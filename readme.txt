@@ -8,7 +8,7 @@ Stable tag: 1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-A WordPress plugin to anonymize job applications to fight bias in hiring and employment.
+Receive anonymized job applications to fight bias in hiring and employment.
 
 == Description ==
 
@@ -80,7 +80,7 @@ Upgrade notices describe the reason a user should upgrade.  No more than 300 cha
 = 0.5 =
 This version fixes a security related bug.  Upgrade immediately.
 
-== Arbitrary section ==
+== Why Anonymize Job Applications?  ==
 
 You may provide arbitrary sections, in the same format as the ones above.  This may be of use for extremely complicated
 plugins where more information needs to be conveyed that doesn't fit into the categories of "description" or
