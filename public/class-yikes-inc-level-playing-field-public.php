@@ -52,8 +52,9 @@ class Yikes_Inc_Level_Playing_Field_Public {
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
 
-		/* Load all shortcodes found in the directory */
-		add_action( 'init', array( $this, 'yikes_level_playing_field_load_shortcodes' ) );
+		/* Register our Shortcodes */
+		// Application Shortcode
+		add_shortcode( 'lpf-application', array( $this, 'render_application_shortcode' ) );
 	}
 
 	/**
@@ -103,14 +104,36 @@ class Yikes_Inc_Level_Playing_Field_Public {
 	}
 
 	/**
-	 * Enqueue all shortcodes foudn int he public/partials/shortcodes/
+	 * Render the Job Application Form
+	 * @param  array $atts  The shortcode attributes.
+	 * @return string       HTML markup for th eform
 	 */
-	public function yikes_level_playing_field_load_shortcodes() {
-		// search for and loop over all shortcode files
-		foreach ( glob( YIKES_LEVEL_PLAYING_FIELD_PATH . 'public/partials/shortcodes/*.php' ) as $filename ) {
-			// include it
-			include $filename;
-		}
-	}
+	public function render_application_shortcode( $atts ) {
 
+		// Parse the shortcode attributes
+		$atts = shortcode_atts( array(
+			'application' => false,
+			'custom' => 'shortcode',
+		), $atts, 'level-playing-field-application' );
+
+		$helpers = new Yikes_Inc_Level_Playing_Field_Helper( $this->plugin_name, $this->version );
+		$application_fields = $helpers->get_application_fields( (int) $atts['application'] );
+
+		if ( $application_fields ) {
+			?>
+			<form class="yikes-lpf-form yikes-lpf-section yikes-lpf-group">
+				<?php
+				foreach ( $application_fields as $app_field ) {
+					// render the feild
+					$helpers->render_field( $app_field );
+				}
+				?>
+				<input type="submit" class="<?php echo esc_attr( apply_filters( 'yikes_level_playing_field_submit_button_class', 'yikes-lpf-submit' ) ); ?>" value="<?php esc_attr_e( 'Apply', 'yikes-inc-level-playing-field' ); ?>" />
+			</form>
+			<?php
+		}
+
+		// return the shortcode
+		return wp_kses_post( '<strong>Level Playing Field Application Shortcode</strong>' );
+	}
 }

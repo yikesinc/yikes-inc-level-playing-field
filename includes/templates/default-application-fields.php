@@ -6,26 +6,21 @@
 return array(
 	// text field
 	array(
-		'label' => 'Test',
-		'name' => 'testing',
+		'label' => __( 'Name', 'yikes-inc-level-playing-field' ),
+		'name' => 'name',
 		'type' => 'text',
-		'class' => 'testing-text-field',
 		'custom_atts' => array(
-			'placeholder' => 'Evan Is So Friggen Cool',
+			'placeholder' => __( 'Your Name', 'yikes-inc-level-playing-field' ),
 		),
 	),
 	// number field
 	array(
-		'label' => 'Test 2',
-		'name' => 'Testing Field 2',
-		'type' => 'number',
-		'class' => 'testing-number-field',
+		'label' => __( 'Email', 'yikes-inc-level-playing-field' ),
+		'name' => 'email',
+		'type' => 'email',
 		'custom_atts' => array(
-			'value' => '8',
-			'placeholder' => '10',
-			'min' => '1',
-			'max' => '100',
-			'step' => '10',
+			'placeholder' => __( 'email@example.com', 'yikes-inc-level-playing-field' ),
+			'pattern' => '[^@]+@[^@]+\.[a-zA-Z]{2,6}',
 		),
 	),
 );

@@ -36,6 +36,8 @@ class Yikes_Inc_Level_Playing_Field_Helper {
 		if ( ! $job_id ) {
 			return false;
 		}
+		$plugin_name = $this->plugin_name;
+		$version = $this->version;
 		// include default fields
 		$default_fields = include_once( YIKES_LEVEL_PLAYING_FIELD_PATH . 'includes/templates/default-application-fields.php' );
 		// return & filter results
