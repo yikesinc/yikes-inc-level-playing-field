@@ -52,6 +52,8 @@ class Yikes_Inc_Level_Playing_Field_Admin {
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
 
+		// include our custom menu(s)
+		include_once( YIKES_LEVEL_PLAYING_FIELD_PATH . 'admin/partials/menu/application-management.php' );
 	}
 
 	/**

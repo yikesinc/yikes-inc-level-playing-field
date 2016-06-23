@@ -57,6 +57,8 @@ class Yikes_Inc_Level_Playing_Field {
 	 */
 	protected $version;
 
+	protected $helpers;
+
 	/**
 	 * Define the core functionality of the plugin.
 	 *
@@ -75,7 +77,6 @@ class Yikes_Inc_Level_Playing_Field {
 		$this->set_locale();
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
-
 	}
 
 	/**
@@ -119,8 +120,13 @@ class Yikes_Inc_Level_Playing_Field {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-yikes-inc-level-playing-field-public.php';
 
-		$this->loader = new Yikes_Inc_Level_Playing_Field_Loader();
+		/**
+		 * The class responsible for loading all of our helper functions
+		 * @since 1.0.0
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-yikes-inc-level-playing-field-helpers.php';
 
+		$this->loader = new Yikes_Inc_Level_Playing_Field_Loader();
 	}
 
 	/**
@@ -211,5 +217,4 @@ class Yikes_Inc_Level_Playing_Field {
 	public function get_version() {
 		return $this->version;
 	}
-
 }

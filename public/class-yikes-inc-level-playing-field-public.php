@@ -52,6 +52,8 @@ class Yikes_Inc_Level_Playing_Field_Public {
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
 
+		/* Load all shortcodes found in the directory */
+		add_action( 'init', array( $this, 'yikes_level_playing_field_load_shortcodes' ) );
 	}
 
 	/**
@@ -73,7 +75,7 @@ class Yikes_Inc_Level_Playing_Field_Public {
 		 * class.
 		 */
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/yikes-inc-level-playing-field-public.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/min/yikes-inc-level-playing-field-public.min.css', array(), $this->version, 'all' );
 
 	}
 
@@ -96,8 +98,19 @@ class Yikes_Inc_Level_Playing_Field_Public {
 		 * class.
 		 */
 
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/yikes-inc-level-playing-field-public.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/min/yikes-inc-level-playing-field-public.min.js', array( 'jquery' ), $this->version, false );
 
+	}
+
+	/**
+	 * Enqueue all shortcodes foudn int he public/partials/shortcodes/
+	 */
+	public function yikes_level_playing_field_load_shortcodes() {
+		// search for and loop over all shortcode files
+		foreach ( glob( YIKES_LEVEL_PLAYING_FIELD_PATH . 'public/partials/shortcodes/*.php' ) as $filename ) {
+			// include it
+			include $filename;
+		}
 	}
 
 }

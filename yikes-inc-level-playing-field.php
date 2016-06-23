@@ -39,9 +39,29 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 /**
+ * 	Define path constant to our plugin directory.
+ *
+ * 	@since 6.0.0
+ *	@return void
+ */
+if ( ! defined( 'YIKES_LEVEL_PLAYING_FIELD_PATH' ) ) {
+	define( 'YIKES_LEVEL_PLAYING_FIELD_PATH' , trailingslashit( plugin_dir_path( __FILE__ ) ) );
+}
+/**
+ * 	Define URL constant to our plugin directory.
+ *
+ * 	@since 6.0.0
+ *	@return void
+ */
+if ( ! defined( 'YIKES_LEVEL_PLAYING_FIELD_URL' ) ) {
+	define( 'YIKES_LEVEL_PLAYING_FIELD_URL' , trailingslashit( plugin_dir_url( __FILE__ ) ) );
+}
+
+/**
  * The code that runs during plugin activation.
  * This action is documented in includes/class-yikes-inc-level-playing-field-activator.php
  */
+register_activation_hook( __FILE__, 'activate_yikes_inc_level_playing_field' );
 function activate_yikes_inc_level_playing_field() {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-yikes-inc-level-playing-field-activator.php';
 	Yikes_Inc_Level_Playing_Field_Activator::activate();
@@ -51,13 +71,11 @@ function activate_yikes_inc_level_playing_field() {
  * The code that runs during plugin deactivation.
  * This action is documented in includes/class-yikes-inc-level-playing-field-deactivator.php
  */
+register_deactivation_hook( __FILE__, 'deactivate_yikes_inc_level_playing_field' );
 function deactivate_yikes_inc_level_playing_field() {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-yikes-inc-level-playing-field-deactivator.php';
 	Yikes_Inc_Level_Playing_Field_Deactivator::deactivate();
 }
-
-register_activation_hook( __FILE__, 'activate_yikes_inc_level_playing_field' );
-register_deactivation_hook( __FILE__, 'deactivate_yikes_inc_level_playing_field' );
 
 /**
  * The core plugin class that is used to define internationalization,

@@ -2,4 +2,62 @@
  * All of the CSS for your public-facing functionality should be
  * included in this file.
  */
-/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInlpa2VzLWluYy1sZXZlbC1wbGF5aW5nLWZpZWxkLXB1YmxpYy5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7OztHQUdHIiwiZmlsZSI6Inlpa2VzLWluYy1sZXZlbC1wbGF5aW5nLWZpZWxkLXB1YmxpYy5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyIvKipcbiAqIEFsbCBvZiB0aGUgQ1NTIGZvciB5b3VyIHB1YmxpYy1mYWNpbmcgZnVuY3Rpb25hbGl0eSBzaG91bGQgYmVcbiAqIGluY2x1ZGVkIGluIHRoaXMgZmlsZS5cbiAqLyJdfQ== */
+
+/* Form Section */
+.yikes-lpf-form-section {
+	display: inline-block;
+	margin: .25em 0;
+}
+
+/* Submit Button */
+.yikes-lpf-submit {
+	display: inline-block;
+	margin: 8px 0;
+}
+
+/** Columns **/
+
+/*  SECTIONS  */
+.yikes-lpf-section {
+	clear: both;
+	padding: 0px;
+	margin: 0px;
+}
+
+/*  COLUMN SETUP  */
+.yikes-lpf-col {
+	display: block;
+	float:left;
+	margin: 1% 0 1% 1.6%;
+}
+.yikes-lpf-col:first-child { margin-left: 0; }
+
+/*  GROUPING  */
+.yikes-lpf-group:before,
+.yikes-lpf-group:after { content:""; display:table; }
+.yikes-lpf-group:after { clear:both;}
+.yikes-lpf-group { zoom:1; /* For IE 6/7 */ }
+
+.yikes-lpf-form-column-2 {
+	width: 49.2%;
+}
+
+.yikes-lpf-form-column-full-width {
+	width: 100%;
+}
+
+/*  GO FULL WIDTH AT LESS THAN 480 PIXELS */
+
+@media only screen and (max-width: 480px) {
+	.yikes-lpf-col {
+		margin: 1% 0 1% 0%;
+	}
+}
+
+@media only screen and (max-width: 480px) {
+	.yikes-lpf-form-column-2 { width: 100%; }
+}
+
+/* End Responsive */
+
+/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInlpa2VzLWluYy1sZXZlbC1wbGF5aW5nLWZpZWxkLXB1YmxpYy5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7OztHQUdHOztBQUVIO0NBQ0Msc0JBQXNCO0NBQ3RCLGdCQUFnQjtDQUNoQiIsImZpbGUiOiJ5aWtlcy1pbmMtbGV2ZWwtcGxheWluZy1maWVsZC1wdWJsaWMuY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLyoqXG4gKiBBbGwgb2YgdGhlIENTUyBmb3IgeW91ciBwdWJsaWMtZmFjaW5nIGZ1bmN0aW9uYWxpdHkgc2hvdWxkIGJlXG4gKiBpbmNsdWRlZCBpbiB0aGlzIGZpbGUuXG4gKi8iXX0= */
