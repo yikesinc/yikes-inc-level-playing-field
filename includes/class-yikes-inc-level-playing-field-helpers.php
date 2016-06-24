@@ -104,7 +104,7 @@ class Yikes_Inc_Level_Playing_Field_Helper {
 	* is_product_taxonomy - Returns true when viewing a job taxonomy archive.
 	* @return bool
 	*/
-	function is_job_taxonomy() {
+	public function is_job_taxonomy() {
 		return is_tax( get_object_taxonomies( 'jobs' ) );
 	}
 }
@@ -143,3 +143,108 @@ function lpf_get_template_part( $slug, $name = '' ) {
 		load_template( $template, false );
 	}
 }
+
+/**
+ * Get other templates (e.g. product attributes) passing attributes and including the file.
+ *
+ * @access public
+ * @param string $template_name
+ * @param array $args (default: array())
+ * @param string $template_path (default: '')
+ * @param string $default_path (default: '')
+ */
+function lpf_get_template( $template_name, $args = array(), $template_path = '', $default_path = '' ) {
+	if ( ! empty( $args ) && is_array( $args ) ) {
+		extract( $args );
+	}
+
+	$located = lpf_locate_template( $template_name, $template_path, $default_path );
+
+	if ( ! file_exists( $located ) ) {
+		_doing_it_wrong( __FUNCTION__, sprintf( '<code>%s</code> does not exist.', $located ), '2.1' );
+		return;
+	}
+	// Allow 3rd party plugin filter template file from their plugin.
+	$located = apply_filters( 'lpf_get_template', $located, $template_name, $args, $template_path, $default_path );
+	do_action( 'woocommerce_before_template_part', $template_name, $template_path, $located, $args );
+	include( $located );
+	do_action( 'woocommerce_after_template_part', $template_name, $template_path, $located, $args );
+}
+
+/**
+ * Locate a template and return the path for inclusion.
+ *
+ * This is the load order:
+ *
+ *		yourtheme		/	$template_path	/	$template_name
+ *		yourtheme		/	$template_name
+ *		$default_path	/	$template_name
+ *
+ * @access public
+ * @param string $template_name
+ * @param string $template_path (default: '')
+ * @param string $default_path (default: '')
+ * @return string
+ */
+function lpf_locate_template( $template_name, $template_path = '', $default_path = '' ) {
+	if ( ! $template_path ) {
+		$template_path = apply_filters( 'yikes_level_playing_field_template_path', 'level-playing-field/' );
+	}
+	if ( ! $default_path ) {
+		$default_path = YIKES_LEVEL_PLAYING_FIELD_PATH . 'templates/';
+	}
+	// Look within passed path within the theme - this is priority.
+	$template = locate_template(
+		array(
+			trailingslashit( $template_path ) . $template_name,
+			$template_name
+		)
+	);
+	// Get default template/
+	if ( ! $template || WC_TEMPLATE_DEBUG_MODE ) {
+		$template = $default_path . $template_name;
+	}
+	// Return what we found.
+	return apply_filters( 'yikes_level_playing_field_locate_template', $template, $template_name, $template_path );
+}
+
+/**
+ * Adds extra post classes for products.
+ *
+ * @since 1.0.0
+ * @param array $classes
+ * @param string|array $class
+ * @param int $post_id
+ * @return array
+ */
+function lpf_job_classes( $classes, $class = '', $post_id = '' ) {
+	if ( ! $post_id || 'jobs' !== get_post_type( $post_id ) ) {
+		return $classes;
+	}
+	$job = get_post( $post_id );
+	if ( $job ) {
+		$classes[] = 'cpt-job';
+	}
+	if ( false !== ( $key = array_search( 'hentry', $classes ) ) ) {
+		unset( $classes[ $key ] );
+	}
+	return $classes;
+}
+
+/**
+ * Get the job title template
+ * @return mixed
+ */
+function yikes_level_playing_field_single_job_title() {
+	lpf_get_template( 'single-job/title.php' );
+}
+add_action( 'yikes_level_playing_field_single_job_summary', 'yikes_level_playing_field_single_job_title', 5 );
+
+/**
+ * Ger the job description template
+ * @return mixed
+ */
+function yikes_level_playing_field_single_job_content() {
+	lpf_get_template( 'single-job/content.php' );
+}
+add_action( 'yikes_level_playing_field_after_single_job_summary', 'yikes_level_playing_field_single_job_content', 10 );

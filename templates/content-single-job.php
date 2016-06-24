@@ -41,16 +41,10 @@ if ( post_password_required() ) {
 			/**
 			 * woocommerce_single_product_summary hook.
 			 *
-			 * @hooked woocommerce_template_single_title - 5
-			 * @hooked woocommerce_template_single_rating - 10
-			 * @hooked woocommerce_template_single_price - 10
-			 * @hooked woocommerce_template_single_excerpt - 20
-			 * @hooked woocommerce_template_single_add_to_cart - 30
-			 * @hooked woocommerce_template_single_meta - 40
-			 * @hooked woocommerce_template_single_sharing - 50
+			 * @hooked yikes_level_playing_field_single_job_title - 5
+			 * @hooked yikes_level_playing_field_single_job_content - 10
 			 */
 			do_action( 'yikes_level_playing_field_single_job_summary' );
-			echo 'TESTING!';
 		?>
 
 	</div><!-- .summary -->
