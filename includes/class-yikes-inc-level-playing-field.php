@@ -126,6 +126,18 @@ class Yikes_Inc_Level_Playing_Field {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-yikes-inc-level-playing-field-helpers.php';
 
+		/**
+		 * Include our Custom Post Types
+		 * @since 1.0.0
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/cpt/job-cpt.php';
+
+		/**
+		 * Include our associated metaboxes with CPTs above
+		 * @since 1.0.0
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/metaboxes/job-metaboxes.php';
+
 		$this->loader = new Yikes_Inc_Level_Playing_Field_Loader();
 	}
 

@@ -41,6 +41,11 @@ class Yikes_Inc_Level_Playing_Field_Public {
 	private $version;
 
 	/**
+	 * Helper functions, to make accessible to this class
+	 */
+	private $helpers;
+
+	/**
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
@@ -51,10 +56,15 @@ class Yikes_Inc_Level_Playing_Field_Public {
 
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
+		// Load and instantiate our helper functions (class)
+		$this->helpers = new Yikes_Inc_Level_Playing_Field_Helper( $this->plugin_name, $this->version );
 
 		/* Register our Shortcodes */
 		// Application Shortcode
 		add_shortcode( 'lpf-application', array( $this, 'render_application_shortcode' ) );
+
+		/* Template Loader */
+		add_filter( 'template_include', array( $this, 'template_loader' ) );
 	}
 
 	/**
@@ -116,8 +126,7 @@ class Yikes_Inc_Level_Playing_Field_Public {
 			'custom' => 'shortcode',
 		), $atts, 'level-playing-field-application' );
 
-		$helpers = new Yikes_Inc_Level_Playing_Field_Helper( $this->plugin_name, $this->version );
-		$application_fields = $helpers->get_application_fields( (int) $atts['application'] );
+		$application_fields = $this->helpers->get_application_fields( (int) $atts['application'] );
 
 		if ( $application_fields ) {
 			?>
@@ -125,7 +134,7 @@ class Yikes_Inc_Level_Playing_Field_Public {
 				<?php
 				foreach ( $application_fields as $app_field ) {
 					// render the feild
-					$helpers->render_field( $app_field );
+					$this->helpers->render_field( $app_field );
 				}
 				?>
 				<input type="submit" class="<?php echo esc_attr( apply_filters( 'yikes_level_playing_field_submit_button_class', 'yikes-lpf-submit' ) ); ?>" value="<?php esc_attr_e( 'Apply', 'yikes-inc-level-playing-field' ); ?>" />
@@ -135,5 +144,54 @@ class Yikes_Inc_Level_Playing_Field_Public {
 
 		// return the shortcode
 		return wp_kses_post( '<strong>Level Playing Field Application Shortcode</strong>' );
+	}
+
+	/**
+	 * Load the job posting template.
+	 *
+	 * Handles template usage so that we can use our own templates instead of the themes.
+	 *
+	 * Templates are in the 'templates' folder. Level Playing Field looks for theme.
+	 * overrides in /theme/level-playing-field/ by default.
+	 *
+	 * @param mixed $template
+	 * @return string
+	 */
+	public function template_loader( $template ) {
+		$find = array( 'single-job.php' );
+		$file = '';
+		// if embed, abort - return default template
+		if ( is_embed() ) {
+			return $template;
+		}
+		if ( is_single() && get_post_type() === 'jobs' ) {
+			$file 	= 'single-job.php';
+			$find[] = $file;
+			$find[] = $this->helpers->template_path() . $file;
+		} elseif ( $this->helpers->is_job_taxonomy() ) {
+			$term   = get_queried_object();
+			if ( is_tax( 'job_categories' ) || is_tax( 'job_tags' ) ) {
+				$file = 'taxonomy-' . $term->taxonomy . '.php';
+			} else {
+				$file = 'archive-jobs.php';
+			}
+			$find[] = 'taxonomy-' . $term->taxonomy . '-' . $term->slug . '.php';
+			$find[] = $this->helpers->template_path() . 'taxonomy-' . $term->taxonomy . '-' . $term->slug . '.php';
+			$find[] = 'taxonomy-' . $term->taxonomy . '.php';
+			$find[] = $this->helpers->template_path() . 'taxonomy-' . $term->taxonomy . '.php';
+			$find[] = $file;
+			$find[] = $this->helpers->template_path() . $file;
+		} elseif ( is_post_type_archive( 'product' ) || is_page( wc_get_page_id( 'shop' ) ) ) {
+			$file 	= 'archive-product.php';
+			$find[] = $file;
+			$find[] = $this->helpers->template_path() . $file;
+		}
+		if ( $file ) {
+			$template       = locate_template( array_unique( $find ) );
+			if ( ! $template || YIKES_LEVEL_PLAYING_FIELD_TEMPLATE_DEBUG_MODE ) {
+				$template = YIKES_LEVEL_PLAYING_FIELD_PATH . '/templates/' . $file;
+			}
+		}
+		return $template;
 	}
 }

@@ -1,6 +1,6 @@
 {
   "name": "yikes-inc-level-playing-field",
-	"title": "Level Playing Field by YIKES Inc.",
+  "title": "Level Playing Field by YIKES Inc.",
   "version": "1.0.0",
   "description": "A WordPress plugin to anonymize job applications to fight bias in hiring and employment.",
   "main": "index.js",
@@ -8,7 +8,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "YIKES Inc.",
-	"site": "http://www.yikesinc.com",
+  "site": "http://www.yikesinc.com",
   "license": "GPLv2",
   "dependencies": {
     "grunt": "^0.4.5"
@@ -17,6 +17,7 @@
     "autoprefixer-core": "^5.2.1",
     "grunt-auto-install": "^0.2.4",
     "grunt-banner": "^0.6.0",
+    "grunt-contrib-copy": "^1.0.0",
     "grunt-contrib-cssmin": "^0.12.3",
     "grunt-contrib-uglify": "^0.9.1",
     "grunt-contrib-watch": "^0.6.1",

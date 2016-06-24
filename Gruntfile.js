@@ -87,11 +87,27 @@ module.exports = function(grunt) {
 	    }
 	  },
 
+		// Copy our template files to the root /template/ directory.
+    copy: {
+      main: {
+        files: [
+          // copy over template files into the root of the plugin
+          {
+            expand: true,
+            flatten: true,
+            src: ['public/partials/templates/*.php'],
+            dest: 'templates/',
+            filter: 'isFile'
+          },
+        ],
+      },
+    },
+
     // watch our project for changes
     watch: {
       public_css: { // public css
         files: 'public/css/*.css',
-        tasks: ['cssmin', 'usebanner'],
+        tasks: ['cssmin', 'usebanner', 'copy'],
         options: {
           spawn: false,
           event: ['all']
@@ -99,7 +115,7 @@ module.exports = function(grunt) {
       },
 			admin_css: { // admin css
         files: 'admin/css/*.css',
-        tasks: ['cssmin', 'usebanner'],
+        tasks: ['cssmin', 'usebanner', 'copy'],
         options: {
           spawn: false,
           event: ['all']
@@ -107,7 +123,7 @@ module.exports = function(grunt) {
       },
 			public_js: { // public js
 			 files: 'public/js/*.js',
-			 tasks: ['uglify', 'usebanner'],
+			 tasks: ['uglify', 'usebanner', 'copy'],
 			 options: {
 				 spawn: false,
 				 event: ['all']
@@ -115,7 +131,7 @@ module.exports = function(grunt) {
 		 },
 		 admin_js: { // admin js
 			files: 'admin/js/*.js',
-			tasks: ['uglify', 'usebanner'],
+			tasks: ['uglify', 'usebanner', 'copy'],
 			options: {
 				spawn: false,
 				event: ['all']
@@ -130,6 +146,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-banner');
+	grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-postcss'); // CSS autoprefixer plugin (cross-browser auto pre-fixes)
   grunt.loadNpmTasks('grunt-auto-install'); // autoload all of ourd ependencies (ideally, you install this one package, and run grunt auto_install to install our dependencies automagically)
 
@@ -139,6 +156,7 @@ module.exports = function(grunt) {
     'postcss',
     'cssmin',
 		'usebanner',
+		'copy',
     'watch',
   ]);
 
