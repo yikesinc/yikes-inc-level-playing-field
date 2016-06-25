@@ -101,5 +101,4 @@ class Yikes_Inc_Level_Playing_Field_Admin {
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/yikes-inc-level-playing-field-admin.js', array( 'jquery' ), $this->version, false );
 
 	}
-
 }

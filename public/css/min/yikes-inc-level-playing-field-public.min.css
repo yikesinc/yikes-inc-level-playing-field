@@ -1,8 +1,1 @@
-/*
- * @Plugin Level Playing Field by YIKES Inc.
- * @Author YIKES Inc.
- * @Site http://www.yikesinc.com
- * @Version 1.0.0
- * @Build 06-24-2016
- */
-.yikes-lpf-form-section{display:inline-block;margin:.25em 0}.yikes-lpf-submit{display:inline-block;margin:8px 0}.yikes-lpf-section{clear:both;padding:0;margin:0}.yikes-lpf-col{display:block;float:left;margin:1% 0 1% 1.6%}.yikes-lpf-col:first-child{margin-left:0}.yikes-lpf-group:after,.yikes-lpf-group:before{content:"";display:table}.yikes-lpf-group:after{clear:both}.yikes-lpf-group{zoom:1}.yikes-lpf-form-column-2{width:49.2%}.yikes-lpf-form-column-full-width{width:100%}@media only screen and (max-width:480px){.yikes-lpf-col{margin:1% 0}.yikes-lpf-form-column-2{width:100%}}
+.yikes-lpf-categories,.yikes-lpf-posted-on,.yikes-lpf-tags{font-size:16px;display:block;width:100%;margin-bottom:10px}.yikes-lpf-form-section{display:inline-block;margin:.25em 0}.yikes-lpf-submit{display:inline-block;margin:8px 0}.yikes-lpf-section{clear:both;padding:0;margin:0}.yikes-lpf-col{display:block;float:left;margin:1% 0 1% 1.6%}.yikes-lpf-col:first-child{margin-left:0}.yikes-lpf-group:after,.yikes-lpf-group:before{content:"";display:table}.yikes-lpf-group:after{clear:both}.yikes-lpf-group{zoom:1}.yikes-lpf-form-column-2{width:49.2%}.yikes-lpf-form-column-full-width{width:100%}@media only screen and (max-width:480px){.yikes-lpf-col{margin:1% 0}.yikes-lpf-form-column-2{width:100%}}h1.job-title{margin:.5em 0!important}.single-jobs .lpf-job-icon{background-image:url(../../../assets/img/job-icon-spritesheet.png);background-repeat:no-repeat;display:block;float:left;margin:2px 8px 0 0}.lpf-job-icon-categories-icon{width:20px;height:20px;background-position:-2px -2px}.lpf-job-icon-clock-icon{width:20px;height:20px;background-position:-2px -26px}.lpf-job-icon-tags-icon{width:20px;height:20px;background-position:-2px -50px}

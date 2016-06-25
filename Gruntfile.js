@@ -107,6 +107,14 @@ module.exports = function(grunt) {
             dest: 'templates/single-job',
             filter: 'isFile'
           },
+					// global templates
+					{
+            expand: true,
+            flatten: true,
+            src: ['public/partials/templates/global/*.php'],
+            dest: 'templates/global',
+            filter: 'isFile'
+          },
         ],
       },
     },

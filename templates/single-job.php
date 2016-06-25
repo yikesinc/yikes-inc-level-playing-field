@@ -35,15 +35,17 @@ endwhile; // end of the loop.
  * woocommerce_after_main_content hook.
  *
  * @hooked woocommerce_output_content_wrapper_end - 10 (outputs closing divs for the content)
+ * @hooked yikes_lpf_categories - 10 (outputs categories assigned to the job listing)
+ * @hooked yikes_lpf_tags - 11 (outputs tags assigned to the job listing)
  */
 do_action( 'yikes_level_playing_field_after_main_content' );
 
 /**
  * woocommerce_sidebar hook.
  *
- * @hooked woocommerce_get_sidebar - 10
+ * @hooked yikes_lpf_get_sidebar - 10
  */
-do_action( 'yikes_level_playing_field_job_sidebar' );
+do_action( 'yikes_level_playing_field_sidebar' );
 
 // Display the footer
 get_footer( 'jobs' );

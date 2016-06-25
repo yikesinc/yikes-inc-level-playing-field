@@ -10,13 +10,15 @@ Level Playing field by YIKES Inc.
 * `yikes_level_playing_field_template_path`
 * `yikes_level_playing_field_submit_button_class`
 * `yikes_level_playing_field_get_template_part`
+* `yikes_level_playing_field_breadcrumb_defaults`
+* `yikes_level_playing_field_breadcrumb_home_url`
 
 ##### Actions
 
 <strong>Single Job Template:</strong>
 * `yikes_level_playing_field_before_main_content`
 * `yikes_level_playing_field_after_main_content`
-* `yikes_level_playing_field_job_sidebar`
+* `yikes_level_playing_field_sidebar`
 * `yikes_level_playing_field_before_single_job`
 * `yikes_level_playing_field_before_single_job_summary`
 * `yikes_level_playing_field_single_job_summary`

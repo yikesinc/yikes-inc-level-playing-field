@@ -41,8 +41,11 @@ if ( post_password_required() ) {
 			/**
 			 * woocommerce_single_product_summary hook.
 			 *
-			 * @hooked yikes_level_playing_field_single_job_title - 5
-			 * @hooked yikes_level_playing_field_single_job_content - 10
+			 * @hooked woocommerce_template_single_title - 5
+			 * @yikes_lpf_categories - 10
+			 * @yikes_lpf_tags - 11
+			 * @yikes_lpf_posted_on - 12
+			 * @hooked woocommerce_template_single_excerpt - 20
 			 */
 			do_action( 'yikes_level_playing_field_single_job_summary' );
 		?>

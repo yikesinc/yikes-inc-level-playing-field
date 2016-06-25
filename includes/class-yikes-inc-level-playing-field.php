@@ -127,6 +127,12 @@ class Yikes_Inc_Level_Playing_Field {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-yikes-inc-level-playing-field-helpers.php';
 
 		/**
+		 * Breadcrumbs class
+		 * @since 1.0.0
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-yikes-inc-level-playing-field-breadcrumbs.php';
+
+		/**
 		 * Include our Custom Post Types
 		 * @since 1.0.0
 		 */
@@ -137,6 +143,13 @@ class Yikes_Inc_Level_Playing_Field {
 		 * @since 1.0.0
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/metaboxes/job-metaboxes.php';
+
+		/**
+		 * Include the template functions and hooks
+		 * @since 1.0.0
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/yikes-inc-level-playing-field-template-hooks.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/yikes-inc-level-playing-field-template-functions.php';
 
 		$this->loader = new Yikes_Inc_Level_Playing_Field_Loader();
 	}
