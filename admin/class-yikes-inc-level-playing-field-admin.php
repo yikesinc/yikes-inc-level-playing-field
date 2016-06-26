@@ -54,6 +54,9 @@ class Yikes_Inc_Level_Playing_Field_Admin {
 
 		// include our custom menu(s)
 		include_once( YIKES_LEVEL_PLAYING_FIELD_PATH . 'admin/partials/menu/application-management.php' );
+
+		add_action( 'admin_print_scripts-post-new.php', array( $this, 'job_admin_scripts_and_styles' ), 11 );
+		add_action( 'admin_print_scripts-post.php', array( $this, 'job_admin_scripts_and_styles' ), 11 );
 	}
 
 	/**
@@ -75,8 +78,7 @@ class Yikes_Inc_Level_Playing_Field_Admin {
 		 * class.
 		 */
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/yikes-inc-level-playing-field-admin.css', array(), $this->version, 'all' );
-
+		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/min/yikes-inc-level-playing-field-admin.min.css', array(), $this->version, 'all' );
 	}
 
 	/**
@@ -85,7 +87,6 @@ class Yikes_Inc_Level_Playing_Field_Admin {
 	 * @since    1.0.0
 	 */
 	public function enqueue_scripts() {
-
 		/**
 		 * This function is provided for demonstration purposes only.
 		 *
@@ -98,7 +99,18 @@ class Yikes_Inc_Level_Playing_Field_Admin {
 		 * class.
 		 */
 
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/yikes-inc-level-playing-field-admin.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/min/yikes-inc-level-playing-field-admin.min.js', array( 'jquery' ), $this->version, false );
+	}
 
+	/**
+	 * Enqueue scripts and styles to our 'job' custom post type explicilty
+	 * @since 1.0.0
+	 */
+	public function job_admin_scripts_and_styles() {
+		global $post_type;
+		if ( 'jobs' === $post_type ) {
+			wp_enqueue_style( 'jobs-metabox-styles', plugin_dir_url( __FILE__ ) . 'css/min/yikes-inc-level-playing-field-metabox-styles.min.css', array(), $this->version, 'all' );
+			wp_enqueue_script( 'jobs-metabox-scripts', plugin_dir_url( __FILE__ ) . 'js/min/yikes-inc-level-playing-field-metabox-scripts.min.js', array( 'jquery' ), $this->version, 'all' );
+		}
 	}
 }

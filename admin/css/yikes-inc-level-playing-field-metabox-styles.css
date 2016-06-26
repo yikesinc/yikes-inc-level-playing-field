@@ -1,0 +1,237 @@
+/**
+ * All of the CSS for your admin metaboxes
+ * @since 1.0.0
+ */
+
+#job-posting-details .inside {
+	padding: 0;
+	margin-top: 0;
+}
+
+#job-posting-details ul.yikes-lpf-tabs {
+	margin: 0;
+	width: 20%;
+	float: left;
+	line-height: 1em;
+	padding: 0 0 10px;
+	position: relative;
+	background-color: #fafafa;
+	border-right: 1px solid #eee;
+	box-sizing: border-box
+}
+
+#job-posting-details ul.yikes-lpf-tabs li {
+	margin: 0;
+	padding: 0;
+	display: block;
+	position: relative
+}
+
+#job-posting-details ul.yikes-lpf-tabs li.active a {
+	color: #555;
+	position: relative;
+	background-color: #eee
+}
+
+#job-posting-details ul.yikes-lpf-tabs li a {
+	margin: 0;
+	padding: 10px;
+	display: block;
+	box-shadow: none;
+	text-decoration: none;
+	line-height: 20px!important;
+	border-bottom: 1px solid #eee
+}
+
+#job-posting-details .yikes_lpf_options_panel .options_group:first-child {
+	border-top: 0;
+}
+
+#job-posting-details .wc-metaboxes-wrapper,
+#job-posting-details .yikes_lpf_options_panel {
+	float: left;
+	width: 80%
+}
+
+#job-posting-details fieldset.form-field,
+#job-posting-details p.form-field {
+	padding: 5px 20px 5px 162px !important;
+}
+
+#job-posting-details p.form-field.section_title {
+	font-weight: bold;
+	font-size: 14px;
+	padding-bottom: 20px !important
+}
+
+#job-posting-details .yikes_lpf_options_panel .options_group {
+	border-top: 1px solid #fff;
+	border-bottom: 1px solid #eee
+}
+
+#job-posting-details .yikes_lpf_options_panel .options_group:first-child {
+	border-top: 0
+}
+
+#job-posting-details .yikes_lpf_options_panel .options_group:last-child {
+	border-bottom: 0
+}
+
+#job-posting-details .yikes_lpf_options_panel .options_group fieldset {
+	margin: 9px 0;
+	font-size: 12px;
+	padding: 5px 9px;
+	line-height: 24px
+}
+
+#job-posting-details .yikes_lpf_options_panel .options_group fieldset label {
+	width: auto;
+	float: none
+}
+
+#job-posting-details .yikes_lpf_options_panel .options_group fieldset ul {
+	float: left;
+	width: 50%;
+	margin: 0;
+	padding: 0
+}
+
+#job-posting-details .yikes_lpf_options_panel .options_group fieldset ul li {
+	margin: 0;
+	width: auto
+}
+
+#job-posting-details .yikes_lpf_options_panel .options_group fieldset ul li input {
+	width: auto;
+	float: none;
+	margin-right: 4px
+}
+
+#job-posting-details .yikes_lpf_options_panel .options_group fieldset ul.wc-radios label {
+	margin-left: 0
+}
+
+#job-posting-details .yikes_lpf_options_panel label,
+#job-posting-details .yikes_lpf_options_panel legend {
+	float: left;
+	width: 150px;
+	padding: 0;
+	margin: 0 0 0 -150px
+}
+
+#job-posting-details .yikes_lpf_options_panel .dimensions_field .wrap {
+	display: block;
+	width: 50%
+}
+
+#job-posting-details .yikes_lpf_options_panel .dimensions_field .wrap input {
+	width: 30.75%;
+	margin-right: 3.8%
+}
+
+#job-posting-details .yikes_lpf_options_panel .dimensions_field .wrap .last {
+	margin-right: 0
+}
+
+#job-posting-details .yikes_lpf_options_panel.padded {
+	padding: 1em
+}
+
+#job-posting-details input.dp-applied,.yikes_lpf_options_panel .select2-container {
+	float: left
+}
+
+/**
+ * Font Icons For our Tabs
+ */
+@font-face {
+	font-family: 'YIKES-LPF';
+	src:    url('../fonts/YIKES-LPF.eot?gy1y3e');
+	src:    url('../fonts/YIKES-LPF.eot?gy1y3e#iefix') format('embedded-opentype'),
+					url('../fonts/YIKES-LPF.ttf?gy1y3e') format('truetype'),
+					url('../fonts/YIKES-LPF.woff?gy1y3e') format('woff'),
+					url('../fonts/YIKES-LPF.svg?gy1y3e#YIKES-LPF') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+#job-posting-details ul.yikes-lpf-tabs li a:before {
+	font-family: 'YIKES-LPF';
+	speak: none;
+	font-weight: 400;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+	margin-right: .618em;
+	content: "";
+	text-decoration: none
+}
+
+/* Company Details Icon */
+#job-posting-details ul.yikes-lpf-tabs li a[href="#company_details"]:before {
+	content: "\e900";
+}
+
+/* Job Details Icon */
+#job-posting-details ul.yikes-lpf-tabs li a[href="#job_details"]:before {
+	content: "\e901";
+}
+
+/* Compensation Icon */
+#job-posting-details ul.yikes-lpf-tabs li a[href="#compensation"]:before {
+	content: "\e904";
+}
+
+/* Schedule Icon */
+#job-posting-details ul.yikes-lpf-tabs li a[href="#schedule"]:before {
+	content: "\e905";
+}
+
+/* Notifications Icon */
+#job-posting-details ul.yikes-lpf-tabs li a[href="#notifications"]:before {
+	content: "\e902";
+}
+
+/* Schedule Icon */
+#job-posting-details ul.yikes-lpf-tabs li a[href="#advanced_options"]:before {
+	content: "\e903"
+}
+
+/**
+ * Begin Job Application Builder Styles
+ */
+#job-application-builder .job-app-action-btn {
+	margin-right: 5px;
+	padding: 3px 8px;
+	text-decoration: none;
+	border-radius: 3px;
+	opacity: 1;
+	transition: opacity .15s ease-in-out;
+	-moz-transition: opacity .15s ease-in-out;
+	-webkit-transition: opacity .15s ease-in-out;
+}
+
+#job-application-builder .job-app-action-btn:hover {
+	opacity: .9;
+}
+
+	/* Button Styles */
+	#job-application-builder .job-app-action-btn.save-application  {
+		background: #5CB85C;
+		color: #fefefe;
+	}
+
+	#job-application-builder .job-app-action-btn.load-application  {
+		background: #5BC0DE;
+		color: #fefefe;
+	}
+
+	#job-application-builder .job-app-action-btn.clear-application  {
+		background: #D9534F;
+		color: #fefefe;
+	}
+
+/** End Job Application Builder Styles **/
+
+/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInlpa2VzLWluYy1sZXZlbC1wbGF5aW5nLWZpZWxkLW1ldGFib3gtc3R5bGVzLmNzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTs7O0dBR0c7QUFDSDtDQUNDLFVBQVU7Q0FDVixXQUFXO0NBQ1gsWUFBWTtDQUNaLGlCQUFpQjtDQUNqQixrQkFBa0I7Q0FDbEIsbUJBQW1CO0NBQ25CLDBCQUEwQjtDQUMxQiw2QkFBNkI7Q0FDN0Isc0JBQXNCO0NBQ3RCOztBQUVEO0NBQ0MsVUFBVTtDQUNWLFdBQVc7Q0FDWCxlQUFlO0NBQ2Ysa0JBQWtCO0NBQ2xCOztBQUVEO0NBQ0MsWUFBWTtDQUNaLG1CQUFtQjtDQUNuQixzQkFBc0I7Q0FDdEI7O0FBRUQ7Q0FDQyxVQUFVO0NBQ1YsY0FBYztDQUNkLGVBQWU7Q0FDZixpQkFBaUI7Q0FDakIsc0JBQXNCO0NBQ3RCLDRCQUE0QjtDQUM1Qiw2QkFBNkI7Q0FDN0I7O0FBRUQ7Q0FDQyxjQUFjO0NBQ2Q7O0FBRUQ7O0NBRUMsWUFBWTtDQUNaLFVBQVU7Q0FDVjs7QUFFRDs7Q0FFQyx1Q0FBdUM7Q0FDdkM7O0FBRUQ7Q0FDQyxrQkFBa0I7Q0FDbEIsZ0JBQWdCO0NBQ2hCLCtCQUErQjtDQUMvQjs7QUFFRDtDQUNDLDJCQUEyQjtDQUMzQiw2QkFBNkI7Q0FDN0I7O0FBRUQ7Q0FDQyxhQUFhO0NBQ2I7O0FBRUQ7Q0FDQyxnQkFBZ0I7Q0FDaEI7O0FBRUQ7Q0FDQyxjQUFjO0NBQ2QsZ0JBQWdCO0NBQ2hCLGlCQUFpQjtDQUNqQixpQkFBaUI7Q0FDakI7O0FBRUQ7Q0FDQyxZQUFZO0NBQ1osV0FBVztDQUNYOztBQUVEO0NBQ0MsWUFBWTtDQUNaLFdBQVc7Q0FDWCxVQUFVO0NBQ1YsVUFBVTtDQUNWOztBQUVEO0NBQ0MsVUFBVTtDQUNWLFdBQVc7Q0FDWDs7QUFFRDtDQUNDLFlBQVk7Q0FDWixZQUFZO0NBQ1osaUJBQWlCO0NBQ2pCOztBQUVEO0NBQ0MsY0FBYztDQUNkOztBQUVEOztDQUVDLFlBQVk7Q0FDWixhQUFhO0NBQ2IsV0FBVztDQUNYLG9CQUFvQjtDQUNwQjs7QUFFRDtDQUNDLGVBQWU7Q0FDZixVQUFVO0NBQ1Y7O0FBRUQ7Q0FDQyxjQUFjO0NBQ2Qsa0JBQWtCO0NBQ2xCOztBQUVEO0NBQ0MsZUFBZTtDQUNmOztBQUVEO0NBQ0MsWUFBWTtDQUNaOztBQUVEO0NBQ0MsV0FBVztDQUNYIiwiZmlsZSI6Inlpa2VzLWluYy1sZXZlbC1wbGF5aW5nLWZpZWxkLW1ldGFib3gtc3R5bGVzLmNzcyIsInNvdXJjZXNDb250ZW50IjpbIi8qKlxuICogQWxsIG9mIHRoZSBDU1MgZm9yIHlvdXIgYWRtaW4gbWV0YWJveGVzXG4gKiBAc2luY2UgMS4wLjBcbiAqL1xuIl19 */
