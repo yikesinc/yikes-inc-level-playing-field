@@ -22,7 +22,7 @@ function render_level_playing_field_dashboard() {
 		<h2>Applicants Template</h2>
 		<ul>
 			<li>- List out the job CPTs here in custom view format.</li>
-			<li>- Make each job clicakble, to query current applicants, again in a custom view.</li>
+			<li>- Make each job clicakble, to query current applicants (post type = <code>applicants</code>), again in a custom view.</li>
 		</ul>
 	<?php
 }

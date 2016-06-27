@@ -54,165 +54,115 @@ add_action( 'add_meta_boxes', 'yikes_level_playinf_field_register_meta_boxes' );
  * @param WP_Post $post Current post object.
  */
 function jobs_cpt_details_metabox_callback( $post ) {
+	$job_posting_details = new Yikes_Inc_Level_Playing_Field_Job_Posting_Details();
+	$main_sections = $job_posting_details->main_sections;
 	?>
 		<!-- TO DO: This needs to be done via loop and arrays, to make extensible (setup class to build defaults etc.) -->
-		<div class="panel-wrap product_data">
-			<ul class="job_data_tabs yikes-lpf-tabs" style="">
-				<li class="company_details general_tab hide_if_grouped active">
-					<a href="#company_details"><?php esc_attr_e( 'Company Details', 'yikes-inc-level-playing-field' ); ?></a>
-				</li>
-				<li class="job_details inventory_tab show_if_simple show_if_variable show_if_grouped" style="display: block;">
-					<a href="#job_details"><?php esc_attr_e( 'Job Details', 'yikes-inc-level-playing-field' ); ?></a>
-				</li>
-				<li class="compensation shipping_tab hide_if_virtual hide_if_grouped hide_if_external">
-					<a href="#compensation"><?php esc_attr_e( 'Compensation (optional)', 'yikes-inc-level-playing-field' ); ?></a>
-				</li>
-				<li class="schedule linked_product_tab">
-					<a href="#schedule"><?php esc_attr_e( 'Schedule (optional)', 'yikes-inc-level-playing-field' ); ?></a>
-				</li>
-				<li class="notifications attribute_tab">
-					<a href="#notifications"><?php esc_attr_e( 'Notifications', 'yikes-inc-level-playing-field' ); ?></a>
-				</li>
-				<li class="advanced_options advanced_tab">
-					<a href="#advanced_options">Advanced</a>
-				</li>
-			</ul>
-			<div id="company_details" class="panel yikes_lpf_options_panel" style="display: block;">
-				<div class="options_group hide_if_grouped">
-					<p class="form-field _sku_field ">
-						<label for="_company_name">
-							<abbr title="<?php esc_attr__( 'Company Name', 'yikes-inc-level-playing-field' ); ?>">
-								<?php esc_attr_e( 'Company Name', 'yikes-inc-level-playing-field' ); ?>
-							</abbr>
-						</label>
-						<input type="text" class="short" style="" name="_company_name" id="_company_name" value="" placeholder="" pmbx_context="FB515532-1068-4393-A201-4C33FCD991BC">
-					</p>
-					<p class="form-field _regular_price_field ">
-						<label for="_company_tag_line">
-							<abbr title="<?php esc_attr__( 'Company Tagline', 'yikes-inc-level-playing-field' ); ?>">
-								<?php esc_attr_e( 'Company Tagline', 'yikes-inc-level-playing-field' ); ?>
-							</abbr>
-						</label>
-						<input type="text" class="short" style="" name="_company_tag_line" id="_company_tag_line" value="" placeholder="" pmbx_context="1992A4EA-2CBB-4C59-939F-CE2D34AACE89">
-					</p>
-					<p class="form-field _sale_price_field ">
-						<label for="_company_logo">
-								<abbr title="<?php esc_attr__( 'Company Logo', 'yikes-inc-level-playing-field' ); ?>">
-									<?php printf( esc_attr__( 'Company Logo %s', 'yikes-inc-level-playing-field' ), '<br /><em>(' . esc_attr__( 'optional', 'yikes-inc-level-playing-field' ) . ')</em>' ); ?>
-								</abbr>
-						</label>
-						<input type="text" class="short" style="" name="_company_logo" id="_company_logo" value="" placeholder="" pmbx_context="B5FA2F0A-A238-494A-A1B8-77FBC84B4213">
-						<span class="description">
-							<br /><?php esc_attr_e( 'Add the associated company logo to this job posting.', 'yikes-inc-level-playing-field' ); ?>
-						</span>
-					</p>
-				</div>
-
-				<!-- Company Details Tab -->
-				<div class="options_group pricing show_if_simple show_if_external" style="display: block;">
-					<p class="form-field section_title">
-						<label for="_company_website">
-							<?php esc_attr_e( 'Contact Details', 'yikes-inc-level-playing-field' ); ?>
-						</label>
-					</p>
-					<p class="form-field _company_website_field ">
-						<label for="_company_website">
-							<?php esc_attr_e( 'Company Website', 'yikes-inc-level-playing-field' ); ?>
-						</label>
-						<input type="text" class="short" style="" name="_company_website" id="_company_website" value="" placeholder="http://www.yikesinc.com" pmbx_context="1992A4EA-2CBB-4C59-939F-CE2D34AACE89">
-					</p>
-					<p class="form-field _company_twitter_field ">
-						<label for="_company_twitter">
-							<?php printf( esc_attr__( 'Company Twitter %s', 'yikes-inc-level-playing-field' ), '<br /><em>(' . esc_attr__( 'optional', 'yikes-inc-level-playing-field' ) . ')</em>' ); ?>
-						</label>
-						<input type="text" class="short" style="" name="_company_twitter" id="_company_twitter" value="" placeholder="@yikesinc" pmbx_context="B5FA2F0A-A238-494A-A1B8-77FBC84B4213">
-						<span class="description">
-							<br /><?php esc_attr_e( 'Enter your companys twitter username.', 'yikes-inc-level-playing-field' ); ?>
-						</span>
-					</p>
-				</div>
-			</div>
-			<!-- End Company Details Tab -->
-
-			<!-- Job Details Tab -->
-			<div id="job_details" class="panel yikes_lpf_options_panel" style="display: none;">
-					<div class="options_group">
-						<p class="form-field _job_details_field" style="display: block;">
-							<label for="_manage_stock">
-								<?php esc_attr_e( 'Job Details Here', 'yikes-inc-level-playing-field' ); ?>
-							</label>
-							<span class="description">
-								<?php echo __( '<strong>TO DO</strong>: Additional job details will be entered in this box (job location, etc etc.).', 'yikes-inc-level-playing-field' ); ?>
-							</span>
-						</p>
-				</div>
-			</div>
-			<!-- End Job Details Tab -->
-
-			<!-- Compensation Tab -->
-			<div id="compensation" class="panel yikes_lpf_options_panel" style="display: none;">
-				<div class="options_group">
-					<p class="form-field _compensation_field ">
-						<label for="_manage_stock">
-							<?php esc_attr_e( 'Compensation Details', 'yikes-inc-level-playing-field' ); ?>
-						</label>
-						<span class="description">
-							<?php echo __( '<strong>TO DO</strong>: Job compensation & benefits.', 'yikes-inc-level-playing-field' ); ?>
-						</span>
-					</p>
-				</div>
-			</div>
-			<!-- End Compensation Tab -->
-
-			<!-- Notifications Tab -->
-			<div id="notifications" class="panel yikes_lpf_options_panel" style="display: none;">
-				<div class="options_group">
-					<p class="form-field _schedule_field ">
-						<label for="_manage_stock">
-							<?php esc_attr_e( 'Notifications', 'yikes-inc-level-playing-field' ); ?>
-						</label>
-						<span class="description">
-							<?php echo __( '<strong>TO DO</strong>: Options to email the admins and the current applicant.', 'yikes-inc-level-playing-field' ); ?>
-						</span>
-					</p>
-				</div>
-			</div>
-			<!-- End Notifications Tab -->
-
-			<!-- Schedule Tab -->
-			<div id="schedule" class="panel yikes_lpf_options_panel" style="display: none;">
-				<div class="options_group">
-					<p class="form-field _notifications_field ">
-						<label for="_manage_stock">
-							<?php esc_attr_e( 'Schedule', 'yikes-inc-level-playing-field' ); ?>
-						</label>
-						<span class="description">
-							<?php echo __( '<strong>TO DO</strong>: Setup date/time pickers to schedule the job posting.', 'yikes-inc-level-playing-field' ); ?>
-						</span>
-					</p>
-				</div>
-			</div>
-			<!-- End Shceulde Tab -->
-
-			<!-- Advanced Options Tab -->
-			<div id="advanced_options" class="panel yikes_lpf_options_panel" style="display: none;">
-				<div class="options_group">
-					<p class="form-field _notifications_field ">
-						<label for="_manage_stock">
-							<?php esc_attr_e( 'Advanced Options', 'yikes-inc-level-playing-field' ); ?>
-						</label>
-						<span class="description">
-							<?php echo __( '<strong>TO DO</strong>: Setup advanced options (not sure yet - may not need this tab).', 'yikes-inc-level-playing-field' ); ?>
-						</span>
-					</p>
-				</div>
-			</div>
-			<!-- End Advanced Options Tab -->
-
+		<div class="panel-wrap job_data">
+			<?php
+				render_job_posting_details_sidebar( $job_posting_details );
+				render_job_posting_details_main_sections( $job_posting_details );
+			?>
 			<div class="clear"></div>
-
 		</div>
 	<?php
+}
+
+function render_job_posting_details_sidebar( $job_posting_details ) {
+	// Get our sidebar menu
+	$sidebar_menu = $job_posting_details->sidebar_menu;
+	ob_start();
+	?>
+	<!-- Sidebar Menu -->
+	<ul class="job_data_tabs yikes-lpf-tabs">
+		<?php
+		if ( $sidebar_menu && ! empty( $sidebar_menu ) ) {
+			$sidebar_menu_length = count( $sidebar_menu );
+			for ( $x = 0; $x <= $sidebar_menu_length; $x++ ) {
+				?>
+				<li class="<?php echo esc_attr( $sidebar_menu[ $x ]['id'] ); if ( 0 === $x ) { ?> active<?php } ?>">
+					<a href="#<?php echo esc_attr( $sidebar_menu[ $x ]['id'] ); ?>">
+						<?php echo esc_attr( $sidebar_menu[ $x ]['text'] ); ?>
+					</a>
+				</li>
+				<?php
+			}
+		}
+		?>
+	</ul>
+	<!-- End Sidebar Menu -->
+	<?php
+	$contents = ob_get_contents();
+	ob_get_clean();
+	echo wp_kses_post( $contents );
+}
+
+function render_job_posting_details_main_sections( $job_posting_details ) {
+	// Store sidebar to loop and generate associated main section
+	$sidebar_menu = $job_posting_details->sidebar_menu;
+	ob_start();
+	if ( $sidebar_menu && ! empty( $sidebar_menu ) ) {
+		$sidebar_menu_length = count( $sidebar_menu );
+		for ( $x = 0; $x <= $sidebar_menu_length; $x++ ) {
+			?>
+			<div id="<?php echo esc_attr( $sidebar_menu[ $x ]['id'] ); ?>" class="panel yikes_lpf_options_panel">
+				<?php render_seciton_fields( $job_posting_details, $sidebar_menu[ $x ]['id'] ); ?>
+			</div>
+			<?php
+		}
+	}
+	$contents = ob_get_contents();
+	ob_get_clean();
+	// Get the allowed tags
+	$allowed_tags = $job_posting_details->allowed_tags;
+	echo wp_kses( $contents, $allowed_tags );
+}
+
+/**
+ * Loop over and render our field sections
+ * @param  class  $job_posting_details Job posting details class initialization
+ * @param  string $section_id          Section ID to retreive the fields for.
+ * @return mixed                       HTML content for the fields to render.
+ */
+function render_seciton_fields( $job_posting_details, $section_id ) {
+	// Get our fields
+	$fields = $job_posting_details->fields;
+	ob_start();
+	if ( isset( $fields[ $section_id ] ) && ! empty( $fields[ $section_id ] ) ) {
+		foreach ( $fields[ $section_id ] as $field_data ) {
+			// Store our field attributes
+			$field_name = '_' . str_replace( '-', '_', sanitize_title( $field_data['label'] ) );
+			$value = ( isset( $field_data['value'] ) ) ? $field_data['value'] : '';
+			$class = ( isset( $field_data['class'] ) ) ? $field_data['class'] : '';
+			$type = ( isset( $field_data['type'] ) ) ? $field_data['type'] : 'text';
+			$placeholder = ( isset( $field_data['placeholder'] ) ) ? $field_data['placeholder'] : '';
+			$description = ( isset( $field_data['description'] ) ) ? $field_data['description'] : false;
+			?>
+			<!-- Display the field -->
+			<p class="form-field <?php echo esc_attr( $field_name ); ?>">
+				<label for="<?php echo esc_attr( $field_name ); ?>">
+					<abbr title="">
+						<?php echo esc_attr( $field_data['label'] ); ?>
+					</abbr>
+				</label>
+				<input type="<?php echo esc_attr( $type ); ?>" class="<?php echo esc_attr( $class ); ?>" name="<?php echo esc_attr( $field_name ); ?>" id="<?php echo esc_attr( $field_name ); ?>" value="<?php echo esc_attr( $value ); ?>" placeholder="<?php echo esc_attr( $placeholder ); ?>">
+				<?php
+				if ( $description ) {
+					?>
+					<em class="description">
+						<?php echo esc_attr( $description ); ?>
+					</em>
+					<?php
+				}
+				?>
+			</p>
+			<?php
+		}
+	}
+	$contents = ob_get_contents();
+	ob_get_clean();
+	$allowed_tags = $job_posting_details->allowed_tags;
+	echo wp_kses( $contents, $allowed_tags );
 }
 
 /**

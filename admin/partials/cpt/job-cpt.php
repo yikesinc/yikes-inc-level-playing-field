@@ -57,11 +57,11 @@ add_action( 'init', 'generate_job_cpt', 0 );
 /**
  * Register the custom taxonomies for Jobs cpt
  */
-// hook into the init action and call create_book_taxonomies when it fires
-add_action( 'init', 'create_book_taxonomies', 0 );
+// hook into the init action and call create_job_taxonomies when it fires
+add_action( 'init', 'create_job_taxonomies', 0 );
 
-// create two taxonomies, genres and writers for the post type "book"
-function create_book_taxonomies() {
+// create two taxonomies, genres and writers for the post type "job"
+function create_job_taxonomies() {
 	// Add new taxonomy, make it hierarchical (like categories)
 	$labels = array(
 		'name'              => _x( 'Job Categories', 'yikes-inc-level-playing-field' ),
