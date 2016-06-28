@@ -6,6 +6,10 @@ Level Playing field by YIKES Inc.
 
 ### Temporary Documentation:
 
+##### Shortcodes
+* `[lpf-jobs]` - List the current, active, jobs in a nice table.
+* `[lpf-application]` - Display the application for a specific job.
+
 ##### Filters
 * `yikes_level_playing_field_template_path`
 * `yikes_level_playing_field_submit_button_class`
@@ -16,6 +20,7 @@ Level Playing field by YIKES Inc.
 * `yikes_level_playing_field_job_application_action_buttons`
 * `yikes_level_playing_field_job_posting_details_menu_items`
 * `yikes_level_playing_field_job_posting_details_fields`
+* `yikes_level_playing_field_job_query_args`
 
 ##### Actions
 

@@ -63,6 +63,9 @@ class Yikes_Inc_Level_Playing_Field_Public {
 		// Application Shortcode
 		add_shortcode( 'lpf-application', array( $this, 'render_application_shortcode' ) );
 
+		// Job Listing Table Shortcode
+		add_shortcode( 'lpf-jobs', array( $this, 'render_job_listing_shortcode' ) );
+
 		/* Template Loader */
 		add_filter( 'template_include', array( $this, 'template_loader' ) );
 	}
@@ -126,6 +129,11 @@ class Yikes_Inc_Level_Playing_Field_Public {
 			'custom' => 'shortcode',
 		), $atts, 'level-playing-field-application' );
 
+		// If no application is specified, abort
+		if ( ! $atts['application'] ) {
+			return __( 'It looks like you forgot to specify what application to retreive.', 'yikes-inc-level-playing-field' );
+		}
+
 		$application_fields = $this->helpers->get_application_fields( (int) $atts['application'] );
 
 		if ( $application_fields ) {
@@ -144,6 +152,27 @@ class Yikes_Inc_Level_Playing_Field_Public {
 
 		// return the shortcode
 		return wp_kses_post( '<strong>Level Playing Field Application Shortcode</strong>' );
+	}
+
+	/**
+	 * Render the Jobs Table
+	 * @param  array $atts  The shortcode attributes.
+	 * @return string       HTML markup for th eform
+	 */
+	public function render_job_listing_shortcode( $atts ) {
+		// Parse the shortcode attributes
+		$atts = shortcode_atts( array(
+			'job-categories' => false,
+			'job-tags' => false,
+		), $atts, 'level-playing-field-job-table' );
+		ob_start();
+		// include our responsive table
+		include_once( YIKES_LEVEL_PLAYING_FIELD_PATH . 'includes/class-yikes-inc-level-playing-field-job-table.php' );
+		$jobs_table = new Yikes_Inc_Level_Playing_Field_Job_Table();
+		$content = ob_get_contents();
+		ob_get_clean();
+		// return the shortcode contents
+		return $content;
 	}
 
 	/**
