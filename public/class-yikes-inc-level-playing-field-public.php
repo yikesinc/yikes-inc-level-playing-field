@@ -164,15 +164,28 @@ class Yikes_Inc_Level_Playing_Field_Public {
 		$atts = shortcode_atts( array(
 			'job-categories' => false,
 			'job-tags' => false,
+			'type' => 'table',
 		), $atts, 'level-playing-field-job-table' );
 		ob_start();
-		// include our responsive table
+		$this->enqueue_job_table_scripts_and_styles();
+		// Include our responsive table
 		include_once( YIKES_LEVEL_PLAYING_FIELD_PATH . 'includes/class-yikes-inc-level-playing-field-job-table.php' );
-		$jobs_table = new Yikes_Inc_Level_Playing_Field_Job_Table();
+		// Initialize the job table class
+		$jobs_table = new Yikes_Inc_Level_Playing_Field_Job_Table( $atts );
 		$content = ob_get_contents();
 		ob_get_clean();
 		// return the shortcode contents
 		return $content;
+	}
+
+	/**
+	 * Enqueue the scripts and styles needed for the job listing table
+	 * @since 1.0.0
+	 */
+	public function enqueue_job_table_scripts_and_styles() {
+		wp_enqueue_style( 'fontawesome', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css' );
+		wp_enqueue_style( 'footable-css', plugin_dir_url( __FILE__ ) . 'css/min/footable.standalone.min.css', array( 'fontawesome' ), '3.0.0', 'all' );
+		wp_enqueue_script( 'footable-js', plugin_dir_url( __FILE__ ) . 'js/min/footable.min.js', array( 'jquery' ), '3.0.0', 'all' );
 	}
 
 	/**

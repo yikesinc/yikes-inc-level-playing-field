@@ -248,3 +248,23 @@ function yikes_level_playing_field_single_job_content() {
 	lpf_get_template( 'single-job/content.php' );
 }
 add_action( 'yikes_level_playing_field_after_single_job_summary', 'yikes_level_playing_field_single_job_content', 10 );
+
+/** Format Money Values **/
+if ( ! function_exists( 'yikes_format_money' ) ) {
+	/**
+	* Format the salary value into an appropriate format
+	* @param  int $value The original value to format
+	* @return int        Final formatted value for the money.
+	*/
+	function yikes_format_money( $value ) {
+		// If the PHP function money_format() exists...
+		if ( function_exists( 'money_format' ) ) {
+			// Set the locale based on the WordPress settings
+			setlocale( LC_MONETARY, get_locale() );
+			return money_format( '%(#10n', $value );
+		}
+		// else...
+		$currency_sign = get_option( 'yikes_level_playing_field_money_format', '$' );
+		return $currency_sign . number_format( $value, 2 );
+	}
+}

@@ -7,7 +7,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "YIKES Inc.",
+  "author": "YIKES, Inc.",
   "site": "http://www.yikesinc.com",
   "license": "GPLv2",
   "dependencies": {

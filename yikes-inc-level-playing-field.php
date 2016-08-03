@@ -93,9 +93,7 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-yikes-inc-level-playing-fi
  * @since    1.0.0
  */
 function run_yikes_inc_level_playing_field() {
-
 	$plugin = new Yikes_Inc_Level_Playing_Field();
 	$plugin->run();
-
 }
 run_yikes_inc_level_playing_field();

@@ -125,6 +125,7 @@ function render_job_posting_details_main_sections( $job_posting_details ) {
  * @return mixed                       HTML content for the fields to render.
  */
 function render_seciton_fields( $job_posting_details, $section_id ) {
+	global $post;
 	// Get our fields
 	$fields = $job_posting_details->fields;
 	ob_start();
@@ -132,7 +133,7 @@ function render_seciton_fields( $job_posting_details, $section_id ) {
 		foreach ( $fields[ $section_id ] as $field_data ) {
 			// Store our field attributes
 			$field_name = '_' . str_replace( '-', '_', sanitize_title( $field_data['label'] ) );
-			$value = ( isset( $field_data['value'] ) ) ? $field_data['value'] : '';
+			$value = ( isset( $field_data['value'] ) ) ? $field_data['value'] : ( get_post_meta( $post->ID, $field_name, true ) ) ? get_post_meta( $post->ID, $field_name, true ) : '';
 			$class = ( isset( $field_data['class'] ) ) ? $field_data['class'] : '';
 			$type = ( isset( $field_data['type'] ) ) ? $field_data['type'] : 'text';
 			$placeholder = ( isset( $field_data['placeholder'] ) ) ? $field_data['placeholder'] : '';
@@ -201,6 +202,18 @@ function jobs_cpt_app_builder_metabox_callback( $post ) {
  * @param int $post_id Post ID
  */
 function jobs_cpt_save_meta_box( $post_id ) {
-
+	$options_whitelist = array(
+		'_company_name',
+		'_company_tagline',
+		'_company_logo_optional',
+		'_company_website_optional',
+		'_company_twitter_account_optional',
+		'_compensation_details',
+	);
+	foreach ( $options_whitelist as $whitelisted_option ) {
+		if ( in_array( $whitelisted_option, $options_whitelist ) ) {
+			update_post_meta( $post_id, $whitelisted_option, sanitize_text_field( $_POST[ $whitelisted_option ] ) );
+		}
+	}
 }
 add_action( 'save_post', 'jobs_cpt_save_meta_box' );

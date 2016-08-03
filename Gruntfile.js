@@ -21,6 +21,11 @@ module.exports = function(grunt) {
           'public/js/min/yikes-inc-level-playing-field-public.min.js': [ // all other admin scripts
             'public/js/yikes-inc-level-playing-field-public.js',
           ],
+					// footable script
+          'public/js/min/footable.min.js': [
+            'public/js/footable.js',
+						'public/js/footable-init.js',
+          ],
         }
       }
     },
@@ -67,6 +72,13 @@ module.exports = function(grunt) {
 						[
 							'public/css/yikes-inc-level-playing-field-public.css',
 						],
+          },
+					// FooTable css
+          {
+						'public/css/min/FooTable.min.css':
+						[
+							'public/css/FooTable.css',
+						],
           }
         ]
       }
@@ -93,6 +105,8 @@ module.exports = function(grunt) {
 						'admin/js/min/yikes-inc-level-playing-field-admin.min.js',
 						'public/css/min/yikes-inc-level-playing-field-public.min.css',
 						'public/js/min/yikes-inc-level-playing-field-public.min.js',
+						'public/css/min/FooTable.min.css',
+						'public/js/min/FooTable-init.min.js',
 					]
 	      }
 	    }
