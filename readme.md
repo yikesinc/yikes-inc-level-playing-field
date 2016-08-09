@@ -22,6 +22,7 @@ Level Playing field by YIKES Inc.
 * `yikes_level_playing_field_job_posting_details_fields`
 * `yikes_level_playing_field_job_query_args`
 * `yikes_level_playing_field_job_table_headers`
+* `yikes_level_playing_whitelisted_options`
 
 ##### Actions
 
