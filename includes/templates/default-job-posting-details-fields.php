@@ -64,6 +64,15 @@ return array(
 			'placeholder' => __( 'Senior Engineer', 'yikes-inc-level-playing-field' ),
 			'class' => 'short',
 		),
+		// Company Name
+		array(
+			'type' => 'text',
+			'label' => __( 'Job Location', 'yikes-inc-level-playing-field' ),
+			'default' => '',
+			'description' => __( 'Where is this job located (address).', 'yikes-inc-level-playing-field' ),
+			'placeholder' => __( '', 'yikes-inc-level-playing-field' ),
+			'class' => 'short',
+		),
 	),
 	// Compensation Details
 	'compensation' => array(
@@ -74,7 +83,7 @@ return array(
 			'default' => '',
 			'description' => __( 'How much money will the employee be offered?', 'yikes-inc-level-playing-field' ),
 			'placeholder' => __( '50,000.00', 'yikes-inc-level-playing-field' ),
-			'class' => 'short',
+			'class' => 'short currency',
 		),
 	),
 	// Schedule Details

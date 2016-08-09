@@ -20,7 +20,7 @@
 	width: 20%;
 	float: left;
 	line-height: 1em;
-	padding: 0 0 10px;
+	padding: 0;
 	position: relative;
 	background-color: #fafafa;
 	border-right: 1px solid #eee;
@@ -71,6 +71,26 @@
 #job-posting-details fieldset.form-field,
 #job-posting-details p.form-field {
 	padding: 5px 20px 5px 162px !important;
+}
+
+#job-posting-details span.input-group-currency{
+	padding: 4px 10px;
+	font-size: 14px;
+	font-weight: 400;
+	line-height: 1;
+	margin-right: -8px;
+	border-top-right-radius: 3px;
+	border-bottom-right-radius: 3px;
+	z-index: 1;
+	color: #555;
+	text-align: center;
+	background-color: #eee;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+}
+
+#job-posting-details input.currency {
+	padding-bottom: 2px;
 }
 
 #job-posting-details p.form-field.section_title {
@@ -179,7 +199,6 @@
 	line-height: 1;
 	-webkit-font-smoothing: antialiased;
 	margin-right: .618em;
-	content: "";
 	text-decoration: none
 }
 

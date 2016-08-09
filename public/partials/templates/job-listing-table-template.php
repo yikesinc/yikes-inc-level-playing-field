@@ -28,7 +28,6 @@
 				?><tr><?php
 				// Loop over the table headers again
 				foreach ( $table_headers as $header_name => $attributes ) {
-					setlocale(LC_MONETARY, 'en_US');
 					$meta_value = ( 'title' === $attributes['meta_key'] ) ? get_the_title() : ( ( get_post_meta( get_the_ID(), $attributes['meta_key'], true ) ) ? get_post_meta( get_the_ID(), $attributes['meta_key'], true ) : '' );
 					// Setup our number/money formats
 					// $meta_value = ( is_numeric( $meta_value ) ) ? ( ( '_compensation_details' === $attributes['meta_key'] ) ? get_option( 'yikes_level_playing_field_money_format', '$' ) . number_format_i18n( $meta_value, 2 ) : number_format_i18n( $meta_value, 2 ) ) : $meta_value;

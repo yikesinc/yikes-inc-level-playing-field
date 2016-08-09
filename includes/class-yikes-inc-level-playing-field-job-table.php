@@ -84,7 +84,7 @@ class Yikes_Inc_Level_Playing_Field_Job_Table {
 			__( 'Position', 'yikes-inc-level-playing-field' ) => array(
 				'type' => 'text',
 				'break_point' => 's',
-				'meta_key' => 'position',
+				'meta_key' => '_job_title',
 			),
 			__( 'Location', 'yikes-inc-level-playing-field' ) => array(
 				'type' => 'text',

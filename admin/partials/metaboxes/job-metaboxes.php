@@ -10,9 +10,10 @@ function yikes_level_playinf_field_register_meta_boxes() {
 		'part-time' => __( 'Part Time', 'yikes-inc-level-playing-field' ),
 		'full-time' => __( 'Full Time', 'yikes-inc-level-playing-field' ),
 	) );
+	$selected_job_type = ( get_post_meta( $post->ID, '_position_status', true ) ) ? get_post_meta( $post->ID, '_position_status', true ) : 'full-time';
 	$job_type_dropdown_options = '';
 	foreach ( $job_types as $val => $label ) {
-		$job_type_dropdown_options .= '<option val="' . esc_attr( $val ) . '">' . esc_attr( $label ) . '</option>';
+		$job_type_dropdown_options .= '<option value="' . esc_attr( $val ) . '" ' . selected( $selected_job_type, esc_attr( $val ), false ) . '>' . esc_attr( $label ) . '</option>';
 	}
 	$job_type_dropdown = '<select name="_position_status" onclick="event.stopPropagation();">' . $job_type_dropdown_options . '</select>';
 	// Add job posting details metabox
@@ -78,7 +79,7 @@ function render_job_posting_details_sidebar( $job_posting_details ) {
 		<?php
 		if ( $sidebar_menu && ! empty( $sidebar_menu ) ) {
 			$sidebar_menu_length = count( $sidebar_menu );
-			for ( $x = 0; $x <= $sidebar_menu_length; $x++ ) {
+			for ( $x = 0; $x < $sidebar_menu_length; $x++ ) {
 				?>
 				<li class="<?php echo esc_attr( $sidebar_menu[ $x ]['id'] ); if ( 0 === $x ) { ?> active<?php } ?>">
 					<a href="#<?php echo esc_attr( $sidebar_menu[ $x ]['id'] ); ?>">
@@ -146,7 +147,10 @@ function render_seciton_fields( $job_posting_details, $section_id ) {
 						<?php echo esc_attr( $field_data['label'] ); ?>
 					</abbr>
 				</label>
-				<input type="<?php echo esc_attr( $type ); ?>" class="<?php echo esc_attr( $class ); ?>" name="<?php echo esc_attr( $field_name ); ?>" id="<?php echo esc_attr( $field_name ); ?>" value="<?php echo esc_attr( $value ); ?>" placeholder="<?php echo esc_attr( $placeholder ); ?>">
+				<?php if ( '_compensation_details' === $field_name ) { ?>
+					<span class="input-group-currency"><?php echo get_option( 'yikes_level_playing_field_money_format', '$' ); ?></span>
+				<?php } ?>
+				<input type="<?php echo esc_attr( $type ); ?>" <?php if ( '_compensation_details' === $field_name ) { ?> min="0" step="0.01" <?php } ?> class="<?php echo esc_attr( $class ); ?>" name="<?php echo esc_attr( $field_name ); ?>" id="<?php echo esc_attr( $field_name ); ?>" value="<?php echo esc_attr( $value ); ?>" placeholder="<?php echo esc_attr( $placeholder ); ?>">
 				<?php
 				if ( $description ) {
 					?>
@@ -202,14 +206,19 @@ function jobs_cpt_app_builder_metabox_callback( $post ) {
  * @param int $post_id Post ID
  */
 function jobs_cpt_save_meta_box( $post_id ) {
-	$options_whitelist = array(
-		'_company_name',
-		'_company_tagline',
-		'_company_logo_optional',
-		'_company_website_optional',
-		'_company_twitter_account_optional',
-		'_compensation_details',
-	);
+	$options_whitelist = apply_filters( 'yikes_level_playing_whitelisted_options', array(
+		'_position_status', // Position Status ( Contract, Part Time, Full Time)
+		'_company_name', // Company Name
+		'_company_tagline', // Company Tagline
+		'_company_logo_optional', // Company Logo
+		'_company_website_optional', // Company Website
+		'_company_twitter_account_optional', // Company Twitter
+		'_job_title', // Job Title
+		'_job_location', // Job Location
+		'_compensation_details', // Compensation Details
+		'_schedule_details',  // Schedule Details
+		'_notifications_details', // Notification Details
+	) );
 	foreach ( $options_whitelist as $whitelisted_option ) {
 		if ( in_array( $whitelisted_option, $options_whitelist ) ) {
 			update_post_meta( $post_id, $whitelisted_option, sanitize_text_field( $_POST[ $whitelisted_option ] ) );

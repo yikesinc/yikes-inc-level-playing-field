@@ -104,6 +104,9 @@ class Yikes_Inc_Level_Playing_Field_Job_Posting_Details {
 			'em' => array(
 				'class' => array(),
 			),
+			'span' => array(
+				'class' => array(),
+			),
 			'strong' => array(),
 			'input' => array(
 				'type' => array(),
@@ -112,6 +115,8 @@ class Yikes_Inc_Level_Playing_Field_Job_Posting_Details {
 				'id' => array(),
 				'value' => array(),
 				'placeholder' => array(),
+				'min' => array(),
+				'step' => array(),
 			),
 			'label' => array(
 				'for' => array(),
