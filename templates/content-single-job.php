@@ -41,11 +41,9 @@ if ( post_password_required() ) {
 			/**
 			 * woocommerce_single_product_summary hook.
 			 *
-			 * @hooked woocommerce_template_single_title - 5
-			 * @yikes_lpf_categories - 10
-			 * @yikes_lpf_tags - 11
-			 * @yikes_lpf_posted_on - 12
-			 * @hooked woocommerce_template_single_excerpt - 20
+			 * @hooked yikes_lpf_categories - 10
+			 * @hooked yikes_lpf_tags - 11
+			 * @hooked yikes_lpf_posted_on - 12
 			 */
 			do_action( 'yikes_level_playing_field_single_job_summary' );
 		?>
@@ -56,9 +54,7 @@ if ( post_password_required() ) {
 		/**
 		 * woocommerce_after_single_product_summary hook.
 		 *
-		 * @hooked woocommerce_output_product_data_tabs - 10
-		 * @hooked woocommerce_upsell_display - 15
-		 * @hooked woocommerce_output_related_products - 20
+		 * @hooked append_job_listing_application - 10
 		 */
 		do_action( 'yikes_level_playing_field_after_single_job_summary' );
 	?>

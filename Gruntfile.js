@@ -26,6 +26,10 @@ module.exports = function(grunt) {
             'public/js/footable.js',
 						'public/js/footable-init.js',
           ],
+					// lity lightbox script
+          'public/js/min/lity.min.js': [
+            'public/js/lity.js',
+          ],
         }
       }
     },
@@ -79,6 +83,13 @@ module.exports = function(grunt) {
 						[
 							'public/css/FooTable.css',
 						],
+          },
+					// FooTable css
+          {
+						'public/css/min/lity.min.css':
+						[
+							'public/css/lity.css',
+						],
           }
         ]
       }
@@ -107,6 +118,8 @@ module.exports = function(grunt) {
 						'public/js/min/yikes-inc-level-playing-field-public.min.js',
 						'public/css/min/FooTable.min.css',
 						'public/js/min/FooTable-init.min.js',
+						'public/css/min/lity.min.css',
+						'public/js/min/lity.min.js',
 					]
 	      }
 	    }
@@ -198,7 +211,6 @@ module.exports = function(grunt) {
     'cssmin',
 		'usebanner',
 		'copy',
-    'watch',
   ]);
 
 };

@@ -56,3 +56,22 @@ Users can customize both the table and the list of available jobs, by copying th
 *Table* - To customize the table layout, you will want to copy over the table template file (`job-listing-table-template.php`) from '/yikes-inc-level-playing-field/templates/' into your theme root, inside of a `yikes-level-playing-field/` directory (`/wp-content/themes/theme_name/yikes-level-playing-field/job-listing-table-template.php`).
 
 *List* - To customize the list layout, you will want to copy over the list template file (`job-listing-list-template.php`) from '/yikes-inc-level-playing-field/templates/' into your theme root, inside of a `yikes-level-playing-field/` directory (`/wp-content/themes/theme_name/yikes-level-playing-field/job-listing-list-template.php`).
+
+
+##### Re-arranging Content
+
+Out of the box, this plugin may not display things exactly how you watn them to. Let's say you wanted to move the 'Apply' link from it's original location below the job description - up to above the job title.
+
+You'll need to unhook the function from it's default location, and then define a new function or hook the existing function into a new location.
+
+**Example:**
+```php
+/**
+ * Move the 'Apply' link/form from the standard location (after the description)
+ * To the top of the page (pre content/tags/category etc.)
+ * @return mixed HTML content for the job application link/form
+ */
+remove_action( 'yikes_level_playing_field_after_single_job_summary', 'append_job_listing_application', 10 );
+// Hook in to a new location, and re-render the link/form
+add_action( 'yikes_level_playing_field_before_single_job', 'append_job_listing_application', 10 );
+```

@@ -95,6 +95,9 @@ if ( ! function_exists( 'yikes_lpf_posted_on' ) ) {
 	}
 }
 
+/**
+ * Calculate the number of days since the job was posted to the site
+ */
 if ( ! function_exists( 'lpf_calculate_days_since_posting' ) ) {
 	function lpf_calculate_days_since_posting( $date ) {
 		$date_diff = strtotime( 'now' ) - $date;
@@ -105,6 +108,34 @@ if ( ! function_exists( 'lpf_calculate_days_since_posting' ) ) {
 	}
 }
 
+/**
+ * Function called when an application is rendered on the page
+ * These scripts/styles are required for the popup to function properly
+ * @return null Enqueue scripts and styles as needed
+ * @since 1.0.0
+ */
+function yikes_lpf_load_application_assets() {
+	wp_enqueue_style( 'lity.css', YIKES_LEVEL_PLAYING_FIELD_URL . 'public/css/min/lity.min.css' );
+	wp_enqueue_script( 'lity.js', YIKES_LEVEL_PLAYING_FIELD_URL . 'public/js/min/lity.min.js', array( 'jquery', 'yikes-inc-level-playing-field' ), 'all', true );
+}
+
+/**
+ * Append the shortcode to the end of the site content
+ * @param  [type] $content [description]
+ * @return [type]          [description]
+ */
+if ( ! function_exists( 'append_job_listing_application' ) ) {
+	function append_job_listing_application() {
+		global $post;
+		if ( ! isset( $post ) || 'jobs' !== $post->post_type ) {
+			return;
+		}
+		yikes_lpf_load_application_assets();
+		// Render the shortcode
+		echo wp_kses_post( do_shortcode( '[lpf-application application="' . $post->ID . '"]' ) );
+	}
+	add_action( 'yikes_level_playing_field_after_single_job_summary', 'append_job_listing_application', 10 );
+}
 /**
  * End Global functions
  */

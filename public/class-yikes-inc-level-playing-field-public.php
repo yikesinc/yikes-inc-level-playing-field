@@ -126,7 +126,6 @@ class Yikes_Inc_Level_Playing_Field_Public {
 		// Parse the shortcode attributes
 		$atts = shortcode_atts( array(
 			'application' => false,
-			'custom' => 'shortcode',
 		), $atts, 'level-playing-field-application' );
 
 		// If no application is specified, abort
@@ -138,20 +137,22 @@ class Yikes_Inc_Level_Playing_Field_Public {
 
 		if ( $application_fields ) {
 			?>
-			<form class="yikes-lpf-form yikes-lpf-section yikes-lpf-group">
+			<form id="yikes-job-application-form" class="yikes-lpf-form yikes-lpf-section yikes-lpf-group lity-hide">
 				<?php
 				foreach ( $application_fields as $app_field ) {
 					// render the feild
 					$this->helpers->render_field( $app_field );
 				}
 				?>
-				<input type="submit" class="<?php echo esc_attr( apply_filters( 'yikes_level_playing_field_submit_button_class', 'yikes-lpf-submit' ) ); ?>" value="<?php esc_attr_e( 'Apply', 'yikes-inc-level-playing-field' ); ?>" />
+				<input type="submit" name="submit" class="<?php echo esc_attr( apply_filters( 'yikes_level_playing_field_submit_button_class', 'yikes-lpf-submit' ) ); ?>" value="<?php esc_attr_e( 'Apply', 'yikes-inc-level-playing-field' ); ?>" />
 			</form>
 			<?php
 		}
 
 		// return the shortcode
-		return wp_kses_post( '<strong>Level Playing Field Application Shortcode</strong>' );
+		// return wp_kses_post( '<strong>Level Playing Field Application Shortcode</strong>' );
+		// return the 'Apply Now' link
+		return '<a href="#yikes-job-application-form" class="apply-now-link yikes-btn yikes-btn-large yikes-btn-info" data-lity>Apply Now</a>';
 	}
 
 	/**
