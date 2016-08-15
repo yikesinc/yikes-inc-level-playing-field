@@ -9,6 +9,7 @@ return array(
 	'company_details' => array(
 		// Company Name
 		array(
+			'id' => '_company_name',
 			'type' => 'text',
 			'label' => __( 'Company Name', 'yikes-inc-level-playing-field' ),
 			'default' => '',
@@ -18,6 +19,7 @@ return array(
 		),
 		// Company Tagline
 		array(
+			'id' => '_company_tagline',
 			'type' => 'text',
 			'label' => __( 'Company Tagline', 'yikes-inc-level-playing-field' ),
 			'default' => '',
@@ -27,6 +29,7 @@ return array(
 		),
 		// Company Logo
 		array(
+			'id' => '_company_logo',
 			'type' => 'text',
 			'label' => __( 'Company Logo (optional)', 'yikes-inc-level-playing-field' ),
 			'default' => '',
@@ -36,6 +39,7 @@ return array(
 		),
 		// Company Website
 		array(
+			'id' => '_company_website',
 			'type' => 'text',
 			'label' => __( 'Company Website (optional)', 'yikes-inc-level-playing-field' ),
 			'default' => '',
@@ -45,6 +49,7 @@ return array(
 		),
 		// Company Twitter
 		array(
+			'id' => '_company_twitter',
 			'type' => 'text',
 			'label' => __( 'Company Twitter Account (optional)', 'yikes-inc-level-playing-field' ),
 			'default' => '',
@@ -57,6 +62,7 @@ return array(
 	'job_details' => array(
 		// Company Name
 		array(
+			'id' => '_job_title',
 			'type' => 'text',
 			'label' => __( 'Job Title', 'yikes-inc-level-playing-field' ),
 			'default' => '',
@@ -66,6 +72,7 @@ return array(
 		),
 		// Company Name
 		array(
+			'id' => '_job_location',
 			'type' => 'text',
 			'label' => __( 'Job Location', 'yikes-inc-level-playing-field' ),
 			'default' => '',
@@ -78,6 +85,7 @@ return array(
 	'compensation' => array(
 		// Company Name
 		array(
+			'id' => '_compensation_details',
 			'type' => 'number',
 			'label' => __( 'Compensation Details', 'yikes-inc-level-playing-field' ),
 			'default' => '',
@@ -90,6 +98,7 @@ return array(
 	'schedule' => array(
 		// Company Name
 		array(
+			'id' => '_schedule_details',
 			'type' => 'text',
 			'label' => __( 'Schedule Details', 'yikes-inc-level-playing-field' ),
 			'default' => '',
@@ -102,11 +111,35 @@ return array(
 	'notifications' => array(
 		// Company Name
 		array(
+			'id' => '_notifications_details',
 			'type' => 'text',
 			'label' => __( 'Notifications Details', 'yikes-inc-level-playing-field' ),
 			'default' => '',
 			'description' => __( 'Placeholder description.', 'yikes-inc-level-playing-field' ),
 			'placeholder' => __( '---temp---', 'yikes-inc-level-playing-field' ),
+			'class' => 'short',
+		),
+	),
+	// Application Details
+	'application_details' => array(
+		// Third Party Site Checkbox
+		array(
+			'id' => '_third_party_site',
+			'type' => 'checkbox',
+			'value' => '1',
+			'label' => __( 'Third Party Site', 'yikes-inc-level-playing-field' ),
+			'default' => '',
+			'description' => __( 'Check this option if users will apply for this job on a third party website.', 'yikes-inc-level-playing-field' ),
+			'class' => 'short',
+		),
+		// Third Party Site URL
+		array(
+			'id' => '_third_party_site_url',
+			'type' => 'url',
+			'label' => __( 'Third Party Site URL', 'yikes-inc-level-playing-field' ),
+			'default' => '',
+			'description' => __( 'Enter the URL to the third party site where users will be applying for this position.', 'yikes-inc-level-playing-field' ),
+			'placeholder' => __( 'http://', 'yikes-inc-level-playing-field' ),
 			'class' => 'short',
 		),
 	),

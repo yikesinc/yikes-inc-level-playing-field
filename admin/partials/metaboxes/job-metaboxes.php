@@ -133,12 +133,14 @@ function render_seciton_fields( $job_posting_details, $section_id ) {
 	if ( isset( $fields[ $section_id ] ) && ! empty( $fields[ $section_id ] ) ) {
 		foreach ( $fields[ $section_id ] as $field_data ) {
 			// Store our field attributes
-			$field_name = '_' . str_replace( '-', '_', sanitize_title( $field_data['label'] ) );
-			$value = ( isset( $field_data['value'] ) ) ? $field_data['value'] : ( get_post_meta( $post->ID, $field_name, true ) ) ? get_post_meta( $post->ID, $field_name, true ) : '';
+			$field_name = ( isset( $field_data['id'] ) ) ? $field_data['id'] : '_' . str_replace( '-', '_', sanitize_title( $field_data['label'] ) );
+			$value = ( isset( $field_data['value'] ) ) ? $field_data['value'] : ( ( get_post_meta( $post->ID, $field_name, true ) ) ? get_post_meta( $post->ID, $field_name, true ) : '' );
 			$class = ( isset( $field_data['class'] ) ) ? $field_data['class'] : '';
 			$type = ( isset( $field_data['type'] ) ) ? $field_data['type'] : 'text';
 			$placeholder = ( isset( $field_data['placeholder'] ) ) ? $field_data['placeholder'] : '';
 			$description = ( isset( $field_data['description'] ) ) ? $field_data['description'] : false;
+			// checked attribute
+			$checked = ( 'checkbox' === $type ) ? checked( $value, $field_data['value'], false ) : '';
 			?>
 			<!-- Display the field -->
 			<p class="form-field <?php echo esc_attr( $field_name ); ?>">
@@ -147,11 +149,17 @@ function render_seciton_fields( $job_posting_details, $section_id ) {
 						<?php echo esc_attr( $field_data['label'] ); ?>
 					</abbr>
 				</label>
+
+				<!-- Compensation Details currency sign -->
 				<?php if ( '_compensation_details' === $field_name ) { ?>
-					<span class="input-group-currency"><?php echo get_option( 'yikes_level_playing_field_money_format', '$' ); ?></span>
+					<span class="input-group-currency"><?php echo esc_html( get_option( 'yikes_level_playing_field_money_format', '$' ) ); ?></span>
 				<?php } ?>
-				<input type="<?php echo esc_attr( $type ); ?>" <?php if ( '_compensation_details' === $field_name ) { ?> min="0" step="0.01" <?php } ?> class="<?php echo esc_attr( $class ); ?>" name="<?php echo esc_attr( $field_name ); ?>" id="<?php echo esc_attr( $field_name ); ?>" value="<?php echo esc_attr( $value ); ?>" placeholder="<?php echo esc_attr( $placeholder ); ?>">
+
+				<!-- Field -->
+				<input type="<?php echo esc_attr( $type ); ?>" <?php if ( '_compensation_details' === $field_name ) { ?> min="0" step="0.01" <?php } echo esc_attr( $checked ); ?> class="<?php echo esc_attr( $class ); ?>" name="<?php echo esc_attr( $field_name ); ?>" id="<?php echo esc_attr( $field_name ); ?>" value="<?php echo esc_attr( $value ); ?>" placeholder="<?php echo esc_attr( $placeholder ); ?>">
+
 				<?php
+				/* Field Description */
 				if ( $description ) {
 					?>
 					<em class="description">
@@ -201,24 +209,42 @@ function jobs_cpt_app_builder_metabox_callback( $post ) {
 }
 
 /**
+ * Get the job posting fields, and return the IDs
+ * This is used to retreive our options whitelist
+ * @return array IDs of the fields.
+ * @since 1.0.0
+ */
+function get_whitelisted_options() {
+	$job_posting_details = new Yikes_Inc_Level_Playing_Field_Job_Posting_Details();
+	$field_ids = array();
+	if ( $job_posting_details->fields && ! empty( $job_posting_details->fields ) ) {
+		foreach ( $job_posting_details->fields as $job_detail_section_name => $field_data ) {
+			foreach ( $field_data as $field_data_array ) {
+				if ( isset( $field_data_array['id'] ) && ! empty( $field_data_array['id'] ) ) {
+					$field_ids[] = $field_data_array['id'];
+				}
+			}
+		}
+	}
+	return $field_ids;
+}
+
+/**
  * Save meta box content.
  *
  * @param int $post_id Post ID
  */
 function jobs_cpt_save_meta_box( $post_id ) {
-	$options_whitelist = apply_filters( 'yikes_level_playing_whitelisted_options', array(
-		'_position_status', // Position Status ( Contract, Part Time, Full Time)
-		'_company_name', // Company Name
-		'_company_tagline', // Company Tagline
-		'_company_logo_optional', // Company Logo
-		'_company_website_optional', // Company Website
-		'_company_twitter_account_optional', // Company Twitter
-		'_job_title', // Job Title
-		'_job_location', // Job Location
-		'_compensation_details', // Compensation Details
-		'_schedule_details',  // Schedule Details
-		'_notifications_details', // Notification Details
-	) );
+	// Verify the nonce, before continuing
+	if ( ! isset( $_POST['_wpnonce'] ) || ! wp_verify_nonce( $_POST['_wpnonce'], 'update-post_' . $post_id ) ) {
+		wp_die( esc_attr__( 'The security nonce did not pass. Please go back and try again.', 'yikes-inc-level-playing' ) );
+		exit;
+	}
+	$options_whitelist = get_whitelisted_options();
+	// if for some reason the options return empty, abort
+	if ( empty( $options_whitelist ) ) {
+		return;
+	}
 	foreach ( $options_whitelist as $whitelisted_option ) {
 		if ( in_array( $whitelisted_option, $options_whitelist ) ) {
 			update_post_meta( $post_id, $whitelisted_option, sanitize_text_field( $_POST[ $whitelisted_option ] ) );

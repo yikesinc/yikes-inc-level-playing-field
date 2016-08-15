@@ -65,6 +65,10 @@ class Yikes_Inc_Level_Playing_Field_Job_Posting_Details {
 				'id' => 'notifications',
 				'text' => __( 'Notifications', 'yikes-inc-level-playing-field' ),
 			),
+			array(
+				'id' => 'application_details',
+				'text' => __( 'Application Details', 'yikes-inc-level-playing-field' ),
+			),
 		) );
 	}
 
@@ -111,6 +115,7 @@ class Yikes_Inc_Level_Playing_Field_Job_Posting_Details {
 			'input' => array(
 				'type' => array(),
 				'class' => array(),
+				'checked' => array(),
 				'name' => array(),
 				'id' => array(),
 				'value' => array(),

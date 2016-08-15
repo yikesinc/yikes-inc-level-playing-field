@@ -77,14 +77,21 @@ module.exports = function(grunt) {
 							'public/css/yikes-inc-level-playing-field-public.css',
 						],
           },
-					// FooTable css
+					// FooTable bootstrap css
           {
-						'public/css/min/FooTable.min.css':
+						'public/css/min/footable.bootstrap.min.css':
 						[
-							'public/css/FooTable.css',
+							'public/css/footable.bootstrap.css',
 						],
           },
-					// FooTable css
+					// FooTable standalone css
+          {
+						'public/css/min/footable.standalone.min.css':
+						[
+							'public/css/footable.standalone.css',
+						],
+          },
+					// lity css
           {
 						'public/css/min/lity.min.css':
 						[

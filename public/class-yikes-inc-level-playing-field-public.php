@@ -144,15 +144,17 @@ class Yikes_Inc_Level_Playing_Field_Public {
 					$this->helpers->render_field( $app_field );
 				}
 				?>
-				<input type="submit" name="submit" class="<?php echo esc_attr( apply_filters( 'yikes_level_playing_field_submit_button_class', 'yikes-lpf-submit' ) ); ?>" value="<?php esc_attr_e( 'Apply', 'yikes-inc-level-playing-field' ); ?>" />
+				<input type="submit" name="submit" class="<?php echo esc_attr( apply_filters( 'yikes_level_playing_field_submit_application_button_class', 'yikes-lpf-submit' ) ); ?>" value="<?php esc_attr_e( 'Apply', 'yikes-inc-level-playing-field' ); ?>" />
 			</form>
 			<?php
 		}
-
-		// return the shortcode
-		// return wp_kses_post( '<strong>Level Playing Field Application Shortcode</strong>' );
+		// If the application is on a third party, setup that URL
+		$third_party_site = ( get_post_meta( get_the_ID(), '_third_party_site', true ) ) ? true : false;
+		$site_url = $third_party_site ? esc_url( get_post_meta( get_the_ID(), '_third_party_site_url', true ) ) : '#yikes-job-application-form';
+		$data_lity = $third_party_site ? 'target="_blank"' : 'data-lity';
+		$classes = $third_party_site ? 'yikes-btn yikes-btn-large yikes-btn-info' : 'apply-now-link yikes-btn yikes-btn-large yikes-btn-info';
 		// return the 'Apply Now' link
-		return '<a href="#yikes-job-application-form" class="apply-now-link yikes-btn yikes-btn-large yikes-btn-info" data-lity>Apply Now</a>';
+		return '<a href="' . esc_attr( $site_url ) . '" class="' . apply_filters( 'yikes-level-playing-field-apply-now-link-classes', $classes ) . '" ' . esc_attr( $data_lity ) . '>Apply Now</a>';
 	}
 
 	/**

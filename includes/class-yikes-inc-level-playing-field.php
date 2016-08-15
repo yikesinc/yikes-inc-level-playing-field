@@ -140,7 +140,7 @@ class Yikes_Inc_Level_Playing_Field {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/cpt/applicant-cpt.php';
 
 		/**
-		 * Includeo ur metabox render class
+		 * Include our metabox render class
 		 * @since 1.0.0
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-yikes-inc-level-playing-field-job-posting-details.php';

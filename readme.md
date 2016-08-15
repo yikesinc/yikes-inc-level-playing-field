@@ -12,7 +12,7 @@ Level Playing field by YIKES Inc.
 
 ##### Filters
 * `yikes_level_playing_field_template_path`
-* `yikes_level_playing_field_submit_button_class`
+* `yikes_level_playing_field_submit_application_button_class`
 * `yikes_level_playing_field_get_template_part`
 * `yikes_level_playing_field_breadcrumb_defaults`
 * `yikes_level_playing_field_breadcrumb_home_url`
