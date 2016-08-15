@@ -235,9 +235,14 @@ function get_whitelisted_options() {
  * @param int $post_id Post ID
  */
 function jobs_cpt_save_meta_box( $post_id ) {
+	// If were on the front end (eg: Submitting an application form)
+	// or we're not on the jobs post type
+	if ( ! is_admin() || 'jobs' !== get_the_post_type( $post_id ) ) {
+		return;
+	}
 	// Verify the nonce, before continuing
 	if ( ! isset( $_POST['_wpnonce'] ) || ! wp_verify_nonce( $_POST['_wpnonce'], 'update-post_' . $post_id ) ) {
-		wp_die( esc_attr__( 'The security nonce did not pass. Please go back and try again.', 'yikes-inc-level-playing' ) );
+		wp_die( esc_attr__( 'The security check did not pass. Please go back and try again.', 'yikes-inc-level-playing' ) );
 		exit;
 	}
 	$options_whitelist = get_whitelisted_options();

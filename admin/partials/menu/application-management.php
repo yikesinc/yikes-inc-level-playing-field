@@ -18,26 +18,51 @@ add_action( 'admin_menu', 'wpdocs_register_my_custom_menu_page' );
  * Render the Level Playing Field Dashboard Managemenet Page
  */
 function render_level_playing_field_dashboard() {
-	$post_type = 'applicants';
+	//Our class extends the WP_List_Table class, so we need to make sure that it's there
+	if ( ! class_exists( 'WP_List_Table' ) ) {
+		require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
+	}
+	// Admin table class
+	require_once( YIKES_LEVEL_PLAYING_FIELD_PATH . 'includes/class-yikes-inc-level-playing-field-admin-table.php' );
+	//Prepare Table of elements
+	$wp_list_table = new Link_List_Table();
+	$wp_list_table->prepare_items();
+	?><div class="wrap"><?php
+		printf( '<h1>' . __( 'Job Applicants', 'yikes-inc-level-playing-field' ) . '</h1>' );
+		printf( '<p class="description">' . __( 'Select a job to view the current job applicants.', 'yikes-inc-level-playing-field' ) . '</p>' );
+		//Table of elements
+		$wp_list_table->display();
+	?></div><?php
+}
+
+/**
+ * Get all of the current jobs from the database
+ * @return array Data returned from the job query.
+ * @since 1.0.0
+ */
+function get_level_playing_field_jobs() {
+	$paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
+	$applicant_args = array(
+		'post_type' => 'jobs',
+		'posts_per_page' => 20,
+		'paged' => $paged,
+	);
+	$applicant_query = new WP_Query( $applicant_args );
+	return $applicant_query;
+}
+
+/**
+ * Get all of the current applicants from the database
+ * @return array Data returned from the applicant query.
+ * @since 1.0.0
+ */
+function get_level_playing_field_applicants() {
+	$paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
 	$applicant_args = array(
 		'post_type' => 'applicants',
 		'posts_per_page' => 20,
 		'paged' => $paged,
 	);
 	$applicant_query = new WP_Query( $applicant_args );
-	if ( $applicant_query->have_posts() ) {
-		while ( $applicant_query->have_posts() ) {
-			$applicant_query->the_post();
-			echo the_title() . '<br />';
-		}
-	} else {
-		?>
-			<h2>Applicants Template</h2>
-			<ul>
-				<li>- Applicants are a custom post type named <code>applicants</code>.
-				<li>- List out the job CPTs here in custom view format.</li>
-				<li>- Make each job clicakble, to query current applicants (post type = <code>applicants</code>), again in a custom view.</li>
-			</ul>
-		<?php
-	}
+	return $applicant_query;
 }

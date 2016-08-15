@@ -1,5 +1,4 @@
 <?php
-
 /**
  * The public-facing functionality of the plugin.
  *
@@ -46,6 +45,12 @@ class Yikes_Inc_Level_Playing_Field_Public {
 	private $helpers;
 
 	/**
+	 * Global Error Check and response
+	 */
+	private $error;
+	private $error_response;
+
+	/**
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
@@ -68,6 +73,12 @@ class Yikes_Inc_Level_Playing_Field_Public {
 
 		/* Template Loader */
 		add_filter( 'template_include', array( $this, 'template_loader' ) );
+
+		/* Process Form Submissions */
+		add_action( 'init', array( $this, 'process_application_submission' ) );
+
+		/* Render Job Submission Response */
+		add_action( 'yikes_level_playing_field_before_single_job', array( $this, 'generate_application_submission_response' ) );
 	}
 
 	/**
@@ -128,26 +139,54 @@ class Yikes_Inc_Level_Playing_Field_Public {
 			'application' => false,
 		), $atts, 'level-playing-field-application' );
 
+		$application_id = (int) $atts['application'];
+		$company_name = get_post_meta( $application_id, '_company_name', true );
+
 		// If no application is specified, abort
-		if ( ! $atts['application'] ) {
+		if ( ! $application_id ) {
 			return __( 'It looks like you forgot to specify what application to retreive.', 'yikes-inc-level-playing-field' );
 		}
 
-		$application_fields = $this->helpers->get_application_fields( (int) $atts['application'] );
+		// Get the application fields
+		$application_fields = $this->helpers->get_application_fields( (int) $application_id );
 
-		if ( $application_fields ) {
-			?>
-			<form id="yikes-job-application-form" class="yikes-lpf-form yikes-lpf-section yikes-lpf-group lity-hide">
-				<?php
-				foreach ( $application_fields as $app_field ) {
-					// render the feild
-					$this->helpers->render_field( $app_field );
-				}
+		?><div id="yikes-job-application-form" class="lity-hide"><?php
+
+			printf( '<h3 class="application-title">' . esc_html( '%s Job Application' ) . '</h3>', get_the_title() );
+
+			if ( $company_name ) {
+				printf( '<p class="company-name">' . esc_html( 'Company: %s' ) . '</p>', esc_html( get_post_meta( $application_id, '_company_name', true ) ) );
+			}
+
+			// Render the application
+			if ( $application_fields ) {
 				?>
-				<input type="submit" name="submit" class="<?php echo esc_attr( apply_filters( 'yikes_level_playing_field_submit_application_button_class', 'yikes-lpf-submit' ) ); ?>" value="<?php esc_attr_e( 'Apply', 'yikes-inc-level-playing-field' ); ?>" />
-			</form>
-			<?php
-		}
+				<form class="yikes-lpf-form yikes-lpf-section" action="" method="POST">
+					<?php
+					// Form Fields
+					foreach ( $application_fields as $app_field ) {
+						// render the feild
+						$this->helpers->render_field( $app_field );
+					}
+					?>
+					<input type="submit" name="submit" class="<?php echo esc_attr( apply_filters( 'yikes_level_playing_field_submit_application_button_class', 'yikes-lpf-submit' ) ); ?>" value="<?php esc_attr_e( 'Apply', 'yikes-inc-level-playing-field' ); ?>" />
+
+					<!-- Application ID -->
+					<input type="hidden" name="application_id" value="<?php echo esc_attr( $application_id ); ?>" />
+					<!-- Security Nonce -->
+					<?php wp_nonce_field( 'submit_job_application', 'submit_job_application' ); ?>
+				</form>
+				<?php
+			} else {
+				?>
+				<p><em><?php esc_html_e( 'It looks like you forgot to assign fields to this application!', 'yikes-inc-level-playing-field' ); ?></em></p>
+				<?php
+				if ( current_user_can( 'manage_options' ) ) {
+					?><a href="<?php echo esc_url( admin_url( '/post.php?post=' . (int) $application_id . '&action=edit' ) ); ?>"><?php esc_html_e( 'Edit Job', 'yikes-inc-level-playing-field' ); ?></a><?php
+				}
+			}
+		?></div><?php
+
 		// If the application is on a third party, setup that URL
 		$third_party_site = ( get_post_meta( get_the_ID(), '_third_party_site', true ) ) ? true : false;
 		$site_url = $third_party_site ? esc_url( get_post_meta( get_the_ID(), '_third_party_site_url', true ) ) : '#yikes-job-application-form';
@@ -238,5 +277,57 @@ class Yikes_Inc_Level_Playing_Field_Public {
 			}
 		}
 		return $template;
+	}
+
+	/**
+	 * Process Application Submissions
+	 * @return boolean true/false based on submission success
+	 * @since 1.0.0
+	 */
+	public function process_application_submission() {
+		// Job application was not submitted
+		if ( ! isset( $_POST['submit_job_application'] ) ) {
+			return;
+		}
+		// Nonce/Security check failed
+		if ( ! wp_verify_nonce( $_POST['submit_job_application'], 'submit_job_application' ) ) {
+			$this->error = true;
+			$this->response = __( 'Security check failed. Please refresh this page and try again.', 'yikes-inc-level-playing-field' );
+			return;
+		}
+		// Unset the nonce, since we no longer need it
+		unset( $_POST['submit_job_application'], $_POST['_wp_http_referer'] );
+		// Include our responsive table
+		include_once( YIKES_LEVEL_PLAYING_FIELD_PATH . 'includes/class-yikes-inc-level-playing-field-process-submission.php' );
+		// Initialize the job table class
+		$submit_job_application = new Yikes_Inc_Level_Playing_Field_Process_Submission( $_POST );
+		// if it was a success
+		if ( $submit_job_application ) {
+			$this->success = true;
+			$this->response = __( 'Your job application has been successfully submitted.', 'yikes-inc-level-playing-field' );
+		}
+	}
+
+	/**
+	 * Generate the success/error responses
+	 * @return [type] [description]
+	 */
+	function generate_application_submission_response() {
+		// Error
+		if ( $this->error ) {
+			if ( ! empty( $this->response ) ) {
+				echo '<p class="submission-response error">' . esc_html( $this->response ) . '</p>';
+				return;
+			}
+			echo 'Error';
+		}
+		// Success
+		if ( $this->success ) {
+			if ( ! empty( $this->response ) ) {
+				echo '<p class="submission-response success">' . esc_html( $this->response ) . '</p>';
+				return;
+			}
+			echo 'Success';
+		}
 	}
 }

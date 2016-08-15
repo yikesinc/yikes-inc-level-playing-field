@@ -16,6 +16,23 @@
 }
 /** End Single Job Listing **/
 
+/** Success & Error Responses **/
+body.single-jobs .site-content .submission-response {
+		padding: 10px 15px;
+		color: #333;
+		margin: 10px 0;
+}
+
+body.single-jobs .site-content .submission-response.error {
+	color: #d08383;
+	background: rgba(255, 170, 170, 0.45);
+}
+
+body.single-jobs .site-content .submission-response.success {
+	color: #597b4b;
+	background: rgba(163, 236, 162, 0.3);
+}
+
 /** Popup Application Form **/
 #yikes-job-application-form {
 	background: #fff;
