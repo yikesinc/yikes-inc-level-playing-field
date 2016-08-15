@@ -155,19 +155,19 @@ class Link_List_Table extends WP_List_Table {
 					//Display the cell
 					switch ( $column_name ) {
 						case 'col_applicant_id':
-							echo '<td '. esc_attr( $attributes ) . '>' . esc_html( stripslashes( $applicant->ID ) ) . '</td>';
+							echo '<td '. $attributes . '>' . esc_html( stripslashes( $applicant->ID ) ) . '</td>';
 							break;
 						case 'col_applicant_name':
-							echo '<td ' . esc_attr( $attributes ) . '>' . esc_html( stripslashes( $applicant->post_title ) ) . '5</td>';
+							echo '<td ' . $attributes . '>' . esc_html( stripslashes( $applicant->post_title ) ) . '5</td>';
 							break;
 						case 'col_link_url':
-							echo '<td ' . esc_attr( $attributes ) . '>' . esc_html( stripslashes( $rec->link_url ) ) . '</td>';
+							echo '<td ' . $attributes . '>' . esc_html( stripslashes( $rec->link_url ) ) . '</td>';
 							break;
 						case 'col_link_description':
-							echo '<td ' . esc_attr( $attributes ) . '>' . esc_html( $rec->link_description ) . '</td>';
+							echo '<td ' . $attributes . '>' . esc_html( $rec->link_description ) . '</td>';
 							break;
 						case 'col_applicant_submitted_date':
-							echo '<td ' . esc_attr( $attributes ) . '>' . esc_html( get_the_date( get_option( 'date_format' ), $applicant->ID ) ) . '</td>';
+							echo '<td ' . $attributes . '>' . esc_html( get_the_date( get_option( 'date_format' ), $applicant->ID ) ) . '</td>';
 							break;
 					}
 				}
