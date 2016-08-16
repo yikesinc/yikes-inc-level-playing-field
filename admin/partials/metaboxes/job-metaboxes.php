@@ -140,7 +140,7 @@ function render_seciton_fields( $job_posting_details, $section_id ) {
 			$placeholder = ( isset( $field_data['placeholder'] ) ) ? $field_data['placeholder'] : '';
 			$description = ( isset( $field_data['description'] ) ) ? $field_data['description'] : false;
 			// checked attribute
-			$checked = ( 'checkbox' === $type ) ? checked( $value, $field_data['value'], false ) : '';
+			$checked = ( 'checkbox' === $type && get_post_meta( $post->ID, $field_name, true ) ) ? checked( $value, $field_data['value'], false ) : '';
 			?>
 			<!-- Display the field -->
 			<p class="form-field <?php echo esc_attr( $field_name ); ?>">
@@ -234,26 +234,28 @@ function get_whitelisted_options() {
  *
  * @param int $post_id Post ID
  */
-function jobs_cpt_save_meta_box( $post_id ) {
+function jobs_cpt_save_meta_box( $post_id, $post, $update ) {
 	// If were on the front end (eg: Submitting an application form)
-	// or we're not on the jobs post type
-	if ( ! is_admin() || 'jobs' !== get_the_post_type( $post_id ) ) {
+	// or we're not on the jobs post type, or it's a revision, or the nonce is not set
+	if ( wp_is_post_revision( $post_id ) || ! is_admin() || 'jobs' !== get_post_type( $post_id ) || ! isset( $_POST['_wpnonce'] ) ) {
 		return;
 	}
 	// Verify the nonce, before continuing
-	if ( ! isset( $_POST['_wpnonce'] ) || ! wp_verify_nonce( $_POST['_wpnonce'], 'update-post_' . $post_id ) ) {
+	if ( isset( $_POST['_wpnonce'] ) && ! wp_verify_nonce( $_POST['_wpnonce'], 'update-post_' . $post_id ) ) {
 		wp_die( esc_attr__( 'The security check did not pass. Please go back and try again.', 'yikes-inc-level-playing' ) );
 		exit;
 	}
+	// retreive and store whitelisted options
 	$options_whitelist = get_whitelisted_options();
 	// if for some reason the options return empty, abort
 	if ( empty( $options_whitelist ) ) {
-		return;
+		return $post_id;
 	}
 	foreach ( $options_whitelist as $whitelisted_option ) {
 		if ( in_array( $whitelisted_option, $options_whitelist ) ) {
 			update_post_meta( $post_id, $whitelisted_option, sanitize_text_field( $_POST[ $whitelisted_option ] ) );
 		}
 	}
+	return $post_id;
 }
-add_action( 'save_post', 'jobs_cpt_save_meta_box' );
+add_action( 'save_post', 'jobs_cpt_save_meta_box', 10, 3 );

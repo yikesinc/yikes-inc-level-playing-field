@@ -23,8 +23,27 @@ class Link_List_Table extends WP_List_Table {
 	 */
 	function extra_tablenav( $which ) {
 		if ( 'top' === $which ) {
-			//The code that goes before the table is here
-			// echo "Hello, I'm before the table";
+			$count = 1;
+			$admin_table_url = admin_url( 'edit.php?post_type=jobs&page=manage-applicants' );
+			$page = ( isset( $_GET['view'] ) ) ? $_GET['view'] : 'all-applicants';
+			$links = array(
+				__( 'All Applicants', 'yikes-inc-level-playing-field' ) => esc_url_raw( add_query_arg( 'view', 'all-applicants', $admin_table_url ) ),
+				__( 'Sort by Jobs', 'yikes-inc-level-playing-field' ) => esc_url_raw( add_query_arg( 'view', 'sort-by-jobs', $admin_table_url ) ),
+			);
+			ob_start();
+			?><ul class="subsubsub"><?php
+			foreach ( $links as $link_text => $link_href ) {
+				$current = ( sanitize_title( $link_text ) === $page ) ? 'current' : '';
+				echo wp_kses_post( '<li><a class="' . esc_attr( $current ) . '" href="' . esc_attr( $link_href ) . '">' . esc_html( $link_text ) . '</a></li>' );
+				if ( $count != count( $links ) ) {
+					echo ' | ';
+				}
+				$count++;
+			}
+			?></ul><?php
+			$contents = ob_get_contents();
+			ob_get_clean();
+			echo wp_kses_post( $contents );
 		}
 		if ( 'bottom' === $which ) {
 			//The code that goes after the table is there
@@ -38,11 +57,11 @@ class Link_List_Table extends WP_List_Table {
 	 */
 	function get_columns() {
 		return $columns = array(
-			'col_applicant_id' => __( 'ID' ),
-			'col_applicant_name' => __( 'Name' ),
+			'col_job_id' => __( 'ID' ),
+			'col_job_title' => __( 'Job Title' ),
 			'col_link_url' => __( 'Url' ),
 			'col_link_description' => __( 'Description' ),
-			'col_applicant_submitted_date' => __( 'Submission Date' ),
+			'col_job_posted_date' => __( 'Job Posted Date' ),
 		);
 	}
 
@@ -52,8 +71,8 @@ class Link_List_Table extends WP_List_Table {
 	 */
 	public function get_sortable_columns() {
 		return $sortable = array(
-			'col_applicant_id' => 'link_id',
-			'col_applicant_name' => 'link_name',
+			'col_job_id' => 'job_id',
+			'col_job_title' => 'job_title',
 		);
 	}
 
@@ -65,11 +84,15 @@ class Link_List_Table extends WP_List_Table {
 		$screen = get_current_screen();
 
 		/* -- Preparing your query -- */
-		$query = "SELECT * FROM $wpdb->posts WHERE $wpdb->posts.post_type = 'applicants'";
+		$query = "SELECT * FROM $wpdb->posts WHERE $wpdb->posts.post_type = 'jobs' AND $wpdb->posts.post_status = 'publish'";
+
+		if ( isset( $_GET['orderby'] ) ) {
+			print_r( $_GET );
+		}
 
 		/* -- Ordering parameters -- */
 		//Parameters that are going to be used to order the result
-		$orderby = ! empty( $_GET['orderby'] ) ? mysql_real_escape_string( $_GET['orderby'] ) : 'ASC';
+		$orderby = ! empty( $_GET['orderby'] ) ? 'ASC' : 'ASC';
 		$order = ! empty( $_GET['order'] ) ? mysql_real_escape_string( $_GET['order'] ) : '';
 		if ( ! empty( $orderby ) & ! empty( $order ) ) {
 			$query .= ' ORDER BY '. $orderby . ' ' . $order;
@@ -106,7 +129,7 @@ class Link_List_Table extends WP_List_Table {
 		$columns = $this->get_columns();
 		// Pass in column IDs to hide
 		$hidden = array(
-			'col_applicant_id',
+			'col_job_id',
 		);
 		$sortable = $this->get_sortable_columns();
 		$this->_column_headers = array( $columns, $hidden, $sortable );
@@ -122,7 +145,7 @@ class Link_List_Table extends WP_List_Table {
 	function display_rows() {
 
 		//Get the records registered in the prepare_items method
-		$applicants = $this->items;
+		$jobs = $this->items;
 
 		//Get the columns registered in the get_columns and get_sortable_columns methods
 		list( $columns, $hidden ) = $this->get_column_info();
@@ -130,11 +153,11 @@ class Link_List_Table extends WP_List_Table {
 		// print_r( $columns );
 
 		//Loop for each record
-		if ( ! empty( $applicants ) ) {
-			foreach ( $applicants as $applicant ) {
+		if ( ! empty( $jobs ) ) {
+			foreach ( $jobs as $job ) {
 
 				// Open the row
-				echo '<tr id="record_' . esc_attr( $applicant->ID ) . '">';
+				echo '<tr id="record_' . esc_attr( $job->ID ) . '">';
 
 				foreach ( $columns as $column_name => $column_display_name ) {
 
@@ -150,24 +173,24 @@ class Link_List_Table extends WP_List_Table {
 					$attributes = $class . $style;
 
 					//edit link
-					$editlink  = '/wp-admin/link.php?action=edit&link_id=' . (int) $applicant->ID;
+					$editlink  = '/wp-admin/link.php?action=edit&link_id=' . (int) $job->ID;
 
 					//Display the cell
 					switch ( $column_name ) {
-						case 'col_applicant_id':
-							echo '<td '. $attributes . '>' . esc_html( stripslashes( $applicant->ID ) ) . '</td>';
+						case 'col_job_id':
+							echo '<td '. $attributes . '>' . esc_html( stripslashes( $job->ID ) ) . '</td>';
 							break;
-						case 'col_applicant_name':
-							echo '<td ' . $attributes . '>' . esc_html( stripslashes( $applicant->post_title ) ) . '5</td>';
+						case 'col_job_title':
+							echo '<td ' . $attributes . '>' . esc_html( stripslashes( $job->post_title ) ) . '</td>';
 							break;
 						case 'col_link_url':
-							echo '<td ' . $attributes . '>' . esc_html( stripslashes( $rec->link_url ) ) . '</td>';
+							echo '<td ' . $attributes . '>' . esc_html( stripslashes( $job->link_url ) ) . '</td>';
 							break;
 						case 'col_link_description':
-							echo '<td ' . $attributes . '>' . esc_html( $rec->link_description ) . '</td>';
+							echo '<td ' . $attributes . '>' . esc_html( $job->link_description ) . '</td>';
 							break;
-						case 'col_applicant_submitted_date':
-							echo '<td ' . $attributes . '>' . esc_html( get_the_date( get_option( 'date_format' ), $applicant->ID ) ) . '</td>';
+						case 'col_job_posted_date':
+							echo '<td ' . $attributes . '>' . esc_html( get_the_date( get_option( 'date_format' ), $job->ID ) ) . '</td>';
 							break;
 					}
 				}

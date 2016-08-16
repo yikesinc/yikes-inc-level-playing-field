@@ -8,7 +8,7 @@ function wpdocs_register_my_custom_menu_page() {
 		__( 'Applicants', 'yikes-inc-level-playing-field' ),
 		__( 'Applicants', 'yikes-inc-level-playing-field' ),
 		'manage_options',
-		esc_url_raw( 'admin.php?page=manage-applicants' ),
+		'manage-applicants',
 		'render_level_playing_field_dashboard'
 	);
 }
@@ -22,8 +22,16 @@ function render_level_playing_field_dashboard() {
 	if ( ! class_exists( 'WP_List_Table' ) ) {
 		require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
 	}
-	// Admin table class
-	require_once( YIKES_LEVEL_PLAYING_FIELD_PATH . 'includes/class-yikes-inc-level-playing-field-admin-table.php' );
+
+	// Include the appropriate table class (based on the view query arg)
+	if ( ! isset( $_GET['view'] ) || 'all-applicants' === $_GET['view'] ) {
+		// All applicants table class
+		require_once( YIKES_LEVEL_PLAYING_FIELD_PATH . 'includes/class-yikes-inc-level-playing-field-admin-applicants-table.php' );
+	} else {
+		// All jobs table class
+		require_once( YIKES_LEVEL_PLAYING_FIELD_PATH . 'includes/class-yikes-inc-level-playing-field-admin-jobs-table.php' );
+	}
+
 	//Prepare Table of elements
 	$wp_list_table = new Link_List_Table();
 	$wp_list_table->prepare_items();

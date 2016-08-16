@@ -10,7 +10,7 @@ function generate_applicant_cpt() {
 		'add_new_item'          => __( 'Add New Applicant', 'yikes-inc-level-playing-field' ),
 		'add_new'               => __( 'Add New Applicant', 'yikes-inc-level-playing-field' ),
 		'new_item'              => __( 'New Applicant', 'yikes-inc-level-playing-field' ),
-		'edit_item'             => __( 'Edit v', 'yikes-inc-level-playing-field' ),
+		'edit_item'             => __( 'Edit Applicant', 'yikes-inc-level-playing-field' ),
 		'update_item'           => __( 'Update Applicant', 'yikes-inc-level-playing-field' ),
 		'view_item'             => __( 'View Applicant', 'yikes-inc-level-playing-field' ),
 		'search_items'          => __( 'Search Applicant', 'yikes-inc-level-playing-field' ),

@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * woocommerce_before_single_product hook.
+ * yikes_level_playing_field_before_single_job hook.
  *
  * @hooked wc_print_notices - 10
  */
@@ -27,10 +27,9 @@ if ( post_password_required() ) {
 
 	<?php
 		/**
-		 * woocommerce_before_single_product_summary hook.
+		 * yikes_level_playing_field_before_single_job_summary hook.
 		 *
-		 * @hooked woocommerce_show_product_sale_flash - 10
-		 * @hooked woocommerce_show_product_images - 20
+		 * @hooked yikes_level_playing_field_before_single_job - 10
 		 */
 		do_action( 'yikes_level_playing_field_before_single_job_summary' );
 	?>
@@ -39,7 +38,7 @@ if ( post_password_required() ) {
 
 		<?php
 			/**
-			 * woocommerce_single_product_summary hook.
+			 * yikes_level_playing_field_single_job_summary hook.
 			 *
 			 * @hooked yikes_lpf_categories - 10
 			 * @hooked yikes_lpf_tags - 11
@@ -52,7 +51,7 @@ if ( post_password_required() ) {
 
 	<?php
 		/**
-		 * woocommerce_after_single_product_summary hook.
+		 * yikes_level_playing_field_after_single_job_summary hook.
 		 *
 		 * @hooked append_job_listing_application - 10
 		 */
