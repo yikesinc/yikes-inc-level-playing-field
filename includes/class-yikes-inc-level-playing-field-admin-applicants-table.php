@@ -5,11 +5,15 @@
  */
 class Link_List_Table extends WP_List_Table {
 
+	// Store the helpers class
+	private $helpers;
+
 	/**
 	* Constructor, we override the parent to pass our own arguments
 	* We usually focus on three parameters: singular and plural labels, as well as whether the class supports AJAX.
 	*/
-	function __construct() {
+	function __construct( $helpers ) {
+		$this->helpers = $helpers;
 		parent::__construct( array(
 			'singular' => 'wp_list_text_link', // Singular label
 			'plural'   => 'wp_list_test_links', // Plural label, also this well be one of the table css class
@@ -86,8 +90,6 @@ class Link_List_Table extends WP_List_Table {
 		/* -- Preparing your query -- */
 		$query = "SELECT * FROM $wpdb->posts WHERE $wpdb->posts.post_type = 'applicants' AND $wpdb->posts.post_status = 'publish'";
 
-		// wp_die( print_r( $_GET ) );
-
 		/* -- Ordering parameters -- */
 		//Parameters that are going to be used to order the result
 		$orderby = ! empty( $_GET['orderby'] ) ? mysql_real_escape_string( $_GET['orderby'] ) : 'ASC';
@@ -157,6 +159,9 @@ class Link_List_Table extends WP_List_Table {
 				// Open the row
 				echo '<tr id="record_' . esc_attr( $applicant->ID ) . '">';
 
+				$applicant_name = ( get_post_meta( $applicant->ID, 'applicant_obfuscated_name', true ) && ! WP_DEBUG ) ? get_post_meta( $applicant->ID, 'applicant_obfuscated_name', true ) : $applicant->post_title;
+				$new_applicant_badge = ( get_post_meta( $applicant->ID, 'new_applicant', true ) ) ? $this->helpers->get_new_applicants_badge( 'user-badge' ) : '';
+
 				foreach ( $columns as $column_name => $column_display_name ) {
 
 					// Style attributes for each col
@@ -179,13 +184,13 @@ class Link_List_Table extends WP_List_Table {
 							echo '<td '. $attributes . '>' . esc_html( stripslashes( $applicant->ID ) ) . '</td>';
 							break;
 						case 'col_applicant_name':
-							echo '<td ' . $attributes . '>' . esc_html( stripslashes( $applicant->post_title ) ) . '</td>';
+							echo '<td ' . $attributes . '>' . esc_html( stripslashes( $applicant_name ) ) . wp_kses_post( $new_applicant_badge ) . '</td>';
 							break;
 						case 'col_link_url':
-							echo '<td ' . $attributes . '>' . esc_html( stripslashes( $rec->link_url ) ) . '</td>';
+							echo '<td ' . $attributes . '>' . esc_html( stripslashes( isset( $applicant->link_url ) ? $applicant->link_url : '' ) ) . '</td>';
 							break;
 						case 'col_link_description':
-							echo '<td ' . $attributes . '>' . esc_html( $rec->link_description ) . '</td>';
+							echo '<td ' . $attributes . '>' . esc_html( isset( $applicant->link_description ) ? $applicant->link_description : '' ) . '</td>';
 							break;
 						case 'col_applicant_submitted_date':
 							echo '<td ' . $attributes . '>' . esc_html( get_the_date( get_option( 'date_format' ), $applicant->ID ) ) . '</td>';

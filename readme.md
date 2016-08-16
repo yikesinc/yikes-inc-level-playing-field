@@ -36,6 +36,9 @@ Level Playing field by YIKES Inc.
 * `yikes_level_playing_field_after_single_job_summary`
 * `yikes_level_playing_field_after_single_job`
 
+<strong>Application Submission:</strong>
+* `yikes_inc_level_playing_field_process_application_submission`
+
 ##### Constants
 
 * `LPF_TEMPLATE_DEBUG_MODE` - Template debugging.

@@ -1,8 +1,1 @@
-/*
- * @Plugin Level Playing Field by YIKES Inc.
- * @Author YIKES, Inc.
- * @Site http://www.yikesinc.com
- * @Version 1.0.0
- * @Build 08-16-2016
- */
-body.jobs_page_admin-page-manage-applicants .bulkactions,body.jobs_page_manage-applicants .bulkactions{display:none}body.jobs_page_admin-page-manage-applicants .disabled-action-link,body.jobs_page_manage-applicants .disabled-action-link{opacity:.35}
+body.jobs_page_admin-page-manage-applicants .bulkactions,body.jobs_page_manage-applicants .bulkactions{display:none}body.jobs_page_admin-page-manage-applicants .disabled-action-link,body.jobs_page_manage-applicants .disabled-action-link{opacity:.35}body.jobs_page_manage-applicants .new-applicant-count-badge{font-size:x-small;font-family:"Open Sans";text-align:center;background:rgba(229,76,60,.71);color:#fdfdfd;padding:2px 5px;border-radius:3px;margin-left:1em}

@@ -107,6 +107,103 @@ class Yikes_Inc_Level_Playing_Field_Helper {
 	public function is_job_taxonomy() {
 		return is_tax( get_object_taxonomies( 'jobs' ) );
 	}
+
+	/**
+	 * Get applicants for all or a specified job/application
+	 * @param  int $application_id The Application/Job ID to retreive applicants for. (optional)
+	 * @return int                 The number of applicants returned.
+	 */
+	public function get_applicant_count( $application_id = false ) {
+		$application_query_args = array(
+			'post_type' => 'applicants',
+			'posts_per_page' => -1,
+		);
+		// If a specified job/application ID was passed in
+		if ( $application_id ) {
+			// Check for object or ID
+			if ( is_object( $application_id ) || is_array( $application_id ) ) {
+				$application_id = ( is_object( $application_id ) ) ? $application_id->ID : $application_id['ID'];
+			}
+			$application_query_args['meta_query'] = array(
+				'key' => 'application_id',
+				'value' => $application_id,
+				'compare' => '=',
+			);
+		}
+		$applicant_query = new WP_Query( $application_query_args );
+		// Return the i18n formatted count (integer)
+		return absint( number_format_i18n( $applicant_query->found_posts ) );
+	}
+
+	/**
+	 * Get NEW applicants for all or a specified job/application
+	 * Note: NEW means 'new_application' meta set to '1'
+	 * @param  int $application_id The Application/Job ID to retreive applicants for. (optional)
+	 * @return int                 The number of applicants returned.
+	 */
+	public function get_new_applicant_count( $application_id = false ) {
+		$new_applicant_query_args = array(
+			'post_type' => 'applicants',
+			'posts_per_page' => -1,
+			'meta_query' => array(
+				array(
+					'key' => 'new_applicant',
+					'value' => '1',
+					'compare' => '=',
+				),
+			),
+		);
+		// If a specified job/application ID was passed in
+		if ( $application_id ) {
+			// Check for object or ID
+			if ( is_object( $application_id ) || is_array( $application_id ) ) {
+				$application_id = ( is_object( $application_id ) ) ? $application_id->ID : $application_id['ID'];
+			}
+			$new_applicant_query_args['meta_query'] = array(
+				'key' => 'application_id',
+				'value' => $application_id,
+				'compare' => '=',
+			);
+		}
+		$new_applicant_query = new WP_Query( $new_applicant_query_args );
+		// Return the i18n formatted count (integer)
+		return absint( number_format_i18n( $new_applicant_query->found_posts ) );
+	}
+
+	/**
+	 * Generate our new applicant badge
+	 * @param  string  $type  The type of badge to return.
+	 * @param  integer $count The number of applicants. (optional)
+	 * @return mixed          HTML markup for the new applicant count badge.
+	 */
+	public function get_new_applicants_badge( $type = 'total', $count = false ) {
+		switch ( $type ) {
+			case 'default':
+			case 'total':
+				return '<span class="new-applicant-count-badge">' . sprintf( _n( '%s New Applicant', '%s New Applicants', $count, 'yikes-inc-level-playing-field' ), $count ) . '</div>';
+				break;
+			case 'user-badge':
+				return '<span class="new-applicant-count-badge">' . __( 'New Applicant', 'yikes-inc-level-playing-field' ) . '</div>';
+				break;
+		}
+	}
+
+	/**
+	 * Obfuscate a string, so admins cannot read the submitted text from the form
+	 * @param  string $string String of text to be obfuscated.
+	 * @return string         Obfuscated, obscured string.
+	 */
+	public function obfuscate_string( $string ) {
+		// Get the string length, so we can return the same length
+		$string_length = strlen( $string );
+		// Random set of characters to use in our obfuscation
+		$characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+		$obfuscated_string = '';
+		for ( $i = 0; $i < $string_length; $i++ ) {
+			$obfuscated_string .= $characters[ rand( 0, $string_length - 1 ) ];
+		}
+		return $obfuscated_string;
+	}
 }
 
 /**
@@ -193,11 +290,11 @@ function lpf_locate_template( $template_name, $template_path = '', $default_path
 	if ( ! $default_path ) {
 		$default_path = YIKES_LEVEL_PLAYING_FIELD_PATH . 'templates/';
 	}
-	// Look within passed path within the theme - this is priority.
+	// Look within passed path within the theme - this has priority.
 	$template = locate_template(
 		array(
 			trailingslashit( $template_path ) . $template_name,
-			$template_name
+			$template_name,
 		)
 	);
 	// Get default template/

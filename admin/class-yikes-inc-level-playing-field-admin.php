@@ -41,19 +41,27 @@ class Yikes_Inc_Level_Playing_Field_Admin {
 	private $version;
 
 	/**
+	 * The helper functions
+	 * @var class
+	 */
+	private $helpers;
+
+	/**
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
 	 * @param      string    $plugin_name       The name of this plugin.
 	 * @param      string    $version    The version of this plugin.
 	 */
-	public function __construct( $plugin_name, $version ) {
+	public function __construct( $plugin_name, $version, $helpers ) {
 
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
+		$this->helpers = $helpers;
 
 		// include our custom menu(s)
-		include_once( YIKES_LEVEL_PLAYING_FIELD_PATH . 'admin/partials/menu/application-management.php' );
+		include_once( YIKES_LEVEL_PLAYING_FIELD_PATH . 'admin/partials/menu/class-yikes-inc-level-playing-field-application-management.php' );
+		$application_management = new Yikes_Inc_Level_Playing_Field_Application_Management( $this->helpers );
 
 		add_action( 'admin_print_scripts-post-new.php', array( $this, 'job_admin_scripts_and_styles' ), 11 );
 		add_action( 'admin_print_scripts-post.php', array( $this, 'job_admin_scripts_and_styles' ), 11 );

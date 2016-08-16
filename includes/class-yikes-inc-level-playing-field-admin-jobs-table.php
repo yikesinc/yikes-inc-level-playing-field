@@ -5,11 +5,15 @@
  */
 class Link_List_Table extends WP_List_Table {
 
+	// Store our helpers class
+	public $helpers;
+
 	/**
 	* Constructor, we override the parent to pass our own arguments
 	* We usually focus on three parameters: singular and plural labels, as well as whether the class supports AJAX.
 	*/
-	function __construct() {
+	function __construct( $helpers ) {
+		$this->helpers = $helpers;
 		parent::__construct( array(
 			'singular' => 'wp_list_text_link', // Singular label
 			'plural'   => 'wp_list_test_links', // Plural label, also this well be one of the table css class
@@ -30,17 +34,20 @@ class Link_List_Table extends WP_List_Table {
 				__( 'Sort by Jobs', 'yikes-inc-level-playing-field' ) => esc_url_raw( add_query_arg( 'view', 'sort-by-jobs', $admin_table_url ) ),
 				__( 'All Applicants', 'yikes-inc-level-playing-field' ) => esc_url_raw( add_query_arg( 'view', 'all-applicants', $admin_table_url ) ),
 			);
-			ob_start();
-			?><ul class="subsubsub"><?php
-			foreach ( $links as $link_text => $link_href ) {
-				$current = ( sanitize_title( $link_text ) === $page ) ? 'current' : '';
-				echo wp_kses_post( '<li><a class="' . esc_attr( $current ) . '" href="' . esc_attr( $link_href ) . '">' . esc_html( $link_text ) . '</a></li>' );
-				if ( $count != count( $links ) ) {
-					echo ' | ';
-				}
-				$count++;
-			}
-			?></ul><?php
+			ob_start(); ?>
+			<ul class="subsubsub">
+				<?php
+					foreach ( $links as $link_text => $link_href ) {
+						$current = ( sanitize_title( $link_text ) === $page ) ? 'current' : '';
+						echo wp_kses_post( '<li><a class="' . esc_attr( $current ) . '" href="' . esc_attr( $link_href ) . '">' . esc_html( $link_text ) . '</a></li>' );
+						if ( $count !== count( $links ) ) {
+							echo ' | ';
+						}
+						$count++;
+					}
+				?>
+			</ul>
+			<?php
 			$contents = ob_get_contents();
 			ob_get_clean();
 			echo wp_kses_post( $contents );
@@ -159,7 +166,8 @@ class Link_List_Table extends WP_List_Table {
 			foreach ( $jobs as $job ) {
 
 				// Get the number of applicants
-				$applicant_count = $this->get_applicant_count( $job );
+				$applicant_count = $this->helpers->get_applicant_count( $job );
+				$new_applicants_badge = ( $this->helpers->get_new_applicant_count( $job ) > 0 ) ? $this->helpers->get_new_applicants_badge( 'total', $applicant_count ) : '';
 
 				// Setup the action links
 				$action_links = $this->get_action_links( $job->ID, $applicant_count );
@@ -189,7 +197,7 @@ class Link_List_Table extends WP_List_Table {
 							echo '<td ' . $attributes . '>' . esc_html( stripslashes( $job->post_title ) ) . wp_kses_post( $action_links ) . '</td>';
 							break;
 						case 'col_applicant_count':
-							echo '<td ' . $attributes . '>' . esc_html( $applicant_count ) . '</td>';
+							echo '<td ' . $attributes . '>' . esc_html( $applicant_count ) . wp_kses_post( $new_applicants_badge ) . '</td>';
 							break;
 						case 'col_company_name':
 							echo '<td ' . $attributes . '>' . esc_html( get_post_meta( $job->ID, '_company_name', true ) ) . '</td>';
@@ -204,27 +212,6 @@ class Link_List_Table extends WP_List_Table {
 				echo'</tr>';
 			}
 		}
-	}
-
-	/**
-	 * Get the number of applicants for the given job
-	 * @param $job_id The ID of the current job to retreive applicants for
-	 * @since 1.0.0
-	 */
-	function get_applicant_count( $job_obj ) {
-		$applicant_query_args = array(
-			'post_type' => 'applicants',
-			'meta_key' => 'application_id',
-			'meta_query' => array(
-				array(
-					'key' => 'application_id',
-					'value'   => (int) $job_obj->ID,
-					'compare' => '=',
-				),
-			),
-		);
-		$applicant_query = new WP_Query( $applicant_query_args );
-		return $applicant_query->found_posts;
 	}
 
 	/**

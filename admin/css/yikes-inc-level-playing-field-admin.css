@@ -3,14 +3,34 @@
  * included in this file.
  */
 
+/**
+ * Bulk actions (hidden)
+ */
 body.jobs_page_admin-page-manage-applicants .bulkactions,
 body.jobs_page_manage-applicants .bulkactions {
 	display: none;
 }
 
+/**
+ * Disabled Action Link
+ */
 body.jobs_page_admin-page-manage-applicants .disabled-action-link,
 body.jobs_page_manage-applicants .disabled-action-link {
 	opacity: .35;
+}
+
+/**
+ * New Applicant Count Badge
+ */
+body.jobs_page_manage-applicants .new-applicant-count-badge {
+	font-size: x-small;
+	font-family: "Open Sans";
+	text-align: center;
+	background: rgba(229, 76, 60, 0.71);
+	color: #fdfdfd;
+	padding: 2px 5px;
+	border-radius: 3px;
+	margin-left: 1em;
 }
 
 /*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInlpa2VzLWluYy1sZXZlbC1wbGF5aW5nLWZpZWxkLWFkbWluLmNzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTs7O0dBR0c7O0FBRUg7O0NBRUMsY0FBQTtDQUNBOztBQUVEOztDQUVDLGFBQVk7Q0FDWiIsImZpbGUiOiJ5aWtlcy1pbmMtbGV2ZWwtcGxheWluZy1maWVsZC1hZG1pbi5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyIvKipcbiAqIEFsbCBvZiB0aGUgQ1NTIGZvciB5b3VyIGFkbWluLXNwZWNpZmljIGZ1bmN0aW9uYWxpdHkgc2hvdWxkIGJlXG4gKiBpbmNsdWRlZCBpbiB0aGlzIGZpbGUuXG4gKi8iXX0= */

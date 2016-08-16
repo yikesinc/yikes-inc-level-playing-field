@@ -7,9 +7,13 @@ class Yikes_Inc_Level_Playing_Field_Process_Submission extends Yikes_Inc_Level_P
 	// Private form data submitted via job application
 	private $application_data;
 
-	public function __construct( $form_data ) {
+	// Store our helper class
+	private $helpers;
+
+	public function __construct( $form_data, $helpers ) {
 		// Store the form data
 		$this->application_data = $form_data;
+		$this->helpers = $helpers;
 		// Submit the application
 		$this->submit_job_application( $form_data );
 	}
@@ -35,6 +39,9 @@ class Yikes_Inc_Level_Playing_Field_Process_Submission extends Yikes_Inc_Level_P
 			return false;
 		}
 
+		// Store an obfuscated version of this user, for reference
+		update_post_meta( $applicant, 'applicant_obfuscated_name', $this->helpers->obfuscate_string( $application_data['name'] ) );
+
 		// Unset the 'name' field and the 'submit' button
 		unset( $application_data['name'], $application_name['submit'] );
 
@@ -42,6 +49,21 @@ class Yikes_Inc_Level_Playing_Field_Process_Submission extends Yikes_Inc_Level_P
 		foreach ( $application_data as $application_data_key => $application_data_value ) {
 			update_post_meta( $applicant, $application_data_key, $application_data_value );
 		}
+
+		// Set the applicant to 'New', so the numbers increase in the database menu item
+		update_post_meta( $applicant, 'new_applicant', '1' );
+
+		// clear our 'total_new_applicant_count' transient
+		// so the count gets updated across the site
+		delete_transient( 'total_new_applicant_count' );
+
+		/**
+		 * Action hook to allow for additional steps to be taken
+		 * before the applicant is in the database
+		 * @param integer   $applicant         The applicant ID as it was stored in the database.
+		 * @param array     $application_data  The array of data submitted by the applicant via the form.
+		 */
+		do_action( 'yikes_inc_level_playing_field_process_application_submission', $applicant, $application_data );
 
 		return true;
 	}

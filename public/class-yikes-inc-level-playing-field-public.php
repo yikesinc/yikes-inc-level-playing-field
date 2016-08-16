@@ -57,12 +57,11 @@ class Yikes_Inc_Level_Playing_Field_Public {
 	 * @param      string    $plugin_name       The name of the plugin.
 	 * @param      string    $version    The version of this plugin.
 	 */
-	public function __construct( $plugin_name, $version ) {
+	public function __construct( $plugin_name, $version, $helpers ) {
 
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
-		// Load and instantiate our helper functions (class)
-		$this->helpers = new Yikes_Inc_Level_Playing_Field_Helper( $this->plugin_name, $this->version );
+		$this->helpers = $helpers;
 
 		/* Register our Shortcodes */
 		// Application Shortcode
@@ -300,7 +299,7 @@ class Yikes_Inc_Level_Playing_Field_Public {
 		// Include our responsive table
 		include_once( YIKES_LEVEL_PLAYING_FIELD_PATH . 'includes/class-yikes-inc-level-playing-field-process-submission.php' );
 		// Initialize the job table class
-		$submit_job_application = new Yikes_Inc_Level_Playing_Field_Process_Submission( $_POST );
+		$submit_job_application = new Yikes_Inc_Level_Playing_Field_Process_Submission( $_POST, $this->helpers );
 		// if it was a success
 		if ( $submit_job_application ) {
 			$this->success = true;

@@ -159,6 +159,8 @@ class Yikes_Inc_Level_Playing_Field {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/yikes-inc-level-playing-field-template-functions.php';
 
 		$this->loader = new Yikes_Inc_Level_Playing_Field_Loader();
+		// Load and instantiate our helper functions (class)
+		$this->helpers = new Yikes_Inc_Level_Playing_Field_Helper( $this->plugin_name, $this->version );
 	}
 
 	/**
@@ -187,7 +189,7 @@ class Yikes_Inc_Level_Playing_Field {
 	 */
 	private function define_admin_hooks() {
 
-		$plugin_admin = new Yikes_Inc_Level_Playing_Field_Admin( $this->get_plugin_name(), $this->get_version() );
+		$plugin_admin = new Yikes_Inc_Level_Playing_Field_Admin( $this->get_plugin_name(), $this->get_version(), $this->get_helpers() );
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
@@ -203,7 +205,7 @@ class Yikes_Inc_Level_Playing_Field {
 	 */
 	private function define_public_hooks() {
 
-		$plugin_public = new Yikes_Inc_Level_Playing_Field_Public( $this->get_plugin_name(), $this->get_version() );
+		$plugin_public = new Yikes_Inc_Level_Playing_Field_Public( $this->get_plugin_name(), $this->get_version(), $this->get_helpers() );
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
@@ -248,5 +250,15 @@ class Yikes_Inc_Level_Playing_Field {
 	 */
 	public function get_version() {
 		return $this->version;
+	}
+
+	/**
+	 * Retrieve the helpers functions for the plugin.
+	 *
+	 * @since     1.0.0
+	 * @return    string    The helper class for the plugin.
+	 */
+	public function get_helpers() {
+		return $this->helpers;
 	}
 }
