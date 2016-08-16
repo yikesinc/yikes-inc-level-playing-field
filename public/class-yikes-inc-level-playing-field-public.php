@@ -78,7 +78,7 @@ class Yikes_Inc_Level_Playing_Field_Public {
 		add_action( 'init', array( $this, 'process_application_submission' ) );
 
 		/* Render Job Submission Response */
-		add_action( 'yikes_level_playing_field_before_single_job', array( $this, 'generate_application_submission_response' ) );
+		add_action( 'yikes_level_playing_field_before_single_job', array( $this, 'generate_application_submission_response' ), 10 );
 	}
 
 	/**
