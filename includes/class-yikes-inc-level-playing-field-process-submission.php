@@ -29,6 +29,20 @@ class Yikes_Inc_Level_Playing_Field_Process_Submission extends Yikes_Inc_Level_P
 
 		// Insert the post into the database
 		$applicant = wp_insert_post( $new_applicant );
-		return ( $applicant ) ? true : false;
+
+		// If the applicant was not inserted into the db, abort
+		if ( ! $applicant ) {
+			return false;
+		}
+
+		// Unset the 'name' field and the 'submit' button
+		unset( $application_data['name'], $application_name['submit'] );
+
+		// Loop over applicant data and store the meta
+		foreach ( $application_data as $application_data_key => $application_data_value ) {
+			update_post_meta( $applicant, $application_data_key, $application_data_value );
+		}
+
+		return true;
 	}
 }

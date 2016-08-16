@@ -25,10 +25,10 @@ class Link_List_Table extends WP_List_Table {
 		if ( 'top' === $which ) {
 			$count = 1;
 			$admin_table_url = admin_url( 'edit.php?post_type=jobs&page=manage-applicants' );
-			$page = ( isset( $_GET['view'] ) ) ? $_GET['view'] : 'all-applicants';
+			$page = ( isset( $_GET['view'] ) ) ? $_GET['view'] : 'sort-by-jobs';
 			$links = array(
-				__( 'All Applicants', 'yikes-inc-level-playing-field' ) => esc_url_raw( add_query_arg( 'view', 'all-applicants', $admin_table_url ) ),
 				__( 'Sort by Jobs', 'yikes-inc-level-playing-field' ) => esc_url_raw( add_query_arg( 'view', 'sort-by-jobs', $admin_table_url ) ),
+				__( 'All Applicants', 'yikes-inc-level-playing-field' ) => esc_url_raw( add_query_arg( 'view', 'all-applicants', $admin_table_url ) ),
 			);
 			ob_start();
 			?><ul class="subsubsub"><?php

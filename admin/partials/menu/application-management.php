@@ -24,12 +24,12 @@ function render_level_playing_field_dashboard() {
 	}
 
 	// Include the appropriate table class (based on the view query arg)
-	if ( ! isset( $_GET['view'] ) || 'all-applicants' === $_GET['view'] ) {
-		// All applicants table class
-		require_once( YIKES_LEVEL_PLAYING_FIELD_PATH . 'includes/class-yikes-inc-level-playing-field-admin-applicants-table.php' );
-	} else {
+	if ( ! isset( $_GET['view'] ) || 'sort-by-jobs' === $_GET['view'] ) {
 		// All jobs table class
 		require_once( YIKES_LEVEL_PLAYING_FIELD_PATH . 'includes/class-yikes-inc-level-playing-field-admin-jobs-table.php' );
+	} else {
+		// All applicants table class
+		require_once( YIKES_LEVEL_PLAYING_FIELD_PATH . 'includes/class-yikes-inc-level-playing-field-admin-applicants-table.php' );
 	}
 
 	//Prepare Table of elements

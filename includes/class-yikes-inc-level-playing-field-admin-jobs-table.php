@@ -25,10 +25,10 @@ class Link_List_Table extends WP_List_Table {
 		if ( 'top' === $which ) {
 			$count = 1;
 			$admin_table_url = admin_url( 'edit.php?post_type=jobs&page=manage-applicants' );
-			$page = ( isset( $_GET['view'] ) ) ? $_GET['view'] : 'all-applicants';
+			$page = ( isset( $_GET['view'] ) ) ? $_GET['view'] : 'sort-by-jobs';
 			$links = array(
-				__( 'All Applicants', 'yikes-inc-level-playing-field' ) => esc_url_raw( add_query_arg( 'view', 'all-applicants', $admin_table_url ) ),
 				__( 'Sort by Jobs', 'yikes-inc-level-playing-field' ) => esc_url_raw( add_query_arg( 'view', 'sort-by-jobs', $admin_table_url ) ),
+				__( 'All Applicants', 'yikes-inc-level-playing-field' ) => esc_url_raw( add_query_arg( 'view', 'all-applicants', $admin_table_url ) ),
 			);
 			ob_start();
 			?><ul class="subsubsub"><?php
@@ -57,11 +57,11 @@ class Link_List_Table extends WP_List_Table {
 	 */
 	function get_columns() {
 		return $columns = array(
-			'col_job_id' => __( 'ID' ),
-			'col_job_title' => __( 'Job Title' ),
-			'col_link_url' => __( 'Url' ),
-			'col_link_description' => __( 'Description' ),
-			'col_job_posted_date' => __( 'Job Posted Date' ),
+			'col_job_id' => __( 'ID', 'yikes-inc-level-playing-field' ),
+			'col_job_title' => __( 'Job Title', 'yikes-inc-level-playing-field' ),
+			'col_applicant_count' => __( 'Applicant Count', 'yikes-inc-level-playing-field' ),
+			'col_company_name' => __( 'Company', 'yikes-inc-level-playing-field' ),
+			'col_job_posted_date' => __( 'Job Posted Date', 'yikes-inc-level-playing-field' ),
 		);
 	}
 
@@ -71,8 +71,9 @@ class Link_List_Table extends WP_List_Table {
 	 */
 	public function get_sortable_columns() {
 		return $sortable = array(
-			'col_job_id' => 'job_id',
-			'col_job_title' => 'job_title',
+			'col_job_title' => 'title',
+			'col_company_name' => '_company_name',
+			'col_job_posted_date' => 'date',
 		);
 	}
 
@@ -86,8 +87,9 @@ class Link_List_Table extends WP_List_Table {
 		/* -- Preparing your query -- */
 		$query = "SELECT * FROM $wpdb->posts WHERE $wpdb->posts.post_type = 'jobs' AND $wpdb->posts.post_status = 'publish'";
 
+		// Testing Data
 		if ( isset( $_GET['orderby'] ) ) {
-			print_r( $_GET );
+			// print_r( $_GET );
 		}
 
 		/* -- Ordering parameters -- */
@@ -156,6 +158,12 @@ class Link_List_Table extends WP_List_Table {
 		if ( ! empty( $jobs ) ) {
 			foreach ( $jobs as $job ) {
 
+				// Get the number of applicants
+				$applicant_count = $this->get_applicant_count( $job );
+
+				// Setup the action links
+				$action_links = $this->get_action_links( $job->ID, $applicant_count );
+
 				// Open the row
 				echo '<tr id="record_' . esc_attr( $job->ID ) . '">';
 
@@ -172,22 +180,19 @@ class Link_List_Table extends WP_List_Table {
 
 					$attributes = $class . $style;
 
-					//edit link
-					$editlink  = '/wp-admin/link.php?action=edit&link_id=' . (int) $job->ID;
-
 					//Display the cell
 					switch ( $column_name ) {
 						case 'col_job_id':
 							echo '<td '. $attributes . '>' . esc_html( stripslashes( $job->ID ) ) . '</td>';
 							break;
 						case 'col_job_title':
-							echo '<td ' . $attributes . '>' . esc_html( stripslashes( $job->post_title ) ) . '</td>';
+							echo '<td ' . $attributes . '>' . esc_html( stripslashes( $job->post_title ) ) . wp_kses_post( $action_links ) . '</td>';
 							break;
-						case 'col_link_url':
-							echo '<td ' . $attributes . '>' . esc_html( stripslashes( $job->link_url ) ) . '</td>';
+						case 'col_applicant_count':
+							echo '<td ' . $attributes . '>' . esc_html( $applicant_count ) . '</td>';
 							break;
-						case 'col_link_description':
-							echo '<td ' . $attributes . '>' . esc_html( $job->link_description ) . '</td>';
+						case 'col_company_name':
+							echo '<td ' . $attributes . '>' . esc_html( get_post_meta( $job->ID, '_company_name', true ) ) . '</td>';
 							break;
 						case 'col_job_posted_date':
 							echo '<td ' . $attributes . '>' . esc_html( get_the_date( get_option( 'date_format' ), $job->ID ) ) . '</td>';
@@ -199,5 +204,63 @@ class Link_List_Table extends WP_List_Table {
 				echo'</tr>';
 			}
 		}
+	}
+
+	/**
+	 * Get the number of applicants for the given job
+	 * @param $job_id The ID of the current job to retreive applicants for
+	 * @since 1.0.0
+	 */
+	function get_applicant_count( $job_obj ) {
+		$applicant_query_args = array(
+			'post_type' => 'applicants',
+			'meta_key' => 'application_id',
+			'meta_query' => array(
+				array(
+					'key' => 'application_id',
+					'value'   => (int) $job_obj->ID,
+					'compare' => '=',
+				),
+			),
+		);
+		$applicant_query = new WP_Query( $applicant_query_args );
+		return $applicant_query->found_posts;
+	}
+
+	/**
+	 * Get the action links to use on this page
+	 * @return mixed HTML content of the action links
+	 */
+	function get_action_links( $job_id, $applicant_count ) {
+		$action_link_array = array(
+			__( 'View Applicants', 'yikes-inc-level-playing-field' ) => ( $applicant_count > 0 ) ? add_query_arg( array(
+				'post' => $job_id,
+				'action' => 'edit',
+			), admin_url( 'post.php' ) ) : 'disabled',
+			__( 'Edit Job', 'yikes-inc-level-playing-field' ) => add_query_arg( array(
+				'post' => $job_id,
+				'action' => 'edit',
+			), admin_url( 'post.php' ) ),
+		);
+		$count = 1;
+		ob_start();
+		?>
+		<div class="row-actions">
+			<?php
+			foreach( $action_link_array as $action_link_text => $action_link_href ) {
+				$divider = ( $count < count( $action_link_array ) ) ? ' | ' : '';
+				if ( 'disabled' === $action_link_href ) {
+					echo wp_kses_post( '<a href="#" onclick="return false;" disabled="disabled" class="disabled-action-link">' . $action_link_text . '</a>' . $divider );
+				} else {
+					echo wp_kses_post( '<a href="' . $action_link_href . '">' . $action_link_text . $divider . '</a>' );
+				}
+				$count++;
+			}
+			?>
+		</div>
+		<?php
+		$content = ob_get_contents();
+		ob_get_clean();
+		return $content;
 	}
 }
