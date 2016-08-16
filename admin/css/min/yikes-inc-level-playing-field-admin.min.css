@@ -5,4 +5,4 @@
  * @Version 1.0.0
  * @Build 08-16-2016
  */
-body.jobs_page_admin-page-manage-applicants .bulkactions{display:none}
+body.jobs_page_admin-page-manage-applicants .bulkactions,body.jobs_page_manage-applicants .bulkactions{display:none}
