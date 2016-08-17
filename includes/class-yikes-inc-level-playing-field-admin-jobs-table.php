@@ -221,9 +221,8 @@ class Link_List_Table extends WP_List_Table {
 	function get_action_links( $job_id, $applicant_count ) {
 		$action_link_array = array(
 			__( 'View Applicants', 'yikes-inc-level-playing-field' ) => ( $applicant_count > 0 ) ? add_query_arg( array(
-				'post' => $job_id,
-				'action' => 'edit',
-			), admin_url( 'post.php' ) ) : 'disabled',
+				'job' => $job_id,
+			), admin_url( 'edit.php?post_type=jobs&page=manage-applicants&view=all-applicants' ) ) : 'disabled',
 			__( 'Edit Job', 'yikes-inc-level-playing-field' ) => add_query_arg( array(
 				'post' => $job_id,
 				'action' => 'edit',
@@ -239,7 +238,7 @@ class Link_List_Table extends WP_List_Table {
 				if ( 'disabled' === $action_link_href ) {
 					echo wp_kses_post( '<a href="#" onclick="return false;" disabled="disabled" class="disabled-action-link">' . $action_link_text . '</a>' . $divider );
 				} else {
-					echo wp_kses_post( '<a href="' . $action_link_href . '">' . $action_link_text . $divider . '</a>' );
+					echo wp_kses_post( '<a href="' . $action_link_href . '">' . $action_link_text . '</a>' . $divider );
 				}
 				$count++;
 			}

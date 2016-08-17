@@ -124,7 +124,7 @@ class Yikes_Inc_Level_Playing_Field_Helper {
 			if ( is_object( $application_id ) || is_array( $application_id ) ) {
 				$application_id = ( is_object( $application_id ) ) ? $application_id->ID : $application_id['ID'];
 			}
-			$application_query_args['meta_query'] = array(
+			$application_query_args['meta_query'][] = array(
 				'key' => 'application_id',
 				'value' => $application_id,
 				'compare' => '=',
@@ -159,13 +159,14 @@ class Yikes_Inc_Level_Playing_Field_Helper {
 			if ( is_object( $application_id ) || is_array( $application_id ) ) {
 				$application_id = ( is_object( $application_id ) ) ? $application_id->ID : $application_id['ID'];
 			}
-			$new_applicant_query_args['meta_query'] = array(
+			$new_applicant_query_args['meta_query'][] = array(
 				'key' => 'application_id',
-				'value' => $application_id,
+				'value' => (int) $application_id,
 				'compare' => '=',
 			);
 		}
 		$new_applicant_query = new WP_Query( $new_applicant_query_args );
+		wp_reset_query();
 		// Return the i18n formatted count (integer)
 		return absint( number_format_i18n( $new_applicant_query->found_posts ) );
 	}
@@ -180,10 +181,12 @@ class Yikes_Inc_Level_Playing_Field_Helper {
 		switch ( $type ) {
 			case 'default':
 			case 'total':
-				return '<span class="new-applicant-count-badge">' . sprintf( _n( '%s New Applicant', '%s New Applicants', $count, 'yikes-inc-level-playing-field' ), $count ) . '</div>';
+				$btn_text = sprintf( _n( '%s New Applicant', '%s New Applicants', $count, 'yikes-inc-level-playing-field' ), $count );
+				return '<span class="new-applicant-count-badge" title="' . $btn_text . '">' . $btn_text . '</div>';
 				break;
 			case 'user-badge':
-				return '<span class="new-applicant-count-badge">' . __( 'New Applicant', 'yikes-inc-level-playing-field' ) . '</div>';
+				$btn_text = __( 'New Applicant', 'yikes-inc-level-playing-field' );
+				return '<span class="new-applicant-count-badge" title="' . $btn_text . '">' . $btn_text . '</div>';
 				break;
 		}
 	}
@@ -233,6 +236,9 @@ class Yikes_Inc_Level_Playing_Field_Helper {
 	 * @return mixed                     HTML content for the status buttns.
 	 */
 	public function generate_status_buttons( $applicant_id ) {
+		if ( get_post_meta( $applicant_id, 'new_applicant', true ) ) {
+			return '<span class="applicant-needs-review" title="' . __( 'Applicant Needs Review', 'yikes-inc-level-playing-field' ) . '">' . __( 'Needs Review', 'yikes-inc-level-playing-field' ) . '</span>';
+		}
 		$statuses = $this->get_applicant_statuses();
 		$applicant_status = ( get_post_meta( $applicant_id, 'applicant_status', true ) ) ? get_post_meta( $applicant_id, 'applicant_status', true ) : 'needs-review';
 		ob_start();
@@ -248,16 +254,15 @@ class Yikes_Inc_Level_Playing_Field_Helper {
 			if ( strtolower( $status_btn_text ) !== $applicant_status ) {
 				$btn_classes[] = 'inactive';
 			}
-			if ( 'needs-review' !== $status_btn_text ) {
-				echo wp_kses( sprintf( '<a href="#" onclick="toggleApplicantStatus( this, %s );return false;" data-attr-status="' . strtolower( $status_btn_text ) . '" class="' . implode( ' ', $btn_classes ) . '">' . $status_btn_text . '</a>', $applicant_id  ), array(
-					'a' => array(
-						'href' => array(),
-						'onclick' => array(),
-						'data-attr-status' => array(),
-						'class' => array(),
-					),
-				) );
-			}
+			// Render our buttons
+			echo wp_kses( sprintf( '<a href="#" onclick="toggleApplicantStatus( this, %s );return false;" data-attr-status="' . strtolower( $status_btn_text ) . '" class="' . implode( ' ', $btn_classes ) . '">' . $status_btn_text . '</a>', $applicant_id  ), array(
+				'a' => array(
+					'href' => array(),
+					'onclick' => array(),
+					'data-attr-status' => array(),
+					'class' => array(),
+				),
+			) );
 		}
 		$buttons = ob_get_contents();
 		ob_get_clean();

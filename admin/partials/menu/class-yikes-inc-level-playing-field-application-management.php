@@ -51,17 +51,26 @@ class Yikes_Inc_Level_Playing_Field_Application_Management {
 		if ( ! isset( $_GET['view'] ) || 'sort-by-jobs' === $_GET['view'] ) {
 			// All jobs table class
 			require_once( YIKES_LEVEL_PLAYING_FIELD_PATH . 'includes/class-yikes-inc-level-playing-field-admin-jobs-table.php' );
+			$page_title = esc_html__( 'Job Listings', 'yikes-inc-level-playing-field' );
+			$page_subtitle = esc_html__( 'Select a job to view the list of applicants.', 'yikes-inc-level-playing-field' );
 		} else {
 			// All applicants table class
 			require_once( YIKES_LEVEL_PLAYING_FIELD_PATH . 'includes/class-yikes-inc-level-playing-field-admin-applicants-table.php' );
+			$page_title = esc_html__( 'All Applicants', 'yikes-inc-level-playing-field' );
+			$page_subtitle = esc_html__( 'List of all applicantsn on the site.', 'yikes-inc-level-playing-field' );
+			if ( isset( $_GET['job'] ) && ! empty( $_GET['job'] ) ) {
+				$job_title = get_post( absint( $_GET['job'] ) );
+				$page_title = sprintf( esc_html__( '%s | Applicants %s', 'yikes-inc-level-playing-field' ), $job_title->post_title, '<a href="' . add_query_arg( array( 'post' => $_GET['job'], 'action' => 'edit' ), admin_url( 'post.php' ) ) . '" class="page-title-action">' . __( 'Edit Job', 'yikes-inc-level-playing-field' ) . '</a>' );
+				$page_subtitle = esc_html__( 'List of all applicantsn on the site.', 'yikes-inc-level-playing-field' );
+			}
 		}
 
 		// Prepare Table of elements
 		$wp_list_table = new Link_List_Table( $this->helpers );
 		$wp_list_table->prepare_items();
 		?><div class="wrap"><?php
-			printf( '<h1>' . esc_html__( 'Job Applicants', 'yikes-inc-level-playing-field' ) . '</h1>' );
-			printf( '<p class="description">' . esc_html__( 'Select a job to view the current job applicants.', 'yikes-inc-level-playing-field' ) . '</p>' );
+			printf( '<h1>' . $page_title . '</h1>' );
+			printf( '<p class="description">' . $page_subtitle . '</p>' );
 			//Table of elements
 			$wp_list_table->display();
 		?></div><?php

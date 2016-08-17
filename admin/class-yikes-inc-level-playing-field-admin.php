@@ -65,6 +65,9 @@ class Yikes_Inc_Level_Playing_Field_Admin {
 
 		add_action( 'admin_print_scripts-post-new.php', array( $this, 'job_admin_scripts_and_styles' ), 11 );
 		add_action( 'admin_print_scripts-post.php', array( $this, 'job_admin_scripts_and_styles' ), 11 );
+
+		/* Alter the applicant status when the button is clicked */
+		add_action( 'wp_ajax_update_applicant_status', array( $this, 'update_applicant_status' ) );
 	}
 
 	/**
@@ -120,5 +123,27 @@ class Yikes_Inc_Level_Playing_Field_Admin {
 			wp_enqueue_style( 'jobs-metabox-styles', plugin_dir_url( __FILE__ ) . 'css/min/yikes-inc-level-playing-field-metabox-styles.min.css', array(), $this->version, 'all' );
 			wp_enqueue_script( 'jobs-metabox-scripts', plugin_dir_url( __FILE__ ) . 'js/min/yikes-inc-level-playing-field-metabox-scripts.min.js', array( 'jquery' ), $this->version, 'all' );
 		}
+	}
+
+	/**
+	 * Update a given applicants status
+	 * This is used on the applicant listing table, admin side
+	 * @return boolean true/false based on update meta response.
+	 * @since 1.0.0
+	 */
+	public function update_applicant_status() {
+		// catch & store our variables passed in
+		$applicant_id = ( isset( $_POST['applicant_id'] ) ) ? $_POST['applicant_id'] : false;
+		$applicant_status = ( isset( $_POST['applicant_status'] ) ) ? $_POST['applicant_status'] : false;
+		// If no applicant ID is passed in, return an error
+		if ( ! $applicant_id || ! $applicant_status ) {
+			return wp_send_json_error();
+		}
+		// update the status, and return a success response
+		update_post_meta( $applicant_id, 'applicant_status', $applicant_status );
+		// Ensure the applicant is no longer marked as 'new'
+		delete_post_meta( $applicant_id, 'new_applicant' );
+
+		return wp_send_json_success();
 	}
 }

@@ -103,9 +103,21 @@ class Link_List_Table extends WP_List_Table {
 		global $wpdb, $_wp_column_headers;
 		$screen = get_current_screen();
 
-		/* -- Preparing your query -- */
-		$query = "SELECT * FROM $wpdb->posts WHERE $wpdb->posts.post_type = 'applicants' AND $wpdb->posts.post_status = 'publish'";
-
+		// Query applicants for a specified job/application
+		if ( isset( $_GET['job'] ) && ! empty( $_GET['job'] ) ) {
+			/* -- Preparing your query -- */
+			$query= sprintf(
+				"SELECT * FROM wp_posts
+				LEFT JOIN wp_postmeta v1 ON (wp_posts.ID = v1.post_id)
+				WHERE
+				wp_posts.post_status = 'publish' AND wp_posts.post_type = 'applicants'
+				AND v1.meta_value = '%s'
+				ORDER BY wp_posts.post_date DESC",
+				$_GET['job'] );
+		} else { // Query all applicants
+			/* -- Preparing your query -- */
+			$query = "SELECT * FROM $wpdb->posts WHERE $wpdb->posts.post_type = 'applicants' AND $wpdb->posts.post_status = 'publish'";
+		}
 		/* -- Ordering parameters -- */
 		//Parameters that are going to be used to order the result
 		$orderby = ! empty( $_GET['orderby'] ) ? mysql_real_escape_string( $_GET['orderby'] ) : 'ASC';

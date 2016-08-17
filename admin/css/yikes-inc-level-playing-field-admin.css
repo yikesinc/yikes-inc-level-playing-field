@@ -22,7 +22,8 @@ body.jobs_page_manage-applicants .disabled-action-link {
 /**
  * New Applicant Count Badge
  */
-body.jobs_page_manage-applicants .new-applicant-count-badge {
+body.jobs_page_manage-applicants .new-applicant-count-badge,
+body.jobs_page_manage-applicants .applicant-needs-review {
 	font-size: x-small;
 	font-family: "Open Sans";
 	text-align: center;
@@ -32,6 +33,17 @@ body.jobs_page_manage-applicants .new-applicant-count-badge {
 	border-radius: 3px;
 	margin-left: 1em;
 }
+
+	body.jobs_page_manage-applicants .applicant-needs-review {
+		background: orange;
+		margin-left: 0;
+	}
+
+	body.jobs_page_manage-applicants .applicant-needs-review:hover,
+	body.jobs_page_manage-applicants .new-applicant-count-badge:hover,
+	body.jobs_page_manage-applicants .applicant-needs-review:hover {
+		cursor: pointer;
+	}
 
 /**
  * Blurred Text/Container
@@ -543,5 +555,17 @@ body.jobs_page_manage-applicants .new-applicant-count-badge {
  .hidden {
    display: none !important;
  }
+
+ /**
+  * Application Management Button Spacing
+  */
+ .col_applicant_status a {
+ 	margin-left: 5px;
+	padding: 3px 8px;
+ }
+
+ 	.col_applicant_status a:first-child {
+ 		margin-left: 0;
+ 	}
 
 /*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInlpa2VzLWluYy1sZXZlbC1wbGF5aW5nLWZpZWxkLWFkbWluLmNzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTs7O0dBR0c7O0FBRUg7O0dBRUM7QUFDRDs7Q0FFQSxjQUFBO0NBQ0M7O0FBRUQ7O0dBRUc7QUFDSDs7Q0FFQyxhQUFhO0NBQ2I7O0FBRUQ7O0dBRUc7QUFDSDtDQUNDLG1CQUFtQjtDQUNuQix5QkFBeUI7Q0FDekIsbUJBQW1CO0NBQ25CLG9DQUFvQztDQUNwQyxlQUFlO0NBQ2YsaUJBQWlCO0NBQ2pCLG1CQUFtQjtDQUNuQixpQkFBaUI7Q0FDakI7O0FBRUQ7O0dBRUc7QUFDSDtDQUNDLDBCQUEwQjtDQUMxQiIsImZpbGUiOiJ5aWtlcy1pbmMtbGV2ZWwtcGxheWluZy1maWVsZC1hZG1pbi5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyIvKipcbiAqIEFsbCBvZiB0aGUgQ1NTIGZvciB5b3VyIGFkbWluLXNwZWNpZmljIGZ1bmN0aW9uYWxpdHkgc2hvdWxkIGJlXG4gKiBpbmNsdWRlZCBpbiB0aGlzIGZpbGUuXG4gKi8iXX0= */
