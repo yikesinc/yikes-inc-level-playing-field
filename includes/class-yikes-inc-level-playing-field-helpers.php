@@ -216,16 +216,24 @@ class Yikes_Inc_Level_Playing_Field_Helper {
 	}
 
 	/**
-	 * Generate the status buttons in the admin table
-	 * @param  integer   $applicant_id   The applicant ID to retreive the status for.
-	 * @return mixed                     HTML content for the status buttns.
+	 * Return an array of appliucant status
+	 * @return  array  Array of statuses (Button Text => Button Class (.yikes-btn-CLASS))
 	 */
-	public function generate_status_buttons( $applicant_id ) {
+	public function get_applicant_statuses() {
 		$statuses = array(
 			__( 'Yes', 'yikes-inc-level-playing-field' ) => 'success',
 			__( 'No', 'yikes-inc-level-playing-field' ) => 'danger',
 			__( 'Maybe', 'yikes-inc-level-playing-field' ) => 'warning',
 		);
+		return apply_filters( 'yikes_inc_level_playing_field_applicant_statuses', $statuses );
+	}
+	/**
+	 * Generate the status buttons in the admin table
+	 * @param  integer   $applicant_id   The applicant ID to retreive the status for.
+	 * @return mixed                     HTML content for the status buttns.
+	 */
+	public function generate_status_buttons( $applicant_id ) {
+		$statuses = $this->get_applicant_statuses();
 		$applicant_status = ( get_post_meta( $applicant_id, 'applicant_status', true ) ) ? get_post_meta( $applicant_id, 'applicant_status', true ) : 'needs-review';
 		ob_start();
 		// Loop over status and create the button

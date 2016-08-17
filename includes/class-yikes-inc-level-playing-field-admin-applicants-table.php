@@ -34,20 +34,34 @@ class Link_List_Table extends WP_List_Table {
 				__( 'Sort by Jobs', 'yikes-inc-level-playing-field' ) => esc_url_raw( add_query_arg( 'view', 'sort-by-jobs', $admin_table_url ) ),
 				__( 'All Applicants', 'yikes-inc-level-playing-field' ) => esc_url_raw( add_query_arg( 'view', 'all-applicants', $admin_table_url ) ),
 			);
-			ob_start();
-			?><ul class="subsubsub"><?php
-			foreach ( $links as $link_text => $link_href ) {
-				$current = ( sanitize_title( $link_text ) === $page ) ? 'current' : '';
-				echo wp_kses_post( '<li><a class="' . esc_attr( $current ) . '" href="' . esc_attr( $link_href ) . '">' . esc_html( $link_text ) . '</a></li>' );
-				if ( $count != count( $links ) ) {
-					echo ' | ';
+			// Sub Nav - Switch Table
+			?>
+			<form id="applicants-filter" action="<?php echo admin_url( 'edit.php?post_type=jobs&page=manage-applicants&view=all-applicants' ); ?>" method="GET">
+				<ul class="subsubsub"><?php
+				foreach ( $links as $link_text => $link_href ) {
+					$current = ( sanitize_title( $link_text ) === $page ) ? 'current' : '';
+					echo wp_kses_post( '<li><a class="' . esc_attr( $current ) . '" href="' . esc_attr( $link_href ) . '">' . esc_html( $link_text ) . '</a></li>' );
+					if ( $count != count( $links ) ) {
+						echo ' | ';
+					}
+					$count++;
 				}
-				$count++;
-			}
-			?></ul><?php
-			$contents = ob_get_contents();
-			ob_get_clean();
-			echo wp_kses_post( $contents );
+				?></ul>
+				<div class="tablenav top">
+					<!-- Filtering Options -->
+					<div class="alignleft actions">
+						<?php
+							$statuses = $this->helpers->get_applicant_statuses();
+							echo '<label class="screen-reader-text" for="cat_id">' . __( 'Filter by Applicant Status' ) . '</label>';
+							echo '<select name="applicant_status" id="applicant_status" class="postform">';
+								foreach ( $statuses as $applicant_status_text => $applicant_status_class ) {
+									echo '<option value="' . strtolower( $applicant_status_text ) . '">' . $applicant_status_text . '</option>';
+								}
+							echo '</select>';
+							submit_button( __( 'Filter Applicants' ), 'button', 'filter_action', false, array( 'id' => 'post-query-submit' ) );
+						?>
+					</div>
+				<?php
 		}
 		if ( 'bottom' === $which ) {
 			//The code that goes after the table is there
