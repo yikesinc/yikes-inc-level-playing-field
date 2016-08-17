@@ -149,6 +149,13 @@ h1.job-title {
 	}
 
 /**
+ * Application Messenger Styles
+ */
+.applicant-message-box {
+	margin-bottom: 1em;
+}
+
+/**
  * Custom Button Styles (Borrowed from bootstrap)
  */
  [role="button"] {

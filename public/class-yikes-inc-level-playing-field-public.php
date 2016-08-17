@@ -264,8 +264,20 @@ class Yikes_Inc_Level_Playing_Field_Public {
 			$find[] = $this->helpers->template_path() . 'taxonomy-' . $term->taxonomy . '.php';
 			$find[] = $file;
 			$find[] = $this->helpers->template_path() . $file;
-		} elseif ( is_post_type_archive( 'product' ) ) {
-			$file 	= 'archive-product.php';
+		} elseif (
+			( isset( $_GET['job'] ) && ! empty( $_GET['job'] ) )
+			&& ( isset( $_GET['page'] ) && 'applicant-messenger' === $_GET['page'] )
+			&& ( isset( $_GET['security-key'] ) && ! empty( $_GET['security-key'] ) )
+			&& isset( $_GET['applicant'] ) && ! empty( $_GET['applicant'] ) ) {
+			// Check the security key matches what we have in the database, or abort
+			if ( get_post_meta( $_GET['applicant'], 'messenger_security_key', true ) === $_GET['security-key'] ) {
+				wp_die( __( 'It looks like the security key is invalid. Please confirm you are using the correct key, by clicking the link sent to you via email.', 'yikes-inc-level-playing-field' ) );
+				exit;
+			}
+			// Include our messenger class
+			include_once( YIKES_LEVEL_PLAYING_FIELD_PATH . 'includes/class-yikes-inc-level-playing-field-applicant-messenger.php' );
+			$applicant_messenger = new Yikes_Inc_Level_Playing_Field_Applicant_Messenger( $this->helpers, $_GET['job'], $_GET['applicant'] );
+			$file 	= 'application-messenger.php';
 			$find[] = $file;
 			$find[] = $this->helpers->template_path() . $file;
 		}
