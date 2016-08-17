@@ -204,6 +204,57 @@ class Yikes_Inc_Level_Playing_Field_Helper {
 		}
 		return $obfuscated_string;
 	}
+
+	/**
+	 * Blur a string, so admins cannot read the submitted text from the form
+	 * Note: Also add a noselect class to prevent users from being able to highlight the string
+	 * @param  string $string String of text to be obfuscated.
+	 * @return string         Obfuscated, obscured string.
+	 */
+	public function blur_string( $string ) {
+		return '<span class="blur noselect">' . $string . '</span>';
+	}
+
+	/**
+	 * Generate the status buttons in the admin table
+	 * @param  integer   $applicant_id   The applicant ID to retreive the status for.
+	 * @return mixed                     HTML content for the status buttns.
+	 */
+	public function generate_status_buttons( $applicant_id ) {
+		$statuses = array(
+			__( 'Yes', 'yikes-inc-level-playing-field' ) => 'success',
+			__( 'No', 'yikes-inc-level-playing-field' ) => 'danger',
+			__( 'Maybe', 'yikes-inc-level-playing-field' ) => 'warning',
+		);
+		$applicant_status = ( get_post_meta( $applicant_id, 'applicant_status', true ) ) ? get_post_meta( $applicant_id, 'applicant_status', true ) : 'needs-review';
+		ob_start();
+		// Loop over status and create the button
+		foreach ( $statuses as $status_btn_text => $status_btn_class ) {
+			// Setup the classes
+			$btn_classes = array(
+				'yikes-btn',
+				'yikes-btn-small',
+				'yikes-btn-' . $status_btn_class,
+			);
+			// Set the inactive class, and button calss
+			if ( strtolower( $status_btn_text ) !== $applicant_status ) {
+				$btn_classes[] = 'inactive';
+			}
+			if ( 'needs-review' !== $status_btn_text ) {
+				echo wp_kses( sprintf( '<a href="#" onclick="toggleApplicantStatus( this, %s );return false;" data-attr-status="' . strtolower( $status_btn_text ) . '" class="' . implode( ' ', $btn_classes ) . '">' . $status_btn_text . '</a>', $applicant_id  ), array(
+					'a' => array(
+						'href' => array(),
+						'onclick' => array(),
+						'data-attr-status' => array(),
+						'class' => array(),
+					),
+				) );
+			}
+		}
+		$buttons = ob_get_contents();
+		ob_get_clean();
+		return $buttons;
+	}
 }
 
 /**

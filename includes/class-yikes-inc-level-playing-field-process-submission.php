@@ -39,9 +39,6 @@ class Yikes_Inc_Level_Playing_Field_Process_Submission extends Yikes_Inc_Level_P
 			return false;
 		}
 
-		// Store an obfuscated version of this user, for reference
-		update_post_meta( $applicant, 'applicant_obfuscated_name', $this->helpers->obfuscate_string( $application_data['name'] ) );
-
 		// Unset the 'name' field and the 'submit' button
 		unset( $application_data['name'], $application_name['submit'] );
 
@@ -52,6 +49,7 @@ class Yikes_Inc_Level_Playing_Field_Process_Submission extends Yikes_Inc_Level_P
 
 		// Set the applicant to 'New', so the numbers increase in the database menu item
 		update_post_meta( $applicant, 'new_applicant', '1' );
+		update_post_meta( $applicant, 'applicant_status', 'needs-review' );
 
 		// clear our 'total_new_applicant_count' transient
 		// so the count gets updated across the site

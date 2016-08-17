@@ -61,11 +61,12 @@ class Link_List_Table extends WP_List_Table {
 	 */
 	function get_columns() {
 		return $columns = array(
-			'col_applicant_id' => __( 'ID' ),
-			'col_applicant_name' => __( 'Name' ),
-			'col_link_url' => __( 'Url' ),
-			'col_link_description' => __( 'Description' ),
-			'col_applicant_submitted_date' => __( 'Submission Date' ),
+			'col_applicant_id' => __( 'ID', 'yikes-inc-level-playing-field' ),
+			'col_applicant_name' => __( 'Name', 'yikes-inc-level-playing-field' ),
+			'col_link_url' => __( 'Url', 'yikes-inc-level-playing-field' ),
+			'col_link_description' => __( 'Description', 'yikes-inc-level-playing-field' ),
+			'col_applicant_submitted_date' => __( 'Submission Date', 'yikes-inc-level-playing-field' ),
+			'col_applicant_status' => __( 'Applicant Status', 'yikes-inc-level-playing-field' ),
 		);
 	}
 
@@ -76,7 +77,8 @@ class Link_List_Table extends WP_List_Table {
 	public function get_sortable_columns() {
 		return $sortable = array(
 			'col_applicant_id' => 'link_id',
-			'col_applicant_name' => 'link_name',
+			'col_applicant_submitted_date' => 'date',
+			'col_applicant_status' => 'applicant_status',
 		);
 	}
 
@@ -159,7 +161,7 @@ class Link_List_Table extends WP_List_Table {
 				// Open the row
 				echo '<tr id="record_' . esc_attr( $applicant->ID ) . '">';
 
-				$applicant_name = ( get_post_meta( $applicant->ID, 'applicant_obfuscated_name', true ) && ! WP_DEBUG ) ? get_post_meta( $applicant->ID, 'applicant_obfuscated_name', true ) : $applicant->post_title;
+				$applicant_name = ( $applicant->post_title && ! WP_DEBUG ) ? $this->helpers->blur_string( $applicant->post_title ) : $applicant->post_title;
 				$new_applicant_badge = ( get_post_meta( $applicant->ID, 'new_applicant', true ) ) ? $this->helpers->get_new_applicants_badge( 'user-badge' ) : '';
 
 				foreach ( $columns as $column_name => $column_display_name ) {
@@ -184,7 +186,7 @@ class Link_List_Table extends WP_List_Table {
 							echo '<td '. $attributes . '>' . esc_html( stripslashes( $applicant->ID ) ) . '</td>';
 							break;
 						case 'col_applicant_name':
-							echo '<td ' . $attributes . '>' . esc_html( stripslashes( $applicant_name ) ) . wp_kses_post( $new_applicant_badge ) . '</td>';
+							echo '<td ' . $attributes . '>' . wp_kses_post( stripslashes( $applicant_name ) . $new_applicant_badge ) . '</td>';
 							break;
 						case 'col_link_url':
 							echo '<td ' . $attributes . '>' . esc_html( stripslashes( isset( $applicant->link_url ) ? $applicant->link_url : '' ) ) . '</td>';
@@ -194,6 +196,9 @@ class Link_List_Table extends WP_List_Table {
 							break;
 						case 'col_applicant_submitted_date':
 							echo '<td ' . $attributes . '>' . esc_html( get_the_date( get_option( 'date_format' ), $applicant->ID ) ) . '</td>';
+							break;
+						case 'col_applicant_status':
+							echo '<td ' . $attributes . '>' . $this->helpers->generate_status_buttons( $applicant->ID ) . '</td>';
 							break;
 					}
 				}
