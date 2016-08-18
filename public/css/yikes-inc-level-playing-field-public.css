@@ -155,6 +155,11 @@ h1.job-title {
  * Application Messenger Styles
  */
 
+/* Avatar Images */
+body.applicant-messenger img.avatar {
+	max-width: 96px;
+}
+
 /* No conversations notice */
 body.applicant-messenger .yikes-lpf-no-messages-found {
 	font-size: 25px;

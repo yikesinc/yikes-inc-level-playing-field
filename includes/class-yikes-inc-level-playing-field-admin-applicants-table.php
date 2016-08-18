@@ -174,6 +174,7 @@ class Link_List_Table extends WP_List_Table {
 
 		//Get the records registered in the prepare_items method
 		$applicants = $this->items;
+		$job_id = ( isset( $_GET['job'] ) ) ? (int) $_GET['job'] : false;
 
 		//Get the columns registered in the get_columns and get_sortable_columns methods
 		list( $columns, $hidden ) = $this->get_column_info();
@@ -183,6 +184,9 @@ class Link_List_Table extends WP_List_Table {
 		//Loop for each record
 		if ( ! empty( $applicants ) ) {
 			foreach ( $applicants as $applicant ) {
+
+				// Setup the action links
+				$action_links = $this->get_action_links( $applicant->ID, $job_id, $this->helpers->get_applicant_status( $applicant->ID ) );
 
 				// Open the row
 				echo '<tr id="record_' . esc_attr( $applicant->ID ) . '">';
@@ -212,7 +216,7 @@ class Link_List_Table extends WP_List_Table {
 							echo '<td '. $attributes . '>' . esc_html( stripslashes( $applicant->ID ) ) . '</td>';
 							break;
 						case 'col_applicant_name':
-							echo '<td ' . $attributes . '>' . wp_kses_post( stripslashes( $applicant_name ) . $new_applicant_badge ) . '</td>';
+							echo '<td ' . $attributes . '>' . wp_kses_post( stripslashes( $applicant_name ) . $new_applicant_badge . $action_links ) . '</td>';
 							break;
 						case 'col_link_url':
 							echo '<td ' . $attributes . '>' . esc_html( stripslashes( isset( $applicant->link_url ) ? $applicant->link_url : '' ) ) . '</td>';
@@ -233,5 +237,48 @@ class Link_List_Table extends WP_List_Table {
 				echo'</tr>';
 			}
 		}
+	}
+
+	/**
+	 * Get the action links to use on this page
+	 * @return mixed HTML content of the action links
+	 */
+	function get_action_links( $applicant_id, $job_id, $applicant_status ) {
+		$action_link_array = array(
+			__( 'View', 'yikes-inc-level-playing-field' ) => ( $applicant_status === 'needs-review' ) ? add_query_arg( array(
+				'job' => $applicant_id,
+			), admin_url( 'edit.php?post_type=jobs&page=manage-applicants&view=all-applicants' ) ) : 'disabled',
+			__( 'Message', 'yikes-inc-level-playing-field' ) => add_query_arg( array(
+				'page' => 'applicant-messenger',
+				'job' => $job_id,
+				'applicant' => $applicant_id,
+				'security-key' => get_post_meta( $applicant_id, 'messenger_security_key', true ),
+			), home_url() ),
+			__( 'Delete', 'yikes-inc-level-playing-field' ) => add_query_arg( array(
+				'post' => $applicant_id,
+				'action' => 'delete-applicant',
+			), admin_url( 'post.php' ) ),
+		);
+		$count = 1;
+		ob_start();
+		?>
+		<div class="row-actions">
+			<?php
+			foreach( $action_link_array as $action_link_text => $action_link_href ) {
+				$divider = ( $count < count( $action_link_array ) ) ? ' | ' : '';
+				$action_link_class = ( 'Delete' === $action_link_text ) ? 'submitdelete' : '';
+				if ( 'disabled' === $action_link_href ) {
+					echo wp_kses_post( '<span class="' . sanitize_title( $action_link_text ) . '"><a href="#" onclick="return false;" disabled="disabled" class="disabled-action-link">' . $action_link_text . '</a></span>' . $divider );
+				} else {
+					echo wp_kses_post( '<span class="' . sanitize_title( $action_link_text ) . '"><a href="' . $action_link_href . '" class="' . $action_link_class . '">' . $action_link_text . '</a></span>' . $divider );
+				}
+				$count++;
+			}
+			?>
+		</div>
+		<?php
+		$content = ob_get_contents();
+		ob_get_clean();
+		return $content;
 	}
 }

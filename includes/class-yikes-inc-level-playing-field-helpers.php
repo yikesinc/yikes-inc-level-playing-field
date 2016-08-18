@@ -182,11 +182,11 @@ class Yikes_Inc_Level_Playing_Field_Helper {
 			case 'default':
 			case 'total':
 				$btn_text = sprintf( _n( '%s New Applicant', '%s New Applicants', $count, 'yikes-inc-level-playing-field' ), $count );
-				return '<span class="new-applicant-count-badge" title="' . $btn_text . '">' . $btn_text . '</div>';
+				return '<span class="new-applicant-count-badge" title="' . $btn_text . '">' . $btn_text . '</span>';
 				break;
 			case 'user-badge':
 				$btn_text = __( 'New Applicant', 'yikes-inc-level-playing-field' );
-				return '<span class="new-applicant-count-badge" title="' . $btn_text . '">' . $btn_text . '</div>';
+				return '<span class="new-applicant-count-badge" title="' . $btn_text . '">' . $btn_text . '</span>';
 				break;
 		}
 	}
@@ -234,6 +234,7 @@ class Yikes_Inc_Level_Playing_Field_Helper {
 		);
 		return apply_filters( 'yikes_inc_level_playing_field_applicant_statuses', $statuses );
 	}
+
 	/**
 	 * Generate the status buttons in the admin table
 	 * @param  integer   $applicant_id   The applicant ID to retreive the status for.
@@ -274,12 +275,59 @@ class Yikes_Inc_Level_Playing_Field_Helper {
 	}
 
 	/**
+	 * Generate the status buttons in the admin table
+	 * @param  integer   $applicant_id   The applicant ID to retreive the status for.
+	 * @return mixed                     HTML content for the status buttns.
+	 */
+	public function get_applicant_status( $applicant_id ) {
+		if ( get_post_meta( $applicant_id, 'new_applicant', true ) ) {
+			return 'needs-review';
+		}
+		$statuses = $this->get_applicant_statuses();
+		$applicant_status = ( get_post_meta( $applicant_id, 'applicant_status', true ) ) ? get_post_meta( $applicant_id, 'applicant_status', true ) : 'needs-review';
+		return $applicant_status;
+	}
+
+	/**
 	 * Generate a new security key for the post messenger
 	 * @return [type] [description]
 	 */
 	public function generate_new_messenger_security_key( $security_key = false ) {
 		$security_key = ( $security_key ) ? $security_key : 'jkehafheaufheakefkaefaw';
 		return $this->obfuscate_string( $security_key );
+	}
+
+	/**
+	 * Send an API request to avatars.adorable.io to retreive an avatar for this user
+	 * @return URL to store in the database to reference for future use.
+	 */
+	public function generate_user_avatar() {
+		$base_url = 'https://api.adorable.io/avatars/face/';
+		$eyes_array = array();
+		$nose_array = array();
+		$mouth_array = array();
+		for( $x = 1; $x <= 10; $x++ ) {
+			$eyes_array[] = 'eyes' . $x;
+			$nose_array[] = 'nose' . $x;
+			$mouth_array[] = 'mouth' . $x;
+		}
+		return $base_url . $eyes_array[ array_rand( $eyes_array, 1 ) ] . '/' . $nose_array[ array_rand( $nose_array, 1 ) ] . '/' . $mouth_array[ array_rand( $mouth_array, 1 ) ] . '/' . $this->random_hex_color();
+	}
+
+	/**
+	 * Generate a random RGB number
+	 * @return string RGB color value, to be used when converting to hex
+	 */
+	public function random_rgb_color_part() {
+		return str_pad( dechex( mt_rand( 0, 255 ) ), 2, '0', STR_PAD_LEFT);
+	}
+
+	/**
+	 * [random_hex_color description]
+	 * @return [type] [description]
+	 */
+	public function random_hex_color() {
+		return $this->random_rgb_color_part() . $this->random_rgb_color_part() . $this->random_rgb_color_part();
 	}
 }
 
@@ -431,6 +479,10 @@ if ( ! function_exists( 'yikes_format_money' ) ) {
 	* @return int        Final formatted value for the money.
 	*/
 	function yikes_format_money( $value ) {
+		// if the value is not set, abort
+		if ( ! $value ) {
+			return;
+		}
 		// If the PHP function money_format() exists...
 		if ( function_exists( 'money_format' ) ) {
 			// Set the locale based on the WordPress settings

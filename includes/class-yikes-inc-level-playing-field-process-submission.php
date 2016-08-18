@@ -54,6 +54,9 @@ class Yikes_Inc_Level_Playing_Field_Process_Submission extends Yikes_Inc_Level_P
 		// Generate a messenger security key on initial creation
 		update_post_meta( $applicant, 'messenger_security_key', $this->helpers->generate_new_messenger_security_key() );
 
+		// Assign an avatar to this user
+		update_post_meta( $applicant, 'applicant_avatar', $this->helpers->generate_user_avatar() );
+
 		// clear our 'total_new_applicant_count' transient
 		// so the count gets updated across the site
 		delete_transient( 'total_new_applicant_count' );

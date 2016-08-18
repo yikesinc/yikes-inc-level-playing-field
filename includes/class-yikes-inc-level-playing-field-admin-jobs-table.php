@@ -236,9 +236,9 @@ class Link_List_Table extends WP_List_Table {
 			foreach( $action_link_array as $action_link_text => $action_link_href ) {
 				$divider = ( $count < count( $action_link_array ) ) ? ' | ' : '';
 				if ( 'disabled' === $action_link_href ) {
-					echo wp_kses_post( '<a href="#" onclick="return false;" disabled="disabled" class="disabled-action-link">' . $action_link_text . '</a>' . $divider );
+					echo wp_kses_post( '<span class="' . sanitize_title( $action_link_text ) . '"><a href="#" onclick="return false;" disabled="disabled" class="disabled-action-link">' . $action_link_text . '</a></span>' . $divider );
 				} else {
-					echo wp_kses_post( '<a href="' . $action_link_href . '">' . $action_link_text . '</a>' . $divider );
+					echo wp_kses_post( '<span class="' . sanitize_title( $action_link_text ) . '"><a href="' . $action_link_href . '">' . $action_link_text . '</a></span>' . $divider );
 				}
 				$count++;
 			}

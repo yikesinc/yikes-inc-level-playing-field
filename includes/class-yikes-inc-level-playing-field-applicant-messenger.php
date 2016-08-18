@@ -106,14 +106,22 @@ class Yikes_Inc_Level_Playing_Field_Applicant_Messenger {
 			<?php
 			return;
 		}
+
+		// $user_avatar = ( get_post_meta( $this->applicant_id, 'applicant_avatar', true ) ) ? get_post_meta( $this->applicant_id, 'applicant_avatar', true )
+
 		foreach ( $conversation[ $this->job_id ][ $this->applicant_id ] as $message_position => $message_data ) {
-			$admin_user = ( user_can( (int) $message_data['user'], 'manage_options' ) ) ? get_userdata( $message_data['user'] ) : false;
+			$is_admin = ( strpos( $message_data['user'], '-admin' ) > 0 ) ? true : false;
 			// This is an admin user
-			if ( is_object( $admin_user ) ) {
+			if ( $is_admin ) {
+				$admin_user = get_userdata( str_replace( '-admin', '', $message_data['user'] ) );
 				$user_name = ( isset( $admin_user->user_nicename ) ) ? $admin_user->user_nicename : __( 'Administrator', 'yikes-inc-level-playing-field' );
+				$avatar = get_avatar( $admin_user->user_email, 96, false, __( 'Admin Avatar', 'yikes-inc-level-playing-field' ), array(
+					'class' => 'avatar admin',
+				) );
 			} else {
 				$user_object = get_post( (int) $message_data['user'] );
 				$user_name = ( isset( $user_object->post_title ) ) ? $user_object->post_title : __( 'Applicant', 'yikes-inc-level-playing-field' );
+				$avatar = '<img title="' . esc_attr_e( 'Applicant Avatar', 'yikes-inc-level-playing-field' ) . '" class="avatar applicant" src="' . esc_url( get_post_meta( $this->applicant_id, 'applicant_avatar', true ) ) . '">';
 			}
 			?>
 			<ul>
@@ -121,16 +129,9 @@ class Yikes_Inc_Level_Playing_Field_Applicant_Messenger {
 				<li>Sent On: <?php echo date( 'm/d/Y', $message_data['timestamp'] ) . ' at ' . date( 'h:iA', $message_data['timestamp'] ); ?></li>
 				<li>Sent By: <?php echo esc_html( ucfirst( $user_name ) ); ?></li>
 				<li>Message: <?php echo $message_data['message']; ?></li>
+				<li>Avatar: <?php echo $avatar; ?></li>
 			</ul>
 			<?php
 		}
-	}
-
-	/**
-	 * Function to send messages back and forth
-	 * @since 1.0.0
-	 */
-	public function send_applicant_message() {
-
 	}
 }

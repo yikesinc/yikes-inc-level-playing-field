@@ -278,7 +278,16 @@ class Yikes_Inc_Level_Playing_Field_Public {
 			&& isset( $_GET['applicant'] ) && ! empty( $_GET['applicant'] ) ) {
 			// Check the security key matches what we have in the database, or abort
 			if ( get_post_meta( $_GET['applicant'], 'messenger_security_key', true ) !== $_GET['security-key'] ) {
-				wp_die( esc_attr__( 'It looks like the security key is invalid. Please confirm you are using the correct key, by clicking the link sent to you via email.', 'yikes-inc-level-playing-field' ) );
+				// generate a link allowing users to re-send themself a link to the conversation.
+				$resend_notice_link = add_query_arg( array(
+					'action' => 'resend_conversation_link',
+					'applicant' => (int) $_GET['applicant'],
+					'job' => (int) $_GET['job'],
+					'security-key' => get_post_meta( (int) $_GET['applicant'], 'messenger_security_key', true ),
+				), home_url() );
+				wp_die(
+					sprintf( esc_attr__( 'It looks like the security key is invalid. Please confirm you are using the correct key, by clicking the link sent to you via email. %s', 'yikes-inc-level-playing-field' ), '<a href="' . esc_url( $resend_notice_link ) . '" class="button-secondary">' . __( 'Re-send Conversation Link', 'yikes-inc-level-playing-field' ) . '</a>' )
+				);
 				exit;
 			}
 			// Include our messenger class
@@ -335,8 +344,13 @@ class Yikes_Inc_Level_Playing_Field_Public {
 		if ( ! isset( $_POST['send_message'] ) ) {
 			return;
 		}
+
+		// Store the job and applicant IDs
+		$job_id = absint( $_POST['job'] );
+		$applicant_id = absint( $_POST['applicant'] );
+
 		// Nonce/Security check failed
-		if ( ! wp_verify_nonce( $_POST[ 'send_message_' . (int) $_POST['job'] . '_' . (int) $_POST['applicant'] ], 'send_message' ) ) {
+		if ( ! wp_verify_nonce( $_POST[ 'send_message_' . $job_id . '_' . $applicant_id ], 'send_message' ) ) {
 			$this->error = true;
 			$this->response = __( 'Security check failed. Please refresh this page and try again.', 'yikes-inc-level-playing-field' );
 			return;
@@ -349,31 +363,33 @@ class Yikes_Inc_Level_Playing_Field_Public {
 		}
 
 		// Unset the nonce, since we no longer need it
-		unset( $_POST[ 'send_message_' . (int) $_POST['job'] . '_' . (int) $_POST['applicant'] ], $_POST['_wp_http_referer'] );
+		unset( $_POST[ 'send_message_' . $job_id . '_' . $applicant_id ], $_POST['_wp_http_referer'] );
 
 		// Setup the new message data, and the responses
 		$new_data = array(
 			'timestamp' => current_time( 'timestamp' ),
-			'user' => ( is_user_logged_in() ) ? get_current_user_ID() : (int) $_POST['applicant'],
+			'user' => ( is_user_logged_in() ) ? get_current_user_ID() . '-admin' : $applicant_id,
 			'message' => sanitize_text_field( $_POST['applicant_message'] ),
 		);
 		// If old data was previously stored, we need to append it
-		if ( get_post_meta( (int) $_POST['applicant'], 'applicant_conversation', true ) ) {
-			$new_message_data = get_post_meta( (int) $_POST['applicant'], 'applicant_conversation', true );
+		if ( get_post_meta( $applicant_id, 'applicant_conversation', true ) ) {
+			$new_message_data = get_post_meta( $applicant_id, 'applicant_conversation', true );
 		}
 		// Setup the final array to sore
-		$new_message_data[ (int) $_POST['job'] ][ (int) $_POST['applicant'] ][] = $new_data;
+		$new_message_data[ $job_id ][ $applicant_id ][] = $new_data;
 
 		// The messages are stored in the applicants post type meta data (nested in a multi-dimensional array under the JOB ID)
-		if ( ! update_post_meta( (int) $_POST['applicant'], 'applicant_conversation', $new_message_data ) ) {
-			$old_security_key = ( get_post_meta( (int) $_POST['applicant'], 'messenger_security_key', true ) ) ? get_post_meta( (int) $_POST['applicant'], 'messenger_security_key', true ) : '123';
-			wp_redirect( add_query_arg( array( 'message-sent' => 'false' ), site_url( '?page=applicant-messenger&job=' . $_POST['job'] . '&security-key=123&applicant=' . $_POST['applicant'] ) ) );
+		if ( ! update_post_meta( $applicant_id, 'applicant_conversation', $new_message_data ) ) {
+			$old_security_key = ( get_post_meta( $applicant_id, 'messenger_security_key', true ) ) ? get_post_meta( $applicant_id, 'messenger_security_key', true ) : '123';
+			wp_redirect( add_query_arg( array( 'message-sent' => 'false' ), site_url( '?page=applicant-messenger&job=' . $job_id . '&security-key=123&applicant=' . $applicant_id ) ) );
 			exit;
 		}
 		// Update the security key
 		$new_security_key = $this->helpers->generate_new_messenger_security_key();
-		update_post_meta( (int) $_POST['applicant'], 'messenger_security_key', $new_security_key );
-		wp_redirect( add_query_arg( array( 'message-sent' => 'true' ), site_url( '?page=applicant-messenger&job=' . $_POST['job'] . '&security-key=' . $new_security_key . '&applicant=' . $_POST['applicant'] ) ) );
+		update_post_meta( $applicant_id, 'messenger_security_key', $new_security_key );
+
+		// Redirect the user, display the message (This prevents page refreshes from re-sending messages)
+		wp_redirect( add_query_arg( array( 'message-sent' => 'true' ), site_url( '?page=applicant-messenger&job=' . $job_id . '&security-key=' . $new_security_key . '&applicant=' . $applicant_id ) ) );
 		exit;
 	}
 	/**
