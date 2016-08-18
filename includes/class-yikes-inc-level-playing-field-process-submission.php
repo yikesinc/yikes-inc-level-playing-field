@@ -44,12 +44,15 @@ class Yikes_Inc_Level_Playing_Field_Process_Submission extends Yikes_Inc_Level_P
 
 		// Loop over applicant data and store the meta
 		foreach ( $application_data as $application_data_key => $application_data_value ) {
-			update_post_meta( $applicant, $application_data_key, $application_data_value );
+			update_post_meta( $applicant, $application_data_key, sanitize_text_field( $application_data_value ) );
 		}
 
 		// Set the applicant to 'New', so the numbers increase in the database menu item
 		update_post_meta( $applicant, 'new_applicant', '1' );
 		update_post_meta( $applicant, 'applicant_status', 'needs-review' );
+
+		// Generate a messenger security key on initial creation
+		update_post_meta( $applicant, 'messenger_security_key', $this->helpers->generate_new_messenger_security_key() );
 
 		// clear our 'total_new_applicant_count' transient
 		// so the count gets updated across the site

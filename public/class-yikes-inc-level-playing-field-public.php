@@ -76,8 +76,15 @@ class Yikes_Inc_Level_Playing_Field_Public {
 		/* Process Form Submissions */
 		add_action( 'init', array( $this, 'process_application_submission' ) );
 
-		/* Render Job Submission Response */
+		// Process Submissions
+		add_action( 'init', array( $this, 'process_applicant_messenger_message_sending' ) );
+
+		/* Render Submission Response */
 		add_action( 'yikes_level_playing_field_before_single_job', array( $this, 'generate_application_submission_response' ), 10 );
+
+		/* Render the message sent response */
+		add_action( 'yikes_level_playing_field_before_applicant_messenger', array( $this, 'generate_message_submission_response' ), 10 );
+		add_action( 'yikes_level_playing_field_before_applicant_messenger', array( $this, 'generate_application_submission_response' ), 10 );
 	}
 
 	/**
@@ -270,14 +277,14 @@ class Yikes_Inc_Level_Playing_Field_Public {
 			&& ( isset( $_GET['security-key'] ) && ! empty( $_GET['security-key'] ) )
 			&& isset( $_GET['applicant'] ) && ! empty( $_GET['applicant'] ) ) {
 			// Check the security key matches what we have in the database, or abort
-			if ( get_post_meta( $_GET['applicant'], 'messenger_security_key', true ) === $_GET['security-key'] ) {
-				wp_die( __( 'It looks like the security key is invalid. Please confirm you are using the correct key, by clicking the link sent to you via email.', 'yikes-inc-level-playing-field' ) );
+			if ( get_post_meta( $_GET['applicant'], 'messenger_security_key', true ) !== $_GET['security-key'] ) {
+				wp_die( esc_attr__( 'It looks like the security key is invalid. Please confirm you are using the correct key, by clicking the link sent to you via email.', 'yikes-inc-level-playing-field' ) );
 				exit;
 			}
 			// Include our messenger class
 			include_once( YIKES_LEVEL_PLAYING_FIELD_PATH . 'includes/class-yikes-inc-level-playing-field-applicant-messenger.php' );
 			$applicant_messenger = new Yikes_Inc_Level_Playing_Field_Applicant_Messenger( $this->helpers, $_GET['job'], $_GET['applicant'] );
-			$file 	= 'application-messenger.php';
+			$file 	= 'applicant-messenger.php';
 			$find[] = $file;
 			$find[] = $this->helpers->template_path() . $file;
 		}
@@ -320,6 +327,56 @@ class Yikes_Inc_Level_Playing_Field_Public {
 	}
 
 	/**
+	 * Process the data submitted when a user submits a message via the messenger
+	 * @return true/false
+	 */
+	public function process_applicant_messenger_message_sending() {
+		// If a message wasn't sent, abort
+		if ( ! isset( $_POST['send_message'] ) ) {
+			return;
+		}
+		// Nonce/Security check failed
+		if ( ! wp_verify_nonce( $_POST[ 'send_message_' . (int) $_POST['job'] . '_' . (int) $_POST['applicant'] ], 'send_message' ) ) {
+			$this->error = true;
+			$this->response = __( 'Security check failed. Please refresh this page and try again.', 'yikes-inc-level-playing-field' );
+			return;
+		}
+
+		if ( '' === trim( $_POST['applicant_message'] ) ) {
+			$this->error = true;
+			$this->response = __( 'Please enter a message in the textbox below.', 'yikes-inc-level-playing-field' );
+			return;
+		}
+
+		// Unset the nonce, since we no longer need it
+		unset( $_POST[ 'send_message_' . (int) $_POST['job'] . '_' . (int) $_POST['applicant'] ], $_POST['_wp_http_referer'] );
+
+		// Setup the new message data, and the responses
+		$new_data = array(
+			'timestamp' => current_time( 'timestamp' ),
+			'user' => ( is_user_logged_in() ) ? get_current_user_ID() : (int) $_POST['applicant'],
+			'message' => sanitize_text_field( $_POST['applicant_message'] ),
+		);
+		// If old data was previously stored, we need to append it
+		if ( get_post_meta( (int) $_POST['applicant'], 'applicant_conversation', true ) ) {
+			$new_message_data = get_post_meta( (int) $_POST['applicant'], 'applicant_conversation', true );
+		}
+		// Setup the final array to sore
+		$new_message_data[ (int) $_POST['job'] ][ (int) $_POST['applicant'] ][] = $new_data;
+
+		// The messages are stored in the applicants post type meta data (nested in a multi-dimensional array under the JOB ID)
+		if ( ! update_post_meta( (int) $_POST['applicant'], 'applicant_conversation', $new_message_data ) ) {
+			$old_security_key = ( get_post_meta( (int) $_POST['applicant'], 'messenger_security_key', true ) ) ? get_post_meta( (int) $_POST['applicant'], 'messenger_security_key', true ) : '123';
+			wp_redirect( add_query_arg( array( 'message-sent' => 'false' ), site_url( '?page=applicant-messenger&job=' . $_POST['job'] . '&security-key=123&applicant=' . $_POST['applicant'] ) ) );
+			exit;
+		}
+		// Update the security key
+		$new_security_key = $this->helpers->generate_new_messenger_security_key();
+		update_post_meta( (int) $_POST['applicant'], 'messenger_security_key', $new_security_key );
+		wp_redirect( add_query_arg( array( 'message-sent' => 'true' ), site_url( '?page=applicant-messenger&job=' . $_POST['job'] . '&security-key=' . $new_security_key . '&applicant=' . $_POST['applicant'] ) ) );
+		exit;
+	}
+	/**
 	 * Generate the success/error responses
 	 * @return [type] [description]
 	 */
@@ -330,7 +387,6 @@ class Yikes_Inc_Level_Playing_Field_Public {
 				echo '<p class="submission-response error">' . esc_html( $this->response ) . '</p>';
 				return;
 			}
-			echo 'Error';
 		}
 		// Success
 		if ( $this->success ) {
@@ -338,7 +394,24 @@ class Yikes_Inc_Level_Playing_Field_Public {
 				echo '<p class="submission-response success">' . esc_html( $this->response ) . '</p>';
 				return;
 			}
-			echo 'Success';
 		}
+	}
+
+	/**
+	 * Generate a response after the user attempts to submit the form
+	 * @return mixed HTML content displayed back tot he user 'success/error'
+	 * @since 1.0.0
+	 */
+	function generate_message_submission_response() {
+		// If the message was not ever sent, abort.
+		if ( ! isset( $_GET['message-sent'] ) ) {
+			return;
+		}
+		$success = ( isset( $_GET['message-sent'] ) && 'true' === $_GET['message-sent'] ) ? true : false;
+		if ( ! $success ) {
+			echo '<p class="submission-response error">' . esc_html( $this->response ) . '</p>';
+			return;
+		}
+		echo '<p class="submission-response success">' . esc_html__( 'Your message has been successfully sent.', 'yikes-inc-level-playing-field' ) . '</p>';
 	}
 }

@@ -197,6 +197,10 @@ class Yikes_Inc_Level_Playing_Field_Helper {
 	 * @return string         Obfuscated, obscured string.
 	 */
 	public function obfuscate_string( $string ) {
+		// No string passed in? Abort
+		if ( ! $string ) {
+			return;
+		}
 		// Get the string length, so we can return the same length
 		$string_length = strlen( $string );
 		// Random set of characters to use in our obfuscation
@@ -267,6 +271,15 @@ class Yikes_Inc_Level_Playing_Field_Helper {
 		$buttons = ob_get_contents();
 		ob_get_clean();
 		return $buttons;
+	}
+
+	/**
+	 * Generate a new security key for the post messenger
+	 * @return [type] [description]
+	 */
+	public function generate_new_messenger_security_key( $security_key = false ) {
+		$security_key = ( $security_key ) ? $security_key : 'jkehafheaufheakefkaefaw';
+		return $this->obfuscate_string( $security_key );
 	}
 }
 
