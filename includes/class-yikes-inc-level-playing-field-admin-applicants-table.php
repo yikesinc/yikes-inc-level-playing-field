@@ -306,6 +306,7 @@ class Link_List_Table extends WP_List_Table {
 		}
 
 		// If the delete bulk action is triggered
+		/*
 		if ( ( isset( $_POST['action'] ) && $_POST['action'] == 'bulk-delete' )
 			|| ( isset( $_POST['action2'] ) && $_POST['action2'] == 'bulk-delete' )
 		) {
@@ -317,6 +318,7 @@ class Link_List_Table extends WP_List_Table {
 			wp_redirect( esc_url( add_query_arg() ) );
 			exit;
 		}
+		*/
 	}
 
 }
