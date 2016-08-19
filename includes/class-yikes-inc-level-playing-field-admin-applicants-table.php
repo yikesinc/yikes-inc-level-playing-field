@@ -14,14 +14,15 @@ class Link_List_Table extends WP_List_Table {
 	*/
 	function __construct( $helpers ) {
 		$this->helpers = $helpers;
+		$this->process_bulk_action();
 		parent::__construct( array(
-			'singular' => 'wp_list_text_link', // Singular label
-			'plural'   => 'wp_list_test_links', // Plural label, also this well be one of the table css class
+			'singular' => __( 'Applicant', 'yikes-inc-level-playing-field' ), // Singular label
+			'plural'   => __( 'Applicants', 'yikes-inc-level-playing-field' ), // Plural label, also this well be one of the table css class
 			'ajax'     => false, // We won't support Ajax for this table
 		) );
 	}
 
-		/**
+	/**
 	 * Add extra markup in the toolbars before or after the list
 	 * @param string $which, helps you decide if you add the markup after (bottom) or before (top) the list
 	 */
@@ -254,16 +255,17 @@ class Link_List_Table extends WP_List_Table {
 				'applicant' => $applicant_id,
 			), get_the_permalink( $applicant_id ) ),
 			__( 'Delete', 'yikes-inc-level-playing-field' ) => add_query_arg( array(
-				'post' => $applicant_id,
+				'applicant' => $applicant_id,
 				'action' => 'delete-applicant',
-			), admin_url( 'post.php' ) ),
+				'_wpnonce' => wp_create_nonce( 'yikes_delete_applicant' ),
+			), admin_url( 'edit.php?post_type=jobs&page=manage-applicants&view=all-applicants&job=' . $job_id ) ),
 		);
 		$count = 1;
 		ob_start();
 		?>
 		<div class="row-actions">
 			<?php
-			foreach( $action_link_array as $action_link_text => $action_link_href ) {
+			foreach ( $action_link_array as $action_link_text => $action_link_href ) {
 				$divider = ( $count < count( $action_link_array ) ) ? ' | ' : '';
 				$action_link_class = ( 'Delete' === $action_link_text ) ? 'submitdelete' : '';
 				if ( 'disabled' === $action_link_href ) {
@@ -280,4 +282,41 @@ class Link_List_Table extends WP_List_Table {
 		ob_get_clean();
 		return $content;
 	}
+
+	/**
+	 * Handle the delete applicant action
+	 * @return boolean true/false on completion
+	 */
+	public function process_bulk_action() {
+		if ( ! isset( $_GET['action'] ) || 'delete-applicant' !== esc_attr( $_GET['action'] ) ) {
+			return;
+		}
+		//Detect when a bulk action is being triggered...
+		if ( 'delete-applicant' === $_GET['action'] ) {
+			// In our file that handles the request, verify the nonce.
+			$nonce = esc_attr( $_REQUEST['_wpnonce'] );
+
+			if ( ! wp_verify_nonce( $nonce, 'yikes_delete_applicant' ) ) {
+				die( 'Get a life script kiddie :)' );
+			} else {
+				self::delete_applicant( absint( $_GET['applicant'] ) );
+				wp_redirect( esc_url( add_query_arg() ) );
+				exit;
+			}
+		}
+
+		// If the delete bulk action is triggered
+		if ( ( isset( $_POST['action'] ) && $_POST['action'] == 'bulk-delete' )
+			|| ( isset( $_POST['action2'] ) && $_POST['action2'] == 'bulk-delete' )
+		) {
+			$delete_ids = esc_sql( $_POST['bulk-delete'] );
+			// loop over the array of record IDs and delete them
+			foreach ( $delete_ids as $id ) {
+				self::delete_applicant( $id );
+			}
+			wp_redirect( esc_url( add_query_arg() ) );
+			exit;
+		}
+	}
+
 }

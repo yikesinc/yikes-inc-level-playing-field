@@ -142,6 +142,10 @@ class Yikes_Inc_Level_Playing_Field_Applicant_Messenger {
 	 * @return mixed HTML content for the password protection form
 	 */
 	public function generate_the_application_messenger_password_form() {
+		if ( current_user_can( 'manage_options' ) ) :
+			return;
+		endif;
+		// if the password is required, display it
 		if ( post_password_required() ) :
 			echo get_the_password_form();
 			get_footer();

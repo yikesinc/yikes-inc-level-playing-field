@@ -68,6 +68,9 @@ class Yikes_Inc_Level_Playing_Field_Admin {
 
 		/* Alter the applicant status when the button is clicked */
 		add_action( 'wp_ajax_update_applicant_status', array( $this, 'update_applicant_status' ) );
+
+		/* Handle deleting an applicant from the database */
+		add_action( 'admin_init', array( $this, 'delete_applicant_from_db' ) );
 	}
 
 	/**
@@ -145,5 +148,37 @@ class Yikes_Inc_Level_Playing_Field_Admin {
 		delete_post_meta( $applicant_id, 'new_applicant' );
 
 		return wp_send_json_success();
+	}
+
+	/**
+	 * Delete an applicant from the database
+	 * @return redirect the user after action is taken
+	 */
+	public function delete_applicant_from_db() {
+		if ( ! isset( $_GET['action'] ) || 'delete-applicant' !== esc_attr( $_GET['action'] ) ) {
+			return;
+		}
+		// Detect when our delete action is triggered
+		if ( 'delete-applicant' === $_GET['action'] ) {
+			// In our file that handles the request, verify the nonce.
+			$nonce = esc_attr( $_REQUEST['_wpnonce'] );
+			// verify the nonce
+			if ( ! wp_verify_nonce( $nonce, 'yikes_delete_applicant' ) ) {
+				wp_die( 'Get a life script kiddie :)' );
+				exit;
+			} else {
+				// delete an applicant
+				$deleted_post = ( ! $this->helpers->delete_applicant( absint( $_GET['applicant'] ) ) ) ? false : true;
+				// redirect back to the list table
+				wp_redirect( esc_url_raw( add_query_arg( array(
+					'post_type' => 'jobs',
+					'page' => 'manage-applicants',
+					'view' => 'all-applicants',
+					'job' => absint( $_GET['job' ] ),
+					'applicant-deleted' => $deleted_post,
+				), admin_url( 'edit.php' ) ) ) );
+				exit;
+			}
+		}
 	}
 }

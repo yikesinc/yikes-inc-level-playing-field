@@ -319,15 +319,25 @@ class Yikes_Inc_Level_Playing_Field_Helper {
 	 * @return string RGB color value, to be used when converting to hex
 	 */
 	public function random_rgb_color_part() {
-		return str_pad( dechex( mt_rand( 0, 255 ) ), 2, '0', STR_PAD_LEFT);
+		return str_pad( dechex( mt_rand( 0, 255 ) ), 2, '0', STR_PAD_LEFT );
 	}
 
 	/**
-	 * [random_hex_color description]
-	 * @return [type] [description]
+	 * Generate a hex value
+	 * @return string hex value eg: FFF
 	 */
 	public function random_hex_color() {
 		return $this->random_rgb_color_part() . $this->random_rgb_color_part() . $this->random_rgb_color_part();
+	}
+
+	/**
+	 * Delete an applicant from the database
+	 * @param  integer $applicant_id [description]
+	 * @return boolean True/False on action completion.
+	 * @since 1.0.0
+	 */
+	public function delete_applicant( $applicant_id ) {
+		return wp_delete_post( $applicant_id );
 	}
 }
 
