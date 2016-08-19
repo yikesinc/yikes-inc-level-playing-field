@@ -20,6 +20,7 @@ get_header( 'applicant-messenger' );
 /**
  * yikes_level_playing_field_before_application_messenger hook.
  *
+ * @hooked generate_application_password_form - 5
  * @hooked generate_application_submission_response - 10
  */
 do_action( 'yikes_level_playing_field_before_applicant_messenger' );

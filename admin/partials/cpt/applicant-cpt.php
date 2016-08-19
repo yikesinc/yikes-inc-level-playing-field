@@ -36,6 +36,7 @@ function generate_applicant_cpt() {
 		'public'                => true,
 		'show_ui'               => false,
 		'show_in_menu'          => 'edit.php?post_type=jobs',
+		'rewrite'								=> array( 'slug' => 'applicant' ), // set the slug to applicant, instead of applicants
 		'menu_position'         => 5,
 		'show_in_admin_bar'     => false,
 		'show_in_nav_menus'     => false,

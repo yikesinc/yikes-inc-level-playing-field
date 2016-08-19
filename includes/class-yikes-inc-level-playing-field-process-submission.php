@@ -27,6 +27,8 @@ class Yikes_Inc_Level_Playing_Field_Process_Submission extends Yikes_Inc_Level_P
 		// Create post object
 		$new_applicant = array(
 			'post_title'    => wp_strip_all_tags( $application_data['name'] ),
+			'post_name' => $this->helpers->obfuscate_string( 'user_name' ), // set the applicant slug to a random string/number
+			'post_password' => $this->helpers->obfuscate_string( '123456789123456789' ), // Generate a random character password for this post (18 characters)
 			'post_type'			=> 'applicants',
 			'post_status'   => 'publish',
 		);
@@ -50,9 +52,6 @@ class Yikes_Inc_Level_Playing_Field_Process_Submission extends Yikes_Inc_Level_P
 		// Set the applicant to 'New', so the numbers increase in the database menu item
 		update_post_meta( $applicant, 'new_applicant', '1' );
 		update_post_meta( $applicant, 'applicant_status', 'needs-review' );
-
-		// Generate a messenger security key on initial creation
-		update_post_meta( $applicant, 'messenger_security_key', $this->helpers->generate_new_messenger_security_key() );
 
 		// Assign an avatar to this user
 		update_post_meta( $applicant, 'applicant_avatar', $this->helpers->generate_user_avatar() );

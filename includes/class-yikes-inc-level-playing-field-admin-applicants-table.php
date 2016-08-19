@@ -252,8 +252,7 @@ class Link_List_Table extends WP_List_Table {
 				'page' => 'applicant-messenger',
 				'job' => $job_id,
 				'applicant' => $applicant_id,
-				'security-key' => get_post_meta( $applicant_id, 'messenger_security_key', true ),
-			), home_url() ),
+			), get_the_permalink( $applicant_id ) ),
 			__( 'Delete', 'yikes-inc-level-playing-field' ) => add_query_arg( array(
 				'post' => $applicant_id,
 				'action' => 'delete-applicant',

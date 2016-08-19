@@ -83,8 +83,8 @@ class Yikes_Inc_Level_Playing_Field_Public {
 		add_action( 'yikes_level_playing_field_before_single_job', array( $this, 'generate_application_submission_response' ), 10 );
 
 		/* Render the message sent response */
-		add_action( 'yikes_level_playing_field_before_applicant_messenger', array( $this, 'generate_message_submission_response' ), 10 );
 		add_action( 'yikes_level_playing_field_before_applicant_messenger', array( $this, 'generate_application_submission_response' ), 10 );
+		add_action( 'yikes_level_playing_field_before_applicant_messenger', array( $this, 'generate_message_submission_response' ), 10 );
 	}
 
 	/**
@@ -271,25 +271,7 @@ class Yikes_Inc_Level_Playing_Field_Public {
 			$find[] = $this->helpers->template_path() . 'taxonomy-' . $term->taxonomy . '.php';
 			$find[] = $file;
 			$find[] = $this->helpers->template_path() . $file;
-		} elseif (
-			( isset( $_GET['job'] ) && ! empty( $_GET['job'] ) )
-			&& ( isset( $_GET['page'] ) && 'applicant-messenger' === $_GET['page'] )
-			&& ( isset( $_GET['security-key'] ) && ! empty( $_GET['security-key'] ) )
-			&& isset( $_GET['applicant'] ) && ! empty( $_GET['applicant'] ) ) {
-			// Check the security key matches what we have in the database, or abort
-			if ( get_post_meta( $_GET['applicant'], 'messenger_security_key', true ) !== $_GET['security-key'] ) {
-				// generate a link allowing users to re-send themself a link to the conversation.
-				$resend_notice_link = add_query_arg( array(
-					'action' => 'resend_conversation_link',
-					'applicant' => (int) $_GET['applicant'],
-					'job' => (int) $_GET['job'],
-					'security-key' => get_post_meta( (int) $_GET['applicant'], 'messenger_security_key', true ),
-				), home_url() );
-				wp_die(
-					sprintf( esc_attr__( 'It looks like the security key is invalid. Please confirm you are using the correct key, by clicking the link sent to you via email. %s', 'yikes-inc-level-playing-field' ), '<a href="' . esc_url( $resend_notice_link ) . '" class="button-secondary">' . __( 'Re-send Conversation Link', 'yikes-inc-level-playing-field' ) . '</a>' )
-				);
-				exit;
-			}
+		} elseif ( is_single() && 'applicants' === get_post_type() ) { // SINGLE APPLICANT PAGES (EG: Applicant Messenger)
 			// Include our messenger class
 			include_once( YIKES_LEVEL_PLAYING_FIELD_PATH . 'includes/class-yikes-inc-level-playing-field-applicant-messenger.php' );
 			$applicant_messenger = new Yikes_Inc_Level_Playing_Field_Applicant_Messenger( $this->helpers, $_GET['job'], $_GET['applicant'] );
@@ -380,18 +362,15 @@ class Yikes_Inc_Level_Playing_Field_Public {
 
 		// The messages are stored in the applicants post type meta data (nested in a multi-dimensional array under the JOB ID)
 		if ( ! update_post_meta( $applicant_id, 'applicant_conversation', $new_message_data ) ) {
-			$old_security_key = ( get_post_meta( $applicant_id, 'messenger_security_key', true ) ) ? get_post_meta( $applicant_id, 'messenger_security_key', true ) : '123';
-			wp_redirect( add_query_arg( array( 'message-sent' => 'false' ), site_url( '?page=applicant-messenger&job=' . $job_id . '&security-key=123&applicant=' . $applicant_id ) ) );
+			wp_redirect( add_query_arg( array( 'page' => 'applicant-messenger', 'job' => $job_id, 'applicant' => $applicant_id, 'message-sent' => 'false' ), get_the_permalink( $applicant_id ) ) );
 			exit;
 		}
-		// Update the security key
-		$new_security_key = $this->helpers->generate_new_messenger_security_key();
-		update_post_meta( $applicant_id, 'messenger_security_key', $new_security_key );
 
 		// Redirect the user, display the message (This prevents page refreshes from re-sending messages)
-		wp_redirect( add_query_arg( array( 'message-sent' => 'true' ), site_url( '?page=applicant-messenger&job=' . $job_id . '&security-key=' . $new_security_key . '&applicant=' . $applicant_id ) ) );
+		wp_redirect( add_query_arg( array( 'page' => 'applicant-messenger', 'job' => $job_id, 'applicant' => $applicant_id, 'message-sent' => 'true' ), get_the_permalink( $applicant_id ) ) );
 		exit;
 	}
+
 	/**
 	 * Generate the success/error responses
 	 * @return [type] [description]
