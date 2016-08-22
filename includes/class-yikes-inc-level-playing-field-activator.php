@@ -36,8 +36,8 @@ class Yikes_Inc_Level_Playing_Field_Activator {
 
 	public static function create_applicant_messanger_sidebar_template() {
 		// Add our widget to the sidebar
-		self::wpse_138242_pre_set_widget( 'applicant-messenger', 'wpb_widget', array(
-			'title' => 'This was a test during plugin activation',
+		self::wpse_138242_pre_set_widget( 'applicant-messenger', 'lpf_applicant_details_widget', array(
+			'title' => __( 'Applicant Details', 'yikes-inc-level-playing-field' ),
 		) );
 		// file_get_contents is not available, abort
 		if ( ! function_exists( 'file_get_contents' ) ) {
@@ -55,6 +55,9 @@ class Yikes_Inc_Level_Playing_Field_Activator {
 		file_put_contents( $file_to_create, $updated_file_contents );
 	}
 
+	/**
+	 * Replace template tags
+	 */
 	public static function update_file_contents( $contents ) {
 		// replace is is_active_sidebar, dynamic_sidebar and get_sidebar
 		$contents = preg_replace( '/is_active_sidebar\([^)]*\)/', "is_active_sidebar( 'applicant-messenger' )", $contents );
@@ -63,6 +66,9 @@ class Yikes_Inc_Level_Playing_Field_Activator {
 		return $contents;
 	}
 
+	/**
+	 * Pre-set the widget on our applicant messenger page on plugin activation
+	 */
 	public static function wpse_138242_pre_set_widget( $sidebar, $name, $args = array() ) {
 		if ( ! $sidebars = get_option( 'sidebars_widgets' ) ) {
 			$sidebars = array();

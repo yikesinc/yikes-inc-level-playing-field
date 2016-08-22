@@ -85,6 +85,9 @@ class Yikes_Inc_Level_Playing_Field_Public {
 		/* Render the message sent response */
 		add_action( 'yikes_level_playing_field_before_applicant_messenger', array( $this, 'generate_application_submission_response' ), 15 );
 		add_action( 'yikes_level_playing_field_before_applicant_messenger', array( $this, 'generate_message_submission_response' ), 15 );
+
+		/* Fix the classes on the body */
+		add_filter( 'body_class', array( $this, 'generate_proper_body_class' ), 999 );
 	}
 
 	/**
@@ -369,6 +372,23 @@ class Yikes_Inc_Level_Playing_Field_Public {
 		// Redirect the user, display the message (This prevents page refreshes from re-sending messages)
 		wp_redirect( add_query_arg( array( 'page' => 'applicant-messenger', 'job' => $job_id, 'applicant' => $applicant_id, 'message-sent' => 'true' ), get_the_permalink( $applicant_id ) ) );
 		exit;
+	}
+
+	/**
+	 * Fix the body class on our applicant messenger (.no-sidebar is being added)
+	 */
+	public function generate_proper_body_class( $classes ) {
+		$page = ( isset( $_GET['page'] ) ) ? esc_textarea( $_GET['page'] ) : false;
+		if ( ! $page || 'applicant-messenger' !== $page ) {
+			return $classes;
+		}
+		if ( is_active_sidebar( 'applicant-messenger' ) ) :
+			$no_sidebar_key = array_search( 'no-sidebar', $classes );
+			if ( $no_sidebar_key ) {
+				unset( $classes[ $no_sidebar_key ] );
+			}
+		endif;
+		return $classes;
 	}
 
 	/**
