@@ -1,0 +1,268 @@
+.applicant-messenger-chat li.clearfix {
+	list-style: none;
+}
+
+.container {
+  margin: 0 auto;
+  width: 750px;
+  background: #444753;
+  border-radius: 5px;
+}
+
+.people-list {
+  width: 260px;
+  float: left;
+}
+.people-list .search {
+  padding: 20px;
+}
+.people-list input {
+  border-radius: 3px;
+  border: none;
+  padding: 14px;
+  color: white;
+  background: #6A6C75;
+  width: 90%;
+  font-size: 14px;
+}
+.people-list .fa-search {
+  position: relative;
+  left: -25px;
+}
+.people-list ul {
+  padding: 20px;
+  height: 770px;
+}
+.people-list ul li {
+  padding-bottom: 20px;
+}
+.people-list img {
+  float: left;
+}
+.people-list .about {
+  float: left;
+  margin-top: 8px;
+}
+.people-list .about {
+  padding-left: 8px;
+}
+.people-list .status {
+  color: #92959E;
+}
+.applicant-messenger-chat .message-data {
+  margin-bottom: 15px;
+}
+.applicant-messenger-chat .message-data-time {
+  color: #a8aab1;
+  padding-left: 6px;
+}
+.applicant-messenger-chat .message {
+  color: white;
+  padding: 18px 20px;
+  line-height: 26px;
+  font-size: 16px;
+  border-radius: 7px;
+  width: 90%;
+  position: relative;
+	margin-bottom: 3em;
+}
+.applicant-messenger-chat .message:after {
+  bottom: 100%;
+  left: 7%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+  border-bottom-color: #86BB71;
+  border-width: 10px;
+  margin-left: -10px;
+}
+.applicant-messenger-chat .my-message {
+  background: #86BB71;
+}
+.applicant-messenger-chat .other-message {
+  background: #94C2ED;
+}
+.applicant-messenger-chat .other-message:after {
+  border-bottom-color: #94C2ED;
+  left: 93%;
+}
+.chat .chat-message {
+  padding: 30px;
+}
+.chat .chat-message textarea {
+  width: 100%;
+  border: none;
+  padding: 10px 20px;
+  font: 14px/22px "Lato", Arial, sans-serif;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  resize: none;
+}
+.chat .chat-message .fa-file-o, .chat .chat-message .fa-file-image-o {
+  font-size: 16px;
+  color: gray;
+  cursor: pointer;
+}
+.chat .chat-message button {
+  float: right;
+  color: #94C2ED;
+  font-size: 16px;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  background: #F2F5F8;
+}
+.chat .chat-message button:hover {
+  color: #75b1e8;
+}
+
+.online, .offline, .me {
+  margin-right: 3px;
+  font-size: 10px;
+}
+
+.online {
+  color: #86BB71;
+}
+
+.offline {
+  color: #E38968;
+}
+
+.me {
+  color: #94C2ED;
+}
+
+.align-left {
+  text-align: left;
+}
+
+.align-right {
+  text-align: right;
+}
+
+.float-right {
+  float: right;
+}
+
+.clearfix:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
+}
+
+/**
+ * Application Messenger Styles
+ */
+
+/* Avatar Images */
+body.applicant-messenger img.avatar {
+	max-width: 50px;
+	margin-right: 5px;
+}
+
+/* No conversations notice */
+
+body.applicant-messenger ul.applicant-messenger-chat .message p:last-child {
+	margin-bottom: 0;
+}
+
+body.applicant-messenger ul.applicant-messenger-chat li.clearfix:last-child {
+	margin-bottom: 5em;
+}
+
+h2.yikes-applicant-messenger-title {
+	text-decoration: underline;
+	margin-bottom: 1.5em;
+}
+
+body.applicant-messenger .yikes-lpf-no-messages-found {
+	font-size: 25px;
+	font-family: "sans-serif";
+	color: rgba(187, 187, 187, 0.75);
+	text-align: center;
+	padding: 10% 0;
+	background: #f7f7f7;
+	border: 1px solid #eaeaea;
+	margin: 1em 0;
+}
+
+	body.applicant-messenger .yikes-lpf-no-messages-found p {
+		margin: 0;
+		line-height: 1.2;
+	}
+
+/* Message Box */
+body.applicant-messenger .applicant-message-box {
+	margin-bottom: 1em;
+}
+
+	body.applicant-messenger .applicant-message-box + input[type="submit"] {
+		margin-bottom: 1em;
+	}
+
+/**
+ * Blurred Text/Container
+ */
+.blur {
+	-webkit-filter: blur(3px);
+}
+
+.noselect {
+	-webkit-touch-callout: none; /* iOS Safari */
+	-webkit-user-select: none;   /* Chrome/Safari/Opera */
+	-khtml-user-select: none;    /* Konqueror */
+	-moz-user-select: none;      /* Firefox */
+	-ms-user-select: none;       /* Internet Explorer/Edge */
+	user-select: none;           /* Non-prefixed version, currently */
+}
+
+/**
+ * Animations
+ */
+.yikes-animated {
+	-webkit-animation-duration: 1s;
+	animation-duration: 1s;
+	-webkit-animation-fill-mode: both;
+	animation-fill-mode: both;
+}
+
+@-webkit-keyframes yikes-fadeInUp {
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(0, 100%, 0);
+    transform: translate3d(0, 100%, 0);
+  }
+
+  to {
+    opacity: 1;
+    -webkit-transform: none;
+    transform: none;
+  }
+}
+
+@keyframes yikes-fadeInUp {
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(0, 100%, 0);
+    transform: translate3d(0, 100%, 0);
+  }
+
+  to {
+    opacity: 1;
+    -webkit-transform: none;
+    transform: none;
+  }
+}
+
+.yikes-fadeInUp {
+  -webkit-animation-name: yikes-fadeInUp;
+  animation-name: yikes-fadeInUp;
+}

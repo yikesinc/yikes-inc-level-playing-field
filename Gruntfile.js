@@ -75,6 +75,7 @@ module.exports = function(grunt) {
 						'public/css/min/yikes-inc-level-playing-field-public.min.css':
 						[
 							'public/css/yikes-inc-level-playing-field-public.css',
+							'public/css/yikes-inc-level-playing-field-applicant-messenger.css',
 						],
           },
 					// FooTable bootstrap css

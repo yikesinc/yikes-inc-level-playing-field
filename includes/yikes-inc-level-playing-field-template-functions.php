@@ -73,6 +73,11 @@ if ( ! function_exists( 'yikes_lpf_get_applicant_messenger_sidebar' ) ) {
 	 * Get the Applicant Messenger Sidebar
 	 */
 	function yikes_lpf_get_applicant_messenger_sidebar() {
+		// If password protected, abort
+		// if the password is required, display it
+		if ( ! current_user_can( 'manage_options' ) && post_password_required() ) :
+			return;
+		endif;
 		lpf_get_template( 'global/applicant-messenger-sidebar.php' );
 	}
 }

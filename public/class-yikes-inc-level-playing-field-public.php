@@ -88,6 +88,9 @@ class Yikes_Inc_Level_Playing_Field_Public {
 
 		/* Fix the classes on the body */
 		add_filter( 'body_class', array( $this, 'generate_proper_body_class' ), 999 );
+
+		/* Fix the applicant messenger page title */
+		add_filter('pre_get_document_title', array( $this, 'apply_level_playing_field_applicant_title' ) );
 	}
 
 	/**
@@ -428,5 +431,22 @@ class Yikes_Inc_Level_Playing_Field_Public {
 			return;
 		}
 		echo '<p class="submission-response success">' . esc_html__( 'Your message has been successfully sent.', 'yikes-inc-level-playing-field' ) . '</p>';
+	}
+
+	/**
+	 * Filter the title on the applicant messenger
+	 * This prevents the page title from being random numbers
+	 */
+	public function apply_level_playing_field_applicant_title() {
+		global $post;
+		// if not on the correct post type, abort
+		if ( ! isset( $post->post_type ) || 'applicants' !== $post->post_type ) {
+			return;
+		}
+		// if not on the correct page, abort
+		if ( ! isset( $_GET['page'] ) || 'applicant-messenger' !== esc_textarea( $_GET['page'] ) ) {
+			return;
+		}
+		return __( 'Applicant Messenger', 'yikes-inc-level-playing-field' );
 	}
 }

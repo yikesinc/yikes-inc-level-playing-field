@@ -339,6 +339,18 @@ class Yikes_Inc_Level_Playing_Field_Helper {
 	public function delete_applicant( $applicant_id ) {
 		return wp_delete_post( $applicant_id );
 	}
+
+	/**
+	 * Helper to check if currnet applicant messenger is still password protected
+	 * @return boolean true/false Password protected state
+	 */
+	public function is_password_protected() {
+		// if the password is required, display it
+		if ( ! current_user_can( 'manage_options' ) && post_password_required() ) :
+			return true;
+		endif;
+		return false;
+	}
 }
 
 /**

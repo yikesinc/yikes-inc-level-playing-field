@@ -157,41 +157,6 @@ h1.job-title {
 	}
 
 /**
- * Application Messenger Styles
- */
-
-/* Avatar Images */
-body.applicant-messenger img.avatar {
-	max-width: 96px;
-}
-
-/* No conversations notice */
-body.applicant-messenger .yikes-lpf-no-messages-found {
-	font-size: 25px;
-	font-family: "sans-serif";
-	color: rgba(187, 187, 187, 0.75);
-	text-align: center;
-	padding: 10% 0;
-	background: #f7f7f7;
-	border: 1px solid #eaeaea;
-	margin: 1em 0;
-}
-
-	body.applicant-messenger .yikes-lpf-no-messages-found p {
-		margin: 0;
-		line-height: 1.2;
-	}
-
-/* Message Box */
-body.applicant-messenger .applicant-message-box {
-	margin-bottom: 1em;
-}
-
-	body.applicant-messenger .applicant-message-box + input[type="submit"] {
-		margin-bottom: 1em;
-	}
-
-/**
  * Custom Button Styles (Borrowed from bootstrap)
  */
  [role="button"] {

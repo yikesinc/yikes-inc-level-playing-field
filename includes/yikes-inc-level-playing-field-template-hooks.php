@@ -35,7 +35,6 @@ add_action( 'yikes_level_playing_field_sidebar', 'yikes_lpf_get_sidebar', 10 );
 // Applicant Messenger sidebar
 add_action( 'yikes_level_playing_field_applicant_messenger_sidebar', 'yikes_lpf_get_applicant_messenger_sidebar', 10 );
 
-
 /**
  * Breadcrumbs.
  *
