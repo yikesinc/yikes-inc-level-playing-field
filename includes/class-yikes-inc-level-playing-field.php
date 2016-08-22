@@ -158,6 +158,9 @@ class Yikes_Inc_Level_Playing_Field {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/yikes-inc-level-playing-field-template-hooks.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/yikes-inc-level-playing-field-template-functions.php';
 
+		// Include our custom sidebar
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/yikes-inc-level-playing-field-sidebar-functions.php';
+
 		$this->loader = new Yikes_Inc_Level_Playing_Field_Loader();
 		// Load and instantiate our helper functions (class)
 		$this->helpers = new Yikes_Inc_Level_Playing_Field_Helper( $this->plugin_name, $this->version );

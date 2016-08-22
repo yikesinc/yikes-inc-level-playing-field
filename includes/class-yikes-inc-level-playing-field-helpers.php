@@ -393,7 +393,7 @@ function lpf_get_template( $template_name, $args = array(), $template_path = '',
 	$located = lpf_locate_template( $template_name, $template_path, $default_path );
 
 	if ( ! file_exists( $located ) ) {
-		_doing_it_wrong( __FUNCTION__, sprintf( '<code>%s</code> does not exist.', $located ), '2.1' );
+		_doing_it_wrong( __FUNCTION__, sprintf( '<code>%s</code> does not exist.', esc_attr( $located ) ), '2.1' );
 		return;
 	}
 	// Allow 3rd party plugin filter template file from their plugin.

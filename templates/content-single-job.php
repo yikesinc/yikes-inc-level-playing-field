@@ -23,13 +23,13 @@ if ( post_password_required() ) {
 }
 ?>
 
-<div itemscope itemtype="" id="job-<?php the_ID(); ?>" <?php post_class(); ?>>
+<article itemscope itemtype="" id="job-<?php the_ID(); ?>" <?php post_class(); ?>>
 
 	<?php
 		/**
 		 * yikes_level_playing_field_before_single_job_summary hook.
 		 *
-		 * @hooked yikes_level_playing_field_before_single_job - 10
+		 * @hooked yikes_lpf_breadcrumbs - 10
 		 */
 		do_action( 'yikes_level_playing_field_before_single_job_summary' );
 	?>
@@ -60,6 +60,6 @@ if ( post_password_required() ) {
 
 	<meta itemprop="url" content="<?php the_permalink(); ?>" />
 
-</div><!-- #product-<?php the_ID(); ?> -->
+</article><!-- #job-<?php the_ID(); ?> -->
 
 <?php do_action( 'yikes_level_playing_field_after_single_job' ); ?>

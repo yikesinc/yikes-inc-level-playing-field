@@ -83,8 +83,8 @@ class Yikes_Inc_Level_Playing_Field_Public {
 		add_action( 'yikes_level_playing_field_before_single_job', array( $this, 'generate_application_submission_response' ), 10 );
 
 		/* Render the message sent response */
-		add_action( 'yikes_level_playing_field_before_applicant_messenger', array( $this, 'generate_application_submission_response' ), 10 );
-		add_action( 'yikes_level_playing_field_before_applicant_messenger', array( $this, 'generate_message_submission_response' ), 10 );
+		add_action( 'yikes_level_playing_field_before_applicant_messenger', array( $this, 'generate_application_submission_response' ), 15 );
+		add_action( 'yikes_level_playing_field_before_applicant_messenger', array( $this, 'generate_message_submission_response' ), 15 );
 	}
 
 	/**

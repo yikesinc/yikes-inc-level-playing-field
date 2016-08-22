@@ -79,7 +79,10 @@ class Yikes_Inc_Level_Playing_Field_Admin {
 	 * @since    1.0.0
 	 */
 	public function enqueue_styles() {
-
+		$enqueue_styles = $this->should_scripts_enqueue();
+		if ( ! $enqueue_styles ) {
+			return;
+		}
 		/**
 		 * This function is provided for demonstration purposes only.
 		 *
@@ -101,6 +104,10 @@ class Yikes_Inc_Level_Playing_Field_Admin {
 	 * @since    1.0.0
 	 */
 	public function enqueue_scripts() {
+		$enqueue_styles = $this->should_scripts_enqueue();
+		if ( ! $enqueue_styles ) {
+			return;
+		}
 		/**
 		 * This function is provided for demonstration purposes only.
 		 *
@@ -180,5 +187,32 @@ class Yikes_Inc_Level_Playing_Field_Admin {
 				exit;
 			}
 		}
+	}
+
+	/**
+	 * Determine if our scripts and styles should enqueue
+	 * @return boolean true/false based on current admin page
+	 */
+	public function should_scripts_enqueue() {
+		$screen = get_current_screen();
+		$allowed_pages = array(
+			'edit',
+			'post',
+			'add',
+			'edit-tags',
+			'jobs',
+		);
+		if ( ! isset( $screen ) || ! isset( $screen->base ) ) {
+			return false;
+		}
+		// if we are on edit or add, and it's not a jobs post type, abort
+		if ( in_array( $screen->base, $allowed_pages ) ) {
+			if ( 'edit' === $screen->base || 'add' === $screen->base || 'post' === $screen->base ) {
+				if ( ! isset( $screen->post_type ) || 'jobs' !== $screen->post_type ) {
+					return false;
+				}
+			}
+		}
+		return true;
 	}
 }

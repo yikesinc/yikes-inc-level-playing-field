@@ -31,7 +31,7 @@ class Yikes_Inc_Level_Playing_Field_Applicant_Messenger {
 		add_filter( 'body_class', array( $this, 'generate_single_applicant_messenger_body_classes' ) );
 		// Actions
 		/* Generate the password form, to password protect the conversation */
-		add_action( 'yikes_level_playing_field_before_applicant_messenger', array( $this, 'generate_the_application_messenger_password_form' ), 5 );
+		add_action( 'yikes_level_playing_field_before_applicant_messenger', array( $this, 'generate_applicant_messenger_password_form' ), 10 );
 		add_action( 'yikes_level_playing_field_applicant_messenger', array( $this, 'render_applicant_messenger_header' ), 10 );
 		add_action( 'yikes_level_playing_field_applicant_messenger', array( $this, 'render_applicant_messenger_messages' ), 15 );
 		add_action( 'yikes_level_playing_field_applicant_messenger', array( $this, 'render_applicant_messenger_message_box' ), 20 );
@@ -141,7 +141,7 @@ class Yikes_Inc_Level_Playing_Field_Applicant_Messenger {
 	 * Generate the password protection form for applicant messenger
 	 * @return mixed HTML content for the password protection form
 	 */
-	public function generate_the_application_messenger_password_form() {
+	public function generate_applicant_messenger_password_form() {
 		if ( current_user_can( 'manage_options' ) ) :
 			return;
 		endif;

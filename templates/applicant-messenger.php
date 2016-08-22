@@ -20,8 +20,10 @@ get_header( 'applicant-messenger' );
 /**
  * yikes_level_playing_field_before_application_messenger hook.
  *
- * @hooked generate_application_password_form - 5
- * @hooked generate_application_submission_response - 10
+ * @hooked yikes_lpf_output_content_wrapper_end - 5
+ * @hooked generate_applicant_messenger_password_form - 10
+ * @hooked generate_application_submission_response - 15
+ * @hooked generate_message_submission_response - 15
  */
 do_action( 'yikes_level_playing_field_before_applicant_messenger' );
 
@@ -41,6 +43,9 @@ do_action( 'yikes_level_playing_field_after_applicant_messenger' );
 
 /**
  * yikes_level_playing_field_application_messenger_sidebar hook.
+ *
+ * @hooked yikes_lpf_output_content_wrapper_end - 5
+ * @hooked get_applicant_messenger_sidebar - 10
  */
 do_action( 'yikes_level_playing_field_applicant_messenger_sidebar' );
 

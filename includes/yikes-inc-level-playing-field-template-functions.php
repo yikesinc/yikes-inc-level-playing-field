@@ -68,6 +68,15 @@ if ( ! function_exists( 'yikes_lpf_breadcrumbs' ) ) {
 	}
 }
 
+if ( ! function_exists( 'yikes_lpf_get_applicant_messenger_sidebar' ) ) {
+	/**
+	 * Get the Applicant Messenger Sidebar
+	 */
+	function yikes_lpf_get_applicant_messenger_sidebar() {
+		lpf_get_template( 'global/applicant-messenger-sidebar.php' );
+	}
+}
+
 if ( ! function_exists( 'yikes_lpf_categories' ) ) {
 	/**
 	 * Display the job categories

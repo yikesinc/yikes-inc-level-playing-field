@@ -21,6 +21,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 add_action( 'yikes_level_playing_field_before_main_content', 'yikes_lpf_output_content_wrapper', 10 );
 add_action( 'yikes_level_playing_field_after_main_content', 'yikes_lpf_output_content_wrapper_end', 10 );
 
+// Applicant Messenger content wrappers
+add_action( 'yikes_level_playing_field_before_applicant_messenger', 'yikes_lpf_output_content_wrapper', 5 );
+add_action( 'yikes_level_playing_field_after_applicant_messenger', 'yikes_lpf_output_content_wrapper_end', 5 );
+
 /**
  * Sidebar.
  *
@@ -28,12 +32,16 @@ add_action( 'yikes_level_playing_field_after_main_content', 'yikes_lpf_output_co
  */
 add_action( 'yikes_level_playing_field_sidebar', 'yikes_lpf_get_sidebar', 10 );
 
+// Applicant Messenger sidebar
+add_action( 'yikes_level_playing_field_applicant_messenger_sidebar', 'yikes_lpf_get_applicant_messenger_sidebar', 10 );
+
+
 /**
  * Breadcrumbs.
  *
  * @see yikes_lpf_breadcrumbs()
  */
-add_action( 'yikes_level_playing_field_before_main_content', 'yikes_lpf_breadcrumbs', 20, 0 );
+add_action( 'yikes_level_playing_field_before_single_job_summary', 'yikes_lpf_breadcrumbs', 10, 0 );
 
 /**
  * Categories.
