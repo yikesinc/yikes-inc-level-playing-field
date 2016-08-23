@@ -4,29 +4,54 @@
  * assigned to the application builder
  */
 return array(
-	// Text Field
-	array(
-		'type' => 'text',
-		'class' => 'widefat',
-	),
-	// Email Field
-	array(
-		'type' => 'email',
-		'class' => 'widefat',
-	),
-	// Select Field
-	array(
-		'type' => 'select',
-		'class' => 'widefat',
-	),
-	// Radio Field
-	array(
-		'type' => 'radio',
-		'class' => '',
-	),
-	// Checkbox Field
-	array(
-		'type' => 'checkbox',
-		'class' => '',
-	),
+		__( 'Standard Fields', 'yikes-inc-level-playing-field' ) => array(
+			// Text Field
+			array(
+				'label' => __( 'Text', 'yikes-inc-level-playing-field' ),
+				'type' => 'text',
+				'class' => 'widefat',
+			),
+			// Email Field
+			array(
+				'label' => __( 'Email', 'yikes-inc-level-playing-field' ),
+				'type' => 'email',
+				'class' => 'widefat',
+			),
+			// Select Field
+			array(
+				'label' => __( 'Dropdown', 'yikes-inc-level-playing-field' ),
+				'type' => 'select',
+				'class' => 'widefat',
+			),
+			// Radio Field
+			array(
+				'label' => __( 'Radio Buttons', 'yikes-inc-level-playing-field' ),
+				'type' => 'radio',
+				'class' => '',
+			),
+			// Checkbox Field
+			array(
+				'label' => __( 'Checkbox', 'yikes-inc-level-playing-field' ),
+				'type' => 'checkbox',
+				'class' => '',
+			),
+		),
+		__( 'Advanced Fields', 'yikes-inc-level-playing-field' ) => array(
+			// Checkbox Field
+			array(
+				'label' => __( 'Multi-Checkbox', 'yikes-inc-level-playing-field' ),
+				'type' => 'multi-check',
+				'class' => '',
+			),
+			array(
+				'label' => __( 'Education', 'yikes-inc-level-playing-field' ),
+				'type' => 'education',
+				'class' => '',
+			),
+			array(
+				'label' => __( 'HTML', 'yikes-inc-level-playing-field' ),
+				'type' => 'html',
+				'class' => '',
+			),
+		),
 );

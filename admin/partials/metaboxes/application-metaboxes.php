@@ -175,7 +175,7 @@ function application_builder_metabox_callback( $post ) {
 	// Instantiate our helper class, since this is going to be necessary
 	$helpers = new Yikes_Inc_Level_Playing_Field_Helper( 'yikes-inc-level-playing-field', YIKES_LEVEL_PLAYING_FIELD_VERSION );
 	// Include the application builder class
-	include_once( YIKES_LEVEL_PLAYING_FIELD_PATH . '/includes/yikes-inc-level-playing-field-application-builder.php' );
+	include_once( YIKES_LEVEL_PLAYING_FIELD_PATH . '/includes/class-yikes-inc-level-playing-field-application-builder.php' );
 	// Initialize and render our application builder.
 	$application_builder = new Yikes_Inc_Level_Playing_Field_Application_Builder( $helpers );
 }

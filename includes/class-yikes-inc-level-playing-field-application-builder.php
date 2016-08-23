@@ -67,10 +67,6 @@ class Yikes_Inc_Level_Playing_Field_Application_Builder extends Yikes_Inc_Level_
 
 							<div class="postbox">
 
-								<h2><span><?php esc_attr_e(
-									'Application Fields', 'yikes-inc-level-playing-field'
-								); ?></span></h2>
-
 								<div class="inside">
 									<?php	$this->generate_available_application_fields(); ?>
 								</div>
@@ -100,12 +96,57 @@ class Yikes_Inc_Level_Playing_Field_Application_Builder extends Yikes_Inc_Level_
 	public function generate_available_application_fields() {
 		$available_fields = $this->helpers->get_available_application_fields();
 		if ( ! $available_fields || empty( $available_fields ) ) {
-			return 'There was an error retreiving the application fields.';
+			return __( 'There was an error retreiving the application fields.', 'yikes-inc-level-playing-field' );
 		}
-		// Loop over and display the possible application fields
-		foreach ( $available_fields as $application_field => $field_data ) {
-			echo $field_data['type'] . '<br />';
-		}
+		$count = 1;
+		?>
+		<ul id="sidebarmenu1" class="menu collapsible expandfirst">
+			<?php
+			// Loop over and display the possible application fields
+			foreach ( $available_fields as $field_section => $fields_data ) {
+				$field_section_title_slug = str_replace( '-', '_', sanitize_title( $field_section ) );
+				$active_class = ( 1 === $count ) ? ' yikes_button_title_active' : '';
+				?>
+					<li id="add_<?php echo esc_attr( $field_section_title_slug ); ?>" class="add_field_button_container">
+
+						<!-- Begin Section Title -->
+						<div class="button-title-link<?php echo esc_attr( $active_class ); ?>">
+							<div class="add-buttons-title">
+								<!-- Section Title -->
+								<?php echo esc_html( $field_section ); ?>
+								<a href="#" onclick="return false;" onkeypress="return false;" class="yikes_tooltip tooltip_bottomleft tooltip_form_<?php echo esc_attr( $field_section_title_slug ); ?>" title="<h6>Standard Fields</h6>Standard Fields provide basic form functionality.">
+									<i class="dashicons dashicons-editor-help"></i>
+								</a>
+								<!-- Tooltip Icon -->
+								<span class="right-pull">
+									<i class="dashicons dashicons-arrow-down"></i>
+								</span>
+							</div>
+						</div>
+						<!-- End Section Title -->
+
+						<!-- Begin Button Containers -->
+						<ul style="display: block;">
+							<li class="add-buttons">
+								<ol class="field_type">
+									<?php
+									foreach ( $fields_data as $field ) {
+										?>
+										<li>
+											<input type="button" class="button ui-draggable ui-draggable-handle" data-type="<?php echo esc_attr( $field['type'] ); ?>" value="<?php echo esc_attr( $field['label'] ); ?>">
+										</li>
+									<?php
+									}
+									?>
+							</li>
+						</ul>
+						<!-- End Button Containers -->
+
+					</li>
+				<?php
+				$count++;
+			}
+		?></ul><?php
 	}
 
 	public function render_application_field() {
