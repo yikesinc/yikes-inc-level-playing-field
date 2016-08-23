@@ -4,10 +4,22 @@
  */
 function yikes_level_playing_field_register_application_meta_boxes() {
 	global $post;
+
+	// Build our array of buttons for the 'Job Application' metabox
+	$job_application_buttons = apply_filters( 'yikes_level_playing_field_job_application_action_buttons', array(
+		'clear-application' => __( 'Clear Fields', 'yikes-inc-level-playing-field' ),
+	) );
+	$application_action_button_container = '';
+	if ( ! empty( $job_application_buttons ) ) {
+		foreach ( $job_application_buttons as $class => $button_text ) {
+			$application_action_button_container .= '<a href="#' . esc_attr( $class ) . '" class="job-app-action-btn ' . esc_attr( $class ) . '">' . esc_attr( $button_text ) . '</a>';
+		}
+	}
+
 	// Add application builder metabox
 	add_meta_box(
 		'job-application-builder',
-		__( 'Application Fields', 'yikes-inc-level-playing-field' ),
+		__( 'Application Fields', 'yikes-inc-level-playing-field' ) . '&nbsp;&mdash;&nbsp;' . $application_action_button_container,
 		'application_builder_metabox_callback',
 		'applications'
 	);

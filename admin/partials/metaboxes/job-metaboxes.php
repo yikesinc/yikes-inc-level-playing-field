@@ -24,6 +24,7 @@ function yikes_level_playing_field_register_meta_boxes() {
 		'jobs'
 	);
 	// Build our array of buttons for the 'Job Application' metabox
+	/*
 	$job_application_buttons = apply_filters( 'yikes_level_playing_field_job_application_action_buttons', array(
 		'save-application' => __( 'Save', 'yikes-inc-level-playing-field' ),
 		'load-application' => __( 'Load', 'yikes-inc-level-playing-field' ),
@@ -42,6 +43,7 @@ function yikes_level_playing_field_register_meta_boxes() {
 		'jobs_cpt_app_builder_metabox_callback',
 		'jobs'
 	);
+	*/
 	// only display the stats box once the job posting is published
 	if ( isset( $post->ID ) && ( 'publish' === get_post_status( $post->ID ) ) ) {
 		add_meta_box( 'job-posting-stats', __( 'Job Posting Stats', 'yikes-inc-level-playing-field' ), 'jobs_cpt_stats_metabox_callback', 'jobs', 'side', 'high' );
