@@ -21,7 +21,11 @@ class Yikes_Inc_Level_Playing_Field_Application_Builder extends Yikes_Inc_Level_
 	 */
 	public function enqueue_application_builder_scripts_and_styles() {
 		wp_enqueue_style( 'level-playing-field-application-builder-styles', YIKES_LEVEL_PLAYING_FIELD_URL . 'admin/css/min/yikes-inc-level-playing-field-application-builder.min.css' );
-		wp_enqueue_script( 'level-playing-field-application-builder-scripts', YIKES_LEVEL_PLAYING_FIELD_URL . 'admin/js/min/yikes-inc-level-playing-field-application-builder.min.js', array( 'jquery'), YIKES_LEVEL_PLAYING_FIELD_VERSION, true );
+
+		wp_enqueue_script( 'jquery-ui-sortable' );
+		wp_enqueue_script( 'jquery-ui-droppable' );
+		wp_enqueue_script( 'jquery-ui-draggable' );
+		wp_enqueue_script( 'level-playing-field-application-builder-scripts', YIKES_LEVEL_PLAYING_FIELD_URL . 'admin/js/min/yikes-inc-level-playing-field-application-builder.min.js', array( 'jquery-ui-droppable', 'jquery-ui-draggable', 'jquery-ui-core' ), YIKES_LEVEL_PLAYING_FIELD_VERSION, true );
 	}
 	/**
 	 * Generate the application builder containers/wrappers
@@ -47,7 +51,7 @@ class Yikes_Inc_Level_Playing_Field_Application_Builder extends Yikes_Inc_Level_
 								<h2><span><?php esc_attr_e( 'Job Application', 'yikes-inc-level-playing-field' ); ?></span></h2>
 
 								<div class="inside">
-									<p><?php echo 'Application builder here.'; ?></p>
+									<div id="droppable"></div>
 								</div>
 								<!-- .inside -->
 
@@ -133,7 +137,7 @@ class Yikes_Inc_Level_Playing_Field_Application_Builder extends Yikes_Inc_Level_
 									foreach ( $fields_data as $field ) {
 										?>
 										<li>
-											<input type="button" class="button ui-draggable ui-draggable-handle" data-type="<?php echo esc_attr( $field['type'] ); ?>" value="<?php echo esc_attr( $field['label'] ); ?>">
+											<input type="button" class="button draggable" data-type="<?php echo esc_attr( $field['type'] ); ?>" value="<?php echo esc_attr( $field['label'] ); ?>">
 										</li>
 									<?php
 									}

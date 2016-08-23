@@ -86,15 +86,11 @@ body.post-type-applications li.add_field_button_container ul li.add-buttons ol.f
  	border-radius: 3px !important;
  }
 
-body.post-type-applications li.add_field_button_container ul li.add-buttons ol.field_type li input.button:hover  {
- 	border-color: #CCC;
- }
-
-body.post-type-applications li.add_field_button_container ul li.add-buttons ol.field_type li input.button:active {
+body.post-type-applications #job-application-builder input.button:active {
  	border-color: #BBB;
  }
 
-body.post-type-applications li.add_field_button_container ul li.add-buttons ol.field_type li input.button:hover  {
+body.post-type-applications #job-application-builder input.button:hover  {
 	border-color: #CCC;
 }
 
@@ -102,24 +98,24 @@ body.post-type-applications li.add_field_button_container ul li.add-buttons ol.f
  * Field Types
  */
 body.post-type-applications ol.field_type {
-	display: block;
+	display: inline-block;
 	visibility: visible !important;
-	overflow: hidden;
 	margin: 0;
 	padding: 0;
 }
 
-body.post-type-applications ol.field_type input.button {
+body.post-type-applications #job-application-builder input.button {
+	z-index: 9999;
 	width: 95%;
 	text-align: center;
-	-webkit-transition: color 0.12s linear;
-	-moz-transition: color 0.12s linear;
-	-ms-transition: color 0.12s linear;
-	-o-transition: color 0.12s linear;
-	transition: color 0.12s linear;
+	-webkit-transition: color 0.1s linear;
+	-moz-transition: color 0.1s linear;
+	-ms-transition: color 0.1s linear;
+	-o-transition: color 0.1s linear;
+	transition: color 0.1s linear;
 }
 
-	body.post-type-applications ol.field_type input.button:hover {
+	body.post-type-applications #job-application-builder input.button:hover {
 		color: #88d688;
 	}
 
@@ -137,5 +133,31 @@ body.post-type-applications .yikes_tooltip {
 	text-decoration: none;
 	color: #424242;
 }
+
+/**
+ * Droppable Container
+ */
+body.post-type-applications #droppable {
+	min-height: 100px;
+}
+
+body.post-type-applications #droppable input.button {
+	width: 100%;
+	margin: 5px 0;
+}
+
+	body.post-type-applications #droppable input.button:first-child {
+		margin-top: 0;
+	}
+
+	body.post-type-applications #droppable input.button:last-child {
+		margin-bottom: 0;
+	}
+
+	body.post-type-applications #droppable:empty {
+		background: url( '../../../assets/img/empty-form-builder-bg.jpg');
+		background-size: cover;
+		background-position: center center;
+	}
 
 /*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInlpa2VzLWluYy1sZXZlbC1wbGF5aW5nLWZpZWxkLWFwcGxpY2F0aW9uLWJ1aWxkZXIuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBOztHQUVHOztBQUVIO0VBQ0Usc0JBQXNCO0VBQ3RCOztBQUVGOzs7RUFLRSw4QkFBOEI7RUFDOUI7O0FBRUY7RUFDRSxtQkFBbUI7RUFDbkI7O0FBRUY7RUFDRSxtQkFBbUI7RUFDbkIiLCJmaWxlIjoieWlrZXMtaW5jLWxldmVsLXBsYXlpbmctZmllbGQtYXBwbGljYXRpb24tYnVpbGRlci5jc3MifQ== */
