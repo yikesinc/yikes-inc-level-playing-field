@@ -13,7 +13,7 @@ return array(
 			'placeholder' => __( 'Your Name', 'yikes-inc-level-playing-field' ),
 		),
 	),
-	// number field
+	// email field
 	array(
 		'label' => __( 'Email', 'yikes-inc-level-playing-field' ),
 		'name' => 'email',

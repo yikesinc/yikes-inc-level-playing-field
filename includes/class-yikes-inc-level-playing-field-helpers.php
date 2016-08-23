@@ -47,6 +47,17 @@ class Yikes_Inc_Level_Playing_Field_Helper {
 	}
 
 	/**
+	 * Helper function to retreive a set of available application fields
+	 * @return array           The fields for the given job application, or false/empty array
+	 */
+	public function get_available_application_fields() {
+		// include default fields
+		$possible_fields = include_once( YIKES_LEVEL_PLAYING_FIELD_PATH . 'includes/templates/available-job-application-fields.php' );
+		// return & filter results
+		return apply_filters( 'yikes_level_playing_field_application_fields', $possible_fields );
+	}
+
+	/**
 	 * Render a field based on the passed in field data
 	 * @param  array   $field_data   Field data to use when rendering this field
 	 * @return string								 HTML markup for the new form field.

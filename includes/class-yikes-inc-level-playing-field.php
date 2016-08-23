@@ -138,6 +138,7 @@ class Yikes_Inc_Level_Playing_Field {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/cpt/job-cpt.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/cpt/applicant-cpt.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/cpt/application-cpt.php';
 
 		/**
 		 * Include our metabox render class
@@ -150,6 +151,7 @@ class Yikes_Inc_Level_Playing_Field {
 		 * @since 1.0.0
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/metaboxes/job-metaboxes.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/metaboxes/application-metaboxes.php';
 
 		/**
 		 * Include the template functions and hooks

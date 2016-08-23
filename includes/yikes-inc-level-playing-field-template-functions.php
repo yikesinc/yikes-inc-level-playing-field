@@ -130,7 +130,7 @@ if ( ! function_exists( 'lpf_calculate_days_since_posting' ) ) {
  */
 function yikes_lpf_load_application_assets() {
 	wp_enqueue_style( 'lity.css', YIKES_LEVEL_PLAYING_FIELD_URL . 'public/css/min/lity.min.css' );
-	wp_enqueue_script( 'lity.js', YIKES_LEVEL_PLAYING_FIELD_URL . 'public/js/min/lity.min.js', array( 'jquery', 'yikes-inc-level-playing-field' ), 'all', true );
+	wp_enqueue_script( 'lity.js', YIKES_LEVEL_PLAYING_FIELD_URL . 'public/js/min/lity.min.js', array( 'jquery', 'yikes-inc-level-playing-field' ), YIKES_LEVEL_PLAYING_FIELD_VERSION, true );
 }
 
 /**

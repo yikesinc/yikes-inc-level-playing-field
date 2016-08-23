@@ -112,7 +112,7 @@ class Yikes_Inc_Level_Playing_Field_Public {
 		 * class.
 		 */
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/min/yikes-inc-level-playing-field-public.min.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/min/yikes-inc-level-playing-field-public.min.css', array(), $this->version, YIKES_LEVEL_PLAYING_FIELD_VERSION );
 
 	}
 
@@ -238,8 +238,8 @@ class Yikes_Inc_Level_Playing_Field_Public {
 	 */
 	public function enqueue_job_table_scripts_and_styles() {
 		wp_enqueue_style( 'fontawesome', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css' );
-		wp_enqueue_style( 'footable-css', plugin_dir_url( __FILE__ ) . 'css/min/footable.standalone.min.css', array( 'fontawesome' ), '3.0.0', 'all' );
-		wp_enqueue_script( 'footable-js', plugin_dir_url( __FILE__ ) . 'js/min/footable.min.js', array( 'jquery' ), '3.0.0', 'all' );
+		wp_enqueue_style( 'footable-css', plugin_dir_url( __FILE__ ) . 'css/min/footable.standalone.min.css', array( 'fontawesome' ), '3.0.0', YIKES_LEVEL_PLAYING_FIELD_VERSION );
+		wp_enqueue_script( 'footable-js', plugin_dir_url( __FILE__ ) . 'js/min/footable.min.js', array( 'jquery' ), '3.0.0', YIKES_LEVEL_PLAYING_FIELD_VERSION );
 	}
 
 	/**

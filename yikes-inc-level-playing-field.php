@@ -39,6 +39,16 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 /**
+ * 	Define version constant for our plugin
+ *
+ * 	@since 6.0.0
+ *	@return void
+ */
+if ( ! defined( 'YIKES_LEVEL_PLAYING_FIELD_VERSION' ) ) {
+	define( 'YIKES_LEVEL_PLAYING_FIELD_VERSION' , '1.0.0' );
+}
+
+/**
  * 	Define path constant to our plugin directory.
  *
  * 	@since 6.0.0

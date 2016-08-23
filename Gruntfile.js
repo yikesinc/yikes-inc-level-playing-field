@@ -17,6 +17,10 @@ module.exports = function(grunt) {
           'admin/js/min/yikes-inc-level-playing-field-metabox-scripts.min.js': [ // all other admin scripts
             'admin/js/yikes-inc-level-playing-field-metabox-scripts.js',
           ],
+					// admin - application builder scripts
+          'admin/js/min/yikes-inc-level-playing-field-application-builder.min.js': [ // all other admin scripts
+            'admin/js/yikes-inc-level-playing-field-application-builder.js',
+          ],
 					// public scripts
           'public/js/min/yikes-inc-level-playing-field-public.min.js': [ // all other admin scripts
             'public/js/yikes-inc-level-playing-field-public.js',
@@ -68,6 +72,13 @@ module.exports = function(grunt) {
 						'admin/css/min/yikes-inc-level-playing-field-metabox-styles.min.css':
 						[
 							'admin/css/yikes-inc-level-playing-field-metabox-styles.css',
+						],
+          },
+					// admin - application builder styles
+          {
+						'admin/css/min/yikes-inc-level-playing-field-application-builder.min.css':
+						[
+							'admin/css/yikes-inc-level-playing-field-application-builder.css',
 						],
           },
 					// public css files
