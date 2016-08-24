@@ -11,6 +11,18 @@ return array(
 				'type' => 'text',
 				'class' => 'widefat',
 			),
+			// Paragraph Text Field
+			array(
+				'label' => __( 'Paragraph Text', 'yikes-inc-level-playing-field' ),
+				'type' => 'textarea',
+				'class' => 'widefat',
+			),
+			// Paragraph Text Field
+			array(
+				'label' => __( 'Number', 'yikes-inc-level-playing-field' ),
+				'type' => 'number',
+				'class' => 'widefat',
+			),
 			// Email Field
 			array(
 				'label' => __( 'Email', 'yikes-inc-level-playing-field' ),
@@ -35,12 +47,30 @@ return array(
 				'type' => 'checkbox',
 				'class' => '',
 			),
+			// Paragraph Text Field
+			array(
+				'label' => __( 'Hidden', 'yikes-inc-level-playing-field' ),
+				'type' => 'hidden',
+				'class' => 'widefat',
+			),
+			// Section Break/Line Break
+			array(
+				'label' => __( 'Section', 'yikes-inc-level-playing-field' ),
+				'type' => 'section-break',
+				'class' => 'widefat',
+			),
 		),
 		__( 'Advanced Fields', 'yikes-inc-level-playing-field' ) => array(
-			// Checkbox Field
+			// Name Field
 			array(
-				'label' => __( 'Multi-Checkbox', 'yikes-inc-level-playing-field' ),
-				'type' => 'multi-check',
+				'label' => __( 'Name', 'yikes-inc-level-playing-field' ),
+				'type' => 'name',
+				'class' => '',
+			),
+			// Date Field
+			array(
+				'label' => __( 'Date', 'yikes-inc-level-playing-field' ),
+				'type' => 'date',
 				'class' => '',
 			),
 			array(
@@ -51,6 +81,11 @@ return array(
 			array(
 				'label' => __( 'HTML', 'yikes-inc-level-playing-field' ),
 				'type' => 'html',
+				'class' => '',
+			),
+			array(
+				'label' => __( 'File Upload', 'yikes-inc-level-playing-field' ),
+				'type' => 'file',
 				'class' => '',
 			),
 		),

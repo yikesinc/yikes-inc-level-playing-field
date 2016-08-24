@@ -49,3 +49,23 @@ function generate_application_cpt() {
 	register_post_type( 'applications', $args );
 }
 add_action( 'init', 'generate_application_cpt', 0 );
+
+/**
+ * Alter the application 'Publish' button text
+ * @param  string $translation The translation text.
+ * @param  string $text        The text to use as comparison.
+ * @return string              [description]
+ */
+function change_publish_button( $translation, $text ) {
+	global $post;
+	if ( ! isset( $post->post_type ) || 'applications' !== $post->post_type ) :
+		return $translation;
+	endif;
+	// If the te
+	if ( 'Publish' !== $text ) :
+		return $translation;
+	endif;
+	// Return the original text
+	return __( 'Save Application', 'yikes-inc-level-playing-field' );
+}
+add_filter( 'gettext', 'change_publish_button', 10, 2 );

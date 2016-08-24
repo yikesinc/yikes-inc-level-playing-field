@@ -2,6 +2,10 @@
  * Application Builder Styles
  */
 
+body.post-type-applications {
+	overflow-x: hidden;
+}
+
 body.post-type-applications #sidebarmenu1 {
 	margin-top: 0;
 	padding-top: 0;
@@ -104,7 +108,7 @@ body.post-type-applications ol.field_type {
 	padding: 0;
 }
 
-body.post-type-applications #job-application-builder input.button {
+body.post-type-applications #job-application-builder .add_field_button_container input.button {
 	z-index: 9999;
 	width: 95%;
 	text-align: center;
@@ -141,9 +145,32 @@ body.post-type-applications #droppable {
 	min-height: 100px;
 }
 
-body.post-type-applications #droppable input.button {
-	width: 100%;
+body.post-type-applications #droppable input.button,
+body.post-type-applications #droppable .ui-state-highlight {
 	margin: 5px 0;
+	height: 40px !important;
+	-webkit-transition: width .3s ease-in-out;
+	-moz-transition: width .3s ease-in-out;
+	-ms-transition: width .3s ease-in-out;
+	-o-transition: width .3s ease-in-out;
+	transition: width .3s ease-in-out;
+}
+
+body.post-type-applications img.application_builder_preloader {
+	display: block;
+	margin: 0 auto;
+	margin-bottom: 4px;
+	margin-top: 4px;
+}
+
+body.post-type-applications #droppable .ui-state-highlight {
+	width: 100%;
+}
+
+body.post-type-applications #droppable .ui-state-highlight {
+	background: #98ff98;
+	box-shadow: none;
+	border: none;
 }
 
 	body.post-type-applications #droppable input.button:first-child {
@@ -156,7 +183,8 @@ body.post-type-applications #droppable input.button {
 
 	body.post-type-applications #droppable:empty {
 		background: url( '../../../assets/img/empty-form-builder-bg.jpg');
-		background-size: cover;
+		background-size: 800px;
+		background-repeat: no-repeat;
 		background-position: center center;
 	}
 
