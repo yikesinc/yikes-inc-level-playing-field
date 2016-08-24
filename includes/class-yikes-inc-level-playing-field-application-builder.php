@@ -25,6 +25,7 @@ class Yikes_Inc_Level_Playing_Field_Application_Builder extends Yikes_Inc_Level_
 		wp_enqueue_script( 'jquery-ui-sortable' );
 		wp_enqueue_script( 'jquery-ui-droppable' );
 		wp_enqueue_script( 'jquery-ui-draggable' );
+		wp_enqueue_script( 'jquery-ui-tabs' );
 		wp_enqueue_script( 'level-playing-field-application-builder-scripts', YIKES_LEVEL_PLAYING_FIELD_URL . 'admin/js/min/yikes-inc-level-playing-field-application-builder.min.js', array( 'jquery-ui-droppable', 'jquery-ui-draggable', 'jquery-ui-core' ), YIKES_LEVEL_PLAYING_FIELD_VERSION, true );
 		wp_localize_script( 'level-playing-field-application-builder-scripts', 'script_data', array(
 			'preloader' => wp_kses_post( '<img src="' . esc_url( admin_url( '/images/wpspin_light.gif' ) ) . '" class="application_builder_preloader">' ),

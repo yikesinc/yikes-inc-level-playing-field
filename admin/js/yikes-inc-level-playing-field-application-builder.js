@@ -46,17 +46,15 @@ function initialize_drag_and_drop_functionality() {
 		drop: function( event, ui ) {
 			console.log( ui );
 			var dropped_item = get_dragged_item( ui );
-			var drop_zone_width = jQuery( '#droppable' ).width() + 'px';
-			dropped_item.css( 'width', drop_zone_width ).fadeTo( 'fast', 0, function() {
-				jQuery( '.ui-state-highlight' ).remove();
-				jQuery( this ).replaceWith ( script_data.preloader );
-				// Run our ajax function to retreive the new form field markup
-				// Mock AJAX Temporarily in place.
-				setTimeout( function() {
-					jQuery( '.application_builder_preloader' ).replaceWith( '<h2>This would be the results...</h2>' );
-				}, 1200 );
-			});
-			enable_sortable_items();
+			dropped_item.css( 'width', '500px' );
+			setTimeout( function() {
+				dropped_item.fadeTo( 'fast', 0, function() {
+					dropped_item.replaceWith ( script_data.preloader );
+					// Run our ajax function to retreive the new form field markup
+					// Mock AJAX Temporarily in place.
+					get_and_add_application_field( ui );
+				});
+			}, 500);
 		}
 	});
 }
@@ -68,4 +66,33 @@ function initialize_drag_and_drop_functionality() {
  */
 function get_dragged_item( ui ) {
 	return jQuery( ui.helper[0] );
+}
+
+/**
+ * Initialize the tabs inside of the container
+ * @since 1.0.0
+ */
+function initialize_tabs() {
+	// initialize the tabs in this container
+	jQuery( '.tab-container' ).tabs();
+}
+
+/**
+ * AJAX Request to get the field markup to add to the form
+ * @param array ui Array data from the dragged field. Use this to get the field type.
+ * @return mixed HTML content to add to the application builder.
+ */
+function get_and_add_application_field( ui ) {
+	var data = {
+		'action': 'my_action',
+		'field_type': jQuery( ui.helper[0] ).attr( 'data-type' ),
+	};
+	// since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
+	jQuery.post( ajaxurl, data, function( response ) {
+		jQuery( '.application_builder_preloader' ).replaceWith( response );
+		// initialize the tabs in this container
+		initialize_tabs();
+		// re-enable sorting
+		enable_sortable_items();
+	});
 }

@@ -69,6 +69,8 @@ class Yikes_Inc_Level_Playing_Field_Admin {
 		/* Alter the applicant status when the button is clicked */
 		add_action( 'wp_ajax_update_applicant_status', array( $this, 'update_applicant_status' ) );
 
+		include_once( YIKES_LEVEL_PLAYING_FIELD_PATH . 'admin/partials/yikes-inc-level-playing-field-ajax-functions.php' );
+
 		/* Handle deleting an applicant from the database */
 		add_action( 'admin_init', array( $this, 'delete_applicant_from_db' ) );
 	}
@@ -95,7 +97,7 @@ class Yikes_Inc_Level_Playing_Field_Admin {
 		 * class.
 		 */
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/min/yikes-inc-level-playing-field-admin.min.css', array(), $this->version, YIKES_LEVEL_PLAYING_FIELD_VERSION );
+		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/min/yikes-inc-level-playing-field-admin.min.css', array(), YIKES_LEVEL_PLAYING_FIELD_VERSION, false );
 	}
 
 	/**
@@ -120,7 +122,7 @@ class Yikes_Inc_Level_Playing_Field_Admin {
 		 * class.
 		 */
 
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/min/yikes-inc-level-playing-field-admin.min.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/min/yikes-inc-level-playing-field-admin.min.js', array( 'jquery' ), YIKES_LEVEL_PLAYING_FIELD_VERSION, false );
 	}
 
 	/**
@@ -130,8 +132,8 @@ class Yikes_Inc_Level_Playing_Field_Admin {
 	public function job_admin_scripts_and_styles() {
 		global $post_type;
 		if ( 'jobs' === $post_type ) {
-			wp_enqueue_style( 'jobs-metabox-styles', plugin_dir_url( __FILE__ ) . 'css/min/yikes-inc-level-playing-field-metabox-styles.min.css', array(), $this->version );
-			wp_enqueue_script( 'jobs-metabox-scripts', plugin_dir_url( __FILE__ ) . 'js/min/yikes-inc-level-playing-field-metabox-scripts.min.js', array( 'jquery' ), $this->version, true );
+			wp_enqueue_style( 'jobs-metabox-styles', plugin_dir_url( __FILE__ ) . 'css/min/yikes-inc-level-playing-field-metabox-styles.min.css', array(), YIKES_LEVEL_PLAYING_FIELD_VERSION, false );
+			wp_enqueue_script( 'jobs-metabox-scripts', plugin_dir_url( __FILE__ ) . 'js/min/yikes-inc-level-playing-field-metabox-scripts.min.js', array( 'jquery' ), YIKES_LEVEL_PLAYING_FIELD_VERSION, true );
 		}
 	}
 

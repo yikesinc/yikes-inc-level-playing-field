@@ -112,7 +112,7 @@ class Yikes_Inc_Level_Playing_Field_Public {
 		 * class.
 		 */
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/min/yikes-inc-level-playing-field-public.min.css', array(), $this->version, YIKES_LEVEL_PLAYING_FIELD_VERSION );
+		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/min/yikes-inc-level-playing-field-public.min.css', array(), YIKES_LEVEL_PLAYING_FIELD_VERSION, YIKES_LEVEL_PLAYING_FIELD_VERSION );
 
 	}
 
@@ -135,7 +135,7 @@ class Yikes_Inc_Level_Playing_Field_Public {
 		 * class.
 		 */
 
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/min/yikes-inc-level-playing-field-public.min.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/min/yikes-inc-level-playing-field-public.min.js', array( 'jquery' ), YIKES_LEVEL_PLAYING_FIELD_VERSION, false );
 
 	}
 

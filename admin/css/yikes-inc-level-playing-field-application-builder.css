@@ -27,6 +27,48 @@ body.post-type-applications ul.menu li {
 	margin-bottom: 10px;
 }
 
+body.post-type-applications .yikes-field-container {
+	list-style: none;
+	box-sizing: border-box;
+	border: 1px solid transparent;
+	overflow-y: visible;
+	width: 100%;
+	max-width: 500px;
+	background: #f1f1f1;
+}
+
+	body.post-type-applications .yikes-field-container .field-label {
+		display: block;
+		width: 100%;
+	}
+
+body.post-type-applications .yikes-field-container .interior_container {
+	padding: 1em;
+}
+
+body.post-type-applications div.yikes_admin_icons {
+	height: 30px;
+	line-height: 30px;
+	background: rgba(173, 216, 230, 0.6);
+	padding: 0 .5em;
+	text-align: right;
+}
+
+	body.post-type-applications div.yikes_admin_icons a,
+	body.post-type-applications div.yikes_admin_icons a i.dashicons {
+		text-decoration: none;
+		line-height: 30px !important;
+	}
+
+body.post-type-applications div.yikes_admin_icons div.yikes_admin_header_title {
+	display: block;
+	float: left;
+	font-size: 11px;
+	font-weight: bold;
+	color: #47759B;
+	letter-spacing: 0.025rem;
+}
+
 body.post-type-applications .button-title-link div.add-buttons-title {
 	min-height: 24px;
 	overflow: hidden;
@@ -157,18 +199,16 @@ body.post-type-applications #droppable .ui-state-highlight {
 }
 
 body.post-type-applications img.application_builder_preloader {
-	display: block;
-	margin: 0 auto;
-	margin-bottom: 4px;
-	margin-top: 4px;
+	margin: 5px 0;
 }
 
 body.post-type-applications #droppable .ui-state-highlight {
 	width: 100%;
+	max-width: 500px;
 }
 
 body.post-type-applications #droppable .ui-state-highlight {
-	background: #98ff98;
+	background: #ececec;
 	box-shadow: none;
 	border: none;
 }
@@ -187,5 +227,53 @@ body.post-type-applications #droppable .ui-state-highlight {
 		background-repeat: no-repeat;
 		background-position: center center;
 	}
+
+/**
+ * Tab Containers
+ */
+body.post-type-applications .yikes-tabs {
+	background: #ffffff;
+	margin-top: 1.5em;
+}
+
+body.post-type-applications #droppable li .ui-widget-header {
+	border-left: none !important;
+	border-top: none !important;
+	border-right: none !important;
+	font-weight: normal !important;
+	height: 30px;
+	line-height: 30px;
+	margin: 0;
+	margin-top: .5em;
+	background: #F1F1F1;
+}
+
+body.post-type-applications #droppable .ui-tabs-panel {
+	padding: 0 .75em .75em .75em;
+}
+
+.ui-tabs .ui-tabs-nav li {
+	position: relative;
+	float: left;
+	margin: 0 .2em -1px 0;
+	padding: 0;
+	text-align: center;
+	padding: 0 10px;
+	text-decoration: none;
+}
+
+	.ui-tabs .ui-tabs-nav li a {
+		text-decoration: none;
+	}
+
+div.ui-widget-content li.ui-state-default.ui-state-active {
+	background-color: #FFF !important;
+	border-bottom: 1px solid #FFF !important;
+	background-image: none !important;
+}
+
+div.ui-widget-content li.ui-state-default.ui-state-active a {
+	color: #212121;
+}
 
 /*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInlpa2VzLWluYy1sZXZlbC1wbGF5aW5nLWZpZWxkLWFwcGxpY2F0aW9uLWJ1aWxkZXIuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBOztHQUVHOztBQUVIO0VBQ0Usc0JBQXNCO0VBQ3RCOztBQUVGOzs7RUFLRSw4QkFBOEI7RUFDOUI7O0FBRUY7RUFDRSxtQkFBbUI7RUFDbkI7O0FBRUY7RUFDRSxtQkFBbUI7RUFDbkIiLCJmaWxlIjoieWlrZXMtaW5jLWxldmVsLXBsYXlpbmctZmllbGQtYXBwbGljYXRpb24tYnVpbGRlci5jc3MifQ== */
