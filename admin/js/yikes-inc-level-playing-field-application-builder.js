@@ -61,6 +61,11 @@ function initialize_drag_and_drop_functionality() {
 	});
 }
 
+/**
+ * Get the dragged item
+ * @param  array ui Array of data related to our dragged item.
+ * @return object   jQuery object of the dragged item, for reference.
+ */
 function get_dragged_item( ui ) {
 	return jQuery( ui.helper[0] );
 }
