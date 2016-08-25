@@ -4,7 +4,7 @@
  * @since 1.0.0
  */
 ?>
-<li class="yikes-field-container js-field-container">
+<li class="yikes-field-container">
 
 	<!-- Field Header -->
 	<div class="yikes_admin_icons">

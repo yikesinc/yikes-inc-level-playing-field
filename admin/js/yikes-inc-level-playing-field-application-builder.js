@@ -5,6 +5,11 @@ jQuery( document ).ready( function() {
 	initialize_drag_and_drop_functionality();
 	// Initialize tabs
 	initialize_tabs();
+
+	// When a user clicks on the 'title' bar of the form field (slide toggle it)
+	jQuery( 'body' ).on( 'click', '.yikes_admin_icons', function() {
+		jQuery( this ).next().stop().slideToggle();
+	});
 });
 
 /**
@@ -13,12 +18,18 @@ jQuery( document ).ready( function() {
  */
 function enable_sortable_items() {
 	jQuery( "#droppable" ).sortable({
-		placeholder: "ui-state-highlight",
-		handle: '.button',
-		revert: true
+		placeholder: "ui-state-highlight ui-sortable-placeholder",
+		revert: true,
+		start: function( event, ui ) {
+			// When sorting has started, collapse the element being sorted
+			var dropped_item = get_dragged_item( ui );
+			jQuery( dropped_item ).find( '.interior_container' ).hide();
+		},
+		stop: function( event, ui ) {
+			// not sure
+		},
 	});
 	jQuery( "#droppable" ).disableSelection();
-	console.log( 'sortable enabled' );
 }
 
 /**
@@ -49,9 +60,12 @@ function initialize_drag_and_drop_functionality() {
 			console.log( ui );
 			var dropped_item = get_dragged_item( ui );
 			dropped_item.css( 'width', '500px' );
+			// Hide all expanded containers when a new one is added (avoid long pages)
+			toggle_form_field_expandable_content();
+			// Replace the content
 			setTimeout( function() {
 				dropped_item.fadeTo( 'fast', 0, function() {
-					dropped_item.replaceWith ( script_data.preloader );
+					dropped_item.replaceWith ( '<div class="placeholder-preloader">' + script_data.preloader + '</div>' );
 					// Run our ajax function to retreive the new form field markup
 					// Mock AJAX Temporarily in place.
 					get_and_add_application_field( ui );
@@ -103,7 +117,7 @@ function get_and_add_application_field( ui ) {
 	};
 	// since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
 	jQuery.post( ajaxurl, data, function( response ) {
-		jQuery( '.application_builder_preloader' ).replaceWith( response );
+		jQuery( '.placeholder-preloader' ).replaceWith( response );
 		// initialize the tabs in this container
 		initialize_tabs();
 		// re-enable sorting
@@ -141,7 +155,7 @@ function togglePatternContainer( clicked_radio_button, pattern ) {
  */
 function delete_this_application_form_field( clicked_button ) {
 	if ( confirm( 'Are you sure you want to delete this form field?') ) {
-		jQuery( clicked_button ).parents( '.yikes-field-container' ).fadeOut( 'fast', function() {
+		jQuery( clicked_button ).parents( '.yikes-field-container' ).css( 'background', '#F2DEDE' ).fadeOut( 'medium', function() {
 			jQuery( this ).remove();
 			// If the application builder is now empty,
 			// set the #droppable to empty so our background appears
@@ -151,4 +165,11 @@ function delete_this_application_form_field( clicked_button ) {
 		});
 		return;
 	}
+}
+
+/**
+ * Collapse all visible .
+ */
+function toggle_form_field_expandable_content() {
+	jQuery( '.yikes-field-container' ).find( '.interior_container' ).slideUp();
 }
