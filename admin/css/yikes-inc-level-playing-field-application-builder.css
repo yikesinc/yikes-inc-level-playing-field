@@ -52,10 +52,14 @@ body.post-type-applications div.yikes_admin_icons {
 	background: rgba(173, 216, 230, 0.6);
 	padding: 0 .5em;
 	text-align: right;
+	transition: opacity .15s ease-in-out;
+	-moz-transition: opacity .15s ease-in-out;
+	-webkit-transition: opacity .15s ease-in-out;
 }
 
 	body.post-type-applications div.yikes_admin_icons:hover {
 		cursor: pointer;
+		opacity: .85;
 	}
 
 	body.post-type-applications div.yikes_admin_icons a,
