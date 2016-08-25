@@ -79,6 +79,7 @@ module.exports = function(grunt) {
 						'admin/css/min/yikes-inc-level-playing-field-application-builder.min.css':
 						[
 							'admin/css/yikes-inc-level-playing-field-application-builder.css',
+							'admin/css/tipso.css',
 						],
           },
 					// public css files

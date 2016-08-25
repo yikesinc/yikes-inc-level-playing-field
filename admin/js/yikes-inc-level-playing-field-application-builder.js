@@ -3,6 +3,8 @@ jQuery( document ).ready( function() {
 	enable_sortable_items();
 	// Initialize drag and drop
 	initialize_drag_and_drop_functionality();
+	// Initialize tabs
+	initialize_tabs();
 });
 
 /**
@@ -75,6 +77,18 @@ function get_dragged_item( ui ) {
 function initialize_tabs() {
 	// initialize the tabs in this container
 	jQuery( '.tab-container' ).tabs();
+	// We should also re-initialize our tooltips
+	jQuery( '.yikes_tooltip' ).each( function() {
+		jQuery( this ).tipso({
+			background        : '#add8e6',
+			titleBackground   : '#333333',
+			color             : '#333333',
+			titleColor        : '#ffffff',
+			titleContent      : jQuery( this ).attr( 'data-tipso-title'),
+			showArrow         : true,
+			position          : 'bottom-left',
+		});
+	});
 }
 
 /**
@@ -95,4 +109,46 @@ function get_and_add_application_field( ui ) {
 		// re-enable sorting
 		enable_sortable_items();
 	});
+}
+
+/**
+ * Toggle the nearest hidden container visibility
+ * @param  object clicked_element The element that the user clicked to trigger this function (passed in using 'this')
+ * @return {[type]}                 [description]
+ */
+function toggleClosestHiddenContainer( clicked_element ) {
+	jQuery( clicked_element ).closest( 'div' ).find( '.hidden_section' ).slideToggle();
+	return;
+}
+
+/**
+ * Toggle the visibile pattern containier section
+ * @param  {[type]} clicked_radio_button [description]
+ * @return {[type]}                      [description]
+ */
+function togglePatternContainer( clicked_radio_button, pattern ) {
+	var pattern_class = ( 'custom' === pattern ) ? '.custom-pattern' : '.standard-pattern';
+	var no_checked_pattern = ( 'custom' === pattern ) ? '.standard-pattern' : '.custom-pattern';
+	jQuery( no_checked_pattern ).slideToggle( 'fast', function() {
+		jQuery( pattern_class ).slideToggle();
+	});
+}
+
+/**
+ * When a user clicks the x on the form field, we need to delete it
+ * @param  object clicked_button The clicked x, to use as reference.
+ * @since 1.0.0
+ */
+function delete_this_application_form_field( clicked_button ) {
+	if ( confirm( 'Are you sure you want to delete this form field?') ) {
+		jQuery( clicked_button ).parents( '.yikes-field-container' ).fadeOut( 'fast', function() {
+			jQuery( this ).remove();
+			// If the application builder is now empty,
+			// set the #droppable to empty so our background appears
+			if ( jQuery( '#droppable' ).find( '.yikes-field-container' ).length <= 0 ) {
+				jQuery( '#droppable' ).html( '' );
+			}
+		});
+		return;
+	}
 }

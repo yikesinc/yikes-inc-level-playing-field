@@ -26,7 +26,8 @@ class Yikes_Inc_Level_Playing_Field_Application_Builder extends Yikes_Inc_Level_
 		wp_enqueue_script( 'jquery-ui-droppable' );
 		wp_enqueue_script( 'jquery-ui-draggable' );
 		wp_enqueue_script( 'jquery-ui-tabs' );
-		wp_enqueue_script( 'level-playing-field-application-builder-scripts', YIKES_LEVEL_PLAYING_FIELD_URL . 'admin/js/min/yikes-inc-level-playing-field-application-builder.min.js', array( 'jquery-ui-droppable', 'jquery-ui-draggable', 'jquery-ui-core' ), YIKES_LEVEL_PLAYING_FIELD_VERSION, true );
+		wp_enqueue_script( 'tipso-tooltips-scripts', YIKES_LEVEL_PLAYING_FIELD_URL . 'admin/js/min/tipso.min.js', array( 'jquery-ui-droppable', 'jquery-ui-draggable', 'jquery-ui-core' ), YIKES_LEVEL_PLAYING_FIELD_VERSION, true );
+		wp_enqueue_script( 'level-playing-field-application-builder-scripts', YIKES_LEVEL_PLAYING_FIELD_URL . 'admin/js/min/yikes-inc-level-playing-field-application-builder.min.js', array( 'tipso-tooltips-scripts' ), YIKES_LEVEL_PLAYING_FIELD_VERSION, true );
 		wp_localize_script( 'level-playing-field-application-builder-scripts', 'script_data', array(
 			'preloader' => wp_kses_post( '<img src="' . esc_url( admin_url( '/images/wpspin_light.gif' ) ) . '" class="application_builder_preloader">' ),
 		) );
@@ -122,7 +123,7 @@ class Yikes_Inc_Level_Playing_Field_Application_Builder extends Yikes_Inc_Level_
 							<div class="add-buttons-title">
 								<!-- Section Title -->
 								<?php echo esc_html( $field_section ); ?>
-								<a href="#" onclick="return false;" onkeypress="return false;" class="yikes_tooltip tooltip_bottomleft tooltip_form_<?php echo esc_attr( $field_section_title_slug ); ?>" title="<h6>Standard Fields</h6>Standard Fields provide basic form functionality.">
+								<a href="#" onclick="return false;" onkeypress="return false;" class="yikes_tooltip tooltip_bottomleft tooltip_form_<?php echo esc_attr( $field_section_title_slug ); ?>" data-tipso-title="<strong>Standard Fields</strong>" data-tipso="Standard Fields provide basic form functionality.">
 									<i class="dashicons dashicons-editor-help"></i>
 								</a>
 								<!-- Tooltip Icon -->
@@ -155,9 +156,5 @@ class Yikes_Inc_Level_Playing_Field_Application_Builder extends Yikes_Inc_Level_
 				$count++;
 			}
 		?></ul><?php
-	}
-
-	public function render_application_field() {
-		echo 'test';
 	}
 }
