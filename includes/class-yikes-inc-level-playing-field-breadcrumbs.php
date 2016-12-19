@@ -29,7 +29,7 @@ class YIKES_Level_Playing_Field_Breadcrumbs {
 	public function add_crumb( $name, $link = '' ) {
 		$this->crumbs[] = array(
 			strip_tags( $name ),
-			$link
+			$link,
 		);
 	}
 
@@ -69,7 +69,7 @@ class YIKES_Level_Playing_Field_Breadcrumbs {
 			'is_tag',
 			'is_author',
 			'is_date',
-			'is_tax'
+			'is_tax',
 		);
 
 		if ( ( ! is_front_page() && ! ( is_post_type_archive() && get_option( 'page_on_front' ) == wc_get_page_id( 'shop' ) ) ) || is_paged() ) {
@@ -304,6 +304,7 @@ class YIKES_Level_Playing_Field_Breadcrumbs {
 
 	/**
 	 * Add crumbs for a term.
+	 *
 	 * @param string $taxonomy
 	 */
 	private function term_ancestors( $term_id, $taxonomy ) {

@@ -1,6 +1,7 @@
 <?php
 /**
  * Generate the markup for the admin table, to display jobs/applicants on
+ *
  * @since 1.0.0
  */
 class Link_List_Table extends WP_List_Table {
@@ -9,9 +10,9 @@ class Link_List_Table extends WP_List_Table {
 	public $helpers;
 
 	/**
-	* Constructor, we override the parent to pass our own arguments
-	* We usually focus on three parameters: singular and plural labels, as well as whether the class supports AJAX.
-	*/
+	 * Constructor, we override the parent to pass our own arguments
+	 * We usually focus on three parameters: singular and plural labels, as well as whether the class supports AJAX.
+	 */
 	function __construct( $helpers ) {
 		$this->helpers = $helpers;
 		parent::__construct( array(
@@ -22,9 +23,10 @@ class Link_List_Table extends WP_List_Table {
 	}
 
 		/**
-	 * Add extra markup in the toolbars before or after the list
-	 * @param string $which, helps you decide if you add the markup after (bottom) or before (top) the list
-	 */
+		 * Add extra markup in the toolbars before or after the list
+		 *
+		 * @param string $which, helps you decide if you add the markup after (bottom) or before (top) the list
+		 */
 	function extra_tablenav( $which ) {
 		if ( 'top' === $which ) {
 			$count = 1;
@@ -37,14 +39,14 @@ class Link_List_Table extends WP_List_Table {
 			ob_start(); ?>
 			<ul class="subsubsub">
 				<?php
-					foreach ( $links as $link_text => $link_href ) {
-						$current = ( sanitize_title( $link_text ) === $page ) ? 'current' : '';
-						echo wp_kses_post( '<li><a class="' . esc_attr( $current ) . '" href="' . esc_attr( $link_href ) . '">' . esc_html( $link_text ) . '</a></li>' );
-						if ( $count !== count( $links ) ) {
-							echo ' | ';
-						}
-						$count++;
+				foreach ( $links as $link_text => $link_href ) {
+					$current = ( sanitize_title( $link_text ) === $page ) ? 'current' : '';
+					echo wp_kses_post( '<li><a class="' . esc_attr( $current ) . '" href="' . esc_attr( $link_href ) . '">' . esc_html( $link_text ) . '</a></li>' );
+					if ( $count !== count( $links ) ) {
+						echo ' | ';
 					}
+					$count++;
+				}
 				?>
 			</ul>
 			<?php
@@ -53,13 +55,14 @@ class Link_List_Table extends WP_List_Table {
 			echo wp_kses_post( $contents );
 		}
 		if ( 'bottom' === $which ) {
-			//The code that goes after the table is there
+			// The code that goes after the table is there
 			// echo "Hi, I'm after the table";
 		}
 	}
 
 	/**
 	 * Define the columns that are going to be used in the table
+	 *
 	 * @return array $columns, the array of columns to use with the table
 	 */
 	function get_columns() {
@@ -74,6 +77,7 @@ class Link_List_Table extends WP_List_Table {
 
 	/**
 	 * Decide which columns to activate the sorting functionality on
+	 *
 	 * @return array $sortable, the array of columns that can be sorted by the user
 	 */
 	public function get_sortable_columns() {
@@ -99,31 +103,33 @@ class Link_List_Table extends WP_List_Table {
 			// print_r( $_GET );
 		}
 
-		/* -- Ordering parameters -- */
-		//Parameters that are going to be used to order the result
+		/*
+		 -- Ordering parameters -- */
+		// Parameters that are going to be used to order the result
 		$orderby = ! empty( $_GET['orderby'] ) ? 'ASC' : 'ASC';
 		$order = ! empty( $_GET['order'] ) ? mysql_real_escape_string( $_GET['order'] ) : '';
 		if ( ! empty( $orderby ) & ! empty( $order ) ) {
-			$query .= ' ORDER BY '. $orderby . ' ' . $order;
+			$query .= ' ORDER BY ' . $orderby . ' ' . $order;
 		}
 
-		/* -- Pagination parameters -- */
+		/*
+		 -- Pagination parameters -- */
 		// Number of elements in your table?
 		$totalitems = $wpdb->query( $query ); // return the total number of affected rows
 		// How many to display per page?
 		$perpage = 5;
-		//Which page is this?
+		// Which page is this?
 		$paged = ! empty( $_GET['paged'] ) ? mysql_real_escape_string( $_GET['paged'] ) : '';
-		//Page Number
+		// Page Number
 		if ( empty( $paged ) || ! is_numeric( $paged ) || $paged <= 0 ) {
 			$paged = 1;
 		}
-		//How many pages do we have in total?
+		// How many pages do we have in total?
 		$totalpages = ceil( $totalitems / $perpage );
-		//adjust the query to take pagination into account
+		// adjust the query to take pagination into account
 		if ( ! empty( $paged ) && ! empty( $perpage ) ) {
 			$offset = ( $paged - 1 ) * $perpage;
-			$query .= ' LIMIT '. (int) $offset . ',' . (int) $perpage;
+			$query .= ' LIMIT ' . (int) $offset . ',' . (int) $perpage;
 		}
 
 		/* -- Register the pagination -- */
@@ -132,8 +138,7 @@ class Link_List_Table extends WP_List_Table {
 			'total_pages' => $totalpages,
 			'per_page' => $perpage,
 		) );
-		//The pagination links are automatically built according to those parameters
-
+		// The pagination links are automatically built according to those parameters
 		/* -- Register the Columns -- */
 		$columns = $this->get_columns();
 		// Pass in column IDs to hide
@@ -149,19 +154,19 @@ class Link_List_Table extends WP_List_Table {
 
 	/**
 	 * Display the rows of records in the table
+	 *
 	 * @return string, echo the markup of the rows
 	 */
 	function display_rows() {
 
-		//Get the records registered in the prepare_items method
+		// Get the records registered in the prepare_items method
 		$jobs = $this->items;
 
-		//Get the columns registered in the get_columns and get_sortable_columns methods
+		// Get the columns registered in the get_columns and get_sortable_columns methods
 		list( $columns, $hidden ) = $this->get_column_info();
 
 		// print_r( $columns );
-
-		//Loop for each record
+		// Loop for each record
 		if ( ! empty( $jobs ) ) {
 			foreach ( $jobs as $job ) {
 
@@ -180,7 +185,7 @@ class Link_List_Table extends WP_List_Table {
 					// Style attributes for each col
 					$class = "class='$column_name column-$column_name'";
 
-					$style = "";
+					$style = '';
 
 					if ( in_array( $column_name, $hidden ) ) {
 						$style = ' style="display:none;"';
@@ -188,10 +193,10 @@ class Link_List_Table extends WP_List_Table {
 
 					$attributes = $class . $style;
 
-					//Display the cell
+					// Display the cell
 					switch ( $column_name ) {
 						case 'col_job_id':
-							echo '<td '. $attributes . '>' . esc_html( stripslashes( $job->ID ) ) . '</td>';
+							echo '<td ' . $attributes . '>' . esc_html( stripslashes( $job->ID ) ) . '</td>';
 							break;
 						case 'col_job_title':
 							echo '<td ' . $attributes . '>' . esc_html( stripslashes( $job->post_title ) ) . wp_kses_post( $action_links ) . '</td>';
@@ -208,14 +213,15 @@ class Link_List_Table extends WP_List_Table {
 					}
 				}
 
-				//Close the row
+				// Close the row
 				echo'</tr>';
-			}
-		}
+			}// End foreach().
+		}// End if().
 	}
 
 	/**
 	 * Get the action links to use on this page
+	 *
 	 * @return mixed HTML content of the action links
 	 */
 	function get_action_links( $job_id, $applicant_count ) {
@@ -233,7 +239,7 @@ class Link_List_Table extends WP_List_Table {
 		?>
 		<div class="row-actions">
 			<?php
-			foreach( $action_link_array as $action_link_text => $action_link_href ) {
+			foreach ( $action_link_array as $action_link_text => $action_link_href ) {
 				$divider = ( $count < count( $action_link_array ) ) ? ' | ' : '';
 				if ( 'disabled' === $action_link_href ) {
 					echo wp_kses_post( '<span class="' . sanitize_title( $action_link_text ) . '"><a href="#" onclick="return false;" disabled="disabled" class="disabled-action-link">' . $action_link_text . '</a></span>' . $divider );

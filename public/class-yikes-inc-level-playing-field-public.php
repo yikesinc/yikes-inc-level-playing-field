@@ -54,8 +54,8 @@ class Yikes_Inc_Level_Playing_Field_Public {
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
-	 * @param      string    $plugin_name       The name of the plugin.
-	 * @param      string    $version    The version of this plugin.
+	 * @param      string $plugin_name       The name of the plugin.
+	 * @param      string $version    The version of this plugin.
 	 */
 	public function __construct( $plugin_name, $version, $helpers ) {
 
@@ -63,7 +63,8 @@ class Yikes_Inc_Level_Playing_Field_Public {
 		$this->version = $version;
 		$this->helpers = $helpers;
 
-		/* Register our Shortcodes */
+		/*
+		 Register our Shortcodes */
 		// Application Shortcode
 		add_shortcode( 'lpf-application', array( $this, 'render_application_shortcode' ) );
 
@@ -90,7 +91,7 @@ class Yikes_Inc_Level_Playing_Field_Public {
 		add_filter( 'body_class', array( $this, 'generate_proper_body_class' ), 999 );
 
 		/* Fix the applicant messenger page title */
-		add_filter('pre_get_document_title', array( $this, 'apply_level_playing_field_applicant_title' ) );
+		add_filter( 'pre_get_document_title', array( $this, 'apply_level_playing_field_applicant_title' ) );
 	}
 
 	/**
@@ -141,6 +142,7 @@ class Yikes_Inc_Level_Playing_Field_Public {
 
 	/**
 	 * Render the Job Application Form
+	 *
 	 * @param  array $atts  The shortcode attributes.
 	 * @return string       HTML markup for th eform
 	 */
@@ -166,37 +168,37 @@ class Yikes_Inc_Level_Playing_Field_Public {
 
 			printf( '<h3 class="application-title">' . esc_html( '%s Job Application' ) . '</h3>', get_the_title() );
 
-			if ( $company_name ) {
-				printf( '<p class="company-name">' . esc_html( 'Company: %s' ) . '</p>', esc_html( get_post_meta( $application_id, '_company_name', true ) ) );
-			}
+if ( $company_name ) {
+	printf( '<p class="company-name">' . esc_html( 'Company: %s' ) . '</p>', esc_html( get_post_meta( $application_id, '_company_name', true ) ) );
+}
 
 			// Render the application
-			if ( $application_fields ) {
-				?>
-				<form class="yikes-lpf-form yikes-lpf-section" action="" method="POST">
-					<?php
-					// Form Fields
-					foreach ( $application_fields as $app_field ) {
-						// render the feild
-						$this->helpers->render_field( $app_field );
-					}
-					?>
-					<input type="submit" name="submit" class="<?php echo esc_attr( apply_filters( 'yikes_level_playing_field_submit_application_button_class', 'yikes-lpf-submit' ) ); ?>" value="<?php esc_attr_e( 'Apply', 'yikes-inc-level-playing-field' ); ?>" />
+if ( $application_fields ) {
+	?>
+	<form class="yikes-lpf-form yikes-lpf-section" action="" method="POST">
+<?php
+// Form Fields
+foreach ( $application_fields as $app_field ) {
+	// render the feild
+	$this->helpers->render_field( $app_field );
+}
+?>
+<input type="submit" name="submit" class="<?php echo esc_attr( apply_filters( 'yikes_level_playing_field_submit_application_button_class', 'yikes-lpf-submit' ) ); ?>" value="<?php esc_attr_e( 'Apply', 'yikes-inc-level-playing-field' ); ?>" />
 
-					<!-- Application ID -->
-					<input type="hidden" name="application_id" value="<?php echo esc_attr( $application_id ); ?>" />
-					<!-- Security Nonce -->
-					<?php wp_nonce_field( 'submit_job_application', 'submit_job_application' ); ?>
-				</form>
-				<?php
-			} else {
-				?>
-				<p><em><?php esc_html_e( 'It looks like you forgot to assign fields to this application!', 'yikes-inc-level-playing-field' ); ?></em></p>
-				<?php
-				if ( current_user_can( 'manage_options' ) ) {
-					?><a href="<?php echo esc_url( admin_url( '/post.php?post=' . (int) $application_id . '&action=edit' ) ); ?>"><?php esc_html_e( 'Edit Job', 'yikes-inc-level-playing-field' ); ?></a><?php
-				}
-			}
+		<!-- Application ID -->
+		<input type="hidden" name="application_id" value="<?php echo esc_attr( $application_id ); ?>" />
+		<!-- Security Nonce -->
+		<?php wp_nonce_field( 'submit_job_application', 'submit_job_application' ); ?>
+	</form>
+	<?php
+} else {
+	?>
+	<p><em><?php esc_html_e( 'It looks like you forgot to assign fields to this application!', 'yikes-inc-level-playing-field' ); ?></em></p>
+	<?php
+	if ( current_user_can( 'manage_options' ) ) {
+		?><a href="<?php echo esc_url( admin_url( '/post.php?post=' . (int) $application_id . '&action=edit' ) ); ?>"><?php esc_html_e( 'Edit Job', 'yikes-inc-level-playing-field' ); ?></a><?php
+	}
+}
 		?></div><?php
 
 		// If the application is on a third party, setup that URL
@@ -210,6 +212,7 @@ class Yikes_Inc_Level_Playing_Field_Public {
 
 	/**
 	 * Render the Jobs Table
+	 *
 	 * @param  array $atts  The shortcode attributes.
 	 * @return string       HTML markup for th eform
 	 */
@@ -234,6 +237,7 @@ class Yikes_Inc_Level_Playing_Field_Public {
 
 	/**
 	 * Enqueue the scripts and styles needed for the job listing table
+	 *
 	 * @since 1.0.0
 	 */
 	public function enqueue_job_table_scripts_and_styles() {
@@ -296,6 +300,7 @@ class Yikes_Inc_Level_Playing_Field_Public {
 
 	/**
 	 * Process Application Submissions
+	 *
 	 * @return boolean true/false based on submission success
 	 * @since 1.0.0
 	 */
@@ -325,6 +330,7 @@ class Yikes_Inc_Level_Playing_Field_Public {
 
 	/**
 	 * Process the data submitted when a user submits a message via the messenger
+	 *
 	 * @return true/false
 	 */
 	public function process_applicant_messenger_message_sending() {
@@ -396,6 +402,7 @@ class Yikes_Inc_Level_Playing_Field_Public {
 
 	/**
 	 * Generate the success/error responses
+	 *
 	 * @return [type] [description]
 	 */
 	function generate_application_submission_response() {
@@ -417,6 +424,7 @@ class Yikes_Inc_Level_Playing_Field_Public {
 
 	/**
 	 * Generate a response after the user attempts to submit the form
+	 *
 	 * @return mixed HTML content displayed back tot he user 'success/error'
 	 * @since 1.0.0
 	 */

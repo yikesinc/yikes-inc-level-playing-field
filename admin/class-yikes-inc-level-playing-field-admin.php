@@ -42,6 +42,7 @@ class Yikes_Inc_Level_Playing_Field_Admin {
 
 	/**
 	 * The helper functions
+	 *
 	 * @var class
 	 */
 	private $helpers;
@@ -50,8 +51,8 @@ class Yikes_Inc_Level_Playing_Field_Admin {
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
-	 * @param      string    $plugin_name       The name of this plugin.
-	 * @param      string    $version    The version of this plugin.
+	 * @param      string $plugin_name       The name of this plugin.
+	 * @param      string $version    The version of this plugin.
 	 */
 	public function __construct( $plugin_name, $version, $helpers ) {
 
@@ -127,6 +128,7 @@ class Yikes_Inc_Level_Playing_Field_Admin {
 
 	/**
 	 * Enqueue scripts and styles to our 'job' custom post type explicilty
+	 *
 	 * @since 1.0.0
 	 */
 	public function job_admin_scripts_and_styles() {
@@ -140,6 +142,7 @@ class Yikes_Inc_Level_Playing_Field_Admin {
 	/**
 	 * Update a given applicants status
 	 * This is used on the applicant listing table, admin side
+	 *
 	 * @return boolean true/false based on update meta response.
 	 * @since 1.0.0
 	 */
@@ -161,6 +164,7 @@ class Yikes_Inc_Level_Playing_Field_Admin {
 
 	/**
 	 * Delete an applicant from the database
+	 *
 	 * @return redirect the user after action is taken
 	 */
 	public function delete_applicant_from_db() {
@@ -183,7 +187,7 @@ class Yikes_Inc_Level_Playing_Field_Admin {
 					'post_type' => 'jobs',
 					'page' => 'manage-applicants',
 					'view' => 'all-applicants',
-					'job' => absint( $_GET['job' ] ),
+					'job' => absint( $_GET['job'] ),
 					'applicant-deleted' => $deleted_post,
 				), admin_url( 'edit.php' ) ) ) );
 				exit;
@@ -193,6 +197,7 @@ class Yikes_Inc_Level_Playing_Field_Admin {
 
 	/**
 	 * Determine if our scripts and styles should enqueue
+	 *
 	 * @return boolean true/false based on current admin page
 	 */
 	public function should_scripts_enqueue() {
