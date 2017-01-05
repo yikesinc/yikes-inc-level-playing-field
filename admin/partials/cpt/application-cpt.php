@@ -52,6 +52,7 @@ add_action( 'init', 'generate_application_cpt', 0 );
 
 /**
  * Alter the application 'Publish' button text
+ *
  * @param  string $translation The translation text.
  * @param  string $text        The text to use as comparison.
  * @return string              [description]

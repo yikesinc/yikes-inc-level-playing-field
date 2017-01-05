@@ -35,13 +35,14 @@ class Yikes_Inc_Level_Playing_Field_Applicant_Messenger {
 		add_action( 'yikes_level_playing_field_applicant_messenger', array( $this, 'render_applicant_messenger_header' ), 10 );
 		add_action( 'yikes_level_playing_field_applicant_messenger', array( $this, 'render_applicant_messenger_messages' ), 15 );
 		add_action( 'yikes_level_playing_field_applicant_messenger', array( $this, 'render_applicant_messenger_message_box' ), 20 );
-		/** Password Protected Form **/
+		/** Password Protected Form */
 		add_filter( 'the_password_form', array( $this, 'level_playing_field_custom_password_protection_form' ) );
 	}
 
 	/**
 	 * Add additional classes to the body, so we can style things easier
-	 * @param  array   $classes   Original array of classes to add to the body.
+	 *
+	 * @param  array $classes   Original array of classes to add to the body.
 	 * @return array              New array with our additional classes added, to add to the body.
 	 */
 	public function generate_single_applicant_messenger_body_classes( $classes ) {
@@ -51,6 +52,7 @@ class Yikes_Inc_Level_Playing_Field_Applicant_Messenger {
 
 	/**
 	 * Render the messenger application header
+	 *
 	 * @return mixed HTML content for the messenger header
 	 */
 	public function render_applicant_messenger_header() {
@@ -76,6 +78,7 @@ class Yikes_Inc_Level_Playing_Field_Applicant_Messenger {
 
 	/**
 	 * Render the container that users/admins use to send messages
+	 *
 	 * @return mixed HTML Content for the message container.
 	 */
 	public function render_applicant_messenger_message_box() {
@@ -104,6 +107,7 @@ class Yikes_Inc_Level_Playing_Field_Applicant_Messenger {
 
 	/**
 	 * Get the applicant conversation from the databse
+	 *
 	 * @return mixed HTML Content of the conversation, extracted from the db
 	 */
 	public function render_applicant_messenger_messages() {
@@ -127,28 +131,28 @@ class Yikes_Inc_Level_Playing_Field_Applicant_Messenger {
 		?>
 		<ul class="applicant-messenger-chat">
 		<?php
-			foreach ( $conversation[ $this->job_id ][ $this->applicant_id ] as $message_position => $message_data ) {
-				$is_admin = ( strpos( $message_data['user'], '-admin' ) > 0 ) ? true : false;
-				$container_class = ( $is_admin ) ? 'left' : 'right';
-				$message_class = ( ! $is_admin ) ? 'other-message' : 'my-message';
-				$user_name = $this->lpf_get_user_data( 'username', $is_admin, $message_data['user'] );
-				$avatar = $this->lpf_get_user_data( 'avatar', $is_admin, $message_data['user'] );
-				?>
-				<!-- Display The Message -->
-				<li class="clearfix yikes-animated yikes-fadeInUp">
-					<div class="message-data align-<?php echo esc_attr( $container_class ); ?>">
-						<?php echo wp_kses_post( $avatar . ' ' . $user_name ); ?>
-						<span class="message-data-time">
-							<?php echo wp_kses_post( $this->generate_message_details( $message_data['timestamp'] ) ); ?>
-						</span>
-					</div>
-					<div class="message <?php echo esc_attr( $message_class ); ?> float-<?php echo esc_attr( $container_class ); ?>">
-						<?php echo apply_filters( 'the_content', esc_textarea( $message_data['message'] ) ); ?>
-					</div>
-				</li>
-				<?php
-				$count++;
-			}
+		foreach ( $conversation[ $this->job_id ][ $this->applicant_id ] as $message_position => $message_data ) {
+			$is_admin = ( strpos( $message_data['user'], '-admin' ) > 0 ) ? true : false;
+			$container_class = ( $is_admin ) ? 'left' : 'right';
+			$message_class = ( ! $is_admin ) ? 'other-message' : 'my-message';
+			$user_name = $this->lpf_get_user_data( 'username', $is_admin, $message_data['user'] );
+			$avatar = $this->lpf_get_user_data( 'avatar', $is_admin, $message_data['user'] );
+			?>
+			<!-- Display The Message -->
+			<li class="clearfix yikes-animated yikes-fadeInUp">
+			<div class="message-data align-<?php echo esc_attr( $container_class ); ?>">
+				<?php echo wp_kses_post( $avatar . ' ' . $user_name ); ?>
+				<span class="message-data-time">
+					<?php echo wp_kses_post( $this->generate_message_details( $message_data['timestamp'] ) ); ?>
+				</span>
+			</div>
+			<div class="message <?php echo esc_attr( $message_class ); ?> float-<?php echo esc_attr( $container_class ); ?>">
+				<?php echo apply_filters( 'the_content', esc_textarea( $message_data['message'] ) ); ?>
+			</div>
+			</li>
+			<?php
+			$count++;
+		}
 		?>
 		</ul>
 		<?php
@@ -156,6 +160,7 @@ class Yikes_Inc_Level_Playing_Field_Applicant_Messenger {
 
 	/**
 	 * Get the current users username
+	 *
 	 * @param  boolean $is_admin True/False if this is the admin user
 	 * @return string The username to use in the messenger application.
 	 */
@@ -179,6 +184,7 @@ class Yikes_Inc_Level_Playing_Field_Applicant_Messenger {
 
 	/**
 	 * Generate the message details
+	 *
 	 * @param  integer $timestamp UNIX timestamp, when the message was sent
 	 * @return mixed 						  HTML content to display.
 	 */
@@ -189,11 +195,12 @@ class Yikes_Inc_Level_Playing_Field_Applicant_Messenger {
 		if ( $today ) {
 			$formatted_data = __( 'Today', 'yikes-inc-level-playing-field' );
 		}
-		return sprintf( __( 'Sent at %s, %s', 'yikes-inc-level-playing-field' ), $formatted_time, $formatted_data );
+		return sprintf( __( 'Sent at %1$s, %2$s', 'yikes-inc-level-playing-field' ), $formatted_time, $formatted_data );
 	}
 
 	/**
 	 * Generate the password protection form for applicant messenger
+	 *
 	 * @return mixed HTML content for the password protection form
 	 */
 	public function generate_applicant_messenger_password_form() {
@@ -208,6 +215,7 @@ class Yikes_Inc_Level_Playing_Field_Applicant_Messenger {
 
 	/**
 	 * Render a new password protecton form, with a custom message
+	 *
 	 * @param  mixed $form HTML mixed content, password protection form.
 	 * @return mixed       New HTML password protection form.
 	 */
@@ -217,7 +225,7 @@ class Yikes_Inc_Level_Playing_Field_Applicant_Messenger {
 		if ( ! $page || 'applicant-messenger' !== $page || ! isset( $post->post_type ) || 'applicants' !== $post->post_type ) {
 			return $form;
 		}
-		$label = 'pwbox-'.( empty( $post->ID ) ? rand() : $post->ID );
+		$label = 'pwbox-' . ( empty( $post->ID ) ? rand() : $post->ID );
 		$form = '<form action="' . esc_url( site_url( 'wp-login.php?action=postpass', 'login_post' ) ) . '" method="post">
 		<p>' . __( 'This messege is currently password protected. Please enter the password you received via email.', 'yikes-inc-level-playing-field' ) . '</p>
 		<p><label for="' . esc_attr( $label ) . '">' . __( 'Password:', 'yikes-inc-level-playing-field' ) . ' </label>' .

@@ -18,7 +18,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 if ( ! function_exists( 'yikes_lpf_output_content_wrapper' ) ) {
 	/**
 	 * Output the start of the page wrapper.
-	 *
 	 */
 	function yikes_lpf_output_content_wrapper() {
 		lpf_get_template( 'global/page-wrappers-start.php' );
@@ -28,7 +27,6 @@ if ( ! function_exists( 'yikes_lpf_output_content_wrapper' ) ) {
 if ( ! function_exists( 'yikes_lpf_output_content_wrapper_end' ) ) {
 	/**
 	 * Output the end of the page wrapper.
-	 *
 	 */
 	function yikes_lpf_output_content_wrapper_end() {
 		lpf_get_template( 'global/page-wrappers-end.php' );
@@ -125,6 +123,7 @@ if ( ! function_exists( 'lpf_calculate_days_since_posting' ) ) {
 /**
  * Function called when an application is rendered on the page
  * These scripts/styles are required for the popup to function properly
+ *
  * @return null Enqueue scripts and styles as needed
  * @since 1.0.0
  */
@@ -135,6 +134,7 @@ function yikes_lpf_load_application_assets() {
 
 /**
  * Append the shortcode to the end of the site content
+ *
  * @param  [type] $content [description]
  * @return [type]          [description]
  */

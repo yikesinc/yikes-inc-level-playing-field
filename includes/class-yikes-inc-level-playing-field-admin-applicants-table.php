@@ -1,6 +1,7 @@
 <?php
 /**
  * Generate the markup for the admin table, to display jobs/applicants on
+ *
  * @since 1.0.0
  */
 class Link_List_Table extends WP_List_Table {
@@ -9,9 +10,9 @@ class Link_List_Table extends WP_List_Table {
 	private $helpers;
 
 	/**
-	* Constructor, we override the parent to pass our own arguments
-	* We usually focus on three parameters: singular and plural labels, as well as whether the class supports AJAX.
-	*/
+	 * Constructor, we override the parent to pass our own arguments
+	 * We usually focus on three parameters: singular and plural labels, as well as whether the class supports AJAX.
+	 */
 	function __construct( $helpers ) {
 		$this->helpers = $helpers;
 		$this->process_bulk_action();
@@ -24,6 +25,7 @@ class Link_List_Table extends WP_List_Table {
 
 	/**
 	 * Add extra markup in the toolbars before or after the list
+	 *
 	 * @param string $which, helps you decide if you add the markup after (bottom) or before (top) the list
 	 */
 	function extra_tablenav( $which ) {
@@ -55,23 +57,24 @@ class Link_List_Table extends WP_List_Table {
 							$statuses = $this->helpers->get_applicant_statuses();
 							echo '<label class="screen-reader-text" for="cat_id">' . __( 'Filter by Applicant Status' ) . '</label>';
 							echo '<select name="applicant_status" id="applicant_status" class="postform">';
-								foreach ( $statuses as $applicant_status_text => $applicant_status_class ) {
-									echo '<option value="' . strtolower( $applicant_status_text ) . '">' . $applicant_status_text . '</option>';
-								}
+						foreach ( $statuses as $applicant_status_text => $applicant_status_class ) {
+							echo '<option value="' . strtolower( $applicant_status_text ) . '">' . $applicant_status_text . '</option>';
+						}
 							echo '</select>';
 							submit_button( __( 'Filter Applicants' ), 'button', 'filter_action', false, array( 'id' => 'post-query-submit' ) );
 						?>
 					</div>
 				<?php
-		}
+		}// End if().
 		if ( 'bottom' === $which ) {
-			//The code that goes after the table is there
+			// The code that goes after the table is there
 			// echo "Hi, I'm after the table";
 		}
 	}
 
 	/**
 	 * Define the columns that are going to be used in the table
+	 *
 	 * @return array $columns, the array of columns to use with the table
 	 */
 	function get_columns() {
@@ -87,6 +90,7 @@ class Link_List_Table extends WP_List_Table {
 
 	/**
 	 * Decide which columns to activate the sorting functionality on
+	 *
 	 * @return array $sortable, the array of columns that can be sorted by the user
 	 */
 	public function get_sortable_columns() {
@@ -107,43 +111,45 @@ class Link_List_Table extends WP_List_Table {
 		// Query applicants for a specified job/application
 		if ( isset( $_GET['job'] ) && ! empty( $_GET['job'] ) ) {
 			/* -- Preparing your query -- */
-			$query= sprintf(
+			$query = sprintf(
 				"SELECT * FROM wp_posts
 				LEFT JOIN wp_postmeta v1 ON (wp_posts.ID = v1.post_id)
 				WHERE
 				wp_posts.post_status = 'publish' AND wp_posts.post_type = 'applicants'
 				AND v1.meta_value = '%s'
 				ORDER BY wp_posts.post_date DESC",
-				$_GET['job'] );
+			$_GET['job'] );
 		} else { // Query all applicants
 			/* -- Preparing your query -- */
 			$query = "SELECT * FROM $wpdb->posts WHERE $wpdb->posts.post_type = 'applicants' AND $wpdb->posts.post_status = 'publish'";
 		}
-		/* -- Ordering parameters -- */
-		//Parameters that are going to be used to order the result
+		/*
+		 -- Ordering parameters -- */
+		// Parameters that are going to be used to order the result
 		$orderby = ! empty( $_GET['orderby'] ) ? mysql_real_escape_string( $_GET['orderby'] ) : 'ASC';
 		$order = ! empty( $_GET['order'] ) ? mysql_real_escape_string( $_GET['order'] ) : '';
 		if ( ! empty( $orderby ) && ! empty( $order ) ) {
-			$query .= ' ORDER BY '. $orderby . ' ' . $order;
+			$query .= ' ORDER BY ' . $orderby . ' ' . $order;
 		}
 
-		/* -- Pagination parameters -- */
+		/*
+		 -- Pagination parameters -- */
 		// Number of elements in your table?
 		$totalitems = $wpdb->query( $query ); // return the total number of affected rows
 		// How many to display per page?
 		$perpage = 5;
-		//Which page is this?
+		// Which page is this?
 		$paged = ! empty( $_GET['paged'] ) ? mysql_real_escape_string( $_GET['paged'] ) : '';
-		//Page Number
+		// Page Number
 		if ( empty( $paged ) || ! is_numeric( $paged ) || $paged <= 0 ) {
 			$paged = 1;
 		}
-		//How many pages do we have in total?
+		// How many pages do we have in total?
 		$totalpages = ceil( $totalitems / $perpage );
-		//adjust the query to take pagination into account
+		// adjust the query to take pagination into account
 		if ( ! empty( $paged ) && ! empty( $perpage ) ) {
 			$offset = ( $paged - 1 ) * $perpage;
-			$query .= ' LIMIT '. (int) $offset . ',' . (int) $perpage;
+			$query .= ' LIMIT ' . (int) $offset . ',' . (int) $perpage;
 		}
 
 		/* -- Register the pagination -- */
@@ -152,8 +158,7 @@ class Link_List_Table extends WP_List_Table {
 			'total_pages' => $totalpages,
 			'per_page' => $perpage,
 		) );
-		//The pagination links are automatically built according to those parameters
-
+		// The pagination links are automatically built according to those parameters
 		/* -- Register the Columns -- */
 		$columns = $this->get_columns();
 		// Pass in column IDs to hide
@@ -169,20 +174,20 @@ class Link_List_Table extends WP_List_Table {
 
 	/**
 	 * Display the rows of records in the table
+	 *
 	 * @return string, echo the markup of the rows
 	 */
 	function display_rows() {
 
-		//Get the records registered in the prepare_items method
+		// Get the records registered in the prepare_items method
 		$applicants = $this->items;
 		$job_id = ( isset( $_GET['job'] ) ) ? (int) $_GET['job'] : false;
 
-		//Get the columns registered in the get_columns and get_sortable_columns methods
+		// Get the columns registered in the get_columns and get_sortable_columns methods
 		list( $columns, $hidden ) = $this->get_column_info();
 
 		// print_r( $columns );
-
-		//Loop for each record
+		// Loop for each record
 		if ( ! empty( $applicants ) ) {
 			foreach ( $applicants as $applicant ) {
 
@@ -200,7 +205,7 @@ class Link_List_Table extends WP_List_Table {
 					// Style attributes for each col
 					$class = "class='$column_name column-$column_name'";
 
-					$style = "";
+					$style = '';
 
 					if ( in_array( $column_name, $hidden ) ) {
 						$style = ' style="display:none;"';
@@ -208,13 +213,13 @@ class Link_List_Table extends WP_List_Table {
 
 					$attributes = $class . $style;
 
-					//edit link
+					// edit link
 					$editlink  = '/wp-admin/link.php?action=edit&link_id=' . (int) $applicant->ID;
 
-					//Display the cell
+					// Display the cell
 					switch ( $column_name ) {
 						case 'col_applicant_id':
-							echo '<td '. $attributes . '>' . esc_html( stripslashes( $applicant->ID ) ) . '</td>';
+							echo '<td ' . $attributes . '>' . esc_html( stripslashes( $applicant->ID ) ) . '</td>';
 							break;
 						case 'col_applicant_name':
 							echo '<td ' . $attributes . '>' . wp_kses_post( stripslashes( $applicant_name ) . $new_applicant_badge . $action_links ) . '</td>';
@@ -232,16 +237,17 @@ class Link_List_Table extends WP_List_Table {
 							echo '<td ' . $attributes . '>' . $this->helpers->generate_status_buttons( $applicant->ID ) . '</td>';
 							break;
 					}
-				}
+				}// End foreach().
 
-				//Close the row
+				// Close the row
 				echo'</tr>';
-			}
-		}
+			}// End foreach().
+		}// End if().
 	}
 
 	/**
 	 * Get the action links to use on this page
+	 *
 	 * @return mixed HTML content of the action links
 	 */
 	function get_action_links( $applicant_id, $job_id, $applicant_status ) {
@@ -285,13 +291,14 @@ class Link_List_Table extends WP_List_Table {
 
 	/**
 	 * Handle the delete applicant action
+	 *
 	 * @return boolean true/false on completion
 	 */
 	public function process_bulk_action() {
 		if ( ! isset( $_GET['action'] ) || 'delete-applicant' !== esc_attr( $_GET['action'] ) ) {
 			return;
 		}
-		//Detect when a bulk action is being triggered...
+		// Detect when a bulk action is being triggered...
 		if ( 'delete-applicant' === $_GET['action'] ) {
 			// In our file that handles the request, verify the nonce.
 			$nonce = esc_attr( $_REQUEST['_wpnonce'] );

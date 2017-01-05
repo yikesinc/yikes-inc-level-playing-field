@@ -122,18 +122,21 @@ class Yikes_Inc_Level_Playing_Field {
 
 		/**
 		 * The class responsible for loading all of our helper functions
+		 *
 		 * @since 1.0.0
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-yikes-inc-level-playing-field-helpers.php';
 
 		/**
 		 * Breadcrumbs class
+		 *
 		 * @since 1.0.0
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-yikes-inc-level-playing-field-breadcrumbs.php';
 
 		/**
 		 * Include our Custom Post Types
+		 *
 		 * @since 1.0.0
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/cpt/job-cpt.php';
@@ -142,12 +145,14 @@ class Yikes_Inc_Level_Playing_Field {
 
 		/**
 		 * Include our metabox render class
+		 *
 		 * @since 1.0.0
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-yikes-inc-level-playing-field-job-posting-details.php';
 
 		/**
 		 * Include our associated metaboxes with CPTs above
+		 *
 		 * @since 1.0.0
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/metaboxes/job-metaboxes.php';
@@ -155,6 +160,7 @@ class Yikes_Inc_Level_Playing_Field {
 
 		/**
 		 * Include the template functions and hooks
+		 *
 		 * @since 1.0.0
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/yikes-inc-level-playing-field-template-hooks.php';

@@ -14,6 +14,7 @@
 /**
  * Render the job listing table (chronologically based on WHEN they were posted)
  * *
+ *
  * @package    Yikes_Inc_Level_Playing_Field
  * @subpackage Yikes_Inc_Level_Playing_Field/includes
  * @author     YIKES, Inc. <plugins@yikesinc.com>
@@ -70,6 +71,7 @@ class Yikes_Inc_Level_Playing_Field_Job_Table {
 	/**
 	 * Build an array of table headers
 	 * Note: Passed through yikes_level_playing_field_job_table_headers filter
+	 *
 	 * @return array Array of table headers to be used.
 	 * @since 1.0.0
 	 */
@@ -101,6 +103,7 @@ class Yikes_Inc_Level_Playing_Field_Job_Table {
 
 	/**
 	 * Build the jobs query arguments array
+	 *
 	 * @return array Complete array of query args.
 	 * @since 1.0.0
 	 */
