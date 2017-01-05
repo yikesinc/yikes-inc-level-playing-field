@@ -3,7 +3,6 @@
  * Applicant Details widget
  * This is the applicant details, with details about the position etc.
  * Displays on the applicant messenger sidebar, else it returns false.
- *
  * @since 1.0.0
  */
 class lpf_applicant_details_widget extends WP_Widget {

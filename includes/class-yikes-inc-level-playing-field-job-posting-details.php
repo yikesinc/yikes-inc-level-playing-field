@@ -13,7 +13,6 @@
 /**
  * Render the content inside of our job posting details array
  * *
- *
  * @package    Yikes_Inc_Level_Playing_Field
  * @subpackage Yikes_Inc_Level_Playing_Field/includes
  * @author     YIKES, Inc. <plugins@yikesinc.com>
@@ -86,7 +85,6 @@ class Yikes_Inc_Level_Playing_Field_Job_Posting_Details {
 
 	/**
 	 * Array of allowed tags for our containers (security purposes)
-	 *
 	 * @return array Array of allowed HTML tags in our containers.
 	 * @since 1.0.0
 	 */

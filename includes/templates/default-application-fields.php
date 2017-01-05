@@ -1,7 +1,6 @@
 <?php
 /**
  * Default Fields for new job applications
- *
  * @since 1.0.0
  */
 return array(

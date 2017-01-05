@@ -1,7 +1,6 @@
 <?php
 /**
  * Application Builder Class
- *
  * @since 1.0.0
  */
 class Yikes_Inc_Level_Playing_Field_Application_Builder extends Yikes_Inc_Level_Playing_Field_Public {
@@ -18,7 +17,6 @@ class Yikes_Inc_Level_Playing_Field_Application_Builder extends Yikes_Inc_Level_
 
 	/**
 	 * Enqueue Scripts and Styles on our application builder page
-	 *
 	 * @return null
 	 */
 	public function enqueue_application_builder_scripts_and_styles() {
@@ -36,7 +34,6 @@ class Yikes_Inc_Level_Playing_Field_Application_Builder extends Yikes_Inc_Level_
 	}
 	/**
 	 * Generate the application builder containers/wrappers
-	 *
 	 * @return mixed HTML content for the application builder.
 	 */
 	public function generate_application_builder_containers() {
@@ -157,7 +154,7 @@ class Yikes_Inc_Level_Playing_Field_Application_Builder extends Yikes_Inc_Level_
 					</li>
 				<?php
 				$count++;
-			}// End foreach().
+			}
 		?></ul><?php
 	}
 }

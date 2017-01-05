@@ -1,7 +1,6 @@
 <?php
 /**
  * Text Field HTML Markup
- *
  * @since 1.0.0
  */
 ?>

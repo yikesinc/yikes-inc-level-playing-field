@@ -33,7 +33,7 @@ function generate_job_cpt() {
 		'label'                 => __( 'Job', 'yikes-inc-level-playing-field' ),
 		'description'           => __( 'Job listings.', 'yikes-inc-level-playing-field' ),
 		'labels'                => $labels,
-		'supports'              => array( 'title', 'editor' ),
+		'supports'              => array( 'title', 'editor', ),
 		'taxonomies'            => array(),
 		'hierarchical'          => false,
 		'public'                => true,

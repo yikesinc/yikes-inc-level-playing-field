@@ -16,7 +16,6 @@ class Yikes_Inc_Level_Playing_Field_Application_Management {
 
 	/**
 	 * Render a menu item to manage applicants
-	 *
 	 * @return null
 	 * @since 1.0.0
 	 */
@@ -64,9 +63,10 @@ class Yikes_Inc_Level_Playing_Field_Application_Management {
 
 			if ( isset( $_GET['job'] ) && ! empty( $_GET['job'] ) ) {
 				$job_obj = get_post( absint( $_GET['job'] ) );
-				$page_title = sprintf( esc_html__( '%1$s | Applicants %2$s', 'yikes-inc-level-playing-field' ), $job_obj->post_title, '<a href="' . add_query_arg( array( 'post' => $_GET['job'], 'action' => 'edit' ), admin_url( 'post.php' ) ) . '" class="page-title-action">' . __( 'Edit Job', 'yikes-inc-level-playing-field' ) . '</a>' );
+				$page_title = sprintf( esc_html__( '%s | Applicants %s', 'yikes-inc-level-playing-field' ), $job_obj->post_title, '<a href="' . add_query_arg( array( 'post' => $_GET['job'], 'action' => 'edit' ), admin_url( 'post.php' ) ) . '" class="page-title-action">' . __( 'Edit Job', 'yikes-inc-level-playing-field' ) . '</a>' );
 				$page_subtitle = _x( sprintf( 'List of all the applicants who have applied for the %s position.', '<strong>' . $job_obj->post_title . '</strong>' ), 'The name of the job title that the applicant applied for.', 'yikes-inc-level-playing-field' );
 			}
+
 		}
 
 		// All applicants table class
@@ -78,14 +78,13 @@ class Yikes_Inc_Level_Playing_Field_Application_Management {
 		?><div class="wrap"><?php
 		printf( '<h1>' . wp_kses_post( $page_title ) . '</h1>' );
 		printf( '<p class="description">' . wp_kses_post( $page_subtitle ) . '</p>' );
-		// Table of elements
+		//Table of elements
 		$wp_list_table->display();
 		?></div><?php
 	}
 
 	/**
 	 * Render the admin notices on our table pages (used to notify users of actions etc.)
-	 *
 	 * @return mixed admin notice
 	 */
 	public function render_applicant_mangement_admin_notices() {

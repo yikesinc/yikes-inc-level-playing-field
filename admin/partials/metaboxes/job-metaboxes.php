@@ -123,7 +123,6 @@ function render_job_posting_details_main_sections( $job_posting_details ) {
 
 /**
  * Loop over and render our field sections
- *
  * @param  class  $job_posting_details Job posting details class initialization
  * @param  string $section_id          Section ID to retreive the fields for.
  * @return mixed                       HTML content for the fields to render.
@@ -173,8 +172,8 @@ function render_seciton_fields( $job_posting_details, $section_id ) {
 				?>
 			</p>
 			<?php
-		}// End foreach().
-	}// End if().
+		}
+	}
 	$contents = ob_get_contents();
 	ob_get_clean();
 	$allowed_tags = $job_posting_details->allowed_tags;
@@ -214,7 +213,6 @@ function jobs_cpt_app_builder_metabox_callback( $post ) {
 /**
  * Get the job posting fields, and return the IDs
  * This is used to retreive our options whitelist
- *
  * @return array IDs of the fields.
  * @since 1.0.0
  */

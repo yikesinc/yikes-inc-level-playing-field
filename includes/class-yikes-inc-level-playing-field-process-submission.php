@@ -20,7 +20,6 @@ class Yikes_Inc_Level_Playing_Field_Process_Submission extends Yikes_Inc_Level_P
 
 	/**
 	 * Handle the submission of each job application
-	 *
 	 * @param  array $application_data Array of applicant data, submitted in the form
 	 * @return bool                  	 True/False based on the creation of the applicatnt post type
 	 */
@@ -64,7 +63,6 @@ class Yikes_Inc_Level_Playing_Field_Process_Submission extends Yikes_Inc_Level_P
 		/**
 		 * Action hook to allow for additional steps to be taken
 		 * before the applicant is in the database
-		 *
 		 * @param integer   $applicant         The applicant ID as it was stored in the database.
 		 * @param array     $application_data  The array of data submitted by the applicant via the form.
 		 */

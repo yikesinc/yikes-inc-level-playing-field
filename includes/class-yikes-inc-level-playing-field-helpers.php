@@ -33,8 +33,7 @@ class Yikes_Inc_Level_Playing_Field_Helper {
 	/**
 	 * Helper function to retreive a set of application fields
 	 * from a specific job listing
-	 *
-	 * @param  int $job_id   Job ID to retreive applications from (eg: 2)
+	 * @param  int   $job_id   Job ID to retreive applications from (eg: 2)
 	 * @return array           The fields for the given job application, or false/empty array
 	 */
 	public function get_application_fields( $job_id = false ) {
@@ -49,7 +48,6 @@ class Yikes_Inc_Level_Playing_Field_Helper {
 
 	/**
 	 * Helper function to retreive a set of available application fields
-	 *
 	 * @return array           The fields for the given job application, or false/empty array
 	 */
 	public function get_available_application_fields() {
@@ -61,8 +59,7 @@ class Yikes_Inc_Level_Playing_Field_Helper {
 
 	/**
 	 * Render a field based on the passed in field data
-	 *
-	 * @param  array $field_data   Field data to use when rendering this field
+	 * @param  array   $field_data   Field data to use when rendering this field
 	 * @return string								 HTML markup for the new form field.
 	 */
 	public function render_field( $field_data ) {
@@ -85,8 +82,7 @@ class Yikes_Inc_Level_Playing_Field_Helper {
 
 	/**
 	 * Build our custom attributes string for the input field (if set)
-	 *
-	 * @param  array $atts_array Array of data to be used when building the form field
+	 * @param  array   $atts_array Array of data to be used when building the form field
 	 * @return string             The string of custom field attributes
 	 */
 	public function build_custom_atts_string( $atts_array ) {
@@ -101,7 +97,6 @@ class Yikes_Inc_Level_Playing_Field_Helper {
 
 	/**
 	 * Return the number of columns for the application
-	 *
 	 * @return int Returns the number of columns for the application form.
 	 */
 	public function get_application_columns() {
@@ -110,7 +105,6 @@ class Yikes_Inc_Level_Playing_Field_Helper {
 
 	/**
 	 * Store the template path for Level Playing Field
-	 *
 	 * @return string Path to the template directory.
 	 */
 	public function template_path() {
@@ -118,17 +112,15 @@ class Yikes_Inc_Level_Playing_Field_Helper {
 	}
 
 	/**
-	 * is_product_taxonomy - Returns true when viewing a job taxonomy archive.
-	 *
-	 * @return bool
-	 */
+	* is_product_taxonomy - Returns true when viewing a job taxonomy archive.
+	* @return bool
+	*/
 	public function is_job_taxonomy() {
 		return is_tax( get_object_taxonomies( 'jobs' ) );
 	}
 
 	/**
 	 * Get applicants for all or a specified job/application
-	 *
 	 * @param  int $application_id The Application/Job ID to retreive applicants for. (optional)
 	 * @return int                 The number of applicants returned.
 	 */
@@ -157,7 +149,6 @@ class Yikes_Inc_Level_Playing_Field_Helper {
 	/**
 	 * Get NEW applicants for all or a specified job/application
 	 * Note: NEW means 'new_application' meta set to '1'
-	 *
 	 * @param  int $application_id The Application/Job ID to retreive applicants for. (optional)
 	 * @return int                 The number of applicants returned.
 	 */
@@ -193,7 +184,6 @@ class Yikes_Inc_Level_Playing_Field_Helper {
 
 	/**
 	 * Generate our new applicant badge
-	 *
 	 * @param  string  $type  The type of badge to return.
 	 * @param  integer $count The number of applicants. (optional)
 	 * @return mixed          HTML markup for the new applicant count badge.
@@ -214,7 +204,6 @@ class Yikes_Inc_Level_Playing_Field_Helper {
 
 	/**
 	 * Obfuscate a string, so admins cannot read the submitted text from the form
-	 *
 	 * @param  string $string String of text to be obfuscated.
 	 * @return string         Obfuscated, obscured string.
 	 */
@@ -237,7 +226,6 @@ class Yikes_Inc_Level_Playing_Field_Helper {
 	/**
 	 * Blur a string, so admins cannot read the submitted text from the form
 	 * Note: Also add a noselect class to prevent users from being able to highlight the string
-	 *
 	 * @param  string $string String of text to be obfuscated.
 	 * @return string         Obfuscated, obscured string.
 	 */
@@ -247,7 +235,6 @@ class Yikes_Inc_Level_Playing_Field_Helper {
 
 	/**
 	 * Return an array of appliucant status
-	 *
 	 * @return  array  Array of statuses (Button Text => Button Class (.yikes-btn-CLASS))
 	 */
 	public function get_applicant_statuses() {
@@ -261,8 +248,7 @@ class Yikes_Inc_Level_Playing_Field_Helper {
 
 	/**
 	 * Generate the status buttons in the admin table
-	 *
-	 * @param  integer $applicant_id   The applicant ID to retreive the status for.
+	 * @param  integer   $applicant_id   The applicant ID to retreive the status for.
 	 * @return mixed                     HTML content for the status buttns.
 	 */
 	public function generate_status_buttons( $applicant_id ) {
@@ -285,7 +271,7 @@ class Yikes_Inc_Level_Playing_Field_Helper {
 				$btn_classes[] = 'inactive';
 			}
 			// Render our buttons
-			echo wp_kses( sprintf( '<a href="#" onclick="toggleApplicantStatus( this, %s );return false;" data-attr-status="' . strtolower( $status_btn_text ) . '" class="' . implode( ' ', $btn_classes ) . '">' . $status_btn_text . '</a>', $applicant_id ), array(
+			echo wp_kses( sprintf( '<a href="#" onclick="toggleApplicantStatus( this, %s );return false;" data-attr-status="' . strtolower( $status_btn_text ) . '" class="' . implode( ' ', $btn_classes ) . '">' . $status_btn_text . '</a>', $applicant_id  ), array(
 				'a' => array(
 					'href' => array(),
 					'onclick' => array(),
@@ -301,8 +287,7 @@ class Yikes_Inc_Level_Playing_Field_Helper {
 
 	/**
 	 * Generate the status buttons in the admin table
-	 *
-	 * @param  integer $applicant_id   The applicant ID to retreive the status for.
+	 * @param  integer   $applicant_id   The applicant ID to retreive the status for.
 	 * @return mixed                     HTML content for the status buttns.
 	 */
 	public function get_applicant_status( $applicant_id ) {
@@ -316,7 +301,6 @@ class Yikes_Inc_Level_Playing_Field_Helper {
 
 	/**
 	 * Generate a new security key for the post messenger
-	 *
 	 * @return [type] [description]
 	 */
 	public function generate_new_messenger_security_key( $security_key = false ) {
@@ -326,7 +310,6 @@ class Yikes_Inc_Level_Playing_Field_Helper {
 
 	/**
 	 * Send an API request to avatars.adorable.io to retreive an avatar for this user
-	 *
 	 * @return URL to store in the database to reference for future use.
 	 */
 	public function generate_user_avatar() {
@@ -334,7 +317,7 @@ class Yikes_Inc_Level_Playing_Field_Helper {
 		$eyes_array = array();
 		$nose_array = array();
 		$mouth_array = array();
-		for ( $x = 1; $x <= 10; $x++ ) {
+		for( $x = 1; $x <= 10; $x++ ) {
 			$eyes_array[] = 'eyes' . $x;
 			$nose_array[] = 'nose' . $x;
 			$mouth_array[] = 'mouth' . $x;
@@ -344,7 +327,6 @@ class Yikes_Inc_Level_Playing_Field_Helper {
 
 	/**
 	 * Generate a random RGB number
-	 *
 	 * @return string RGB color value, to be used when converting to hex
 	 */
 	public function random_rgb_color_part() {
@@ -353,7 +335,6 @@ class Yikes_Inc_Level_Playing_Field_Helper {
 
 	/**
 	 * Generate a hex value
-	 *
 	 * @return string hex value eg: FFF
 	 */
 	public function random_hex_color() {
@@ -362,7 +343,6 @@ class Yikes_Inc_Level_Playing_Field_Helper {
 
 	/**
 	 * Delete an applicant from the database
-	 *
 	 * @param  integer $applicant_id [description]
 	 * @return boolean True/False on action completion.
 	 * @since 1.0.0
@@ -373,7 +353,6 @@ class Yikes_Inc_Level_Playing_Field_Helper {
 
 	/**
 	 * Helper to check if currnet applicant messenger is still password protected
-	 *
 	 * @return boolean true/false Password protected state
 	 */
 	public function is_password_protected() {
@@ -391,14 +370,14 @@ class Yikes_Inc_Level_Playing_Field_Helper {
  */
 
 /**
- * Get template part (for templates like the shop-loop).
- *
- * LPF_TEMPLATE_DEBUG_MODE will prevent overrides in themes from taking priority.
- *
- * @access public
- * @param mixed  $slug
- * @param string $name (default: '')
- */
+* Get template part (for templates like the shop-loop).
+*
+* LPF_TEMPLATE_DEBUG_MODE will prevent overrides in themes from taking priority.
+*
+* @access public
+* @param mixed $slug
+* @param string $name (default: '')
+*/
 function lpf_get_template_part( $slug, $name = '' ) {
 	$template = '';
 	// Look in yourtheme/slug-name.php and yourtheme/woocommerce/slug-name.php
@@ -425,7 +404,7 @@ function lpf_get_template_part( $slug, $name = '' ) {
  *
  * @access public
  * @param string $template_name
- * @param array  $args (default: array())
+ * @param array $args (default: array())
  * @param string $template_path (default: '')
  * @param string $default_path (default: '')
  */
@@ -488,9 +467,9 @@ function lpf_locate_template( $template_name, $template_path = '', $default_path
  * Adds extra post classes for products.
  *
  * @since 1.0.0
- * @param array        $classes
+ * @param array $classes
  * @param string|array $class
- * @param int          $post_id
+ * @param int $post_id
  * @return array
  */
 function lpf_job_classes( $classes, $class = '', $post_id = '' ) {
@@ -509,7 +488,6 @@ function lpf_job_classes( $classes, $class = '', $post_id = '' ) {
 
 /**
  * Get the job title template
- *
  * @return mixed
  */
 function yikes_level_playing_field_single_job_title() {
@@ -519,7 +497,6 @@ add_action( 'yikes_level_playing_field_single_job_summary', 'yikes_level_playing
 
 /**
  * Ger the job description template
- *
  * @return mixed
  */
 function yikes_level_playing_field_single_job_content() {
@@ -527,14 +504,13 @@ function yikes_level_playing_field_single_job_content() {
 }
 add_action( 'yikes_level_playing_field_after_single_job_summary', 'yikes_level_playing_field_single_job_content', 10 );
 
-/** Format Money Values */
+/** Format Money Values **/
 if ( ! function_exists( 'yikes_format_money' ) ) {
 	/**
-	 * Format the salary value into an appropriate format
-	 *
-	 * @param  int $value The original value to format
-	 * @return int        Final formatted value for the money.
-	 */
+	* Format the salary value into an appropriate format
+	* @param  int $value The original value to format
+	* @return int        Final formatted value for the money.
+	*/
 	function yikes_format_money( $value ) {
 		// if the value is not set, abort
 		if ( ! $value ) {
