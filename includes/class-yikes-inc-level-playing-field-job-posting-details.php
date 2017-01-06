@@ -48,27 +48,27 @@ class Yikes_Inc_Level_Playing_Field_Job_Posting_Details {
 		return apply_filters( 'yikes_level_playing_field_job_posting_details_menu_items', array(
 			array(
 				'id' => 'company_details',
-				'text' => __( 'Company Details', 'yikes-inc-level-playing-field' ),
+				'text' => __( 'Company / Organization Details', 'yikes-inc-level-playing-field' ),
 			),
 			array(
 				'id' => 'job_details',
-				'text' => __( 'Job Details', 'yikes-inc-level-playing-field' ),
+				'text' => __( 'General Job Information', 'yikes-inc-level-playing-field' ),
+			),
+			array(
+				'id' => 'responsibilities',
+				'text' => __( 'Responsibilities', 'yikes-inc-level-playing-field' ),
+			),
+			array(
+				'id' => 'qualifications',
+				'text' => __( 'Qualifications', 'yikes-inc-level-playing-field' ),
 			),
 			array(
 				'id' => 'compensation',
-				'text' => __( 'Compensation (optional)', 'yikes-inc-level-playing-field' ),
-			),
-			array(
-				'id' => 'schedule',
-				'text' => __( 'Schedule (optional)', 'yikes-inc-level-playing-field' ),
-			),
-			array(
-				'id' => 'notifications',
-				'text' => __( 'Notifications', 'yikes-inc-level-playing-field' ),
+				'text' => __( 'Compensation', 'yikes-inc-level-playing-field' ),
 			),
 			array(
 				'id' => 'application_details',
-				'text' => __( 'Application Details', 'yikes-inc-level-playing-field' ),
+				'text' => __( 'Applicants', 'yikes-inc-level-playing-field' ),
 			),
 		) );
 	}

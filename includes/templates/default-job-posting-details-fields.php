@@ -5,62 +5,62 @@
  * @since 1.0.0
  */
 return array(
-	// Company Details
-	'company_details' => array(
-		// Company Name
+	// Company / Organization Details
+	'company_details' => array(		
+		// Name
 		array(
 			'id' => '_company_name',
 			'type' => 'text',
-			'label' => __( 'Company Name', 'yikes-inc-level-playing-field' ),
+			'label' => __( 'Name', 'yikes-inc-level-playing-field' ),
 			'default' => '',
 			'description' => __( '', 'yikes-inc-level-playing-field' ),
 			'placeholder' => __( '', 'yikes-inc-level-playing-field' ),
 			'class' => 'short',
 		),
-		// Company Tagline
+		// Description
 		array(
 			'id' => '_company_tagline',
 			'type' => 'text',
-			'label' => __( 'Company Tagline', 'yikes-inc-level-playing-field' ),
+			'label' => __( 'Company / Organization Description', 'yikes-inc-level-playing-field' ),
 			'default' => '',
 			'description' => __( '', 'yikes-inc-level-playing-field' ),
 			'placeholder' => __( '', 'yikes-inc-level-playing-field' ),
 			'class' => 'short',
 		),
-		// Company Logo
+		// Logo
 		array(
 			'id' => '_company_logo',
 			'type' => 'text',
-			'label' => __( 'Company Logo (optional)', 'yikes-inc-level-playing-field' ),
+			'label' => __( 'Company / Organization Logo', 'yikes-inc-level-playing-field' ),
 			'default' => '',
 			'description' => __( 'Add the associated company logo to this job posting.', 'yikes-inc-level-playing-field' ),
 			'placeholder' => __( '', 'yikes-inc-level-playing-field' ),
 			'class' => 'short',
 		),
-		// Company Website
+		// Website
 		array(
 			'id' => '_company_website',
 			'type' => 'text',
-			'label' => __( 'Company Website (optional)', 'yikes-inc-level-playing-field' ),
+			'label' => __( 'Company / Organization Website', 'yikes-inc-level-playing-field' ),
 			'default' => '',
-			'description' => __( 'Enter the company website in the field above.', 'yikes-inc-level-playing-field' ),
+			'description' => __( 'A URL in the field above.', 'yikes-inc-level-playing-field' ),
 			'placeholder' => __( 'http://www.example.com', 'yikes-inc-level-playing-field' ),
 			'class' => 'short',
 		),
-		// Company Twitter
+		// Twitter
 		array(
 			'id' => '_company_twitter',
 			'type' => 'text',
 			'label' => __( 'Company Twitter Account (optional)', 'yikes-inc-level-playing-field' ),
 			'default' => '',
-			'description' => __( 'Enter your companys twitter username in the field above.', 'yikes-inc-level-playing-field' ),
+			'description' => __( 'Enter a twitter username in the field above.', 'yikes-inc-level-playing-field' ),
 			'placeholder' => __( '@Example', 'yikes-inc-level-playing-field' ),
 			'class' => 'short',
 		),
 	),
-	// Job Details
+	// General Job Information
 	'job_details' => array(
-		// Company Name
+		// Job Title
 		array(
 			'id' => '_job_title',
 			'type' => 'text',
@@ -70,7 +70,7 @@ return array(
 			'placeholder' => __( 'Senior Engineer', 'yikes-inc-level-playing-field' ),
 			'class' => 'short',
 		),
-		// Company Name
+		// Job Location
 		array(
 			'id' => '_job_location',
 			'type' => 'text',
@@ -81,9 +81,35 @@ return array(
 			'class' => 'short',
 		),
 	),
+	// Responsibilities
+	'responsibilities' => array(
+		// Company Name
+		array(
+			'id' => '_responsibility_details',
+			'type' => 'text',
+			'label' => __( 'Responsibilities', 'yikes-inc-level-playing-field' ),
+			'default' => '',
+			'description' => __( 'Placeholder description.', 'yikes-inc-level-playing-field' ),
+			'placeholder' => __( '---temp---', 'yikes-inc-level-playing-field' ),
+			'class' => 'short',
+		),
+	),
+	// Qualifications
+	'qualifications' => array(
+		// Notifications Details
+		array(
+			'id' => '_qualifications_details',
+			'type' => 'text',
+			'label' => __( 'Qualifications Details', 'yikes-inc-level-playing-field' ),
+			'default' => '',
+			'description' => __( 'Placeholder description.', 'yikes-inc-level-playing-field' ),
+			'placeholder' => __( '---temp---', 'yikes-inc-level-playing-field' ),
+			'class' => 'short',
+		),
+	),
 	// Compensation Details
 	'compensation' => array(
-		// Company Name
+		// Compensation Details
 		array(
 			'id' => '_compensation_details',
 			'type' => 'number',
@@ -94,52 +120,15 @@ return array(
 			'class' => 'short currency',
 		),
 	),
-	// Schedule Details
-	'schedule' => array(
-		// Company Name
-		array(
-			'id' => '_schedule_details',
-			'type' => 'text',
-			'label' => __( 'Schedule Details', 'yikes-inc-level-playing-field' ),
-			'default' => '',
-			'description' => __( 'Placeholder description.', 'yikes-inc-level-playing-field' ),
-			'placeholder' => __( '---temp---', 'yikes-inc-level-playing-field' ),
-			'class' => 'short',
-		),
-	),
-	// Schedule Details
-	'notifications' => array(
-		// Company Name
-		array(
-			'id' => '_notifications_details',
-			'type' => 'text',
-			'label' => __( 'Notifications Details', 'yikes-inc-level-playing-field' ),
-			'default' => '',
-			'description' => __( 'Placeholder description.', 'yikes-inc-level-playing-field' ),
-			'placeholder' => __( '---temp---', 'yikes-inc-level-playing-field' ),
-			'class' => 'short',
-		),
-	),
-	// Application Details
+	// Applications
 	'application_details' => array(
 		// Third Party Site Checkbox
 		array(
-			'id' => '_third_party_site',
-			'type' => 'checkbox',
-			'value' => '1',
-			'label' => __( 'Third Party Site', 'yikes-inc-level-playing-field' ),
+			'id' => '_applicants_details',
+			'label' => __( 'Applicants', 'yikes-inc-level-playing-field' ),
 			'default' => '',
-			'description' => __( 'Check this option if users will apply for this job on a third party website.', 'yikes-inc-level-playing-field' ),
-			'class' => 'short',
-		),
-		// Third Party Site URL
-		array(
-			'id' => '_third_party_site_url',
-			'type' => 'url',
-			'label' => __( 'Third Party Site URL', 'yikes-inc-level-playing-field' ),
-			'default' => '',
-			'description' => __( 'Enter the URL to the third party site where users will be applying for this position.', 'yikes-inc-level-playing-field' ),
-			'placeholder' => __( 'http://', 'yikes-inc-level-playing-field' ),
+			'description' => __( 'Placeholder description.', 'yikes-inc-level-playing-field' ),
+			'placeholder' => __( '---temp---', 'yikes-inc-level-playing-field' ),
 			'class' => 'short',
 		),
 	),

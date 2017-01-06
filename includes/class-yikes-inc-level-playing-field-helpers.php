@@ -129,7 +129,7 @@ class Yikes_Inc_Level_Playing_Field_Helper {
 	/**
 	 * Get applicants for all or a specified job/application
 	 *
-	 * @param  int $application_id The Application/Job ID to retreive applicants for. (optional)
+	 * @param  int $application_id The Application/Job ID to retrieve applicants for. (optional)
 	 * @return int                 The number of applicants returned.
 	 */
 	public function get_applicant_count( $application_id = false ) {
@@ -158,7 +158,7 @@ class Yikes_Inc_Level_Playing_Field_Helper {
 	 * Get NEW applicants for all or a specified job/application
 	 * Note: NEW means 'new_application' meta set to '1'
 	 *
-	 * @param  int $application_id The Application/Job ID to retreive applicants for. (optional)
+	 * @param  int $application_id The Application/Job ID to retrieve applicants for. (optional)
 	 * @return int                 The number of applicants returned.
 	 */
 	public function get_new_applicant_count( $application_id = false ) {
