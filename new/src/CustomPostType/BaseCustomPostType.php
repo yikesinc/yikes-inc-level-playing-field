@@ -29,9 +29,16 @@ abstract class BaseCustomPostType implements Service {
 	 * @since 0.1.0
 	 */
 	public function register() {
-		add_action( 'init', function () {
-			register_post_type( $this->get_slug(), $this->get_arguments() );
-		} );
+		add_action( 'init', array( $this, 'register_post_type' ) );
+	}
+
+	/**
+	 * Register the custom post type.
+	 *
+	 * @author Jeremy Pry
+	 */
+	public function register_post_type() {
+		register_post_type( $this->get_slug(), $this->get_arguments() );
 	}
 
 	/**
