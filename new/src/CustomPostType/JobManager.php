@@ -67,4 +67,42 @@ class JobManager extends BaseCustomPostType {
 			'menu_icon'           => 'dashicons-businessman',
 		);
 	}
+
+	/**
+	 * Get the array of messages to use when updating.
+	 *
+	 * @since  %VERSION%
+	 * @author Jeremy Pry
+	 * @return array
+	 */
+	protected function get_messages() {
+		global $post;
+		$permalink = get_permalink( $post );
+
+		return array(
+			0  => '', // Unused. Messages start at index 1.
+			/* translators: %s: permalink URL */
+			1  => sprintf( __( 'Job updated. <a target="_blank" href="%s">View Job</a>', 'yikes-level-playing-field' ), esc_url( $permalink ) ),
+			2  => __( 'Custom field updated.', 'yikes-level-playing-field' ),
+			3  => __( 'Custom field deleted.', 'yikes-level-playing-field' ),
+			4  => __( 'Job updated.', 'yikes-level-playing-field' ),
+			/* translators: %s: date and time of the revision */
+			5  => isset( $_GET['revision'] ) ? sprintf( __( 'Job restored to revision from %s', 'yikes-level-playing-field' ), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
+			/* translators: %s: permalink URL */
+			6  => sprintf( __( 'Job published. <a href="%s">View Job</a>', 'yikes-level-playing-field' ), esc_url( $permalink ) ),
+			7  => __( 'Job saved.', 'yikes-level-playing-field' ),
+			/* translators: %s: preview URL */
+			8  => sprintf( __( 'Job submitted. <a target="_blank" href="%s">Preview Job</a>', 'yikes-level-playing-field' ), esc_url( add_query_arg( 'preview', 'true', $permalink ) ) ),
+			9  => sprintf(
+				/* translators: %1$s: translated date. %2$s: permalink URL */
+				__( 'Job scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview Job</a>', 'yikes-level-playing-field' ),
+				/* translators: Publish box date format, see http://php.net/date */
+				date_i18n( __( 'M j, Y @ G:i' ), strtotime( $post->post_date ) ),
+				esc_url( $permalink )
+			),
+			/* translators: %s: preview URL */
+			10 => sprintf( __( 'Job draft updated. <a target="_blank" href="%s">Preview Job</a>', 'yikes-level-playing-field' ), esc_url( add_query_arg( 'preview', 'true', $permalink ) ) ),
+		);
+	}
+
 }

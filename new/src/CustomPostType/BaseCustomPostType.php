@@ -31,6 +31,7 @@ abstract class BaseCustomPostType implements Service {
 	 */
 	public function register() {
 		add_action( 'init', array( $this, 'register_post_type' ) );
+		add_filter( 'post_updated_messages', array( $this, 'updated_messages' ) );
 	}
 
 	/**
@@ -59,6 +60,22 @@ abstract class BaseCustomPostType implements Service {
 	}
 
 	/**
+	 * Include our custom messages to use when the CPT is updated.
+	 *
+	 * @author Jeremy Pry
+	 * @since  %VERSION%
+	 *
+	 * @param array $messages Array of existing messages.
+	 *
+	 * @return array
+	 */
+	protected function updated_messages( $messages ) {
+		$messages[ $this->get_slug() ] = $this->get_messages();
+
+		return $messages;
+	}
+
+	/**
 	 * Get the arguments that configure the custom post type.
 	 *
 	 * @since 0.1.0
@@ -66,4 +83,13 @@ abstract class BaseCustomPostType implements Service {
 	 * @return array Array of arguments.
 	 */
 	abstract protected function get_arguments();
+
+	/**
+	 * Get the array of messages to use when updating.
+	 *
+	 * @since  %VERSION%
+	 * @author Jeremy Pry
+	 * @return array
+	 */
+	abstract protected function get_messages();
 }
