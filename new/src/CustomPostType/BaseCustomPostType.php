@@ -21,6 +21,8 @@ use Yikes\LevelPlayingField\Service;
  */
 abstract class BaseCustomPostType implements Service {
 
+	const SLUG = '_basecpt_';
+
 	/**
 	 * Register the custom post type.
 	 *
@@ -39,7 +41,9 @@ abstract class BaseCustomPostType implements Service {
 	 *
 	 * @return string Custom post type slug.
 	 */
-	abstract protected function get_slug();
+	protected function get_slug() {
+		return static::SLUG;
+	}
 
 	/**
 	 * Get the arguments that configure the custom post type.
