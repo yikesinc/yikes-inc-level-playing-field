@@ -10,16 +10,14 @@
 namespace Yikes\LevelPlayingField\Exception;
 
 /**
- * Interface SpeakingPageException.
+ * Interface Exception.
  *
- * This interface is implemented by all speaking page exceptions, so that
+ * This interface is implemented by all of this plugin's exceptions so that
  * we can catch "internal" exceptions only.
  *
- * @since   0.1.0
- *
- * @package Yikes\LevelPlayingField
- * @author  Jeremy Pry
+ * @package Yikes\LevelPlayingField\Exception
+ * @author Jeremy Pry
  */
-interface SpeakingPageException extends Exception {
+interface Exception {
 
 }
