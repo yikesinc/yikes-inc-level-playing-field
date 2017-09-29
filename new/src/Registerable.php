@@ -13,7 +13,7 @@ namespace Yikes\LevelPlayingField;
  * @since   0.1.0
  *
  * @package Yikes\LevelPlayingField
- * @author  Alain Schlesser <alain.schlesser@gmail.com>
+ * @author  Jeremy Pry
  */
 interface Registerable {
 

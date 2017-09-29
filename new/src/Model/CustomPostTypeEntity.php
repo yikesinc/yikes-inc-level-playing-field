@@ -1,12 +1,10 @@
 <?php
 /**
- * AlainSchlesser.com Speaking Page Plugin.
+ * YIKES Inc. Level Playing Field Plugin.
  *
  * @package   Yikes\LevelPlayingField
- * @author    Alain Schlesser <alain.schlesser@gmail.com>
- * @license   MIT
- * @link      https://www.alainschlesser.com/
- * @copyright 2017 Alain Schlesser
+ * @author    Jeremy Pry
+ * @license   GPL2
  */
 
 namespace Yikes\LevelPlayingField\Model;
@@ -19,7 +17,7 @@ use WP_Post;
  * @since   0.2.1
  *
  * @package Yikes\LevelPlayingField
- * @author  Alain Schlesser <alain.schlesser@gmail.com>
+ * @author  Jeremy Pry
  */
 abstract class CustomPostTypeEntity implements Entity {
 
@@ -140,8 +138,6 @@ abstract class CustomPostTypeEntity implements Entity {
 	 * Persist the additional properties of the entity.
 	 *
 	 * @since 0.2.1
-	 *
-	 * @return void
 	 */
 	abstract public function persist_properties();
 
@@ -164,8 +160,6 @@ abstract class CustomPostTypeEntity implements Entity {
 	 * @since 0.2.1
 	 *
 	 * @param string $property Name of the property to load.
-	 *
-	 * @return void
 	 */
 	abstract protected function load_lazy_property( $property );
 }

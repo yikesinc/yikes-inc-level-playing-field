@@ -1,12 +1,10 @@
 <?php
 /**
- * AlainSchlesser.com Speaking Page Plugin.
+ * YIKES Inc. Level Playing Field Plugin.
  *
  * @package   Yikes\LevelPlayingField
- * @author    Alain Schlesser <alain.schlesser@gmail.com>
- * @license   MIT
- * @link      https://www.alainschlesser.com/
- * @copyright 2017 Alain Schlesser
+ * @author    Jeremy Pry
+ * @license   GPL2
  */
 
 namespace Yikes\LevelPlayingField\Assets;
@@ -19,7 +17,7 @@ use Closure;
  * @since   0.1.0
  *
  * @package Yikes\LevelPlayingField\Assets
- * @author  Alain Schlesser <alain.schlesser@gmail.com>
+ * @author  Jeremy Pry
  */
 abstract class BaseAsset implements Asset {
 
@@ -51,8 +49,6 @@ abstract class BaseAsset implements Asset {
 	 * Register the current Registerable.
 	 *
 	 * @since 0.1.0
-	 *
-	 * @return void
 	 */
 	public function register() {
 		$this->deferred_action(
@@ -66,8 +62,6 @@ abstract class BaseAsset implements Asset {
 	 * Enqueue the asset.
 	 *
 	 * @since 0.1.0
-	 *
-	 * @return void
 	 */
 	public function enqueue() {
 		$this->deferred_action(
@@ -81,8 +75,6 @@ abstract class BaseAsset implements Asset {
 	 * Dequeue the asset.
 	 *
 	 * @since 0.2.7
-	 *
-	 * @return void
 	 */
 	public function dequeue() {
 		$this->deferred_action(

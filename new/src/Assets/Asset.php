@@ -1,12 +1,10 @@
 <?php
 /**
- * AlainSchlesser.com Speaking Page Plugin.
+ * YIKES Inc. Level Playing Field Plugin.
  *
  * @package   Yikes\LevelPlayingField
- * @author    Alain Schlesser <alain.schlesser@gmail.com>
- * @license   MIT
- * @link      https://www.alainschlesser.com/
- * @copyright 2017 Alain Schlesser
+ * @author    Jeremy Pry
+ * @license   GPL2
  */
 
 namespace Yikes\LevelPlayingField\Assets;
@@ -19,7 +17,7 @@ use Yikes\LevelPlayingField\Registerable;
  * @since   0.1.0
  *
  * @package Yikes\LevelPlayingField\Assets
- * @author  Alain Schlesser <alain.schlesser@gmail.com>
+ * @author  Jeremy Pry
  */
 interface Asset extends Registerable {
 
@@ -27,8 +25,6 @@ interface Asset extends Registerable {
 	 * Enqueue the asset.
 	 *
 	 * @since 0.1.0
-	 *
-	 * @return void
 	 */
 	public function enqueue();
 
@@ -36,8 +32,6 @@ interface Asset extends Registerable {
 	 * Dequeue the asset.
 	 *
 	 * @since 0.2.7
-	 *
-	 * @return void
 	 */
 	public function dequeue();
 

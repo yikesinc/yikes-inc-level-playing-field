@@ -1,12 +1,10 @@
 <?php
 /**
- * AlainSchlesser.com Speaking Page Plugin.
+ * YIKES Inc. Level Playing Field Plugin.
  *
  * @package   Yikes\LevelPlayingField
- * @author    Alain Schlesser <alain.schlesser@gmail.com>
- * @license   MIT
- * @link      https://www.alainschlesser.com/
- * @copyright 2017 Alain Schlesser
+ * @author    Jeremy Pry
+ * @license   GPL2
  */
 
 namespace Yikes\LevelPlayingField\Metabox;
@@ -25,7 +23,7 @@ use Closure;
  * @since   0.1.0
  *
  * @package Yikes\LevelPlayingField
- * @author  Alain Schlesser <alain.schlesser@gmail.com>
+ * @author  Jeremy Pry
  */
 abstract class BaseMetabox implements Renderable, Service, AssetsAware {
 
@@ -66,9 +64,7 @@ abstract class BaseMetabox implements Renderable, Service, AssetsAware {
 	 *
 	 * @since 0.1.0
 	 *
-	 * @param array|string $atts Attributes as passed to the metabox.
-	 *
-	 * @return void The rendered content needs to be echoed.
+	 * @param array|string $atts Attributes as passed to the metabox. The rendered content needs to be echoed.
 	 */
 	public function process_metabox( $atts ) {
 		$atts                = $this->process_attributes( $atts );
@@ -288,8 +284,6 @@ abstract class BaseMetabox implements Renderable, Service, AssetsAware {
 	 * @since 0.1.0
 	 *
 	 * @param int $post_id ID of the post to persist.
-	 *
-	 * @return void
 	 */
 	abstract protected function persist( $post_id );
 

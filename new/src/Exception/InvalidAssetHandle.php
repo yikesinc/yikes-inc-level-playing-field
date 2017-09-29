@@ -1,12 +1,10 @@
 <?php
 /**
- * AlainSchlesser.com Speaking Page Plugin.
+ * YIKES Inc. Level Playing Field Plugin.
  *
  * @package   Yikes\LevelPlayingField
- * @author    Alain Schlesser <alain.schlesser@gmail.com>
- * @license   MIT
- * @link      https://www.alainschlesser.com/
- * @copyright 2017 Alain Schlesser
+ * @author    Jeremy Pry
+ * @license   GPL2
  */
 
 namespace Yikes\LevelPlayingField\Exception;
@@ -17,7 +15,7 @@ namespace Yikes\LevelPlayingField\Exception;
  * @since   0.1.0
  *
  * @package Yikes\LevelPlayingField\Exception
- * @author  Alain Schlesser <alain.schlesser@gmail.com>
+ * @author  Jeremy Pry
  */
 class InvalidAssetHandle extends \InvalidArgumentException implements SpeakingPageException {
 
