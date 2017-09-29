@@ -29,7 +29,7 @@ final class AssetsHandler implements Registerable {
 	 *
 	 * @var array<Asset>
 	 */
-	private $assets;
+	private $assets = array();
 
 	/**
 	 * Add a single asset to the asset handler.
