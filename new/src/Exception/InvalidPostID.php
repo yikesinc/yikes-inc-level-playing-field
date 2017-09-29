@@ -12,7 +12,7 @@ namespace Yikes\LevelPlayingField\Exception;
 /**
  * Class InvalidPostID.
  *
- * @since   0.1.0
+ * @since   %VERSION%
  *
  * @package Yikes\LevelPlayingField\Exception
  * @author  Jeremy Pry
@@ -22,7 +22,7 @@ class InvalidPostID extends \InvalidArgumentException implements SpeakingPageExc
 	/**
 	 * Create a new instance of the exception for a post ID that is not valid.
 	 *
-	 * @since 0.1.0
+	 * @since %VERSION%
 	 *
 	 * @param int $id Post ID that is not valid.
 	 *

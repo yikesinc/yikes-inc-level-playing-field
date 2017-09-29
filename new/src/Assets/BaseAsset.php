@@ -14,7 +14,7 @@ use Closure;
 /**
  * Abstract class BaseAsset.
  *
- * @since   0.1.0
+ * @since   %VERSION%
  *
  * @package Yikes\LevelPlayingField\Assets
  * @author  Jeremy Pry
@@ -28,7 +28,7 @@ abstract class BaseAsset implements Asset {
 	/**
 	 * Handle of the asset.
 	 *
-	 * @since 0.1.0
+	 * @since %VERSION%
 	 *
 	 * @var string
 	 */
@@ -37,7 +37,7 @@ abstract class BaseAsset implements Asset {
 	/**
 	 * Get the handle of the asset.
 	 *
-	 * @since 0.1.0
+	 * @since %VERSION%
 	 *
 	 * @return string
 	 */
@@ -48,7 +48,7 @@ abstract class BaseAsset implements Asset {
 	/**
 	 * Register the current Registerable.
 	 *
-	 * @since 0.1.0
+	 * @since %VERSION%
 	 */
 	public function register() {
 		$this->deferred_action(
@@ -61,7 +61,7 @@ abstract class BaseAsset implements Asset {
 	/**
 	 * Enqueue the asset.
 	 *
-	 * @since 0.1.0
+	 * @since %VERSION%
 	 */
 	public function enqueue() {
 		$this->deferred_action(
@@ -74,7 +74,7 @@ abstract class BaseAsset implements Asset {
 	/**
 	 * Dequeue the asset.
 	 *
-	 * @since 0.2.7
+	 * @since %VERSION%
 	 */
 	public function dequeue() {
 		$this->deferred_action(
@@ -89,7 +89,7 @@ abstract class BaseAsset implements Asset {
 	 *
 	 * If the action has already passed, the closure will be called directly.
 	 *
-	 * @since 0.1.0
+	 * @since %VERSION%
 	 *
 	 * @param string  $action   Deferred action to hook to.
 	 * @param Closure $closure  Closure to attach to the action.
@@ -112,7 +112,7 @@ abstract class BaseAsset implements Asset {
 	/**
 	 * Get the register action to use.
 	 *
-	 * @since 0.1.0
+	 * @since %VERSION%
 	 *
 	 * @return string Register action to use.
 	 */
@@ -123,7 +123,7 @@ abstract class BaseAsset implements Asset {
 	/**
 	 * Get the enqueue action to use.
 	 *
-	 * @since 0.1.0
+	 * @since %VERSION%
 	 *
 	 * @return string Enqueue action name.
 	 */
@@ -134,7 +134,7 @@ abstract class BaseAsset implements Asset {
 	/**
 	 * Get the enqueue action to use.
 	 *
-	 * @since 0.1.0
+	 * @since %VERSION%
 	 *
 	 * @return string Enqueue action name.
 	 */
@@ -145,7 +145,7 @@ abstract class BaseAsset implements Asset {
 	/**
 	 * Normalize the source URI.
 	 *
-	 * @since 0.1.0
+	 * @since %VERSION%
 	 *
 	 * @param string $uri       Source URI to normalize.
 	 * @param string $extension Default extension to use.
@@ -163,7 +163,7 @@ abstract class BaseAsset implements Asset {
 	 * Return the URI of the minified asset if it is readable and
 	 * `SCRIPT_DEBUG` is not set.
 	 *
-	 * @since 0.1.9
+	 * @since %VERSION%
 	 *
 	 * @param string $uri       Source URI.
 	 * @param string $extension Default extension to use.
@@ -182,7 +182,7 @@ abstract class BaseAsset implements Asset {
 	 *
 	 * Optionally adds the extension if none was detected.
 	 *
-	 * @since 0.2.5
+	 * @since %VERSION%
 	 *
 	 * @param string $uri       URI to check the extension of.
 	 * @param string $extension Extension to use.
@@ -202,7 +202,7 @@ abstract class BaseAsset implements Asset {
 	/**
 	 * Get the enqueue closure to use.
 	 *
-	 * @since 0.1.0
+	 * @since %VERSION%
 	 *
 	 * @return Closure
 	 */
@@ -211,7 +211,7 @@ abstract class BaseAsset implements Asset {
 	/**
 	 * Get the enqueue closure to use.
 	 *
-	 * @since 0.1.0
+	 * @since %VERSION%
 	 *
 	 * @return Closure
 	 */
@@ -220,7 +220,7 @@ abstract class BaseAsset implements Asset {
 	/**
 	 * Get the dequeue closure to use.
 	 *
-	 * @since 0.2.7
+	 * @since %VERSION%
 	 *
 	 * @return Closure
 	 */

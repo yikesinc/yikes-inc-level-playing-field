@@ -10,7 +10,7 @@ namespace Yikes\LevelPlayingField;
  *
  * An object that can be `register()`ed.
  *
- * @since   0.1.0
+ * @since   %VERSION%
  *
  * @package Yikes\LevelPlayingField
  * @author  Jeremy Pry
@@ -20,7 +20,7 @@ interface Registerable {
 	/**
 	 * Register the current Registerable.
 	 *
-	 * @since 0.1.0
+	 * @since %VERSION%
 	 */
 	public function register();
 }

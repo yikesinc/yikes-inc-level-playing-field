@@ -15,7 +15,7 @@ use Yikes\LevelPlayingField\Service;
 /**
  * Abstract class BaseCustomPostType.
  *
- * @since   0.1.0
+ * @since   %VERSION%
  *
  * @package Yikes\LevelPlayingField
  * @author  Jeremy Pry
@@ -27,7 +27,7 @@ abstract class BaseCustomPostType implements Service {
 	/**
 	 * Register the custom post type.
 	 *
-	 * @since 0.1.0
+	 * @since %VERSION%
 	 */
 	public function register() {
 		add_action( 'init', array( $this, 'register_post_type' ) );
@@ -46,7 +46,7 @@ abstract class BaseCustomPostType implements Service {
 	/**
 	 * Get the slug to use for the custom post type.
 	 *
-	 * @since 0.1.0
+	 * @since %VERSION%
 	 *
 	 * @return string Custom post type slug.
 	 * @throws MustExtendSlug When the default slug has not been extended.
@@ -78,7 +78,7 @@ abstract class BaseCustomPostType implements Service {
 	/**
 	 * Get the arguments that configure the custom post type.
 	 *
-	 * @since 0.1.0
+	 * @since %VERSION%
 	 *
 	 * @return array Array of arguments.
 	 */

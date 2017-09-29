@@ -19,7 +19,7 @@ use Yikes\LevelPlayingField\View\TemplatedView;
 /**
  * Abstract class BaseShortcode.
  *
- * @since   0.1.0
+ * @since   %VERSION%
  *
  * @package Yikes\LevelPlayingField
  * @author  Jeremy Pry
@@ -31,7 +31,7 @@ abstract class BaseShortcode implements Renderable, AssetsAware, Service {
 	/**
 	 * Register the Shortcode.
 	 *
-	 * @since 0.1.0
+	 * @since %VERSION%
 	 */
 	public function register() {
 		$this->register_assets();
@@ -44,7 +44,7 @@ abstract class BaseShortcode implements Renderable, AssetsAware, Service {
 	/**
 	 * Process the shortcode attributes and prepare rendering.
 	 *
-	 * @since 0.1.0
+	 * @since %VERSION%
 	 *
 	 * @param array|string $atts Attributes as passed to the shortcode.
 	 *
@@ -60,7 +60,7 @@ abstract class BaseShortcode implements Renderable, AssetsAware, Service {
 	/**
 	 * Render the current Renderable.
 	 *
-	 * @since 0.1.0
+	 * @since %VERSION%
 	 *
 	 * @param array $context Context in which to render.
 	 *
@@ -87,7 +87,7 @@ abstract class BaseShortcode implements Renderable, AssetsAware, Service {
 	 *
 	 * Override to add accepted attributes and their default values.
 	 *
-	 * @since 0.1.0
+	 * @since %VERSION%
 	 *
 	 * @param array|string $atts Raw shortcode attributes passed into the
 	 *                           shortcode function.
@@ -110,7 +110,7 @@ abstract class BaseShortcode implements Renderable, AssetsAware, Service {
 	 * Override to provide data to the view that is not part of the shortcode
 	 * attributes.
 	 *
-	 * @since 0.1.0
+	 * @since %VERSION%
 	 *
 	 * @param array $atts Array of shortcode attributes.
 	 *
@@ -123,7 +123,7 @@ abstract class BaseShortcode implements Renderable, AssetsAware, Service {
 	/**
 	 * Get the tag to use for the shortcode.
 	 *
-	 * @since 0.1.0
+	 * @since %VERSION%
 	 *
 	 * @return string Tag of the shortcode.
 	 */
@@ -132,7 +132,7 @@ abstract class BaseShortcode implements Renderable, AssetsAware, Service {
 	/**
 	 * Get the View URI to use for rendering the shortcode.
 	 *
-	 * @since 0.1.0
+	 * @since %VERSION%
 	 *
 	 * @return string View URI.
 	 */

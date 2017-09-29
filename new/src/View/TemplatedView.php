@@ -17,7 +17,7 @@ use Yikes\LevelPlayingField\Exception\InvalidURI;
  * Looks within the child theme and parent theme folders first for a view,
  * before defaulting to the plugin folder.
  *
- * @since   0.1.0
+ * @since   %VERSION%
  *
  * @package Yikes\LevelPlayingField
  * @author  Jeremy Pry
@@ -27,7 +27,7 @@ final class TemplatedView extends BaseView {
 	/**
 	 * Validate an URI.
 	 *
-	 * @since 0.1.0
+	 * @since %VERSION%
 	 *
 	 * @param string $uri URI to validate.
 	 *
@@ -53,7 +53,7 @@ final class TemplatedView extends BaseView {
 	/**
 	 * Get the possible locations for the view.
 	 *
-	 * @since 0.1.0
+	 * @since %VERSION%
 	 *
 	 * @param string $uri URI of the view to get the locations for.
 	 *

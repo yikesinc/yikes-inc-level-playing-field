@@ -18,7 +18,7 @@ use Yikes\LevelPlayingField\Exception\InvalidURI;
  * This is a Decorator that decorates a given View with escaping meant for
  * HTML form output.
  *
- * @since   0.2.4
+ * @since   %VERSION%
  *
  * @package Yikes\LevelPlayingField\View
  * @author  Jeremy Pry
@@ -65,7 +65,7 @@ final class FormEscapedView implements View {
 	/**
 	 * View instance to decorate.
 	 *
-	 * @since 0.2.4
+	 * @since %VERSION%
 	 *
 	 * @var View
 	 */
@@ -74,7 +74,7 @@ final class FormEscapedView implements View {
 	/**
 	 * Tags that are allowed to pass through the escaping function.
 	 *
-	 * @since 0.2.3
+	 * @since %VERSION%
 	 *
 	 * @var array
 	 */
@@ -83,7 +83,7 @@ final class FormEscapedView implements View {
 	/**
 	 * Instantiate a FormEscapedView object.
 	 *
-	 * @since 0.2.4
+	 * @since %VERSION%
 	 *
 	 * @param View       $view         View instance to decorate.
 	 * @param array|null $allowed_tags Optional. Array of allowed tags to let
@@ -100,7 +100,7 @@ final class FormEscapedView implements View {
 	/**
 	 * Render a given URI.
 	 *
-	 * @since 0.2.4
+	 * @since %VERSION%
 	 *
 	 * @param array $context Context in which to render.
 	 *
@@ -120,7 +120,7 @@ final class FormEscapedView implements View {
 	 * The passed-in context is optional, and will fall back to the parent's
 	 * context if omitted.
 	 *
-	 * @since 0.2.4
+	 * @since %VERSION%
 	 *
 	 * @param string     $uri     URI of the partial to render.
 	 * @param array|null $context Context in which to render the partial.
@@ -143,7 +143,7 @@ final class FormEscapedView implements View {
 	 * This makes sure that the basic form elements always pass through the
 	 * escaping functions.
 	 *
-	 * @since 0.2.4
+	 * @since %VERSION%
 	 *
 	 * @param array $allowed_tags Allowed tags as fetched from the WordPress
 	 *                            defaults.

@@ -12,7 +12,7 @@ namespace Yikes\LevelPlayingField\Model;
 /**
  * Interface Entity.
  *
- * @since   0.2.1
+ * @since   %VERSION%
  *
  * @package Yikes\LevelPlayingField
  * @author  Jeremy Pry
@@ -22,7 +22,7 @@ interface Entity {
 	/**
 	 * Return the entity ID.
 	 *
-	 * @since 0.2.1
+	 * @since %VERSION%
 	 *
 	 * @return int Entity ID.
 	 */

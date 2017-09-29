@@ -18,7 +18,7 @@ use Yikes\LevelPlayingField\Assets\AssetsHandler;
  * Main plugin controller class that hooks the plugin's functionality into the
  * WordPress request lifecycle.
  *
- * @since   0.1.0
+ * @since   %VERSION%
  *
  * @package Yikes\LevelPlayingField
  * @author  Jeremy Pry
@@ -28,7 +28,7 @@ final class Plugin implements Registerable {
 	/**
 	 * Assets handler instance.
 	 *
-	 * @since 0.1.0
+	 * @since %VERSION%
 	 *
 	 * @var AssetsHandler
 	 */
@@ -37,7 +37,7 @@ final class Plugin implements Registerable {
 	/**
 	 * Instantiate a Plugin object.
 	 *
-	 * @since 0.2.7
+	 * @since %VERSION%
 	 *
 	 * @param AssetsHandler|null $assets_handler Optional. Instance of the
 	 *                                           assets handler to use.
@@ -49,7 +49,7 @@ final class Plugin implements Registerable {
 	/**
 	 * Register the plugin with the WordPress system.
 	 *
-	 * @since 0.1.0
+	 * @since %VERSION%
 	 *
 	 * @throws Exception\InvalidService If a service is not valid.
 	 */
@@ -61,7 +61,7 @@ final class Plugin implements Registerable {
 	/**
 	 * Register the individual services of this plugin.
 	 *
-	 * @since 0.1.0
+	 * @since %VERSION%
 	 *
 	 * @throws Exception\InvalidService If a service is not valid.
 	 */
@@ -76,7 +76,7 @@ final class Plugin implements Registerable {
 	/**
 	 * Register the assets handler.
 	 *
-	 * @since 0.1.0
+	 * @since %VERSION%
 	 */
 	public function register_assets_handler() {
 		$this->assets_handler->register();
@@ -85,7 +85,7 @@ final class Plugin implements Registerable {
 	/**
 	 * Return the instance of the assets handler in use.
 	 *
-	 * @since 0.2.7
+	 * @since %VERSION%
 	 *
 	 * @return AssetsHandler
 	 */
@@ -96,7 +96,7 @@ final class Plugin implements Registerable {
 	/**
 	 * Instantiate a single service.
 	 *
-	 * @since 0.1.0
+	 * @since %VERSION%
 	 *
 	 * @param string $class Service class to instantiate.
 	 *
@@ -124,7 +124,7 @@ final class Plugin implements Registerable {
 	/**
 	 * Get the list of services to register.
 	 *
-	 * @since 0.1.0
+	 * @since %VERSION%
 	 *
 	 * @return array<string> Array of fully qualified class names.
 	 */

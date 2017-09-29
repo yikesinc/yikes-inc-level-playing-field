@@ -12,7 +12,7 @@ namespace Yikes\LevelPlayingField;
 /**
  * Class PluginFactory
  *
- * @since   0.2.7
+ * @since   %VERSION%
  *
  * @package Yikes\LevelPlayingField
  * @author  Jeremy Pry
@@ -24,7 +24,7 @@ final class PluginFactory {
 	 *
 	 * This always returns a shared instance.
 	 *
-	 * @since 0.2.7
+	 * @since %VERSION%
 	 *
 	 * @return Plugin Plugin instance.
 	 */

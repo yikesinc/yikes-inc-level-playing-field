@@ -12,7 +12,7 @@ namespace Yikes\LevelPlayingField\Model;
 /**
  * Abstract class CustomPostTypeRepository.
  *
- * @since   0.1.0
+ * @since   %VERSION%
  *
  * @package Yikes\LevelPlayingField
  * @author  Jeremy Pry
@@ -22,7 +22,7 @@ abstract class CustomPostTypeRepository {
 	/**
 	 * Persist a modified entity to the storage.
 	 *
-	 * @since 0.1.0
+	 * @since %VERSION%
 	 *
 	 * @param CustomPostTypeEntity $entity Entity instance to persist.
 	 */

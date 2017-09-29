@@ -15,7 +15,7 @@ namespace Yikes\LevelPlayingField\Exception;
  * This interface is implemented by all speaking page exceptions, so that
  * we can catch "internal" exceptions only.
  *
- * @since   0.1.0
+ * @since   %VERSION%
  *
  * @package Yikes\LevelPlayingField
  * @author  Jeremy Pry

@@ -15,7 +15,7 @@ use Yikes\LevelPlayingField\Registerable;
 /**
  * Class AssetsHandler.
  *
- * @since   0.1.0
+ * @since   %VERSION%
  *
  * @package Yikes\LevelPlayingField
  * @author  Jeremy Pry
@@ -25,7 +25,7 @@ final class AssetsHandler implements Registerable {
 	/**
 	 * Assets known to this asset handler.
 	 *
-	 * @since 0.1.0
+	 * @since %VERSION%
 	 *
 	 * @var array<Asset>
 	 */
@@ -34,7 +34,7 @@ final class AssetsHandler implements Registerable {
 	/**
 	 * Add a single asset to the asset handler.
 	 *
-	 * @since 0.1.0
+	 * @since %VERSION%
 	 *
 	 * @param Asset $asset Asset to add.
 	 */
@@ -45,7 +45,7 @@ final class AssetsHandler implements Registerable {
 	/**
 	 * Register the current Registerable.
 	 *
-	 * @since 0.1.0
+	 * @since %VERSION%
 	 */
 	public function register() {
 		foreach ( $this->assets as $asset ) {
@@ -56,7 +56,7 @@ final class AssetsHandler implements Registerable {
 	/**
 	 * Enqueue a single asset based on its handle.
 	 *
-	 * @since 0.1.0
+	 * @since %VERSION%
 	 *
 	 * @param string $handle Handle of the asset to enqueue.
 	 *
@@ -72,7 +72,7 @@ final class AssetsHandler implements Registerable {
 	/**
 	 * Dequeue a single asset based on its handle.
 	 *
-	 * @since 0.2.7
+	 * @since %VERSION%
 	 *
 	 * @param string $handle Handle of the asset to enqueue.
 	 *
@@ -88,7 +88,7 @@ final class AssetsHandler implements Registerable {
 	/**
 	 * Enqueue all assets known to this asset handler.
 	 *
-	 * @since 0.1.0
+	 * @since %VERSION%
 	 *
 	 * @param Asset|null $asset Optional. Asset to enqueue. If omitted, all
 	 *                          known assets are enqueued.

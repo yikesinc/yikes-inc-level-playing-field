@@ -12,7 +12,7 @@ namespace Yikes\LevelPlayingField\Exception;
 /**
  * Class FailedToLoadView.
  *
- * @since   0.1.0
+ * @since   %VERSION%
  *
  * @package Yikes\LevelPlayingField\Exception
  * @author  Jeremy Pry
@@ -23,7 +23,7 @@ class FailedToLoadView extends \RuntimeException implements SpeakingPageExceptio
 	 * Create a new instance of the exception if the view file itself created
 	 * an exception.
 	 *
-	 * @since 0.1.0
+	 * @since %VERSION%
 	 *
 	 * @param string     $uri       URI of the file that is not accessible or
 	 *                              not readable.

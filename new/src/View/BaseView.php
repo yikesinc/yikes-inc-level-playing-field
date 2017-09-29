@@ -19,7 +19,7 @@ use Yikes\LevelPlayingField\Exception\InvalidURI;
  *
  * Note: This should normally be done through a dedicated package.
  *
- * @since   0.1.0
+ * @since   %VERSION%
  *
  * @package Yikes\LevelPlayingField
  * @author  Jeremy Pry
@@ -29,14 +29,14 @@ class BaseView implements View {
 	/**
 	 * Extension to use for view files.
 	 *
-	 * @since 0.1.0
+	 * @since %VERSION%
 	 */
 	const VIEW_EXTENSION = 'php';
 
 	/**
 	 * Contexts to use for escaping.
 	 *
-	 * @since 0.2.3
+	 * @since %VERSION%
 	 */
 	const CONTEXT_HTML       = 'html';
 	const CONTEXT_JAVASCRIPT = 'js';
@@ -44,7 +44,7 @@ class BaseView implements View {
 	/**
 	 * URI to the view file to render.
 	 *
-	 * @since 0.1.0
+	 * @since %VERSION%
 	 *
 	 * @var string
 	 */
@@ -53,7 +53,7 @@ class BaseView implements View {
 	/**
 	 * Internal storage for passed-in context.
 	 *
-	 * @since 0.1.0
+	 * @since %VERSION%
 	 *
 	 * @var array
 	 */
@@ -62,7 +62,7 @@ class BaseView implements View {
 	/**
 	 * Instantiate a View object.
 	 *
-	 * @since 0.1.0
+	 * @since %VERSION%
 	 *
 	 * @param string $uri URI to the view file to render.
 	 *
@@ -75,7 +75,7 @@ class BaseView implements View {
 	/**
 	 * Render a given URI.
 	 *
-	 * @since 0.1.0
+	 * @since %VERSION%
 	 *
 	 * @param array $context Context in which to render.
 	 *
@@ -125,7 +125,7 @@ class BaseView implements View {
 	 * The passed-in context is optional, and will fall back to the parent's
 	 * context if omitted.
 	 *
-	 * @since 0.1.0
+	 * @since %VERSION%
 	 *
 	 * @param string     $uri     URI of the partial to render.
 	 * @param array|null $context Context in which to render the partial.
@@ -143,7 +143,7 @@ class BaseView implements View {
 	/**
 	 * Validate an URI.
 	 *
-	 * @since 0.1.0
+	 * @since %VERSION%
 	 *
 	 * @param string $uri URI to validate.
 	 *
@@ -166,7 +166,7 @@ class BaseView implements View {
 	 *
 	 * Optionally adds the extension if none was detected.
 	 *
-	 * @since 0.2.5
+	 * @since %VERSION%
 	 *
 	 * @param string $uri       URI to check the extension of.
 	 * @param string $extension Extension to use.

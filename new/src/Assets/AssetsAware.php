@@ -12,7 +12,7 @@ namespace Yikes\LevelPlayingField\Assets;
 /**
  * Interface AssetsAware.
  *
- * @since   0.1.0
+ * @since   %VERSION%
  *
  * @package Yikes\LevelPlayingField
  * @author  Jeremy Pry
@@ -22,7 +22,7 @@ interface AssetsAware {
 	/**
 	 * Set the assets handler to use within this object.
 	 *
-	 * @since 0.1.0
+	 * @since %VERSION%
 	 *
 	 * @param AssetsHandler $assets Assets handler to use.
 	 */

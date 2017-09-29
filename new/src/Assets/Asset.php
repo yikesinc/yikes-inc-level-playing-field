@@ -14,7 +14,7 @@ use Yikes\LevelPlayingField\Registerable;
 /**
  * Interface Asset.
  *
- * @since   0.1.0
+ * @since   %VERSION%
  *
  * @package Yikes\LevelPlayingField\Assets
  * @author  Jeremy Pry
@@ -24,21 +24,21 @@ interface Asset extends Registerable {
 	/**
 	 * Enqueue the asset.
 	 *
-	 * @since 0.1.0
+	 * @since %VERSION%
 	 */
 	public function enqueue();
 
 	/**
 	 * Dequeue the asset.
 	 *
-	 * @since 0.2.7
+	 * @since %VERSION%
 	 */
 	public function dequeue();
 
 	/**
 	 * Get the handle of the asset.
 	 *
-	 * @since 0.1.0
+	 * @since %VERSION%
 	 *
 	 * @return string
 	 */

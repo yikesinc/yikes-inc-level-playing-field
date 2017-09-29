@@ -15,7 +15,7 @@ class ApplicationManager extends BaseCustomPostType {
 	/**
 	 * Get the arguments that configure the custom post type.
 	 *
-	 * @since 0.1.0
+	 * @since %VERSION%
 	 *
 	 * @return array Array of arguments.
 	 */

@@ -14,7 +14,7 @@ use Closure;
 /**
  * Class StyleAsset.
  *
- * @since   0.1.0
+ * @since   %VERSION%
  *
  * @package Yikes\LevelPlayingField\Assets
  * @author  Jeremy Pry
@@ -30,7 +30,7 @@ class StyleAsset extends BaseAsset {
 	/**
 	 * Source location of the asset.
 	 *
-	 * @since 0.1.0
+	 * @since %VERSION%
 	 *
 	 * @var string
 	 */
@@ -39,7 +39,7 @@ class StyleAsset extends BaseAsset {
 	/**
 	 * Dependencies of the asset.
 	 *
-	 * @since 0.1.0
+	 * @since %VERSION%
 	 *
 	 * @var array<string>
 	 */
@@ -48,7 +48,7 @@ class StyleAsset extends BaseAsset {
 	/**
 	 * Version of the asset.
 	 *
-	 * @since 0.1.0
+	 * @since %VERSION%
 	 *
 	 * @var string|bool|null
 	 */
@@ -57,7 +57,7 @@ class StyleAsset extends BaseAsset {
 	/**
 	 * Media for which the asset is defined.
 	 *
-	 * @since 0.1.0
+	 * @since %VERSION%
 	 *
 	 * @var string
 	 */
@@ -66,7 +66,7 @@ class StyleAsset extends BaseAsset {
 	/**
 	 * Instantiate a StyleAsset object.
 	 *
-	 * @since 0.1.0
+	 * @since %VERSION%
 	 *
 	 * @param string           $handle       Handle of the asset.
 	 * @param string           $source       Source location of the asset.
@@ -96,7 +96,7 @@ class StyleAsset extends BaseAsset {
 	/**
 	 * Get the enqueue closure to use.
 	 *
-	 * @since 0.1.0
+	 * @since %VERSION%
 	 *
 	 * @return Closure
 	 */
@@ -119,7 +119,7 @@ class StyleAsset extends BaseAsset {
 	/**
 	 * Get the enqueue closure to use.
 	 *
-	 * @since 0.1.0
+	 * @since %VERSION%
 	 *
 	 * @return Closure
 	 */
@@ -132,7 +132,7 @@ class StyleAsset extends BaseAsset {
 	/**
 	 * Get the dequeue closure to use.
 	 *
-	 * @since 0.2.7
+	 * @since %VERSION%
 	 *
 	 * @return Closure
 	 */

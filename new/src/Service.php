@@ -14,7 +14,7 @@ namespace Yikes\LevelPlayingField;
  *
  * A generic service.
  *
- * @since   0.1.0
+ * @since   %VERSION%
  *
  * @package Yikes\LevelPlayingField
  * @author  Jeremy Pry
