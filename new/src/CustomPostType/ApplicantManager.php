@@ -92,7 +92,7 @@ class ApplicantManager extends BaseCustomPostType {
 			/* translators: %s: preview URL */
 			8  => sprintf( __( 'Applicant submitted. <a target="_blank" href="%s">Preview Applicant</a>', 'yikes-level-playing-field' ), esc_url( add_query_arg( 'preview', 'true', $permalink ) ) ),
 			9  => sprintf(
-			/* translators: %1$s: translated date. %2$s: permalink URL */
+				/* translators: %1$s: translated date. %2$s: permalink URL */
 				__( 'Applicant scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview Applicant</a>', 'yikes-level-playing-field' ),
 				/* translators: Publish box date format, see http://php.net/date */
 				date_i18n( __( 'M j, Y @ G:i' ), strtotime( $post->post_date ) ),
