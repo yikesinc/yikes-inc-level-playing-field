@@ -9,6 +9,7 @@
 
 namespace Yikes\LevelPlayingField\CustomPostType;
 
+use Yikes\LevelPlayingField\Exception\MustExtendSlug;
 use Yikes\LevelPlayingField\Service;
 
 /**
@@ -47,8 +48,13 @@ abstract class BaseCustomPostType implements Service {
 	 * @since 0.1.0
 	 *
 	 * @return string Custom post type slug.
+	 * @throws MustExtendSlug When the default slug has not been extended.
 	 */
 	protected function get_slug() {
+		if ( self::SLUG === static::SLUG ) {
+			throw MustExtendSlug::default_slug( self::SLUG );
+		}
+
 		return static::SLUG;
 	}
 
