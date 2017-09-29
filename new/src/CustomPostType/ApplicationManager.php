@@ -1,0 +1,66 @@
+<?php
+
+namespace Yikes\LevelPlayingField\CustomPostType;
+
+/**
+ * Application Manager CPT.
+ *
+ * @package    Yikes\LevelPlayingField
+ * @subpackage CustomPostType
+ */
+class ApplicationManager extends BaseCustomPostType {
+
+	const SLUG = 'applications';
+
+	/**
+	 * Get the arguments that configure the custom post type.
+	 *
+	 * @since 0.1.0
+	 *
+	 * @return array Array of arguments.
+	 */
+	protected function get_arguments() {
+		return array(
+			'label'               => __( 'Job Applications', 'yikes-level-playing-field' ),
+			'description'         => __( 'Job applications that are associated with the level playing field jobs.', 'yikes-level-playing-field' ),
+			'labels'              => array(
+				'name'                  => _x( 'Applications', 'Post Type General Name', 'yikes-level-playing-field' ),
+				'singular_name'         => _x( 'Application', 'Post Type Singular Name', 'yikes-level-playing-field' ),
+				'parent_item_colon'     => __( 'Parent Application:', 'yikes-level-playing-field' ),
+				'all_items'             => __( 'Job Applications', 'yikes-level-playing-field' ),
+				'add_new_item'          => __( 'Add New Application', 'yikes-level-playing-field' ),
+				'add_new'               => __( 'Add New Application', 'yikes-level-playing-field' ),
+				'new_item'              => __( 'New Application', 'yikes-level-playing-field' ),
+				'edit_item'             => __( 'Edit Application', 'yikes-level-playing-field' ),
+				'update_item'           => __( 'Update Application', 'yikes-level-playing-field' ),
+				'view_item'             => __( 'View Application', 'yikes-level-playing-field' ),
+				'search_items'          => __( 'Search Application', 'yikes-level-playing-field' ),
+				'not_found'             => __( 'Application Not found', 'yikes-level-playing-field' ),
+				'not_found_in_trash'    => __( 'Application Not found in Trash', 'yikes-level-playing-field' ),
+				'featured_image'        => __( 'Application Image', 'yikes-level-playing-field' ),
+				'set_featured_image'    => __( 'Set applications image', 'yikes-level-playing-field' ),
+				'remove_featured_image' => __( 'Remove applications image', 'yikes-level-playing-field' ),
+				'use_featured_image'    => __( 'Use as applications image', 'yikes-level-playing-field' ),
+				'insert_into_item'      => __( 'Insert into application', 'yikes-level-playing-field' ),
+				'uploaded_to_this_item' => __( 'Uploaded to this application', 'yikes-level-playing-field' ),
+				'items_list'            => __( 'Applications list', 'yikes-level-playing-field' ),
+				'items_list_navigation' => __( 'Applications list navigation', 'yikes-level-playing-field' ),
+				'filter_items_list'     => __( 'Filter applications list', 'yikes-level-playing-field' ),
+			),
+			'supports'            => array( 'title' ),
+			'taxonomies'          => array(),
+			'hierarchical'        => false,
+			'public'              => true,
+			'show_ui'             => true,
+			'show_in_menu'        => 'edit.php?post_type=jobs',
+			'rewrite'             => array( 'slug' => 'application' ),
+			'show_in_admin_bar'   => false,
+			'show_in_nav_menus'   => false,
+			'can_export'          => true,
+			'has_archive'         => false,
+			'exclude_from_search' => true,
+			'publicly_queryable'  => true,
+			'capability_type'     => 'page',
+		);
+	}
+}

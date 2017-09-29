@@ -130,7 +130,9 @@ final class Plugin implements Registerable {
 	 */
 	private function get_services() {
 		return array(
-
+			'\Yikes\LevelPlayingField\CustomPostType\JobManager',
+			'\Yikes\LevelPlayingField\CustomPostType\ApplicationManager',
+			'\Yikes\LevelPlayingField\CustomPostType\ApplicantManager',
 		);
 	}
 }
