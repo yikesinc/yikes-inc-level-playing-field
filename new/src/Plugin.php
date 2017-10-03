@@ -129,6 +129,19 @@ final class Plugin implements Registerable {
 	 * @return array<string> Array of fully qualified class names.
 	 */
 	private function get_services() {
+		/*
+		 * Ideally, we'd prefer to use the ::class magic constant, but that requires
+		 * using PHP 5.5+.
+		 *
+		 * Example:
+		 * array(
+		 *      JobManager::class,
+		 *      ApplicationManager::class,
+		 *      // etc...
+		 * )
+		 *
+		 * If the minimum required version is ever raised, this can be refactored.
+		 */
 		return array(
 			'\Yikes\LevelPlayingField\CustomPostType\JobManager',
 			'\Yikes\LevelPlayingField\CustomPostType\ApplicationManager',
