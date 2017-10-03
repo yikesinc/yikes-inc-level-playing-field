@@ -19,7 +19,7 @@
 
 namespace Yikes\LevelPlayingField;
 
-// Only run this within WordPress
+// Only run this within WordPress.
 if ( ! defined( 'ABSPATH' ) ) {
 	die();
 }

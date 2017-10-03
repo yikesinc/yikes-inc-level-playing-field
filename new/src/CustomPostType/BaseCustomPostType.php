@@ -25,7 +25,7 @@ abstract class BaseCustomPostType implements Service {
 	const SLUG = '_basecpt_';
 
 	/**
-	 * Register the custom post type.
+	 * Register the WordPress hooks.
 	 *
 	 * @since %VERSION%
 	 */
