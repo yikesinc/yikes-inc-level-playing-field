@@ -26,5 +26,5 @@ interface Entity {
 	 *
 	 * @return int Entity ID.
 	 */
-	public function get_ID();
+	public function get_id();
 }
