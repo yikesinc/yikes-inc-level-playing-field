@@ -52,7 +52,7 @@ abstract class AwesomeBaseMetabox implements Service {
 	 * @since %VERSION%
 	 * @return string
 	 */
-	abstract protected function get_prefix();
+	abstract public function get_prefix();
 
 	/**
 	 * Register meta boxes.
