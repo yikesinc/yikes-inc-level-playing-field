@@ -34,6 +34,27 @@ abstract class AwesomeBaseMetabox implements Service {
 	}
 
 	/**
+	 * Get the prefixed version of a field's name.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param string $name The field name.
+	 *
+	 * @return string The field name with prefix.
+	 */
+	protected function prefix_field( $name ) {
+		return $this->get_prefix() . $name;
+	}
+
+	/**
+	 * Get the prefix for use with meta fields.
+	 *
+	 * @since %VERSION%
+	 * @return string
+	 */
+	abstract protected function get_prefix();
+
+	/**
 	 * Register meta boxes.
 	 *
 	 * @since  %VERSION%
