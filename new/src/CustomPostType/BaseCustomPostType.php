@@ -69,7 +69,7 @@ abstract class BaseCustomPostType implements Service {
 	 *
 	 * @return array
 	 */
-	protected function updated_messages( $messages ) {
+	public function updated_messages( $messages ) {
 		$messages[ $this->get_slug() ] = $this->get_messages();
 
 		return $messages;
