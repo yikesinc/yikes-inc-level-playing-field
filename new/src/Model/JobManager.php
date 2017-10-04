@@ -33,7 +33,6 @@ class JobManager extends CustomPostTypeEntity {
 
 			update_post_meta( $this->get_id(), JMMeta::META_PREFIX . $key, $this->$key );
 		}
-
 	}
 
 	/**

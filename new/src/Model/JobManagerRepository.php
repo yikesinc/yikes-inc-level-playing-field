@@ -9,7 +9,6 @@
 
 namespace Yikes\LevelPlayingField\Model;
 
-
 use Yikes\LevelPlayingField\CustomPostType\JobManager as JobManagerCPT;
 use Yikes\LevelPlayingField\Exception\InvalidPostID;
 
