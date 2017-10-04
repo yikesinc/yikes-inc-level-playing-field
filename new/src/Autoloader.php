@@ -1,6 +1,10 @@
 <?php
 /**
- * FILE HEADER
+ * YIKES Inc. Level Playing Field Plugin.
+ *
+ * @package   Yikes\LevelPlayingField
+ * @author    Jeremy Pry
+ * @license   GPL2
  */
 
 namespace Yikes\LevelPlayingField;
@@ -44,7 +48,7 @@ final class Autoloader {
 	 * @since    %VERSION%
 	 */
 	public function register() {
-		spl_autoload_register(array( $this, 'autoload') );
+		spl_autoload_register( array( $this, 'autoload' ) );
 	}
 
 	/**
@@ -53,7 +57,7 @@ final class Autoloader {
 	 * @since    %VERSION%
 	 */
 	public function unregister() {
-		spl_autoload_unregister(array( $this, 'autoload') );
+		spl_autoload_unregister( array( $this, 'autoload' ) );
 	}
 
 	/**
@@ -80,7 +84,7 @@ final class Autoloader {
 		$lowercase = false,
 		$underscores = false
 	) {
-		$this->namespaces[] =array(
+		$this->namespaces[] = array(
 			'root'        => $this->normalize_root( (string) $root ),
 			'base_dir'    => trailingslashit( (string) $base_dir ),
 			'prefix'      => (string) $prefix,
