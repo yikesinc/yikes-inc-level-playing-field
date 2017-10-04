@@ -147,6 +147,7 @@ final class Plugin implements Registerable {
 			'\Yikes\LevelPlayingField\CustomPostType\ApplicationManager',
 			'\Yikes\LevelPlayingField\CustomPostType\ApplicantManager',
 			'\Yikes\LevelPlayingField\Taxonomy\JobCategory',
+			'\Yikes\LevelPlayingField\Metabox\JobManager',
 		);
 	}
 }
