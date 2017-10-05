@@ -11,7 +11,7 @@ namespace Yikes\LevelPlayingField\ListTable;
 
 use Yikes\LevelPlayingField\CustomPostType\JobManager as JobManagerCPT;
 use Yikes\LevelPlayingField\Taxonomy\JobCategory;
-use Yikes\LevelPlayingField\Taxonomy\Status;
+use Yikes\LevelPlayingField\Taxonomy\JobStatus;
 
 /**
  * Class JobManager
@@ -55,7 +55,7 @@ class JobManager extends BasePostType {
 	 */
 	public function columns( $original_columns ) {
 		$category_tax = get_taxonomy( JobCategory::SLUG );
-		$status_tax   = get_taxonomy( Status::SLUG );
+		$status_tax   = get_taxonomy( JobStatus::SLUG );
 		$columns      = array(
 			'cb'                             => $original_columns['cb'],
 			'title'                          => _x( 'Job Title', 'column heading' ),

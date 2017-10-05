@@ -17,9 +17,9 @@ use Yikes\LevelPlayingField\CustomPostType\JobManager;
  * @since   %VERSION%
  * @package Yikes\LevelPlayingField
  */
-class Status extends BaseTaxonomy {
+class JobStatus extends BaseTaxonomy {
 
-	const SLUG = 'lpf-status';
+	const SLUG = 'job_status';
 
 	/**
 	 * Register the WordPress hooks.
