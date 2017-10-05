@@ -50,7 +50,7 @@ abstract class BaseTaxonomy implements Service {
 	 * @return string
 	 * @throws MustExtendSlug When the default slug has not been extended.
 	 */
-	protected function get_slug() {
+	public function get_slug() {
 		if ( self::SLUG === static::SLUG ) {
 			throw MustExtendSlug::default_slug( self::SLUG );
 		}
