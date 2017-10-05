@@ -51,7 +51,6 @@ class JobManager extends BaseCustomPostType {
 				'filter_items_list'     => __( 'Filter Jobs list', 'yikes-level-playing-field' ),
 			),
 			'supports'            => array( 'title', 'editor' ),
-			'taxonomies'          => array(),
 			'hierarchical'        => false,
 			'public'              => true,
 			'show_ui'             => true,
@@ -104,5 +103,4 @@ class JobManager extends BaseCustomPostType {
 			10 => sprintf( __( 'Job draft updated. <a target="_blank" href="%s">Preview Job</a>', 'yikes-level-playing-field' ), esc_url( add_query_arg( 'preview', 'true', $permalink ) ) ),
 		);
 	}
-
 }
