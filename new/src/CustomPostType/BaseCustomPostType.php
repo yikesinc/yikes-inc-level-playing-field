@@ -19,6 +19,8 @@ use Yikes\LevelPlayingField\Service;
  *
  * @package Yikes\LevelPlayingField
  * @author  Jeremy Pry
+ *
+ * @property string $slug The CPT slug.
  */
 abstract class BaseCustomPostType implements Service {
 
@@ -73,6 +75,25 @@ abstract class BaseCustomPostType implements Service {
 		$messages[ $this->get_slug() ] = $this->get_messages();
 
 		return $messages;
+	}
+
+	/**
+	 * Getter for class properties.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param string $name The property name.
+	 *
+	 * @return mixed The property if accessible, or null.
+	 */
+	public function __get( $name ) {
+		switch ( $name ) {
+			case 'slug':
+				return $this->get_slug();
+
+			default:
+				return null;
+		}
 	}
 
 	/**
