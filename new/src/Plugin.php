@@ -149,6 +149,7 @@ final class Plugin implements Registerable {
 			'\Yikes\LevelPlayingField\Taxonomy\JobCategory',
 			'\Yikes\LevelPlayingField\Metabox\JobManager',
 			'\Yikes\LevelPlayingField\Taxonomy\Status',
+			'\Yikes\LevelPlayingField\ListTable\JobManager',
 		);
 	}
 }
