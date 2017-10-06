@@ -143,7 +143,7 @@ final class Plugin implements Registerable {
 		 * If the minimum required version is ever raised, this can be refactored.
 		 */
 		return array(
-			'\Yikes\LevelPlayingField\CustomPostType\JobManager',
+			'\Yikes\LevelPlayingField\CustomPostType\LimitedJobManager',
 			'\Yikes\LevelPlayingField\CustomPostType\ApplicationManager',
 			'\Yikes\LevelPlayingField\CustomPostType\ApplicantManager',
 			'\Yikes\LevelPlayingField\Taxonomy\JobCategory',
