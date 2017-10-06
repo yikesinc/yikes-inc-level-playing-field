@@ -99,7 +99,7 @@ class ApplicantStatus extends BaseTaxonomy {
 				'slug'        => 'no',
 			),
 			'Maybe' => array(
-				'description' => __( 'Maybe accept the applicant' ),
+				'description' => __( 'Maybe accept the applicant', 'yikes-level-playing-field' ),
 				'slug'        => 'maybe',
 			),
 		);

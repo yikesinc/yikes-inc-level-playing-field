@@ -58,7 +58,7 @@ class JobManager extends BasePostType {
 		$status_tax   = get_taxonomy( JobStatus::SLUG );
 		$columns      = array(
 			'cb'                             => $original_columns['cb'],
-			'title'                          => _x( 'Job Title', 'column heading' ),
+			'title'                          => _x( 'Job Title', 'column heading', 'yikes-level-playing-field' ),
 			"taxonomy-{$category_tax->name}" => $category_tax->label,
 			"taxonomy-{$status_tax->name}"   => $status_tax->label,
 			'applications'                   => _x( 'Applications', 'column heading', 'yikes-level-playing-field' ),
