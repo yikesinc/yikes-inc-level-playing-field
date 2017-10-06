@@ -154,7 +154,6 @@ class JobStatus extends BaseTaxonomy {
 		<select name="tax_input[<?php echo esc_attr( $tax_name ); ?>]"
 				id="tax_input[<?php echo esc_attr( $tax_name ); ?>]"
 				title="<?php echo esc_attr( $taxonomy->labels->update_item ); ?>">
-			<option value=""><?php echo esc_html_x( '------', 'select placeholder', 'yikes-level-playing-field' ); ?></option>
 			<?php
 			/** @var \WP_Term $term */
 			foreach ( $all_terms as $term ) {
