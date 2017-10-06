@@ -11,6 +11,7 @@ namespace Yikes\LevelPlayingField\Model;
 
 use Yikes\LevelPlayingField\CustomPostType\JobManager as JobManagerCPT;
 use Yikes\LevelPlayingField\Exception\InvalidPostID;
+use Yikes\LevelPlayingField\Taxonomy\JobStatus;
 
 /**
  * Class JobManagerRepository
@@ -49,7 +50,7 @@ class JobManagerRepository extends CustomPostTypeRepository {
 	public function find_all() {
 		$args  = array(
 			'post_type'   => JobManagerCPT::SLUG,
-			'post_status' => array( 'active', 'inactive' ),
+			'post_status' => array( 'any' ),
 		);
 		$query = new \WP_Query( $args );
 
@@ -59,5 +60,34 @@ class JobManagerRepository extends CustomPostTypeRepository {
 		}
 
 		return $jobs;
+	}
+
+	/**
+	 * Get the count of active Jobs.
+	 *
+	 * @since %VERSION%
+	 * @return int
+	 */
+	public function count_active() {
+		$args = array(
+			'post_type'              => JobManagerCPT::SLUG,
+			'post_status'            => array( 'any' ),
+			// Limit posts per page, because WP_Query will still tell us the total.
+			'posts_per_page'         => 10,
+			'update_post_meta_cache' => false,
+			'update_post_term_cache' => false,
+			'fields'                 => 'ids',
+			'tax_query'              => array(
+				array(
+					'taxonomy' => JobStatus::SLUG,
+					'field'    => 'slug',
+					'terms'    => 'active',
+				),
+			),
+		);
+
+		$query = new \WP_Query( $args );
+
+		return $query->post_count;
 	}
 }
