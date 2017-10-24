@@ -70,8 +70,7 @@ final class LimitedJobManager extends JobManager {
 		}
 
 		// See if we need to modify the terms for this post.
-		$repo = new JobManagerRepository();
-		if ( $repo->count_active() > $this->limit ) {
+		if ( $this->active_past_limit() ) {
 			// Prevent action recursion.
 			$this->remove_terms_action();
 
@@ -82,6 +81,21 @@ final class LimitedJobManager extends JobManager {
 			// Add our action again.
 			$this->add_terms_action();
 		}
+	}
+
+	/**
+	 * Determine if we're past the number of active jobs.
+	 *
+	 * @since %VERSION%
+	 * @return bool
+	 */
+	private function active_past_limit() {
+		static $repo = null;
+		if ( null === $repo ) {
+			$repo = new JobManagerRepository();
+		}
+
+		return $repo->count_active() > $this->limit;
 	}
 
 	/**
