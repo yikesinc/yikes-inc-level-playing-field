@@ -36,6 +36,7 @@ final class LimitedJobManager extends JobManager {
 	public function register() {
 		parent::register();
 		$this->add_terms_action();
+		add_action( JobStatus::SLUG . '_metabox_before', array( $this, 'metabox_limit_message' ) );
 	}
 
 	/**
@@ -81,6 +82,26 @@ final class LimitedJobManager extends JobManager {
 			// Add our action again.
 			$this->add_terms_action();
 		}
+	}
+
+	/**
+	 * Display a notice when there are too many items active.
+	 *
+	 * @since %VERSION%
+	 */
+	public function metabox_limit_message() {
+		if ( ! $this->active_past_limit() ) {
+			return;
+		}
+		$message = sprintf(
+			_n( 'Jobs are limited to %d active job.', 'Jobs are limited to %s active jobs.', $this->limit, 'yikes-level-playing-field' ),
+			number_format_i18n( $this->limit )
+		);
+		?>
+		<div class="lpf-limit-jobs">
+			<p><?php echo esc_html( $message ); ?></p>
+		</div>
+		<?php
 	}
 
 	/**
