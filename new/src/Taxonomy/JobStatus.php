@@ -120,6 +120,7 @@ class JobStatus extends BaseTaxonomy {
 		?>
 		<div class="tagsdiv">
 			<?php
+			do_action( "{$tax_name}_metabox_before" );
 			if ( current_user_can( $taxonomy->cap->assign_terms ) ) {
 				$this->term_select( $post );
 			}
