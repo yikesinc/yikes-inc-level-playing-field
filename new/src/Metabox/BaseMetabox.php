@@ -134,10 +134,8 @@ abstract class BaseMetabox implements Renderable, Service, AssetsAware {
 			return false;
 		}
 
-		$nonce = $_POST[ $nonce_name ];
-
 		$result = wp_verify_nonce(
-			$nonce,
+			$_POST[ $nonce_name ],
 			$this->get_nonce_action()
 		);
 
