@@ -12,12 +12,12 @@ namespace Yikes\LevelPlayingField\Model;
 use Yikes\LevelPlayingField\Model\ApplicantManagerMeta as AMMeta;
 
 /**
- * Class ApplicationManager
+ * Class Application
  *
  * @since   %VERSION%
  * @package Yikes\LevelPlayingField
  */
-class ApplicationManager extends CustomPostTypeEntity {
+class Application extends CustomPostTypeEntity {
 
 	/**
 	 * Persist the additional properties of the entity.

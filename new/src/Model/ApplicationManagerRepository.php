@@ -27,7 +27,7 @@ class ApplicationManagerRepository extends CustomPostTypeRepository {
 	 *
 	 * @param int $id Post ID to retrieve.
 	 *
-	 * @return ApplicationManager
+	 * @return Application
 	 * @throws InvalidPostID If the post for the requested ID was not found.
 	 */
 	public function find( $id ) {
@@ -36,7 +36,7 @@ class ApplicationManagerRepository extends CustomPostTypeRepository {
 			throw InvalidPostID::from_id( $id );
 		}
 
-		return new ApplicationManager( $post );
+		return new Application( $post );
 	}
 
 	/**
@@ -44,7 +44,7 @@ class ApplicationManagerRepository extends CustomPostTypeRepository {
 	 *
 	 * @since %VERSION%
 	 *
-	 * @return ApplicationManager[]
+	 * @return Application[]
 	 */
 	public function find_all() {
 		$args  = array(
@@ -55,7 +55,7 @@ class ApplicationManagerRepository extends CustomPostTypeRepository {
 
 		$jobs = array();
 		foreach ( $query->posts as $post ) {
-			$jobs[ $post->ID ] = new ApplicationManager( $post );
+			$jobs[ $post->ID ] = new Application( $post );
 		}
 
 		return $jobs;
