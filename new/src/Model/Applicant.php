@@ -17,7 +17,7 @@ use Yikes\LevelPlayingField\Model\ApplicantMeta as AMMeta;
  * @since   %VERSION%
  * @package Yikes\LevelPlayingField
  */
-class Applicant extends CustomPostTypeEntity {
+class Applicant extends AnonymousCustomPostTypeEntity {
 
 	/**
 	 * Persist the additional properties of the entity.
@@ -65,5 +65,9 @@ class Applicant extends CustomPostTypeEntity {
 				? $meta[ AMMeta::META_PREFIX . $key ][0]
 				: $default;
 		}
+	}
+
+	protected function get_anonymous_properties() {
+		// TODO: Implement get_anonymous_properties() method.
 	}
 }
