@@ -10,12 +10,12 @@
 namespace Yikes\LevelPlayingField\Model;
 
 /**
- * Interface ApplicantManagerMeta
+ * Interface ApplicantMeta
  *
  * @since   %VERSION%
  * @package Yikes\LevelPlayingField
  */
-interface ApplicantManagerMeta {
+interface ApplicantMeta {
 
 	const META_PREFIX = 'applicant_cpt_meta_';
 	const FORM_FIELD_PREFIX = 'applicant_cpt_';

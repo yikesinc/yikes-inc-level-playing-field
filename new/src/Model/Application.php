@@ -9,7 +9,7 @@
 
 namespace Yikes\LevelPlayingField\Model;
 
-use Yikes\LevelPlayingField\Model\ApplicantManagerMeta as AMMeta;
+use Yikes\LevelPlayingField\Model\ApplicationMeta as AMMeta;
 
 /**
  * Class Application

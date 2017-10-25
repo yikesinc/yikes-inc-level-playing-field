@@ -14,12 +14,12 @@ use Yikes\LevelPlayingField\Exception\InvalidPostID;
 use Yikes\LevelPlayingField\Taxonomy\JobStatus;
 
 /**
- * Class JobManagerRepository
+ * Class JobRepository
  *
  * @since   %VERSION%
  * @package Yikes\LevelPlayingField
  */
-class JobManagerRepository extends CustomPostTypeRepository {
+class JobRepository extends CustomPostTypeRepository {
 
 	/**
 	 * Find the Talk with a given post ID.
@@ -28,7 +28,7 @@ class JobManagerRepository extends CustomPostTypeRepository {
 	 *
 	 * @param int $id Post ID to retrieve.
 	 *
-	 * @return JobManager
+	 * @return Job
 	 * @throws InvalidPostID If the post for the requested ID was not found.
 	 */
 	public function find( $id ) {
@@ -37,7 +37,7 @@ class JobManagerRepository extends CustomPostTypeRepository {
 			throw InvalidPostID::from_id( $id );
 		}
 
-		return new JobManager( $post );
+		return new Job( $post );
 	}
 
 	/**
@@ -45,7 +45,7 @@ class JobManagerRepository extends CustomPostTypeRepository {
 	 *
 	 * @since %VERSION%
 	 *
-	 * @return JobManager[]
+	 * @return Job[]
 	 */
 	public function find_all() {
 		$args  = array(
@@ -56,7 +56,7 @@ class JobManagerRepository extends CustomPostTypeRepository {
 
 		$jobs = array();
 		foreach ( $query->posts as $post ) {
-			$jobs[ $post->ID ] = new JobManager( $post );
+			$jobs[ $post->ID ] = new Job( $post );
 		}
 
 		return $jobs;

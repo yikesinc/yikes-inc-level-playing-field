@@ -9,7 +9,7 @@
 
 namespace Yikes\LevelPlayingField\CustomPostType;
 
-use Yikes\LevelPlayingField\Model\JobManagerRepository;
+use Yikes\LevelPlayingField\Model\JobRepository;
 use Yikes\LevelPlayingField\Taxonomy\JobStatus;
 
 /**
@@ -113,7 +113,7 @@ final class LimitedJobManager extends JobManager {
 	private function active_past_limit() {
 		static $repo = null;
 		if ( null === $repo ) {
-			$repo = new JobManagerRepository();
+			$repo = new JobRepository();
 		}
 
 		return $repo->count_active() > $this->limit;

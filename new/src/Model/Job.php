@@ -9,15 +9,15 @@
 
 namespace Yikes\LevelPlayingField\Model;
 
-use Yikes\LevelPlayingField\Model\JobManagerMeta as JMMeta;
+use Yikes\LevelPlayingField\Model\JobMeta as JMMeta;
 
 /**
- * Class JobManager
+ * Class Job
  *
  * @since   %VERSION%
  * @package Yikes\LevelPlayingField
  */
-class JobManager extends CustomPostTypeEntity {
+class Job extends CustomPostTypeEntity {
 
 	/**
 	 * Persist the additional properties of the entity.

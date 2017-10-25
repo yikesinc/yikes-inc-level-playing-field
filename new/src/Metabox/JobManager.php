@@ -10,7 +10,7 @@
 namespace Yikes\LevelPlayingField\Metabox;
 
 use Yikes\LevelPlayingField\CustomPostType\JobManager as JobManagerCPT;
-use Yikes\LevelPlayingField\Model\JobManagerMeta;
+use Yikes\LevelPlayingField\Model\JobMeta;
 
 /**
  * Class JobManager
@@ -27,7 +27,7 @@ class JobManager extends AwesomeBaseMetabox {
 	 * @return string
 	 */
 	public function get_prefix() {
-		return JobManagerMeta::META_PREFIX;
+		return JobMeta::META_PREFIX;
 	}
 
 	/**

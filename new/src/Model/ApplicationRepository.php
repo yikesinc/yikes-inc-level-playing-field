@@ -13,12 +13,12 @@ use Yikes\LevelPlayingField\CustomPostType\ApplicationManager as ApplicationMana
 use Yikes\LevelPlayingField\Exception\InvalidPostID;
 
 /**
- * Class ApplicationManagerRepository
+ * Class ApplicationRepository
  *
  * @since   %VERSION%
  * @package Yikes\LevelPlayingField
  */
-class ApplicationManagerRepository extends CustomPostTypeRepository {
+class ApplicationRepository extends CustomPostTypeRepository {
 
 	/**
 	 * Find the Talk with a given post ID.

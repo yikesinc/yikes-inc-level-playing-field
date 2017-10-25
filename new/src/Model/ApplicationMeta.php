@@ -10,13 +10,13 @@
 namespace Yikes\LevelPlayingField\Model;
 
 /**
- * Interface JobManagerMeta
+ * Interface ApplicationMeta
  *
  * @since   %VERSION%
  * @package Yikes\LevelPlayingField
  */
-interface JobManagerMeta {
+interface ApplicationMeta {
 
-	const META_PREFIX = 'job_cpt_meta_';
-	const FORM_FIELD_PREFIX = 'job_cpt_';
+	const META_PREFIX = 'application_cpt_meta_';
+	const FORM_FIELD_PREFIX = 'application_cpt_';
 }
