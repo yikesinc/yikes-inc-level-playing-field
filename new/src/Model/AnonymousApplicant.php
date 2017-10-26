@@ -43,7 +43,116 @@ class AnonymousApplicant extends AnonymousCustomPostTypeEntity {
 	 * @return array
 	 */
 	protected function get_lazy_properties() {
-		return array();
+		return array(
+			'basic' => array(
+				'name'         => true,
+				'email'        => true,
+				'phone'        => true,
+				'address'      => array(
+					// address fields
+				),
+
+				// Make it clear to NOT add name to body of letter
+				'cover_letter' => true,
+			),
+
+			'education' => array(
+				array(
+					// Repeating
+					'schooling' => array(
+						'institution'      => true,
+						'institution_type' => true, // selection options
+						'year'             => true,
+						'major'            => true,
+						'degree'           => true,
+					),
+				),
+				'certifications' => array(
+					// Repeating
+					array(
+						'institution'      => true,
+						'institution_type' => true,
+						'year'             => true,
+						'certification'    => true,
+						'status'           => true,
+					),
+				),
+			),
+
+			'skills' => array(
+				// Repeating
+				array(
+					'skill'       => true,
+					'proficiency' => true,
+				),
+			),
+
+			'languages'  => array(
+				// Repeating
+				array(
+					'language'    => true,
+					'proficiency' => true, // selection options
+				),
+			),
+
+			// Hiring manager will only see "<industry> for <years> years"
+			'experience' => array(
+				// Repeating
+				array(
+					'organization' => true,
+					'industry'     => true,
+					'dates'        => true,
+					'position'     => true,
+				),
+			),
+
+			'volunteer' => array(
+				array(
+					'organization'      => true,
+					'organization_type' => true,
+					'dates'             => true,
+					'position'          => true,
+				),
+			),
+		);
+	}
+
+	/**
+	 * Get an array of properties that need to be anonymized.
+	 *
+	 * @since %VERSION%
+	 * @return array
+	 */
+	protected function get_anonymous_properties() {
+		return array(
+			'basic' => array(
+				'name'    => true,
+				'email'   => true,
+				'phone'   => true,
+				'address' => true,
+			),
+
+			'education' => array(
+				'schooling'      => array(
+					'institution' => true,
+					'year'        => true,
+				),
+				'certifications' => array(
+					'institution' => true,
+					'year'        => true,
+				),
+			),
+
+			'experience' => array(
+				'organization' => true,
+				'dates'        => true,
+			),
+
+			'volunteer' => array(
+				'organization' => true,
+				'dates'        => true,
+			),
+		);
 	}
 
 	/**
@@ -65,8 +174,5 @@ class AnonymousApplicant extends AnonymousCustomPostTypeEntity {
 				? $meta[ AMMeta::META_PREFIX . $key ][0]
 				: $default;
 		}
-	}
-	protected function get_anonymous_properties() {
-		// TODO: Implement get_anonymous_properties() method.
 	}
 }
