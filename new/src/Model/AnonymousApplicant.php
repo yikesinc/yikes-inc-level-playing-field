@@ -12,12 +12,12 @@ namespace Yikes\LevelPlayingField\Model;
 use Yikes\LevelPlayingField\Model\ApplicantMeta as AMMeta;
 
 /**
- * Class Applicant
+ * Class AnonymousApplicant
  *
  * @since   %VERSION%
  * @package Yikes\LevelPlayingField
  */
-class Applicant extends AnonymousCustomPostTypeEntity {
+class AnonymousApplicant extends AnonymousCustomPostTypeEntity {
 
 	/**
 	 * Persist the additional properties of the entity.
@@ -66,7 +66,6 @@ class Applicant extends AnonymousCustomPostTypeEntity {
 				: $default;
 		}
 	}
-
 	protected function get_anonymous_properties() {
 		// TODO: Implement get_anonymous_properties() method.
 	}
