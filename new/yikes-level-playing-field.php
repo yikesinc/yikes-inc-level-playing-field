@@ -14,7 +14,7 @@
  * Text Domain:  yikes-level-playing-field
  * Domain Path:  /languages
  * Version:      0.2.0
- * Requires PHP: 5.4
+ * Requires PHP: 5.6
  */
 
 namespace Yikes\LevelPlayingField;
