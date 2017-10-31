@@ -120,15 +120,10 @@ abstract class CustomPostTypeEntity implements Entity {
 		if ( array_key_exists( $property, $this->get_lazy_properties() ) ) {
 			$this->load_lazy_property( $property );
 
-			return $this->$property;
+			return $this->{$property};
 		}
 
-		$message = sprintf(
-			'Undefined property: %s::$%s',
-			get_class(),
-			$property
-		);
-
+		$message = sprintf( 'Undefined property: %s::$%s', get_class(), $property );
 		trigger_error( $message, E_USER_NOTICE );
 
 		return null;
