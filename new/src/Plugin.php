@@ -32,17 +32,26 @@ final class Plugin implements Registerable {
 	 *
 	 * @var AssetsHandler
 	 */
-	private $assets_handler;
+	protected $assets_handler;
+
+	/**
+	 * Container instance.
+	 *
+	 * @since %VERSION%
+	 * @var Container
+	 */
+	protected $container;
 
 	/**
 	 * Instantiate a Plugin object.
 	 *
 	 * @since %VERSION%
 	 *
-	 * @param AssetsHandler|null $assets_handler Optional. Instance of the
-	 *                                           assets handler to use.
+	 * @param Container     $container
+	 * @param AssetsHandler $assets_handler Optional. Instance of the assets handler to use.
 	 */
-	public function __construct( AssetsHandler $assets_handler = null ) {
+	public function __construct( Container $container, AssetsHandler $assets_handler = null ) {
+		$this->container      = $container;
 		$this->assets_handler = $assets_handler ?: new AssetsHandler();
 	}
 
@@ -103,7 +112,7 @@ final class Plugin implements Registerable {
 	 * @return Service
 	 * @throws Exception\InvalidService If the service is not valid.
 	 */
-	private function instantiate_service( $class ) {
+	protected function instantiate_service( $class ) {
 		if ( ! class_exists( $class ) ) {
 			throw Exception\InvalidService::from_service( $class );
 		}
@@ -126,31 +135,16 @@ final class Plugin implements Registerable {
 	 *
 	 * @since %VERSION%
 	 *
-	 * @return array<string> Array of fully qualified class names.
+	 * @return string[] Array of fully qualified class names.
 	 */
-	private function get_services() {
-		/*
-		 * Ideally, we'd prefer to use the ::class magic constant, but that requires
-		 * using PHP 5.5+.
+	protected function get_services() {
+		/**
+		 * Fires right before the Level Playing Field services are retrieved.
 		 *
-		 * Example:
-		 * array(
-		 *      JobManager::class,
-		 *      ApplicationManager::class,
-		 *      // etc...
-		 * )
-		 *
-		 * If the minimum required version is ever raised, this can be refactored.
+		 * @param Container $container The services container object.
 		 */
-		return array(
-			'\Yikes\LevelPlayingField\CustomPostType\LimitedJobManager',
-			'\Yikes\LevelPlayingField\CustomPostType\ApplicationManager',
-			'\Yikes\LevelPlayingField\CustomPostType\ApplicantManager',
-			'\Yikes\LevelPlayingField\Taxonomy\JobCategory',
-			'\Yikes\LevelPlayingField\Metabox\JobManager',
-			'\Yikes\LevelPlayingField\Taxonomy\JobStatus',
-			'\Yikes\LevelPlayingField\Taxonomy\ApplicantStatus',
-			'\Yikes\LevelPlayingField\ListTable\JobManager',
-		);
+		do_action( 'lpf_pre_get_services', $this->container );
+
+		return $this->container->get_services();
 	}
 }
