@@ -63,7 +63,7 @@ final class Plugin implements Registerable {
 	 * @throws Exception\InvalidService If a service is not valid.
 	 */
 	public function register() {
-		add_action( 'plugins_loaded', array( $this, 'register_services' ) );
+		add_action( 'plugins_loaded', array( $this, 'register_services' ), 20 );
 		add_action( 'init', array( $this, 'register_assets_handler' ) );
 	}
 
