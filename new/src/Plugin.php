@@ -23,7 +23,7 @@ use Yikes\LevelPlayingField\Assets\AssetsHandler;
  * @package Yikes\LevelPlayingField
  * @author  Jeremy Pry
  */
-final class Plugin implements Registerable {
+class Plugin implements Registerable {
 
 	/**
 	 * Assets handler instance.
