@@ -2,6 +2,8 @@
 
 namespace Yikes\LevelPlayingField\CustomPostType;
 
+use Yikes\LevelPlayingField\Roles\Capabilities;
+
 /**
  * Applicant Manager CPT.
  *
@@ -11,6 +13,7 @@ namespace Yikes\LevelPlayingField\CustomPostType;
 class ApplicantManager extends BaseCustomPostType {
 
 	const SLUG = 'applicants';
+	const SINGULAR_SLUG = 'applicant';
 
 	/**
 	 * Get the arguments that configure the custom post type.
@@ -62,7 +65,16 @@ class ApplicantManager extends BaseCustomPostType {
 			'has_archive'         => false,
 			'exclude_from_search' => true,
 			'publicly_queryable'  => true,
-			'capability_type'     => 'page',
+			'map_meta_cap'        => true,
+			'capabilities'        => array(
+				'edit_post'          => Capabilities::EDIT_APPLICANT,
+				'edit_posts'         => Capabilities::EDIT_APPLICANTS,
+				'edit_others_posts'  => Capabilities::EDIT_OTHERS_APPLICANTS,
+				'publish_posts'      => Capabilities::PUBLISH_APPLICANTS,
+				'read_post'          => Capabilities::READ_APPLICANT,
+				'read_private_posts' => Capabilities::READ_PRIVATE_APPLICANTS,
+				'delete_post'        => Capabilities::DELETE_APPLICANT,
+			),
 		);
 	}
 

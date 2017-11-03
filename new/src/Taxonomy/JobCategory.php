@@ -10,6 +10,7 @@
 namespace Yikes\LevelPlayingField\Taxonomy;
 
 use Yikes\LevelPlayingField\CustomPostType\JobManager;
+use Yikes\LevelPlayingField\Roles\Capabilities;
 
 /**
  * Class JobCategory
@@ -37,10 +38,10 @@ class JobCategory extends BaseTaxonomy {
 			'query_var'             => true,
 			'rewrite'               => true,
 			'capabilities'          => array(
-				'manage_terms' => 'edit_posts',
-				'edit_terms'   => 'edit_posts',
-				'delete_terms' => 'edit_posts',
-				'assign_terms' => 'edit_posts',
+				'manage_terms' => Capabilities::EDIT_JOBS,
+				'edit_terms'   => Capabilities::EDIT_JOBS,
+				'delete_terms' => Capabilities::EDIT_JOBS,
+				'assign_terms' => Capabilities::EDIT_JOBS,
 			),
 			'labels'                => array(
 				'name'                       => __( 'Job Categories', 'yikes-level-playing-field' ),

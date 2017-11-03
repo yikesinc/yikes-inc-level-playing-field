@@ -10,6 +10,7 @@
 namespace Yikes\LevelPlayingField\Taxonomy;
 
 use Yikes\LevelPlayingField\CustomPostType\JobManager;
+use Yikes\LevelPlayingField\Roles\Capabilities;
 
 /**
  * Class Status
@@ -48,6 +49,12 @@ class JobStatus extends BaseTaxonomy {
 			'meta_box_cb'       => array( $this, 'meta_box_cb' ),
 			'rewrite'           => array(
 				'slug' => 'status',
+			),
+			'capabilities'      => array(
+				'manage_terms' => Capabilities::MANAGE_JOB_STATUS,
+				'edit_terms'   => Capabilities::MANAGE_JOB_STATUS,
+				'delete_terms' => Capabilities::MANAGE_JOB_STATUS,
+				'assign_terms' => Capabilities::EDIT_JOBS,
 			),
 			'labels'            => array(
 				'name'                       => __( 'Status', 'yikes-level-playing-field' ),

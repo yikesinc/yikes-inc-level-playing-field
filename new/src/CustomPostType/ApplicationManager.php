@@ -2,6 +2,8 @@
 
 namespace Yikes\LevelPlayingField\CustomPostType;
 
+use Yikes\LevelPlayingField\Roles\Capabilities;
+
 /**
  * Application Manager CPT.
  *
@@ -11,6 +13,7 @@ namespace Yikes\LevelPlayingField\CustomPostType;
 class ApplicationManager extends BaseCustomPostType {
 
 	const SLUG = 'applications';
+	const SINGULAR_SLUG = 'application';
 
 	/**
 	 * Get the arguments that configure the custom post type.
@@ -62,7 +65,16 @@ class ApplicationManager extends BaseCustomPostType {
 			'has_archive'         => false,
 			'exclude_from_search' => true,
 			'publicly_queryable'  => true,
-			'capability_type'     => 'page',
+			'map_meta_cap'        => true,
+			'capabilities'        => array(
+				'edit_post'          => Capabilities::EDIT_APPLICATION,
+				'edit_posts'         => Capabilities::EDIT_APPLICATIONS,
+				'edit_others_posts'  => Capabilities::EDIT_OTHERS_APPLICATIONS,
+				'publish_posts'      => Capabilities::PUBLISH_APPLICATIONS,
+				'read_post'          => Capabilities::READ_APPLICATION,
+				'read_private_posts' => Capabilities::READ_PRIVATE_APPLICATIONS,
+				'delete_post'        => Capabilities::DELETE_APPLICATION,
+			),
 		);
 	}
 

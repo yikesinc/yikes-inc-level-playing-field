@@ -2,6 +2,8 @@
 
 namespace Yikes\LevelPlayingField\CustomPostType;
 
+use Yikes\LevelPlayingField\Roles\Capabilities;
+
 /**
  * Job Manager CPT.
  *
@@ -11,6 +13,7 @@ namespace Yikes\LevelPlayingField\CustomPostType;
 class JobManager extends BaseCustomPostType {
 
 	const SLUG = 'jobs';
+	const SINGULAR_SLUG = 'job';
 
 	/**
 	 * Get the arguments that configure the custom post type.
@@ -62,7 +65,16 @@ class JobManager extends BaseCustomPostType {
 			'has_archive'         => true,
 			'exclude_from_search' => false,
 			'publicly_queryable'  => true,
-			'capability_type'     => 'page',
+			'map_meta_cap'        => true,
+			'capabilities'        => array(
+				'edit_post'          => Capabilities::EDIT_JOB,
+				'edit_posts'         => Capabilities::EDIT_JOBS,
+				'edit_others_posts'  => Capabilities::EDIT_OTHERS_JOBS,
+				'publish_posts'      => Capabilities::PUBLISH_JOBS,
+				'read_post'          => Capabilities::READ_JOB,
+				'read_private_posts' => Capabilities::READ_PRIVATE_JOBS,
+				'delete_post'        => Capabilities::DELETE_JOB,
+			),
 			'menu_icon'           => 'dashicons-businessman',
 		);
 	}
