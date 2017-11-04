@@ -48,13 +48,13 @@ class JobRepository extends CustomPostTypeRepository {
 	 * @return Job[]
 	 */
 	public function find_all() {
-		$args  = array(
+		$args  = [
 			'post_type'   => JobManagerCPT::SLUG,
-			'post_status' => array( 'any' ),
-		);
+			'post_status' => [ 'any' ],
+		];
 		$query = new \WP_Query( $args );
 
-		$jobs = array();
+		$jobs = [];
 		foreach ( $query->posts as $post ) {
 			$jobs[ $post->ID ] = new Job( $post );
 		}
@@ -69,22 +69,22 @@ class JobRepository extends CustomPostTypeRepository {
 	 * @return int
 	 */
 	public function count_active() {
-		$args = array(
+		$args = [
 			'post_type'              => JobManagerCPT::SLUG,
-			'post_status'            => array( 'any' ),
+			'post_status'            => [ 'any' ],
 			// Limit posts per page, because WP_Query will still tell us the total.
-			'posts_per_page'         => 10,
+			'posts_per_page'         => 1,
 			'update_post_meta_cache' => false,
 			'update_post_term_cache' => false,
 			'fields'                 => 'ids',
-			'tax_query'              => array(
-				array(
+			'tax_query'              => [
+				[
 					'taxonomy' => JobStatus::SLUG,
 					'field'    => 'slug',
 					'terms'    => 'active',
-				),
-			),
-		);
+				],
+			],
+		];
 
 		$query = new \WP_Query( $args );
 
