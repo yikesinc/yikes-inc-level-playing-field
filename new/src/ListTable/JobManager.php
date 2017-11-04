@@ -10,6 +10,7 @@
 namespace Yikes\LevelPlayingField\ListTable;
 
 use Yikes\LevelPlayingField\CustomPostType\JobManager as JobManagerCPT;
+use Yikes\LevelPlayingField\Model\ApplicantRepository;
 use Yikes\LevelPlayingField\Taxonomy\JobCategory;
 use Yikes\LevelPlayingField\Taxonomy\JobStatus;
 
@@ -82,7 +83,12 @@ class JobManager extends BasePostType {
 			return;
 		}
 
-		// Do application stuff.
+		static $applicant_repo = null;
+		if ( null === $applicant_repo ) {
+			$applicant_repo = new ApplicantRepository();
+		}
+
+		echo esc_html( $applicant_repo->get_applicant_count_for_job( $post_id ) );
 	}
 
 	/**
