@@ -22,7 +22,7 @@ use Yikes\LevelPlayingField\Taxonomy\JobStatus;
 class JobRepository extends CustomPostTypeRepository {
 
 	/**
-	 * Find the Talk with a given post ID.
+	 * Find the Job with a given post ID.
 	 *
 	 * @since %VERSION%
 	 *
@@ -41,7 +41,7 @@ class JobRepository extends CustomPostTypeRepository {
 	}
 
 	/**
-	 * Find all the published Talks.
+	 * Find all the published Jobs.
 	 *
 	 * @since %VERSION%
 	 *
