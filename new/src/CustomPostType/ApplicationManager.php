@@ -57,7 +57,7 @@ class ApplicationManager extends BaseCustomPostType {
 			'show_ui'             => true,
 			'show_in_menu'        => 'edit.php?post_type=jobs',
 			'rewrite'             => array(
-				'slug' => 'application',
+				'slug' => self::SINGULAR_SLUG,
 			),
 			'show_in_admin_bar'   => false,
 			'show_in_nav_menus'   => false,
