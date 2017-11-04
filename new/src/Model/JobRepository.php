@@ -88,6 +88,6 @@ class JobRepository extends CustomPostTypeRepository {
 
 		$query = new \WP_Query( $args );
 
-		return $query->post_count;
+		return absint( $query->found_posts );
 	}
 }
