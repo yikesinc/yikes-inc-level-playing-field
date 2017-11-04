@@ -15,6 +15,7 @@ use Yikes\LevelPlayingField\CustomPostType\LimitedJobManager;
 use Yikes\LevelPlayingField\ListTable\JobManager as JobManagerListTable;
 use Yikes\LevelPlayingField\Metabox\JobManager;
 use Yikes\LevelPlayingField\Roles\Administrator;
+use Yikes\LevelPlayingField\Roles\Editor;
 use Yikes\LevelPlayingField\Roles\HiringManager;
 use Yikes\LevelPlayingField\Roles\HumanResources;
 use Yikes\LevelPlayingField\Taxonomy\ApplicantStatus;
@@ -78,6 +79,7 @@ final class PluginFactory {
 			HiringManager::class,
 			HumanResources::class,
 			Administrator::class,
+			Editor::class,
 		) );
 	}
 }
