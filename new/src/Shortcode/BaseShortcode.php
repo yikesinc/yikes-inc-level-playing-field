@@ -11,6 +11,7 @@ namespace Yikes\LevelPlayingField\Shortcode;
 
 use Yikes\LevelPlayingField\Assets\AssetsAware;
 use Yikes\LevelPlayingField\Assets\AssetsAwareness;
+use Yikes\LevelPlayingField\Exception\MustExtend;
 use Yikes\LevelPlayingField\Renderable;
 use Yikes\LevelPlayingField\Service;
 use Yikes\LevelPlayingField\View\PostEscapedView;
@@ -27,6 +28,9 @@ use Yikes\LevelPlayingField\View\TemplatedView;
 abstract class BaseShortcode implements Renderable, AssetsAware, Service {
 
 	use AssetsAwareness;
+
+	const TAG      = '_baseshortcode_';
+	const VIEW_URI = '_baseviewuri_';
 
 	/**
 	 * Register the Shortcode.
@@ -69,15 +73,11 @@ abstract class BaseShortcode implements Renderable, AssetsAware, Service {
 	public function render( array $context = array() ) {
 		try {
 			$this->enqueue_assets();
-
-			$view = new PostEscapedView(
-				new TemplatedView( $this->get_view_uri() )
-			);
+			$view = new PostEscapedView( new TemplatedView( $this->get_view_uri() ) );
 
 			return $view->render( $context );
 		} catch ( \Exception $exception ) {
-			// Don't let exceptions bubble up. Just render an empty shortcode
-			// instead.
+			// Don't let exceptions bubble up. Just render an empty shortcode instead.
 			return '';
 		}
 	}
@@ -89,19 +89,12 @@ abstract class BaseShortcode implements Renderable, AssetsAware, Service {
 	 *
 	 * @since %VERSION%
 	 *
-	 * @param array|string $atts Raw shortcode attributes passed into the
-	 *                           shortcode function.
+	 * @param array|string $atts Raw shortcode attributes passed into the shortcode function.
 	 *
 	 * @return array Processed shortcode attributes.
 	 */
 	protected function process_attributes( $atts ) {
-		return shortcode_atts(
-			array(
-				// Shortcode attributes' default values.
-			),
-			$atts,
-			$this->get_tag()
-		);
+		return shortcode_atts( $this->get_default_atts(), $atts, $this->get_tag() );
 	}
 
 	/**
@@ -126,8 +119,15 @@ abstract class BaseShortcode implements Renderable, AssetsAware, Service {
 	 * @since %VERSION%
 	 *
 	 * @return string Tag of the shortcode.
+	 * @throws MustExtend When the default tag has not been extended.
 	 */
-	abstract protected function get_tag();
+	protected function get_tag() {
+		if ( self::TAG === static::TAG ) {
+			throw MustExtend::default_tag( self::TAG );
+		}
+
+		return static::TAG;
+	}
 
 	/**
 	 * Get the View URI to use for rendering the shortcode.
@@ -135,6 +135,21 @@ abstract class BaseShortcode implements Renderable, AssetsAware, Service {
 	 * @since %VERSION%
 	 *
 	 * @return string View URI.
+	 * @throws MustExtend When the default view URI has not been extended.
 	 */
-	abstract protected function get_view_uri();
+	protected function get_view_uri() {
+		if ( self::VIEW_URI === static::VIEW_URI ) {
+			throw MustExtend::default_view( self::VIEW_URI );
+		}
+
+		return static::VIEW_URI;
+	}
+
+	/**
+	 * Get the default array of attributes for the shortcode.
+	 *
+	 * @since %VERSION%
+	 * @return array
+	 */
+	abstract protected function get_default_atts();
 }
