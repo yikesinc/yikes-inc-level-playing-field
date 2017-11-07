@@ -9,7 +9,7 @@
 
 namespace Yikes\LevelPlayingField\Roles;
 
-use Yikes\LevelPlayingField\Exception\MustExtendSlug;
+use Yikes\LevelPlayingField\Exception\MustExtend;
 use Yikes\LevelPlayingField\Service;
 
 /**
@@ -46,11 +46,11 @@ abstract class BaseRole implements Service {
 	 * @since %VERSION%
 	 *
 	 * @return string Custom post type slug.
-	 * @throws MustExtendSlug When the default slug has not been extended.
+	 * @throws MustExtend When the default slug has not been extended.
 	 */
 	protected function get_slug() {
 		if ( self::SLUG === static::SLUG ) {
-			throw MustExtendSlug::default_slug( self::SLUG );
+			throw MustExtend::default_slug( self::SLUG );
 		}
 
 		return static::SLUG;
