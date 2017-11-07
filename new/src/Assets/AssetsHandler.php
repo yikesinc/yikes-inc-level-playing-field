@@ -27,7 +27,7 @@ final class AssetsHandler implements Registerable {
 	 *
 	 * @since %VERSION%
 	 *
-	 * @var array<Asset>
+	 * @var Asset[]
 	 */
 	private $assets = array();
 

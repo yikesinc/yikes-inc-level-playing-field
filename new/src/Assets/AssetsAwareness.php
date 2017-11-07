@@ -35,7 +35,7 @@ trait AssetsAwareness {
 	 *
 	 * @since %VERSION%
 	 *
-	 * @return array<Asset>
+	 * @return Asset[]
 	 */
 	protected function get_assets() {
 		return array();

@@ -41,7 +41,7 @@ class StyleAsset extends BaseAsset {
 	 *
 	 * @since %VERSION%
 	 *
-	 * @var array<string>
+	 * @var string[]
 	 */
 	protected $dependencies;
 

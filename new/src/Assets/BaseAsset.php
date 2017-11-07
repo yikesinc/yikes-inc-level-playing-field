@@ -51,11 +51,7 @@ abstract class BaseAsset implements Asset {
 	 * @since %VERSION%
 	 */
 	public function register() {
-		$this->deferred_action(
-			$this->get_register_action(),
-			$this->get_register_closure(),
-			static::REGISTER_PRIORITY
-		);
+		$this->deferred_action( $this->get_register_action(), $this->get_register_closure(), static::REGISTER_PRIORITY );
 	}
 
 	/**
@@ -64,11 +60,7 @@ abstract class BaseAsset implements Asset {
 	 * @since %VERSION%
 	 */
 	public function enqueue() {
-		$this->deferred_action(
-			$this->get_enqueue_action(),
-			$this->get_enqueue_closure(),
-			static::ENQUEUE_PRIORITY
-		);
+		$this->deferred_action( $this->get_enqueue_action(), $this->get_enqueue_closure(), static::ENQUEUE_PRIORITY );
 	}
 
 	/**
@@ -77,11 +69,7 @@ abstract class BaseAsset implements Asset {
 	 * @since %VERSION%
 	 */
 	public function dequeue() {
-		$this->deferred_action(
-			$this->get_dequeue_action(),
-			$this->get_dequeue_closure(),
-			static::DEQUEUE_PRIORITY
-		);
+		$this->deferred_action( $this->get_dequeue_action(), $this->get_dequeue_closure(), static::DEQUEUE_PRIORITY );
 	}
 
 	/**
@@ -102,11 +90,7 @@ abstract class BaseAsset implements Asset {
 			return;
 		}
 
-		add_action(
-			$action,
-			$closure,
-			$priority
-		);
+		add_action( $action, $closure, $priority );
 	}
 
 	/**
