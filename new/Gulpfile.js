@@ -35,7 +35,7 @@ const paths = {
 	'icons': 'assets/images/svg-icons/*.svg',
 	'images': [ 'assets/images/*', '!assets/images/*.svg' ],
 	'php': [ './*.php', './**/*.php' ],
-	'sass': 'assets/css/sass/**/*.scss',
+	'sass': 'assets/css/sass/*.scss',
 	'concat_scripts': 'assets/js/concat/*.js',
 	'scripts': [ 'assets/js/*.js', '!assets/js/*.min.js' ],
 	'sprites': 'assets/images/sprites/*.png'
@@ -75,7 +75,7 @@ gulp.task( 'clean:styles', () =>
  * https://www.npmjs.com/package/css-mqpacker
  */
 gulp.task( 'postcss', [ 'clean:styles' ], () =>
-	gulp.src( 'assets/css/sass/**/*.scss', paths.css )
+	gulp.src( paths.sass, paths.css )
 
 		// Deal with errors.
 		.pipe( plumber({'errorHandler': handleErrors}) )
@@ -103,7 +103,7 @@ gulp.task( 'postcss', [ 'clean:styles' ], () =>
 		// Create sourcemap.
 		.pipe( sourcemaps.write() )
 
-		// Create style.css.
+		// Create .css files.
 		.pipe( gulp.dest( 'assets/css' ) )
 		.pipe( browserSync.stream() )
 );
@@ -114,12 +114,16 @@ gulp.task( 'postcss', [ 'clean:styles' ], () =>
  * https://www.npmjs.com/package/gulp-cssnano
  */
 gulp.task( 'cssnano', [ 'postcss' ], () =>
-	gulp.src( 'assets/css/main.css' )
+	gulp.src( paths.css )
 		.pipe( plumber({'errorHandler': handleErrors}) )
 		.pipe( cssnano({
-			'safe': true // Use safe optimizations.
+			// Use safe optimizations.
+			'safe': true
 		}) )
-		.pipe( rename( 'main.min.css' ) )
+		.pipe( rename({
+			// Ensure .min.css extension.
+			'extname': '.min.css'
+		}) )
 		.pipe( gulp.dest( 'assets/css' ) )
 		.pipe( browserSync.stream() )
 );
