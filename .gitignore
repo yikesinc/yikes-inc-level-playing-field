@@ -1,1 +1,10 @@
-node_modules
+.DS_Store
+Thumbs.db
+wp-cli.local.yml
+node_modules/
+*.sql
+*.tar.gz
+*.zip
+
+# Ignore compiled files. This prevents unnecessary noise in Git history
+assets/css/*.css
