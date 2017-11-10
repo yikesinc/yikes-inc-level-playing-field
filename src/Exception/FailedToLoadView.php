@@ -17,7 +17,7 @@ namespace Yikes\LevelPlayingField\Exception;
  * @package Yikes\LevelPlayingField\Exception
  * @author  Jeremy Pry
  */
-class FailedToLoadView extends \RuntimeException implements SpeakingPageException {
+class FailedToLoadView extends \RuntimeException implements Exception {
 
 	/**
 	 * Create a new instance of the exception if the view file itself created

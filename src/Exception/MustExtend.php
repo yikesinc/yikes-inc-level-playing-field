@@ -17,7 +17,7 @@ namespace Yikes\LevelPlayingField\Exception;
  * @package Yikes\LevelPlayingField\Exception
  * @author  Jeremy Pry
  */
-class MustExtend extends \LogicException {
+class MustExtend extends \LogicException implements Exception {
 
 	/**
 	 * Create a new exception when a slug needs extended.

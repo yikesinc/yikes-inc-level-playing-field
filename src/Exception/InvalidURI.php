@@ -17,7 +17,7 @@ namespace Yikes\LevelPlayingField\Exception;
  * @package Yikes\LevelPlayingField\Exception
  * @author  Jeremy Pry
  */
-class InvalidURI extends \InvalidArgumentException implements SpeakingPageException {
+class InvalidURI extends \InvalidArgumentException implements Exception {
 
 	/**
 	 * Create a new instance of the exception for a file that is not accessible

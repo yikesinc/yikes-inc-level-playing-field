@@ -17,7 +17,7 @@ namespace Yikes\LevelPlayingField\Exception;
  * @package Yikes\LevelPlayingField\Exception
  * @author  Jeremy Pry
  */
-class InvalidAssetHandle extends \InvalidArgumentException implements SpeakingPageException {
+class InvalidAssetHandle extends \InvalidArgumentException implements Exception {
 
 	/**
 	 * Create a new instance of the exception for a asset handle that is not
