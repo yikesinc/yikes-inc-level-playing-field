@@ -17,17 +17,11 @@
  * Requires PHP: 5.6
  */
 
-namespace Yikes\LevelPlayingField;
-
 // Only run this within WordPress.
 if ( ! defined( 'ABSPATH' ) ) {
 	die();
 }
 
-// Load and register the autoloader.
-require_once( __DIR__ . '/src/Autoloader.php' );
-$ylpf_autoloader = new Autoloader();
-$ylpf_autoloader->add_namespace( __NAMESPACE__, __DIR__ . '/src' )->register();
 
-// Kick it off.
-PluginFactory::create()->register();
+// Bootstrap the plugin.
+require_once( dirname( __FILE__ ) . '/src/bootstrap.php' );
