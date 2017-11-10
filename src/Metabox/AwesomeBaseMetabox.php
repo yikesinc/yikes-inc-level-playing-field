@@ -9,7 +9,7 @@
 
 namespace Yikes\LevelPlayingField\Metabox;
 
-
+use Yikes\LevelPlayingField\PluginFactory;
 use Yikes\LevelPlayingField\Service;
 
 /**
@@ -30,7 +30,19 @@ abstract class AwesomeBaseMetabox implements Service {
 	 * @author Jeremy Pry
 	 */
 	public function register() {
+		// First make sure we've loaded the awesome framework.
+		$this->load_awesome_framework();
+
 		add_filter( 'yks_mboxes', array( $this, 'register_boxes' ) );
+	}
+
+	/**
+	 * Load the Awesome Framework.
+	 *
+	 * @since %VERSION%
+	 */
+	protected function load_awesome_framework() {
+		require_once( PluginFactory::create()->get_plugin_root() . '/vendor/awesome-yikes-framework/yks-mbox-framework.php' );
 	}
 
 	/**
