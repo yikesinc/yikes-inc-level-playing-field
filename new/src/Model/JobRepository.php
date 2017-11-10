@@ -63,6 +63,38 @@ class JobRepository extends CustomPostTypeRepository {
 	}
 
 	/**
+	 * Find all active Jobs.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param int $limit The maximum number of jobs to retrieve.
+	 *
+	 * @return Job[]
+	 */
+	public function find_active( $limit = 10 ) {
+		$query = new \WP_Query( [
+			'post_type'      => JobManagerCPT::SLUG,
+			'post_status'    => [ 'publish' ],
+			'posts_per_page' => $limit,
+			'orderby'        => 'title',
+			'tax_query'      => [
+				[
+					'taxonomy' => JobStatus::SLUG,
+					'field'    => 'slug',
+					'terms'    => 'active',
+				],
+			],
+		] );
+
+		$jobs = [];
+		foreach ( $query->posts as $post ) {
+			$jobs[ $post->ID ] = new Job( $post );
+		}
+
+		return $jobs;
+	}
+
+	/**
 	 * Get the count of active Jobs.
 	 *
 	 * @since %VERSION%
