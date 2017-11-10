@@ -10,14 +10,14 @@
 namespace Yikes\LevelPlayingField;
 
 // Don't allow loading outside of WordPress.
-if ( ! defined( 'ABSPATH')) {
+if ( ! defined( 'ABSPATH' ) ) {
 	die();
 }
 
 // Load and register the autoloader.
 require_once( __DIR__ . '/Autoloader.php' );
 $ylpf_autoloader = new Autoloader();
-$ylpf_autoloader->add_namespace( __NAMESPACE__, __DIR__ . '/src' )->register();
+$ylpf_autoloader->add_namespace( __NAMESPACE__, __DIR__ )->register();
 
 // Kick it off.
 PluginFactory::create()->register();
