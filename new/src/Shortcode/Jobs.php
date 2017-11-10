@@ -11,6 +11,7 @@ namespace Yikes\LevelPlayingField\Shortcode;
 
 use Yikes\LevelPlayingField\Assets\Asset;
 use Yikes\LevelPlayingField\Assets\StyleAsset;
+use Yikes\LevelPlayingField\Model\JobRepository;
 
 class Jobs extends BaseShortcode {
 
@@ -26,7 +27,29 @@ class Jobs extends BaseShortcode {
 	 * @return array
 	 */
 	protected function get_default_atts() {
-		return [];
+		return [
+			'limit' => 10,
+		];
+	}
+
+	/**
+	 * Get the context to pass onto the view.
+	 *
+	 * Override to provide data to the view that is not part of the shortcode
+	 * attributes.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param array $atts Array of shortcode attributes.
+	 *
+	 * @return array Context to pass onto view.
+	 */
+	protected function get_context( $atts ) {
+		$jobs_repository = new JobRepository();
+
+		return [
+			'jobs' => $jobs_repository->find_active( $atts['limit'] ),
+		];
 	}
 
 	/**
