@@ -27,6 +27,7 @@ const svgmin = require( 'gulp-svgmin' );
 const svgstore = require( 'gulp-svgstore' );
 const uglify = require( 'gulp-uglify' );
 const wpPot = require( 'gulp-wp-pot' );
+const zip = require( 'gulp-zip' );
 
 // Set assets paths.
 const paths = {
@@ -37,8 +38,23 @@ const paths = {
 	'sass': 'assets/css/sass/*.scss',
 	'concat_scripts': 'assets/js/concat/*.js',
 	'scripts': [ 'assets/js/*.js', '!assets/js/*.min.js' ],
-	'sprites': 'assets/images/sprites/*.png'
+	'sprites': 'assets/images/sprites/*.png',
+	'build': [
+		'assets/css/*.css',
+		'assets/js/*.js',
+		'assets/images/**',
+		'languages/*',
+		'src/**/*.php',
+		'vendor/**',
+		'views/**/*.php',
+		'*.php',
+		'LICENSE.txt',
+		'readme.*'
+	]
 };
+
+// Load the package.json data
+const packageJSON = require( './package.json' );
 
 /**
  * Handle errors and alert the user.
@@ -363,6 +379,19 @@ gulp.task( 'watch', function() {
 	gulp.watch( paths.concat_scripts, [ 'scripts' ]);
 	// gulp.watch( paths.sprites, [ 'sprites' ]);
 	gulp.watch( paths.php, [ 'markup' ]);
+});
+
+/**
+ * Build a zip file appropriate for distribution.
+ */
+gulp.task( 'build', [ 'default' ], function() {
+	return gulp.src( paths.build, { base: process.cwd() } )
+		.pipe( rename( function ( path ) {
+			// Prefix the paths with the directory name before zipping.
+			path.dirname = 'yikes-level-playing-field/' + path.dirname;
+		}))
+		.pipe( zip( `yikes-level-playing-field-${packageJSON.version}.zip` ) )
+		.pipe( gulp.dest( 'build' ) );
 });
 
 /**
