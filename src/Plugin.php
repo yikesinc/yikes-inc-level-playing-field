@@ -43,16 +43,26 @@ class Plugin implements Registerable {
 	protected $container;
 
 	/**
+	 * The root plugin directory.
+	 *
+	 * @since %VERSION%
+	 * @var string
+	 */
+	protected $plugin_root;
+
+	/**
 	 * Instantiate a Plugin object.
 	 *
 	 * @since %VERSION%
 	 *
 	 * @param Container     $container
 	 * @param AssetsHandler $assets_handler Optional. Instance of the assets handler to use.
+	 * @param string        $plugin_root    The root directory of the plugin.
 	 */
-	public function __construct( Container $container, AssetsHandler $assets_handler = null ) {
+	public function __construct( Container $container, AssetsHandler $assets_handler = null, $plugin_root = '' ) {
 		$this->container      = $container;
 		$this->assets_handler = $assets_handler ?: new AssetsHandler();
+		$this->plugin_root    = $plugin_root ?: dirname( __DIR__ );
 	}
 
 	/**
@@ -146,5 +156,15 @@ class Plugin implements Registerable {
 		do_action( 'lpf_pre_get_services', $this->container );
 
 		return $this->container->get_services();
+	}
+
+	/**
+	 * Get the root directory for the plugin.
+	 *
+	 * @since %VERSION%
+	 * @return string
+	 */
+	public function get_plugin_root() {
+		return $this->plugin_root;
 	}
 }
