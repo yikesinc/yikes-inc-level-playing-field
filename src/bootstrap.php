@@ -19,5 +19,8 @@ require_once( __DIR__ . '/Autoloader.php' );
 $ylpf_autoloader = new Autoloader();
 $ylpf_autoloader->add_namespace( __NAMESPACE__, __DIR__ )->register();
 
+// Load the Awesome Framework.
+require_once( dirname( __DIR__ ) . '/vendor/awesome-yikes-framework/yks-mbox-framework.php' );
+
 // Kick it off.
 PluginFactory::create()->register();
