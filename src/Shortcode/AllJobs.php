@@ -9,16 +9,18 @@
 
 namespace Yikes\LevelPlayingField\Shortcode;
 
-use Yikes\LevelPlayingField\Assets\Asset;
-use Yikes\LevelPlayingField\Assets\StyleAsset;
 use Yikes\LevelPlayingField\Model\JobRepository;
 
-class Jobs extends BaseShortcode {
+/**
+ * Class AllJobs
+ *
+ * @since   %VERSION%
+ * @package Yikes\LevelPlayingField
+ */
+class AllJobs extends BaseJobs {
 
 	const TAG        = 'lpf_all_jobs';
-	const VIEW_URI   = 'views/all-jobs';
-	const CSS_HANDLE = 'lpf-jobs-css';
-	const CSS_URI    = 'assets/css/lpf-jobs-frontend';
+	const VIEW_URI   = 'views/job-page';
 
 	/**
 	 * Get the default array of attributes for the shortcode.
@@ -49,19 +51,6 @@ class Jobs extends BaseShortcode {
 
 		return [
 			'jobs' => $jobs_repository->find_active( $atts['limit'] ),
-		];
-	}
-
-	/**
-	 * Get the array of known assets.
-	 *
-	 * @since %VERSION%
-	 *
-	 * @return Asset[]
-	 */
-	protected function get_assets() {
-		return [
-			new StyleAsset( self::CSS_HANDLE, self::CSS_URI ),
 		];
 	}
 }
