@@ -13,6 +13,7 @@ use Yikes\LevelPlayingField\CustomPostType\ApplicantManager;
 use Yikes\LevelPlayingField\CustomPostType\ApplicationManager;
 use Yikes\LevelPlayingField\CustomPostType\LimitedJobManager;
 use Yikes\LevelPlayingField\ListTable\JobManager as JobManagerListTable;
+use Yikes\LevelPlayingField\Metabox\ApplicationManager as ApplicationMetabox;
 use Yikes\LevelPlayingField\Metabox\JobManager;
 use Yikes\LevelPlayingField\Roles\Administrator;
 use Yikes\LevelPlayingField\Roles\Editor;
@@ -58,7 +59,7 @@ final class PluginFactory {
 	 * @return Container
 	 */
 	private static function get_service_container() {
-		return new Container( array(
+		return new Container( [
 			// CPTs
 			LimitedJobManager::class,
 			ApplicationManager::class,
@@ -71,6 +72,7 @@ final class PluginFactory {
 
 			// Metaboxes.
 			JobManager::class,
+			ApplicationMetabox::class,
 
 			// Custom List Tables.
 			JobManagerListTable::class,
@@ -80,6 +82,6 @@ final class PluginFactory {
 			HumanResources::class,
 			Administrator::class,
 			Editor::class,
-		) );
+		] );
 	}
 }
