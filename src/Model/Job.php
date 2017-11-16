@@ -20,6 +20,74 @@ use Yikes\LevelPlayingField\Model\JobMeta as JMMeta;
 class Job extends CustomPostTypeEntity {
 
 	/**
+	 * Get the job status.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @return string
+	 */
+	public function get_status() {
+		return '';
+	}
+
+	/**
+	 * Get the job description.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @return string
+	 */
+	public function get_description() {
+		return '';
+	}
+
+	/**
+	 * Get the type of the job.
+	 *
+	 * Possible values are full time, part time, contract, per diem, and other.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @return string
+	 */
+	public function get_type() {
+		return '';
+	}
+
+	/**
+	 * Determine if the job is remote.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @return bool
+	 */
+	public function is_remote() {
+		return true;
+	}
+
+	/**
+	 * Get the job address.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @return array
+	 */
+	public function get_address() {
+		return array();
+	}
+
+	/**
+	 * Get the application ID to use when displaying this Job.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @return int
+	 */
+	public function get_application_id() {
+		return 0;
+	}
+
+	/**
 	 * Persist the additional properties of the entity.
 	 *
 	 * @since %VERSION%
