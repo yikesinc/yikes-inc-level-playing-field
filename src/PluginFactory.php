@@ -19,6 +19,7 @@ use Yikes\LevelPlayingField\Roles\Administrator;
 use Yikes\LevelPlayingField\Roles\Editor;
 use Yikes\LevelPlayingField\Roles\HiringManager;
 use Yikes\LevelPlayingField\Roles\HumanResources;
+use Yikes\LevelPlayingField\Shortcode\AllJobs;
 use Yikes\LevelPlayingField\Taxonomy\ApplicantStatus;
 use Yikes\LevelPlayingField\Taxonomy\JobCategory;
 use Yikes\LevelPlayingField\Taxonomy\JobStatus;
@@ -82,6 +83,9 @@ final class PluginFactory {
 			HumanResources::class,
 			Administrator::class,
 			Editor::class,
+
+			// Shortcodes
+			AllJobs::class,
 		] );
 	}
 }
