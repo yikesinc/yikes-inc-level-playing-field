@@ -14,6 +14,8 @@ use Yikes\LevelPlayingField\Model\JobRepository;
 /**
  * Class AllJobs
  *
+ * This creates the "lpf_all_jobs" shortcode.
+ *
  * @since   %VERSION%
  * @package Yikes\LevelPlayingField
  */
