@@ -49,7 +49,7 @@ class ApplicationRepository extends CustomPostTypeRepository {
 	public function find_all() {
 		$args  = array(
 			'post_type'   => ApplicationManagerCPT::SLUG,
-			'post_status' => array( 'active', 'inactive' ),
+			'post_status' => array( 'publish' ),
 		);
 		$query = new \WP_Query( $args );
 
