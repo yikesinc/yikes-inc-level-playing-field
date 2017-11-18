@@ -10,6 +10,7 @@
 namespace Yikes\LevelPlayingField\Taxonomy;
 
 use Yikes\LevelPlayingField\CustomPostType\ApplicantManager;
+use Yikes\LevelPlayingField\Roles\Capabilities;
 
 /**
  * Class ApplicantStatus
@@ -48,6 +49,12 @@ class ApplicantStatus extends BaseTaxonomy {
 			'meta_box_cb'       => array( $this, 'meta_box_cb' ),
 			'rewrite'           => array(
 				'slug' => 'status',
+			),
+			'capabilities' => array(
+				'manage_terms' => Capabilities::MANAGE_APPLICANT_STATUS,
+				'edit_terms'   => Capabilities::MANAGE_APPLICANT_STATUS,
+				'delete_terms' => Capabilities::MANAGE_APPLICANT_STATUS,
+				'assign_terms' => Capabilities::EDIT_APPLICANTS,
 			),
 			'labels'            => array(
 				'name'                       => __( 'Status', 'yikes-level-playing-field' ),

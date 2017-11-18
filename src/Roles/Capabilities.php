@@ -12,6 +12,7 @@ namespace Yikes\LevelPlayingField\Roles;
 use Yikes\LevelPlayingField\CustomPostType\ApplicantManager;
 use Yikes\LevelPlayingField\CustomPostType\ApplicationManager;
 use Yikes\LevelPlayingField\CustomPostType\JobManager;
+use Yikes\LevelPlayingField\Taxonomy\ApplicantStatus;
 use Yikes\LevelPlayingField\Taxonomy\JobStatus;
 
 /**
@@ -78,4 +79,5 @@ interface Capabilities {
 
 	// Custom Taxonomies.
 	const MANAGE_JOB_STATUS = 'manage_' . JobStatus::SLUG;
+	const MANAGE_APPLICANT_STATUS = 'manage_' . ApplicantStatus::SLUG;
 }
