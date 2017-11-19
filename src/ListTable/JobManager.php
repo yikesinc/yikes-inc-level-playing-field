@@ -31,8 +31,8 @@ class JobManager extends BasePostType {
 		parent::register();
 
 		// Additional functionality for this object.
-		add_filter( 'disable_months_dropdown', array( $this, 'months_dropdown' ), 10, 2 );
-		add_action( 'restrict_manage_posts', array( $this, 'dropdown_filters' ), 10, 2 );
+		add_filter( 'disable_months_dropdown', [ $this, 'months_dropdown' ], 10, 2 );
+		add_action( 'restrict_manage_posts', [ $this, 'job_category_dropdown_filter' ], 10, 2 );
 	}
 
 	/**
@@ -57,14 +57,14 @@ class JobManager extends BasePostType {
 	public function columns( $original_columns ) {
 		$category_tax = get_taxonomy( JobCategory::SLUG );
 		$status_tax   = get_taxonomy( JobStatus::SLUG );
-		$columns      = array(
+		$columns      = [
 			'cb'                             => $original_columns['cb'],
 			'title'                          => _x( 'Job Title', 'column heading', 'yikes-level-playing-field' ),
 			"taxonomy-{$category_tax->name}" => $category_tax->label,
 			"taxonomy-{$status_tax->name}"   => $status_tax->label,
 			'applications'                   => _x( 'Applications', 'column heading', 'yikes-level-playing-field' ),
 			'date'                           => $original_columns['date'],
-		);
+		];
 
 		return $columns;
 	}
@@ -89,62 +89,5 @@ class JobManager extends BasePostType {
 		}
 
 		echo esc_html( $applicant_repo->get_applicant_count_for_job( $post_id ) );
-	}
-
-	/**
-	 * Disable the months drop-down on this post type.
-	 *
-	 * @since %VERSION%
-	 *
-	 * @param bool   $disable   Whether to disable the dropdown.
-	 * @param string $post_type The post type.
-	 *
-	 * @return bool
-	 */
-	public function months_dropdown( $disable, $post_type ) {
-		if ( $this->post_type !== $post_type ) {
-			return $disable;
-		}
-
-		return true;
-	}
-
-	/**
-	 * Display a dropdown filter for this category.
-	 *
-	 * @since %VERSION%
-	 *
-	 * @param string $post_type The post type being displayed.
-	 * @param string $which     Where the action is firing. Will be 'top' or 'bottom'.
-	 */
-	public function dropdown_filters( $post_type, $which ) {
-		if ( $this->post_type !== $post_type || 'top' !== $which ) {
-			return;
-		}
-
-		if ( ! is_object_in_taxonomy( $post_type, JobCategory::SLUG ) ) {
-			return;
-		}
-
-		$taxonomy         = get_taxonomy( JobCategory::SLUG );
-		$dropdown_options = array(
-			'show_option_all' => $taxonomy->labels->all_items,
-			'hide_empty'      => false,
-			'hierarchical'    => $taxonomy->hierarchical,
-			'show_count'      => false,
-			'orderby'         => 'name',
-			'selected'        => get_query_var( JobCategory::SLUG ),
-			'name'            => JobCategory::SLUG,
-			'taxonomy'        => JobCategory::SLUG,
-			'value_field'     => 'slug',
-		);
-
-		printf(
-			'<label class="screen-reader-text" for="%1$s">%2$s</label>',
-			esc_attr( JobCategory::SLUG ),
-			esc_html( $taxonomy->labels->filter_items_list )
-		);
-
-		wp_dropdown_categories( $dropdown_options );
 	}
 }

@@ -10,6 +10,7 @@
 namespace Yikes\LevelPlayingField\ListTable;
 
 use Yikes\LevelPlayingField\Service;
+use Yikes\LevelPlayingField\Taxonomy\JobCategory;
 
 /**
  * Abstract class BasePostType
@@ -27,8 +28,8 @@ abstract class BasePostType implements Service {
 	 * @since %VERSION%
 	 */
 	public function register() {
-		add_filter( "manage_{$this->post_type}_posts_columns", array( $this, 'columns' ) );
-		add_action( "manage_{$this->post_type}_posts_custom_column", array( $this, 'column_content' ), 10, 2 );
+		add_filter( "manage_{$this->post_type}_posts_columns", [ $this, 'columns' ] );
+		add_action( "manage_{$this->post_type}_posts_custom_column", [ $this, 'column_content' ], 10, 2 );
 	}
 
 	/**
@@ -48,6 +49,63 @@ abstract class BasePostType implements Service {
 			default:
 				return null;
 		}
+	}
+
+	/**
+	 * Disable the months drop-down on this post type.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param bool   $disable   Whether to disable the dropdown.
+	 * @param string $post_type The post type.
+	 *
+	 * @return bool
+	 */
+	public function months_dropdown( $disable, $post_type ) {
+		if ( $this->post_type !== $post_type ) {
+			return $disable;
+		}
+
+		return true;
+	}
+
+	/**
+	 * Display a dropdown filter for this category.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param string $post_type The post type being displayed.
+	 * @param string $which     Where the action is firing. Will be 'top' or 'bottom'.
+	 */
+	public function job_category_dropdown_filter( $post_type, $which ) {
+		if ( $this->post_type !== $post_type || 'top' !== $which ) {
+			return;
+		}
+
+		if ( ! is_object_in_taxonomy( $post_type, JobCategory::SLUG ) ) {
+			return;
+		}
+
+		$taxonomy         = get_taxonomy( JobCategory::SLUG );
+		$dropdown_options = [
+			'show_option_all' => $taxonomy->labels->all_items,
+			'hide_empty'      => false,
+			'hierarchical'    => $taxonomy->hierarchical,
+			'show_count'      => false,
+			'orderby'         => 'name',
+			'selected'        => get_query_var( JobCategory::SLUG ),
+			'name'            => JobCategory::SLUG,
+			'taxonomy'        => JobCategory::SLUG,
+			'value_field'     => 'slug',
+		];
+
+		printf(
+			'<label class="screen-reader-text" for="%1$s">%2$s</label>',
+			esc_attr( JobCategory::SLUG ),
+			esc_html( $taxonomy->labels->filter_items_list )
+		);
+
+		wp_dropdown_categories( $dropdown_options );
 	}
 
 	/**
