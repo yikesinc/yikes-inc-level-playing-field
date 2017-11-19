@@ -63,12 +63,12 @@ final class PluginFactory {
 	 */
 	private static function get_service_container() {
 		return new Container( [
-			// CPTs
+			// CPTs.
 			LimitedJobManager::class,
 			ApplicationManager::class,
 			ApplicantManager::class,
 
-			// Taxonomies
+			// Taxonomies.
 			JobCategory::class,
 			JobStatus::class,
 			ApplicantStatus::class,
@@ -87,7 +87,7 @@ final class PluginFactory {
 			Administrator::class,
 			Editor::class,
 
-			// Shortcodes
+			// Shortcodes.
 			AllJobs::class,
 			Job::class,
 		] );
