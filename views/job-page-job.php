@@ -16,16 +16,16 @@ $job = $this->job;
 
 ?>
 <div class="job-page-job">
-	<h4 class="job-page-job-title"><?= $job->get_title() ?></h4>
+	<h4 class="job-page-job-title"><?php echo $job->get_title(); ?></h4>
 	<div class="job-page-job-meta">
 		<?php if ( ! empty( $job->get_description() ) ) : ?>
 			<div class="job-page-job-description">
-				<?= wpautop( $job->get_description() ); ?>
+				<?php echo wpautop( $job->get_description() ); ?>
 			</div>
 		<?php endif; ?>
 		<?php if ( ! empty( $job->get_type() ) ) : ?>
 			<div class="job-page-job-type">
-				<?php esc_html_e( 'Type:' ); ?> <?= $job->get_type(); ?>
+				<?php esc_html_e( 'Type:' ); ?> <?php echo $job->get_type(); ?>
 			</div>
 		<?php endif; ?>
 		<?php if ( ! $job->is_remote() && ! empty( $job->get_address() ) ) : ?>

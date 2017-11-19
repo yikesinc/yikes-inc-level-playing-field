@@ -29,7 +29,7 @@ class ApplicantStatus extends BaseTaxonomy {
 	 */
 	public function register() {
 		parent::register();
-		add_action( 'init', array( $this, 'default_terms' ) );
+		add_action( 'init', [ $this, 'default_terms' ] );
 	}
 
 	/**
@@ -39,24 +39,24 @@ class ApplicantStatus extends BaseTaxonomy {
 	 * @return array
 	 */
 	protected function get_arguments() {
-		return array(
+		return [
 			'hierarchical'      => false,
 			'public'            => false,
 			'show_ui'           => true,
 			'show_in_menu'      => false,
 			'show_admin_column' => true,
 			'query_var'         => true,
-			'meta_box_cb'       => array( $this, 'meta_box_cb' ),
-			'rewrite'           => array(
+			'meta_box_cb'       => [ $this, 'meta_box_cb' ],
+			'rewrite'           => [
 				'slug' => 'status',
-			),
-			'capabilities' => array(
+			],
+			'capabilities' => [
 				'manage_terms' => Capabilities::MANAGE_APPLICANT_STATUS,
 				'edit_terms'   => Capabilities::MANAGE_APPLICANT_STATUS,
 				'delete_terms' => Capabilities::MANAGE_APPLICANT_STATUS,
 				'assign_terms' => Capabilities::EDIT_APPLICANTS,
-			),
-			'labels'            => array(
+			],
+			'labels'            => [
 				'name'                       => __( 'Status', 'yikes-level-playing-field' ),
 				'singular_name'              => _x( 'Status', 'taxonomy general name', 'yikes-level-playing-field' ),
 				'search_items'               => __( 'Search Statuses', 'yikes-level-playing-field' ),
@@ -73,9 +73,9 @@ class ApplicantStatus extends BaseTaxonomy {
 				'choose_from_most_used'      => __( 'Choose from the most used Statuses', 'yikes-level-playing-field' ),
 				'not_found'                  => __( 'No Statuses found.', 'yikes-level-playing-field' ),
 				'menu_name'                  => __( 'Statuses', 'yikes-level-playing-field' ),
-			),
+			],
 			'show_in_rest'      => false,
-		);
+		];
 	}
 
 	/**
@@ -85,9 +85,9 @@ class ApplicantStatus extends BaseTaxonomy {
 	 * @return array
 	 */
 	protected function get_object_types() {
-		return array(
+		return [
 			ApplicantManager::SLUG,
-		);
+		];
 	}
 
 	/**
@@ -96,20 +96,20 @@ class ApplicantStatus extends BaseTaxonomy {
 	 * @since %VERSION%
 	 */
 	public function default_terms() {
-		$terms = array(
-			'Yes'   => array(
+		$terms = [
+			'Yes'   => [
 				'description' => __( 'Accept the applicant', 'yikes-level-playing-field' ),
 				'slug'        => 'yes',
-			),
-			'No'    => array(
+			],
+			'No'    => [
 				'description' => __( 'Do not accept the applicant', 'yikes-level-playing-field' ),
 				'slug'        => 'no',
-			),
-			'Maybe' => array(
+			],
+			'Maybe' => [
 				'description' => __( 'Maybe accept the applicant', 'yikes-level-playing-field' ),
 				'slug'        => 'maybe',
-			),
-		);
+			],
+		];
 
 		foreach ( $terms as $term => $args ) {
 			if ( ! term_exists( $term, $this->get_slug() ) ) {
@@ -150,11 +150,11 @@ class ApplicantStatus extends BaseTaxonomy {
 	protected function term_select( $post ) {
 		$tax_name  = $this->get_slug();
 		$taxonomy  = get_taxonomy( $tax_name );
-		$all_terms = get_terms( array(
+		$all_terms = get_terms( [
 			'taxonomy'   => $tax_name,
 			'hide_empty' => false,
 			'orderby'    => 'term_id',
-		) );
+		] );
 
 		$post_terms = get_the_terms( $post->ID, $tax_name );
 		$post_terms = $post_terms ? wp_list_pluck( $post_terms, 'term_id', 'slug' ) : array();
