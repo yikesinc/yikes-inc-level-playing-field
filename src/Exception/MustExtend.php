@@ -30,6 +30,7 @@ class MustExtend extends \LogicException implements Exception {
 	 */
 	public static function default_slug( $slug ) {
 		$message = sprintf(
+			/* translators: %s refers to the default slug */
 			__( 'The default slug "%s" must be extended in a subclass.', 'yikes-level-playing-field' ),
 			$slug
 		);
@@ -48,6 +49,7 @@ class MustExtend extends \LogicException implements Exception {
 	 */
 	public static function default_tag( $tag ) {
 		$message = sprintf(
+			/* translators: %s refers to the default tag */
 			__( 'The default tag "%s" must be extended in a subclass.', 'yikes-level-playing-field' ),
 			$tag
 		);
@@ -66,6 +68,7 @@ class MustExtend extends \LogicException implements Exception {
 	 */
 	public static function default_view( $view ) {
 		$message = sprintf(
+			/* translators: %s refers to the default view */
 			__( 'The default view "%s" must be extended in a subclass.', 'yikes-level-playing-field' ),
 			$view
 		);
