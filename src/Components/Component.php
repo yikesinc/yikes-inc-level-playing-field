@@ -9,6 +9,12 @@
 
 namespace Yikes\LevelPlayingField\Model\Components;
 
+/**
+ * Interface Component
+ *
+ * @since   %VERSION%
+ * @package Yikes\LevelPlayingField
+ */
 interface Component {
 
 	/**
@@ -18,12 +24,4 @@ interface Component {
 	 * @return string
 	 */
 	public function get_key();
-
-	/**
-	 * Determine if this is a repeatable object.
-	 *
-	 * @since %VERSION%
-	 * @return bool
-	 */
-	public function is_repeatable();
 }
