@@ -9,6 +9,17 @@
 
 namespace Yikes\LevelPlayingField\Model\Components;
 
-class Section {
+/**
+ * Class Section
+ *
+ * @since   %VERSION%
+ * @package Yikes\LevelPlayingField
+ */
+class Section implements MaybeRepeatable {
 
+	use Repeatable;
+
+	public function __construct( array $fields ) {
+
+	}
 }
