@@ -9,21 +9,15 @@
 
 namespace Yikes\LevelPlayingField\Model\Components\Fields;
 
+use Yikes\LevelPlayingField\Model\Components\Component;
+
 /**
- * Class Field
+ * Interface Field
  *
  * @since   %VERSION%
  * @package Yikes\LevelPlayingField
  */
-interface Field {
-
-	/**
-	 * Get the key for the field.
-	 *
-	 * @since %VERSION%
-	 * @return string
-	 */
-	public function get_key();
+interface Field extends Component {
 
 	/**
 	 * Get the field type.
