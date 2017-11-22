@@ -34,4 +34,19 @@ trait Repeatable {
 	public function is_repeatable() {
 		return $this->repeatable;
 	}
+
+	/**
+	 * Set whether the object is repeatable.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param bool $repeatable Whether the object should be repeatable.
+	 *
+	 * @return $this
+	 */
+	public function set_repeatable( $repeatable ) {
+		$this->repeatable = (bool) $repeatable;
+
+		return $this;
+	}
 }
