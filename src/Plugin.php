@@ -55,7 +55,7 @@ class Plugin implements Registerable {
 	 *
 	 * @since %VERSION%
 	 *
-	 * @param Container     $container
+	 * @param Container     $container      The container object.
 	 * @param AssetsHandler $assets_handler Optional. Instance of the assets handler to use.
 	 * @param string        $plugin_root    The root directory of the plugin.
 	 */
@@ -73,8 +73,8 @@ class Plugin implements Registerable {
 	 * @throws Exception\InvalidService If a service is not valid.
 	 */
 	public function register() {
-		add_action( 'plugins_loaded', array( $this, 'register_services' ), 20 );
-		add_action( 'init', array( $this, 'register_assets_handler' ) );
+		add_action( 'plugins_loaded', [ $this, 'register_services' ], 20 );
+		add_action( 'init', [ $this, 'register_assets_handler' ] );
 	}
 
 	/**
@@ -86,10 +86,28 @@ class Plugin implements Registerable {
 	 */
 	public function register_services() {
 		$services = $this->get_services();
-		$services = array_map( array( $this, 'instantiate_service' ), $services );
+		$services = array_map( [ $this, 'instantiate_service' ], $services );
 		array_walk( $services, function ( Service $service ) {
 			$service->register();
 		} );
+	}
+
+	/**
+	 * Get the list of services to register.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @return string[] Array of fully qualified class names.
+	 */
+	protected function get_services() {
+		/**
+		 * Fires right before the Level Playing Field services are retrieved.
+		 *
+		 * @param Container $container The services container object.
+		 */
+		do_action( 'lpf_pre_get_services', $this->container );
+
+		return $this->container->get_services();
 	}
 
 	/**
@@ -110,6 +128,16 @@ class Plugin implements Registerable {
 	 */
 	public function get_assets_handler() {
 		return $this->assets_handler;
+	}
+
+	/**
+	 * Get the root directory for the plugin.
+	 *
+	 * @since %VERSION%
+	 * @return string
+	 */
+	public function get_plugin_root() {
+		return $this->plugin_root;
 	}
 
 	/**
@@ -138,33 +166,5 @@ class Plugin implements Registerable {
 		}
 
 		return $service;
-	}
-
-	/**
-	 * Get the list of services to register.
-	 *
-	 * @since %VERSION%
-	 *
-	 * @return string[] Array of fully qualified class names.
-	 */
-	protected function get_services() {
-		/**
-		 * Fires right before the Level Playing Field services are retrieved.
-		 *
-		 * @param Container $container The services container object.
-		 */
-		do_action( 'lpf_pre_get_services', $this->container );
-
-		return $this->container->get_services();
-	}
-
-	/**
-	 * Get the root directory for the plugin.
-	 *
-	 * @since %VERSION%
-	 * @return string
-	 */
-	public function get_plugin_root() {
-		return $this->plugin_root;
 	}
 }

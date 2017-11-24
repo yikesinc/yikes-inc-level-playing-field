@@ -1,4 +1,11 @@
 <?php
+/**
+ * YIKES Inc. Level Playing Field Plugin.
+ *
+ * @package Yikes\LevelPlayingField
+ * @author  Jeremy Pry
+ * @license GPL2
+ */
 
 namespace Yikes\LevelPlayingField\CustomPostType;
 
@@ -12,7 +19,7 @@ use Yikes\LevelPlayingField\Roles\Capabilities;
  */
 class ApplicantManager extends BaseCustomPostType {
 
-	const SLUG = 'applicants';
+	const SLUG          = 'applicants';
 	const SINGULAR_SLUG = 'applicant';
 
 	/**
@@ -23,10 +30,10 @@ class ApplicantManager extends BaseCustomPostType {
 	 * @return array Array of arguments.
 	 */
 	protected function get_arguments() {
-		return array(
+		return [
 			'label'               => __( 'Applicant', 'yikes-level-playing-field' ),
 			'description'         => __( 'Applicants who have applied for a job through the website form.', 'yikes-level-playing-field' ),
-			'labels'              => array(
+			'labels'              => [
 				'name'                  => _x( 'Applicants', 'Post Type General Name', 'yikes-level-playing-field' ),
 				'singular_name'         => _x( 'Applicant', 'Post Type Singular Name', 'yikes-level-playing-field' ),
 				'parent_item_colon'     => __( 'Parent Applicant:', 'yikes-level-playing-field' ),
@@ -49,16 +56,16 @@ class ApplicantManager extends BaseCustomPostType {
 				'items_list'            => __( 'Applicants list', 'yikes-level-playing-field' ),
 				'items_list_navigation' => __( 'Applicants list navigation', 'yikes-level-playing-field' ),
 				'filter_items_list'     => __( 'Filter Applicants list', 'yikes-level-playing-field' ),
-			),
-			'supports'            => array(),
-			'taxonomies'          => array(),
+			],
+			'supports'            => [],
+			'taxonomies'          => [],
 			'hierarchical'        => false,
 			'public'              => true,
 			'show_ui'             => true,
 			'show_in_menu'        => 'edit.php?post_type=jobs',
-			'rewrite'             => array(
+			'rewrite'             => [
 				'slug' => self::SINGULAR_SLUG,
-			),
+			],
 			'show_in_admin_bar'   => false,
 			'show_in_nav_menus'   => false,
 			'can_export'          => true,
@@ -66,7 +73,7 @@ class ApplicantManager extends BaseCustomPostType {
 			'exclude_from_search' => true,
 			'publicly_queryable'  => true,
 			'map_meta_cap'        => true,
-			'capabilities'        => array(
+			'capabilities'        => [
 				'edit_post'              => Capabilities::EDIT_APPLICANT,
 				'edit_posts'             => Capabilities::EDIT_APPLICANTS,
 				'edit_others_posts'      => Capabilities::EDIT_OTHERS_APPLICANTS,
@@ -81,8 +88,8 @@ class ApplicantManager extends BaseCustomPostType {
 				'edit_private_posts'     => Capabilities::EDIT_PRIVATE_APPLICANTS,
 				'edit_published_posts'   => Capabilities::EDIT_PUBLISHED_APPLICANTS,
 				'create_posts'           => Capabilities::CREATE_APPLICANTS,
-			),
-		);
+			],
+		];
 	}
 
 	/**
@@ -96,7 +103,7 @@ class ApplicantManager extends BaseCustomPostType {
 		global $post;
 		$permalink = get_permalink( $post );
 
-		return array(
+		return [
 			0  => '', // Unused. Messages start at index 1.
 			/* translators: %s: permalink URL */
 			1  => sprintf( __( 'Applicant updated. <a target="_blank" href="%s">View Applicant</a>', 'yikes-level-playing-field' ), esc_url( $permalink ) ),
@@ -119,6 +126,6 @@ class ApplicantManager extends BaseCustomPostType {
 			),
 			/* translators: %s: preview URL */
 			10 => sprintf( __( 'Applicant draft updated. <a target="_blank" href="%s">Preview Applicant</a>', 'yikes-level-playing-field' ), esc_url( add_query_arg( 'preview', 'true', $permalink ) ) ),
-		);
+		];
 	}
 }

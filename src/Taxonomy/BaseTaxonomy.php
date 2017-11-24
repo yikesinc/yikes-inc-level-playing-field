@@ -9,7 +9,6 @@
 
 namespace Yikes\LevelPlayingField\Taxonomy;
 
-
 use Yikes\LevelPlayingField\Exception\MustExtend;
 use Yikes\LevelPlayingField\Service;
 

@@ -61,8 +61,8 @@ final class TemplatedView extends BaseView {
 	 */
 	protected function get_locations( $uri ) {
 		return array(
-			trailingslashit( STYLESHEETPATH ) . $uri,
-			trailingslashit( TEMPLATEPATH ) . $uri,
+			trailingslashit( get_stylesheet_directory() ) . $uri,
+			trailingslashit( get_template_directory() ) . $uri,
 			trailingslashit( dirname( __DIR__, 2 ) ) . $uri,
 		);
 	}

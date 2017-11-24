@@ -36,7 +36,16 @@ final class LimitedJobManager extends JobManager {
 	public function register() {
 		parent::register();
 		$this->add_terms_action();
-		add_action( JobStatus::SLUG . '_metabox_before', array( $this, 'metabox_limit_message' ) );
+		add_action( JobStatus::SLUG . '_metabox_before', [ $this, 'metabox_limit_message' ] );
+	}
+
+	/**
+	 * Hook to the set_object_terms action.
+	 *
+	 * @since %VERSION%
+	 */
+	private function add_terms_action() {
+		add_action( 'set_object_terms', [ $this, 'modify_post_terms' ], 10, 4 );
 	}
 
 	/**
@@ -85,26 +94,6 @@ final class LimitedJobManager extends JobManager {
 	}
 
 	/**
-	 * Display a notice when there are too many items active.
-	 *
-	 * @since %VERSION%
-	 */
-	public function metabox_limit_message() {
-		if ( ! $this->active_past_limit() ) {
-			return;
-		}
-		$message = sprintf(
-			_n( 'Jobs are limited to %d active job.', 'Jobs are limited to %s active jobs.', $this->limit, 'yikes-level-playing-field' ),
-			number_format_i18n( $this->limit )
-		);
-		?>
-		<div class="lpf-limit-jobs">
-			<p><?php echo esc_html( $message ); ?></p>
-		</div>
-		<?php
-	}
-
-	/**
 	 * Determine if we're past the number of active jobs.
 	 *
 	 * @since %VERSION%
@@ -120,20 +109,32 @@ final class LimitedJobManager extends JobManager {
 	}
 
 	/**
-	 * Hook to the set_object_terms action.
-	 *
-	 * @since %VERSION%
-	 */
-	private function add_terms_action() {
-		add_action( 'set_object_terms', array( $this, 'modify_post_terms' ), 10, 4 );
-	}
-
-	/**
 	 * Unhook our set_object_terms action.
 	 *
 	 * @since %VERSION%
 	 */
 	private function remove_terms_action() {
-		remove_action( 'set_object_terms', array( $this, 'modify_post_terms' ), 10 );
+		remove_action( 'set_object_terms', [ $this, 'modify_post_terms' ], 10 );
+	}
+
+	/**
+	 * Display a notice when there are too many items active.
+	 *
+	 * @since %VERSION%
+	 */
+	public function metabox_limit_message() {
+		if ( ! $this->active_past_limit() ) {
+			return;
+		}
+		$message = sprintf(
+			/* translators: %d is the number of active jobs */
+			_n( 'Jobs are limited to %d active job.', 'Jobs are limited to %d active jobs.', $this->limit, 'yikes-level-playing-field' ),
+			number_format_i18n( $this->limit )
+		);
+		?>
+		<div class="lpf-limit-jobs">
+			<p><?php echo esc_html( $message ); ?></p>
+		</div>
+		<?php
 	}
 }

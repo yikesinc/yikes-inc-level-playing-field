@@ -28,7 +28,7 @@ abstract class ExistingRole extends BaseRole {
 		// Since other code could interfere with roles, trigger an error instead of throwing an Exception.
 		if ( null === $role ) {
 			$message = sprintf( 'The %s role was not found.', $role );
-			trigger_error( $message, E_USER_NOTICE );
+			trigger_error( esc_html( $message ), E_USER_NOTICE );
 
 			return;
 		}

@@ -36,7 +36,7 @@ class Block implements Component {
 	 * @since %VERSION%
 	 * @var array
 	 */
-	protected $fields = array();
+	protected $fields = [];
 
 	/**
 	 * Block constructor.

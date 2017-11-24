@@ -1,4 +1,11 @@
 <?php
+/**
+ * YIKES Inc. Level Playing Field Plugin.
+ *
+ * @package Yikes\LevelPlayingField
+ * @author  Jeremy Pry
+ * @license GPL2
+ */
 
 namespace Yikes\LevelPlayingField\CustomPostType;
 
@@ -12,7 +19,7 @@ use Yikes\LevelPlayingField\Roles\Capabilities;
  */
 class ApplicationManager extends BaseCustomPostType {
 
-	const SLUG = 'applications';
+	const SLUG          = 'applications';
 	const SINGULAR_SLUG = 'application';
 
 	/**
@@ -23,10 +30,10 @@ class ApplicationManager extends BaseCustomPostType {
 	 * @return array Array of arguments.
 	 */
 	protected function get_arguments() {
-		return array(
+		return [
 			'label'               => __( 'Applications', 'yikes-level-playing-field' ),
 			'description'         => __( 'Job Applications that are associated with the level playing field jobs.', 'yikes-level-playing-field' ),
-			'labels'              => array(
+			'labels'              => [
 				'name'                  => _x( 'Applications', 'Post Type General Name', 'yikes-level-playing-field' ),
 				'singular_name'         => _x( 'Application', 'Post Type Singular Name', 'yikes-level-playing-field' ),
 				'parent_item_colon'     => __( 'Parent Application:', 'yikes-level-playing-field' ),
@@ -49,16 +56,16 @@ class ApplicationManager extends BaseCustomPostType {
 				'items_list'            => __( 'Applications list', 'yikes-level-playing-field' ),
 				'items_list_navigation' => __( 'Applications list navigation', 'yikes-level-playing-field' ),
 				'filter_items_list'     => __( 'Filter Applications list', 'yikes-level-playing-field' ),
-			),
-			'supports'            => array( 'title' ),
-			'taxonomies'          => array(),
+			],
+			'supports'            => [ 'title' ],
+			'taxonomies'          => [],
 			'hierarchical'        => false,
 			'public'              => true,
 			'show_ui'             => true,
 			'show_in_menu'        => 'edit.php?post_type=jobs',
-			'rewrite'             => array(
+			'rewrite'             => [
 				'slug' => self::SINGULAR_SLUG,
-			),
+			],
 			'show_in_admin_bar'   => false,
 			'show_in_nav_menus'   => false,
 			'can_export'          => true,
@@ -66,7 +73,7 @@ class ApplicationManager extends BaseCustomPostType {
 			'exclude_from_search' => true,
 			'publicly_queryable'  => true,
 			'map_meta_cap'        => true,
-			'capabilities'        => array(
+			'capabilities'        => [
 				'edit_post'              => Capabilities::EDIT_APPLICATION,
 				'edit_posts'             => Capabilities::EDIT_APPLICATIONS,
 				'edit_others_posts'      => Capabilities::EDIT_OTHERS_APPLICATIONS,
@@ -81,8 +88,8 @@ class ApplicationManager extends BaseCustomPostType {
 				'edit_private_posts'     => Capabilities::EDIT_PRIVATE_APPLICATIONS,
 				'edit_published_posts'   => Capabilities::EDIT_PUBLISHED_APPLICATIONS,
 				'create_posts'           => Capabilities::CREATE_APPLICATIONS,
-			),
-		);
+			],
+		];
 	}
 
 	/**
@@ -96,7 +103,7 @@ class ApplicationManager extends BaseCustomPostType {
 		global $post;
 		$permalink = get_permalink( $post );
 
-		return array(
+		return [
 			0  => '', // Unused. Messages start at index 1.
 			/* translators: %s: permalink URL */
 			1  => sprintf( __( 'Application updated. <a target="_blank" href="%s">View Application</a>', 'yikes-level-playing-field' ), esc_url( $permalink ) ),
@@ -119,6 +126,6 @@ class ApplicationManager extends BaseCustomPostType {
 			),
 			/* translators: %s: preview URL */
 			10 => sprintf( __( 'Application draft updated. <a target="_blank" href="%s">Preview Application</a>', 'yikes-level-playing-field' ), esc_url( add_query_arg( 'preview', 'true', $permalink ) ) ),
-		);
+		];
 	}
 }

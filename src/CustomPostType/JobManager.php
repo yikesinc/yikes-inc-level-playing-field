@@ -1,4 +1,11 @@
 <?php
+/**
+ * YIKES Inc. Level Playing Field Plugin.
+ *
+ * @package Yikes\LevelPlayingField
+ * @author  Jeremy Pry
+ * @license GPL2
+ */
 
 namespace Yikes\LevelPlayingField\CustomPostType;
 
@@ -12,7 +19,7 @@ use Yikes\LevelPlayingField\Roles\Capabilities;
  */
 class JobManager extends BaseCustomPostType {
 
-	const SLUG = 'jobs';
+	const SLUG          = 'jobs';
 	const SINGULAR_SLUG = 'job';
 
 	/**
@@ -23,10 +30,10 @@ class JobManager extends BaseCustomPostType {
 	 * @return array Array of arguments.
 	 */
 	protected function get_arguments() {
-		return array(
+		return [
 			'label'               => __( 'Job', 'yikes-level-playing-field' ),
 			'description'         => __( 'Job listings.', 'yikes-level-playing-field' ),
-			'labels'              => array(
+			'labels'              => [
 				'name'                  => _x( 'Jobs', 'Post Type General Name', 'yikes-level-playing-field' ),
 				'singular_name'         => _x( 'Job', 'Post Type Singular Name', 'yikes-level-playing-field' ),
 				'menu_name'             => __( 'Job Manager', 'yikes-level-playing-field' ),
@@ -52,8 +59,8 @@ class JobManager extends BaseCustomPostType {
 				'items_list'            => __( 'Jobs list', 'yikes-level-playing-field' ),
 				'items_list_navigation' => __( 'Jobs list navigation', 'yikes-level-playing-field' ),
 				'filter_items_list'     => __( 'Filter Jobs list', 'yikes-level-playing-field' ),
-			),
-			'supports'            => array( 'title', 'editor' ),
+			],
+			'supports'            => [ 'title', 'editor' ],
 			'hierarchical'        => false,
 			'public'              => true,
 			'show_ui'             => true,
@@ -66,7 +73,7 @@ class JobManager extends BaseCustomPostType {
 			'exclude_from_search' => false,
 			'publicly_queryable'  => true,
 			'map_meta_cap'        => true,
-			'capabilities'        => array(
+			'capabilities'        => [
 				'edit_post'              => Capabilities::EDIT_JOB,
 				'edit_posts'             => Capabilities::EDIT_JOBS,
 				'edit_others_posts'      => Capabilities::EDIT_OTHERS_JOBS,
@@ -81,9 +88,9 @@ class JobManager extends BaseCustomPostType {
 				'edit_private_posts'     => Capabilities::EDIT_PRIVATE_JOBS,
 				'edit_published_posts'   => Capabilities::EDIT_PUBLISHED_JOBS,
 				'create_posts'           => Capabilities::CREATE_JOBS,
-			),
+			],
 			'menu_icon'           => 'dashicons-businessman',
-		);
+		];
 	}
 
 	/**
@@ -97,7 +104,7 @@ class JobManager extends BaseCustomPostType {
 		global $post;
 		$permalink = get_permalink( $post );
 
-		return array(
+		return [
 			0  => '', // Unused. Messages start at index 1.
 			/* translators: %s: permalink URL */
 			1  => sprintf( __( 'Job updated. <a target="_blank" href="%s">View Job</a>', 'yikes-level-playing-field' ), esc_url( $permalink ) ),
@@ -120,6 +127,6 @@ class JobManager extends BaseCustomPostType {
 			),
 			/* translators: %s: preview URL */
 			10 => sprintf( __( 'Job draft updated. <a target="_blank" href="%s">Preview Job</a>', 'yikes-level-playing-field' ), esc_url( add_query_arg( 'preview', 'true', $permalink ) ) ),
-		);
+		];
 	}
 }

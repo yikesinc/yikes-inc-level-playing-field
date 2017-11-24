@@ -17,40 +17,40 @@ namespace Yikes\LevelPlayingField\Model;
  */
 interface ApplicantMeta {
 
-	const META_PREFIX = 'applicant_meta_';
+	const META_PREFIX       = 'applicant_meta_';
 	const FORM_FIELD_PREFIX = 'applicant_';
 
 	// Top level sections.
-	const BASIC = 'basic';
-	const EDUCATION = 'education';
-	const SKILLS = 'skills';
-	const LANGUAGES = 'languages';
+	const BASIC      = 'basic';
+	const EDUCATION  = 'education';
+	const SKILLS     = 'skills';
+	const LANGUAGES  = 'languages';
 	const EXPERIENCE = 'experience';
-	const VOLUNTEER = 'volunteer';
+	const VOLUNTEER  = 'volunteer';
 
 	// Basic fields.
-	const NAME = 'name';
-	const EMAIL = 'email';
-	const PHONE = 'phone';
-	const ADDRESS = 'address';
-	const COVER_LETTER = 'cover_letter';
-	const INSTITUTION = 'institution';
-	const ORGANIZATION = 'organization';
-	const TYPE = 'type';
-	const YEAR = 'year';
-	const MAJOR = 'major';
-	const DEGREE = 'degree';
+	const NAME          = 'name';
+	const EMAIL         = 'email';
+	const PHONE         = 'phone';
+	const ADDRESS       = 'address';
+	const COVER_LETTER  = 'cover_letter';
+	const INSTITUTION   = 'institution';
+	const ORGANIZATION  = 'organization';
+	const TYPE          = 'type';
+	const YEAR          = 'year';
+	const MAJOR         = 'major';
+	const DEGREE        = 'degree';
 	const CERTIFICATION = 'certification';
-	const STATUS = 'status';
-	const SKILL = 'skill';
-	const LANGUAGE = 'language';
-	const PROFICIENCY = 'proficiency';
-	const INDUSTRY = 'industry';
-	const DATES = 'dates';
-	const POSITION = 'position';
+	const STATUS        = 'status';
+	const SKILL         = 'skill';
+	const LANGUAGE      = 'language';
+	const PROFICIENCY   = 'proficiency';
+	const INDUSTRY      = 'industry';
+	const DATES         = 'dates';
+	const POSITION      = 'position';
 
-	// Education sub-structure
-	const SCHOOLING = [
+	// Education sub-structure.
+	const SCHOOLING      = [
 		self::INSTITUTION => 1,
 		self::TYPE        => 1,
 		self::YEAR        => 1,
@@ -66,11 +66,11 @@ interface ApplicantMeta {
 	];
 
 	// Structure for other items.
-	const SKILLS_STRUCTURE = [
+	const SKILLS_STRUCTURE     = [
 		self::SKILL       => 1,
 		self::PROFICIENCY => 1,
 	];
-	const LANGUAGES_STRUCTURE = [
+	const LANGUAGES_STRUCTURE  = [
 		self::LANGUAGE    => 1,
 		self::PROFICIENCY => 1,
 	];
@@ -80,7 +80,7 @@ interface ApplicantMeta {
 		self::DATES        => 1,
 		self::POSITION     => 1,
 	];
-	const VOLUNTEER_STRUCTURE = [
+	const VOLUNTEER_STRUCTURE  = [
 		self::ORGANIZATION => 1,
 		self::TYPE         => 1,
 		self::DATES        => 1,

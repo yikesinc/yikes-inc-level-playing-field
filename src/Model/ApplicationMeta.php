@@ -17,6 +17,6 @@ namespace Yikes\LevelPlayingField\Model;
  */
 interface ApplicationMeta {
 
-	const META_PREFIX = 'application_cpt_meta_';
+	const META_PREFIX       = 'application_cpt_meta_';
 	const FORM_FIELD_PREFIX = 'application_cpt_';
 }

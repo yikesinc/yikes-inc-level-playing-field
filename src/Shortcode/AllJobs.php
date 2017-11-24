@@ -21,8 +21,8 @@ use Yikes\LevelPlayingField\Model\JobRepository;
  */
 class AllJobs extends BaseJobs {
 
-	const TAG        = 'lpf_all_jobs';
-	const VIEW_URI   = 'views/job-page';
+	const TAG      = 'lpf_all_jobs';
+	const VIEW_URI = 'views/job-page';
 
 	/**
 	 * Get the default array of attributes for the shortcode.

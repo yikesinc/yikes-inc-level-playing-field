@@ -43,78 +43,73 @@ class AnonymousApplicant extends AnonymousCustomPostTypeEntity {
 	 * @return array
 	 */
 	protected function get_lazy_properties() {
-		return array(
-			'basic' => array(
+		return [
+			'basic'      => [
 				'name'         => true,
 				'email'        => true,
 				'phone'        => true,
-				'address'      => array(
-					// address fields
-				),
+				'address'      => [
+					// address fields.
+				],
 
-				// Make it clear to NOT add name to body of letter
+				// Make it clear to NOT add name to body of letter.
 				'cover_letter' => true,
-			),
-
-			'education' => array(
-				array(
-					// Repeating
-					'schooling' => array(
+			],
+			'education'  => [
+				[
+					// Repeating.
+					'schooling' => [
 						'institution'      => true,
-						'institution_type' => true, // selection options
+						'institution_type' => true, // selection options.
 						'year'             => true,
 						'major'            => true,
 						'degree'           => true,
-					),
-				),
-				'certifications' => array(
-					// Repeating
-					array(
+					],
+				],
+				'certifications' => [
+					// Repeating.
+					[
 						'institution'      => true,
 						'institution_type' => true,
 						'year'             => true,
 						'certification'    => true,
 						'status'           => true,
-					),
-				),
-			),
-
-			'skills' => array(
-				// Repeating
-				array(
+					],
+				],
+			],
+			'skills'     => [
+				// Repeating.
+				[
 					'skill'       => true,
 					'proficiency' => true,
-				),
-			),
-
-			'languages'  => array(
-				// Repeating
-				array(
+				],
+			],
+			'languages'  => [
+				// Repeating.
+				[
 					'language'    => true,
-					'proficiency' => true, // selection options
-				),
-			),
-
-			// Hiring manager will only see "<industry> for <years> years"
-			'experience' => array(
-				// Repeating
-				array(
+					'proficiency' => true, // selection options.
+				],
+			],
+			// Hiring manager will only see "<industry> for <years> years".
+			'experience' => [
+				// Repeating.
+				[
 					'organization' => true,
 					'industry'     => true,
 					'dates'        => true,
 					'position'     => true,
-				),
-			),
-
-			'volunteer' => array(
-				array(
+				],
+			],
+			'volunteer'  => [
+				[
 					'organization'      => true,
 					'organization_type' => true,
 					'dates'             => true,
 					'position'          => true,
-				),
-			),
-		);
+				],
+			],
+		];
 	}
 
 	/**
@@ -124,35 +119,32 @@ class AnonymousApplicant extends AnonymousCustomPostTypeEntity {
 	 * @return array
 	 */
 	protected function get_anonymous_properties() {
-		return array(
-			'basic' => array(
+		return [
+			'basic'      => [
 				'name'    => true,
 				'email'   => true,
 				'phone'   => true,
 				'address' => true,
-			),
-
-			'education' => array(
-				'schooling'      => array(
+			],
+			'education'  => [
+				'schooling'      => [
 					'institution' => true,
 					'year'        => true,
-				),
-				'certifications' => array(
+				],
+				'certifications' => [
 					'institution' => true,
 					'year'        => true,
-				),
-			),
-
-			'experience' => array(
+				],
+			],
+			'experience' => [
 				'organization' => true,
 				'dates'        => true,
-			),
-
-			'volunteer' => array(
+			],
+			'volunteer'  => [
 				'organization' => true,
 				'dates'        => true,
-			),
-		);
+			],
+		];
 	}
 
 	/**

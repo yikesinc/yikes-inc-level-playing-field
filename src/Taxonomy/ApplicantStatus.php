@@ -33,64 +33,6 @@ class ApplicantStatus extends BaseTaxonomy {
 	}
 
 	/**
-	 * Get the arguments that configure the taxonomy.
-	 *
-	 * @author Jeremy Pry
-	 * @return array
-	 */
-	protected function get_arguments() {
-		return [
-			'hierarchical'      => false,
-			'public'            => false,
-			'show_ui'           => true,
-			'show_in_menu'      => false,
-			'show_admin_column' => true,
-			'query_var'         => true,
-			'meta_box_cb'       => [ $this, 'meta_box_cb' ],
-			'rewrite'           => [
-				'slug' => 'status',
-			],
-			'capabilities' => [
-				'manage_terms' => Capabilities::MANAGE_APPLICANT_STATUS,
-				'edit_terms'   => Capabilities::MANAGE_APPLICANT_STATUS,
-				'delete_terms' => Capabilities::MANAGE_APPLICANT_STATUS,
-				'assign_terms' => Capabilities::EDIT_APPLICANTS,
-			],
-			'labels'            => [
-				'name'                       => __( 'Status', 'yikes-level-playing-field' ),
-				'singular_name'              => _x( 'Status', 'taxonomy general name', 'yikes-level-playing-field' ),
-				'search_items'               => __( 'Search Statuses', 'yikes-level-playing-field' ),
-				'popular_items'              => __( 'Popular Statuses', 'yikes-level-playing-field' ),
-				'all_items'                  => __( 'All Statuses', 'yikes-level-playing-field' ),
-				'parent_item'                => __( 'Parent Status', 'yikes-level-playing-field' ),
-				'parent_item_colon'          => __( 'Parent Status:', 'yikes-level-playing-field' ),
-				'edit_item'                  => __( 'Edit Status', 'yikes-level-playing-field' ),
-				'update_item'                => __( 'Update Status', 'yikes-level-playing-field' ),
-				'add_new_item'               => __( 'New Status', 'yikes-level-playing-field' ),
-				'new_item_name'              => __( 'New Status', 'yikes-level-playing-field' ),
-				'separate_items_with_commas' => __( 'Separate Statuses with commas', 'yikes-level-playing-field' ),
-				'add_or_remove_items'        => __( 'Add or remove Statuses', 'yikes-level-playing-field' ),
-				'choose_from_most_used'      => __( 'Choose from the most used Statuses', 'yikes-level-playing-field' ),
-				'not_found'                  => __( 'No Statuses found.', 'yikes-level-playing-field' ),
-				'menu_name'                  => __( 'Statuses', 'yikes-level-playing-field' ),
-			],
-			'show_in_rest'      => false,
-		];
-	}
-
-	/**
-	 * Get the object type(s) to use when registering the taxonomy.
-	 *
-	 * @author Jeremy Pry
-	 * @return array
-	 */
-	protected function get_object_types() {
-		return [
-			ApplicantManager::SLUG,
-		];
-	}
-
-	/**
 	 * Set up default terms for the taxonomy.
 	 *
 	 * @since %VERSION%
@@ -157,7 +99,7 @@ class ApplicantStatus extends BaseTaxonomy {
 		] );
 
 		$post_terms = get_the_terms( $post->ID, $tax_name );
-		$post_terms = $post_terms ? wp_list_pluck( $post_terms, 'term_id', 'slug' ) : array();
+		$post_terms = $post_terms ? wp_list_pluck( $post_terms, 'term_id', 'slug' ) : [];
 		?>
 		<label for="<?php echo esc_attr( $tax_name ); ?>">
 			<?php echo esc_html( $taxonomy->labels->update_item ); ?>
@@ -178,5 +120,63 @@ class ApplicantStatus extends BaseTaxonomy {
 			?>
 		</select>
 		<?php
+	}
+
+	/**
+	 * Get the arguments that configure the taxonomy.
+	 *
+	 * @author Jeremy Pry
+	 * @return array
+	 */
+	protected function get_arguments() {
+		return [
+			'hierarchical'      => false,
+			'public'            => false,
+			'show_ui'           => true,
+			'show_in_menu'      => false,
+			'show_admin_column' => true,
+			'query_var'         => true,
+			'meta_box_cb'       => [ $this, 'meta_box_cb' ],
+			'rewrite'           => [
+				'slug' => 'status',
+			],
+			'capabilities'      => [
+				'manage_terms' => Capabilities::MANAGE_APPLICANT_STATUS,
+				'edit_terms'   => Capabilities::MANAGE_APPLICANT_STATUS,
+				'delete_terms' => Capabilities::MANAGE_APPLICANT_STATUS,
+				'assign_terms' => Capabilities::EDIT_APPLICANTS,
+			],
+			'labels'            => [
+				'name'                       => __( 'Status', 'yikes-level-playing-field' ),
+				'singular_name'              => _x( 'Status', 'taxonomy general name', 'yikes-level-playing-field' ),
+				'search_items'               => __( 'Search Statuses', 'yikes-level-playing-field' ),
+				'popular_items'              => __( 'Popular Statuses', 'yikes-level-playing-field' ),
+				'all_items'                  => __( 'All Statuses', 'yikes-level-playing-field' ),
+				'parent_item'                => __( 'Parent Status', 'yikes-level-playing-field' ),
+				'parent_item_colon'          => __( 'Parent Status:', 'yikes-level-playing-field' ),
+				'edit_item'                  => __( 'Edit Status', 'yikes-level-playing-field' ),
+				'update_item'                => __( 'Update Status', 'yikes-level-playing-field' ),
+				'add_new_item'               => __( 'New Status', 'yikes-level-playing-field' ),
+				'new_item_name'              => __( 'New Status', 'yikes-level-playing-field' ),
+				'separate_items_with_commas' => __( 'Separate Statuses with commas', 'yikes-level-playing-field' ),
+				'add_or_remove_items'        => __( 'Add or remove Statuses', 'yikes-level-playing-field' ),
+				'choose_from_most_used'      => __( 'Choose from the most used Statuses', 'yikes-level-playing-field' ),
+				'not_found'                  => __( 'No Statuses found.', 'yikes-level-playing-field' ),
+				'menu_name'                  => __( 'Statuses', 'yikes-level-playing-field' ),
+			],
+			'show_in_rest'      => false,
+		];
+	}
+
+	/**
+	 * Get the object type(s) to use when registering the taxonomy.
+	 *
+	 * @author Jeremy Pry
+	 * @return array
+	 */
+	protected function get_object_types() {
+		return [
+			ApplicantManager::SLUG,
+		];
 	}
 }

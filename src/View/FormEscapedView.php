@@ -27,40 +27,42 @@ final class FormEscapedView implements View {
 
 	/**
 	 * Form tags that are allowed to be rendered.
+	 *
+	 * @var array
 	 */
-	protected $form_tags = array(
-		'form'   => array(
+	protected $form_tags = [
+		'form'   => [
 			'id'     => true,
 			'class'  => true,
 			'action' => true,
 			'method' => true,
-		),
-		'input'  => array(
+		],
+		'input'  => [
 			'id'    => true,
 			'class' => true,
 			'type'  => true,
 			'name'  => true,
 			'value' => true,
-		),
-		'select' => array(
+		],
+		'select' => [
 			'id'    => true,
 			'class' => true,
 			'type'  => true,
 			'name'  => true,
 			'value' => true,
-		),
-		'option' => array(
+		],
+		'option' => [
 			'id'       => true,
 			'class'    => true,
 			'type'     => true,
 			'name'     => true,
 			'value'    => true,
 			'selected' => true,
-		),
-		'label'  => array(
+		],
+		'label'  => [
 			'for' => true,
-		),
-	);
+		],
+	];
 
 	/**
 	 * View instance to decorate.
@@ -78,7 +80,7 @@ final class FormEscapedView implements View {
 	 *
 	 * @var array
 	 */
-	private $allowed_tags = array();
+	private $allowed_tags = [];
 
 	/**
 	 * Instantiate a FormEscapedView object.
@@ -98,6 +100,24 @@ final class FormEscapedView implements View {
 	}
 
 	/**
+	 * Prepare an array of allowed tags by adding form elements to the existing
+	 * array.
+	 *
+	 * This makes sure that the basic form elements always pass through the
+	 * escaping functions.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param array $allowed_tags Allowed tags as fetched from the WordPress
+	 *                            defaults.
+	 *
+	 * @return array Modified tags array.
+	 */
+	private function prepare_allowed_tags( $allowed_tags ) {
+		return array_replace_recursive( $allowed_tags, $this->form_tags );
+	}
+
+	/**
 	 * Render a given URI.
 	 *
 	 * @since %VERSION%
@@ -107,7 +127,7 @@ final class FormEscapedView implements View {
 	 * @return string Rendered HTML.
 	 * @throws FailedToLoadView If the View URI could not be loaded.
 	 */
-	public function render( array $context = array() ) {
+	public function render( array $context = [] ) {
 		return wp_kses( $this->view->render( $context ), $this->allowed_tags );
 	}
 
@@ -134,23 +154,5 @@ final class FormEscapedView implements View {
 			$this->view->render_partial( $uri, $context ),
 			$this->allowed_tags
 		);
-	}
-
-	/**
-	 * Prepare an array of allowed tags by adding form elements to the existing
-	 * array.
-	 *
-	 * This makes sure that the basic form elements always pass through the
-	 * escaping functions.
-	 *
-	 * @since %VERSION%
-	 *
-	 * @param array $allowed_tags Allowed tags as fetched from the WordPress
-	 *                            defaults.
-	 *
-	 * @return array Modified tags array.
-	 */
-	private function prepare_allowed_tags( $allowed_tags ) {
-		return array_replace_recursive( $allowed_tags, $this->form_tags );
 	}
 }

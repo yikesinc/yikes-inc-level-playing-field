@@ -9,7 +9,12 @@
 
 namespace Yikes\LevelPlayingField\Model;
 
-
+/**
+ * Trait ApplicantTrait
+ *
+ * @since   %VERSION%
+ * @package Yikes\LevelPlayingField
+ */
 trait ApplicantTrait {
 
 

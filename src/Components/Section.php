@@ -19,6 +19,11 @@ class Section implements MaybeRepeatable {
 
 	use Repeatable;
 
+	/**
+	 * Section constructor.
+	 *
+	 * @param array $fields Fields to include with the section.
+	 */
 	public function __construct( array $fields ) {
 
 	}
