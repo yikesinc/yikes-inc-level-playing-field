@@ -13,8 +13,16 @@
     "license": "GPL-2.0+",
     "authors": [
         {
+            "name": "Jeremy Pry",
+            "email": "jeremy.pry@gmail.com",
+            "role": "Developer",
+            "homepage": "http://jeremypry.com/"
+        },
+        {
             "name": "Yikes Inc.",
-            "email": "info@yikesinc.com"
+            "email": "info@yikesinc.com",
+            "role": "Owner",
+            "homepage": "https://www.yikesinc.com"
         }
     ]
 }
