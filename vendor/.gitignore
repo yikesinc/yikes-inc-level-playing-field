@@ -1,0 +1,7 @@
+# Ignore everything in this directory
+*
+
+# ...except a few things
+!.gitignore
+!README.md
+!awesome-yikes-framework
