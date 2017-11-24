@@ -2,8 +2,34 @@
 <ruleset name="WordPress Coding Standards for Plugins">
 	<description>Generally-applicable sniffs for WordPress plugins</description>
 
-	<rule ref="WordPress-Core" />
-	<rule ref="WordPress-Docs" />
+	<!-- Default WordPress sniffs -->
+	<rule ref="WordPress-Core">
+		<exclude name="WordPress.Files.FileName"/>
+		<exclude name="WordPress.CSRF.NonceVerification.NoNonceVerification"/>
+	</rule>
+	<rule ref="WordPress-Docs"/>
+	<rule ref="WordPress-Extra"/>
+
+	<!-- Remove some sniffs we don't need to follow -->
+	<rule ref="PEAR.Files.IncludingFile">
+		<exclude name="PEAR.Files.IncludingFile.BracketsNotRequired"/>
+	</rule>
+
+	<!-- Change behavior of some sniffs -->
+	<rule ref="Generic.Commenting.DocComment.MissingShort">
+		<message>Inline Doc Comment detected</message>
+		<severity>3</severity>
+	</rule>
+	<rule ref="WordPress.PHP.DevelopmentFunctions">
+		<properties>
+			<property name="exclude" value="error_log"/>
+		</properties>
+	</rule>
+	<rule ref="WordPress.PHP.DiscouragedPHPFunctions">
+		<properties>
+			<property name="exclude" value="obfuscation"/>
+		</properties>
+	</rule>
 
 	<!-- Check all PHP files in directory tree by default. -->
 	<arg name="extensions" value="php"/>
@@ -13,5 +39,8 @@
 	<arg value="s"/>
 
 	<exclude-pattern>*/node_modules/*</exclude-pattern>
-	<exclude-pattern>*/vendor/*</exclude-pattern>
+	<exclude-pattern type="relative">^vendor/*</exclude-pattern>
+	<exclude-pattern type="relative">^.idea/*</exclude-pattern>
+	<exclude-pattern type="relative">^old/*</exclude-pattern>
+	<exclude-pattern type="relative">^tests/*</exclude-pattern>
 </ruleset>
