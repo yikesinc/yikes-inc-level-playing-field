@@ -123,7 +123,39 @@ table.yks_mbox {
     }
   }
 
+  /* File upload */
 
+  /* Make images fit after files are uploaded */
+  .img_status img {
+    border: 1px solid #DFDFDF;
+    background: #FAFAFA;
+    display: block;
+    margin-top: 10px;
+    max-width: 350px !important;
+    padding: 5px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+  }
+
+
+  /* Remove image button */
+  .yks_upstat {
+    .img_status, .embed_status {
+      position: relative;
+
+      .yks_hide_ubutton  {
+        background: url(images/ico-delete.png);
+        cursor: pointer;
+        text-indent: -9999px;
+        height: 16px;
+        left: -5px;
+        margin-left: 1px;
+        position: absolute;
+        top: -5px;
+        width: 16px;
+      }
+    }
+  }
 
   /* Taxonomy pickers */
   .yks_taxonomy_container, .yks_mbox-multicheck {

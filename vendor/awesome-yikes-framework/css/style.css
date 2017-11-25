@@ -7,6 +7,9 @@ table.yks_mbox {
   /* Global */
   /* Title Metabox */
   /* Other Metaboxes */
+  /* File upload */
+  /* Make images fit after files are uploaded */
+  /* Remove image button */
   /* Taxonomy pickers */
   /**
    * Colorpicker
@@ -67,6 +70,27 @@ table.yks_mbox {
     width: 18%; }
     table.yks_mbox .yks_multicheck_label input.yks_multicheck {
       margin-right: 5px; }
+  table.yks_mbox .img_status img {
+    border: 1px solid #DFDFDF;
+    background: #FAFAFA;
+    display: block;
+    margin-top: 10px;
+    max-width: 350px !important;
+    padding: 5px;
+    -moz-border-radius: 2px;
+    border-radius: 2px; }
+  table.yks_mbox .yks_upstat .img_status, table.yks_mbox .yks_upstat .embed_status {
+    position: relative; }
+    table.yks_mbox .yks_upstat .img_status .yks_hide_ubutton, table.yks_mbox .yks_upstat .embed_status .yks_hide_ubutton {
+      background: url(images/ico-delete.png);
+      cursor: pointer;
+      text-indent: -9999px;
+      height: 16px;
+      left: -5px;
+      margin-left: 1px;
+      position: absolute;
+      top: -5px;
+      width: 16px; }
   table.yks_mbox .yks_taxonomy_container, table.yks_mbox .yks_mbox-multicheck {
     margin-top: 4px; }
   table.yks_mbox .wp-picker-container {

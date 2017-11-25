@@ -72,7 +72,7 @@ if ( ! class_exists( 'YIKES_Awesome_Framework_100', false ) ) {
 			require_once YIKES_Awesome_Framework_Path . 'classes/class-yikes-page-meta-boxes.php';
 			
 			// Metafield sortable columsn for CPT's
-			require_once YIKES_Awesome_Framework_Path . 'classes/sortable.columns.class.php';
+			require_once YIKES_Awesome_Framework_Path . 'classes/class-yikes-sortable-columns.php';
 
 			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ), 10 );
 

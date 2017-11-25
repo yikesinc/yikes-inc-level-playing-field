@@ -110,7 +110,7 @@ class YIKES_CPT_Meta_Boxes {
 		$mbox['show_on']['value'] = ! is_array( $mbox['show_on']['value'] ) ? array( $mbox['show_on']['value'] ) : $mbox['show_on']['value'];
 
 		// If current page id is in the included array, display the metabox.
-		if ( in_array( $post_id, $mbox['show_on']['value'], true ) ) {
+		if ( in_array( $post_id, $mbox['show_on']['value'] ) ) {
 			return true;
 		}
 
@@ -141,7 +141,7 @@ class YIKES_CPT_Meta_Boxes {
 		$mbox['hide_on']['value'] = ! is_array( $mbox['hide_on']['value'] ) ? array( $mbox['hide_on']['value'] ) : $mbox['hide_on']['value'];
 
 		// If current page id is in the included array, hide the metabox.
-		if ( in_array( $post_id, $mbox['hide_on']['value'], true ) ) {
+		if ( in_array( $post_id, $mbox['hide_on']['value'] ) ) {
 			return false;
 		}
 
