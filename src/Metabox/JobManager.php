@@ -41,29 +41,29 @@ class JobManager extends AwesomeBaseMetabox {
 	 * @return array The filtered meta boxes.
 	 */
 	public function register_boxes( $meta_boxes ) {
-		$meta_boxes[] = array(
+		$meta_boxes[] = [
 			'id'     => $this->prefix_field( 'metabox' ),
 			'title'  => __( 'General Info', 'yikes-level-playing-field' ),
-			'pages'  => array( JobManagerCPT::SLUG ),
-			'fields' => array(
-				array(
+			'pages'  => [ JobManagerCPT::SLUG ],
+			'fields' => [
+				[
 					'name'    => __( 'Status', 'yikes-level-playing-field' ),
 					'desc'    => __( 'The job status', 'yikes-level-playing-field' ),
 					'id'      => $this->prefix_field( 'status' ),
 					'type'    => 'select',
-					'options' => array(
-						array(
+					'options' => [
+						[
 							'name'  => __( 'Active', 'yikes-level-playing-field' ),
 							'value' => 'active',
-						),
-						array(
+						],
+						[
 							'name'  => __( 'Inactive', 'yikes-level-playing-field' ),
 							'value' => 'inactive',
-						),
-					),
-				),
-			),
-		);
+						],
+					],
+				],
+			],
+		];
 
 		return $meta_boxes;
 	}
