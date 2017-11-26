@@ -45,9 +45,9 @@ class ApplicationManager extends BasePostType {
 	public function columns( $original_columns ) {
 		$columns = [
 			'cb'         => $original_columns['cb'],
-			'title'      => _x( 'Application Name', 'column heading' ),
-			'jobs'       => _x( 'Jobs', 'column heading' ),
-			'applicants' => _x( 'Applicants', 'column heading' ),
+			'title'      => _x( 'Application Name', 'column heading', 'yikes-level-playing-field' ),
+			'jobs'       => _x( 'Jobs', 'column heading', 'yikes-level-playing-field' ),
+			'applicants' => _x( 'Applicants', 'column heading', 'yikes-level-playing-field' ),
 			'date'       => $original_columns['date'],
 		];
 

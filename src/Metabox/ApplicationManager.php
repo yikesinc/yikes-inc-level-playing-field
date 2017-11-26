@@ -43,15 +43,15 @@ class ApplicationManager extends AwesomeBaseMetabox {
 	public function register_boxes( $meta_boxes ) {
 		$meta_boxes[] = [
 			'id'     => $this->prefix_field( 'metabox' ),
-			'title'  => __( 'Application Fields' ),
+			'title'  => __( 'Application Fields', 'yikes-level-playing-field' ),
 			'pages'  => [ ApplicationCPT::SLUG ],
 			'fields' => [
 				[
-					'name'   => __( 'Basic Info' ),
+					'name'   => __( 'Basic Info', 'yikes-level-playing-field' ),
 					'type'   => 'group',
 					'fields' => [
 						[
-							'name'  => __( 'Name (required)' ),
+							'name'  => __( 'Name (required)', 'yikes-level-playing-field' ),
 							'id'    => $this->prefix_field( 'name' ),
 							'type'  => 'checkbox',
 							'value' => 1,

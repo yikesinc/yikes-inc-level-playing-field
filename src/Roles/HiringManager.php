@@ -26,7 +26,7 @@ class HiringManager extends BaseRole {
 	 * @return string
 	 */
 	protected function get_title() {
-		return esc_html__( 'Hiring Manager' );
+		return esc_html__( 'Hiring Manager', 'yikes-level-playing-field' );
 	}
 
 	/**
