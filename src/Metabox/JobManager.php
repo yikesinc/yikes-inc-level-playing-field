@@ -64,13 +64,13 @@ class JobManager extends AwesomeBaseMetabox {
 						[
 							'name' => __( 'Job Description', 'yikes-level-playing-field' ),
 							'desc' => __( 'General overview of the Job and its requirements.', 'yikes-level-playing-field' ),
-							'id'   => $this->prefix_field( 'description' ),
+							'id'   => JobMeta::DESCRIPTION,
 							'type' => 'wysiwyg',
 						],
 						[
 							'name'    => __( 'Job Type', 'yikes-level-playing-field' ),
 							'desc'    => __( 'The type of job being offered', 'yikes-level-playing-field' ),
-							'id'      => $this->prefix_field( 'type' ),
+							'id'      => JobMeta::TYPE,
 							'type'    => 'radio-inline',
 							'options' => [
 								[
@@ -97,7 +97,7 @@ class JobManager extends AwesomeBaseMetabox {
 						],
 						[
 							'name'    => __( 'Location', 'yikes-level-playing-field' ),
-							'id'      => $this->prefix_field( 'location' ),
+							'id'      => JobMeta::LOCATION,
 							'type'    => 'radio-inline',
 							'options' => [
 								[
@@ -113,7 +113,7 @@ class JobManager extends AwesomeBaseMetabox {
 						[
 							'name' => __( 'Address', 'yikes-level-playing-field' ),
 							'desc' => __( 'Address where the job is located', 'yikes-level-playing-field' ),
-							'id'   => $this->prefix_field( 'address' ),
+							'id'   => JobMeta::ADDRESS,
 							'type' => 'address',
 						],
 					],

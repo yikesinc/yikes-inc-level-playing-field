@@ -17,6 +17,13 @@ namespace Yikes\LevelPlayingField\Model;
  */
 interface JobMeta {
 
+	// Prefixes.
 	const META_PREFIX       = 'job_cpt_meta_';
 	const FORM_FIELD_PREFIX = 'job_cpt_';
+
+	// General fields.
+	const DESCRIPTION = self::META_PREFIX . 'description';
+	const TYPE        = self::META_PREFIX . 'type';
+	const LOCATION    = self::META_PREFIX . 'location';
+	const ADDRESS     = self::META_PREFIX . 'address';
 }
