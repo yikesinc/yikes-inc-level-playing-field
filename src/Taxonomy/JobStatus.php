@@ -42,7 +42,7 @@ class JobStatus extends BaseTaxonomy {
 		return [
 			'hierarchical'      => false,
 			'public'            => false,
-			'show_ui'           => true,
+			'show_ui'           => false,
 			'show_in_menu'      => false,
 			'show_admin_column' => true,
 			'query_var'         => true,
