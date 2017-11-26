@@ -10,6 +10,7 @@
 namespace Yikes\LevelPlayingField\Model;
 
 use Yikes\LevelPlayingField\Model\JobMeta as JMMeta;
+use Yikes\LevelPlayingField\Taxonomy\JobStatus;
 
 /**
  * Class Job
@@ -27,7 +28,7 @@ class Job extends CustomPostTypeEntity {
 	 * @return string
 	 */
 	public function get_status() {
-		return '';
+		return $this->status;
 	}
 
 	/**
@@ -38,7 +39,7 @@ class Job extends CustomPostTypeEntity {
 	 * @return string
 	 */
 	public function get_description() {
-		return '';
+		return $this->description;
 	}
 
 	/**
@@ -51,7 +52,7 @@ class Job extends CustomPostTypeEntity {
 	 * @return string
 	 */
 	public function get_type() {
-		return '';
+		return $this->type;
 	}
 
 	/**
@@ -73,7 +74,7 @@ class Job extends CustomPostTypeEntity {
 	 * @return array
 	 */
 	public function get_address() {
-		return array();
+		return [];
 	}
 
 	/**
@@ -111,7 +112,20 @@ class Job extends CustomPostTypeEntity {
 	 * @return array
 	 */
 	protected function get_lazy_properties() {
-		return array();
+		return [
+			JobMeta::DESCRIPTION => '',
+			JobMeta::TYPE        => '',
+			JobMeta::LOCATION    => '',
+			JobMeta::ADDRESS     => [
+				'address-1' => '',
+				'address-2' => '',
+				'city'      => '',
+				'state'     => '',
+				'province'  => '',
+				'country'   => '',
+				'zip'       => '',
+			],
+		];
 	}
 
 	/**
@@ -126,8 +140,8 @@ class Job extends CustomPostTypeEntity {
 	 * @param string $property Name of the property to load.
 	 */
 	protected function load_lazy_property( $property ) {
+		// Load the normal properties from post meta.
 		$meta = get_post_meta( $this->get_id() );
-
 		foreach ( $this->get_lazy_properties() as $key => $default ) {
 			$this->$key = array_key_exists( JMMeta::META_PREFIX . $key, $meta )
 				? $meta[ JMMeta::META_PREFIX . $key ][0]
