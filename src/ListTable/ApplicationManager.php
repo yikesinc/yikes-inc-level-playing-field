@@ -91,6 +91,11 @@ class ApplicationManager extends BasePostType {
 	 * @return array
 	 */
 	public function filter_request( $query_vars ) {
+		// This filter should only run in the admin area, and where get_current_screen() exists.
+		if ( ! is_admin() || ! function_exists( 'get_current_screen' ) ) {
+			return $query_vars;
+		}
+
 		// Ensure this is the screen we want.
 		$screen = get_current_screen();
 		if ( ! ( $screen instanceof \WP_Screen ) ) {
