@@ -9,6 +9,10 @@
 
 namespace Yikes\LevelPlayingField\Metabox;
 
+use Yikes\LevelPlayingField\Assets\Asset;
+use Yikes\LevelPlayingField\Assets\AssetsAware;
+use Yikes\LevelPlayingField\Assets\AssetsAwareness;
+use Yikes\LevelPlayingField\Assets\ScriptAsset;
 use Yikes\LevelPlayingField\CustomPostType\JobManager as JobManagerCPT;
 use Yikes\LevelPlayingField\Model\JobMeta;
 use Yikes\LevelPlayingField\Taxonomy\JobStatus;
@@ -19,7 +23,27 @@ use Yikes\LevelPlayingField\Taxonomy\JobStatus;
  * @since   %VERSION%
  * @package Yikes\LevelPlayingField
  */
-class JobManager extends AwesomeBaseMetabox {
+class JobManager extends AwesomeBaseMetabox implements AssetsAware {
+
+	use AssetsAwareness;
+
+	const JS_HANDLE = 'lpf-job-manager-js';
+	const JS_URI    = 'assets/js/job-manager';
+
+	/**
+	 * Register hooks.
+	 *
+	 * @since  %VERSION%
+	 * @author Jeremy Pry
+	 */
+	public function register() {
+		parent::register();
+		$this->register_assets();
+
+		add_action( 'add_meta_boxes_' . JobManagerCPT::SLUG, function () {
+			$this->enqueue_assets();
+		} );
+	}
 
 	/**
 	 * Get the prefix for use with meta fields.
@@ -132,4 +156,18 @@ class JobManager extends AwesomeBaseMetabox {
 
 		return $meta_boxes;
 	}
+
+	/**
+	 * Get the array of known assets.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @return Asset[]
+	 */
+	protected function get_assets() {
+		return [
+			new ScriptAsset( self::JS_HANDLE, self::JS_URI ),
+		];
+	}
+
 }
