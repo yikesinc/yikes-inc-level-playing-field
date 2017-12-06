@@ -28,13 +28,17 @@ const svgstore = require( 'gulp-svgstore' );
 const uglify = require( 'gulp-uglify' );
 const wpPot = require( 'gulp-wp-pot' );
 const zip = require( 'gulp-zip' );
+const print = require( 'gulp-print' );
+
+// Environment variables.
+const gitKey = process.env.gitKey;
 
 // Set assets paths.
 const paths = {
 	'css': [ 'assets/css/*.css', '!assets/css/*.min.css' ],
 	'icons': 'assets/images/svg-icons/*.svg',
 	'images': [ 'assets/images/*', '!assets/images/*.svg' ],
-	'php': [ './*.php', './**/*.php' ],
+	'php': [ './*.php', './src/**/*.php' ],
 	'sass': 'assets/css/sass/*.scss',
 	'concat_scripts': 'assets/js/concat/*.js',
 	'scripts': [ 'assets/js/*.js', '!assets/js/*.min.js' ],
@@ -72,6 +76,15 @@ function handleErrors() {
 
 	// Prevent the 'watch' task from stopping.
 	this.emit( 'end' );
+}
+
+/**
+ * Output error messages to the command prompt.
+ * @param error
+ */
+function outputErrors( error ) {
+	gutil.log( gutil.colors.red( '[Error]' ), error.toString() );
+	gutil.beep();
 }
 
 /**
@@ -246,17 +259,13 @@ gulp.task( 'concat', [ 'clean:scripts' ], () =>
 	gulp.src( paths.concat_scripts )
 
 		// Deal with errors.
-		.pipe( plumber(
-			{'errorHandler': handleErrors}
-		) )
+		.pipe( plumber( { 'errorHandler': handleErrors } ) )
 
 		// Start a sourcemap.
 		.pipe( sourcemaps.init() )
 
 		// Convert ES6+ to ES2015.
-		.pipe( babel({
-			presets: [ 'latest' ]
-		}) )
+		.pipe( babel( { presets: [ 'latest' ] } ) )
 
 		// Concatenate partials into a single script.
 		.pipe( concat( 'yikes-level-playing-field.js' ) )
@@ -276,10 +285,10 @@ gulp.task( 'concat', [ 'clean:scripts' ], () =>
   */
 gulp.task( 'uglify', [ 'concat' ], () =>
 	gulp.src( paths.scripts )
-		.pipe( rename({'suffix': '.min'}) )
-		.pipe( uglify({
-			'mangle': false
-		}) )
+		.pipe( plumber( { 'errorHandler': outputErrors } ) )
+		.pipe( rename( { 'extname': '.min.js' } ) )
+		.pipe( babel( { presets: [ 'latest' ] } ) )
+		.pipe( uglify( { 'mangle': false } ) )
 		.pipe( gulp.dest( 'assets/js' ) )
 );
 
@@ -292,16 +301,15 @@ gulp.task( 'clean:pot', () =>
 
 /**
  * Scan the theme and create a POT file.
- *
- * https://www.npmjs.com/package/gulp-wp-pot
+ *f
  */
 gulp.task( 'wp-pot', [ 'clean:pot' ], () =>
 	gulp.src( paths.php )
-		.pipe( plumber({'errorHandler': handleErrors}) )
+		.pipe( plumber( { 'errorHandler': handleErrors } ) )
 		.pipe( sort() )
 		.pipe( wpPot({
 			'domain': 'yikes-level-playing-field',
-			'package': 'yikes-level-playing-field'
+			'package': 'Yikes Level Playing Field'
 		}) )
 		.pipe( gulp.dest( 'languages/yikes-level-playing-field.pot' ) )
 );
@@ -348,7 +356,7 @@ gulp.task( 'js:lint', () =>
  */
 gulp.task( 'sassdoc', function() {
 	const options = {
-		dest: 'docs',
+		dest: 'docs'
 	};
 
 	return gulp.src( 'assets/css/sass/**/*.scss' )
