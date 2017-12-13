@@ -77,8 +77,16 @@ class ApplicationManager extends BasePostType {
 			$applicant_repo = new ApplicantRepository();
 		}
 
-		// TODO: Implement column_content() method.
-		echo 'placeholder';
+		switch ( $column_name ) {
+			case 'applicants':
+				echo esc_html( $applicant_repo->get_count_for_application( $post_id ) );
+				break;
+
+			case 'jobs':
+				// TODO: Implement column_content() method.
+				echo 'placeholder';
+				break;
+		}
 	}
 
 	/**
