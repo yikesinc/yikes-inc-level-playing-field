@@ -11,6 +11,7 @@ namespace Yikes\LevelPlayingField\ListTable;
 
 use Yikes\LevelPlayingField\CustomPostType\ApplicationManager as ApplicationManagerCPT;
 use Yikes\LevelPlayingField\Model\ApplicantRepository;
+use Yikes\LevelPlayingField\Model\JobRepository;
 
 /**
  * Class ApplicationManager
@@ -72,9 +73,16 @@ class ApplicationManager extends BasePostType {
 			return;
 		}
 
+		// Create only one Applicant Repo object.
 		static $applicant_repo = null;
 		if ( null === $applicant_repo ) {
 			$applicant_repo = new ApplicantRepository();
+		}
+
+		// Create only one Job Repo object.
+		static $job_repo = null;
+		if ( null === $job_repo ) {
+			$job_repo = new JobRepository();
 		}
 
 		switch ( $column_name ) {
@@ -83,8 +91,7 @@ class ApplicationManager extends BasePostType {
 				break;
 
 			case 'jobs':
-				// TODO: Implement column_content() method.
-				echo 'placeholder';
+				echo esc_html( $job_repo->get_count_for_application( $post_id ) );
 				break;
 		}
 	}

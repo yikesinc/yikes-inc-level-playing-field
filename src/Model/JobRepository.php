@@ -122,4 +122,35 @@ class JobRepository extends CustomPostTypeRepository {
 
 		return absint( $query->found_posts );
 	}
+
+	/**
+	 * Get the count of Jobs using a particular Application.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param int $application_id The Application ID.
+	 *
+	 * @return int The count of jobs for the Application.
+	 */
+	public function get_count_for_application( $application_id ) {
+		$args = [
+			'post_type'              => JobManagerCPT::SLUG,
+			'post_status'            => [ 'any' ],
+			// Limit posts per page, because WP_Query will still tell us the total.
+			'posts_per_page'         => 1,
+			'update_post_meta_cache' => false,
+			'update_post_term_cache' => false,
+			'fields'                 => 'ids',
+			'meta_query'             => [
+				[
+					'key'   => '_application_id',
+					'value' => $application_id,
+				],
+			],
+		];
+
+		$query = new \WP_Query( $args );
+
+		return absint( $query->found_posts );
+	}
 }
