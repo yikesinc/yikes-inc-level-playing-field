@@ -9,6 +9,7 @@
 
 namespace Yikes\LevelPlayingField\CustomPostType;
 
+use Yikes\LevelPlayingField\Exception\MustExtend;
 use Yikes\LevelPlayingField\Model\JobRepository;
 use Yikes\LevelPlayingField\Taxonomy\JobStatus;
 
@@ -37,6 +38,7 @@ final class LimitedJobManager extends JobManager {
 		parent::register();
 		$this->add_terms_action();
 		add_action( JobStatus::SLUG . '_metabox_before', [ $this, 'metabox_limit_message' ] );
+		add_action( 'yks_render_taxonomy-select', [ $this, 'metabox_limit_message' ] );
 	}
 
 	/**
@@ -57,6 +59,8 @@ final class LimitedJobManager extends JobManager {
 	 * @param array  $terms     An array of object terms.
 	 * @param array  $tt_ids    An array of term taxonomy IDs.
 	 * @param string $taxonomy  Taxonomy slug.
+	 *
+	 * @throws MustExtend When get_slug() throws an exception.
 	 */
 	public function modify_post_terms( $object_id, $terms, $tt_ids, $taxonomy ) {
 		if ( JobStatus::SLUG !== $taxonomy ) {
@@ -100,12 +104,32 @@ final class LimitedJobManager extends JobManager {
 	 * @return bool
 	 */
 	private function active_past_limit() {
+		return $this->count_active() > $this->limit;
+	}
+
+	/**
+	 * Determine if we're at the limit available jobs.
+	 *
+	 * @since %VERSION%
+	 * @return bool
+	 */
+	private function active_at_limit() {
+		return $this->count_active() === $this->limit;
+	}
+
+	/**
+	 * Return the count of active Jobs.
+	 *
+	 * @since %VERSION%
+	 * @return int
+	 */
+	private function count_active() {
 		static $repo = null;
 		if ( null === $repo ) {
 			$repo = new JobRepository();
 		}
 
-		return $repo->count_active() > $this->limit;
+		return $repo->count_active();
 	}
 
 	/**
@@ -121,11 +145,16 @@ final class LimitedJobManager extends JobManager {
 	 * Display a notice when there are too many items active.
 	 *
 	 * @since %VERSION%
+	 *
+	 * @param array $field Array of field data on the Yikes Framework hook.
 	 */
-	public function metabox_limit_message() {
-		if ( ! $this->active_past_limit() ) {
+	public function metabox_limit_message( array $field = [] ) {
+		if ( doing_action( 'yks_render_taxonomy-select' ) && JobStatus::SLUG !== $field['taxonomy'] ) {
+			return;
+		} elseif ( ! $this->active_at_limit() ) {
 			return;
 		}
+
 		$message = sprintf(
 			/* translators: %d is the number of active jobs */
 			_n( 'Jobs are limited to %d active job.', 'Jobs are limited to %d active jobs.', $this->limit, 'yikes-level-playing-field' ),
