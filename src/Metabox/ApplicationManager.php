@@ -9,6 +9,10 @@
 
 namespace Yikes\LevelPlayingField\Metabox;
 
+use Yikes\LevelPlayingField\Assets\Asset;
+use Yikes\LevelPlayingField\Assets\AssetsAware;
+use Yikes\LevelPlayingField\Assets\AssetsAwareness;
+use Yikes\LevelPlayingField\Assets\ScriptAsset;
 use Yikes\LevelPlayingField\CustomPostType\ApplicationManager as ApplicationCPT;
 use Yikes\LevelPlayingField\Model\ApplicationMeta;
 
@@ -18,7 +22,27 @@ use Yikes\LevelPlayingField\Model\ApplicationMeta;
  * @since   %VERSION%
  * @package Yikes\LevelPlayingField
  */
-class ApplicationManager extends AwesomeBaseMetabox {
+class ApplicationManager extends AwesomeBaseMetabox implements AssetsAware {
+
+	use AssetsAwareness;
+
+	const JS_HANDLE = 'lpf-application-manager-js';
+	const JS_URI    = 'assets/js/application-manager';
+
+	/**
+	 * Register hooks.
+	 *
+	 * @since  %VERSION%
+	 * @author Jeremy Pry
+	 */
+	public function register() {
+		parent::register();
+		$this->register_assets();
+
+		add_action( 'add_meta_boxes_' . ApplicationCPT::SLUG, function () {
+			$this->enqueue_assets();
+		} );
+	}
 
 	/**
 	 * Get the prefix for use with meta fields.
@@ -273,5 +297,17 @@ class ApplicationManager extends AwesomeBaseMetabox {
 		<?php
 
 		return ob_get_clean();
+	}
+
+	/**
+	 * Get the array of known assets.
+	 *
+	 * @since %VERSION%
+	 * @return Asset[]
+	 */
+	protected function get_assets() {
+		return [
+			new ScriptAsset( self::JS_HANDLE, self::JS_URI ),
+		];
 	}
 }
