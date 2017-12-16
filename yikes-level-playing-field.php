@@ -40,7 +40,7 @@ if ( version_compare( '5.6.0', PHP_VERSION, '>' ) ) {
 			'<div class="error"><p>%s</p></div>',
 			sprintf(
 				/* translators: %1$s is the required PHP version, %2$s is the current version */
-				esc_html__( 'Yikes, Inc. Level Playing Fields requires PHP version %1$s or above. You site is using PHP version %2$s.' ),
+				esc_html__( 'Yikes, Inc. Level Playing Fields requires PHP version %1$s or above. You site is using PHP version %2$s.', 'yikes-level-playing-field' ),
 				'5.6.0',
 				esc_html( PHP_VERSION )
 			)

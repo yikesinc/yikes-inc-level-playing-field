@@ -25,7 +25,7 @@ $job = $this->job;
 		<?php endif; ?>
 		<?php if ( ! empty( $job->get_type() ) ) : ?>
 			<div class="job-page-job-type">
-				<?php esc_html_e( 'Type:' ); ?> <?php echo esc_html( $job->get_type() ); ?>
+				<?php esc_html_e( 'Type:', 'yikes-level-playing-field' ); ?> <?php echo esc_html( $job->get_type() ); ?>
 			</div>
 		<?php endif; ?>
 		<?php if ( ! $job->is_remote() && ! empty( $job->get_address() ) ) : ?>
