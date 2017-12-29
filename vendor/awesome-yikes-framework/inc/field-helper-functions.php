@@ -1639,3 +1639,15 @@ function yks_awesome_framework_countries_array() {
 
 	return apply_filters( 'yikes-awesome-framework-countries-select', $countries );
 }
+
+/**
+ * Return an escaped HTML attribute.
+ *
+ * @since %VERSION%
+ *
+ * @param string $key The attribute key.
+ * @param string $value The attribute value.
+ */
+function yks_return_attribute( $key, $value ) {
+	return sprintf( '%1$s="%2$s" ', $key, esc_attr( $value ) );
+}

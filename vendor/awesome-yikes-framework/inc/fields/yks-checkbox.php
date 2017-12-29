@@ -23,15 +23,16 @@
 */
 
 // Setup our defaults
-$field_values	 = ! is_array( $meta ) ? array( $meta ) : $meta;
-$field_value	 = ( isset( $field['value'] ) ) ? $field['value'] : 1;
-$field_html		 = '';
-$field_repeating = ( isset( $field['repeating'] ) && $field['repeating'] === true ) ? true : false;
-$field_counter	 = 0;
-$field_id		 = ( isset( $field['id'] ) ) ? $field['id'] : '';
-$field_desc		 = ( isset( $field['desc'] ) ) ? $field['desc'] : '';
-$desc_type		 = ( isset( $field['desc_type'] ) ) ? $field['desc_type'] : 'block';
-$repeat_btn_text = isset( $field['repeat_btn_text'] ) ? $field['repeat_btn_text'] : 'Add A Field';
+$field_values     = ! is_array( $meta ) ? [ $meta ] : $meta;
+$field_html       = '';
+$field_counter    = 0;
+$field_value      = isset( $field['value'] ) ? $field['value'] : 1;
+$field_repeating  = isset( $field['repeating'] ) && $field['repeating'] === true;
+$field_id         = isset( $field['id'] ) ? $field['id'] : '';
+$field_desc       = isset( $field['desc'] ) ? $field['desc'] : '';
+$desc_type        = isset( $field['desc_type'] ) ? $field['desc_type'] : 'block';
+$repeat_btn_text  = isset( $field['repeat_btn_text'] ) ? $field['repeat_btn_text'] : 'Add A Field';
+$field_attributes = isset( $field['attributes'] ) ? (array) $field['attributes'] : array();
 
 if ( $field_repeating === true ) {
 
@@ -73,10 +74,32 @@ if ( $field_repeating === true ) {
 
 	// Get the field value
 	$value	 = isset( $field_values[0] ) ? $field_values[0] : '';
-	$checked = ( (string) $value === (string) $field_value ) ? 'checked="checked"' : '';
 
-	// Not a repeating field - no loop necessary, just add the HTML
-	$field_html .= '<input type="checkbox" class="yks_checkbox" name="' . esc_attr( $field_id ) . '" id="' . esc_attr( $field_id ) . '" value="' . esc_attr( $field_value ) . '"' . $checked . '/>';
+	// Set up field attributes.
+	$field_attributes = array_merge( $field_attributes, array(
+		'id'    => $field_id,
+		'name'  => $field_id,
+		'value' => $field_value,
+		'type'  => 'checkbox',
+		'class' => array(),
+	) );
+
+	if ( checked( $value, $field_value, false ) ) {
+		$field_attributes['checked'] = 'checked';
+	}
+
+	$field_attributes['class'] = array_unique( array_merge( $field_attributes['class'], array( 'yks_checkbox' ) ) );
+
+	// Build the HTML
+	$field_html .= '<input ';
+	foreach ( $field_attributes as $key => $value ) {
+		if ( 'class' === $key ) {
+			$field_html .= yks_return_attribute( $key, join( ' ', $value ) );
+		} else {
+			$field_html .= yks_return_attribute( $key, $value );
+		}
+	}
+	$field_html .= ' />';
 }
 
 // Field description
@@ -92,4 +115,3 @@ if ( $desc_type === 'inline' ) {
 
 // Display our field on the page
 echo $field_html;
-return;
