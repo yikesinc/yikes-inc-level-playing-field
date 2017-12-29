@@ -81,8 +81,9 @@ if ( $field_repeating === true ) {
 		'name'  => $field_id,
 		'value' => $field_value,
 		'type'  => 'checkbox',
-		'class' => array(),
 	) );
+
+	$field_attributes['class'] = isset( $field_attributes['class'] ) ? $field_attributes['class'] : array();
 
 	if ( checked( $value, $field_value, false ) ) {
 		$field_attributes['checked'] = 'checked';
