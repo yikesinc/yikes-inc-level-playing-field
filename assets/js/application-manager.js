@@ -1,28 +1,26 @@
 jQuery( document ).ready( function( $ ) {
 	'use strict';
 
-	const $address_div = $( '#job_cpt_meta_address_address-1' ).closest( '.yks-mbox-group-field' );
+	const $extraInfoFields = $( '.yks_extra_info' );
 	const application_manager_actions = {
 
 		/**
 		 * Initialize Job Manager actions.
 		 */
 		init: function() {
-			$( "input[name='job_cpt_meta_location']" ).on( 'change', this.address_div ).change();
+			$extraInfoFields.on( 'change', this.displayExtraInfo ).change();
 		},
 
 		/**
-		 * Show/hide the Address div based on the selected radio button.
+		 * Show/hide the extra info span based on the checkbox.
 		 */
-		address_div: function( e ) {
-			switch ( e.currentTarget.value ) {
-				case 'address':
-					$address_div.show();
-					break;
-
-				default:
-					$address_div.hide();
-					break;
+		displayExtraInfo: function( e ) {
+			const $this = $( this );
+			const $info = $( '.' + $this.data( 'section' ) );
+			if ( $this.is( ':checked' ) ) {
+				$info.show();
+			} else {
+				$info.hide();
 			}
 		}
 	};

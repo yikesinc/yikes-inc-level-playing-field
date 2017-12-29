@@ -133,24 +133,32 @@ class ApplicationManager extends AwesomeBaseMetabox implements AssetsAware {
 					'type'   => 'group',
 					'fields' => [
 						[
-							'name'      => __( 'Schooling', 'yikes-level-playing-field' ),
-							'desc'      => __( 'Schooling', 'yikes-level-playing-field' ),
-							'id'        => $this->prefix_field( 'schooling' ),
-							'type'      => 'checkbox',
-							'value'     => 1,
-							'desc_type' => 'inline',
+							'name'       => __( 'Schooling', 'yikes-level-playing-field' ),
+							'desc'       => __( 'Schooling', 'yikes-level-playing-field' ),
+							'id'         => $this->prefix_field( 'schooling' ),
+							'type'       => 'checkbox',
+							'value'      => 1,
+							'desc_type'  => 'inline',
+							'attributes' => [
+								'class'        => [ 'yks_extra_info' ],
+								'data-section' => 'lpf_schooling',
+							],
 						],
 						[
 							'desc' => $this->get_schooling_html(),
 							'type' => 'message',
 						],
 						[
-							'name'      => __( 'Certifications', 'yikes-level-playing-field' ),
-							'desc'      => __( 'Certifications', 'yikes-level-playing-field' ),
-							'id'        => $this->prefix_field( 'certifications' ),
-							'type'      => 'checkbox',
-							'value'     => 1,
-							'desc_type' => 'inline',
+							'name'       => __( 'Certifications', 'yikes-level-playing-field' ),
+							'desc'       => __( 'Certifications', 'yikes-level-playing-field' ),
+							'id'         => $this->prefix_field( 'certifications' ),
+							'type'       => 'checkbox',
+							'value'      => 1,
+							'desc_type'  => 'inline',
+							'attributes' => [
+								'class'        => [ 'yks_extra_info' ],
+								'data-section' => 'lpf_certification',
+							],
 						],
 						[
 							'desc' => $this->get_certification_html(),
@@ -194,12 +202,16 @@ class ApplicationManager extends AwesomeBaseMetabox implements AssetsAware {
 					'type'   => 'group',
 					'fields' => [
 						[
-							'name'      => __( 'Experience', 'yikes-level-playing-field' ),
-							'desc'      => __( 'Experience', 'yikes-level-playing-field' ),
-							'id'        => $this->prefix_field( 'experience' ),
-							'type'      => 'checkbox',
-							'value'     => 1,
-							'desc_type' => 'inline',
+							'name'       => __( 'Experience', 'yikes-level-playing-field' ),
+							'desc'       => __( 'Experience', 'yikes-level-playing-field' ),
+							'id'         => $this->prefix_field( 'experience' ),
+							'type'       => 'checkbox',
+							'value'      => 1,
+							'desc_type'  => 'inline',
+							'attributes' => [
+								'class'        => [ 'yks_extra_info' ],
+								'data-section' => 'lpf_experience',
+							],
 						],
 						[
 							'desc' => $this->get_experience_html(),
@@ -213,12 +225,16 @@ class ApplicationManager extends AwesomeBaseMetabox implements AssetsAware {
 					'type'   => 'group',
 					'fields' => [
 						[
-							'name'      => __( 'Volunteer Work', 'yikes-level-playing-field' ),
-							'desc'      => __( 'Volunteer Work', 'yikes-level-playing-field' ),
-							'id'        => $this->prefix_field( 'volunteer' ),
-							'type'      => 'checkbox',
-							'value'     => 1,
-							'desc_type' => 'inline',
+							'name'       => __( 'Volunteer Work', 'yikes-level-playing-field' ),
+							'desc'       => __( 'Volunteer Work', 'yikes-level-playing-field' ),
+							'id'         => $this->prefix_field( 'volunteer' ),
+							'type'       => 'checkbox',
+							'value'      => 1,
+							'desc_type'  => 'inline',
+							'attributes' => [
+								'class'        => [ 'yks_extra_info' ],
+								'data-section' => 'lpf_volunteer',
+							],
 						],
 						[
 							'desc' => $this->get_volunteer_html(),
@@ -290,7 +306,7 @@ class ApplicationManager extends AwesomeBaseMetabox implements AssetsAware {
 	protected function get_experience_html() {
 		ob_start();
 		?>
-		<ul class="lpf_details lpf_certification">
+		<ul class="lpf_details lpf_experience">
 			<li><?php esc_html_e( 'Organization', 'yikes-level-playing-field' ); ?></li>
 			<li><?php esc_html_e( 'Industry', 'yikes-level-playing-field' ); ?></li>
 			<li><?php esc_html_e( 'Dates', 'yikes-level-playing-field' ); ?></li>
