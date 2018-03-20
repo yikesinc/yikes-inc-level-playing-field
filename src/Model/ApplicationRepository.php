@@ -21,7 +21,7 @@ use Yikes\LevelPlayingField\Exception\InvalidPostID;
 class ApplicationRepository extends CustomPostTypeRepository {
 
 	/**
-	 * Find the Talk with a given post ID.
+	 * Find the Application with a given post ID.
 	 *
 	 * @since %VERSION%
 	 *
@@ -40,7 +40,7 @@ class ApplicationRepository extends CustomPostTypeRepository {
 	}
 
 	/**
-	 * Find all the published Talks.
+	 * Find all the published Applications.
 	 *
 	 * @since %VERSION%
 	 *
