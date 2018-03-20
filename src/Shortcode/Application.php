@@ -52,7 +52,7 @@ class Application extends BaseShortcode {
 		$application_repository = new ApplicationRepository();
 
 		return [
-			'appication' => $application_repository->find( $atts['id'] ),
+			'application' => $application_repository->find( $atts['id'] ),
 		];
 	}
 }
