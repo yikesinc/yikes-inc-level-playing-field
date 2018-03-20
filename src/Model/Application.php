@@ -43,7 +43,27 @@ class Application extends CustomPostTypeEntity {
 	 * @return array
 	 */
 	protected function get_lazy_properties() {
-		return array();
+		/**
+		 * Filter the default enabled fields.
+		 *
+		 * Fields that are default enabled should be set to true, while default
+		 * disabled fields are set to false.
+		 *
+		 * @param array $fields The array of fields.
+		 */
+		return apply_filters( 'lpf_application_fields_enabled_defaults', [
+			'name'           => true,
+			'email'          => true,
+			'phone'          => true,
+			'address'        => true,
+			'cover_letter'   => true,
+			'schooling'      => false,
+			'certifications' => false,
+			'skills'         => false,
+			'languages'      => false,
+			'experience'     => true,
+			'volunteer'      => false,
+		] );
 	}
 
 	/**
@@ -58,12 +78,37 @@ class Application extends CustomPostTypeEntity {
 	 * @param string $property Name of the property to load.
 	 */
 	protected function load_lazy_property( $property ) {
-		$meta = get_post_meta( $this->get_id() );
+		$this->load_lazy_properties();
+	}
 
+	/**
+	 * Load all lazily-loaded properties.
+	 *
+	 * After this process, the loaded property should be set within the
+	 * object's state, otherwise the load procedure might be triggered multiple
+	 * times.
+	 *
+	 * @since %VERSION%
+	 */
+	protected function load_lazy_properties() {
+		$meta = get_post_meta( $this->get_id() );
 		foreach ( $this->get_lazy_properties() as $key => $default ) {
 			$this->$key = array_key_exists( AMMeta::META_PREFIX . $key, $meta )
-				? $meta[ AMMeta::META_PREFIX . $key ][0]
+				? (bool) $meta[ AMMeta::META_PREFIX . $key ][0]
 				: $default;
 		}
+	}
+
+	/**
+	 * Get the active fields for this application.
+	 *
+	 * @since %VERSION%
+	 * @return array
+	 */
+	public function get_active_fields() {
+		$this->load_lazy_properties();
+		return array_filter( get_object_vars( $this ), function ( $value ) {
+			return true === $value;
+		} );
 	}
 }
