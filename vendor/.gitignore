@@ -4,4 +4,4 @@
 # ...except a few things
 !.gitignore
 !README.md
-!awesome-yikes-framework
+!awesome-yikes-framework/**
