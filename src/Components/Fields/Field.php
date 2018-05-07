@@ -42,4 +42,12 @@ interface Field extends Component {
 	 * @return bool
 	 */
 	public function is_required();
+
+	/**
+	 * Render the field for a form.
+	 *
+	 * @since %VERSION%
+	 * @return mixed
+	 */
+	public function render_form();
 }

@@ -9,6 +9,7 @@
 
 namespace Yikes\LevelPlayingField\Model\Components\Fields;
 
+use Yikes\LevelPlayingField\Exception\InvalidKey;
 use Yikes\LevelPlayingField\Exception\MustExtend;
 use Yikes\LevelPlayingField\Model\Components\Disabled;
 use Yikes\LevelPlayingField\Model\Components\MaybeRepeatable;
@@ -50,6 +51,43 @@ abstract class BaseField implements Field, MaybeRepeatable {
 	 * @var bool
 	 */
 	protected $required;
+
+	/**
+	 * BaseField constructor.
+	 *
+	 * @param string $key     The key for the field.
+	 * @param array  $options The options for the field.
+	 *
+	 * @throws InvalidKey When an empty key is provided.
+	 */
+	public function __construct( $key, array $options ) {
+		if ( empty( $key ) ) {
+			throw InvalidKey::empty_key( __METHOD__ );
+		}
+
+		$options = wp_parse_args( $options, [
+			'anonymous' => false,
+			'required'  => false,
+			'class'     => [],
+		] );
+
+		$this->key       = $key;
+		$this->anonymous = isset( $options['anonymous'] ) ? (bool) $options['anonymous'] : false;
+		$this->required  = isset( $options['required'] ) ? (bool) $options['required'] : false;
+
+		$this->process_attributes( $options );
+	}
+
+	/**
+	 * Process the field attributes for the object.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param array $atts The attributes for the current field object.
+	 *
+	 * @return mixed
+	 */
+	abstract protected function process_attributes( $atts );
 
 	/**
 	 * Get the field type.
