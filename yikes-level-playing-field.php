@@ -15,6 +15,38 @@
  * Domain Path:  /languages
  * Version:      0.2.0
  * Requires PHP: 5.6
+ * License:      GPL-2.0+
+ *
+ * The code in this plugin is a derivative work of the code written by Alain Schlesser in various
+ * libraries, which is licensed GPLv2. This code is therefore also licensed under the terms of
+ * the GNU Public License, version 2.
+ *
+ * Copyright 2016-2017 Alain Schlesser
+ * @link http://www.alainschlesser.com/
+ * @link https://github.com/schlessera/as-speaking
+ * @link https://github.com/schlessera/better-settings-v1
+ *
+ * Copyright 2017-2018 YIKES, Inc.
+ *
+ * Level Playing Field is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 2 of the License, or
+ * any later version.
+ *
+ * Level Playing Field is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Level Playing Field. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * We at YIKES, Inc. embrace the open source philosophy on a daily basis. We donate company time back to the
+ * WordPress project, and constantly strive to improve the WordPress project and community as a whole.
+ *
+ * "'Free software' is a matter of liberty, not price. To understand the concept, you should think of 'free'
+ * as in 'free speech,' not as in 'free beer'."
+ * - Richard Stallman
  */
 
 // Only run this within WordPress.
