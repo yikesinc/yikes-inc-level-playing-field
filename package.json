@@ -41,5 +41,8 @@
         "gulp-zip": "^4",
         "gulp.spritesmith": "^6",
         "sassdoc": "^2"
+    },
+    "resolutions": {
+        "natives": "1.1.3"
     }
 }
