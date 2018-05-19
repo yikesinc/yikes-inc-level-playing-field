@@ -1,8 +1,8 @@
-# Copyright (C) 2017 yikes-level-playing-field
-# This file is distributed under the same license as the yikes-level-playing-field package.
+# Copyright (C) 2018 Yikes Level Playing Field
+# This file is distributed under the same license as the Yikes Level Playing Field package.
 msgid ""
 msgstr ""
-"Project-Id-Version: yikes-level-playing-field\n"
+"Project-Id-Version: Yikes Level Playing Field\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -13,431 +13,478 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: src/CustomPostType/ApplicantManager.php:27
+#. translators: %1$s is the required PHP version, %2$s is the current version
+#: yikes-level-playing-field.php:75
+msgid "Yikes, Inc. Level Playing Fields requires PHP version %1$s or above. Your site is using PHP version %2$s."
+msgstr ""
+
+#: src/CustomPostType/ApplicantManager.php:34
 msgid "Applicant"
 msgstr ""
 
-#: src/CustomPostType/ApplicantManager.php:28
+#: src/CustomPostType/ApplicantManager.php:35
 msgid "Applicants who have applied for a job through the website form."
 msgstr ""
 
-#: src/CustomPostType/ApplicantManager.php:30
+#: src/CustomPostType/ApplicantManager.php:37
 msgctxt "Post Type General Name"
 msgid "Applicants"
 msgstr ""
 
-#: src/CustomPostType/ApplicantManager.php:31
+#: src/CustomPostType/ApplicantManager.php:38
 msgctxt "Post Type Singular Name"
 msgid "Applicant"
 msgstr ""
 
-#: src/CustomPostType/ApplicantManager.php:32
+#: src/CustomPostType/ApplicantManager.php:39
 msgid "Parent Applicant:"
 msgstr ""
 
-#: src/CustomPostType/ApplicantManager.php:33
+#: src/CustomPostType/ApplicantManager.php:40
 msgid "Applicants"
 msgstr ""
 
-#: src/CustomPostType/ApplicantManager.php:34, src/CustomPostType/ApplicantManager.php:35
+#: src/CustomPostType/ApplicantManager.php:41, src/CustomPostType/ApplicantManager.php:42
 msgid "Add New Applicant"
 msgstr ""
 
-#: src/CustomPostType/ApplicantManager.php:36
+#: src/CustomPostType/ApplicantManager.php:43
 msgid "New Applicant"
 msgstr ""
 
-#: src/CustomPostType/ApplicantManager.php:37
+#: src/CustomPostType/ApplicantManager.php:44
 msgid "Edit Applicant"
 msgstr ""
 
-#: src/CustomPostType/ApplicantManager.php:38
+#: src/CustomPostType/ApplicantManager.php:45
 msgid "Update Applicant"
 msgstr ""
 
-#: src/CustomPostType/ApplicantManager.php:39
+#: src/CustomPostType/ApplicantManager.php:46
 msgid "View Applicant"
 msgstr ""
 
-#: src/CustomPostType/ApplicantManager.php:40
+#: src/CustomPostType/ApplicantManager.php:47
 msgid "Search Applicant"
 msgstr ""
 
-#: src/CustomPostType/ApplicantManager.php:41
+#: src/CustomPostType/ApplicantManager.php:48
 msgid "Applicant Not found"
 msgstr ""
 
-#: src/CustomPostType/ApplicantManager.php:42
+#: src/CustomPostType/ApplicantManager.php:49
 msgid "Applicant Not found in Trash"
 msgstr ""
 
-#: src/CustomPostType/ApplicantManager.php:43
+#: src/CustomPostType/ApplicantManager.php:50
 msgid "Applicant Image"
 msgstr ""
 
-#: src/CustomPostType/ApplicantManager.php:44
+#: src/CustomPostType/ApplicantManager.php:51
 msgid "Set Applicant image"
 msgstr ""
 
-#: src/CustomPostType/ApplicantManager.php:45
+#: src/CustomPostType/ApplicantManager.php:52
 msgid "Remove Applicant image"
 msgstr ""
 
-#: src/CustomPostType/ApplicantManager.php:46
+#: src/CustomPostType/ApplicantManager.php:53
 msgid "Use as Applicant image"
 msgstr ""
 
-#: src/CustomPostType/ApplicantManager.php:47
+#: src/CustomPostType/ApplicantManager.php:54
 msgid "Insert into Applicant"
 msgstr ""
 
-#: src/CustomPostType/ApplicantManager.php:48
+#: src/CustomPostType/ApplicantManager.php:55
 msgid "Uploaded to this Applicant"
 msgstr ""
 
-#: src/CustomPostType/ApplicantManager.php:49
+#: src/CustomPostType/ApplicantManager.php:56
 msgid "Applicants list"
 msgstr ""
 
-#: src/CustomPostType/ApplicantManager.php:50
+#: src/CustomPostType/ApplicantManager.php:57
 msgid "Applicants list navigation"
 msgstr ""
 
-#: src/CustomPostType/ApplicantManager.php:51
+#: src/CustomPostType/ApplicantManager.php:58
 msgid "Filter Applicants list"
 msgstr ""
 
-#: src/CustomPostType/ApplicantManager.php:102
+#. translators: %s: permalink URL
+#: src/CustomPostType/ApplicantManager.php:109
 msgid "Applicant updated. <a target=\"_blank\" href=\"%s\">View Applicant</a>"
 msgstr ""
 
-#: src/CustomPostType/ApplicantManager.php:103, src/CustomPostType/ApplicationManager.php:103, src/CustomPostType/JobManager.php:104
+#: src/CustomPostType/ApplicantManager.php:110, src/CustomPostType/ApplicationManager.php:110, src/CustomPostType/JobManager.php:111
 msgid "Custom field updated."
 msgstr ""
 
-#: src/CustomPostType/ApplicantManager.php:104, src/CustomPostType/ApplicationManager.php:104, src/CustomPostType/JobManager.php:105
+#: src/CustomPostType/ApplicantManager.php:111, src/CustomPostType/ApplicationManager.php:111, src/CustomPostType/JobManager.php:112
 msgid "Custom field deleted."
 msgstr ""
 
-#: src/CustomPostType/ApplicantManager.php:105
+#: src/CustomPostType/ApplicantManager.php:112
 msgid "Applicant updated."
 msgstr ""
 
-#: src/CustomPostType/ApplicantManager.php:107
+#. translators: %s: date and time of the revision
+#: src/CustomPostType/ApplicantManager.php:114
 msgid "Applicant restored to revision from %s"
 msgstr ""
 
-#: src/CustomPostType/ApplicantManager.php:109
+#. translators: %s: permalink URL
+#: src/CustomPostType/ApplicantManager.php:116
 msgid "Applicant published. <a href=\"%s\">View Applicant</a>"
 msgstr ""
 
-#: src/CustomPostType/ApplicantManager.php:110
+#: src/CustomPostType/ApplicantManager.php:117
 msgid "Applicant saved."
 msgstr ""
 
-#: src/CustomPostType/ApplicantManager.php:112
+#. translators: %s: preview URL
+#: src/CustomPostType/ApplicantManager.php:119
 msgid "Applicant submitted. <a target=\"_blank\" href=\"%s\">Preview Applicant</a>"
 msgstr ""
 
-#: src/CustomPostType/ApplicantManager.php:115
+#. translators: %1$s: translated date. %2$s: permalink URL
+#: src/CustomPostType/ApplicantManager.php:122
 msgid "Applicant scheduled for: <strong>%1$s</strong>. <a target=\"_blank\" href=\"%2$s\">Preview Applicant</a>"
 msgstr ""
 
-#: src/CustomPostType/ApplicantManager.php:117, src/CustomPostType/ApplicationManager.php:117, src/CustomPostType/JobManager.php:118
+#. translators: Publish box date format, see http://php.net/date
+#. translators: Publish box date format, see http://php.net/date
+#. translators: Publish box date format, see http://php.net/date
+#: src/CustomPostType/ApplicantManager.php:124, src/CustomPostType/ApplicationManager.php:124, src/CustomPostType/JobManager.php:125
 msgid "M j, Y @ G:i"
 msgstr ""
 
-#: src/CustomPostType/ApplicantManager.php:121
+#. translators: %s: preview URL
+#: src/CustomPostType/ApplicantManager.php:128
 msgid "Applicant draft updated. <a target=\"_blank\" href=\"%s\">Preview Applicant</a>"
 msgstr ""
 
-#: src/CustomPostType/ApplicationManager.php:27
+#: src/CustomPostType/ApplicationManager.php:34
 msgid "Applications"
 msgstr ""
 
-#: src/CustomPostType/ApplicationManager.php:28
+#: src/CustomPostType/ApplicationManager.php:35
 msgid "Job Applications that are associated with the level playing field jobs."
 msgstr ""
 
-#: src/CustomPostType/ApplicationManager.php:30
+#: src/CustomPostType/ApplicationManager.php:37
 msgctxt "Post Type General Name"
 msgid "Applications"
 msgstr ""
 
-#: src/CustomPostType/ApplicationManager.php:31
+#: src/CustomPostType/ApplicationManager.php:38
 msgctxt "Post Type Singular Name"
 msgid "Application"
 msgstr ""
 
-#: src/CustomPostType/ApplicationManager.php:32
+#: src/CustomPostType/ApplicationManager.php:39
 msgid "Parent Application:"
 msgstr ""
 
-#: src/CustomPostType/ApplicationManager.php:33
+#: src/CustomPostType/ApplicationManager.php:40
 msgid "All Applications"
 msgstr ""
 
-#: src/CustomPostType/ApplicationManager.php:34, src/CustomPostType/ApplicationManager.php:35
+#: src/CustomPostType/ApplicationManager.php:41, src/CustomPostType/ApplicationManager.php:42
 msgid "Add New Application"
 msgstr ""
 
-#: src/CustomPostType/ApplicationManager.php:36
+#: src/CustomPostType/ApplicationManager.php:43
 msgid "New Application"
 msgstr ""
 
-#: src/CustomPostType/ApplicationManager.php:37
+#: src/CustomPostType/ApplicationManager.php:44
 msgid "Edit Application"
 msgstr ""
 
-#: src/CustomPostType/ApplicationManager.php:38
+#: src/CustomPostType/ApplicationManager.php:45
 msgid "Update Application"
 msgstr ""
 
-#: src/CustomPostType/ApplicationManager.php:39
+#: src/CustomPostType/ApplicationManager.php:46
 msgid "View Application"
 msgstr ""
 
-#: src/CustomPostType/ApplicationManager.php:40
+#: src/CustomPostType/ApplicationManager.php:47
 msgid "Search Application"
 msgstr ""
 
-#: src/CustomPostType/ApplicationManager.php:41
+#: src/CustomPostType/ApplicationManager.php:48
 msgid "Application Not found"
 msgstr ""
 
-#: src/CustomPostType/ApplicationManager.php:42
+#: src/CustomPostType/ApplicationManager.php:49
 msgid "Application Not found in Trash"
 msgstr ""
 
-#: src/CustomPostType/ApplicationManager.php:43
+#: src/CustomPostType/ApplicationManager.php:50
 msgid "Application Image"
 msgstr ""
 
-#: src/CustomPostType/ApplicationManager.php:44
+#: src/CustomPostType/ApplicationManager.php:51
 msgid "Set Application image"
 msgstr ""
 
-#: src/CustomPostType/ApplicationManager.php:45
+#: src/CustomPostType/ApplicationManager.php:52
 msgid "Remove Application image"
 msgstr ""
 
-#: src/CustomPostType/ApplicationManager.php:46
+#: src/CustomPostType/ApplicationManager.php:53
 msgid "Use as Application image"
 msgstr ""
 
-#: src/CustomPostType/ApplicationManager.php:47
+#: src/CustomPostType/ApplicationManager.php:54
 msgid "Insert into Application"
 msgstr ""
 
-#: src/CustomPostType/ApplicationManager.php:48
+#: src/CustomPostType/ApplicationManager.php:55
 msgid "Uploaded to this Application"
 msgstr ""
 
-#: src/CustomPostType/ApplicationManager.php:49
+#: src/CustomPostType/ApplicationManager.php:56
 msgid "Applications list"
 msgstr ""
 
-#: src/CustomPostType/ApplicationManager.php:50
+#: src/CustomPostType/ApplicationManager.php:57
 msgid "Applications list navigation"
 msgstr ""
 
-#: src/CustomPostType/ApplicationManager.php:51
+#: src/CustomPostType/ApplicationManager.php:58
 msgid "Filter Applications list"
 msgstr ""
 
-#: src/CustomPostType/ApplicationManager.php:102
+#. translators: %s: permalink URL
+#: src/CustomPostType/ApplicationManager.php:109
 msgid "Application updated. <a target=\"_blank\" href=\"%s\">View Application</a>"
 msgstr ""
 
-#: src/CustomPostType/ApplicationManager.php:105
+#: src/CustomPostType/ApplicationManager.php:112
 msgid "Application updated."
 msgstr ""
 
-#: src/CustomPostType/ApplicationManager.php:107
+#. translators: %s: date and time of the revision
+#: src/CustomPostType/ApplicationManager.php:114
 msgid "Application restored to revision from %s"
 msgstr ""
 
-#: src/CustomPostType/ApplicationManager.php:109
+#. translators: %s: permalink URL
+#: src/CustomPostType/ApplicationManager.php:116
 msgid "Application published. <a href=\"%s\">View Application</a>"
 msgstr ""
 
-#: src/CustomPostType/ApplicationManager.php:110
+#: src/CustomPostType/ApplicationManager.php:117
 msgid "Application saved."
 msgstr ""
 
-#: src/CustomPostType/ApplicationManager.php:112
+#. translators: %s: preview URL
+#: src/CustomPostType/ApplicationManager.php:119
 msgid "Application submitted. <a target=\"_blank\" href=\"%s\">Preview Application</a>"
 msgstr ""
 
-#: src/CustomPostType/ApplicationManager.php:115
+#. translators: %1$s: translated date. %2$s: permalink URL
+#: src/CustomPostType/ApplicationManager.php:122
 msgid "Application scheduled for: <strong>%1$s</strong>. <a target=\"_blank\" href=\"%2$s\">Preview Application</a>"
 msgstr ""
 
-#: src/CustomPostType/ApplicationManager.php:121
+#. translators: %s: preview URL
+#: src/CustomPostType/ApplicationManager.php:128
 msgid "Application draft updated. <a target=\"_blank\" href=\"%s\">Preview Application</a>"
 msgstr ""
 
-#: src/CustomPostType/JobManager.php:27
+#: src/CustomPostType/JobManager.php:34
 msgid "Job"
 msgstr ""
 
-#: src/CustomPostType/JobManager.php:28
+#: src/CustomPostType/JobManager.php:35
 msgid "Job listings."
 msgstr ""
 
-#: src/CustomPostType/JobManager.php:30
+#: src/CustomPostType/JobManager.php:37
 msgctxt "Post Type General Name"
 msgid "Jobs"
 msgstr ""
 
-#: src/CustomPostType/JobManager.php:31
+#: src/CustomPostType/JobManager.php:38
 msgctxt "Post Type Singular Name"
 msgid "Job"
 msgstr ""
 
-#: src/CustomPostType/JobManager.php:32
+#: src/CustomPostType/JobManager.php:39
 msgid "Job Manager"
 msgstr ""
 
-#: src/CustomPostType/JobManager.php:33
+#: src/CustomPostType/JobManager.php:40
 msgid "Jobs"
 msgstr ""
 
-#: src/CustomPostType/JobManager.php:34
+#: src/CustomPostType/JobManager.php:41
 msgid "Job Archives"
 msgstr ""
 
-#: src/CustomPostType/JobManager.php:35
+#: src/CustomPostType/JobManager.php:42
 msgid "Parent Job:"
 msgstr ""
 
-#: src/CustomPostType/JobManager.php:36
+#: src/CustomPostType/JobManager.php:43
 msgid "All Jobs"
 msgstr ""
 
-#: src/CustomPostType/JobManager.php:37, src/CustomPostType/JobManager.php:38
+#: src/CustomPostType/JobManager.php:44, src/CustomPostType/JobManager.php:45
 msgid "Add New Job"
 msgstr ""
 
-#: src/CustomPostType/JobManager.php:39
+#: src/CustomPostType/JobManager.php:46
 msgid "New Job"
 msgstr ""
 
-#: src/CustomPostType/JobManager.php:40
+#: src/CustomPostType/JobManager.php:47
 msgid "Edit Job"
 msgstr ""
 
-#: src/CustomPostType/JobManager.php:41
+#: src/CustomPostType/JobManager.php:48
 msgid "Update Job"
 msgstr ""
 
-#: src/CustomPostType/JobManager.php:42
+#: src/CustomPostType/JobManager.php:49
 msgid "View Job"
 msgstr ""
 
-#: src/CustomPostType/JobManager.php:43
+#: src/CustomPostType/JobManager.php:50
 msgid "Search Job"
 msgstr ""
 
-#: src/CustomPostType/JobManager.php:44
+#: src/CustomPostType/JobManager.php:51
 msgid "Job Not found"
 msgstr ""
 
-#: src/CustomPostType/JobManager.php:45
+#: src/CustomPostType/JobManager.php:52
 msgid "Job Not found in Trash"
 msgstr ""
 
-#: src/CustomPostType/JobManager.php:46
+#: src/CustomPostType/JobManager.php:53
 msgid "Job Image"
 msgstr ""
 
-#: src/CustomPostType/JobManager.php:47
+#: src/CustomPostType/JobManager.php:54
 msgid "Set Job image"
 msgstr ""
 
-#: src/CustomPostType/JobManager.php:48
+#: src/CustomPostType/JobManager.php:55
 msgid "Remove Job image"
 msgstr ""
 
-#: src/CustomPostType/JobManager.php:49
+#: src/CustomPostType/JobManager.php:56
 msgid "Use as Job image"
 msgstr ""
 
-#: src/CustomPostType/JobManager.php:50
+#: src/CustomPostType/JobManager.php:57
 msgid "Insert into Job"
 msgstr ""
 
-#: src/CustomPostType/JobManager.php:51
+#: src/CustomPostType/JobManager.php:58
 msgid "Uploaded to this Job"
 msgstr ""
 
-#: src/CustomPostType/JobManager.php:52
+#: src/CustomPostType/JobManager.php:59
 msgid "Jobs list"
 msgstr ""
 
-#: src/CustomPostType/JobManager.php:53
+#: src/CustomPostType/JobManager.php:60
 msgid "Jobs list navigation"
 msgstr ""
 
-#: src/CustomPostType/JobManager.php:54
+#: src/CustomPostType/JobManager.php:61
 msgid "Filter Jobs list"
 msgstr ""
 
-#: src/CustomPostType/JobManager.php:103
+#. translators: %s: permalink URL
+#: src/CustomPostType/JobManager.php:110
 msgid "Job updated. <a target=\"_blank\" href=\"%s\">View Job</a>"
 msgstr ""
 
-#: src/CustomPostType/JobManager.php:106
+#: src/CustomPostType/JobManager.php:113
 msgid "Job updated."
 msgstr ""
 
-#: src/CustomPostType/JobManager.php:108
+#. translators: %s: date and time of the revision
+#: src/CustomPostType/JobManager.php:115
 msgid "Job restored to revision from %s"
 msgstr ""
 
-#: src/CustomPostType/JobManager.php:110
+#. translators: %s: permalink URL
+#: src/CustomPostType/JobManager.php:117
 msgid "Job published. <a href=\"%s\">View Job</a>"
 msgstr ""
 
-#: src/CustomPostType/JobManager.php:111
+#: src/CustomPostType/JobManager.php:118
 msgid "Job saved."
 msgstr ""
 
-#: src/CustomPostType/JobManager.php:113
+#. translators: %s: preview URL
+#: src/CustomPostType/JobManager.php:120
 msgid "Job submitted. <a target=\"_blank\" href=\"%s\">Preview Job</a>"
 msgstr ""
 
-#: src/CustomPostType/JobManager.php:116
+#. translators: %1$s: translated date. %2$s: permalink URL
+#: src/CustomPostType/JobManager.php:123
 msgid "Job scheduled for: <strong>%1$s</strong>. <a target=\"_blank\" href=\"%2$s\">Preview Job</a>"
 msgstr ""
 
-#: src/CustomPostType/JobManager.php:122
+#. translators: %s: preview URL
+#: src/CustomPostType/JobManager.php:129
 msgid "Job draft updated. <a target=\"_blank\" href=\"%s\">Preview Job</a>"
 msgstr ""
 
-#: src/CustomPostType/LimitedJobManager.php:97
+#. translators: %d is the number of active jobs
+#: src/CustomPostType/LimitedJobManager.php:160
 msgid "Jobs are limited to %d active job."
-msgid_plural "Jobs are limited to %s active jobs."
+msgid_plural "Jobs are limited to %d active jobs."
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Exception/MustExtend.php:33
+#. translators: %s refers to the default slug
+#: src/Exception/MustExtend.php:34
 msgid "The default slug \"%s\" must be extended in a subclass."
 msgstr ""
 
-#: src/Exception/MustExtend.php:51
+#. translators: %s refers to the default tag
+#: src/Exception/MustExtend.php:53
 msgid "The default tag \"%s\" must be extended in a subclass."
 msgstr ""
 
-#: src/Exception/MustExtend.php:69
+#. translators: %s refers to the default view
+#. translators: %s refers to the default type
+#: src/Exception/MustExtend.php:72, src/Exception/MustExtend.php:91
 msgid "The default view \"%s\" must be extended in a subclass."
 msgstr ""
 
+#. translators: %1$s is the post type, %2$d is the item limit
 #: src/Exception/TooManyItems.php:33
 msgid "%1$s do not support more than %2$d item."
 msgid_plural "%1$s do not support more than %2$d items."
 msgstr[0] ""
 msgstr[1] ""
+
+#: src/ListTable/ApplicationManager.php:49
+msgctxt "column heading"
+msgid "Application Name"
+msgstr ""
+
+#: src/ListTable/ApplicationManager.php:50
+msgctxt "column heading"
+msgid "Jobs"
+msgstr ""
+
+#: src/ListTable/ApplicationManager.php:51
+msgctxt "column heading"
+msgid "Applicants"
+msgstr ""
 
 #: src/ListTable/JobManager.php:62
 msgctxt "column heading"
@@ -449,98 +496,266 @@ msgctxt "column heading"
 msgid "Applications"
 msgstr ""
 
-#: src/Metabox/JobManager.php:46
+#: src/Metabox/ApplicationManager.php:70, src/Metabox/ApplicationManager.php:76, src/Metabox/ApplicationManager.php:85
+msgid "Basic Info"
+msgstr ""
+
+#: src/Metabox/ApplicationManager.php:81
+msgid "Check the fields you want included on this Application Form"
+msgstr ""
+
+#: src/Metabox/ApplicationManager.php:89, src/Metabox/ApplicationManager.php:90
+msgid "Name (required)"
+msgstr ""
+
+#: src/Metabox/ApplicationManager.php:97, src/Metabox/ApplicationManager.php:98
+msgid "Email Address (required)"
+msgstr ""
+
+#: src/Metabox/ApplicationManager.php:105, src/Metabox/ApplicationManager.php:106
+msgid "Phone Number"
+msgstr ""
+
+#: src/Metabox/ApplicationManager.php:113, src/Metabox/ApplicationManager.php:114, src/Metabox/JobManager.php:128, src/Metabox/JobManager.php:138
+msgid "Address"
+msgstr ""
+
+#: src/Metabox/ApplicationManager.php:121, src/Metabox/ApplicationManager.php:122
+msgid "Cover Letter"
+msgstr ""
+
+#: src/Metabox/ApplicationManager.php:131
+msgid "Education"
+msgstr ""
+
+#: src/Metabox/ApplicationManager.php:136, src/Metabox/ApplicationManager.php:137
+msgid "Schooling"
+msgstr ""
+
+#: src/Metabox/ApplicationManager.php:152, src/Metabox/ApplicationManager.php:153
+msgid "Certifications"
+msgstr ""
+
+#: src/Metabox/ApplicationManager.php:170
+msgid "Skills"
+msgstr ""
+
+#: src/Metabox/ApplicationManager.php:175, src/Metabox/ApplicationManager.php:176
+msgid "Skill and Proficiency"
+msgstr ""
+
+#: src/Metabox/ApplicationManager.php:185
+msgid "Languages"
+msgstr ""
+
+#: src/Metabox/ApplicationManager.php:190, src/Metabox/ApplicationManager.php:191
+msgid "Language and Proficiency"
+msgstr ""
+
+#: src/Metabox/ApplicationManager.php:200, src/Metabox/ApplicationManager.php:205, src/Metabox/ApplicationManager.php:206
+msgid "Experience"
+msgstr ""
+
+#: src/Metabox/ApplicationManager.php:223, src/Metabox/ApplicationManager.php:228, src/Metabox/ApplicationManager.php:229
+msgid "Volunteer Work"
+msgstr ""
+
+#: src/Metabox/ApplicationManager.php:269
+msgid "Institution"
+msgstr ""
+
+#: src/Metabox/ApplicationManager.php:270
+msgid "Institution Type"
+msgstr ""
+
+#: src/Metabox/ApplicationManager.php:271
+msgid "Graduation Year"
+msgstr ""
+
+#: src/Metabox/ApplicationManager.php:272
+msgid "Major"
+msgstr ""
+
+#: src/Metabox/ApplicationManager.php:273
+msgid "Degree"
+msgstr ""
+
+#: src/Metabox/ApplicationManager.php:290
+msgid "Certifying Institution"
+msgstr ""
+
+#: src/Metabox/ApplicationManager.php:291
+msgid "Year Certified"
+msgstr ""
+
+#: src/Metabox/ApplicationManager.php:292
+msgid "Certification Type"
+msgstr ""
+
+#: src/Metabox/ApplicationManager.php:293
+msgid "Certification Status"
+msgstr ""
+
+#: src/Metabox/ApplicationManager.php:310, src/Metabox/ApplicationManager.php:330
+msgid "Organization"
+msgstr ""
+
+#: src/Metabox/ApplicationManager.php:311
+msgid "Industry"
+msgstr ""
+
+#: src/Metabox/ApplicationManager.php:312, src/Metabox/ApplicationManager.php:332
+msgid "Dates"
+msgstr ""
+
+#: src/Metabox/ApplicationManager.php:313, src/Metabox/ApplicationManager.php:333
+msgid "Position"
+msgstr ""
+
+#: src/Metabox/ApplicationManager.php:331
+msgid "Organization Type"
+msgstr ""
+
+#: src/Metabox/JobManager.php:71, src/Metabox/JobManager.php:77
 msgid "General Info"
 msgstr ""
 
-#: src/Metabox/JobManager.php:50, src/Taxonomy/ApplicantStatus.php:53, src/Taxonomy/JobStatus.php:60
+#: src/Metabox/JobManager.php:82, src/Taxonomy/ApplicantStatus.php:150, src/Taxonomy/JobStatus.php:60
 msgid "Status"
 msgstr ""
 
-#: src/Metabox/JobManager.php:51
+#: src/Metabox/JobManager.php:83
 msgid "The job status"
 msgstr ""
 
-#: src/Metabox/JobManager.php:56
-msgid "Active"
+#: src/Metabox/JobManager.php:89
+msgid "Job Description"
 msgstr ""
 
-#: src/Metabox/JobManager.php:60
-msgid "Inactive"
+#: src/Metabox/JobManager.php:90
+msgid "General overview of the Job and its requirements."
 msgstr ""
 
-#: src/Taxonomy/ApplicantStatus.php:54, src/Taxonomy/JobStatus.php:61
+#: src/Metabox/JobManager.php:95
+msgid "Job Type"
+msgstr ""
+
+#: src/Metabox/JobManager.php:96
+msgid "The type of job being offered"
+msgstr ""
+
+#: src/Metabox/JobManager.php:101
+msgid "Full Time"
+msgstr ""
+
+#: src/Metabox/JobManager.php:105
+msgid "Part Time"
+msgstr ""
+
+#: src/Metabox/JobManager.php:109
+msgid "Contract"
+msgstr ""
+
+#: src/Metabox/JobManager.php:113
+msgid "Per Diem"
+msgstr ""
+
+#: src/Metabox/JobManager.php:117
+msgid "Other"
+msgstr ""
+
+#: src/Metabox/JobManager.php:123
+msgid "Location"
+msgstr ""
+
+#: src/Metabox/JobManager.php:132
+msgid "Remote"
+msgstr ""
+
+#: src/Metabox/JobManager.php:139
+msgid "Address where the job is located"
+msgstr ""
+
+#: src/Roles/HiringManager.php:29
+msgid "Hiring Manager"
+msgstr ""
+
+#: src/Roles/HumanResources.php:29
+msgid "Human Resources"
+msgstr ""
+
+#: src/Taxonomy/ApplicantStatus.php:43
+msgid "Accept the applicant"
+msgstr ""
+
+#: src/Taxonomy/ApplicantStatus.php:47
+msgid "Do not accept the applicant"
+msgstr ""
+
+#: src/Taxonomy/ApplicantStatus.php:51
+msgid "Maybe accept the applicant"
+msgstr ""
+
+#: src/Taxonomy/ApplicantStatus.php:110
+msgctxt "select placeholder"
+msgid "------"
+msgstr ""
+
+#: src/Taxonomy/ApplicantStatus.php:151, src/Taxonomy/JobStatus.php:61
 msgctxt "taxonomy general name"
 msgid "Status"
 msgstr ""
 
-#: src/Taxonomy/ApplicantStatus.php:55, src/Taxonomy/JobStatus.php:62
+#: src/Taxonomy/ApplicantStatus.php:152, src/Taxonomy/JobStatus.php:62
 msgid "Search Statuses"
 msgstr ""
 
-#: src/Taxonomy/ApplicantStatus.php:56, src/Taxonomy/JobStatus.php:63
+#: src/Taxonomy/ApplicantStatus.php:153, src/Taxonomy/JobStatus.php:63
 msgid "Popular Statuses"
 msgstr ""
 
-#: src/Taxonomy/ApplicantStatus.php:57, src/Taxonomy/JobStatus.php:64
+#: src/Taxonomy/ApplicantStatus.php:154, src/Taxonomy/JobStatus.php:64
 msgid "All Statuses"
 msgstr ""
 
-#: src/Taxonomy/ApplicantStatus.php:58, src/Taxonomy/JobStatus.php:65
+#: src/Taxonomy/ApplicantStatus.php:155, src/Taxonomy/JobStatus.php:65
 msgid "Parent Status"
 msgstr ""
 
-#: src/Taxonomy/ApplicantStatus.php:59, src/Taxonomy/JobStatus.php:66
+#: src/Taxonomy/ApplicantStatus.php:156, src/Taxonomy/JobStatus.php:66
 msgid "Parent Status:"
 msgstr ""
 
-#: src/Taxonomy/ApplicantStatus.php:60, src/Taxonomy/JobStatus.php:67
+#: src/Taxonomy/ApplicantStatus.php:157, src/Taxonomy/JobStatus.php:67
 msgid "Edit Status"
 msgstr ""
 
-#: src/Taxonomy/ApplicantStatus.php:61, src/Taxonomy/JobStatus.php:68
+#: src/Taxonomy/ApplicantStatus.php:158, src/Taxonomy/JobStatus.php:68
 msgid "Update Status"
 msgstr ""
 
-#: src/Taxonomy/ApplicantStatus.php:62, src/Taxonomy/ApplicantStatus.php:63, src/Taxonomy/JobStatus.php:69, src/Taxonomy/JobStatus.php:70
+#: src/Taxonomy/ApplicantStatus.php:159, src/Taxonomy/ApplicantStatus.php:160, src/Taxonomy/JobStatus.php:69, src/Taxonomy/JobStatus.php:70
 msgid "New Status"
 msgstr ""
 
-#: src/Taxonomy/ApplicantStatus.php:64, src/Taxonomy/JobStatus.php:71
+#: src/Taxonomy/ApplicantStatus.php:161, src/Taxonomy/JobStatus.php:71
 msgid "Separate Statuses with commas"
 msgstr ""
 
-#: src/Taxonomy/ApplicantStatus.php:65, src/Taxonomy/JobStatus.php:72
+#: src/Taxonomy/ApplicantStatus.php:162, src/Taxonomy/JobStatus.php:72
 msgid "Add or remove Statuses"
 msgstr ""
 
-#: src/Taxonomy/ApplicantStatus.php:66, src/Taxonomy/JobStatus.php:73
+#: src/Taxonomy/ApplicantStatus.php:163, src/Taxonomy/JobStatus.php:73
 msgid "Choose from the most used Statuses"
 msgstr ""
 
-#: src/Taxonomy/ApplicantStatus.php:67, src/Taxonomy/JobStatus.php:74
+#: src/Taxonomy/ApplicantStatus.php:164, src/Taxonomy/JobStatus.php:74
 msgid "No Statuses found."
 msgstr ""
 
-#: src/Taxonomy/ApplicantStatus.php:68, src/Taxonomy/JobStatus.php:75
+#: src/Taxonomy/ApplicantStatus.php:165, src/Taxonomy/JobStatus.php:75
 msgid "Statuses"
-msgstr ""
-
-#: src/Taxonomy/ApplicantStatus.php:94
-msgid "Accept the applicant"
-msgstr ""
-
-#: src/Taxonomy/ApplicantStatus.php:98
-msgid "Do not accept the applicant"
-msgstr ""
-
-#: src/Taxonomy/ApplicantStatus.php:102
-msgid "Maybe accept the applicant"
-msgstr ""
-
-#: src/Taxonomy/ApplicantStatus.php:161
-msgctxt "select placeholder"
-msgid "------"
 msgstr ""
 
 #: src/Taxonomy/JobCategory.php:47, src/Taxonomy/JobCategory.php:62
@@ -610,8 +825,4 @@ msgstr ""
 
 #: src/Taxonomy/JobStatus.php:105
 msgid "Job is active"
-msgstr ""
-
-#: node_modules/grunt-wp-i18n/test/fixtures/basic-theme/page-templates/full-width.php:2
-msgid "Full Width"
 msgstr ""
