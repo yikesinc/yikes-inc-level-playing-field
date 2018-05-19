@@ -20,8 +20,9 @@ use Yikes\LevelPlayingField\Model\ApplicationRepository;
  */
 class Application extends BaseShortcode {
 
-	const TAG      = 'lpf_application';
-	const VIEW_URI = 'views/job-page-application';
+	const TAG           = 'lpf_application';
+	const VIEW_URI      = 'views/job-page-application';
+	const SUBMITTED_URI = 'views/job-page-application-completed';
 
 	/**
 	 * Get the default array of attributes for the shortcode.
@@ -54,5 +55,26 @@ class Application extends BaseShortcode {
 		return [
 			'application' => $application_repository->find( $atts['id'] ),
 		];
+	}
+
+	/**
+	 * Get the View URI to use for rendering the shortcode.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @return string View URI.
+	 */
+	protected function get_view_uri() {
+		return $this->is_submitting_application() ? self::SUBMITTED_URI : self::VIEW_URI;
+	}
+
+	/**
+	 * Determine whether an application is currently being submitted.
+	 *
+	 * @since %VERSION%
+	 * @return bool
+	 */
+	protected function is_submitting_application() {
+		return ! empty( $_POST );
 	}
 }
