@@ -218,8 +218,10 @@ class YIKES_Page_Meta_Boxes {
 				echo '<table class="form-table yks_mbox">';
 				foreach ( $page['fields'] as $field ) :
 
-					// Check if template for field exsists.
-					if ( stream_resolve_include_path( dirname( dirname( __FILE__ ) ) . '/inc/fields/yks-' . str_replace( '_', '-', $field['type'] ) . '.php' ) !== false ) :
+					// Check if template for field exists in theme or framework.
+					$filepath = yikes_get_file_template_location( $field );
+
+					if ( $filepath !== false ) :
 
 						// Set up blank or default values for empty ones.
 						$field['name'] = isset( $field['name'] ) ? $field['name'] : '';
@@ -238,7 +240,7 @@ class YIKES_Page_Meta_Boxes {
 							}
 							echo '<td>';
 						}
-						include dirname( dirname( __FILE__ ) ) . '/inc/fields/yks-' . str_replace( '_', '-', $field['type'] ) . '.php';
+						include $filepath;
 						do_action( 'yks_render_' . $field['type'], $field, $meta );
 						echo '</td>','</tr>';
 					endif;

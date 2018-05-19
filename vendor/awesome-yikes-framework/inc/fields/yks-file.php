@@ -52,7 +52,7 @@ if ( $field_repeating === true ) {
 		$field_html  .= '<div class="yks_upstat">';
 		if ( ! empty( $url_value ) ) {
 			$field_html  .= '<div class="img_status">';
-			$field_html   .= '<img src="' . htmlspecialchars( $url_value ) . '" />';
+			$field_html .= yks_get_preview_html_from_file_type( $id_value ,$url_value );
 			$field_html   .= '<a class="yks_hide_ubutton" data-switch="single">Remove Image</a>';
 			$field_html  .= '</div>';
 		}
@@ -83,7 +83,7 @@ if ( $field_repeating === true ) {
 	$field_html .= '<div class="yks_upstat">';
 	if ( ! empty( $url_value ) ) {
 		$field_html .= '<div class="img_status">';
-		$field_html  .= '<img src="' . htmlspecialchars( $url_value ) . '" />';
+		$field_html .= yks_get_preview_html_from_file_type( $id_value ,$url_value );
 		$field_html  .= '<a class="yks_hide_ubutton" data-switch="single">Remove Image</a>';
 		$field_html .= '</div>';
 	}

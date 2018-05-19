@@ -161,8 +161,6 @@ jQuery( document ).ready( function( $ ) {
 
 		$( '.yks_img_up' ).change( function () {
 			var formfield = $( this ).attr( 'name' );
-			console.log( formfield );
-			console.log( $( '#' + formfield + '_id' ) );
 			$( '#' + formfield + '_id' ).val( "" );
 
 		});
@@ -171,9 +169,21 @@ jQuery( document ).ready( function( $ ) {
 			var clicked = $( this );
 			var send_attachment_bkp = wp.media.editor.send.attachment;
 			wp.media.editor.send.attachment = function( a, image ) {
+				var preview_html = '';
+                switch (image.type) {
+                    case 'image':
+                        preview_html = '<img src="' + image.url + '">';
+                        break;
+                    case 'video':
+                        preview_html = '<span class="dashicons dashicons-media-video"></span>';
+                        break;
+					default:
+                        preview_html = '<span class="dashicons dashicons-media-default"></span>';
+                }
 				clicked.siblings( '.yks_img_up' ).val( image.url );
 				clicked.siblings( '.yks_img_up_id' ).val( image.id );
-				clicked.siblings( '.yks_upstat' ).html( '<div class="img_status"><img src="' + image.url + '"><a class="yks_hide_ubutton" data-switch="single">Remove Image</a></div>' );
+                clicked.siblings( '.yks_img_up_type' ).val( image.type );
+				clicked.siblings( '.yks_upstat' ).html( '<div class="img_status">' + preview_html + '<a class="yks_hide_ubutton" data-switch="single">Remove Image</a></div>' );
 			};
 			wp.media.editor.open( clicked );
 			return false;

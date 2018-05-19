@@ -17,7 +17,7 @@ $input-repeating-width: 85%;
 
 /* BEGIN Metabox Styles */
 
-table.yks_mbox {
+.yks_mbox, table.yks_mbox, table.form-table {
 
   /* Global */
 
@@ -126,7 +126,7 @@ table.yks_mbox {
   /* File upload */
 
   /* Make images fit after files are uploaded */
-  .img_status img {
+  .img_status img, .img_status .dashicons {
     border: 1px solid #DFDFDF;
     background: #FAFAFA;
     display: block;

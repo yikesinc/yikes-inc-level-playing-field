@@ -46,29 +46,6 @@ class YIKES_CPT_Meta_Boxes {
 	}
 
 	/**
-	 * Check theme for field file - if it does not exist check framework
-	 *
-	 * @param array $field The field we're dealing with.
-	 */
-	public function get_file_template_location( $field ) {
-
-		$field_name_with_dashes = str_replace( '_', '-', $field['type'] );
-
-		if ( file_exists( ( get_template_directory() . '/inc/cpt/cpt-fields/fields/yks-' . $field_name_with_dashes . '.php' ) ) !== false ) {
-
-			return get_template_directory() . '/inc/cpt/cpt-fields/fields/yks-' . $field_name_with_dashes . '.php';
-
-		} elseif ( stream_resolve_include_path( dirname( dirname( __FILE__ ) ) . '/inc/fields/yks-' . $field_name_with_dashes . '.php' ) !== false ) {
-
-			return stream_resolve_include_path( dirname( dirname( __FILE__ ) ) . '/inc/fields/yks-' . $field_name_with_dashes . '.php' );
-
-		} else {
-
-			return false;
-		}
-	}
-
-	/**
 	 * Add metaboxes.
 	 */
 	public function yks_add() {
@@ -307,7 +284,7 @@ class YIKES_CPT_Meta_Boxes {
 		}
 
 		// Check if template for field exists in theme or framework.
-		$filepath = $this->get_file_template_location( $field );
+		$filepath = yikes_get_file_template_location( $field );
 
 		if ( $filepath !== false ) {
 
@@ -470,6 +447,11 @@ class YIKES_CPT_Meta_Boxes {
 							$name = $f['id'];
 							$old  = get_post_meta( $post_id, $name, true );
 							$new  = $this->yks_get_submit_meta( $post_id, $f['id'], $f['type'] );
+
+							// Check if we're saving a taxonomy.
+							if ( false !== $type_comp && in_array( $f['type'], array( 'taxonomy_select', 'taxonomy_radio', 'taxonomy_multicheck' ), true ) ) {
+								$new = wp_set_object_terms( $post_id, $this->yks_get_submit_meta( $post_id, $f['id'], $f['type'], false ), $f['taxonomy'] );
+							}
 
 							if ( ! empty( $new ) && $new !== $old ) {
 								update_post_meta( $post_id, $name, $new );

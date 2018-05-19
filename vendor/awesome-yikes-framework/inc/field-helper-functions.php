@@ -1,4 +1,29 @@
 <?php 
+
+/**
+ * Check theme for field file - if it does not exist check framework
+ *
+ * @param array $field The field we're dealing with.
+ */
+function yikes_get_file_template_location( $field ) {
+
+	$field_name_with_dashes = str_replace( '_', '-', $field['type'] );
+
+	if ( file_exists( ( get_template_directory() . '/inc/cpt/cpt-fields/fields/yks-' . $field_name_with_dashes . '.php' ) ) !== false ) {
+
+		return get_template_directory() . '/inc/cpt/cpt-fields/fields/yks-' . $field_name_with_dashes . '.php';
+
+	} elseif ( stream_resolve_include_path( dirname( dirname( __FILE__ ) ) . '/inc/fields/yks-' . $field_name_with_dashes . '.php' ) !== false ) {
+
+		return stream_resolve_include_path( dirname( dirname( __FILE__ ) ) . '/inc/fields/yks-' . $field_name_with_dashes . '.php' );
+
+	} else {
+
+		return false;
+	}
+}
+
+
 add_action( 'wp_ajax_yks_oembed_handler', 'yks_oembed_ajax_results' );
 /**
  * Handles our oEmbed ajax request.
@@ -417,12 +442,8 @@ function yks_mbox_text_time_formatted_get_am_pm( $time_string_24, $default_empty
 *
 * @return array | $states | e.g. array( array( 'name' => 'Pennsylvania', 'value' => 'PA' ), array(...) );
 */
-function yks_awesome_framework_states_array() {
+function yks_awesome_framework_states_array( $include_na = true ) {
 	$states = array(
-		array(
-			'name' => 'N/A',
-			'value' => 'n/a'
-		),
 		array(
 			'name' => 'Alabama',
 			'value' => 'AL'
@@ -452,7 +473,7 @@ function yks_awesome_framework_states_array() {
 			'value' => 'CT',
 		),
 		array(
-			'name' => 'Delware',
+			'name' => 'Delaware',
 			'value' => 'DE',
 		),
 		array(
@@ -628,6 +649,13 @@ function yks_awesome_framework_states_array() {
 			'value' => 'WY',
 		)
 	);
+
+	if ( $include_na === true ) {
+		array_unshift( $states, array(
+			'name' => 'N/A',
+			'value' => 'n/a'
+		) );
+	}
 
 	return apply_filters( 'yikes-awesome-framework-states-select', $states );
 }
@@ -1641,13 +1669,25 @@ function yks_awesome_framework_countries_array() {
 }
 
 /**
- * Return an escaped HTML attribute.
+ * Take ID of media attachment and return appropriate preview HTML
  *
- * @since %VERSION%
+ * @param int    | $attachment_id  | ID for media object
+ * @param string | $attachment_url | URL for media object
  *
- * @param string $key The attribute key.
- * @param string $value The attribute value.
+ * @return string $preview_html
  */
-function yks_return_attribute( $key, $value ) {
-	return sprintf( '%1$s="%2$s" ', $key, esc_attr( $value ) );
+function yks_get_preview_html_from_file_type( $attachment_id, $attachment_url ) {
+	$type = get_post_mime_type( $attachment_id );
+	$type = explode( '/', $type );
+	$type = is_array( $type ) && isset( $type[0] ) ? $type[0] : '';
+	$preview_html = '<span class="dashicons dashicons-media-default"></span>';
+	switch ( $type ) {
+		case 'image':
+			$preview_html = '<img src="' . htmlspecialchars( $attachment_url ) . '">';
+			break;
+		case 'video':
+			$preview_html = '<span class="dashicons dashicons-media-video"></span>';
+			break;
+	}
+	return $preview_html;
 }
