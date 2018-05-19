@@ -69,8 +69,6 @@ class Plugin implements Registerable {
 	 * Register the plugin with the WordPress system.
 	 *
 	 * @since %VERSION%
-	 *
-	 * @throws Exception\InvalidService If a service is not valid.
 	 */
 	public function register() {
 		add_action( 'plugins_loaded', [ $this, 'register_services' ], 20 );
@@ -81,8 +79,6 @@ class Plugin implements Registerable {
 	 * Register the individual services of this plugin.
 	 *
 	 * @since %VERSION%
-	 *
-	 * @throws Exception\InvalidService If a service is not valid.
 	 */
 	public function register_services() {
 		$services = $this->get_services();
