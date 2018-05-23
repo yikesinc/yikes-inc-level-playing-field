@@ -1,0 +1,133 @@
+<?php
+/**
+ * YIKES Inc. Level Playing Field Plugin.
+ *
+ * @package Yikes\LevelPlayingField
+ * @author  Kevin Utz / Jeremy Pry
+ * @license GPL2
+ */
+
+namespace Yikes\LevelPlayingField\ListTable;
+
+use Yikes\LevelPlayingField\Assets\Asset;
+use Yikes\LevelPlayingField\Assets\AssetsAware;
+use Yikes\LevelPlayingField\Assets\AssetsAwareness;
+use Yikes\LevelPlayingField\Assets\ScriptAsset;
+use Yikes\LevelPlayingField\CustomPostType\ApplicantManager as ApplicantManagerCPT;
+use Yikes\LevelPlayingField\Model\ApplicantRepository;
+
+/**
+ * Class ApplicantManager
+ *
+ * @since   %VERSION%
+ * @package Yikes\LevelPlayingField
+ */
+class ApplicantManager extends BasePostType implements AssetsAware {
+
+	use AssetsAwareness;
+
+	const JS_HANDLE       = 'lpf-applicants-admin-script';
+	const JS_URI          = 'assets/js/applicants-admin';
+	const JS_DEPENDENCIES = array( 'jquery' );
+	const JS_VERSION      = false;
+
+	/**
+	 * Register hooks.
+	 *
+	 * @since  %VERSION%
+	 * @author Jeremy Pry
+	 */
+	public function register() {
+		parent::register();
+
+		// add_filter( 'admin_enqueue_scripts', [ $this, 'admin_enqueue' ], 10, 1 );
+
+		$this->register_assets();
+		$this->enqueue_assets();
+	}
+
+	public function admin_enqueue( $hook ) {
+
+		// This filter should only run in the admin area, and where get_current_screen() exists.
+		if ( ! is_admin() || ! function_exists( 'get_current_screen' ) ) {
+			return;
+		}
+
+		// Ensure this is the screen we want.
+		$screen = get_current_screen();
+		if ( ! ( $screen instanceof \WP_Screen ) ) {
+			return;
+		}
+
+		if ( 'edit' !== $screen->base || $this->get_post_type() !== $screen->post_type ) {
+			return;
+		}
+
+		$this->register_assets();
+		$this->enqueue_assets();
+	}
+
+	/**
+	 * Get the array of known assets.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @return Asset[]
+	 */
+	protected function get_assets() {
+
+		$applicant_script = new ScriptAsset( self::JS_HANDLE, self::JS_URI, self::JS_DEPENDENCIES, self::JS_VERSION, ScriptAsset::ENQUEUE_FOOTER );
+		
+		$applicant_script->add_localization( 
+			'applicant_admin', 
+			[
+				'export_url' => add_query_arg( 'page', 'applicant-export' ),
+				'strings'    => [
+					'export_button_text' => __( 'Export', 'yikes-level-playing-field' )
+				]
+			] 
+		);
+
+		return [
+			$applicant_script
+		];
+	}
+
+	/**
+	 * Adjust the columns to display for the list table.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param array $original_columns The original columns.
+	 *
+	 * @return array
+	 */
+	public function columns( $original_columns ) {
+
+		// @todo Decide whether we need custom columns for Applicants.
+		return $original_columns;
+	}
+
+	/**
+	 * Output the values for our custom columns.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param string $column_name The column slug.
+	 * @param int    $post_id     The post ID.
+	 */
+	public function column_content( $column_name, $post_id ) {
+		
+		// @todo Decide whether we need custom column content for Applicants.
+	}
+
+	/**
+	 * Get the post type.
+	 *
+	 * @since %VERSION%
+	 * @return string
+	 */
+	protected function get_post_type() {
+		return ApplicantManagerCPT::SLUG;
+	}
+}
