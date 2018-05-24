@@ -23,7 +23,7 @@ $ylpf_autoloader->add_namespace( __NAMESPACE__, __DIR__ );
 $ylpf_autoloader->add_namespace( 'Carbon_Fields', dirname( __DIR__ ) . '/vendor/htmlburger/carbon-fields/core' );
 $ylpf_autoloader->register();
 
-// Load Carbon Fields config file
+// Load Carbon Fields config file.
 require_once( dirname( __DIR__ ) . '/vendor/htmlburger/carbon-fields/config.php' );
 
 // Load the Awesome Framework.
