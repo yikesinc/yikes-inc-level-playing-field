@@ -39,32 +39,28 @@ class ApplicantManager extends BasePostType implements AssetsAware {
 	 */
 	public function register() {
 		parent::register();
-
-		// add_filter( 'admin_enqueue_scripts', [ $this, 'admin_enqueue' ], 10, 1 );
-
 		$this->register_assets();
-		$this->enqueue_assets();
-	}
 
-	public function admin_enqueue( $hook ) {
+		add_filter( 'admin_enqueue_scripts', function( $hook ) {
 
-		// This filter should only run in the admin area, and where get_current_screen() exists.
-		if ( ! is_admin() || ! function_exists( 'get_current_screen' ) ) {
-			return;
-		}
+			// This filter should only run on an edit page. Make sure get_current_screen() exists.
+			if ( 'edit.php' !== $hook || ! function_exists( 'get_current_screen' ) ) {
+				return;
+			}
 
-		// Ensure this is the screen we want.
-		$screen = get_current_screen();
-		if ( ! ( $screen instanceof \WP_Screen ) ) {
-			return;
-		}
+			// Ensure this is a real screen object.
+			$screen = get_current_screen();
+			if ( ! ( $screen instanceof \WP_Screen ) ) {
+				return;
+			}
 
-		if ( 'edit' !== $screen->base || $this->get_post_type() !== $screen->post_type ) {
-			return;
-		}
+			// Ensure this is the edit screen for the correct post type.
+			if ( $this->get_post_type() !== $screen->post_type ) {
+				return;
+			}
 
-		$this->register_assets();
-		$this->enqueue_assets();
+			$this->enqueue_assets();
+		} );
 	}
 
 	/**

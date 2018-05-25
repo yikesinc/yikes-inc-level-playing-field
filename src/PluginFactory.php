@@ -27,6 +27,7 @@ use Yikes\LevelPlayingField\Shortcode\Job;
 use Yikes\LevelPlayingField\Taxonomy\ApplicantStatus;
 use Yikes\LevelPlayingField\Taxonomy\JobCategory;
 use Yikes\LevelPlayingField\Taxonomy\JobStatus;
+use Yikes\LevelPlayingField\AdminPage\ExportApplicantsPage;
 
 /**
  * Class PluginFactory
@@ -94,6 +95,9 @@ final class PluginFactory {
 			AllJobs::class,
 			Job::class,
 			Application::class,
+
+			// Admin Pages
+			ExportApplicantsPage::class
 		] );
 	}
 }
