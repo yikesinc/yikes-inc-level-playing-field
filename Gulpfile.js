@@ -49,7 +49,8 @@ const paths = {
 		'assets/images/**',
 		'languages/*',
 		'src/**/*.php',
-		'vendor/**',
+		'vendor/awesome-yikes-framework/**',
+		'vendor/htmlburger/**',
 		'views/**/*.php',
 		'*.php',
 		'LICENSE.txt',
@@ -393,12 +394,18 @@ gulp.task( 'watch', function() {
  * Build a zip file appropriate for distribution.
  */
 gulp.task( 'build', [ 'default' ], function() {
+
 	return gulp.src( paths.build, { base: process.cwd() } )
 		.pipe( rename( function ( path ) {
 			// Prefix the paths with the directory name before zipping.
 			path.dirname = 'yikes-level-playing-field/' + path.dirname;
 		}))
+
+		// Pipe each file to the build directory and the Zip file
+		.pipe( gulp.dest( 'build' ) )
 		.pipe( zip( `yikes-level-playing-field-${packageJSON.version}.zip` ) )
+
+		// Pipe the zip file to the build directory
 		.pipe( gulp.dest( 'build' ) );
 });
 
