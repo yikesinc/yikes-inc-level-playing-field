@@ -92,6 +92,9 @@ final class PluginFactory {
 			AllJobs::class              => 1,
 			Job::class                  => 1,
 			Application::class          => 1,
+
+			// Carbon Fields.
+			FieldLoader::class          => 1,
 		] );
 	}
 }

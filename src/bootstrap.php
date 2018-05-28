@@ -9,8 +9,6 @@
 
 namespace Yikes\LevelPlayingField;
 
-use Carbon_Fields\Carbon_Fields;
-
 // Don't allow loading outside of WordPress.
 if ( ! defined( 'ABSPATH' ) ) {
 	die();
@@ -31,4 +29,3 @@ require_once( dirname( __DIR__ ) . '/vendor/awesome-yikes-framework/yks-mbox-fra
 
 // Kick it off.
 PluginFactory::create()->register();
-Carbon_Fields::boot();
