@@ -65,33 +65,33 @@ final class PluginFactory {
 	private static function get_service_container() {
 		return new Container( [
 			// CPTs.
-			LimitedJobManager::class,
-			ApplicationManager::class,
-			ApplicantManager::class,
+			LimitedJobManager::class    => 1,
+			ApplicationManager::class   => 1,
+			ApplicantManager::class     => 1,
 
 			// Taxonomies.
-			JobCategory::class,
-			JobStatus::class,
-			ApplicantStatus::class,
+			JobCategory::class          => 1,
+			JobStatus::class            => 1,
+			ApplicantStatus::class      => 1,
 
 			// Metaboxes.
-			JobManager::class,
-			ApplicationMetabox::class,
+			JobManager::class           => 1,
+			ApplicationMetabox::class   => 1,
 
 			// Custom List Tables.
-			JobListTable::class,
-			ApplicationListTable::class,
+			JobListTable::class         => 1,
+			ApplicationListTable::class => 1,
 
 			// User roles.
-			HiringManager::class,
-			HumanResources::class,
-			Administrator::class,
-			Editor::class,
+			HiringManager::class        => 1,
+			HumanResources::class       => 1,
+			Administrator::class        => 1,
+			Editor::class               => 1,
 
 			// Shortcodes.
-			AllJobs::class,
-			Job::class,
-			Application::class,
+			AllJobs::class              => 1,
+			Job::class                  => 1,
+			Application::class          => 1,
 		] );
 	}
 }
