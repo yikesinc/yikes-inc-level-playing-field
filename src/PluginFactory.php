@@ -97,7 +97,7 @@ final class PluginFactory {
 			Application::class,
 
 			// Admin Pages
-			ExportApplicantsPage::class
+			ExportApplicantsPage::class,
 		] );
 	}
 }

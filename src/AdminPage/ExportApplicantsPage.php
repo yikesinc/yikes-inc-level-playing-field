@@ -28,6 +28,9 @@ class ExportApplicantsPage extends BaseAdminPage implements AssetsAware {
 	const POST_TYPE = 'jobs';
 	const PAGE_SLUG = 'lpf-export-applicants';
 
+
+	const PRIORITY  = 15;
+
 	// Define the JavaScript file
 	const JS_HANDLE       = 'lpf-export-page-admin-script';
 	const JS_URI          = 'assets/js/export';
@@ -113,5 +116,16 @@ class ExportApplicantsPage extends BaseAdminPage implements AssetsAware {
 
 		// @todo - implement an OO way of creating admin page content. 
 		echo ';)';
+	}
+
+	/**
+	 * Get the priority for this admin page.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @return int The priority.
+	 */
+	public function get_priority() {
+		return static::PRIORITY;
 	}
 }

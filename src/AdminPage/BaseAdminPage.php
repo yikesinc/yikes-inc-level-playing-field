@@ -23,6 +23,7 @@ use Yikes\LevelPlayingField\Roles\Capabilities;
 abstract class BaseAdminPage implements Service {
 
 	const PARENT_SLUG = 'edit.php?post_type=jobs';
+	const PRIORITY    = 10;
 
 	/**
 	 * Register the Metabox.
@@ -40,7 +41,7 @@ abstract class BaseAdminPage implements Service {
 				$this->get_menu_slug(),
 				$this->get_callback()
 			);
-		});
+		}, $this->get_priority() );
 	}
 
 	/**
@@ -111,4 +112,15 @@ abstract class BaseAdminPage implements Service {
 	 * @return [not sure yet]
 	 */
 	abstract public function callback();
+
+	/**
+	 * Get the priority for this admin page.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @return int The priority.
+	 */
+	public function get_priority() {
+		return static::PRIORITY;
+	}
 }
