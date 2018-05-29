@@ -9,13 +9,30 @@
 
 namespace Yikes\LevelPlayingField\AdminPage;
 
+use Yikes\LevelPlayingField\Assets\Asset;
+use Yikes\LevelPlayingField\Assets\AssetsAware;
+use Yikes\LevelPlayingField\Assets\AssetsAwareness;
+use Yikes\LevelPlayingField\Assets\ScriptAsset;
+
 /**
  * Class ExportApplicantsPage
  *
  * @since   %VERSION%
  * @package Yikes\LevelPlayingField
  */
-class ExportApplicantsPage extends BaseAdminPage {
+class ExportApplicantsPage extends BaseAdminPage implements AssetsAware {
+
+	use AssetsAwareness;
+
+	// @todo - need to implement a way of telling our Export button javascript about these variables...
+	const POST_TYPE = 'jobs';
+	const PAGE_SLUG = 'lpf-export-applicants';
+
+	// Define the JavaScript file
+	const JS_HANDLE       = 'lpf-export-page-admin-script';
+	const JS_URI          = 'assets/js/export';
+	const JS_DEPENDENCIES = array( 'jquery' );
+	const JS_VERSION      = false;
 
 	/**
 	 * Register hooks.
@@ -25,6 +42,31 @@ class ExportApplicantsPage extends BaseAdminPage {
 	 */
 	public function register() {
 		parent::register();
+
+		$this->register_assets();
+
+		add_filter( 'admin_enqueue_scripts', function( $hook ) {
+
+			// This filter should only run on our export page.
+			if ( 'jobs_page_lpf-export-applicants' !== $hook ) {
+				return;
+			}
+
+			$this->enqueue_assets();
+		} );
+	}
+
+	/**
+	 * Get the array of known assets.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @return Asset[]
+	 */
+	protected function get_assets() {
+		return [
+			new ScriptAsset( self::JS_HANDLE, self::JS_URI, self::JS_DEPENDENCIES, self::JS_VERSION, ScriptAsset::ENQUEUE_FOOTER )
+		];
 	}
 
 	/**
@@ -57,7 +99,7 @@ class ExportApplicantsPage extends BaseAdminPage {
 	 * @return string The slug name to refer to this menu by.
 	 */
 	protected function get_menu_slug() {
-		return 'lpf-export-applicants';
+		return static::PAGE_SLUG;
 	}
 
 	/**
@@ -65,11 +107,11 @@ class ExportApplicantsPage extends BaseAdminPage {
 	 *
 	 * @since %VERSION%
 	 *
-	 * @return mixed I don't know yet...
+	 * @return [not sure yet]
 	 */
 	public function callback() {
 
 		// @todo - implement an OO way of creating admin page content. 
-		echo 'Page Content';
+		echo ';)';
 	}
 }

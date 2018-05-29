@@ -72,12 +72,13 @@ class ApplicantManager extends BasePostType implements AssetsAware {
 	 */
 	protected function get_assets() {
 
-		$applicant_script = new ScriptAsset( self::JS_HANDLE, self::JS_URI, self::JS_DEPENDENCIES, self::JS_VERSION, ScriptAsset::ENQUEUE_FOOTER );
+		$script = new ScriptAsset( self::JS_HANDLE, self::JS_URI, self::JS_DEPENDENCIES, self::JS_VERSION, ScriptAsset::ENQUEUE_FOOTER );
 		
-		$applicant_script->add_localization( 
+		$script->add_localization( 
 			'applicant_admin', 
 			[
-				'export_url' => add_query_arg( 'page', 'applicant-export' ),
+				// @todo - need to implement a way connecting this to the ExportApplicantsPage constants - ExportApplicantsPage::POST_TYPE and ExportApplicantsPage::PAGE_SLUG;
+				'export_url' => add_query_arg( array( 'page' => 'lpf-export-applicants', 'post_type' => 'jobs' )  ),
 				'strings'    => [
 					'export_button_text' => __( 'Export', 'yikes-level-playing-field' )
 				]
@@ -85,7 +86,7 @@ class ApplicantManager extends BasePostType implements AssetsAware {
 		);
 
 		return [
-			$applicant_script
+			$script
 		];
 	}
 

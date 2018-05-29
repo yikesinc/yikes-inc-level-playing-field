@@ -108,7 +108,7 @@ abstract class BaseAdminPage implements Service {
 	 *
 	 * @since %VERSION%
 	 *
-	 * @return callable The function that generates the admin page.
+	 * @return [not sure yet]
 	 */
 	abstract public function callback();
 }
