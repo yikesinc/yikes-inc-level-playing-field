@@ -1691,3 +1691,15 @@ function yks_get_preview_html_from_file_type( $attachment_id, $attachment_url ) 
 	}
 	return $preview_html;
 }
+
+/**
+ * Return an escaped HTML attribute.
+ *
+ * @param string $key   The attribute key.
+ * @param string $value The attribute value.
+ *
+ * @return string
+ */
+function yks_return_attribute( $key, $value ) {
+	return sprintf( '%1$s="%2$s" ', $key, esc_attr( $value ) );
+}
