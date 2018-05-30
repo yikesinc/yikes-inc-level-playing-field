@@ -9,7 +9,6 @@
 
 namespace Yikes\LevelPlayingField\Widget\Dashboard;
 
-use Yikes\LevelPlayingField\Exception\MustExtend;
 use Yikes\LevelPlayingField\Service;
 
 /**
@@ -24,30 +23,20 @@ use Yikes\LevelPlayingField\Service;
  */
 abstract class BaseWidget implements Service {
 
-	const PREFIX = '_basewdgt_';
-
 	/**
 	 * Register the WordPress hooks.
 	 *
 	 * @since %VERSION%
 	 */
 	public function register() {
-		add_action( 'wp_dashboard_setup', array( $this, $this->get_prefix() . 'add_widget' ) );
+		add_action( 'wp_dashboard_setup', array( $this, 'add_widget' ) );
 	}
-
 	/**
-	 * Get the prefix to use for the function name.
+	 * Get the arguments that configure the custom post type.
 	 *
 	 * @since %VERSION%
 	 *
-	 * @return string Custom post type slug.
-	 * @throws MustExtend When the default slug has not been extended.
+	 * @return array Array of arguments.
 	 */
-	protected function get_prefix() {
-		if ( self::PREFIX === static::PREFIX ) {
-			throw MustExtend::default_slug( self::PREFIX );
-		}
-
-		return static::PREFIX;
-	}
+	abstract public function add_widget();
 }
