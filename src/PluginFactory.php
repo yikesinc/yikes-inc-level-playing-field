@@ -26,7 +26,7 @@ use Yikes\LevelPlayingField\Shortcode\Job;
 use Yikes\LevelPlayingField\Taxonomy\ApplicantStatus;
 use Yikes\LevelPlayingField\Taxonomy\JobCategory;
 use Yikes\LevelPlayingField\Taxonomy\JobStatus;
-use Yikes\LevelPlayingField\Widget\Dashboard\DashboardStatistics;
+use Yikes\LevelPlayingField\Widget\Dashboard\Status;
 
 /**
  * Class PluginFactory
@@ -90,7 +90,7 @@ final class PluginFactory {
 			Editor::class,
 
 			// Widgets.
-			DashboardStatistics::class,
+			Status::class,
 
 			// Shortcodes.
 			AllJobs::class,
