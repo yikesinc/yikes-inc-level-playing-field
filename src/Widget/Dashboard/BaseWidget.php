@@ -12,14 +12,13 @@ namespace Yikes\LevelPlayingField\Widget\Dashboard;
 use Yikes\LevelPlayingField\Service;
 
 /**
- * Abstract class BaseCustomPostType.
+ * Abstract class BaseWidget.
  *
  * @since   %VERSION%
  *
  * @package Yikes\LevelPlayingField
- * @author  Jeremy Pry
+ * @author  Ebonie Butler
  *
- * @property string $slug The CPT slug.
  */
 abstract class BaseWidget implements Service {
 
@@ -32,11 +31,9 @@ abstract class BaseWidget implements Service {
 		add_action( 'wp_dashboard_setup', array( $this, 'add_widget' ) );
 	}
 	/**
-	 * Get the arguments that configure the custom post type.
+	 * Add widget to dashboard.
 	 *
 	 * @since %VERSION%
-	 *
-	 * @return array Array of arguments.
 	 */
 	abstract public function add_widget();
 }
