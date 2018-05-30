@@ -17,6 +17,7 @@ use Yikes\LevelPlayingField\ListTable\JobManager as JobListTable;
 use Yikes\LevelPlayingField\Metabox\ApplicationManager as ApplicationMetabox;
 use Yikes\LevelPlayingField\Metabox\JobManager;
 use Yikes\LevelPlayingField\Roles\Administrator;
+use Yikes\LevelPlayingField\Roles\Applicant;
 use Yikes\LevelPlayingField\Roles\Editor;
 use Yikes\LevelPlayingField\Roles\HiringManager;
 use Yikes\LevelPlayingField\Roles\HumanResources;
@@ -85,6 +86,7 @@ final class PluginFactory {
 			// User roles.
 			HiringManager::class        => 1,
 			HumanResources::class       => 1,
+			Applicant::class            => 1,
 			Administrator::class        => 1,
 			Editor::class               => 1,
 
