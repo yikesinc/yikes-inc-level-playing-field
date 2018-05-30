@@ -7,6 +7,7 @@
  * @license   GPL2
  */
 namespace Yikes\LevelPlayingField\Widget\Dashboard;
+
 use Yikes\LevelPlayingField\Exception\MustExtend;
 use Yikes\LevelPlayingField\Service;
 /**
