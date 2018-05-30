@@ -1,4 +1,3 @@
-console.log( 'hola' );
 /* Applicants Admin List Page JS */
 jQuery( function ( $ ) {
 
