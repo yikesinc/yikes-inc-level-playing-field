@@ -11,6 +11,7 @@ namespace Yikes\LevelPlayingField\AdminPage;
 
 use Yikes\LevelPlayingField\Service;
 use Yikes\LevelPlayingField\Roles\Capabilities;
+use Yikes\LevelPlayingField\CustomPostType\JobManager;
 
 /**
  * Abstract class BaseAdminPage.
@@ -22,7 +23,7 @@ use Yikes\LevelPlayingField\Roles\Capabilities;
  */
 abstract class BaseAdminPage implements Service {
 
-	const PARENT_SLUG = 'edit.php?post_type=jobs';
+	const PARENT_SLUG = 'edit.php?post_type=' . JobManager::SLUG;
 	const PRIORITY    = 10;
 
 	/**
@@ -31,7 +32,6 @@ abstract class BaseAdminPage implements Service {
 	 * @since %VERSION%
 	 */
 	public function register() {
-
 		add_action( 'admin_menu', function () {
 			add_submenu_page(
 				$this->get_parent_slug(),

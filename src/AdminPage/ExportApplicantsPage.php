@@ -13,6 +13,7 @@ use Yikes\LevelPlayingField\Assets\Asset;
 use Yikes\LevelPlayingField\Assets\AssetsAware;
 use Yikes\LevelPlayingField\Assets\AssetsAwareness;
 use Yikes\LevelPlayingField\Assets\ScriptAsset;
+use Yikes\LevelPlayingField\CustomPostType\JobManager;
 
 /**
  * Class ExportApplicantsPage
@@ -24,11 +25,8 @@ class ExportApplicantsPage extends BaseAdminPage implements AssetsAware {
 
 	use AssetsAwareness;
 
-	// @todo - need to implement a way of telling our Export button javascript about these variables...
-	const POST_TYPE = 'jobs';
+	const POST_TYPE = JobManager::SLUG;
 	const PAGE_SLUG = 'lpf-export-applicants';
-
-
 	const PRIORITY  = 15;
 
 	// Define the JavaScript file
@@ -80,7 +78,7 @@ class ExportApplicantsPage extends BaseAdminPage implements AssetsAware {
 	 * @return string The text to be displayed in the title tags of the page when the menu is.
 	 */
 	protected function get_page_title() {
-		return 'Export Applicants';
+		return __( 'Export Applicants', 'yikes-level-playing-field' );
 	}
 
 	/**
@@ -91,7 +89,7 @@ class ExportApplicantsPage extends BaseAdminPage implements AssetsAware {
 	 * @return string The text to be used for the menu.
 	 */
 	protected function get_menu_title() {
-		return 'Export';
+		return __( 'Export', 'yikes-level-playing-field' );
 	}
 
 	/**

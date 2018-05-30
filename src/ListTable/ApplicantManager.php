@@ -15,6 +15,7 @@ use Yikes\LevelPlayingField\Assets\AssetsAwareness;
 use Yikes\LevelPlayingField\Assets\ScriptAsset;
 use Yikes\LevelPlayingField\CustomPostType\ApplicantManager as ApplicantManagerCPT;
 use Yikes\LevelPlayingField\Model\ApplicantRepository;
+use YIKES\LevelPlayingField\AdminPage\ExportApplicantsPage as ExportApplicantsPage;
 
 /**
  * Class ApplicantManager
@@ -77,8 +78,7 @@ class ApplicantManager extends BasePostType implements AssetsAware {
 		$script->add_localization( 
 			'applicant_admin', 
 			[
-				// @todo - need to implement a way connecting this to the ExportApplicantsPage constants - ExportApplicantsPage::POST_TYPE and ExportApplicantsPage::PAGE_SLUG;
-				'export_url' => add_query_arg( array( 'page' => 'lpf-export-applicants', 'post_type' => 'jobs' )  ),
+				'export_url' => add_query_arg( array( 'page' => ExportApplicantsPage::PAGE_SLUG, 'post_type' => ExportApplicantsPage::POST_TYPE )  ),
 				'strings'    => [
 					'export_button_text' => __( 'Export', 'yikes-level-playing-field' )
 				]
