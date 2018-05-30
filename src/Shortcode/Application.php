@@ -49,7 +49,7 @@ class Application extends BaseShortcode {
 	 * @return array Context to pass onto view.
 	 * @throws InvalidPostID When the post ID is not valid.
 	 */
-	protected function get_context( $atts ) {
+	protected function get_context( array $atts ) {
 		$application_repository = new ApplicationRepository();
 
 		return [

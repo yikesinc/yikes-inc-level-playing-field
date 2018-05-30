@@ -109,7 +109,7 @@ abstract class BaseShortcode implements Renderable, AssetsAware, Service {
 	 *
 	 * @return array Context to pass onto view.
 	 */
-	protected function get_context( $atts ) {
+	protected function get_context( array $atts ) {
 		return array();
 	}
 
