@@ -52,33 +52,31 @@ class Application extends CustomPostTypeEntity {
 		 * @param array $fields The array of fields.
 		 */
 		return apply_filters( 'lpf_application_fields_enabled_defaults', [
-			'name'           => true,
-			'email'          => true,
-			'phone'          => true,
-			'address'        => true,
-			'cover_letter'   => true,
-			'schooling'      => false,
-			'certifications' => false,
-			'skills'         => false,
-			'languages'      => false,
-			'experience'     => true,
-			'volunteer'      => false,
+			AMMeta::NAME           => true,
+			AMMeta::EMAIL          => true,
+			AMMeta::PHONE          => true,
+			AMMeta::ADDRESS        => true,
+			AMMeta::COVER_LETTER   => true,
+			AMMeta::EDUCATION      => false,
+			AMMeta::CERTIFICATIONS => false,
+			AMMeta::SKILLS         => false,
+			AMMeta::LANGUAGES      => false,
+			AMMeta::EXPERIENCE     => true,
+			AMMeta::VOLUNTEER      => false,
 		] );
 	}
 
 	/**
-	 * Load a lazily-loaded property.
-	 *
-	 * After this process, the loaded property should be set within the
-	 * object's state, otherwise the load procedure might be triggered multiple
-	 * times.
+	 * Get the active fields for this application.
 	 *
 	 * @since %VERSION%
-	 *
-	 * @param string $property Name of the property to load.
+	 * @return array
 	 */
-	protected function load_lazy_property( $property ) {
+	public function get_active_fields() {
 		$this->load_lazy_properties();
+		return array_keys( array_filter( get_object_vars( $this ), function ( $value ) {
+			return true === $value;
+		} ) );
 	}
 
 	/**
@@ -100,15 +98,17 @@ class Application extends CustomPostTypeEntity {
 	}
 
 	/**
-	 * Get the active fields for this application.
+	 * Load a lazily-loaded property.
+	 *
+	 * After this process, the loaded property should be set within the
+	 * object's state, otherwise the load procedure might be triggered multiple
+	 * times.
 	 *
 	 * @since %VERSION%
-	 * @return array
+	 *
+	 * @param string $property Name of the property to load.
 	 */
-	public function get_active_fields() {
+	protected function load_lazy_property( $property ) {
 		$this->load_lazy_properties();
-		return array_filter( get_object_vars( $this ), function ( $value ) {
-			return true === $value;
-		} );
 	}
 }

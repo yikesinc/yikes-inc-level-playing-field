@@ -26,4 +26,11 @@ interface ApplicationMeta {
 	const PHONE        = self::META_PREFIX . 'phone';
 	const ADDRESS      = self::META_PREFIX . 'address';
 	const COVER_LETTER = self::META_PREFIX . 'cover_letter';
+
+	const EDUCATION      = self::META_PREFIX . 'education';
+	const CERTIFICATIONS = self::META_PREFIX . 'certifications';
+	const SKILLS         = self::META_PREFIX . 'skills';
+	const LANGUAGES      = self::META_PREFIX . 'languages';
+	const EXPERIENCE     = self::META_PREFIX . 'experience';
+	const VOLUNTEER      = self::META_PREFIX . 'volunteer';
 }
