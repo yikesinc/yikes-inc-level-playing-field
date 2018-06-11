@@ -14,6 +14,7 @@ use Yikes\LevelPlayingField\Assets\AssetsAware;
 use Yikes\LevelPlayingField\Assets\AssetsAwareness;
 use Yikes\LevelPlayingField\Assets\ScriptAsset;
 use Yikes\LevelPlayingField\CustomPostType\JobManager;
+use Yikes\LevelPlayingField\View\AdminView;
 
 /**
  * Class ExportApplicantsPage
@@ -112,8 +113,8 @@ class ExportApplicantsPage extends BaseAdminPage implements AssetsAware {
 	 */
 	public function callback() {
 
-		// @todo - implement an OO way of creating admin page content. 
-		echo ';)';
+		$view = new AdminView( 'views/applicant-export' );
+		$view->render();
 	}
 
 	/**
