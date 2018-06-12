@@ -97,4 +97,19 @@ interface ApplicantMeta {
 		self::ORGANIZATION => 1,
 		self::DATES        => 1,
 	];
+
+	// Field types.
+	const TYPE_TEXT  = 'text';
+	const TYPE_EMAIL = 'email';
+	const TYPE_PHONE = 'tel';
+	const TYPE_FILE  = 'file';
+
+	const FIELD_MAP = [
+		self::NAME         => self::TYPE_TEXT,
+		self::EMAIL        => self::TYPE_EMAIL,
+		self::PHONE        => self::TYPE_PHONE,
+		// todo: address
+		self::COVER_LETTER => self::TYPE_FILE,
+		// todo: other complex fields
+	];
 }
