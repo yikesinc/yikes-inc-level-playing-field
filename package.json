@@ -1,26 +1,48 @@
 {
-  "name": "yikes-inc-level-playing-field",
-  "title": "Level Playing Field by YIKES Inc.",
-  "version": "1.0.0",
-  "description": "A WordPress plugin to anonymize job applications to fight bias in hiring and employment.",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "YIKES, Inc.",
-  "site": "http://www.yikesinc.com",
-  "license": "GPLv2",
-  "dependencies": {
-    "grunt": "^0.4.5"
-  },
-  "devDependencies": {
-    "autoprefixer-core": "^5.2.1",
-    "grunt-auto-install": "^0.2.4",
-    "grunt-banner": "^0.6.0",
-    "grunt-contrib-copy": "^1.0.0",
-    "grunt-contrib-cssmin": "^0.12.3",
-    "grunt-contrib-uglify": "^0.9.1",
-    "grunt-contrib-watch": "^0.6.1",
-    "grunt-postcss": "^0.5.0"
-  }
+    "name": "yikes-level-playing-field",
+    "version": "0.1.0",
+    "main": "Gulpfile.js",
+    "author": "YIKES, Inc.",
+    "devDependencies": {
+        "babel-preset-latest": "^6",
+        "bourbon": "^4.3",
+        "bourbon-neat": "^1.9",
+        "browser-sync": "^2",
+        "css-mqpacker": "^6",
+        "del": "^3",
+        "eslint": "^4",
+        "eslint-config-wordpress": "^2",
+        "glob": "^7",
+        "gulp": "^3",
+        "gulp-babel": "^6",
+        "gulp-bump": "^2",
+        "gulp-cheerio": "^0",
+        "gulp-concat": "^2",
+        "gulp-conventional-changelog": "^1",
+        "gulp-cssnano": "^2",
+        "gulp-eslint": "^4",
+        "gulp-git": "^2",
+        "gulp-imagemin": "^3",
+        "gulp-notify": "^3",
+        "gulp-plumber": "^1",
+        "gulp-postcss": "^7",
+        "gulp-print": "^2",
+        "gulp-rename": "^1",
+        "gulp-replace": "^0.6",
+        "gulp-sass": "^3",
+        "gulp-sass-lint": "^1",
+        "gulp-sort": "^2",
+        "gulp-sourcemaps": "^2",
+        "gulp-svgmin": "^1",
+        "gulp-svgstore": "^6",
+        "gulp-uglify": "^3",
+        "gulp-util": "^3",
+        "gulp-wp-pot": "^2",
+        "gulp-zip": "^4",
+        "gulp.spritesmith": "^6",
+        "sassdoc": "^2"
+    },
+    "resolutions": {
+        "natives": "1.1.3"
+    }
 }

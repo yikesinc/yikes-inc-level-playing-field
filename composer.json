@@ -1,0 +1,29 @@
+{
+    "name": "yikesinc/yikes-level-playing-field",
+    "description": "",
+    "type": "wordpress-plugin",
+    "require": {
+        "php": ">=5.6",
+        "htmlburger/carbon-fields": "^2.2"
+    },
+    "require-dev": {
+        "wp-coding-standards/wpcs": "^0.14.0",
+        "phpunit/phpunit": "^6.4",
+        "dealerdirect/phpcodesniffer-composer-installer": "^0.4"
+    },
+    "license": "GPL-2.0+",
+    "authors": [
+        {
+            "name": "Jeremy Pry",
+            "email": "jeremy.pry@gmail.com",
+            "role": "Developer",
+            "homepage": "http://jeremypry.com/"
+        },
+        {
+            "name": "Yikes Inc.",
+            "email": "info@yikesinc.com",
+            "role": "Owner",
+            "homepage": "https://www.yikesinc.com"
+        }
+    ]
+}
