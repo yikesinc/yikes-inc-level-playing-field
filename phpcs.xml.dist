@@ -14,6 +14,10 @@
 	<rule ref="PEAR.Files.IncludingFile">
 		<exclude name="PEAR.Files.IncludingFile.BracketsNotRequired"/>
 	</rule>
+	<rule ref="WordPress.WhiteSpace.PrecisionAlignment">
+		<!-- This rule flags space indents in HTML tags, which are OK -->
+		<exclude name="WordPress.WhiteSpace.PrecisionAlignment.Found"/>
+	</rule>
 
 	<!-- Change behavior of some sniffs -->
 	<rule ref="Generic.Commenting.DocComment.MissingShort">
