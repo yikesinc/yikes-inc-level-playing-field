@@ -39,7 +39,7 @@ class Job extends CustomPostTypeEntity {
 	 * @return string
 	 */
 	public function get_description() {
-		return $this->description;
+		return $this->{ JMMeta::META_PREFIX . 'description' };
 	}
 
 	/**
@@ -52,7 +52,7 @@ class Job extends CustomPostTypeEntity {
 	 * @return string
 	 */
 	public function get_type() {
-		return $this->type;
+		return $this->{ JMMeta::META_PREFIX . 'type' };
 	}
 
 	/**
@@ -63,7 +63,7 @@ class Job extends CustomPostTypeEntity {
 	 * @return bool
 	 */
 	public function is_remote() {
-		return true;
+		return $this->{ JMMeta::META_PREFIX . 'location' } === 'remote';
 	}
 
 	/**
@@ -74,7 +74,18 @@ class Job extends CustomPostTypeEntity {
 	 * @return array
 	 */
 	public function get_address() {
-		return [];
+		return unserialize( $this->{ JMMeta::META_PREFIX . 'address' } )[0];
+	}
+
+	/**
+	 * Get the job ID to use when displaying this Job.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @return int
+	 */
+	public function get_post_id() {
+		return $this->post->ID;
 	}
 
 	/**
@@ -145,6 +156,24 @@ class Job extends CustomPostTypeEntity {
 		foreach ( $this->get_lazy_properties() as $key => $default ) {
 			$this->$key = array_key_exists( JMMeta::META_PREFIX . $key, $meta )
 				? $meta[ JMMeta::META_PREFIX . $key ][0]
+				: $default;
+		}
+	}
+
+	/**
+	 * Load all properties, lazily.
+	 *
+	 * @since %VERSION%
+	 *
+	 */
+	public function load_lazy_properties() {
+
+		// Load all the normal properties from post meta.
+		$meta = get_post_meta( $this->get_id() );
+
+		foreach ( $this->get_lazy_properties() as $key => $default ) {
+			$this->$key = array_key_exists( $key, $meta )
+				? $meta[ $key ][0]
 				: $default;
 		}
 	}
