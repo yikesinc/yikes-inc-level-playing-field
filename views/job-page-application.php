@@ -9,6 +9,7 @@
 
 namespace Yikes\LevelPlayingField;
 
+use Yikes\LevelPlayingField\Field\Hidden;
 use Yikes\LevelPlayingField\Form\Factory;
 use Yikes\LevelPlayingField\Model\Application;
 
@@ -22,14 +23,14 @@ $field_classes = [
 	sprintf( 'lpf-application-%s', $application->get_id() ),
 ];
 
-$fields = Factory::create( $active_fields, $field_classes );
+// todo: change job_id to actual job, not application, ID.
+$fields   = Factory::create( $active_fields, $field_classes );
+$fields[] = new Hidden( 'job_id', $application->get_id() );
 
 ?>
 <form method="POST" id="<?php echo esc_attr( $application->get_id() ); ?>">
-	<?php wp_nonce_field( 'lpf_application_submit', 'lpf_nonce' ); ?>
-	<input type="hidden" name="application_id" value="<?php echo esc_attr( $application->get_id() ); ?>" />
-
 	<?php
+	wp_nonce_field( 'lpf_application_submit', 'lpf_nonce' );
 	foreach ( $fields as $field ) {
 		$field->render();
 	}
