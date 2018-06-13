@@ -55,7 +55,8 @@ class BaseInput extends BaseField {
 			<input type="<?php echo esc_attr( $type ); ?>"
 				   class="<?php echo esc_attr( join( ' ', $classes ) ); ?>"
 				   name="<?php echo esc_attr( $this->id ); ?>"
-				   id="<?php esc_attr( $this->id ); ?>"
+				   id="<?php echo esc_attr( $this->id ); ?>"
+				   required="required"
 				<?php $this->render_data_attributes(); ?>
 			/>
 		</label>
