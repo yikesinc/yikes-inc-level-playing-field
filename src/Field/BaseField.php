@@ -46,6 +46,14 @@ abstract class BaseField implements Field {
 	protected $classes;
 
 	/**
+	 * Whether the field is required.
+	 *
+	 * @since %VERSION%
+	 * @var bool
+	 */
+	protected $required;
+
+	/**
 	 * Data attributes for the field.
 	 *
 	 * @since %VERSION%
@@ -56,14 +64,16 @@ abstract class BaseField implements Field {
 	/**
 	 * BaseField constructor.
 	 *
-	 * @param string $id      The field ID.
-	 * @param string $label   The field label.
-	 * @param array  $classes Array of field classes.
+	 * @param string $id       The field ID.
+	 * @param string $label    The field label.
+	 * @param array  $classes  Array of field classes.
+	 * @param bool   $required Whether the field is required.
 	 */
-	public function __construct( $id, $label, array $classes ) {
-		$this->id      = $id;
-		$this->label   = $label;
-		$this->classes = $classes;
+	public function __construct( $id, $label, array $classes, $required = true ) {
+		$this->id       = $id;
+		$this->label    = $label;
+		$this->classes  = $classes;
+		$this->required = (bool) $required;
 	}
 
 	/**
@@ -95,5 +105,16 @@ abstract class BaseField implements Field {
 		}
 
 		echo join( ' ', $pieces ); // XSS ok.
+	}
+
+	/**
+	 * Render the required attribute.
+	 *
+	 * @since %VERSION%
+	 */
+	protected function render_required() {
+		if ( $this->required ) {
+			echo 'required="required"';
+		}
 	}
 }
