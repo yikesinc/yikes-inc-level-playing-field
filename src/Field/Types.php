@@ -24,5 +24,5 @@ interface Types {
 	const HIDDEN   = Hidden::class;
 	const NUMBER   = Number::class;
 	const PHONE    = Phone::class;
-	const ADDRESS  = Addresss::class;
+	const ADDRESS  = Address::class;
 }

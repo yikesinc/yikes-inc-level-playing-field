@@ -10,12 +10,12 @@
 namespace Yikes\LevelPlayingField\Field;
 
 /**
- * Class Addresss
+ * Class Address
  *
  * @since   %VERSION%
  * @package Yikes\LevelPlayingField
  */
-class Addresss extends BaseField {
+class Address extends BaseField {
 
 	/**
 	 * Render the field.
