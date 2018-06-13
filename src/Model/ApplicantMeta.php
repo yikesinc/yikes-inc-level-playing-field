@@ -9,6 +9,8 @@
 
 namespace Yikes\LevelPlayingField\Model;
 
+use Yikes\LevelPlayingField\Field\Types;
+
 /**
  * Interface ApplicantMeta
  *
@@ -98,18 +100,11 @@ interface ApplicantMeta {
 		self::DATES        => 1,
 	];
 
-	// Field types.
-	const TYPE_TEXT  = 'text';
-	const TYPE_EMAIL = 'email';
-	const TYPE_PHONE = 'tel';
-	const TYPE_FILE  = 'file';
-
 	const FIELD_MAP = [
-		self::NAME         => self::TYPE_TEXT,
-		self::EMAIL        => self::TYPE_EMAIL,
-		self::PHONE        => self::TYPE_PHONE,
-		// todo: address
-		self::COVER_LETTER => self::TYPE_FILE,
-		// todo: other complex fields
+		self::NAME         => Types::TEXT,
+		self::EMAIL        => Types::EMAIL,
+		self::PHONE        => Types::PHONE,
+		self::ADDRESS      => Types::ADDRESS,
+		self::COVER_LETTER => Types::TEXTAREA,
 	];
 }
