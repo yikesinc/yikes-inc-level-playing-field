@@ -77,9 +77,6 @@ abstract class BaseWidget implements Service {
 	 * Render widget to dashboard.
 	 *
 	 * @since %VERSION%
-	 *
-	 * @return string widget title.
-	 * @throws MustExtend When the default title has not been extended.
 	 */
 	abstract public function render_widget();
 }
