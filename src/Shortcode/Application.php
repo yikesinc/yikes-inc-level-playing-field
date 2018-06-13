@@ -12,7 +12,7 @@ namespace Yikes\LevelPlayingField\Shortcode;
 use Yikes\LevelPlayingField\Exception\InvalidPostID;
 use Yikes\LevelPlayingField\Model\ApplicationRepository;
 use Yikes\LevelPlayingField\View\FormEscapedView;
-use Yikes\LevelPlayingField\View\TemplatedView;
+use Yikes\LevelPlayingField\View\NoOverrideLocationView;
 
 /**
  * Class Application
@@ -92,7 +92,7 @@ class Application extends BaseShortcode {
 	public function render( array $context = [] ) {
 		try {
 			$this->enqueue_assets();
-			$view = new FormEscapedView( new TemplatedView( $this->get_view_uri() ) );
+			$view = new FormEscapedView( new NoOverrideLocationView( $this->get_view_uri() ) );
 
 			return $view->render( $context );
 		} catch ( \Exception $e ) {
