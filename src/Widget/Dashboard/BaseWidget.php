@@ -42,7 +42,7 @@ abstract class BaseWidget implements Service {
 		wp_add_dashboard_widget(
 			$this->get_slug(),         // Widget slug.
 			$this->get_widget_title(),         // Title.
-			array( $this, $this->get_display_function_name() ) // Display function.
+			array( $this, 'render_widget' ) // Display function.
 		);
 	}
 	/**
@@ -74,17 +74,9 @@ abstract class BaseWidget implements Service {
 		return static::TITLE;
 	}
 	/**
-	 * Get the function name to use to display the dashboard widget.
+	 * Render widget to dashboard.
 	 *
 	 * @since %VERSION%
-	 *
-	 * @return string widget title.
-	 * @throws MustExtend When the default title has not been extended.
 	 */
-	protected function get_display_function_name() {
-		if ( self::F_NAME === static::F_NAME ) {
-			throw MustExtend::default_slug( self::F_NAME );
-		}
-		return static::F_NAME;
-	}
+	abstract public function render_widget();
 }
