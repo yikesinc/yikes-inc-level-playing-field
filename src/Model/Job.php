@@ -10,7 +10,6 @@
 namespace Yikes\LevelPlayingField\Model;
 
 use Yikes\LevelPlayingField\Model\JobMeta as JMMeta;
-use Yikes\LevelPlayingField\Taxonomy\JobStatus;
 
 /**
  * Class Job
@@ -39,7 +38,7 @@ class Job extends CustomPostTypeEntity {
 	 * @return string
 	 */
 	public function get_description() {
-		return $this->{ JMMeta::META_PREFIX . 'description' };
+		return $this->{JMMeta::META_PREFIX . 'description'};
 	}
 
 	/**
@@ -52,7 +51,7 @@ class Job extends CustomPostTypeEntity {
 	 * @return string
 	 */
 	public function get_type() {
-		return $this->{ JMMeta::META_PREFIX . 'type' };
+		return $this->{JMMeta::META_PREFIX . 'type'};
 	}
 
 	/**
@@ -63,7 +62,7 @@ class Job extends CustomPostTypeEntity {
 	 * @return bool
 	 */
 	public function is_remote() {
-		return $this->{ JMMeta::META_PREFIX . 'location' } === 'remote';
+		return 'remote' === $this->{JMMeta::META_PREFIX . 'location'};
 	}
 
 	/**
@@ -74,7 +73,7 @@ class Job extends CustomPostTypeEntity {
 	 * @return array
 	 */
 	public function get_address() {
-		return unserialize( $this->{ JMMeta::META_PREFIX . 'address' } )[0];
+		return unserialize( $this->{JMMeta::META_PREFIX . 'address'} )[0];
 	}
 
 	/**
