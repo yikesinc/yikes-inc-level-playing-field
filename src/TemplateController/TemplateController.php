@@ -14,7 +14,6 @@ use Yikes\LevelPlayingField\Assets\AssetsAwareness;
 use Yikes\LevelPlayingField\Exception\MustExtend;
 use Yikes\LevelPlayingField\Renderable;
 use Yikes\LevelPlayingField\Service;
-use Yikes\LevelPlayingField\View\FormEscapedView;
 use Yikes\LevelPlayingField\View\PostEscapedView;
 use Yikes\LevelPlayingField\View\TemplatedView;
 
@@ -33,11 +32,15 @@ abstract class TemplateController implements Renderable, AssetsAware, Service {
 	use AssetsAwareness;
 
 	const PRIORITY = 10;
-	const VIEW_URI = NULL;
+	const VIEW_URI = null;
 
+	/**
+	 * Register the current Registerable.
+	 *
+	 * @since %VERSION%
+	 */
 	public function register() {
-
-		add_filter( 'template_include', [ $this, 'set_content' ], static::PRIORITY, 1 );
+		add_filter( 'the_content', [ $this, 'set_content' ], 20 );
 	}
 
 	/**
@@ -46,6 +49,7 @@ abstract class TemplateController implements Renderable, AssetsAware, Service {
 	 * @since %VERSION%
 	 *
 	 * @param  string $template The default template file WordPress is handing us.
+	 *
 	 * @return string The text to be used for the menu.
 	 */
 	abstract public function set_content( $template );
@@ -66,17 +70,18 @@ abstract class TemplateController implements Renderable, AssetsAware, Service {
 	 *
 	 * @return string Rendered HTML.
 	 */
-	public function render( array $context = array() ) {
+	public function render( array $context = [] ) {
 		try {
-
 			$this->enqueue_assets();
 			$view = new PostEscapedView( new TemplatedView( $this->get_view_uri() ) );
 
 			return $view->render( $context );
-		} catch ( \Exception $exception ) {
-
-			// Don't let exceptions bubble up. Just render an empty shortcode instead.
-			return '';
+		} catch ( \Exception $e ) {
+			return sprintf(
+				/* translators: %s refers to the error message */
+				esc_html__( 'There was an error displaying the template: %s', 'yikes-level-playing-field' ),
+				$e->getMessage()
+			);
 		}
 	}
 
@@ -96,7 +101,7 @@ abstract class TemplateController implements Renderable, AssetsAware, Service {
 	 * @throws MustExtend When the default view URI has not been extended.
 	 */
 	protected function get_view_uri() {
-		if ( static::VIEW_URI === NULL ) {
+		if ( static::VIEW_URI === null ) {
 			throw MustExtend::default_view( self::VIEW_URI );
 		}
 

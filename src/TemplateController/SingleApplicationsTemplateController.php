@@ -9,8 +9,9 @@
 
 namespace Yikes\LevelPlayingField\TemplateController;
 
-use Yikes\LevelPlayingField\Model\ApplicationRepository;
 use Yikes\LevelPlayingField\CustomPostType\ApplicationManager;
+use Yikes\LevelPlayingField\Exception\InvalidPostID;
+use Yikes\LevelPlayingField\Model\ApplicationRepository;
 use Yikes\LevelPlayingField\View\FormEscapedView;
 use Yikes\LevelPlayingField\View\TemplatedView;
 
@@ -29,26 +30,21 @@ class SingleApplicationsTemplateController extends TemplateController {
 	const PRIORITY = 10;
 	const VIEW_URI = 'views/job-page-application';
 
-	public function register() {
-		parent::register();
-	}
-
 	/**
 	 * Check if the current request is for this class' object and supply the current post w/ content.
 	 *
 	 * @since %VERSION%
 	 *
-	 * @param  string $template The default template file WordPress is handing us.
+	 * @param  string $content The default template file WordPress is handing us.
+	 *
 	 * @return string The text to be used for the menu.
 	 */
-	public function set_content( $template ) {
-
+	public function set_content( $content ) {
 		if ( $this->is_template_request() ) {
-			global $post;
-			$post->post_content = $this->render( $this->get_context( $this->get_context_data() ) );
+			$content = $this->render( $this->get_context( $this->get_context_data() ) );
 		}
 
-		return $template;
+		return $content;
 	}
 
 	/**
@@ -69,17 +65,18 @@ class SingleApplicationsTemplateController extends TemplateController {
 	 *
 	 * @return string Rendered HTML.
 	 */
-	public function render( array $context = array() ) {
+	public function render( array $context = [] ) {
 		try {
-
 			$this->enqueue_assets();
 			$view = new FormEscapedView( new TemplatedView( $this->get_view_uri() ) );
 
 			return $view->render( $context );
-		} catch ( \Exception $exception ) {
-
-			// Don't let exceptions bubble up. Just render an empty shortcode instead.
-			return '';
+		} catch ( \Exception $e ) {
+			return sprintf(
+				/* translators: %s refers to the error message */
+				esc_html__( 'There was an error displaying the form: %s', 'yikes-level-playing-field' ),
+				$e->getMessage()
+			);
 		}
 	}
 
@@ -97,16 +94,16 @@ class SingleApplicationsTemplateController extends TemplateController {
 	 *
 	 * @since %VERSION%
 	 *
+	 * @param int $id The Job ID.
+	 *
 	 * @return array Context to pass onto view.
+	 * @throws InvalidPostID When the post ID cannot be found as an Application.
 	 */
 	protected function get_context( $id ) {
 		$applications_repository = new ApplicationRepository();
 
-		return apply_filters( 'lpf_single_application_template_data', 
-			[
-				'application' => $applications_repository->find( $id ),
-			]
-		);
+		return apply_filters( 'lpf_single_application_template_data', [
+			'application' => $applications_repository->find( $id ),
+		] );
 	}
-
 }
