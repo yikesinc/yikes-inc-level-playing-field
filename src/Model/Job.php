@@ -158,22 +158,4 @@ class Job extends CustomPostTypeEntity {
 				: $default;
 		}
 	}
-
-	/**
-	 * Load all properties, lazily.
-	 *
-	 * @since %VERSION%
-	 *
-	 */
-	public function load_lazy_properties() {
-
-		// Load all the normal properties from post meta.
-		$meta = get_post_meta( $this->get_id() );
-
-		foreach ( $this->get_lazy_properties() as $key => $default ) {
-			$this->$key = array_key_exists( $key, $meta )
-				? $meta[ $key ][0]
-				: $default;
-		}
-	}
 }

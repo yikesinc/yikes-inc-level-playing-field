@@ -13,7 +13,6 @@ use Yikes\LevelPlayingField\Model\Job;
 
 /** @var Job $job */
 $job = $this->job;
-$job->load_lazy_properties();
 ?>
 
 <div class="job-page-job">
@@ -42,7 +41,7 @@ $job->load_lazy_properties();
 
 				esc_html_e( 'Address: remote', 'yikes-level-playing-field' );
 
-			} else if ( ! empty( $address = $job->get_address() ) ) { ?>  
+			} else if ( ! empty( $address = $job->get_address() ) ) { ?>
 
 				<address id="lpf-address">
 
@@ -64,7 +63,7 @@ $job->load_lazy_properties();
 			<?php }; ?>
 
 		</div>
-		
+
 	</div>
 	<!-- Output application form -->
 </div>
