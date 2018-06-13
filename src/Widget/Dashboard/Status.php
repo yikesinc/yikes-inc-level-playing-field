@@ -17,19 +17,9 @@ namespace Yikes\LevelPlayingField\Widget\Dashboard;
  */
 class Status extends BaseWidget {
 
-	/**
-	 * Add a widget to the dashboard.
-	 * This function is hooked into the 'wp_dashboard_setup' action above.
-	 *
-	 * @return void
-	 */
-	public function add_widget() {
-		wp_add_dashboard_widget(
-			'yikes_lpf_widget',         // Widget slug.
-			'Yikes Level Playing Field',         // Title.
-			array( $this, 'yikes_stats_display_status' ) // Display function.
-		);
-	}
+	const SLUG   = 'yikes_lpf_widget';
+	const TITLE  = 'Yikes Level Playing Field Stuff';
+	const F_NAME = 'yikes_stats_display_status';
 
 	/**
 	 * Output the contents of our Dashboard Widget.
