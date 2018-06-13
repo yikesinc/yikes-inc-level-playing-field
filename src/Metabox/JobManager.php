@@ -16,6 +16,7 @@ use Yikes\LevelPlayingField\Assets\ScriptAsset;
 use Yikes\LevelPlayingField\CustomPostType\JobManager as JobManagerCPT;
 use Yikes\LevelPlayingField\Model\JobMeta;
 use Yikes\LevelPlayingField\Taxonomy\JobStatus;
+use Yikes\LevelPlayingField\CustomPostType\ApplicationManager;
 
 /**
  * Class JobManager
@@ -139,6 +140,13 @@ class JobManager extends AwesomeBaseMetabox implements AssetsAware {
 							'desc' => __( 'Address where the job is located', 'yikes-level-playing-field' ),
 							'id'   => JobMeta::ADDRESS,
 							'type' => 'address',
+						],
+						[
+							'name'       => __( 'Application', 'yikes-level-playing-field' ),
+							'desc'       => __( 'Application to use for job posting.', 'yikes-level-playing-field' ),
+							'id'         => JobMeta::APPLICATION,
+							'type'       => 'select_post_type',
+							'post-types' =>ApplicationManager::SLUG,
 						],
 					],
 				],

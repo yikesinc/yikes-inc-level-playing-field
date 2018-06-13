@@ -26,6 +26,7 @@ interface JobMeta {
 	const TYPE        = self::META_PREFIX . 'type';
 	const LOCATION    = self::META_PREFIX . 'location';
 	const ADDRESS     = self::META_PREFIX . 'address';
+	const APPLICATION = self::META_PREFIX . 'application';
 
 	// Responsibilities.
 	const RESPONSIBILITIES = self::META_PREFIX . 'responsibilities';
