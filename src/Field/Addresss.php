@@ -23,7 +23,7 @@ class Addresss extends BaseField {
 	 * @since %VERSION%
 	 */
 	public function render() {
-		$classes    = array_merge( $this->classes, 'lpf-field-address' );
+		$classes    = array_merge( $this->classes, [ 'lpf-field-address' ] );
 		$sub_fields = [
 			new Text( "{$this->id}[line_1]", '', $classes ),
 			new Text( "{$this->id}[line_2]", '', $classes, false ),
