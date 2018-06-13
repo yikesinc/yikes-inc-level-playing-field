@@ -23,8 +23,6 @@ class Status extends BaseWidget {
 
 	/**
 	 * Output the contents of our Dashboard Widget.
-	 *
-	 * @return void
 	 */
 	public function yikes_stats_display_status() {
 		$html = '<h3>Placeholder text.</h3>';
