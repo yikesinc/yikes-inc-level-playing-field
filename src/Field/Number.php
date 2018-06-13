@@ -9,6 +9,12 @@
 
 namespace Yikes\LevelPlayingField\Field;
 
-class Number {
-
+/**
+ * Class Number
+ *
+ * @since   %VERSION%
+ * @package Yikes\LevelPlayingField
+ */
+class Number extends BaseInput {
+	const TYPE = 'number';
 }
