@@ -25,10 +25,12 @@ class Addresss extends BaseField {
 	public function render() {
 		$classes    = array_merge( $this->classes, [ 'lpf-field-address' ] );
 		$sub_fields = [
-			new Text( "{$this->id}[line_1]", '', $classes ),
-			new Text( "{$this->id}[line_2]", '', $classes, false ),
+			new Text( "{$this->id}[address-1]", '', $classes ),
+			new Text( "{$this->id}[address-2]", '', $classes, false ),
 			new Text( "{$this->id}[city]", '', $classes ),
 			new Text( "{$this->id}[state]", '', $classes ),
+			new Text( "{$this->id}[province]", '', $classes ),
+			new Text( "{$this->id}[country]", '', $classes ),
 			new Number( "{$this->id}[zip]", '', $classes ),
 		];
 
