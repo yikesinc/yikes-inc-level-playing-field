@@ -7,8 +7,14 @@
  * @license GPL2
  */
 
+namespace Yikes\LevelPlayingField\Field;
+
 interface Field {
 
-
+	/**
+	 * Render the field.
+	 *
+	 * @since %VERSION%
+	 */
 	public function render();
 }
