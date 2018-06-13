@@ -9,6 +9,7 @@
 
 namespace Yikes\LevelPlayingField\Widget\Dashboard;
 
+use Yikes\LevelPlayingField\Exception\MustExtend;
 use Yikes\LevelPlayingField\Service;
 
 /**
@@ -22,18 +23,68 @@ use Yikes\LevelPlayingField\Service;
  */
 abstract class BaseWidget implements Service {
 
+	const SLUG   = '_basewidget_';
+	const TITLE  = '_basetitle_';
+	const F_NAME = '_basedisplay_';
+
 	/**
 	 * Register the WordPress hooks.
 	 *
 	 * @since %VERSION%
 	 */
 	public function register() {
-		add_action( 'wp_dashboard_setup', array( $this, 'add_widget' ) );
+		add_action( 'wp_dashboard_setup', array( $this, 'add_dashboard_widget' ) );
 	}
 	/**
-	 * Add widget to dashboard.
+	 * Add custom dashboard widget.
+	 */
+	public function add_dashboard_widget() {
+		wp_add_dashboard_widget(
+			$this->get_slug(),         // Widget slug.
+			$this->get_widget_title(),         // Title.
+			array( $this, $this->get_display_function_name() ) // Display function.
+		);
+	}
+	/**
+	 * Get the slug to use for the dashboard widget.
 	 *
 	 * @since %VERSION%
+	 *
+	 * @return string widget slug.
+	 * @throws MustExtend When the default slug has not been extended.
 	 */
-	abstract public function add_widget();
+	protected function get_slug() {
+		if ( self::SLUG === static::SLUG ) {
+			throw MustExtend::default_slug( self::SLUG );
+		}
+		return static::SLUG;
+	}
+	/**
+	 * Get the title to use for the dashboard widget.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @return string widget title.
+	 * @throws MustExtend When the default title has not been extended.
+	 */
+	protected function get_widget_title() {
+		if ( self::TITLE === static::TITLE ) {
+			throw MustExtend::default_slug( self::TITLE );
+		}
+		return static::TITLE;
+	}
+	/**
+	 * Get the function name to use to display the dashboard widget.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @return string widget title.
+	 * @throws MustExtend When the default title has not been extended.
+	 */
+	protected function get_display_function_name() {
+		if ( self::F_NAME === static::F_NAME ) {
+			throw MustExtend::default_slug( self::F_NAME );
+		}
+		return static::F_NAME;
+	}
 }
