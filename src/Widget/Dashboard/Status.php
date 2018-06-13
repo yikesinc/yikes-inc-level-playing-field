@@ -17,14 +17,13 @@ namespace Yikes\LevelPlayingField\Widget\Dashboard;
  */
 class Status extends BaseWidget {
 
-	const SLUG   = 'yikes_lpf_widget';
-	const TITLE  = 'Yikes Level Playing Field Stuff';
-	const F_NAME = 'yikes_stats_display_status';
+	const SLUG  = 'yikes_lpf_widget';
+	const TITLE = 'Yikes Level Playing Field Stuff';
 
 	/**
-	 * Output the contents of our Dashboard Widget.
+	 * Render widget to dashboard.
 	 */
-	public function yikes_stats_display_status() {
+	public function render_widget() {
 		$html = '<h3>Placeholder text.</h3>';
 		echo $html;
 	}
