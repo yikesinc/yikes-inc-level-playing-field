@@ -77,4 +77,23 @@ abstract class BaseField implements Field {
 	public function add_data( $key, $value ) {
 		$this->data[ $key ] = $value;
 	}
+
+	/**
+	 * Render any data attributes for this field.
+	 *
+	 * @since %VERSION%
+	 */
+	protected function render_data_attributes() {
+		if ( empty( $this->data ) ) {
+			return;
+		}
+
+		$pieces = [];
+		foreach ( $this->data as $key => $datum ) {
+			$key      = strtolower( str_replace( [ '_', ' ' ], '-', $key ) );
+			$pieces[] = sprintf( 'data-%s="%s"', esc_html( $key ), esc_attr( $datum ) );
+		}
+
+		echo join( ' ', $pieces ); // XSS ok.
+	}
 }

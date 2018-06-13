@@ -61,22 +61,4 @@ class BaseInput extends BaseField {
 		</label>
 		<?php
 	}
-
-	/**
-	 * Render any data attributes for this field.
-	 *
-	 * @since %VERSION%
-	 */
-	protected function render_data_attributes() {
-		if ( empty( $this->data ) ) {
-			return;
-		}
-
-		$pieces = [];
-		foreach ( $this->data as $key => $datum ) {
-			$pieces[] = sprintf( '%s="%s"', esc_html( $key ), esc_attr( $datum ) );
-		}
-
-		echo join( ' ', $pieces ); // XSS ok.
-	}
 }
