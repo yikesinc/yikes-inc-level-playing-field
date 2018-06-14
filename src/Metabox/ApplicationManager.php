@@ -80,10 +80,12 @@ class ApplicationManager extends AwesomeBaseMetabox implements AssetsAware {
 						[
 							'desc' => __( 'Check the fields you want included on this Application Form', 'yikes-level-playing-field' ),
 							'type' => 'message',
+							'id'   => $this->prefix_field( 'intro_message' ),
 						],
 						[
 							'name' => __( 'Basic Info', 'yikes-level-playing-field' ),
 							'type' => 'title',
+							'id'   => $this->prefix_field( 'intro_title' ),
 						],
 						[
 							'name'      => __( 'Name (required)', 'yikes-level-playing-field' ),
@@ -147,6 +149,7 @@ class ApplicationManager extends AwesomeBaseMetabox implements AssetsAware {
 						[
 							'desc' => $this->get_schooling_html(),
 							'type' => 'message',
+							'id'   => $this->prefix_field( 'schooling' ),
 						],
 						[
 							'name'       => __( 'Certifications', 'yikes-level-playing-field' ),
@@ -163,6 +166,7 @@ class ApplicationManager extends AwesomeBaseMetabox implements AssetsAware {
 						[
 							'desc' => $this->get_certification_html(),
 							'type' => 'message',
+							'id'   => $this->prefix_field( 'certification' ),
 						],
 					],
 				],
@@ -216,6 +220,7 @@ class ApplicationManager extends AwesomeBaseMetabox implements AssetsAware {
 						[
 							'desc' => $this->get_experience_html(),
 							'type' => 'message',
+							'id'   => $this->prefix_field( 'experience' ),
 						],
 					],
 				],
@@ -239,6 +244,7 @@ class ApplicationManager extends AwesomeBaseMetabox implements AssetsAware {
 						[
 							'desc' => $this->get_volunteer_html(),
 							'type' => 'message',
+							'id'   => $this->prefix_field( 'volunteer' ),
 						],
 					],
 				],

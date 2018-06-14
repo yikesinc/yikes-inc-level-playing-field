@@ -146,7 +146,7 @@ class JobManager extends AwesomeBaseMetabox implements AssetsAware {
 							'desc'       => __( 'Application to use for job posting.', 'yikes-level-playing-field' ),
 							'id'         => JobMeta::APPLICATION,
 							'type'       => 'select_post_type',
-							'post-types' =>ApplicationManager::SLUG,
+							'post-types' => ApplicationManager::SLUG,
 						],
 					],
 				],
