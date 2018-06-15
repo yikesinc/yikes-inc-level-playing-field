@@ -24,6 +24,10 @@
 		<message>Inline Doc Comment detected</message>
 		<severity>3</severity>
 	</rule>
+	<rule ref="Generic.Commenting.DocComment.SpacingBeforeTags">
+		<message>There must be exactly one blank line before the tags in a doc comment</message>
+		<severity>3</severity>
+	</rule>
 	<rule ref="WordPress.PHP.DevelopmentFunctions">
 		<properties>
 			<property name="exclude" value="error_log"/>
