@@ -25,7 +25,7 @@ class Textarea extends BaseField {
 	public function render() {
 		$classes = array_merge( $this->classes, [ 'lpf-field-textarea' ] );
 		?>
-		<label><?php echo esc_html( $this->label ); ?>
+		<label class="lpf-input-label"><?php echo esc_html( $this->label ); ?>
 			<textarea name="<?php echo esc_attr( $this->id ); ?>"
 					  id="<?php echo esc_attr( $this->id ); ?>"
 					  class="<?php esc_attr( join( ' ', $classes ) ); ?>"

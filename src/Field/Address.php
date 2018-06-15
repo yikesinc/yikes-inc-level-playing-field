@@ -9,6 +9,8 @@
 
 namespace Yikes\LevelPlayingField\Field;
 
+use Yikes\LevelPlayingField\Exception\InvalidField;
+
 /**
  * Class Address
  *
@@ -23,16 +25,63 @@ class Address extends BaseField {
 	 * @since %VERSION%
 	 */
 	public function render() {
-		$classes    = array_merge( $this->classes, [ 'lpf-field-address' ] );
-		$sub_fields = [
-			new Text( "{$this->id}[address-1]", '', $classes ),
-			new Text( "{$this->id}[address-2]", '', $classes, false ),
-			new Text( "{$this->id}[city]", '', $classes ),
-			new Text( "{$this->id}[state]", '', $classes ),
-			new Text( "{$this->id}[province]", '', $classes ),
-			new Text( "{$this->id}[country]", '', $classes ),
-			new Number( "{$this->id}[zip]", '', $classes ),
-		];
+		$classes = array_merge( $this->classes, [ 'lpf-field-address' ] );
+
+		/**
+		 * Filter the default address fields.
+		 *
+		 * @param array $fields Array of address fields.
+		 */
+		$default_fields = apply_filters( 'lpf_field_address_fields', [
+			'address-1' => [
+				'label' => esc_html__( 'Line 1', 'yikes-level-playing-field' ),
+			],
+			'address-2' => [
+				'label'    => esc_html__( 'Line 2', 'yikes-level-playing-field' ),
+				'required' => false,
+			],
+			'city'      => [
+				'label' => esc_html__( 'City', 'yikes-level-playing-field' ),
+			],
+			'state'     => [
+				'label' => esc_html__( 'State', 'yikes-level-playing-field' ),
+			],
+			'country'   => [
+				'label' => esc_html__( 'Country', 'yikes-level-playing-field' ),
+			],
+			'zip'       => [
+				'label' => esc_html__( 'Zip Code', 'yikes-level-playing-field' ),
+				'class' => PostalCode::class,
+			],
+		] );
+
+		// Generate the sub-fields for the address.
+		$sub_fields = [];
+		foreach ( $default_fields as $field => $settings ) {
+			$settings = wp_parse_args( $settings, [
+				'label'    => ucwords( str_replace( [ '_', '-' ], ' ', $field ) ),
+				'class'    => Text::class,
+				'required' => true,
+			] );
+
+			$sub_fields[] = new $settings['class'](
+				"{$this->id}[{$field}]",
+				$settings['label'],
+				$classes,
+				(bool) $settings['required']
+			);
+
+			// Ensure the class extends the Field interface.
+			if ( ! ( end( $sub_fields ) instanceof Field ) ) {
+				throw InvalidField::from_field( $settings['class'] );
+			}
+		}
+
+		// Render the grouping label.
+		printf(
+			'<label class="lpf-field-address lpf-input-label">%s</label>',
+			esc_html__( 'Address: ', 'yikes-level-playing-field' )
+		);
 
 		/** @var Field $sub_field */
 		foreach ( $sub_fields as $sub_field ) {
