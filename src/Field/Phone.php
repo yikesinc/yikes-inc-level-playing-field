@@ -17,4 +17,15 @@ namespace Yikes\LevelPlayingField\Field;
  */
 class Phone extends BaseInput {
 	const TYPE = 'tel';
+
+	/**
+	 * Render any additional attributes.
+	 *
+	 * @since %VERSION%
+	 */
+	protected function render_extra_attributes() {
+		parent::render_extra_attributes();
+		echo 'autocomplete="tel" ';
+	}
+
 }

@@ -104,7 +104,7 @@ abstract class BaseField implements Field {
 			$pieces[] = sprintf( 'data-%s="%s"', esc_html( $key ), esc_attr( $datum ) );
 		}
 
-		echo join( ' ', $pieces ); // XSS ok.
+		echo join( ' ', $pieces ), ' '; // XSS ok.
 	}
 
 	/**
@@ -114,7 +114,7 @@ abstract class BaseField implements Field {
 	 */
 	protected function render_required() {
 		if ( $this->required ) {
-			echo 'required="required"';
+			echo 'required="required" ';
 		}
 	}
 }
