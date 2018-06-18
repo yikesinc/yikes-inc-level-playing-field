@@ -13,8 +13,15 @@ jQuery( document ).ready( function( $ ) {
 
 		/**
 		 * Show/hide the Address div based on the selected radio button.
+		 *
+		 * @param {event} e
 		 */
 		address_div: function( e ) {
+			// We get multiple elements assigned, so make sure we're comparing a checked item.
+			if ( ! e.currentTarget.checked ) {
+				return;
+			}
+
 			switch ( e.currentTarget.value ) {
 				case 'address':
 					$address_div.show();
