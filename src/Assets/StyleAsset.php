@@ -84,10 +84,7 @@ class StyleAsset extends BaseAsset {
 		$media = self::MEDIA_ALL
 	) {
 		$this->handle       = $handle;
-		$this->source       = $this->normalize_source(
-			$source,
-			static::DEFAULT_EXTENSION
-		);
+		$this->source       = $this->normalize_source( $source, static::DEFAULT_EXTENSION );
 		$this->dependencies = (array) $dependencies;
 		$this->version      = $version;
 		$this->media        = $media;
