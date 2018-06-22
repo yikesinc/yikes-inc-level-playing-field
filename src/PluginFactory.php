@@ -27,7 +27,6 @@ use Yikes\LevelPlayingField\Shortcode\Job;
 use Yikes\LevelPlayingField\Taxonomy\ApplicantStatus;
 use Yikes\LevelPlayingField\Taxonomy\JobCategory;
 use Yikes\LevelPlayingField\Taxonomy\JobStatus;
-use Yikes\LevelPlayingField\TemplateController\TemplateController;
 use Yikes\LevelPlayingField\TemplateController\SingleJobsTemplateController as SingleJobs;
 use Yikes\LevelPlayingField\TemplateController\SingleApplicationsTemplateController as SingleApplications;
 
