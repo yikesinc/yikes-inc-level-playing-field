@@ -9,8 +9,6 @@
 
 namespace Yikes\LevelPlayingField\Model;
 
-use Yikes\LevelPlayingField\Model\JobMeta as JMMeta;
-
 /**
  * Class Job
  *
@@ -38,7 +36,7 @@ class Job extends CustomPostTypeEntity {
 	 * @return string
 	 */
 	public function get_description() {
-		return $this->{JMMeta::META_PREFIX . 'description'};
+		return $this->{JobMeta::DESCRIPTION};
 	}
 
 	/**
@@ -51,7 +49,7 @@ class Job extends CustomPostTypeEntity {
 	 * @return string
 	 */
 	public function get_type() {
-		return $this->{JMMeta::META_PREFIX . 'type'};
+		return $this->{JobMeta::TYPE};
 	}
 
 	/**
@@ -62,7 +60,7 @@ class Job extends CustomPostTypeEntity {
 	 * @return bool
 	 */
 	public function is_remote() {
-		return 'remote' === $this->{JMMeta::META_PREFIX . 'location'};
+		return 'remote' === $this->{JobMeta::LOCATION};
 	}
 
 	/**
@@ -73,18 +71,7 @@ class Job extends CustomPostTypeEntity {
 	 * @return array
 	 */
 	public function get_address() {
-		return unserialize( $this->{JMMeta::META_PREFIX . 'address'} )[0];
-	}
-
-	/**
-	 * Get the job ID to use when displaying this Job.
-	 *
-	 * @since %VERSION%
-	 *
-	 * @return int
-	 */
-	public function get_post_id() {
-		return $this->post->ID;
+		return $this->{JobMeta::ADDRESS};
 	}
 
 	/**
@@ -106,11 +93,11 @@ class Job extends CustomPostTypeEntity {
 	public function persist_properties() {
 		foreach ( $this->get_lazy_properties() as $key => $default ) {
 			if ( $this->$key === $default ) {
-				delete_post_meta( $this->get_id(), JMMeta::META_PREFIX . $key );
+				delete_post_meta( $this->get_id(), $key );
 				continue;
 			}
 
-			update_post_meta( $this->get_id(), JMMeta::META_PREFIX . $key, $this->$key );
+			update_post_meta( $this->get_id(), $key, $this->maybe_json_encode( $key, $this->$key ) );
 		}
 	}
 
@@ -153,9 +140,53 @@ class Job extends CustomPostTypeEntity {
 		// Load the normal properties from post meta.
 		$meta = get_post_meta( $this->get_id() );
 		foreach ( $this->get_lazy_properties() as $key => $default ) {
-			$this->$key = array_key_exists( JMMeta::META_PREFIX . $key, $meta )
-				? $meta[ JMMeta::META_PREFIX . $key ][0]
+			$this->$key = array_key_exists( $key, $meta )
+				? $this->maybe_json_decode( $key, $meta[ $key ][0] )
 				: $default;
 		}
+	}
+
+	/**
+	 * Possibly JSON decode a string.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param string $key   The property key.
+	 * @param mixed  $value The property value.
+	 *
+	 * @return array|string
+	 */
+	protected function maybe_json_decode( $key, $value ) {
+		return isset( $this->get_json_properties()[ $key ] ) && is_string( $value )
+			? json_decode( $value, true )
+			: $value;
+	}
+
+	/**
+	 * Get properties that should be stored as JSON.
+	 *
+	 * @since %VERSION%
+	 * @return array
+	 */
+	protected function get_json_properties() {
+		return [
+			JobMeta::ADDRESS => true,
+		];
+	}
+
+	/**
+	 * Possibly JSON encode a value.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param string $key   The property key.
+	 * @param mixed  $value The property value.
+	 *
+	 * @return string
+	 */
+	protected function maybe_json_encode( $key, $value ) {
+		return isset( $this->get_json_properties()[ $key ] ) && ( is_array( $value ) || is_object( $value ) )
+			? json_encode( $value )
+			: $value;
 	}
 }
