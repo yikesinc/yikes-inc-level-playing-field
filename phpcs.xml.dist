@@ -38,6 +38,12 @@
 			<property name="exclude" value="obfuscation"/>
 		</properties>
 	</rule>
+	<rule ref="WordPress.WP.AlternativeFunctions">
+		<properties>
+			<!-- wp_json_encode() recommended for compatibility with older PHP versions. We require 5.6+, so no need. -->
+			<property name="exclude" value="json_encode"/>
+		</properties>
+	</rule>
 
 	<!-- Check all PHP files in directory tree by default. -->
 	<arg name="extensions" value="php"/>
