@@ -119,8 +119,8 @@ class Job extends CustomPostTypeEntity {
 	 * @since %VERSION%
 	 */
 	public function persist_properties() {
-		foreach ( $this->get_lazy_properties() as $prefixed_key => $default ) {
-			$key = $this->get_unprefixed_key( $prefixed_key );
+		foreach ( $this->get_lazy_properties() as $key => $default ) {
+			$prefixed_key = JobMeta::META_PREFIX . $key;
 			if ( $this->$key === $default ) {
 				delete_post_meta( $this->get_id(), $prefixed_key );
 				continue;
@@ -172,24 +172,33 @@ class Job extends CustomPostTypeEntity {
 	protected function load_lazy_property( $property ) {
 		// Load the normal properties from post meta.
 		$meta = get_post_meta( $this->get_id() );
-		foreach ( $this->get_lazy_properties() as $prefixed_key => $default ) {
-			$key        = $this->get_unprefixed_key( $prefixed_key );
-			$this->$key = array_key_exists( $prefixed_key, $meta )
-				? $meta[ $prefixed_key ][0]
+		foreach ( $this->get_lazy_properties() as $key => $default ) {
+			$prefixed_key = JobMeta::META_PREFIX . $key;
+			$this->$key   = array_key_exists( $prefixed_key, $meta )
+				// Maybe decode, because we grabbed all meta at once instead of individually.
+				? $this->maybe_json_decode( $prefixed_key, $meta[ $prefixed_key ][0] )
 				: $default;
 		}
 	}
 
 	/**
-	 * Get the unprefixed version of a meta key.
+	 * Possibly json_decode() a value.
 	 *
 	 * @since %VERSION%
 	 *
-	 * @param string $key The key with a prefix.
+	 * @param string $key  The key name.
+	 * @param mixed  $data The data.
 	 *
-	 * @return string The key with prefix removed.
+	 * @return mixed
 	 */
-	protected function get_unprefixed_key( $key ) {
-		return ltrim( str_replace( JobMeta::META_PREFIX, '', $key ), '_' );
+	protected function maybe_json_decode( $key, $data ) {
+		if ( array_key_exists( $key, JobMeta::JSON_PROPERTIES ) ) {
+			$decoded = json_decode( $data, true );
+			$data    = JSON_ERROR_NONE === json_last_error() && is_array( $decoded ) && isset( $decoded[0] )
+				? $decoded[0]
+				: $data;
+		}
+
+		return $data;
 	}
 }
