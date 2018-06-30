@@ -30,10 +30,29 @@ class InvalidField extends \InvalidArgumentException implements Exception {
 	public static function from_field( $field ) {
 		$message = sprintf(
 			/* translators: %s represents the class name */
-			esc_html__( 'The field "%s" is not recognized and cannot be used.' ),
+			esc_html__( 'The field class "%s" is not recognized and cannot be used.' ),
 			is_object( $field )
 				? get_class( $field )
 				: (string) $field
+		);
+
+		return new static( $message );
+	}
+
+	/**
+	 * Create a new instance of the exception for a field ID that is invalid.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param string $id The invalid field ID.
+	 *
+	 * @return InvalidField
+	 */
+	public static function invalid_id( $id ) {
+		$message = sprintf(
+			/* translators: %s represents the field ID */
+			esc_html__( 'The ID "%s" is invalid. The ID must be a simple string, or a single depth array' ),
+			$id
 		);
 
 		return new static( $message );
