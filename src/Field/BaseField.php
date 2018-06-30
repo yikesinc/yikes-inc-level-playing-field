@@ -9,6 +9,8 @@
 
 namespace Yikes\LevelPlayingField\Field;
 
+use Yikes\LevelPlayingField\Exception\InvalidField;
+
 /**
  * Class BaseField
  *
@@ -62,18 +64,62 @@ abstract class BaseField implements Field {
 	protected $data = [];
 
 	/**
+	 * The pattern used for matching an field's ID.
+	 *
+	 * @since %VERSION%
+	 * @var string
+	 */
+	protected $id_pattern = '#^([\w-]+)(?:\[([\w-]+)\])?#';
+
+	/**
 	 * BaseField constructor.
 	 *
 	 * @param string $id       The field ID.
 	 * @param string $label    The field label.
 	 * @param array  $classes  Array of field classes.
 	 * @param bool   $required Whether the field is required.
+	 *
+	 * @throws InvalidField When the provided ID is invalid.
 	 */
 	public function __construct( $id, $label, array $classes, $required = true ) {
 		$this->id       = $id;
 		$this->label    = $label;
 		$this->classes  = $classes;
 		$this->required = (bool) $required;
+		$this->validate_id();
+	}
+
+	/**
+	 * Ensure we have a valid ID for the field.
+	 *
+	 * An ID is valid when it is a single word, or when it contains a single-depth array.
+	 * Examples of valid IDs:
+	 *
+	 * foo
+	 * foo[bar]
+	 * foo_bar_baz
+	 * foo-bar-baz
+	 *
+	 * Examples of invalid IDs:
+	 *
+	 * foo bar baz
+	 * foo[bar][baz]
+	 * foo[bar[baz]]
+	 *
+	 * @since %VERSION%
+	 *
+	 * @throws InvalidField When the provided ID is invalid for a form field.
+	 */
+	protected function validate_id() {
+		// Make sure we match the pattern as a whole.
+		if ( ! preg_match( $this->id_pattern, $this->id, $matches ) ) {
+			throw InvalidField::invalid_id( $this->id );
+		}
+
+		// Make sure we matched the entire ID string.
+		if ( $matches[0] !== $this->id ) {
+			throw InvalidField::invalid_id( $this->id );
+		}
 	}
 
 	/**
@@ -116,5 +162,18 @@ abstract class BaseField implements Field {
 		if ( $this->required ) {
 			echo 'required="required" ';
 		}
+	}
+
+	/**
+	 * Get the raw submitted value.
+	 *
+	 * @since %VERSION%
+	 * @return mixed
+	 */
+	protected function get_raw_value() {
+		preg_match( $this->id_pattern, $this->id, $m );
+		return ! isset( $m[2] )
+			? ( isset( $_POST[ $m[1] ] ) ? $_POST[ $m[1] ] : '' )
+			: ( isset( $_POST[ $m[1] ][ $m[2] ] ) ? $_POST[ $m[1] ][ $m[2] ] : '' );
 	}
 }
