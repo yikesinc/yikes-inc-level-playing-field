@@ -135,13 +135,13 @@ class JobManager extends AwesomeBaseMetabox implements AssetsAware {
 						[
 							'name' => __( 'Job Description', 'yikes-level-playing-field' ),
 							'desc' => __( 'General overview of the Job and its requirements.', 'yikes-level-playing-field' ),
-							'id'   => JobMeta::DESCRIPTION,
+							'id'   => $this->prefix_field( JobMeta::DESCRIPTION ),
 							'type' => 'wysiwyg',
 						],
 						[
 							'name'    => __( 'Job Type', 'yikes-level-playing-field' ),
 							'desc'    => __( 'The type of job being offered', 'yikes-level-playing-field' ),
-							'id'      => JobMeta::TYPE,
+							'id'      => $this->prefix_field( JobMeta::TYPE ),
 							'type'    => 'radio-inline',
 							'options' => [
 								[
@@ -168,7 +168,7 @@ class JobManager extends AwesomeBaseMetabox implements AssetsAware {
 						],
 						[
 							'name'    => __( 'Location', 'yikes-level-playing-field' ),
-							'id'      => JobMeta::LOCATION,
+							'id'      => $this->prefix_field( JobMeta::LOCATION ),
 							'type'    => 'radio-inline',
 							'options' => [
 								[
@@ -184,7 +184,7 @@ class JobManager extends AwesomeBaseMetabox implements AssetsAware {
 						[
 							'name' => __( 'Address', 'yikes-level-playing-field' ),
 							'desc' => __( 'Address where the job is located', 'yikes-level-playing-field' ),
-							'id'   => JobMeta::ADDRESS,
+							'id'   => $this->prefix_field( JobMeta::ADDRESS ),
 							'type' => 'address',
 						],
 					],

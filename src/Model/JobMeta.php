@@ -22,25 +22,25 @@ interface JobMeta {
 	const FORM_FIELD_PREFIX = 'job_cpt_';
 
 	// General fields.
-	const DESCRIPTION = self::META_PREFIX . 'description';
-	const TYPE        = self::META_PREFIX . 'type';
-	const LOCATION    = self::META_PREFIX . 'location';
-	const ADDRESS     = self::META_PREFIX . 'address';
+	const DESCRIPTION = 'description';
+	const TYPE        = 'type';
+	const LOCATION    = 'location';
+	const ADDRESS     = 'address';
 	const APPLICATION = MetaLinks::APPLICATION;
 
 	// Responsibilities.
-	const RESPONSIBILITIES = self::META_PREFIX . 'responsibilities';
-	const SCHEDULE         = self::META_PREFIX . 'schedule';
-	const REQUIREMENTS     = self::META_PREFIX . 'requirements';
+	const RESPONSIBILITIES = 'responsibilities';
+	const SCHEDULE         = 'schedule';
+	const REQUIREMENTS     = 'requirements';
 
 	// Qualifications.
-	const QUALIFICATIONS = self::META_PREFIX . 'qualifications';
-	const EDUCATION      = self::META_PREFIX . 'education';
-	const EXPERIENCE     = self::META_PREFIX . 'experience';
-	const KNOWLEDGE      = self::META_PREFIX . 'knowledge';
+	const QUALIFICATIONS = 'qualifications';
+	const EDUCATION      = 'education';
+	const EXPERIENCE     = 'experience';
+	const KNOWLEDGE      = 'knowledge';
 
 	// Properties that should be JSON-encoded.
 	const JSON_PROPERTIES = [
-		self::ADDRESS => true,
+		self::META_PREFIX . self::ADDRESS => true,
 	];
 }
