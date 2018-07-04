@@ -28,4 +28,5 @@ interface Types {
 	const ADDRESS     = Address::class;
 	const POSTAL_CODE = PostalCode::class;
 	const YEAR        = Year::class;
+	const EDUCATION   = Education::class;
 }
