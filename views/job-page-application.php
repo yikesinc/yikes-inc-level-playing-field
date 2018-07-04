@@ -9,26 +9,30 @@
 
 namespace Yikes\LevelPlayingField;
 
-use Yikes\LevelPlayingField\Field\Hidden;
-use Yikes\LevelPlayingField\Form\Factory;
+use Yikes\LevelPlayingField\Form\Application as ApplicationForm;
 use Yikes\LevelPlayingField\Model\Application;
 
 /** @var Application $application */
-$application   = $this->application;
-$active_fields = $application->get_active_fields();
+$application = $this->application;
 
-// Set up HTML classes.
+/**
+ * Set up the classes we'll use for the form and the individual fields.
+ */
 $base_classes  = [
 	'lpf-application',
 	sprintf( 'lpf-application-%s', $application->get_id() ),
 ];
-$field_classes = array_merge( [ 'lpf-form-field' ], $base_classes );
 $form_classes  = array_merge( [ 'lpf-form' ], $base_classes );
+$field_classes = array_merge( [ 'lpf-form-field' ], $base_classes );
 
-// Set up Form Fields.
-// todo: change job_id to actual job, not application, ID.
-$fields   = Factory::create( $active_fields, $field_classes );
-$fields[] = new Hidden( 'job_id', $application->get_id() );
+/**
+ * The application form can be customized with classes for both the form itself
+ * and the individual fields. The class instance below uses the default
+ * classes.
+ *
+ * @see \Yikes\LevelPlayingField\Form\ApplicationForm
+ */
+$form = new ApplicationForm( $application, $field_classes );
 
 ?>
 <form method="POST"
@@ -37,7 +41,7 @@ $fields[] = new Hidden( 'job_id', $application->get_id() );
 >
 	<?php
 	wp_nonce_field( 'lpf_application_submit', 'lpf_nonce' );
-	foreach ( $fields as $field ) {
+	foreach ( $form->fields as $field ) {
 		$field->render();
 	}
 	?>
