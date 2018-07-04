@@ -27,4 +27,5 @@ interface Types {
 	const PHONE       = Phone::class;
 	const ADDRESS     = Address::class;
 	const POSTAL_CODE = PostalCode::class;
+	const YEAR        = Year::class;
 }
