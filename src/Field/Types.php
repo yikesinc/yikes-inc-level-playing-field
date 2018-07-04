@@ -18,11 +18,13 @@ namespace Yikes\LevelPlayingField\Field;
  * @package Yikes\LevelPlayingField
  */
 interface Types {
-	const TEXT     = Text::class;
-	const TEXTAREA = Textarea::class;
-	const EMAIL    = Email::class;
-	const HIDDEN   = Hidden::class;
-	const NUMBER   = Number::class;
-	const PHONE    = Phone::class;
-	const ADDRESS  = Address::class;
+
+	const TEXT        = Text::class;
+	const TEXTAREA    = Textarea::class;
+	const EMAIL       = Email::class;
+	const HIDDEN      = Hidden::class;
+	const NUMBER      = Number::class;
+	const PHONE       = Phone::class;
+	const ADDRESS     = Address::class;
+	const POSTAL_CODE = PostalCode::class;
 }

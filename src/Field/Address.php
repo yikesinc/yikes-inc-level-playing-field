@@ -23,6 +23,8 @@ class Address extends BaseField {
 	 * Render the field.
 	 *
 	 * @since %VERSION%
+	 *
+	 * @throws InvalidField When an invalid field class is provided through the filter.
 	 */
 	public function render() {
 		$classes = array_merge( $this->classes, [ 'lpf-field-address' ] );
@@ -50,8 +52,8 @@ class Address extends BaseField {
 				'label' => esc_html__( 'Country', 'yikes-level-playing-field' ),
 			],
 			'zip'       => [
-				'label' => esc_html__( 'Zip Code', 'yikes-level-playing-field' ),
-				'class' => PostalCode::class,
+				'label' => esc_html__( 'Postal Code', 'yikes-level-playing-field' ),
+				'class' => Types::POSTAL_CODE,
 			],
 		] );
 
@@ -60,7 +62,7 @@ class Address extends BaseField {
 		foreach ( $default_fields as $field => $settings ) {
 			$settings = wp_parse_args( $settings, [
 				'label'    => ucwords( str_replace( [ '_', '-' ], ' ', $field ) ),
-				'class'    => Text::class,
+				'class'    => Types::TEXT,
 				'required' => true,
 			] );
 
