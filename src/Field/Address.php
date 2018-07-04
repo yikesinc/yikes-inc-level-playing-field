@@ -9,32 +9,40 @@
 
 namespace Yikes\LevelPlayingField\Field;
 
-use Yikes\LevelPlayingField\Exception\InvalidField;
-
 /**
  * Class Address
  *
  * @since   %VERSION%
  * @package Yikes\LevelPlayingField
  */
-class Address extends BaseField {
+class Address extends ComplexField {
 
 	/**
-	 * Render the field.
+	 * Get the array of classes to merge in with the default field classes.
 	 *
 	 * @since %VERSION%
-	 *
-	 * @throws InvalidField When an invalid field class is provided through the filter.
+	 * @return array
 	 */
-	public function render() {
-		$classes = array_merge( $this->classes, [ 'lpf-field-address' ] );
+	protected function get_classes() {
+		return [ 'lpf-field-address' ];
+	}
 
+	/**
+	 * Get the array of default fields.
+	 *
+	 * This should return a multi-dimensional array of field data which will
+	 * be used to construct Field objects.
+	 *
+	 * @since %VERSION%
+	 * @return array
+	 */
+	protected function get_default_fields() {
 		/**
 		 * Filter the default address fields.
 		 *
 		 * @param array $fields Array of address fields.
 		 */
-		$default_fields = apply_filters( 'lpf_field_address_fields', [
+		return apply_filters( 'lpf_field_address_fields', [
 			'address-1' => [
 				'label' => esc_html__( 'Line 1', 'yikes-level-playing-field' ),
 			],
@@ -56,38 +64,19 @@ class Address extends BaseField {
 				'class' => Types::POSTAL_CODE,
 			],
 		] );
+	}
 
-		// Generate the sub-fields for the address.
-		$sub_fields = [];
-		foreach ( $default_fields as $field => $settings ) {
-			$settings = wp_parse_args( $settings, [
-				'label'    => ucwords( str_replace( [ '_', '-' ], ' ', $field ) ),
-				'class'    => Types::TEXT,
-				'required' => true,
-			] );
-
-			$sub_fields[] = new $settings['class'](
-				"{$this->id}[{$field}]",
-				$settings['label'],
-				$classes,
-				(bool) $settings['required']
-			);
-
-			// Ensure the class extends the Field interface.
-			if ( ! ( end( $sub_fields ) instanceof Field ) ) {
-				throw InvalidField::from_field( $settings['class'] );
-			}
-		}
-
-		// Render the grouping label.
+	/**
+	 * Render the grouping label for the sub-fields.
+	 *
+	 * This should echo the label directly.
+	 *
+	 * @since %VERSION%
+	 */
+	protected function render_grouping_label() {
 		printf(
 			'<label class="lpf-field-address lpf-input-label">%s</label>',
 			esc_html__( 'Address: ', 'yikes-level-playing-field' )
 		);
-
-		/** @var Field $sub_field */
-		foreach ( $sub_fields as $sub_field ) {
-			$sub_field->render();
-		}
 	}
 }
