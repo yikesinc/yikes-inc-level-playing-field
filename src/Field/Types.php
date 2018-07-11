@@ -19,14 +19,15 @@ namespace Yikes\LevelPlayingField\Field;
  */
 interface Types {
 
-	const TEXT        = Text::class;
-	const TEXTAREA    = Textarea::class;
-	const EMAIL       = Email::class;
-	const HIDDEN      = Hidden::class;
-	const NUMBER      = Number::class;
-	const PHONE       = Phone::class;
-	const ADDRESS     = Address::class;
-	const POSTAL_CODE = PostalCode::class;
-	const YEAR        = Year::class;
+	const TEXT           = Text::class;
+	const TEXTAREA       = Textarea::class;
+	const EMAIL          = Email::class;
+	const HIDDEN         = Hidden::class;
+	const NUMBER         = Number::class;
+	const PHONE          = Phone::class;
+	const ADDRESS        = Address::class;
+	const POSTAL_CODE    = PostalCode::class;
+	const YEAR           = Year::class;
 	const SCHOOLING      = Schooling::class;
+	const CERTIFICATIONS = Certifications::class;
 }
