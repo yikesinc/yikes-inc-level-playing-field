@@ -106,6 +106,6 @@ interface ApplicantMeta {
 		self::PHONE        => Types::PHONE,
 		self::ADDRESS      => Types::ADDRESS,
 		self::COVER_LETTER => Types::TEXTAREA,
-		self::EDUCATION    => Types::EDUCATION,
+		self::EDUCATION    => Types::SCHOOLING,
 	];
 }

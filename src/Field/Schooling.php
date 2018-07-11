@@ -10,12 +10,12 @@
 namespace Yikes\LevelPlayingField\Field;
 
 /**
- * Class Education
+ * Class Schooling
  *
  * @since   %VERSION%
  * @package Yikes\LevelPlayingField
  */
-class Education extends ComplexField {
+class Schooling extends ComplexField {
 
 	/**
 	 * Whether the field is repeatable.
@@ -32,7 +32,7 @@ class Education extends ComplexField {
 	 * @return array
 	 */
 	protected function get_classes() {
-		return [ 'lpf-field-education' ];
+		return [ 'lpf-field-schooling' ];
 	}
 
 	/**
@@ -46,28 +46,40 @@ class Education extends ComplexField {
 	 */
 	protected function get_default_fields() {
 		/**
-		 * Filter the default education fields.
+		 * Filter the default schooling fields.
 		 *
-		 * @param array $fields Array of education fields.
+		 * @param array $fields Array of schooling fields.
 		 */
-		return apply_filters( 'lpf_field_education_fields', [
-			'institution'      => [
-				'label' => esc_html__( 'Institution' ),
+		return apply_filters( 'lpf_field_schooling_fields', [
+			'institution' => [
+				'label' => esc_html__( 'Institution', 'yikes-level-playing-field' ),
 			],
-			'institution-type' => [
-				'label' => esc_html__( 'Institution Type' ),
+			'type'        => [
+				'label' => esc_html__( 'Institution Type', 'yikes-level-playing-field' ),
 			],
-			'year'             => [
-				'label' => esc_html__( 'Graduation Year' ),
+			'year'        => [
+				'label' => esc_html__( 'Graduation Year', 'yikes-level-playing-field' ),
 				'class' => Types::YEAR,
 			],
-			'major'            => [
-				'label' => esc_html__( 'Major' ),
+			'major'       => [
+				'label' => esc_html__( 'Major', 'yikes-level-playing-field' ),
 			],
-			'degree'           => [
-				'label' => esc_html__( 'Degree' ),
+			'degree'      => [
+				'label' => esc_html__( 'Degree', 'yikes-level-playing-field' ),
 			],
 		] );
+	}
+
+	/**
+	 * Render the sub-fields.
+	 *
+	 * @since %VERSION%
+	 * @todo Control how many fields are rendered by default
+	 */
+	protected function render_sub_fields() {
+		for ( $i = 0; $i < 3; $i ++ ) {
+			parent::render_sub_fields();
+		}
 	}
 
 	/**
