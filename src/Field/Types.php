@@ -25,6 +25,7 @@ interface Types {
 	const HIDDEN         = Hidden::class;
 	const NUMBER         = Number::class;
 	const PHONE          = Phone::class;
+	const DATE           = Date::class;
 	const ADDRESS        = Address::class;
 	const POSTAL_CODE    = PostalCode::class;
 	const YEAR           = Year::class;
