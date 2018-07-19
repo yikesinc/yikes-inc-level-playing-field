@@ -101,11 +101,13 @@ interface ApplicantMeta {
 	];
 
 	const FIELD_MAP = [
-		self::NAME         => Types::TEXT,
-		self::EMAIL        => Types::EMAIL,
-		self::PHONE        => Types::PHONE,
-		self::ADDRESS      => Types::ADDRESS,
-		self::COVER_LETTER => Types::TEXTAREA,
-		self::EDUCATION    => Types::SCHOOLING,
+		self::NAME          => Types::TEXT,
+		self::EMAIL         => Types::EMAIL,
+		self::PHONE         => Types::PHONE,
+		self::ADDRESS       => Types::ADDRESS,
+		self::COVER_LETTER  => Types::TEXTAREA,
+		self::EDUCATION     => Types::SCHOOLING,
+		self::CERTIFICATION => Types::CERTIFICATIONS,
+		self::EXPERIENCE    => Types::EXPERIENCE,
 	];
 }

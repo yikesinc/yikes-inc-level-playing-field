@@ -31,4 +31,5 @@ interface Types {
 	const YEAR           = Year::class;
 	const SCHOOLING      = Schooling::class;
 	const CERTIFICATIONS = Certifications::class;
+	const EXPERIENCE     = Experience::class;
 }
