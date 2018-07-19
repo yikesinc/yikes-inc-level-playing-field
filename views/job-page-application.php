@@ -30,7 +30,7 @@ $field_classes = array_merge( [ 'lpf-form-field' ], $base_classes );
  * and the individual fields. The class instance below uses the default
  * classes.
  *
- * @see \Yikes\LevelPlayingField\Form\ApplicationForm
+ * @see \Yikes\LevelPlayingField\Form\Application
  */
 $form = new ApplicationForm( $application, $field_classes );
 
