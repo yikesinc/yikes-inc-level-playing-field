@@ -92,10 +92,7 @@ class ScriptAsset extends BaseAsset {
 		$in_footer = self::ENQUEUE_HEADER
 	) {
 		$this->handle       = $handle;
-		$this->source       = $this->normalize_source(
-			$source,
-			static::DEFAULT_EXTENSION
-		);
+		$this->source       = $this->normalize_source( $source, static::DEFAULT_EXTENSION );
 		$this->dependencies = (array) $dependencies;
 		$this->version      = $version;
 		$this->in_footer    = $in_footer;

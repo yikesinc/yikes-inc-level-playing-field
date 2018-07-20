@@ -9,6 +9,8 @@
 
 namespace Yikes\LevelPlayingField\Model;
 
+use Yikes\LevelPlayingField\Field\Types;
+
 /**
  * Interface ApplicantMeta
  *
@@ -96,5 +98,17 @@ interface ApplicantMeta {
 		self::YEAR         => 1,
 		self::ORGANIZATION => 1,
 		self::DATES        => 1,
+	];
+
+	const FIELD_MAP = [
+		self::NAME          => Types::TEXT,
+		self::EMAIL         => Types::EMAIL,
+		self::PHONE         => Types::PHONE,
+		self::ADDRESS       => Types::ADDRESS,
+		self::COVER_LETTER  => Types::TEXTAREA,
+		self::EDUCATION     => Types::SCHOOLING,
+		self::CERTIFICATION => Types::CERTIFICATIONS,
+		self::EXPERIENCE    => Types::EXPERIENCE,
+		self::VOLUNTEER     => Types::VOLUNTEER,
 	];
 }

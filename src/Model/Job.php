@@ -9,7 +9,6 @@
 
 namespace Yikes\LevelPlayingField\Model;
 
-use Yikes\LevelPlayingField\Model\JobMeta as JMMeta;
 use Yikes\LevelPlayingField\Taxonomy\JobStatus;
 
 /**
@@ -17,6 +16,13 @@ use Yikes\LevelPlayingField\Taxonomy\JobStatus;
  *
  * @since   %VERSION%
  * @package Yikes\LevelPlayingField
+ *
+ * @property string status      The Job status.
+ * @property string description The Job description.
+ * @property string type        The Job type.
+ * @property string location    The Job location.
+ * @property array  address     The Job location address.
+ * @property int    application The Job application ID.
  */
 class Job extends CustomPostTypeEntity {
 
@@ -29,6 +35,25 @@ class Job extends CustomPostTypeEntity {
 	 */
 	public function get_status() {
 		return $this->status;
+	}
+
+	/**
+	 * Magic getter method to fetch meta properties only when requested.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param string $property Property that was requested.
+	 *
+	 * @return mixed
+	 */
+	public function __get( $property ) {
+		// Set the status separately, since it is a taxonomy.
+		if ( 'status' === $property ) {
+			$this->status = wp_get_object_terms( $this->get_id(), JobStatus::SLUG )[0];
+			return $this->status;
+		}
+
+		return parent::__get( $property );
 	}
 
 	/**
@@ -63,7 +88,7 @@ class Job extends CustomPostTypeEntity {
 	 * @return bool
 	 */
 	public function is_remote() {
-		return true;
+		return 'remote' === $this->location;
 	}
 
 	/**
@@ -74,7 +99,7 @@ class Job extends CustomPostTypeEntity {
 	 * @return array
 	 */
 	public function get_address() {
-		return [];
+		return $this->address;
 	}
 
 	/**
@@ -85,7 +110,7 @@ class Job extends CustomPostTypeEntity {
 	 * @return int
 	 */
 	public function get_application_id() {
-		return 0;
+		return $this->application;
 	}
 
 	/**
@@ -95,13 +120,17 @@ class Job extends CustomPostTypeEntity {
 	 */
 	public function persist_properties() {
 		foreach ( $this->get_lazy_properties() as $key => $default ) {
+			$prefixed_key = JobMeta::META_PREFIX . $key;
 			if ( $this->$key === $default ) {
-				delete_post_meta( $this->get_id(), JMMeta::META_PREFIX . $key );
+				delete_post_meta( $this->get_id(), $prefixed_key );
 				continue;
 			}
 
-			update_post_meta( $this->get_id(), JMMeta::META_PREFIX . $key, $this->$key );
+			update_post_meta( $this->get_id(), $prefixed_key, $this->$key );
 		}
+
+		// Set the status.
+		wp_set_post_terms( $this->get_id(), $this->status, JobStatus::SLUG );
 	}
 
 	/**
@@ -125,6 +154,7 @@ class Job extends CustomPostTypeEntity {
 				'country'   => '',
 				'zip'       => '',
 			],
+			JobMeta::APPLICATION => 0,
 		];
 	}
 
@@ -143,9 +173,32 @@ class Job extends CustomPostTypeEntity {
 		// Load the normal properties from post meta.
 		$meta = get_post_meta( $this->get_id() );
 		foreach ( $this->get_lazy_properties() as $key => $default ) {
-			$this->$key = array_key_exists( JMMeta::META_PREFIX . $key, $meta )
-				? $meta[ JMMeta::META_PREFIX . $key ][0]
+			$prefixed_key = JobMeta::META_PREFIX . $key;
+			$this->$key   = array_key_exists( $prefixed_key, $meta )
+				// Maybe decode, because we grabbed all meta at once instead of individually.
+				? $this->maybe_json_decode( $prefixed_key, $meta[ $prefixed_key ][0] )
 				: $default;
 		}
+	}
+
+	/**
+	 * Possibly json_decode() a value.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param string $key  The key name.
+	 * @param mixed  $data The data.
+	 *
+	 * @return mixed
+	 */
+	protected function maybe_json_decode( $key, $data ) {
+		if ( array_key_exists( $key, JobMeta::JSON_PROPERTIES ) ) {
+			$decoded = json_decode( $data, true );
+			$data    = JSON_ERROR_NONE === json_last_error() && is_array( $decoded ) && isset( $decoded[0] )
+				? $decoded[0]
+				: $data;
+		}
+
+		return $data;
 	}
 }

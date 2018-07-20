@@ -10,11 +10,11 @@
 namespace Yikes\LevelPlayingField\Field;
 
 /**
- * Class Text
+ * Class Email
  *
  * @since   %VERSION%
  * @package Yikes\LevelPlayingField
  */
-class Text extends BaseInput {
-	const TYPE = 'text';
+class Email extends BaseInput {
+	const TYPE = 'email';
 }

@@ -40,9 +40,56 @@ class JobManager extends AwesomeBaseMetabox implements AssetsAware {
 		parent::register();
 		$this->register_assets();
 
-		add_action( 'add_meta_boxes_' . JobManagerCPT::SLUG, function () {
+		// Enqueue the meta box assets.
+		add_action( 'add_meta_boxes_' . JobManagerCPT::SLUG, function() {
 			$this->enqueue_assets();
 		} );
+
+		// Filter post meta to save JSON.
+		add_filter( 'update_post_metadata', function( $check, $id, $key, $value, $prev_value ) {
+			if ( ! isset( JobMeta::JSON_PROPERTIES[ $key ] ) ) {
+				return $check;
+			}
+
+			// Make sure to prevent infinite recursion in the filter.
+			static $filtering = false;
+			if ( $filtering ) {
+				return $check;
+			}
+
+			// Attempt to json_encode() the new data.
+			$json = json_encode( $value );
+
+			// Bail early if json_encode() fails, or if the old value is the same as the new value.
+			if ( false === $json || $prev_value === $json ) {
+				return $json;
+			}
+
+			$filtering = true;
+			$check     = update_metadata( 'post', $id, $key, $json, $prev_value );
+			$filtering = false;
+
+			return $check;
+		}, 10, 5 );
+
+		// Filter post meta to retrieve JSON.
+		add_filter( 'get_post_metadata', function( $check, $id, $key, $single ) {
+			if ( ! isset( JobMeta::JSON_PROPERTIES[ $key ] ) ) {
+				return $check;
+			}
+
+			// Make sure to prevent infinite recursion in the filter.
+			static $filtering = false;
+			if ( $filtering ) {
+				return $check;
+			}
+
+			$filtering = true;
+			$check     = json_decode( get_metadata( 'post', $id, $key, $single ), true );
+			$filtering = false;
+
+			return $check;
+		}, 10, 4 );
 	}
 
 	/**
@@ -67,7 +114,7 @@ class JobManager extends AwesomeBaseMetabox implements AssetsAware {
 	 */
 	public function register_boxes( $meta_boxes ) {
 		$job_boxes = [
-			'id'         => $this->prefix_field( 'metabox' ),
+			'id'         => JobMeta::META_PREFIX . 'metabox',
 			'title'      => __( 'General Info', 'yikes-level-playing-field' ),
 			'pages'      => [ JobManagerCPT::SLUG ],
 			'show_names' => true,
@@ -88,13 +135,13 @@ class JobManager extends AwesomeBaseMetabox implements AssetsAware {
 						[
 							'name' => __( 'Job Description', 'yikes-level-playing-field' ),
 							'desc' => __( 'General overview of the Job and its requirements.', 'yikes-level-playing-field' ),
-							'id'   => JobMeta::DESCRIPTION,
+							'id'   => $this->prefix_field( JobMeta::DESCRIPTION ),
 							'type' => 'wysiwyg',
 						],
 						[
 							'name'    => __( 'Job Type', 'yikes-level-playing-field' ),
 							'desc'    => __( 'The type of job being offered', 'yikes-level-playing-field' ),
-							'id'      => JobMeta::TYPE,
+							'id'      => $this->prefix_field( JobMeta::TYPE ),
 							'type'    => 'radio-inline',
 							'options' => [
 								[
@@ -121,7 +168,7 @@ class JobManager extends AwesomeBaseMetabox implements AssetsAware {
 						],
 						[
 							'name'    => __( 'Location', 'yikes-level-playing-field' ),
-							'id'      => JobMeta::LOCATION,
+							'id'      => $this->prefix_field( JobMeta::LOCATION ),
 							'type'    => 'radio-inline',
 							'options' => [
 								[
@@ -137,7 +184,7 @@ class JobManager extends AwesomeBaseMetabox implements AssetsAware {
 						[
 							'name' => __( 'Address', 'yikes-level-playing-field' ),
 							'desc' => __( 'Address where the job is located', 'yikes-level-playing-field' ),
-							'id'   => JobMeta::ADDRESS,
+							'id'   => $this->prefix_field( JobMeta::ADDRESS ),
 							'type' => 'address',
 						],
 					],

@@ -27,6 +27,9 @@ use Yikes\LevelPlayingField\Shortcode\Job;
 use Yikes\LevelPlayingField\Taxonomy\ApplicantStatus;
 use Yikes\LevelPlayingField\Taxonomy\JobCategory;
 use Yikes\LevelPlayingField\Taxonomy\JobStatus;
+use Yikes\LevelPlayingField\TemplateController\SingleJobsTemplateController as SingleJobs;
+use Yikes\LevelPlayingField\TemplateController\SingleApplicationsTemplateController as SingleApplications;
+
 
 /**
  * Class PluginFactory
@@ -97,6 +100,10 @@ final class PluginFactory {
 
 			// Carbon Fields.
 			FieldLoader::class          => 1,
+
+			// Template Overrides.
+			SingleJobs::class           => 1,
+			SingleApplications::class   => 1,
 		] );
 	}
 }

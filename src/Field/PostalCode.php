@@ -10,11 +10,22 @@
 namespace Yikes\LevelPlayingField\Field;
 
 /**
- * Class Text
+ * Class PostalCode
  *
  * @since   %VERSION%
  * @package Yikes\LevelPlayingField
  */
-class Text extends BaseInput {
+class PostalCode extends BaseInput {
+
 	const TYPE = 'text';
+
+	/**
+	 * Render any additional attributes.
+	 *
+	 * @since %VERSION%
+	 */
+	protected function render_extra_attributes() {
+		parent::render_extra_attributes();
+		echo 'autocomplete="postal-code" ';
+	}
 }
