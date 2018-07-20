@@ -32,4 +32,5 @@ interface Types {
 	const SCHOOLING      = Schooling::class;
 	const CERTIFICATIONS = Certifications::class;
 	const EXPERIENCE     = Experience::class;
+	const VOLUNTEER      = Volunteer::class;
 }

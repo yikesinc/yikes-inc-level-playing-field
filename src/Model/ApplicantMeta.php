@@ -109,5 +109,6 @@ interface ApplicantMeta {
 		self::EDUCATION     => Types::SCHOOLING,
 		self::CERTIFICATION => Types::CERTIFICATIONS,
 		self::EXPERIENCE    => Types::EXPERIENCE,
+		self::VOLUNTEER     => Types::VOLUNTEER,
 	];
 }
