@@ -45,5 +45,5 @@ $form = new ApplicationForm( $application, $field_classes );
 		$field->render();
 	}
 	?>
-	<button type="submit" name="lpf_submit"><?php esc_html_e( 'Submit' ); ?></button>
+	<button class="lpf-submit" type="submit" name="lpf_submit"><?php esc_html_e( 'Submit' ); ?></button>
 </form>
