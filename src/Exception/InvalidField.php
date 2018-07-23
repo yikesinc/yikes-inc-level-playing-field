@@ -30,7 +30,7 @@ class InvalidField extends \InvalidArgumentException implements Exception {
 	public static function from_field( $field ) {
 		$message = sprintf(
 			/* translators: %s represents the class name */
-			esc_html__( 'The field class "%s" is not recognized and cannot be used.' ),
+			esc_html__( 'The field class "%s" is not recognized and cannot be used.', 'yikes-level-playing-field' ),
 			is_object( $field )
 				? get_class( $field )
 				: (string) $field
@@ -51,7 +51,7 @@ class InvalidField extends \InvalidArgumentException implements Exception {
 	public static function invalid_id( $id ) {
 		$message = sprintf(
 			/* translators: %s represents the field ID */
-			esc_html__( 'The ID "%s" is invalid. The ID must be a simple string, or a single depth array' ),
+			esc_html__( 'The ID "%s" is invalid. The ID must be a simple string, or a single depth array', 'yikes-level-playing-field' ),
 			$id
 		);
 

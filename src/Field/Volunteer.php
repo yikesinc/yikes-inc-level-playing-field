@@ -38,21 +38,21 @@ class Volunteer extends ComplexField {
 		 */
 		return apply_filters( 'lpf_field_volunteer_fields', [
 			'organization' => [
-				'label' => esc_html__( 'Organization' ),
+				'label' => esc_html__( 'Organization', 'yikes-level-playing-field' ),
 			],
 			'type'         => [
-				'label' => esc_html__( 'Organization Type' ),
+				'label' => esc_html__( 'Organization Type', 'yikes-level-playing-field' ),
 			],
 			'start_date'   => [
-				'label' => esc_html__( 'Start Date' ),
+				'label' => esc_html__( 'Start Date', 'yikes-level-playing-field' ),
 				'class' => Types::DATE,
 			],
 			'end_date'     => [
-				'label' => esc_html__( 'End Date' ),
+				'label' => esc_html__( 'End Date', 'yikes-level-playing-field' ),
 				'class' => Types::DATE,
 			],
 			'position'     => [
-				'label' => esc_html__( 'Position' ),
+				'label' => esc_html__( 'Position', 'yikes-level-playing-field' ),
 			],
 		] );
 	}
