@@ -15,6 +15,7 @@ use Yikes\LevelPlayingField\Field\Types;
 use Yikes\LevelPlayingField\Model\ApplicantMeta as Meta;
 use Yikes\LevelPlayingField\Model\Application as AppModel;
 use Yikes\LevelPlayingField\Model\ApplicationMeta;
+use Yikes\LevelPlayingField\Assets\AssetsAware;
 use Yikes\LevelPlayingField\Assets\AssetsAwareness;
 use Yikes\LevelPlayingField\Assets\StyleAsset;
 
@@ -28,7 +29,7 @@ use Yikes\LevelPlayingField\Assets\StyleAsset;
  * @property array   field_classes The array of classes used for field objects.
  * @property array   form_classes  The array of classes used for the main form element.
  */
-class Application {
+class Application implements AssetsAware {
 
 	use AssetsAwareness;
 
