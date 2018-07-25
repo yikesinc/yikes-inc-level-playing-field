@@ -15,6 +15,8 @@ use Yikes\LevelPlayingField\Field\Types;
 use Yikes\LevelPlayingField\Model\ApplicantMeta as Meta;
 use Yikes\LevelPlayingField\Model\Application as AppModel;
 use Yikes\LevelPlayingField\Model\ApplicationMeta;
+use Yikes\LevelPlayingField\Assets\AssetsAwareness;
+use Yikes\LevelPlayingField\Assets\StyleAsset;
 
 /**
  * Class Application
@@ -27,6 +29,24 @@ use Yikes\LevelPlayingField\Model\ApplicationMeta;
  * @property array   form_classes  The array of classes used for the main form element.
  */
 class Application {
+
+	use AssetsAwareness;
+
+	const CSS_HANDLE = 'lpf-app-css';
+	const CSS_URI    = 'assets/css/lpf-app-frontend';
+
+	/**
+	 * Get the array of known assets.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @return Asset[]
+	 */
+	protected function get_assets() {
+		return [
+			new StyleAsset( self::CSS_HANDLE, self::CSS_URI ),
+		];
+	}
 
 	/**
 	 * The application object.
@@ -64,6 +84,7 @@ class Application {
 		$this->application   = $application;
 		$this->field_classes = $field_classes;
 		$this->set_default_classes();
+		$this->register_assets();
 	}
 
 	/**
