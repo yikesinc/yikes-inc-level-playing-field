@@ -38,11 +38,12 @@ final class FormEscapedView implements View {
 			'method' => true,
 		],
 		'input'  => [
-			'id'    => true,
-			'class' => true,
-			'type'  => true,
-			'name'  => true,
-			'value' => true,
+			'id'       => true,
+			'class'    => true,
+			'type'     => true,
+			'name'     => true,
+			'value'    => true,
+			'required' => true,
 		],
 		'select' => [
 			'id'    => true,
