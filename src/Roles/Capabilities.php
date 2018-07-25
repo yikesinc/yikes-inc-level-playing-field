@@ -80,4 +80,7 @@ interface Capabilities {
 	// Custom Taxonomies.
 	const MANAGE_JOB_STATUS       = 'manage_' . JobStatus::SLUG;
 	const MANAGE_APPLICANT_STATUS = 'manage_' . ApplicantStatus::SLUG;
+
+	// Admin Pages.
+	const VIEW_ADMIN_PAGES = self::CAP_PREFIX . 'view_admin_pages';
 }

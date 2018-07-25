@@ -12,6 +12,7 @@ namespace Yikes\LevelPlayingField;
 use Yikes\LevelPlayingField\CustomPostType\ApplicantManager;
 use Yikes\LevelPlayingField\CustomPostType\ApplicationManager;
 use Yikes\LevelPlayingField\CustomPostType\LimitedJobManager;
+use Yikes\LevelPlayingField\ListTable\ApplicantManager as ApplicantListTable;
 use Yikes\LevelPlayingField\ListTable\ApplicationManager as ApplicationListTable;
 use Yikes\LevelPlayingField\ListTable\JobManager as JobListTable;
 use Yikes\LevelPlayingField\Metabox\ApplicationManager as ApplicationMetabox;
@@ -27,9 +28,9 @@ use Yikes\LevelPlayingField\Shortcode\Job;
 use Yikes\LevelPlayingField\Taxonomy\ApplicantStatus;
 use Yikes\LevelPlayingField\Taxonomy\JobCategory;
 use Yikes\LevelPlayingField\Taxonomy\JobStatus;
+use Yikes\LevelPlayingField\AdminPage\ExportApplicantsPage;
 use Yikes\LevelPlayingField\TemplateController\SingleJobsTemplateController as SingleJobs;
 use Yikes\LevelPlayingField\TemplateController\SingleApplicationsTemplateController as SingleApplications;
-
 
 /**
  * Class PluginFactory
@@ -83,8 +84,9 @@ final class PluginFactory {
 			ApplicationMetabox::class   => 1,
 
 			// Custom List Tables.
-			JobListTable::class         => 1,
-			ApplicationListTable::class => 1,
+			JobListTable::class,
+			ApplicationListTable::class,
+			ApplicantListTable::class,
 
 			// User roles.
 			HiringManager::class        => 1,
@@ -97,6 +99,9 @@ final class PluginFactory {
 			AllJobs::class              => 1,
 			Job::class                  => 1,
 			Application::class          => 1,
+      
+      // Admin Pages
+			ExportApplicantsPage::class,
 
 			// Carbon Fields.
 			FieldLoader::class          => 1,

@@ -74,6 +74,9 @@ class Administrator extends ExistingRole {
 			Capabilities::EDIT_PRIVATE_APPLICANTS       => true,
 			Capabilities::EDIT_PUBLISHED_APPLICANTS     => true,
 			Capabilities::CREATE_APPLICANTS             => true,
+
+			// Admin Pages.
+			Capabilities::VIEW_ADMIN_PAGES              => true,
 		];
 	}
 }
