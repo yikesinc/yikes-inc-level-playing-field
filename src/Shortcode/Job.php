@@ -70,7 +70,7 @@ class Job extends BaseJobs {
 	 *
 	 * @return array Context to pass onto view.
 	 */
-	protected function get_context( $atts ) {
+	protected function get_context( array $atts ) {
 		$jobs_repository = new JobRepository();
 
 		return [

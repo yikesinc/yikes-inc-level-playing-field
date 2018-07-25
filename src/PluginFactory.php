@@ -18,6 +18,7 @@ use Yikes\LevelPlayingField\ListTable\JobManager as JobListTable;
 use Yikes\LevelPlayingField\Metabox\ApplicationManager as ApplicationMetabox;
 use Yikes\LevelPlayingField\Metabox\JobManager;
 use Yikes\LevelPlayingField\Roles\Administrator;
+use Yikes\LevelPlayingField\Roles\Applicant;
 use Yikes\LevelPlayingField\Roles\Editor;
 use Yikes\LevelPlayingField\Roles\HiringManager;
 use Yikes\LevelPlayingField\Roles\HumanResources;
@@ -28,6 +29,8 @@ use Yikes\LevelPlayingField\Taxonomy\ApplicantStatus;
 use Yikes\LevelPlayingField\Taxonomy\JobCategory;
 use Yikes\LevelPlayingField\Taxonomy\JobStatus;
 use Yikes\LevelPlayingField\AdminPage\ExportApplicantsPage;
+use Yikes\LevelPlayingField\TemplateController\SingleJobsTemplateController as SingleJobs;
+use Yikes\LevelPlayingField\TemplateController\SingleApplicationsTemplateController as SingleApplications;
 
 /**
  * Class PluginFactory
@@ -67,18 +70,18 @@ final class PluginFactory {
 	private static function get_service_container() {
 		return new Container( [
 			// CPTs.
-			LimitedJobManager::class,
-			ApplicationManager::class,
-			ApplicantManager::class,
+			LimitedJobManager::class    => 1,
+			ApplicationManager::class   => 1,
+			ApplicantManager::class     => 1,
 
 			// Taxonomies.
-			JobCategory::class,
-			JobStatus::class,
-			ApplicantStatus::class,
+			JobCategory::class          => 1,
+			JobStatus::class            => 1,
+			ApplicantStatus::class      => 1,
 
 			// Metaboxes.
-			JobManager::class,
-			ApplicationMetabox::class,
+			JobManager::class           => 1,
+			ApplicationMetabox::class   => 1,
 
 			// Custom List Tables.
 			JobListTable::class,
@@ -86,18 +89,26 @@ final class PluginFactory {
 			ApplicantListTable::class,
 
 			// User roles.
-			HiringManager::class,
-			HumanResources::class,
-			Administrator::class,
-			Editor::class,
+			HiringManager::class        => 1,
+			HumanResources::class       => 1,
+			Applicant::class            => 1,
+			Administrator::class        => 1,
+			Editor::class               => 1,
 
 			// Shortcodes.
-			AllJobs::class,
-			Job::class,
-			Application::class,
-
-			// Admin Pages
+			AllJobs::class              => 1,
+			Job::class                  => 1,
+			Application::class          => 1,
+      
+      // Admin Pages
 			ExportApplicantsPage::class,
+
+			// Carbon Fields.
+			FieldLoader::class          => 1,
+
+			// Template Overrides.
+			SingleJobs::class           => 1,
+			SingleApplications::class   => 1,
 		] );
 	}
 }

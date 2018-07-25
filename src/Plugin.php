@@ -103,7 +103,7 @@ class Plugin implements Registerable {
 		 */
 		do_action( 'lpf_pre_get_services', $this->container );
 
-		return $this->container->get_services();
+		return array_keys( $this->container->get_services() );
 	}
 
 	/**

@@ -1,5 +1,6 @@
 {
     "name": "yikes-level-playing-field",
+    "title": "Yikes Level Playing Field",
     "version": "0.1.0",
     "main": "Gulpfile.js",
     "author": "YIKES, Inc.",
@@ -16,6 +17,7 @@
         "gulp": "^3",
         "gulp-babel": "^6",
         "gulp-bump": "^2",
+        "gulp-checktextdomain": "^2",
         "gulp-cheerio": "^0",
         "gulp-concat": "^2",
         "gulp-conventional-changelog": "^1",

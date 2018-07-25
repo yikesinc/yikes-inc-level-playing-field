@@ -88,7 +88,7 @@ class MustExtend extends \LogicException implements Exception {
 	public static function default_type( $type ) {
 		$message = sprintf(
 			/* translators: %s refers to the default type */
-			__( 'The default view "%s" must be extended in a subclass.', 'yikes-level-playing-field' ),
+			__( 'The default type "%s" must be extended in a subclass.', 'yikes-level-playing-field' ),
 			$type
 		);
 

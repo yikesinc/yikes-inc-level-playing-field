@@ -292,7 +292,7 @@ class YIKES_CPT_Meta_Boxes {
 			$field['name'] = isset( $field['name'] ) ? $field['name'] : '';
 			$field['desc'] = isset( $field['desc'] ) ? $field['desc'] : '';
 			$field['std']  = isset( $field['std'] ) ? $field['std'] : '';
-			$meta          = get_post_meta( $post->ID, $field['id'], true );
+			$meta          = isset( $field['id'] ) ? get_post_meta( $post->ID, $field['id'], true ) : '';
 
 			echo '<tr>';
 

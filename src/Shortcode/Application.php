@@ -11,6 +11,8 @@ namespace Yikes\LevelPlayingField\Shortcode;
 
 use Yikes\LevelPlayingField\Exception\InvalidPostID;
 use Yikes\LevelPlayingField\Model\ApplicationRepository;
+use Yikes\LevelPlayingField\View\FormEscapedView;
+use Yikes\LevelPlayingField\View\NoOverrideLocationView;
 
 /**
  * Class Application
@@ -49,7 +51,7 @@ class Application extends BaseShortcode {
 	 * @return array Context to pass onto view.
 	 * @throws InvalidPostID When the post ID is not valid.
 	 */
-	protected function get_context( $atts ) {
+	protected function get_context( array $atts ) {
 		$application_repository = new ApplicationRepository();
 
 		return [
@@ -76,5 +78,29 @@ class Application extends BaseShortcode {
 	 */
 	protected function is_submitting_application() {
 		return ! empty( $_POST );
+	}
+
+	/**
+	 * Render the current Renderable.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param array $context Context in which to render.
+	 *
+	 * @return string Rendered HTML.
+	 */
+	public function render( array $context = [] ) {
+		try {
+			$this->enqueue_assets();
+			$view = new FormEscapedView( new NoOverrideLocationView( $this->get_view_uri() ) );
+
+			return $view->render( $context );
+		} catch ( \Exception $e ) {
+			return sprintf(
+				/* translators: %s refers to the error message */
+				esc_html__( 'There was an error displaying the form: %s', 'yikes-level-playing-field' ),
+				$e->getMessage()
+			);
+		}
 	}
 }

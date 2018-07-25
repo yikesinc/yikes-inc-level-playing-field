@@ -14,10 +14,18 @@
 	<rule ref="PEAR.Files.IncludingFile">
 		<exclude name="PEAR.Files.IncludingFile.BracketsNotRequired"/>
 	</rule>
+	<rule ref="WordPress.WhiteSpace.PrecisionAlignment">
+		<!-- This rule flags space indents in HTML tags, which are OK -->
+		<exclude name="WordPress.WhiteSpace.PrecisionAlignment.Found"/>
+	</rule>
 
 	<!-- Change behavior of some sniffs -->
 	<rule ref="Generic.Commenting.DocComment.MissingShort">
 		<message>Inline Doc Comment detected</message>
+		<severity>3</severity>
+	</rule>
+	<rule ref="Generic.Commenting.DocComment.SpacingBeforeTags">
+		<message>There must be exactly one blank line before the tags in a doc comment</message>
 		<severity>3</severity>
 	</rule>
 	<rule ref="WordPress.PHP.DevelopmentFunctions">
@@ -28,6 +36,12 @@
 	<rule ref="WordPress.PHP.DiscouragedPHPFunctions">
 		<properties>
 			<property name="exclude" value="obfuscation"/>
+		</properties>
+	</rule>
+	<rule ref="WordPress.WP.AlternativeFunctions">
+		<properties>
+			<!-- wp_json_encode() recommended for compatibility with older PHP versions. We require 5.6+, so no need. -->
+			<property name="exclude" value="json_encode"/>
 		</properties>
 	</rule>
 

@@ -62,7 +62,7 @@ class ApplicantManager extends BaseCustomPostType {
 			'hierarchical'        => false,
 			'public'              => true,
 			'show_ui'             => true,
-			'show_in_menu'        => 'edit.php?post_type=jobs',
+			'show_in_menu'        => 'edit.php?post_type=' . JobManager::SLUG,
 			'rewrite'             => [
 				'slug' => self::SINGULAR_SLUG,
 			],
@@ -71,7 +71,7 @@ class ApplicantManager extends BaseCustomPostType {
 			'can_export'          => true,
 			'has_archive'         => false,
 			'exclude_from_search' => true,
-			'publicly_queryable'  => true,
+			'publicly_queryable'  => false,
 			'map_meta_cap'        => true,
 			'capabilities'        => [
 				'edit_post'              => Capabilities::EDIT_APPLICANT,

@@ -41,7 +41,7 @@ abstract class BaseShortcode implements Renderable, AssetsAware, Service {
 		$this->register_assets();
 
 		add_action( 'init', function () {
-			add_shortcode( $this->get_tag(), array( $this, 'process_shortcode' ) );
+			add_shortcode( $this->get_tag(), [ $this, 'process_shortcode' ] );
 		} );
 	}
 
@@ -109,8 +109,8 @@ abstract class BaseShortcode implements Renderable, AssetsAware, Service {
 	 *
 	 * @return array Context to pass onto view.
 	 */
-	protected function get_context( $atts ) {
-		return array();
+	protected function get_context( array $atts ) {
+		return [];
 	}
 
 	/**

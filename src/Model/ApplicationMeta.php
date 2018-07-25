@@ -21,9 +21,17 @@ interface ApplicationMeta {
 	const FORM_FIELD_PREFIX = 'application_cpt_';
 
 	// Basic Info fields.
-	const NAME         = self::META_PREFIX . 'name';
-	const EMAIL        = self::META_PREFIX . 'email';
-	const PHONE        = self::META_PREFIX . 'phone';
-	const ADDRESS      = self::META_PREFIX . 'address';
-	const COVER_LETTER = self::META_PREFIX . 'cover_letter';
+	const NAME         = 'name';
+	const EMAIL        = 'email';
+	const PHONE        = 'phone';
+	const ADDRESS      = 'address';
+	const COVER_LETTER = 'cover_letter';
+
+	// Extended fields.
+	const EDUCATION      = 'education';
+	const CERTIFICATIONS = 'certifications';
+	const SKILLS         = 'skills';
+	const LANGUAGES      = 'languages';
+	const EXPERIENCE     = 'experience';
+	const VOLUNTEER      = 'volunteer';
 }
