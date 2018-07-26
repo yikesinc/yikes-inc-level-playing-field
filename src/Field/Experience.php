@@ -9,6 +9,12 @@
 
 namespace Yikes\LevelPlayingField\Field;
 
+/**
+ * Class Experience
+ *
+ * @since   %VERSION%
+ * @package Yikes\LevelPlayingField
+ */
 class Experience extends ComplexField {
 
 	/**
@@ -18,7 +24,7 @@ class Experience extends ComplexField {
 	 * @var bool
 	 */
 	protected $repeatable = true;
-	
+
 	/**
 	 * Get the array of classes to merge in with the default field classes.
 	 *
@@ -48,18 +54,18 @@ class Experience extends ComplexField {
 			'organization' => [
 				'label' => esc_html__( 'Organization', 'yikes-level-playing-field' ),
 			],
-			'industry'        => [
+			'industry'     => [
 				'label' => esc_html__( 'Industry', 'yikes-level-playing-field' ),
 			],
-			'start_date'        => [
+			'start_date'   => [
 				'label' => esc_html__( 'Start Date', 'yikes-level-playing-field' ),
 				'class' => Types::DATE,
 			],
-			'end_date' => [
+			'end_date'     => [
 				'label' => esc_html__( 'End Date', 'yikes-level-playing-field' ),
 				'class' => Types::DATE,
 			],
-			'position'       => [
+			'position'     => [
 				'label' => esc_html__( 'Position', 'yikes-level-playing-field' ),
 			],
 		] );

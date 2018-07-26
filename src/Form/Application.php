@@ -121,7 +121,7 @@ class Application {
 	 *
 	 * @since %VERSION%
 	 *
-	 * @param array $classes
+	 * @param array $classes The classes to add to the fields.
 	 */
 	public function set_field_classes( array $classes ) {
 		$this->field_classes = $classes;

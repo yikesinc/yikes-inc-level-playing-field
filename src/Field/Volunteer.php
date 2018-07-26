@@ -9,6 +9,12 @@
 
 namespace Yikes\LevelPlayingField\Field;
 
+/**
+ * Class Volunteer
+ *
+ * @since   %VERSION%
+ * @package Yikes\LevelPlayingField
+ */
 class Volunteer extends ComplexField {
 
 	/**

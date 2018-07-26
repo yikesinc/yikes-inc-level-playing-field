@@ -130,12 +130,30 @@ abstract class BaseForm implements Renderable, Service, AssetsAware {
 		return false !== $result;
 	}
 
+	/**
+	 * Get the name of the nonce.
+	 *
+	 * @since %VERSION%
+	 * @return string
+	 */
 	protected function get_nonce_name() {
 		return "{$this->get_id()}_nonce";
 	}
 
+	/**
+	 * Get the ID for the nonce.
+	 *
+	 * @since %VERSION%
+	 * @return string
+	 */
 	abstract protected function get_id();
 
+	/**
+	 * Get the action for the nonce.
+	 *
+	 * @since %VERSION%
+	 * @return string
+	 */
 	protected function get_nonce_action() {
 		return "{$this->get_id()}_action";
 	}

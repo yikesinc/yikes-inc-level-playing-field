@@ -35,8 +35,8 @@ abstract class BaseAdminPage implements Service {
 		add_action( 'admin_menu', function () {
 			add_submenu_page(
 				$this->get_parent_slug(),
-				$this->get_page_title(), 
-				$this->get_menu_title(), 
+				$this->get_page_title(),
+				$this->get_menu_title(),
 				$this->get_capability(),
 				$this->get_menu_slug(),
 				$this->get_callback()
@@ -108,8 +108,6 @@ abstract class BaseAdminPage implements Service {
 	 * This function will generate the admin page.
 	 *
 	 * @since %VERSION%
-	 *
-	 * @return [not sure yet]
 	 */
 	abstract public function callback();
 

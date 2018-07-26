@@ -30,7 +30,7 @@ class ExportApplicantsPage extends BaseAdminPage implements AssetsAware {
 	const PAGE_SLUG = 'lpf-export-applicants';
 	const PRIORITY  = 15;
 
-	// Define the JavaScript file
+	// Define the JavaScript file.
 	const JS_HANDLE       = 'lpf-export-page-admin-script';
 	const JS_URI          = 'assets/js/export';
 	const JS_DEPENDENCIES = array( 'jquery' );
@@ -67,7 +67,7 @@ class ExportApplicantsPage extends BaseAdminPage implements AssetsAware {
 	 */
 	protected function get_assets() {
 		return [
-			new ScriptAsset( self::JS_HANDLE, self::JS_URI, self::JS_DEPENDENCIES, self::JS_VERSION, ScriptAsset::ENQUEUE_FOOTER )
+			new ScriptAsset( self::JS_HANDLE, self::JS_URI, self::JS_DEPENDENCIES, self::JS_VERSION, ScriptAsset::ENQUEUE_FOOTER ),
 		];
 	}
 
@@ -108,11 +108,8 @@ class ExportApplicantsPage extends BaseAdminPage implements AssetsAware {
 	 * This function will generate the admin page.
 	 *
 	 * @since %VERSION%
-	 *
-	 * @return [not sure yet]
 	 */
 	public function callback() {
-
 		$view = new AdminView( 'views/applicant-export' );
 		$view->render();
 	}

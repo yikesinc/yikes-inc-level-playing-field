@@ -9,6 +9,12 @@
 
 namespace Yikes\LevelPlayingField\Field;
 
+/**
+ * Class Certifications
+ *
+ * @since   %VERSION%
+ * @package Yikes\LevelPlayingField
+ */
 class Certifications extends ComplexField {
 
 	/**

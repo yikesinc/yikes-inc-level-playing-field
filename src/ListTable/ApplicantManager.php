@@ -9,13 +9,12 @@
 
 namespace Yikes\LevelPlayingField\ListTable;
 
+use YIKES\LevelPlayingField\AdminPage\ExportApplicantsPage as ExportApplicantsPage;
 use Yikes\LevelPlayingField\Assets\Asset;
 use Yikes\LevelPlayingField\Assets\AssetsAware;
 use Yikes\LevelPlayingField\Assets\AssetsAwareness;
 use Yikes\LevelPlayingField\Assets\ScriptAsset;
 use Yikes\LevelPlayingField\CustomPostType\ApplicantManager as ApplicantManagerCPT;
-use Yikes\LevelPlayingField\Model\ApplicantRepository;
-use YIKES\LevelPlayingField\AdminPage\ExportApplicantsPage as ExportApplicantsPage;
 
 /**
  * Class ApplicantManager
@@ -29,7 +28,7 @@ class ApplicantManager extends BasePostType implements AssetsAware {
 
 	const JS_HANDLE       = 'lpf-applicants-admin-script';
 	const JS_URI          = 'assets/js/applicants-admin';
-	const JS_DEPENDENCIES = array( 'jquery' );
+	const JS_DEPENDENCIES = [ 'jquery' ];
 	const JS_VERSION      = false;
 
 	/**
@@ -72,21 +71,22 @@ class ApplicantManager extends BasePostType implements AssetsAware {
 	 * @return Asset[]
 	 */
 	protected function get_assets() {
-
 		$script = new ScriptAsset( self::JS_HANDLE, self::JS_URI, self::JS_DEPENDENCIES, self::JS_VERSION, ScriptAsset::ENQUEUE_FOOTER );
-		
-		$script->add_localization( 
-			'applicant_admin', 
+		$script->add_localization(
+			'applicant_admin',
 			[
-				'export_url' => add_query_arg( array( 'page' => ExportApplicantsPage::PAGE_SLUG, 'post_type' => ExportApplicantsPage::POST_TYPE )  ),
+				'export_url' => add_query_arg( [
+					'page'      => ExportApplicantsPage::PAGE_SLUG,
+					'post_type' => ExportApplicantsPage::POST_TYPE,
+				] ),
 				'strings'    => [
-					'export_button_text' => __( 'Export', 'yikes-level-playing-field' )
-				]
-			] 
+					'export_button_text' => __( 'Export', 'yikes-level-playing-field' ),
+				],
+			]
 		);
 
 		return [
-			$script
+			$script,
 		];
 	}
 
@@ -100,7 +100,6 @@ class ApplicantManager extends BasePostType implements AssetsAware {
 	 * @return array
 	 */
 	public function columns( $original_columns ) {
-
 		// @todo Decide whether we need custom columns for Applicants.
 		return $original_columns;
 	}
@@ -114,7 +113,6 @@ class ApplicantManager extends BasePostType implements AssetsAware {
 	 * @param int    $post_id     The post ID.
 	 */
 	public function column_content( $column_name, $post_id ) {
-		
 		// @todo Decide whether we need custom column content for Applicants.
 	}
 
