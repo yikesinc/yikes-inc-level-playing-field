@@ -66,6 +66,8 @@ abstract class BaseField implements Field {
 	/**
 	 * The pattern used for matching an field's ID.
 	 *
+	 * @link https://regex101.com/r/ZTgsNa/1
+	 *
 	 * @since %VERSION%
 	 * @var string
 	 */
