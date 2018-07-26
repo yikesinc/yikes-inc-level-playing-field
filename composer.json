@@ -25,5 +25,10 @@
             "role": "Owner",
             "homepage": "https://www.yikesinc.com"
         }
-    ]
+    ],
+    "scripts": {
+        "post-install-cmd": [
+            "./bin/git-setup-pre-commit-hook"
+        ]
+    }
 }
