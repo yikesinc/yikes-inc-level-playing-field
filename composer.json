@@ -8,7 +8,7 @@
     },
     "require-dev": {
         "wp-coding-standards/wpcs": "^1.0",
-        "phpunit/phpunit": "^6.4",
+        "phpunit/phpunit": "^5.7",
         "dealerdirect/phpcodesniffer-composer-installer": "^0.4"
     },
     "license": "GPL-2.0+",
@@ -30,5 +30,10 @@
         "post-install-cmd": [
             "./bin/git-setup-pre-commit-hook"
         ]
+    },
+    "config": {
+        "platform": {
+            "php": "5.6"
+        }
     }
 }

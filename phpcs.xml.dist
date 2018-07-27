@@ -8,10 +8,12 @@
 	<!-- Default WordPress sniffs -->
 	<rule ref="WordPress-Core">
 		<exclude name="WordPress.Files.FileName"/>
-		<exclude name="WordPress.Security.NonceVerification.NoNonceVerification"/>
+		<exclude name="Generic.Files.LineEndings"/>
 	</rule>
 	<rule ref="WordPress-Docs"/>
-	<rule ref="WordPress-Extra"/>
+	<rule ref="WordPress-Extra">
+		<exclude name="WordPress.Security.NonceVerification.NoNonceVerification"/>
+	</rule>
 
 	<!-- Other generic sniffs to include -->
 	<rule ref="Generic.CodeAnalysis.UnusedFunctionParameter"/>

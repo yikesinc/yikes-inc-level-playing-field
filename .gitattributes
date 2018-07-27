@@ -1,0 +1,13 @@
+# Default behavior, to override core.autocrlf.
+* text=auto
+
+# Specific file types need line endings handled.
+*.php text
+*.js text
+*.css text
+*.json text
+*.yml text
+
+# Binary files shouldn't be checked.
+*.png binary
+*.jpg binary
