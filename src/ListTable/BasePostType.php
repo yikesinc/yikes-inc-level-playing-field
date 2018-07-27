@@ -28,8 +28,13 @@ abstract class BasePostType implements Service {
 	 * @since %VERSION%
 	 */
 	public function register() {
+
+		// These actions will customize the columns in the list table.
 		add_filter( "manage_{$this->post_type}_posts_columns", [ $this, 'columns' ] );
 		add_action( "manage_{$this->post_type}_posts_custom_column", [ $this, 'column_content' ], 10, 2 );
+
+		// This action will customize the available dropdowns for filtering.
+		add_action( 'restrict_manage_posts', array( $this, 'custom_dropdowns' ), 10, 2 );
 	}
 
 	/**
@@ -128,6 +133,32 @@ abstract class BasePostType implements Service {
 	 * @param int    $post_id     The post ID.
 	 */
 	abstract public function column_content( $column_name, $post_id );
+
+	/**
+	 * Output custom dropdowns for filtering.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param string $post_type The post type.
+	 * @param string $which     The location of the extra table nav markup: 'top' or 'bottom' for WP_Posts_List_Table, 'bar' for WP_Media_List_Table.
+	 */
+	public function custom_dropdowns( $post_type, $which ) {
+
+		if ( $this->post_type !== $post_type ) {
+			return;
+		}
+
+		$this->create_custom_dropdowns( $which );
+	}
+
+	/**
+	 * Output custom dropdowns for filtering.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param string $which     The location of the extra table nav markup: 'top' or 'bottom' for WP_Posts_List_Table, 'bar' for WP_Media_List_Table.
+	 */
+	abstract protected function create_custom_dropdowns( $which );
 
 	/**
 	 * Get the post type.

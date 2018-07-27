@@ -129,6 +129,17 @@ class ApplicationManager extends BasePostType {
 	}
 
 	/**
+	 * Output custom dropdowns for filtering.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param string $which     The location of the extra table nav markup: 'top' or 'bottom' for WP_Posts_List_Table, 'bar' for WP_Media_List_Table.
+	 */
+	protected function create_custom_dropdowns( $which ) {
+		// @todo Decide whether we need custom dropdowns for Applications.
+	}
+
+	/**
 	 * Get the post type.
 	 *
 	 * @since %VERSION%

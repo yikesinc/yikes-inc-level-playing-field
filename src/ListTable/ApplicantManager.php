@@ -15,6 +15,7 @@ use Yikes\LevelPlayingField\Assets\AssetsAware;
 use Yikes\LevelPlayingField\Assets\AssetsAwareness;
 use Yikes\LevelPlayingField\Assets\ScriptAsset;
 use Yikes\LevelPlayingField\CustomPostType\ApplicantManager as ApplicantManagerCPT;
+use Yikes\LevelPlayingField\Taxonomy\ApplicantStatus;
 
 /**
  * Class ApplicantManager
@@ -114,6 +115,52 @@ class ApplicantManager extends BasePostType implements AssetsAware {
 	 */
 	public function column_content( $column_name, $post_id ) {
 		// @todo Decide whether we need custom column content for Applicants.
+	}
+
+	/**
+	 * Output custom dropdowns for filtering.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param string $which The location of the extra table nav markup: 'top' or 'bottom' for WP_Posts_List_Table, 'bar' for WP_Media_List_Table.
+	 */
+	protected function create_custom_dropdowns( $which ) {
+
+		if ( 'top' === $which ) {
+			$this->create_applicant_status_dropdown();
+		}
+
+	}
+
+	/**
+	 * Output a custom dropdown for the applicant_status taxonomy.
+	 *
+	 * @since %VERSION%
+	 */
+	protected function create_applicant_status_dropdown() {
+
+		$taxonomy = get_taxonomy( ApplicantStatus::SLUG );
+
+		// Make sure we have the taxonomy.
+		if ( ! is_object( $taxonomy ) ) {
+			return;
+		}
+
+		$chosen = isset( $_GET[ ApplicantStatus::SLUG ] ) ? filter_var( $_GET[ ApplicantStatus::SLUG ], FILTER_SANITIZE_STRING ) : '';
+		$terms  = get_terms( [
+			'taxonomy'   => ApplicantStatus::SLUG,
+			'hide_empty' => true,
+			'orderby'    => 'term_id',
+		] );
+
+		?>
+			<label class="screen-reader-text" for="<?php echo esc_attr( ApplicantStatus::SLUG ); ?>"><?php echo esc_html( $taxonomy->labels->all_items ); ?></label><select name="<?php echo esc_attr( ApplicantStatus::SLUG ); ?>" id="<?php echo esc_attr( ApplicantStatus::SLUG ); ?>" class="postform">
+				<option value="0"><?php echo esc_html( $taxonomy->labels->all_items ); ?></option>
+				<?php foreach ( $terms as $term ) : ?>
+					<option value="<?php echo esc_attr( $term->slug ); ?>" <?php selected( $chosen, $term->slug ); ?>><?php echo esc_html( $term->name ); ?></option>
+				<?php endforeach; ?>
+			</select>
+		<?php
 	}
 
 	/**

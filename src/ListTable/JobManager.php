@@ -36,16 +36,6 @@ class JobManager extends BasePostType {
 	}
 
 	/**
-	 * Get the post type.
-	 *
-	 * @since %VERSION%
-	 * @return string
-	 */
-	protected function get_post_type() {
-		return JobManagerCPT::SLUG;
-	}
-
-	/**
 	 * Adjust the columns to display for the list table.
 	 *
 	 * @since %VERSION%
@@ -89,5 +79,26 @@ class JobManager extends BasePostType {
 		}
 
 		echo esc_html( $applicant_repo->get_applicant_count_for_job( $post_id ) );
+	}
+
+	/**
+	 * Output custom dropdowns for filtering.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param string $which     The location of the extra table nav markup: 'top' or 'bottom' for WP_Posts_List_Table, 'bar' for WP_Media_List_Table.
+	 */
+	protected function create_custom_dropdowns( $which ) {
+		// @todo Decide whether we need custom dropdowns for Jobs.
+	}
+
+	/**
+	 * Get the post type.
+	 *
+	 * @since %VERSION%
+	 * @return string
+	 */
+	protected function get_post_type() {
+		return JobManagerCPT::SLUG;
 	}
 }

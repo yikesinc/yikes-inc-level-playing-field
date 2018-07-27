@@ -11,6 +11,11 @@ namespace Yikes\LevelPlayingField\Taxonomy;
 
 use Yikes\LevelPlayingField\CustomPostType\ApplicantManager;
 use Yikes\LevelPlayingField\Roles\Capabilities;
+use Yikes\LevelPlayingField\Assets\Asset;
+use Yikes\LevelPlayingField\Assets\AssetsAware;
+use Yikes\LevelPlayingField\Assets\AssetsAwareness;
+use Yikes\LevelPlayingField\Assets\ScriptAsset;
+use Yikes\LevelPlayingField\Assets\StyleAsset;
 
 /**
  * Class ApplicantStatus
@@ -18,9 +23,19 @@ use Yikes\LevelPlayingField\Roles\Capabilities;
  * @since   %VERSION%
  * @package Yikes\LevelPlayingField
  */
-class ApplicantStatus extends BaseTaxonomy {
+class ApplicantStatus extends BaseTaxonomy implements AssetsAware {
 
-	const SLUG = 'applicant_status';
+	use AssetsAwareness;
+
+	const SLUG            = 'applicant_status';
+	const DEFAULT_NAME    = 'Pending';
+	const DEFAULT_SLUG    = 'pending';
+	const JS_HANDLE       = 'lpf-taxonomy-button-groups-script';
+	const JS_URI          = 'assets/js/taxonomy-button-groups';
+	const JS_DEPENDENCIES = [ 'jquery' ];
+	const JS_VERSION      = false;
+	const CSS_HANDLE      = 'lpf-taxonomy-button-groups-style';
+	const CSS_URI         = 'assets/css/taxonomy-button-groups';
 
 	/**
 	 * Register the WordPress hooks.
@@ -29,7 +44,46 @@ class ApplicantStatus extends BaseTaxonomy {
 	 */
 	public function register() {
 		parent::register();
+		$this->register_assets();
 		add_action( 'init', [ $this, 'default_terms' ] );
+		add_filter( 'admin_enqueue_scripts', function( $hook ) {
+
+			// This filter should only run on an edit page. Make sure get_current_screen() exists.
+			if ( ( 'post-new.php' !== $hook && 'post.php' !== $hook ) || ! function_exists( 'get_current_screen' ) ) {
+				return;
+			}
+
+			// Ensure this is a real screen object.
+			$screen = get_current_screen();
+			if ( ! ( $screen instanceof \WP_Screen ) ) {
+				return;
+			}
+
+			// Ensure this is the edit screen for the correct post type.
+			if ( ApplicantManager::SLUG !== $screen->post_type ) {
+				return;
+			}
+
+			$this->enqueue_assets();
+		} );
+	}
+
+	/**
+	 * Return this taxonomy's default term name.
+	 *
+	 * @author Kevin Utz
+	 */
+	public function get_default_term_name() {
+		return static::DEFAULT_NAME;
+	}
+
+	/**
+	 * Return this taxonomy's default term slug.
+	 *
+	 * @author Kevin Utz
+	 */
+	public function get_default_term_slug() {
+		return static::DEFAULT_SLUG;
 	}
 
 	/**
@@ -39,15 +93,19 @@ class ApplicantStatus extends BaseTaxonomy {
 	 */
 	public function default_terms() {
 		$terms = [
-			'Yes'   => [
+			$this->get_default_term_name() => [
+				'description' => __( 'Acceptance is pending', 'yikes-level-playing-field' ),
+				'slug'        => $this->get_default_term_slug(),
+			],
+			'Yes'                          => [
 				'description' => __( 'Accept the applicant', 'yikes-level-playing-field' ),
 				'slug'        => 'yes',
 			],
-			'No'    => [
+			'No'                           => [
 				'description' => __( 'Do not accept the applicant', 'yikes-level-playing-field' ),
 				'slug'        => 'no',
 			],
-			'Maybe' => [
+			'Maybe'                        => [
 				'description' => __( 'Maybe accept the applicant', 'yikes-level-playing-field' ),
 				'slug'        => 'maybe',
 			],
@@ -75,8 +133,17 @@ class ApplicantStatus extends BaseTaxonomy {
 			<?php
 			if ( current_user_can( $taxonomy->cap->assign_terms ) ) {
 				$this->term_select( $post );
+			} else {
+
+				// For users who cannot edit the taxonomy, show the assigned term.
+				$statuses    = get_the_terms( $post->ID, $tax_name );
+				$status_name = is_array( $statuses ) && isset( $statuses[0] ) ? $statuses[0]->name : $this->get_default_term_name();
+				?>
+					<b>
+						<?php echo esc_html( $status_name ); ?>
+					</b>
+				<?php
 			}
-			// todo: alternate display for user who can't assign terms.
 			?>
 		</div>
 		<?php
@@ -100,26 +167,52 @@ class ApplicantStatus extends BaseTaxonomy {
 
 		$post_terms = get_the_terms( $post->ID, $tax_name );
 		$post_terms = $post_terms ? wp_list_pluck( $post_terms, 'term_id', 'slug' ) : [];
+		$selected   = false;
 		?>
-		<label for="<?php echo esc_attr( $tax_name ); ?>">
-			<?php echo esc_html( $taxonomy->labels->update_item ); ?>
-		</label>
-		<select name="tax_input[<?php echo esc_attr( $tax_name ); ?>]"
-				id="tax_input[<?php echo esc_attr( $tax_name ); ?>]"
-				title="<?php echo esc_attr( $taxonomy->labels->update_item ); ?>">
-			<option value=""><?php echo esc_html_x( '------', 'select placeholder', 'yikes-level-playing-field' ); ?></option>
+
+		<!-- Button group for selecting applicant status -->
+		<div class="tax-btn-group">
 			<?php
-			/** @var \WP_Term $term */
 			foreach ( $all_terms as $term ) {
+				$selected_bool = array_key_exists( $term->slug, $post_terms ) ? $term->slug : false;
+				if ( $selected_bool ) {
+					$selected_term = $term->slug;
+				}
 				?>
-				<option value="<?php echo esc_attr( $term->slug ); ?>" <?php selected( array_key_exists( $term->slug, $post_terms ) ); ?>>
-					<?php echo esc_html( $term->name ); ?>
-				</option>
+					<button
+						type="button" 
+						data-tax-slug="<?php echo esc_attr( $term->slug ); ?>" 
+						data-taxonomy="<?php echo esc_attr( $tax_name ); ?>" 
+						class="<?php echo false !== $selected_bool ? 'active' : ''; ?>"
+					>
+						<?php echo esc_html( $term->name ); ?>
+					</button>
 				<?php
 			}
 			?>
-		</select>
+		</div>
+
+		<!-- Hidden input to hold our taxonomy choice -->
+		<input style="display: none;" class="tax-input <?php echo esc_attr( $tax_name ); ?>" name="tax_input[<?php echo esc_attr( $tax_name ); ?>]" id="tax_input[<?php echo esc_attr( $tax_name ); ?>]" value="<?php echo esc_attr( $selected_term ); ?>"/>
+		
 		<?php
+	}
+
+	/**
+	 * Get the array of known assets.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @return Asset[]
+	 */
+	protected function get_assets() {
+		$script = new ScriptAsset( self::JS_HANDLE, self::JS_URI, self::JS_DEPENDENCIES, self::JS_VERSION, ScriptAsset::ENQUEUE_FOOTER );
+		$style  = new StyleAsset( self::CSS_HANDLE, self::CSS_URI );
+
+		return [
+			$script,
+			$style,
+		];
 	}
 
 	/**
