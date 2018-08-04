@@ -9,6 +9,7 @@
 
 namespace Yikes\LevelPlayingField;
 
+use Yikes\LevelPlayingField\AdminPage\ExportApplicantsPage;
 use Yikes\LevelPlayingField\CustomPostType\ApplicantManager;
 use Yikes\LevelPlayingField\CustomPostType\ApplicationManager;
 use Yikes\LevelPlayingField\CustomPostType\LimitedJobManager;
@@ -28,9 +29,8 @@ use Yikes\LevelPlayingField\Shortcode\Job;
 use Yikes\LevelPlayingField\Taxonomy\ApplicantStatus;
 use Yikes\LevelPlayingField\Taxonomy\JobCategory;
 use Yikes\LevelPlayingField\Taxonomy\JobStatus;
-use Yikes\LevelPlayingField\AdminPage\ExportApplicantsPage;
-use Yikes\LevelPlayingField\TemplateController\SingleJobsTemplateController as SingleJobs;
 use Yikes\LevelPlayingField\TemplateController\SingleApplicationsTemplateController as SingleApplications;
+use Yikes\LevelPlayingField\TemplateController\SingleJobsTemplateController as SingleJobs;
 
 /**
  * Class PluginFactory
