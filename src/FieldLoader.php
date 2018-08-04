@@ -25,7 +25,7 @@ class FieldLoader implements Service {
 	 * @since %VERSION%
 	 */
 	public function register() {
-		add_action( 'after_setup_theme', function () {
+		add_action( 'plugins_loaded', function () {
 			Carbon_Fields::boot();
 		} );
 	}
