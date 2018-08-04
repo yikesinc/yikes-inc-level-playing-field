@@ -28,6 +28,7 @@ interface ApplicationMeta {
 	const COVER_LETTER = 'cover_letter';
 
 	// Extended fields.
+	const SCHOOLING      = 'schooling';
 	const EDUCATION      = 'education';
 	const CERTIFICATIONS = 'certifications';
 	const SKILLS         = 'skills';

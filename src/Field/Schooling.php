@@ -17,6 +17,9 @@ namespace Yikes\LevelPlayingField\Field;
  */
 class Schooling extends ComplexField {
 
+	/** @var string */
+	protected $class_base = 'schooling';
+
 	/**
 	 * Whether the field is repeatable.
 	 *
@@ -24,16 +27,6 @@ class Schooling extends ComplexField {
 	 * @var bool
 	 */
 	protected $repeatable = true;
-
-	/**
-	 * Get the array of classes to merge in with the default field classes.
-	 *
-	 * @since %VERSION%
-	 * @return array
-	 */
-	protected function get_classes() {
-		return [ 'lpf-field-schooling' ];
-	}
 
 	/**
 	 * Get the array of default fields.
@@ -71,18 +64,6 @@ class Schooling extends ComplexField {
 	}
 
 	/**
-	 * Render the sub-fields.
-	 *
-	 * @since %VERSION%
-	 * @todo Control how many fields are rendered by default
-	 */
-	protected function render_sub_fields() {
-		for ( $i = 0; $i < 3; $i ++ ) {
-			parent::render_sub_fields();
-		}
-	}
-
-	/**
 	 * Render the grouping label for the sub-fields.
 	 *
 	 * This should echo the label directly.
@@ -90,6 +71,9 @@ class Schooling extends ComplexField {
 	 * @since %VERSION%
 	 */
 	protected function render_grouping_label() {
-		// TODO: Implement render_grouping_label() method.
+		printf(
+			'<legend class="lpf-field-schooling lpf-input-label">%s</legend>',
+			esc_html__( 'Schooling: ', 'yikes-level-playing-field' )
+		);
 	}
 }

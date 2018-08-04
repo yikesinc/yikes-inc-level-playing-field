@@ -51,43 +51,9 @@ interface ApplicantMeta {
 	const DATES         = 'dates';
 	const POSITION      = 'position';
 
-	// Education sub-structure.
-	const SCHOOLING      = [
-		self::INSTITUTION => 1,
-		self::TYPE        => 1,
-		self::YEAR        => 1,
-		self::MAJOR       => 1,
-		self::DEGREE      => 1,
-	];
-	const CERTIFICATIONS = [
-		self::INSTITUTION   => 1,
-		self::TYPE          => 1,
-		self::YEAR          => 1,
-		self::CERTIFICATION => 1,
-		self::STATUS        => 1,
-	];
-
-	// Structure for other items.
-	const SKILLS_STRUCTURE     = [
-		self::SKILL       => 1,
-		self::PROFICIENCY => 1,
-	];
-	const LANGUAGES_STRUCTURE  = [
-		self::LANGUAGE    => 1,
-		self::PROFICIENCY => 1,
-	];
-	const EXPERIENCE_STRUCTURE = [
-		self::ORGANIZATION => 1,
-		self::INDUSTRY     => 1,
-		self::DATES        => 1,
-		self::POSITION     => 1,
-	];
-	const VOLUNTEER_STRUCTURE  = [
-		self::ORGANIZATION => 1,
-		self::TYPE         => 1,
-		self::DATES        => 1,
-		self::POSITION     => 1,
-	];
+	// Complex fields.
+	const SCHOOLING      = 'schooling';
+	const CERTIFICATIONS = 'certifications';
 
 	const ANONYMOUS_FIELDS = [
 		self::NAME         => 1,
@@ -101,14 +67,16 @@ interface ApplicantMeta {
 	];
 
 	const FIELD_MAP = [
-		self::NAME          => Types::TEXT,
-		self::EMAIL         => Types::EMAIL,
-		self::PHONE         => Types::PHONE,
-		self::ADDRESS       => Types::ADDRESS,
-		self::COVER_LETTER  => Types::TEXTAREA,
-		self::EDUCATION     => Types::SCHOOLING,
-		self::CERTIFICATION => Types::CERTIFICATIONS,
-		self::EXPERIENCE    => Types::EXPERIENCE,
-		self::VOLUNTEER     => Types::VOLUNTEER,
+		self::NAME           => Types::TEXT,
+		self::EMAIL          => Types::EMAIL,
+		self::PHONE          => Types::PHONE,
+		self::ADDRESS        => Types::ADDRESS,
+		self::COVER_LETTER   => Types::TEXTAREA,
+		self::EDUCATION      => Types::SCHOOLING,
+		self::CERTIFICATION  => Types::CERTIFICATIONS,
+		self::EXPERIENCE     => Types::EXPERIENCE,
+		self::VOLUNTEER      => Types::VOLUNTEER,
+		self::SCHOOLING      => Types::SCHOOLING,
+		self::CERTIFICATIONS => Types::CERTIFICATIONS,
 	];
 }

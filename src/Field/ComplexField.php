@@ -9,6 +9,7 @@
 
 namespace Yikes\LevelPlayingField\Field;
 
+use Carbon_Fields\Container;
 use Yikes\LevelPlayingField\Exception\InvalidField;
 
 /**
@@ -18,6 +19,14 @@ use Yikes\LevelPlayingField\Exception\InvalidField;
  * @package Yikes\LevelPlayingField
  */
 abstract class ComplexField extends BaseField {
+
+	/**
+	 * The base HTML class value.
+	 *
+	 * @since %VERSION%
+	 * @var string
+	 */
+	protected $class_base = 'complexfield';
 
 	/**
 	 * Whether the field is repeatable.
@@ -91,8 +100,22 @@ abstract class ComplexField extends BaseField {
 	 * @since %VERSION%
 	 */
 	public function render() {
+		$this->render_open_fieldset();
 		$this->render_grouping_label();
 		$this->render_sub_fields();
+		$this->render_close_fieldset();
+	}
+
+	/**
+	 * Render the opening of a fieldset element.
+	 *
+	 * @since %VERSION%
+	 */
+	protected function render_open_fieldset() {
+		printf(
+			'<fieldset class="%s">',
+			esc_html( join( ' ', [ 'lpf-fieldset', "lpf-fieldset-{$this->class_base}" ] ) )
+		);
 	}
 
 	/**
@@ -108,12 +131,23 @@ abstract class ComplexField extends BaseField {
 	}
 
 	/**
+	 * Render the closing fieldset tag.
+	 *
+	 * @since %VERSION%
+	 */
+	protected function render_close_fieldset() {
+		echo '</fieldset>';
+	}
+
+	/**
 	 * Get the array of classes to merge in with the default field classes.
 	 *
 	 * @since %VERSION%
 	 * @return array
 	 */
-	abstract protected function get_classes();
+	protected function get_classes() {
+		return [ "lpf-field-{$this->class_base}" ];
+	}
 
 	/**
 	 * Get the array of default fields.

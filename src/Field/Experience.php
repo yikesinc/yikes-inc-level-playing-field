@@ -17,6 +17,9 @@ namespace Yikes\LevelPlayingField\Field;
  */
 class Experience extends ComplexField {
 
+	/** @var string */
+	protected $class_base = 'experience';
+
 	/**
 	 * Whether the field is repeatable.
 	 *
@@ -24,16 +27,6 @@ class Experience extends ComplexField {
 	 * @var bool
 	 */
 	protected $repeatable = true;
-
-	/**
-	 * Get the array of classes to merge in with the default field classes.
-	 *
-	 * @since %VERSION%
-	 * @return array
-	 */
-	protected function get_classes() {
-		return [ 'lpf-field-experience' ];
-	}
 
 	/**
 	 * Get the array of default fields.
@@ -79,7 +72,9 @@ class Experience extends ComplexField {
 	 * @since %VERSION%
 	 */
 	protected function render_grouping_label() {
-		// TODO: Implement render_grouping_label() method.
+		printf(
+			'<legend class="lpf-field-experience lpf-input-label">%s</legend>',
+			esc_html__( 'Experience: ', 'yikes-level-playing-field' )
+		);
 	}
-
 }
