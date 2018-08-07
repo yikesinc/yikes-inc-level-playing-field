@@ -9,6 +9,8 @@
 
 namespace Yikes\LevelPlayingField\Shortcode;
 
+use Yikes\LevelPlayingField\Assets\Asset;
+use Yikes\LevelPlayingField\Assets\ScriptAsset;
 use Yikes\LevelPlayingField\Exception\InvalidPostID;
 use Yikes\LevelPlayingField\Exception\InvalidURI;
 use Yikes\LevelPlayingField\Form\Application as ApplicationForm;
@@ -158,5 +160,23 @@ class Application extends BaseShortcode {
 				$e->getMessage()
 			);
 		}
+	}
+
+	/**
+	 * Get the array of known assets.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @return Asset[]
+	 */
+	protected function get_assets() {
+		$repeater = new ScriptAsset( 'lpf-repeater', 'assets/js/fields/repeater', [ 'jquery' ] );
+		$repeater->add_localization( 'lpfRepeater', [
+			'addNew' => _x( 'Add New', 'button for adding section in application', 'yikes-level-playing-field' ),
+		] );
+
+		return [
+			$repeater,
+		];
 	}
 }

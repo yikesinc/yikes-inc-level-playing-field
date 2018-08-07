@@ -31,13 +31,13 @@ final class FormEscapedView implements View {
 	 * @var array
 	 */
 	protected $form_tags = [
-		'form'   => [
+		'form'     => [
 			'id'     => true,
 			'class'  => true,
 			'action' => true,
 			'method' => true,
 		],
-		'input'  => [
+		'input'    => [
 			'id'        => true,
 			'class'     => true,
 			'type'      => true,
@@ -46,7 +46,7 @@ final class FormEscapedView implements View {
 			'required'  => true,
 			'maxlength' => true,
 		],
-		'select' => [
+		'select'   => [
 			'id'       => true,
 			'class'    => true,
 			'type'     => true,
@@ -62,7 +62,7 @@ final class FormEscapedView implements View {
 			'value'    => true,
 			'required' => true,
 		],
-		'option' => [
+		'option'   => [
 			'id'       => true,
 			'class'    => true,
 			'type'     => true,
@@ -70,8 +70,11 @@ final class FormEscapedView implements View {
 			'value'    => true,
 			'selected' => true,
 		],
-		'label'  => [
+		'label'    => [
 			'for' => true,
+		],
+		'fieldset' => [
+			'data-add-new-label' => true,
 		],
 	];
 

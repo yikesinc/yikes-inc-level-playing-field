@@ -9,7 +9,6 @@
 
 namespace Yikes\LevelPlayingField\Field;
 
-use Carbon_Fields\Container;
 use Yikes\LevelPlayingField\Exception\InvalidField;
 
 /**
@@ -77,7 +76,7 @@ abstract class ComplexField extends BaseField {
 			] );
 
 			// Set up the field ID, depending on whether the field is repeatable.
-			$id = $this->id . ( $this->repeatable ? '[]' : '' ) . "[{$field}]";
+			$id = $this->id . ( $this->repeatable ? '[0]' : '' ) . "[{$field}]";
 
 			// Instantiate the sub field.
 			$this->sub_fields[] = new $settings['class'](
@@ -112,9 +111,15 @@ abstract class ComplexField extends BaseField {
 	 * @since %VERSION%
 	 */
 	protected function render_open_fieldset() {
+		$classes = [ 'lpf-fieldset', "lpf-fieldset-{$this->class_base}" ];
+		if ( $this->repeatable ) {
+			$classes[] = 'lpf-fieldset-repeatable';
+		}
+
 		printf(
-			'<fieldset class="%s">',
-			esc_html( join( ' ', [ 'lpf-fieldset', "lpf-fieldset-{$this->class_base}" ] ) )
+			'<fieldset class="%s" %s>',
+			esc_attr( join( ' ', $classes ) ),
+			$this->repeatable ? sprintf( 'data-add-new-label="%s"', esc_attr( $this->get_add_new_label() ) ) : ''
 		);
 	}
 
@@ -147,6 +152,18 @@ abstract class ComplexField extends BaseField {
 	 */
 	protected function get_classes() {
 		return [ "lpf-field-{$this->class_base}" ];
+	}
+
+	/**
+	 * Get the label to use when rendering the "Add New" button.
+	 *
+	 * Only needs to be overridden when the field is repeatable.
+	 *
+	 * @since %VERSION%
+	 * @return string
+	 */
+	protected function get_add_new_label() {
+		return '';
 	}
 
 	/**

@@ -74,7 +74,19 @@ class Experience extends ComplexField {
 	protected function render_grouping_label() {
 		printf(
 			'<legend class="lpf-field-experience lpf-input-label">%s</legend>',
-			esc_html__( 'Experience: ', 'yikes-level-playing-field' )
+			esc_html__( 'Experience:', 'yikes-level-playing-field' )
 		);
+	}
+
+	/**
+	 * Get the label to use when rendering the "Add New" button.
+	 *
+	 * Only needs to be overridden when the field is repeatable.
+	 *
+	 * @since %VERSION%
+	 * @return string
+	 */
+	protected function get_add_new_label() {
+		return esc_html_x( 'Experience', 'for "add new" button', 'yikes-level-playing-field' );
 	}
 }
