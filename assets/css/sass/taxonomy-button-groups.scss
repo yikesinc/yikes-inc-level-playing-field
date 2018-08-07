@@ -18,8 +18,9 @@ $tax-btn-group-border-color: #056f96;
 		float: left; 
 	}
 
+	/* Prevent double borders */
 	button:not(:last-child) {
-		border-right: none; /* Prevent double borders */
+		border-right: none; 
 	}
 
 	/* Clear floats (clearfix hack) */

@@ -143,7 +143,6 @@ abstract class BasePostType implements Service {
 	 * @param string $which     The location of the extra table nav markup: 'top' or 'bottom' for WP_Posts_List_Table, 'bar' for WP_Media_List_Table.
 	 */
 	public function custom_dropdowns( $post_type, $which ) {
-
 		if ( $this->post_type !== $post_type ) {
 			return;
 		}

@@ -27,15 +27,15 @@ class ApplicantStatus extends BaseTaxonomy implements AssetsAware {
 
 	use AssetsAwareness;
 
-	const SLUG            = 'applicant_status';
-	const DEFAULT_NAME    = 'Pending';
-	const DEFAULT_SLUG    = 'pending';
-	const JS_HANDLE       = 'lpf-taxonomy-button-groups-script';
-	const JS_URI          = 'assets/js/taxonomy-button-groups';
-	const JS_DEPENDENCIES = [ 'jquery' ];
-	const JS_VERSION      = false;
-	const CSS_HANDLE      = 'lpf-taxonomy-button-groups-style';
-	const CSS_URI         = 'assets/css/taxonomy-button-groups';
+	const SLUG              = 'applicant_status';
+	const DEFAULT_TERM_NAME = 'Pending';
+	const DEFAULT_TERM_SLUG = 'pending';
+	const JS_HANDLE         = 'lpf-taxonomy-button-groups-script';
+	const JS_URI            = 'assets/js/taxonomy-button-groups';
+	const JS_DEPENDENCIES   = [ 'jquery' ];
+	const JS_VERSION        = false;
+	const CSS_HANDLE        = 'lpf-taxonomy-button-groups-style';
+	const CSS_URI           = 'assets/css/taxonomy-button-groups';
 
 	/**
 	 * Register the WordPress hooks.
@@ -69,43 +69,25 @@ class ApplicantStatus extends BaseTaxonomy implements AssetsAware {
 	}
 
 	/**
-	 * Return this taxonomy's default term name.
-	 *
-	 * @author Kevin Utz
-	 */
-	public function get_default_term_name() {
-		return static::DEFAULT_NAME;
-	}
-
-	/**
-	 * Return this taxonomy's default term slug.
-	 *
-	 * @author Kevin Utz
-	 */
-	public function get_default_term_slug() {
-		return static::DEFAULT_SLUG;
-	}
-
-	/**
 	 * Set up default terms for the taxonomy.
 	 *
 	 * @since %VERSION%
 	 */
 	public function default_terms() {
 		$terms = [
-			$this->get_default_term_name() => [
+			static::DEFAULT_TERM_NAME => [
 				'description' => __( 'Acceptance is pending', 'yikes-level-playing-field' ),
-				'slug'        => $this->get_default_term_slug(),
+				'slug'        => static::DEFAULT_TERM_SLUG,
 			],
-			'Yes'                          => [
+			'Yes'                     => [
 				'description' => __( 'Accept the applicant', 'yikes-level-playing-field' ),
 				'slug'        => 'yes',
 			],
-			'No'                           => [
+			'No'                      => [
 				'description' => __( 'Do not accept the applicant', 'yikes-level-playing-field' ),
 				'slug'        => 'no',
 			],
-			'Maybe'                        => [
+			'Maybe'                   => [
 				'description' => __( 'Maybe accept the applicant', 'yikes-level-playing-field' ),
 				'slug'        => 'maybe',
 			],
@@ -137,12 +119,8 @@ class ApplicantStatus extends BaseTaxonomy implements AssetsAware {
 
 				// For users who cannot edit the taxonomy, show the assigned term.
 				$statuses    = get_the_terms( $post->ID, $tax_name );
-				$status_name = is_array( $statuses ) && isset( $statuses[0] ) ? $statuses[0]->name : $this->get_default_term_name();
-				?>
-					<b>
-						<?php echo esc_html( $status_name ); ?>
-					</b>
-				<?php
+				$status_name = is_array( $statuses ) && isset( $statuses[0] ) ? $statuses[0]->name : static::DEFAULT_TERM_NAME;
+				printf( '<strong>%s</strong>', esc_html( $status_name ) );
 			}
 			?>
 		</div>
@@ -167,7 +145,6 @@ class ApplicantStatus extends BaseTaxonomy implements AssetsAware {
 
 		$post_terms = get_the_terms( $post->ID, $tax_name );
 		$post_terms = $post_terms ? wp_list_pluck( $post_terms, 'term_id', 'slug' ) : [];
-		$selected   = false;
 		?>
 
 		<!-- Button group for selecting applicant status -->
@@ -193,7 +170,13 @@ class ApplicantStatus extends BaseTaxonomy implements AssetsAware {
 		</div>
 
 		<!-- Hidden input to hold our taxonomy choice -->
-		<input style="display: none;" class="tax-input <?php echo esc_attr( $tax_name ); ?>" name="tax_input[<?php echo esc_attr( $tax_name ); ?>]" id="tax_input[<?php echo esc_attr( $tax_name ); ?>]" value="<?php echo esc_attr( $selected_term ); ?>"/>
+		<input 
+			type="hidden" 
+			class="tax-input <?php echo esc_attr( $tax_name ); ?>" 
+			name="tax_input[<?php echo esc_attr( $tax_name ); ?>]" 
+			id="tax_input[<?php echo esc_attr( $tax_name ); ?>]" 
+			value="<?php echo esc_attr( $selected_term ); ?>"
+		/>
 		
 		<?php
 	}
@@ -206,12 +189,9 @@ class ApplicantStatus extends BaseTaxonomy implements AssetsAware {
 	 * @return Asset[]
 	 */
 	protected function get_assets() {
-		$script = new ScriptAsset( self::JS_HANDLE, self::JS_URI, self::JS_DEPENDENCIES, self::JS_VERSION, ScriptAsset::ENQUEUE_FOOTER );
-		$style  = new StyleAsset( self::CSS_HANDLE, self::CSS_URI );
-
 		return [
-			$script,
-			$style,
+			new ScriptAsset( self::JS_HANDLE, self::JS_URI, self::JS_DEPENDENCIES, self::JS_VERSION, ScriptAsset::ENQUEUE_FOOTER ),
+			new StyleAsset( self::CSS_HANDLE, self::CSS_URI ),
 		];
 	}
 
@@ -256,6 +236,7 @@ class ApplicantStatus extends BaseTaxonomy implements AssetsAware {
 				'choose_from_most_used'      => __( 'Choose from the most used Statuses', 'yikes-level-playing-field' ),
 				'not_found'                  => __( 'No Statuses found.', 'yikes-level-playing-field' ),
 				'menu_name'                  => __( 'Statuses', 'yikes-level-playing-field' ),
+				'filter_items_list'          => __( 'Filter Applicant Statuses', 'yikes-level-playing-field' ),
 			],
 			'show_in_rest'      => false,
 		];

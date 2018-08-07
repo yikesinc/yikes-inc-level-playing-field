@@ -125,11 +125,9 @@ class ApplicantManager extends BasePostType implements AssetsAware {
 	 * @param string $which The location of the extra table nav markup: 'top' or 'bottom' for WP_Posts_List_Table, 'bar' for WP_Media_List_Table.
 	 */
 	protected function create_custom_dropdowns( $which ) {
-
 		if ( 'top' === $which ) {
 			$this->create_applicant_status_dropdown();
 		}
-
 	}
 
 	/**
@@ -138,7 +136,6 @@ class ApplicantManager extends BasePostType implements AssetsAware {
 	 * @since %VERSION%
 	 */
 	protected function create_applicant_status_dropdown() {
-
 		$taxonomy = get_taxonomy( ApplicantStatus::SLUG );
 
 		// Make sure we have the taxonomy.
@@ -146,21 +143,25 @@ class ApplicantManager extends BasePostType implements AssetsAware {
 			return;
 		}
 
-		$chosen = isset( $_GET[ ApplicantStatus::SLUG ] ) ? filter_var( $_GET[ ApplicantStatus::SLUG ], FILTER_SANITIZE_STRING ) : '';
-		$terms  = get_terms( [
-			'taxonomy'   => ApplicantStatus::SLUG,
-			'hide_empty' => true,
-			'orderby'    => 'term_id',
-		] );
+		$dropdown_options = [
+			'show_option_all' => $taxonomy->labels->all_items,
+			'hide_empty'      => false,
+			'hierarchical'    => $taxonomy->hierarchical,
+			'show_count'      => false,
+			'orderby'         => 'name',
+			'selected'        => get_query_var( ApplicantStatus::SLUG ),
+			'name'            => ApplicantStatus::SLUG,
+			'taxonomy'        => ApplicantStatus::SLUG,
+			'value_field'     => 'slug',
+		];
 
-		?>
-			<label class="screen-reader-text" for="<?php echo esc_attr( ApplicantStatus::SLUG ); ?>"><?php echo esc_html( $taxonomy->labels->all_items ); ?></label><select name="<?php echo esc_attr( ApplicantStatus::SLUG ); ?>" id="<?php echo esc_attr( ApplicantStatus::SLUG ); ?>" class="postform">
-				<option value="0"><?php echo esc_html( $taxonomy->labels->all_items ); ?></option>
-				<?php foreach ( $terms as $term ) : ?>
-					<option value="<?php echo esc_attr( $term->slug ); ?>" <?php selected( $chosen, $term->slug ); ?>><?php echo esc_html( $term->name ); ?></option>
-				<?php endforeach; ?>
-			</select>
-		<?php
+		printf(
+			'<label class="screen-reader-text" for="%1$s">%2$s</label>',
+			esc_attr( ApplicantStatus::SLUG ),
+			esc_html( $taxonomy->labels->filter_items_list )
+		);
+
+ 		wp_dropdown_categories( $dropdown_options );
 	}
 
 	/**

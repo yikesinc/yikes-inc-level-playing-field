@@ -1,9 +1,16 @@
-jQuery( '.tax-btn-group button' ).click( function() {
+( function( $ ) {
 
-    // Remove active class from all buttons, add it to the clicked button.
-    jQuery( this ).siblings( 'button' ).removeClass( 'active' );
-    jQuery( this ).addClass( 'active' );
+	$( document ).ready( function() {
+		$( '.tax-btn-group button' ).click( function() {
+			const button = $( this );
 
-    // Fill the hidden input field with the active
-    jQuery( '.tax-input.' + jQuery( this ).data( 'taxonomy' ) ).val( jQuery( this ).data( 'tax-slug' ) );
-});
+			// Remove active class from all buttons, add it to the clicked button.
+			button.siblings( 'button' ).removeClass( 'active' );
+			button.addClass( 'active' );
+
+			// Fill the hidden input field with the active
+			$( '.tax-input.' + button.data( 'taxonomy' ) ).val( button.data( 'tax-slug' ) );
+		});
+	});
+
+})( jQuery );
