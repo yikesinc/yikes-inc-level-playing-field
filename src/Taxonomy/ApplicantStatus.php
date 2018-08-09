@@ -27,15 +27,16 @@ class ApplicantStatus extends BaseTaxonomy implements AssetsAware {
 
 	use AssetsAwareness;
 
-	const SLUG              = 'applicant_status';
-	const DEFAULT_TERM_NAME = 'Pending';
-	const DEFAULT_TERM_SLUG = 'pending';
-	const JS_HANDLE         = 'lpf-taxonomy-button-groups-script';
-	const JS_URI            = 'assets/js/taxonomy-button-groups';
-	const JS_DEPENDENCIES   = [ 'jquery' ];
-	const JS_VERSION        = false;
-	const CSS_HANDLE        = 'lpf-taxonomy-button-groups-style';
-	const CSS_URI           = 'assets/css/taxonomy-button-groups';
+	const SLUG               = 'applicant_status';
+	const DEFAULT_TERM_NAME  = 'Pending';
+	const DEFAULT_TERM_SLUG  = 'pending';
+	const JS_HANDLE          = 'lpf-taxonomy-button-groups-script';
+	const JS_URI             = 'assets/js/taxonomy-button-groups';
+	const JS_DEPENDENCIES    = [ 'jquery' ];
+	const JS_VERSION         = false;
+	const CSS_HANDLE         = 'lpf-taxonomy-button-groups-style';
+	const CSS_URI            = 'assets/css/taxonomy-button-groups';
+	const SHOW_IN_QUICK_EDIT = false;
 
 	/**
 	 * Register the WordPress hooks.
@@ -46,6 +47,7 @@ class ApplicantStatus extends BaseTaxonomy implements AssetsAware {
 		parent::register();
 		$this->register_assets();
 		add_action( 'init', [ $this, 'default_terms' ] );
+
 		add_filter( 'admin_enqueue_scripts', function( $hook ) {
 
 			// This filter should only run on an edit page. Make sure get_current_screen() exists.

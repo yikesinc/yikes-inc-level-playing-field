@@ -20,7 +20,8 @@ use Yikes\LevelPlayingField\Roles\Capabilities;
  */
 class JobStatus extends BaseTaxonomy {
 
-	const SLUG = 'job_status';
+	const SLUG               = 'job_status';
+	const SHOW_IN_QUICK_EDIT = true;
 
 	/**
 	 * Register the WordPress hooks.
