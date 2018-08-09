@@ -32,7 +32,6 @@ class JobManager extends BasePostType {
 
 		// Additional functionality for this object.
 		add_filter( 'disable_months_dropdown', [ $this, 'months_dropdown' ], 10, 2 );
-		add_action( 'restrict_manage_posts', [ $this, 'job_category_dropdown_filter' ], 10, 2 );
 	}
 
 	/**
@@ -89,7 +88,44 @@ class JobManager extends BasePostType {
 	 * @param string $which     The location of the extra table nav markup: 'top' or 'bottom' for WP_Posts_List_Table, 'bar' for WP_Media_List_Table.
 	 */
 	protected function create_custom_dropdowns( $which ) {
-		// @todo Decide whether we need custom dropdowns for Jobs.
+		if ( 'top' === $which ) {
+			$this->job_category_dropdown_filter();
+		}
+	}
+
+	/**
+	 * Display a dropdown filter for this category.
+	 *
+	 * @since %VERSION%
+	 */
+	protected function job_category_dropdown_filter() {
+
+		$taxonomy = get_taxonomy( JobCategory::SLUG );
+
+		// Make sure we have the taxonomy.
+		if ( ! is_object( $taxonomy ) ) {
+			return;
+		}
+
+		$dropdown_options = [
+			'show_option_all' => $taxonomy->labels->all_items,
+			'hide_empty'      => false,
+			'hierarchical'    => $taxonomy->hierarchical,
+			'show_count'      => false,
+			'orderby'         => 'name',
+			'selected'        => get_query_var( JobCategory::SLUG ),
+			'name'            => JobCategory::SLUG,
+			'taxonomy'        => JobCategory::SLUG,
+			'value_field'     => 'slug',
+		];
+
+		printf(
+			'<label class="screen-reader-text" for="%1$s">%2$s</label>',
+			esc_attr( JobCategory::SLUG ),
+			esc_html( $taxonomy->labels->filter_items_list )
+		);
+
+		wp_dropdown_categories( $dropdown_options );
 	}
 
 	/**

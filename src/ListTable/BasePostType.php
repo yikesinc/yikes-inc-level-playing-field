@@ -75,45 +75,6 @@ abstract class BasePostType implements Service {
 	}
 
 	/**
-	 * Display a dropdown filter for this category.
-	 *
-	 * @since %VERSION%
-	 *
-	 * @param string $post_type The post type being displayed.
-	 * @param string $which     Where the action is firing. Will be 'top' or 'bottom'.
-	 */
-	public function job_category_dropdown_filter( $post_type, $which ) {
-		if ( $this->post_type !== $post_type || 'top' !== $which ) {
-			return;
-		}
-
-		if ( ! is_object_in_taxonomy( $post_type, JobCategory::SLUG ) ) {
-			return;
-		}
-
-		$taxonomy         = get_taxonomy( JobCategory::SLUG );
-		$dropdown_options = [
-			'show_option_all' => $taxonomy->labels->all_items,
-			'hide_empty'      => false,
-			'hierarchical'    => $taxonomy->hierarchical,
-			'show_count'      => false,
-			'orderby'         => 'name',
-			'selected'        => get_query_var( JobCategory::SLUG ),
-			'name'            => JobCategory::SLUG,
-			'taxonomy'        => JobCategory::SLUG,
-			'value_field'     => 'slug',
-		];
-
-		printf(
-			'<label class="screen-reader-text" for="%1$s">%2$s</label>',
-			esc_attr( JobCategory::SLUG ),
-			esc_html( $taxonomy->labels->filter_items_list )
-		);
-
-		wp_dropdown_categories( $dropdown_options );
-	}
-
-	/**
 	 * Filter the available columns.
 	 *
 	 * @since %VERSION%

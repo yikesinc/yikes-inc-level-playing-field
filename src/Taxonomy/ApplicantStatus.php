@@ -156,14 +156,14 @@ class ApplicantStatus extends BaseTaxonomy implements AssetsAware {
 					$selected_term = $term->slug;
 				}
 				?>
-					<button
-						type="button" 
-						data-tax-slug="<?php echo esc_attr( $term->slug ); ?>" 
-						data-taxonomy="<?php echo esc_attr( $tax_name ); ?>" 
-						class="<?php echo false !== $selected_bool ? 'active' : ''; ?>"
-					>
-						<?php echo esc_html( $term->name ); ?>
-					</button>
+				<button
+					type="button" 
+					data-tax-slug="<?php echo esc_attr( $term->slug ); ?>" 
+					data-taxonomy="<?php echo esc_attr( $tax_name ); ?>" 
+					class="<?php echo false !== $selected_bool ? 'active' : ''; ?>"
+				>
+					<?php echo esc_html( $term->name ); ?>
+				</button>
 				<?php
 			}
 			?>

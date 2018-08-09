@@ -126,7 +126,7 @@ class ApplicantManager extends BasePostType implements AssetsAware {
 	 */
 	protected function create_custom_dropdowns( $which ) {
 		if ( 'top' === $which ) {
-			$this->create_applicant_status_dropdown();
+			$this->applicant_status_dropdown_filter();
 		}
 	}
 
@@ -135,7 +135,7 @@ class ApplicantManager extends BasePostType implements AssetsAware {
 	 *
 	 * @since %VERSION%
 	 */
-	protected function create_applicant_status_dropdown() {
+	protected function applicant_status_dropdown_filter() {
 		$taxonomy = get_taxonomy( ApplicantStatus::SLUG );
 
 		// Make sure we have the taxonomy.
@@ -161,7 +161,7 @@ class ApplicantManager extends BasePostType implements AssetsAware {
 			esc_html( $taxonomy->labels->filter_items_list )
 		);
 
- 		wp_dropdown_categories( $dropdown_options );
+		wp_dropdown_categories( $dropdown_options );
 	}
 
 	/**

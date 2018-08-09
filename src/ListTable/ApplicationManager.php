@@ -30,7 +30,6 @@ class ApplicationManager extends BasePostType {
 		parent::register();
 
 		add_filter( 'disable_months_dropdown', [ $this, 'months_dropdown' ], 10, 2 );
-		add_action( 'restrict_manage_posts', [ $this, 'job_category_dropdown_filter' ], 10, 2 );
 		add_filter( 'request', [ $this, 'filter_request' ] );
 	}
 
