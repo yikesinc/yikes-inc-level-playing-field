@@ -20,8 +20,7 @@ use Yikes\LevelPlayingField\Roles\Capabilities;
  */
 class JobCategory extends BaseTaxonomy {
 
-	const SLUG               = 'job_category';
-	const SHOW_IN_QUICK_EDIT = true;
+	const SLUG = 'job_category';
 
 	/**
 	 * Get the arguments that configure the taxonomy.
@@ -36,6 +35,7 @@ class JobCategory extends BaseTaxonomy {
 			'show_in_nav_menus'     => true,
 			'show_ui'               => true,
 			'show_admin_column'     => true,
+			'show_in_quick_edit'    => true,
 			'query_var'             => true,
 			'rewrite'               => true,
 			'capabilities'          => array(

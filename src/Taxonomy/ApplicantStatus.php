@@ -27,16 +27,15 @@ class ApplicantStatus extends BaseTaxonomy implements AssetsAware {
 
 	use AssetsAwareness;
 
-	const SLUG               = 'applicant_status';
-	const DEFAULT_TERM_NAME  = 'Pending';
-	const DEFAULT_TERM_SLUG  = 'pending';
-	const JS_HANDLE          = 'lpf-taxonomy-button-groups-script';
-	const JS_URI             = 'assets/js/taxonomy-button-groups';
-	const JS_DEPENDENCIES    = [ 'jquery' ];
-	const JS_VERSION         = false;
-	const CSS_HANDLE         = 'lpf-taxonomy-button-groups-style';
-	const CSS_URI            = 'assets/css/taxonomy-button-groups';
-	const SHOW_IN_QUICK_EDIT = false;
+	const SLUG              = 'applicant_status';
+	const DEFAULT_TERM_NAME = 'Pending';
+	const DEFAULT_TERM_SLUG = 'pending';
+	const JS_HANDLE         = 'lpf-taxonomy-button-groups-script';
+	const JS_URI            = 'assets/js/taxonomy-button-groups';
+	const JS_DEPENDENCIES   = [ 'jquery' ];
+	const JS_VERSION        = false;
+	const CSS_HANDLE        = 'lpf-taxonomy-button-groups-style';
+	const CSS_URI           = 'assets/css/taxonomy-button-groups';
 
 	/**
 	 * Register the WordPress hooks.
@@ -110,6 +109,7 @@ class ApplicantStatus extends BaseTaxonomy implements AssetsAware {
 	 * @param \WP_Post $post The current post object.
 	 */
 	public function meta_box_cb( $post ) {
+
 		$tax_name = $this->get_slug();
 		$taxonomy = get_taxonomy( $tax_name );
 		?>
@@ -205,23 +205,24 @@ class ApplicantStatus extends BaseTaxonomy implements AssetsAware {
 	 */
 	protected function get_arguments() {
 		return [
-			'hierarchical'      => false,
-			'public'            => false,
-			'show_ui'           => true,
-			'show_in_menu'      => false,
-			'show_admin_column' => true,
-			'query_var'         => true,
-			'meta_box_cb'       => [ $this, 'meta_box_cb' ],
-			'rewrite'           => [
+			'hierarchical'       => true,
+			'public'             => false,
+			'show_ui'            => true,
+			'show_in_menu'       => false,
+			'show_admin_column'  => true,
+			'show_in_quick_edit' => true,
+			'query_var'          => true,
+			'meta_box_cb'        => [ $this, 'meta_box_cb' ],
+			'rewrite'            => [
 				'slug' => 'status',
 			],
-			'capabilities'      => [
+			'capabilities'       => [
 				'manage_terms' => Capabilities::MANAGE_APPLICANT_STATUS,
 				'edit_terms'   => Capabilities::MANAGE_APPLICANT_STATUS,
 				'delete_terms' => Capabilities::MANAGE_APPLICANT_STATUS,
 				'assign_terms' => Capabilities::EDIT_APPLICANTS,
 			],
-			'labels'            => [
+			'labels'             => [
 				'name'                       => __( 'Status', 'yikes-level-playing-field' ),
 				'singular_name'              => _x( 'Status', 'taxonomy general name', 'yikes-level-playing-field' ),
 				'search_items'               => __( 'Search Statuses', 'yikes-level-playing-field' ),
@@ -240,7 +241,7 @@ class ApplicantStatus extends BaseTaxonomy implements AssetsAware {
 				'menu_name'                  => __( 'Statuses', 'yikes-level-playing-field' ),
 				'filter_items_list'          => __( 'Filter Applicant Statuses', 'yikes-level-playing-field' ),
 			],
-			'show_in_rest'      => false,
+			'show_in_rest'       => false,
 		];
 	}
 

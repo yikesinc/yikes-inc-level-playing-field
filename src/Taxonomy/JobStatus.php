@@ -20,8 +20,7 @@ use Yikes\LevelPlayingField\Roles\Capabilities;
  */
 class JobStatus extends BaseTaxonomy {
 
-	const SLUG               = 'job_status';
-	const SHOW_IN_QUICK_EDIT = true;
+	const SLUG = 'job_status';
 
 	/**
 	 * Register the WordPress hooks.
@@ -41,23 +40,24 @@ class JobStatus extends BaseTaxonomy {
 	 */
 	protected function get_arguments() {
 		return [
-			'hierarchical'      => false,
-			'public'            => false,
-			'show_ui'           => false,
-			'show_in_menu'      => false,
-			'show_admin_column' => true,
-			'query_var'         => true,
-			'meta_box_cb'       => [ $this, 'meta_box_cb' ],
-			'rewrite'           => [
+			'hierarchical'       => false,
+			'public'             => false,
+			'show_ui'            => false,
+			'show_in_menu'       => false,
+			'show_admin_column'  => true,
+			'show_in_quick_edit' => true,
+			'query_var'          => true,
+			'meta_box_cb'        => [ $this, 'meta_box_cb' ],
+			'rewrite'            => [
 				'slug' => 'status',
 			],
-			'capabilities'      => [
+			'capabilities'       => [
 				'manage_terms' => Capabilities::MANAGE_JOB_STATUS,
 				'edit_terms'   => Capabilities::MANAGE_JOB_STATUS,
 				'delete_terms' => Capabilities::MANAGE_JOB_STATUS,
 				'assign_terms' => Capabilities::EDIT_JOBS,
 			],
-			'labels'            => [
+			'labels'             => [
 				'name'                       => __( 'Status', 'yikes-level-playing-field' ),
 				'singular_name'              => _x( 'Status', 'taxonomy general name', 'yikes-level-playing-field' ),
 				'search_items'               => __( 'Search Statuses', 'yikes-level-playing-field' ),
@@ -75,7 +75,7 @@ class JobStatus extends BaseTaxonomy {
 				'not_found'                  => __( 'No Statuses found.', 'yikes-level-playing-field' ),
 				'menu_name'                  => __( 'Statuses', 'yikes-level-playing-field' ),
 			],
-			'show_in_rest'      => false,
+			'show_in_rest'       => false,
 		];
 	}
 

@@ -32,7 +32,6 @@ abstract class BaseTaxonomy implements Service {
 	 */
 	public function register() {
 		add_action( 'init', array( $this, 'register_taxonomy' ) );
-		add_filter( 'quick_edit_show_taxonomy', array( $this, 'quick_edit_show_taxonomy' ), 10, 3 );
 	}
 
 	/**
@@ -57,27 +56,6 @@ abstract class BaseTaxonomy implements Service {
 		}
 
 		return static::SLUG;
-	}
-
-	/**
-	 * Decide whether a taxonomy is editable in the quick and bulk edit screens.
-	 *
-	 * @author Kevin Utz
-	 *
-	 * @param bool   $show_in_quick_edit Whether this taxonomy is shown in the quick and bulk edit screens.
-	 * @param string $taxonomy_slug      The taxonomy's slug.
-	 * @param string $post_type          The post type.
-	 *
-	 * @return bool
-	 *
-	 * @throws MustExtend When the default slug has not been extended.
-	 */
-	public function quick_edit_show_taxonomy( $show_in_quick_edit, $taxonomy_slug, $post_type ) {
-		if ( $this->get_slug() !== $taxonomy_slug ) {
-			return $show_in_quick_edit;
-		}
-
-		return static::SHOW_IN_QUICK_EDIT;
 	}
 
 	/**
