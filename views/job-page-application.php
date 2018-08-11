@@ -40,11 +40,6 @@ $form_classes = $this->form_classes
 	  id="<?php echo esc_attr( $application->get_id() ); ?>"
 	  class="<?php echo esc_attr( join( ' ', $form_classes ) ); ?>"
 >
-	<?php
-	wp_nonce_field( 'lpf_application_submit', 'lpf_nonce' );
-	foreach ( $form->fields as $field ) {
-		$field->render();
-	}
-	?>
+	<?php $form->render(); ?>
 	<button type="submit" name="lpf_submit"><?php esc_html_e( 'Submit', 'yikes-level-playing-field' ); ?></button>
 </form>

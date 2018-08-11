@@ -45,12 +45,22 @@ class Application {
 	protected $field_classes = [];
 
 	/**
+	 * The ID of the Job.
+	 *
+	 * @since %VERSION%
+	 * @var int
+	 */
+	protected $job_id = 0;
+
+	/**
 	 * Application constructor.
 	 *
+	 * @param int      $job_id        The ID of the job this application is for.
 	 * @param AppModel $application   The application object.
 	 * @param array    $field_classes Classes to use for the form fields.
 	 */
-	public function __construct( AppModel $application, array $field_classes = [] ) {
+	public function __construct( $job_id, AppModel $application, array $field_classes = [] ) {
+		$this->job_id        = $job_id;
 		$this->application   = $application;
 		$this->field_classes = $field_classes;
 		$this->set_default_classes();
@@ -104,6 +114,16 @@ class Application {
 	 * @since %VERSION%
 	 */
 	protected function create_fields() {
+		$this->fields = [];
+
+		// Manually add the hidden nonce and referrer fields.
+		$this->fields[] = new Hidden( 'lpf_nonce', wp_create_nonce( 'lpf_application_submit' ) );
+		$this->fields[] = new Hidden( '_wp_http_referer', wp_unslash( $_SERVER['REQUEST_URI'] ) );
+
+		// Manually add the hidden Job ID field.
+		$this->fields[] = new Hidden( 'job_id', $this->job_id );
+
+		// Add all of the active fields.
 		foreach ( $this->application->get_active_fields() as $field ) {
 			$name           = str_replace( ApplicationMeta::META_PREFIX, '', $field );
 			$field_name     = ApplicationMeta::FORM_FIELD_PREFIX . $name;
@@ -111,9 +131,6 @@ class Application {
 			$type           = isset( Meta::FIELD_MAP[ $name ] ) ? Meta::FIELD_MAP[ $name ] : Types::TEXT;
 			$this->fields[] = new $type( $field_name, $field_label, $this->field_classes );
 		}
-
-		// Manually add the hidden Job ID field.
-		$this->fields[] = new Hidden( 'job_id', $this->application->get_id() );
 	}
 
 	/**
@@ -125,5 +142,16 @@ class Application {
 	 */
 	public function set_field_classes( array $classes ) {
 		$this->field_classes = $classes;
+	}
+
+	/**
+	 * Render the form fields.
+	 *
+	 * @since %VERSION%
+	 */
+	public function render() {
+		foreach ( $this->fields as $field ) {
+			$field->render();
+		}
 	}
 }

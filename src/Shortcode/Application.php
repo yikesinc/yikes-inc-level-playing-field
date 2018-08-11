@@ -80,7 +80,7 @@ class Application extends BaseShortcode {
 
 		return [
 			'application'      => $application,
-			'application_form' => new ApplicationForm( $application, $field_classes ),
+			'application_form' => new ApplicationForm( $job->get_id(), $application, $field_classes ),
 			'form_classes'     => $form_classes,
 		];
 	}
