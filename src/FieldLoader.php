@@ -27,6 +27,6 @@ class FieldLoader implements Service {
 	public function register() {
 		add_action( 'plugins_loaded', function () {
 			Carbon_Fields::boot();
-		} );
+		}, 30 );
 	}
 }
