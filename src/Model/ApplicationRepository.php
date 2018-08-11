@@ -53,11 +53,11 @@ class ApplicationRepository extends CustomPostTypeRepository {
 		];
 		$query = new \WP_Query( $args );
 
-		$jobs = array();
+		$applications = [];
 		foreach ( $query->posts as $post ) {
-			$jobs[ $post->ID ] = new Application( $post );
+			$applications[ $post->ID ] = new Application( $post );
 		}
 
-		return $jobs;
+		return $applications;
 	}
 }
