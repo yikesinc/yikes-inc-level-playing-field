@@ -15,6 +15,7 @@ use Yikes\LevelPlayingField\Exception\InvalidPostID;
 use Yikes\LevelPlayingField\Exception\InvalidURI;
 use Yikes\LevelPlayingField\Form\Application as ApplicationForm;
 use Yikes\LevelPlayingField\Model\ApplicationRepository;
+use Yikes\LevelPlayingField\Model\JobRepository;
 use Yikes\LevelPlayingField\View\FormEscapedView;
 use Yikes\LevelPlayingField\View\NoOverrideLocationView;
 
@@ -49,7 +50,7 @@ class Application extends BaseShortcode {
 	 */
 	protected function get_default_atts() {
 		return [
-			'id' => 0,
+			'job_id' => 0,
 		];
 	}
 
@@ -67,7 +68,8 @@ class Application extends BaseShortcode {
 	 * @throws InvalidPostID When the post ID is not valid.
 	 */
 	protected function get_context( array $atts ) {
-		$application = ( new ApplicationRepository() )->find( $atts['id'] );
+		$job         = ( new JobRepository() )->find( $atts['job_id'] );
+		$application = ( new ApplicationRepository() )->find( $job->get_application_id() );
 
 		/**
 		 * Set up the classes we'll use for the form and the individual fields.

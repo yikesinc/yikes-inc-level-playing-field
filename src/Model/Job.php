@@ -173,7 +173,11 @@ class Job extends CustomPostTypeEntity {
 		// Load the normal properties from post meta.
 		$meta = get_post_meta( $this->get_id() );
 		foreach ( $this->get_lazy_properties() as $key => $default ) {
-			$prefixed_key = JobMeta::META_PREFIX . $key;
+			if ( ! array_key_exists( $key, JobMeta::META_PREFIXES ) ) {
+				continue;
+			}
+
+			$prefixed_key = JobMeta::META_PREFIXES[ $key ];
 			$this->$key   = array_key_exists( $prefixed_key, $meta )
 				// Maybe decode, because we grabbed all meta at once instead of individually.
 				? $this->maybe_json_decode( $prefixed_key, $meta[ $prefixed_key ][0] )
