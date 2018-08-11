@@ -28,7 +28,7 @@ final class Autoloader {
 	 *
 	 * @var array
 	 */
-	private $namespaces = array();
+	private $namespaces = [];
 
 	/**
 	 * Destructor for the Autoloader class.
@@ -48,7 +48,7 @@ final class Autoloader {
 	 * @since    %VERSION%
 	 */
 	public function register() {
-		spl_autoload_register( array( $this, 'autoload' ) );
+		spl_autoload_register( [ $this, 'autoload' ] );
 	}
 
 	/**
@@ -57,7 +57,7 @@ final class Autoloader {
 	 * @since    %VERSION%
 	 */
 	public function unregister() {
-		spl_autoload_unregister( array( $this, 'autoload' ) );
+		spl_autoload_unregister( [ $this, 'autoload' ] );
 	}
 
 	/**
@@ -84,14 +84,14 @@ final class Autoloader {
 		$lowercase = false,
 		$underscores = false
 	) {
-		$this->namespaces[] = array(
+		$this->namespaces[] = [
 			'root'        => $this->normalize_root( (string) $root ),
 			'base_dir'    => trailingslashit( (string) $base_dir ),
 			'prefix'      => (string) $prefix,
 			'suffix'      => (string) $suffix,
 			'lowercase'   => (bool) $lowercase,
 			'underscores' => (bool) $underscores,
-		);
+		];
 
 		return $this;
 	}

@@ -23,7 +23,7 @@ class Container {
 	 * @since %VERSION%
 	 * @var array
 	 */
-	protected $services = array();
+	protected $services = [];
 
 	/**
 	 * Container constructor.
@@ -31,7 +31,7 @@ class Container {
 	 * @param array $services Services to register with the container.
 	 */
 	public function __construct( $services = null ) {
-		$this->services = $services ?: array();
+		$this->services = $services ?: [];
 	}
 
 	/**

@@ -69,7 +69,7 @@ class ScriptAsset extends BaseAsset {
 	 *
 	 * @var array
 	 */
-	protected $localizations = array();
+	protected $localizations = [];
 
 	/**
 	 * Instantiate a ScriptAsset object.
@@ -87,7 +87,7 @@ class ScriptAsset extends BaseAsset {
 	public function __construct(
 		$handle,
 		$source,
-		$dependencies = array(),
+		$dependencies = [],
 		$version = false,
 		$in_footer = self::ENQUEUE_HEADER
 	) {

@@ -70,7 +70,7 @@ abstract class BaseShortcode implements Renderable, AssetsAware, Service {
 	 *
 	 * @return string Rendered HTML.
 	 */
-	public function render( array $context = array() ) {
+	public function render( array $context = [] ) {
 		try {
 			$this->enqueue_assets();
 			$view = new PostEscapedView( new TemplatedView( $this->get_view_uri() ) );

@@ -57,7 +57,7 @@ class BaseView implements View {
 	 *
 	 * @var array
 	 */
-	protected $_context_ = array();
+	protected $_context_ = [];
 
 	/**
 	 * Instantiate a View object.
@@ -82,7 +82,7 @@ class BaseView implements View {
 	 * @return string Rendered HTML.
 	 * @throws FailedToLoadView If the View URI could not be loaded.
 	 */
-	public function render( array $context = array() ) {
+	public function render( array $context = [] ) {
 
 		// Add context to the current instance to make it available within the
 		// rendered view.

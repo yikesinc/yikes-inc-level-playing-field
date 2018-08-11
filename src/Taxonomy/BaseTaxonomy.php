@@ -30,7 +30,7 @@ abstract class BaseTaxonomy implements Service {
 	 * @author Jeremy Pry
 	 */
 	public function register() {
-		add_action( 'init', array( $this, 'register_taxonomy' ) );
+		add_action( 'init', [ $this, 'register_taxonomy' ] );
 	}
 
 	/**

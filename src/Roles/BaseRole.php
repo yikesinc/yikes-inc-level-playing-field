@@ -28,7 +28,7 @@ abstract class BaseRole implements Service {
 	 * @since %VERSION%
 	 */
 	public function register() {
-		add_action( 'init', array( $this, 'register_role' ), 20 );
+		add_action( 'init', [ $this, 'register_role' ], 20 );
 	}
 
 	/**

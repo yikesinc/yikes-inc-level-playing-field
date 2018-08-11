@@ -29,7 +29,7 @@ final class AssetsHandler implements Registerable {
 	 *
 	 * @var Asset[]
 	 */
-	private $assets = array();
+	private $assets = [];
 
 	/**
 	 * Add a single asset to the asset handler.
@@ -94,7 +94,7 @@ final class AssetsHandler implements Registerable {
 	 *                          known assets are enqueued.
 	 */
 	public function enqueue( Asset $asset = null ) {
-		$assets = $asset ? array( $asset ) : $this->assets;
+		$assets = $asset ? [ $asset ] : $this->assets;
 		foreach ( $assets as $asset_object ) {
 			$asset_object->enqueue();
 		}
