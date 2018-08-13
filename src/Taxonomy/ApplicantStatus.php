@@ -109,7 +109,6 @@ class ApplicantStatus extends BaseTaxonomy implements AssetsAware {
 	 * @param \WP_Post $post The current post object.
 	 */
 	public function meta_box_cb( $post ) {
-
 		$tax_name = $this->get_slug();
 		$taxonomy = get_taxonomy( $tax_name );
 		?>
@@ -239,7 +238,6 @@ class ApplicantStatus extends BaseTaxonomy implements AssetsAware {
 				'choose_from_most_used'      => __( 'Choose from the most used Statuses', 'yikes-level-playing-field' ),
 				'not_found'                  => __( 'No Statuses found.', 'yikes-level-playing-field' ),
 				'menu_name'                  => __( 'Statuses', 'yikes-level-playing-field' ),
-				'filter_items_list'          => __( 'Filter Applicant Statuses', 'yikes-level-playing-field' ),
 			],
 			'show_in_rest'       => false,
 		];

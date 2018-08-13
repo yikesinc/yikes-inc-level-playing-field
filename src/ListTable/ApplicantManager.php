@@ -158,7 +158,7 @@ class ApplicantManager extends BasePostType implements AssetsAware {
 		printf(
 			'<label class="screen-reader-text" for="%1$s">%2$s</label>',
 			esc_attr( ApplicantStatus::SLUG ),
-			esc_html( $taxonomy->labels->filter_items_list )
+			esc_html__( 'Filter Applicant Statuses', 'yikes-level-playing-field' )
 		);
 
 		wp_dropdown_categories( $dropdown_options );

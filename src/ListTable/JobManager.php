@@ -122,7 +122,7 @@ class JobManager extends BasePostType {
 		printf(
 			'<label class="screen-reader-text" for="%1$s">%2$s</label>',
 			esc_attr( JobCategory::SLUG ),
-			esc_html( $taxonomy->labels->filter_items_list )
+			esc_html__( 'Filter Job Categories', 'yikes-level-playing-field' )
 		);
 
 		wp_dropdown_categories( $dropdown_options );
