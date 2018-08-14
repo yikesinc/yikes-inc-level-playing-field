@@ -1,10 +1,14 @@
 jQuery( document ).ready( function() {
 	'use strict';
 
-	const buttonClass = 'lpf-repeat-button';
-	const i18n = window.lpfRepeater || {};
-	const repeatFieldsets = document.querySelectorAll( '.lpf-fieldset-repeatable' );
-	const repeaterActions = {
+	// Initial variables.
+	const repeatButton = 'lpf-repeat-button',
+		deleteButton = 'lpf-delete-button',
+		i18n = window.lpfRepeater || {},
+		repeatFieldsets = document.querySelectorAll( '.lpf-fieldset-repeatable' );
+
+	// Main object to work with.
+	const repeater = {
 
 		/**
 		 * Initialize our functions.
@@ -22,15 +26,17 @@ jQuery( document ).ready( function() {
 
 		/**
 		 * Add a repeater button to an individual fieldset section.
+		 *
+		 * @param {HTMLSelectElement} item
 		 */
 		addRepeaterButton: function( item ) {
 			const button = document.createElement( 'button' );
 
 			// Set the necessary properties for the button.
 			button.setAttribute( 'type', 'button' );
-			button.classList.add( buttonClass );
+			button.classList.add( repeatButton );
 			button.innerText = i18n.addNew + ' ' + item.dataset.addNewLabel;
-			button.addEventListener( 'click', repeaterActions.repeatSection );
+			button.addEventListener( 'click', repeater.repeatSection );
 
 			// Add the button to the fieldset element.
 			item.appendChild( button );
@@ -40,11 +46,12 @@ jQuery( document ).ready( function() {
 		 * Clone the given section.
 		 */
 		repeatSection: function() {
-			const fieldset = this.closest( 'fieldset' );
-			const newNode = fieldset.cloneNode( true );
+			const fieldset = this.closest( 'fieldset' ),
+				newNode = fieldset.cloneNode( true ),
+				button = newNode.querySelector( `.${deleteButton}` );
 
 			// Remove the repeat button from the parent.
-			fieldset.removeChild( fieldset.querySelector( `.${buttonClass}` ) );
+			fieldset.removeChild( fieldset.querySelector( `.${repeatButton}` ) );
 
 			// Update each input element.
 			newNode.querySelectorAll( 'input' ).forEach( function( item ) {
@@ -57,7 +64,7 @@ jQuery( document ).ready( function() {
 
 				// Update input name/IDs with new number.
 				if ( match.length > 1 ) {
-					const parsed = parseInt( match[1] );
+					const parsed = parseInt( match[ 1 ] );
 					const newId = isNaN( parsed ) ? 0 : parsed + 1;
 
 					// ID and Name should be the same, so update them both.
@@ -68,13 +75,57 @@ jQuery( document ).ready( function() {
 
 			// Re-hook the button to the listener.
 			newNode
-				.querySelector( `.${buttonClass}` )
-				.addEventListener( 'click', repeaterActions.repeatSection );
+				.querySelector( `.${repeatButton}` )
+				.addEventListener( 'click', repeater.repeatSection );
+
+			// Add the button to delete the section, or else re-hook the click listener.
+			if ( null === button ) {
+				repeater.addDeleteButton( newNode );
+			} else {
+				button.addEventListener( 'click', repeater.deleteSection );
+			}
 
 			// Insert the new section.
-			fieldset.parentElement.insertBefore( newNode, fieldset.nextSibling );
+			fieldset.parentElement.insertBefore( newNode, fieldset.nextElementSibling );
+		},
+
+		/**
+		 * Add a button to delete a section.
+		 * @param {HTMLSelectElement} fieldset
+		 */
+		addDeleteButton: function( fieldset ) {
+			const button = document.createElement( 'button' );
+
+			// Set up the necessary properties for the button.
+			button.setAttribute( 'type', 'button' );
+			button.classList.add( deleteButton );
+			button.innerText = 'X';
+			button.addEventListener( 'click', repeater.deleteSection );
+
+			// Add the button to the beginning of the fieldset element.
+			fieldset.insertBefore( button, fieldset.querySelector( '.lpf-field-container' ) );
+		},
+
+		/**
+		 * Delete the given section.
+		 */
+		deleteSection() {
+			const fieldset = this.closest( 'fieldset' ),
+				button = fieldset.previousElementSibling.querySelector( repeatButton ),
+				next = fieldset.nextElementSibling;
+
+			/*
+			 * Add the repeat button to the previous fieldset. But don't add if there's
+			 * at least one element after the current one.
+			 */
+			if ( null === button && null === next ) {
+				repeater.addRepeaterButton( fieldset.previousElementSibling );
+			}
+
+			// Now remove the fieldset.
+			fieldset.parentElement.removeChild( fieldset );
 		}
 	};
 
-	repeaterActions.init();
+	repeater.init();
 } );
