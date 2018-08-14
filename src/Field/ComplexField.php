@@ -117,7 +117,7 @@ abstract class ComplexField extends BaseField {
 		}
 
 		printf(
-			'<fieldset class="%s" %s>',
+			'<div class="lpf-field-container"><fieldset class="%s" %s>',
 			esc_attr( join( ' ', $classes ) ),
 			$this->repeatable ? sprintf( 'data-add-new-label="%s"', esc_attr( $this->get_add_new_label() ) ) : ''
 		);
@@ -141,7 +141,7 @@ abstract class ComplexField extends BaseField {
 	 * @since %VERSION%
 	 */
 	protected function render_close_fieldset() {
-		echo '</fieldset>';
+		echo '</fieldset></div>';
 	}
 
 	/**
