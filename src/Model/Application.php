@@ -63,7 +63,6 @@ class Application extends CustomPostTypeEntity {
 			AMMeta::LANGUAGES      => false,
 			AMMeta::EXPERIENCE     => false,
 			AMMeta::VOLUNTEER      => false,
-			AMMeta::SCHOOLING      => false,
 		] );
 	}
 
