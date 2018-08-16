@@ -9,7 +9,7 @@
 			button.addClass( 'active' );
 
 			// Fill the hidden input field with the active
-			$( '.tax-input.' + button.data( 'taxonomy' ) ).val( button.data( 'tax-slug' ) );
+			$( '.tax-input.' + button.data( 'taxonomy' ) ).val( button.data( 'value' ) );
 		});
 	});
 
