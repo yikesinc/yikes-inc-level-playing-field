@@ -22,7 +22,8 @@ use Yikes\LevelPlayingField\Service;
  */
 abstract class BaseTaxonomy implements Service {
 
-	const SLUG = '_basetax_';
+	const SLUG               = '_basetax_';
+	const SHOW_IN_QUICK_EDIT = true;
 
 	/**
 	 * Register the WordPress hooks.

@@ -15,6 +15,7 @@ use Yikes\LevelPlayingField\Assets\AssetsAware;
 use Yikes\LevelPlayingField\Assets\AssetsAwareness;
 use Yikes\LevelPlayingField\Assets\ScriptAsset;
 use Yikes\LevelPlayingField\CustomPostType\ApplicantManager as ApplicantManagerCPT;
+use Yikes\LevelPlayingField\Taxonomy\ApplicantStatus;
 
 /**
  * Class ApplicantManager
@@ -114,6 +115,53 @@ class ApplicantManager extends BasePostType implements AssetsAware {
 	 */
 	public function column_content( $column_name, $post_id ) {
 		// @todo Decide whether we need custom column content for Applicants.
+	}
+
+	/**
+	 * Output custom dropdowns for filtering.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param string $which The location of the extra table nav markup: 'top' or 'bottom' for WP_Posts_List_Table, 'bar' for WP_Media_List_Table.
+	 */
+	protected function create_custom_dropdowns( $which ) {
+		if ( 'top' === $which ) {
+			$this->applicant_status_dropdown_filter();
+		}
+	}
+
+	/**
+	 * Output a custom dropdown for the applicant_status taxonomy.
+	 *
+	 * @since %VERSION%
+	 */
+	protected function applicant_status_dropdown_filter() {
+		$taxonomy = get_taxonomy( ApplicantStatus::SLUG );
+
+		// Make sure we have the taxonomy.
+		if ( ! is_object( $taxonomy ) ) {
+			return;
+		}
+
+		$dropdown_options = [
+			'show_option_all' => $taxonomy->labels->all_items,
+			'hide_empty'      => false,
+			'hierarchical'    => $taxonomy->hierarchical,
+			'show_count'      => false,
+			'orderby'         => 'name',
+			'selected'        => get_query_var( ApplicantStatus::SLUG ),
+			'name'            => ApplicantStatus::SLUG,
+			'taxonomy'        => ApplicantStatus::SLUG,
+			'value_field'     => 'slug',
+		];
+
+		printf(
+			'<label class="screen-reader-text" for="%1$s">%2$s</label>',
+			esc_attr( ApplicantStatus::SLUG ),
+			esc_html__( 'Filter Applicant Statuses', 'yikes-level-playing-field' )
+		);
+
+		wp_dropdown_categories( $dropdown_options );
 	}
 
 	/**

@@ -30,7 +30,6 @@ class ApplicationManager extends BasePostType {
 		parent::register();
 
 		add_filter( 'disable_months_dropdown', [ $this, 'months_dropdown' ], 10, 2 );
-		add_action( 'restrict_manage_posts', [ $this, 'job_category_dropdown_filter' ], 10, 2 );
 		add_filter( 'request', [ $this, 'filter_request' ] );
 	}
 
@@ -126,6 +125,17 @@ class ApplicationManager extends BasePostType {
 		$query_vars['order']   = isset( $query_vars['order'] ) ? $query_vars['order'] : 'ASC';
 
 		return $query_vars;
+	}
+
+	/**
+	 * Output custom dropdowns for filtering.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param string $which     The location of the extra table nav markup: 'top' or 'bottom' for WP_Posts_List_Table, 'bar' for WP_Media_List_Table.
+	 */
+	protected function create_custom_dropdowns( $which ) {
+		// @todo Decide whether we need custom dropdowns for Applications.
 	}
 
 	/**

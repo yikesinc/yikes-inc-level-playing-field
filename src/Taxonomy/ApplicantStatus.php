@@ -11,6 +11,11 @@ namespace Yikes\LevelPlayingField\Taxonomy;
 
 use Yikes\LevelPlayingField\CustomPostType\ApplicantManager;
 use Yikes\LevelPlayingField\Roles\Capabilities;
+use Yikes\LevelPlayingField\Assets\Asset;
+use Yikes\LevelPlayingField\Assets\AssetsAware;
+use Yikes\LevelPlayingField\Assets\AssetsAwareness;
+use Yikes\LevelPlayingField\Assets\ScriptAsset;
+use Yikes\LevelPlayingField\Assets\StyleAsset;
 
 /**
  * Class ApplicantStatus
@@ -18,9 +23,19 @@ use Yikes\LevelPlayingField\Roles\Capabilities;
  * @since   %VERSION%
  * @package Yikes\LevelPlayingField
  */
-class ApplicantStatus extends BaseTaxonomy {
+class ApplicantStatus extends BaseTaxonomy implements AssetsAware {
 
-	const SLUG = 'applicant_status';
+	use AssetsAwareness;
+
+	const SLUG              = 'applicant_status';
+	const DEFAULT_TERM_NAME = 'Pending';
+	const DEFAULT_TERM_SLUG = 'pending';
+	const JS_HANDLE         = 'lpf-taxonomy-button-groups-script';
+	const JS_URI            = 'assets/js/taxonomy-button-groups';
+	const JS_DEPENDENCIES   = [ 'jquery' ];
+	const JS_VERSION        = false;
+	const CSS_HANDLE        = 'lpf-taxonomy-button-groups-style';
+	const CSS_URI           = 'assets/css/taxonomy-button-groups';
 
 	/**
 	 * Register the WordPress hooks.
@@ -29,7 +44,29 @@ class ApplicantStatus extends BaseTaxonomy {
 	 */
 	public function register() {
 		parent::register();
+		$this->register_assets();
 		add_action( 'init', [ $this, 'default_terms' ] );
+
+		add_filter( 'admin_enqueue_scripts', function( $hook ) {
+
+			// This filter should only run on an edit page. Make sure get_current_screen() exists.
+			if ( ( 'post-new.php' !== $hook && 'post.php' !== $hook ) || ! function_exists( 'get_current_screen' ) ) {
+				return;
+			}
+
+			// Ensure this is a real screen object.
+			$screen = get_current_screen();
+			if ( ! ( $screen instanceof \WP_Screen ) ) {
+				return;
+			}
+
+			// Ensure this is the edit screen for the correct post type.
+			if ( ApplicantManager::SLUG !== $screen->post_type ) {
+				return;
+			}
+
+			$this->enqueue_assets();
+		} );
 	}
 
 	/**
@@ -39,15 +76,19 @@ class ApplicantStatus extends BaseTaxonomy {
 	 */
 	public function default_terms() {
 		$terms = [
-			'Yes'   => [
+			static::DEFAULT_TERM_NAME => [
+				'description' => __( 'Acceptance is pending', 'yikes-level-playing-field' ),
+				'slug'        => static::DEFAULT_TERM_SLUG,
+			],
+			'Yes'                     => [
 				'description' => __( 'Accept the applicant', 'yikes-level-playing-field' ),
 				'slug'        => 'yes',
 			],
-			'No'    => [
+			'No'                      => [
 				'description' => __( 'Do not accept the applicant', 'yikes-level-playing-field' ),
 				'slug'        => 'no',
 			],
-			'Maybe' => [
+			'Maybe'                   => [
 				'description' => __( 'Maybe accept the applicant', 'yikes-level-playing-field' ),
 				'slug'        => 'maybe',
 			],
@@ -75,8 +116,13 @@ class ApplicantStatus extends BaseTaxonomy {
 			<?php
 			if ( current_user_can( $taxonomy->cap->assign_terms ) ) {
 				$this->term_select( $post );
+			} else {
+
+				// For users who cannot edit the taxonomy, show the assigned term.
+				$statuses    = get_the_terms( $post->ID, $tax_name );
+				$status_name = is_array( $statuses ) && isset( $statuses[0] ) ? $statuses[0]->name : static::DEFAULT_TERM_NAME;
+				printf( '<strong>%s</strong>', esc_html( $status_name ) );
 			}
-			// todo: alternate display for user who can't assign terms.
 			?>
 		</div>
 		<?php
@@ -101,25 +147,53 @@ class ApplicantStatus extends BaseTaxonomy {
 		$post_terms = get_the_terms( $post->ID, $tax_name );
 		$post_terms = $post_terms ? wp_list_pluck( $post_terms, 'term_id', 'slug' ) : [];
 		?>
-		<label for="<?php echo esc_attr( $tax_name ); ?>">
-			<?php echo esc_html( $taxonomy->labels->update_item ); ?>
-		</label>
-		<select name="tax_input[<?php echo esc_attr( $tax_name ); ?>]"
-				id="tax_input[<?php echo esc_attr( $tax_name ); ?>]"
-				title="<?php echo esc_attr( $taxonomy->labels->update_item ); ?>">
-			<option value=""><?php echo esc_html_x( '------', 'select placeholder', 'yikes-level-playing-field' ); ?></option>
+
+		<!-- Button group for selecting applicant status -->
+		<div class="tax-btn-group">
 			<?php
-			/** @var \WP_Term $term */
 			foreach ( $all_terms as $term ) {
+				$selected_bool = array_key_exists( $term->term_id, $post_terms ) ? $term->term_id : false;
+				if ( $selected_bool ) {
+					$selected_term = $term->term_id;
+				}
 				?>
-				<option value="<?php echo esc_attr( $term->slug ); ?>" <?php selected( array_key_exists( $term->slug, $post_terms ) ); ?>>
+				<button
+					type="button" 
+					data-value="<?php echo esc_attr( $term->term_id ); ?>" 
+					data-taxonomy="<?php echo esc_attr( $tax_name ); ?>" 
+					class="<?php echo false !== $selected_bool ? 'active' : ''; ?>"
+				>
 					<?php echo esc_html( $term->name ); ?>
-				</option>
+				</button>
 				<?php
 			}
 			?>
-		</select>
+		</div>
+
+		<!-- Hidden input to hold our taxonomy choice -->
+		<input 
+			type="hidden" 
+			class="tax-input <?php echo esc_attr( $tax_name ); ?>" 
+			name="tax_input[<?php echo esc_attr( $tax_name ); ?>]" 
+			id="tax_input[<?php echo esc_attr( $tax_name ); ?>]" 
+			value="<?php echo esc_attr( $selected_term ); ?>"
+		/>
+		
 		<?php
+	}
+
+	/**
+	 * Get the array of known assets.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @return Asset[]
+	 */
+	protected function get_assets() {
+		return [
+			new ScriptAsset( self::JS_HANDLE, self::JS_URI, self::JS_DEPENDENCIES, self::JS_VERSION, ScriptAsset::ENQUEUE_FOOTER ),
+			new StyleAsset( self::CSS_HANDLE, self::CSS_URI ),
+		];
 	}
 
 	/**
@@ -130,23 +204,24 @@ class ApplicantStatus extends BaseTaxonomy {
 	 */
 	protected function get_arguments() {
 		return [
-			'hierarchical'      => false,
-			'public'            => false,
-			'show_ui'           => true,
-			'show_in_menu'      => false,
-			'show_admin_column' => true,
-			'query_var'         => true,
-			'meta_box_cb'       => [ $this, 'meta_box_cb' ],
-			'rewrite'           => [
+			'hierarchical'       => true,
+			'public'             => false,
+			'show_ui'            => true,
+			'show_in_menu'       => false,
+			'show_admin_column'  => true,
+			'show_in_quick_edit' => true,
+			'query_var'          => true,
+			'meta_box_cb'        => [ $this, 'meta_box_cb' ],
+			'rewrite'            => [
 				'slug' => 'status',
 			],
-			'capabilities'      => [
+			'capabilities'       => [
 				'manage_terms' => Capabilities::MANAGE_APPLICANT_STATUS,
 				'edit_terms'   => Capabilities::MANAGE_APPLICANT_STATUS,
 				'delete_terms' => Capabilities::MANAGE_APPLICANT_STATUS,
 				'assign_terms' => Capabilities::EDIT_APPLICANTS,
 			],
-			'labels'            => [
+			'labels'             => [
 				'name'                       => __( 'Status', 'yikes-level-playing-field' ),
 				'singular_name'              => _x( 'Status', 'taxonomy general name', 'yikes-level-playing-field' ),
 				'search_items'               => __( 'Search Statuses', 'yikes-level-playing-field' ),
@@ -164,7 +239,7 @@ class ApplicantStatus extends BaseTaxonomy {
 				'not_found'                  => __( 'No Statuses found.', 'yikes-level-playing-field' ),
 				'menu_name'                  => __( 'Statuses', 'yikes-level-playing-field' ),
 			],
-			'show_in_rest'      => false,
+			'show_in_rest'       => false,
 		];
 	}
 

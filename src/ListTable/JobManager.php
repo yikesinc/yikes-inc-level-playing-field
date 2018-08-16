@@ -32,17 +32,6 @@ class JobManager extends BasePostType {
 
 		// Additional functionality for this object.
 		add_filter( 'disable_months_dropdown', [ $this, 'months_dropdown' ], 10, 2 );
-		add_action( 'restrict_manage_posts', [ $this, 'job_category_dropdown_filter' ], 10, 2 );
-	}
-
-	/**
-	 * Get the post type.
-	 *
-	 * @since %VERSION%
-	 * @return string
-	 */
-	protected function get_post_type() {
-		return JobManagerCPT::SLUG;
 	}
 
 	/**
@@ -89,5 +78,63 @@ class JobManager extends BasePostType {
 		}
 
 		echo esc_html( $applicant_repo->get_applicant_count_for_job( $post_id ) );
+	}
+
+	/**
+	 * Output custom dropdowns for filtering.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param string $which     The location of the extra table nav markup: 'top' or 'bottom' for WP_Posts_List_Table, 'bar' for WP_Media_List_Table.
+	 */
+	protected function create_custom_dropdowns( $which ) {
+		if ( 'top' === $which ) {
+			$this->job_category_dropdown_filter();
+		}
+	}
+
+	/**
+	 * Display a dropdown filter for this category.
+	 *
+	 * @since %VERSION%
+	 */
+	protected function job_category_dropdown_filter() {
+
+		$taxonomy = get_taxonomy( JobCategory::SLUG );
+
+		// Make sure we have the taxonomy.
+		if ( ! is_object( $taxonomy ) ) {
+			return;
+		}
+
+		$dropdown_options = [
+			'show_option_all' => $taxonomy->labels->all_items,
+			'hide_empty'      => false,
+			'hierarchical'    => $taxonomy->hierarchical,
+			'show_count'      => false,
+			'orderby'         => 'name',
+			'selected'        => get_query_var( JobCategory::SLUG ),
+			'name'            => JobCategory::SLUG,
+			'taxonomy'        => JobCategory::SLUG,
+			'value_field'     => 'slug',
+		];
+
+		printf(
+			'<label class="screen-reader-text" for="%1$s">%2$s</label>',
+			esc_attr( JobCategory::SLUG ),
+			esc_html__( 'Filter Job Categories', 'yikes-level-playing-field' )
+		);
+
+		wp_dropdown_categories( $dropdown_options );
+	}
+
+	/**
+	 * Get the post type.
+	 *
+	 * @since %VERSION%
+	 * @return string
+	 */
+	protected function get_post_type() {
+		return JobManagerCPT::SLUG;
 	}
 }

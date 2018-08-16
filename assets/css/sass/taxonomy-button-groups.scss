@@ -1,0 +1,42 @@
+
+// Define base background color.
+$tax-btn-group-bg-color: #008ec2;
+
+// Define slightly darker background color.
+$tax-btn-group-contrast-bg-color: #025674;
+
+// Define base border color.
+$tax-btn-group-border-color: #056f96;
+
+.tax-btn-group {
+	button {
+		background-color: $tax-btn-group-bg-color; 
+		border: 1px solid $tax-btn-group-border-color; 
+		color: #fff; 
+		padding: 5px 12px;
+		cursor: pointer; 
+		float: left; 
+	}
+
+	/* Prevent double borders */
+	button:not(:last-child) {
+		border-right: none; 
+	}
+
+	/* Clear floats (clearfix hack) */
+	&:after {
+		content: "";
+		clear: both;
+		display: table;
+	}
+
+	/* Add a darker background color on hover */
+	button:hover {
+		background-color: $tax-btn-group-contrast-bg-color;
+	}
+
+	/* Add a darker background color when selected */
+	button.active {
+		background-color: $tax-btn-group-contrast-bg-color;   
+	}
+} 

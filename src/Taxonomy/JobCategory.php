@@ -35,6 +35,7 @@ class JobCategory extends BaseTaxonomy {
 			'show_in_nav_menus'     => true,
 			'show_ui'               => true,
 			'show_admin_column'     => true,
+			'show_in_quick_edit'    => true,
 			'query_var'             => true,
 			'rewrite'               => true,
 			'capabilities'          => [
@@ -60,7 +61,6 @@ class JobCategory extends BaseTaxonomy {
 				'choose_from_most_used'      => __( 'Choose from the most used Job Categories', 'yikes-level-playing-field' ),
 				'not_found'                  => __( 'No Job Categories found.', 'yikes-level-playing-field' ),
 				'menu_name'                  => __( 'Job Categories', 'yikes-level-playing-field' ),
-				'filter_items_list'          => __( 'Filter Job Categories', 'yikes-level-playing-field' ),
 			],
 			'show_in_rest'          => true,
 			'rest_base'             => self::SLUG,
