@@ -29,7 +29,7 @@ abstract class AwesomeBaseMetabox implements Service {
 	 * @author Jeremy Pry
 	 */
 	public function register() {
-		add_filter( 'yks_mboxes', array( $this, 'register_boxes' ) );
+		add_filter( 'yks_mboxes', [ $this, 'register_boxes' ] );
 	}
 
 	/**

@@ -33,7 +33,7 @@ class ExportApplicantsPage extends BaseAdminPage implements AssetsAware {
 	// Define the JavaScript file.
 	const JS_HANDLE       = 'lpf-export-page-admin-script';
 	const JS_URI          = 'assets/js/export';
-	const JS_DEPENDENCIES = array( 'jquery' );
+	const JS_DEPENDENCIES = [ 'jquery' ];
 	const JS_VERSION      = false;
 
 	/**

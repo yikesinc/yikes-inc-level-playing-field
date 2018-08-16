@@ -55,7 +55,7 @@ final class PostEscapedView implements View {
 	 * @return string Rendered HTML.
 	 * @throws FailedToLoadView If the View URI could not be loaded.
 	 */
-	public function render( array $context = array() ) {
+	public function render( array $context = [] ) {
 		return wp_kses_post( $this->view->render( $context ) );
 	}
 

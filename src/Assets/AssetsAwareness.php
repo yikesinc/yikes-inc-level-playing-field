@@ -38,7 +38,7 @@ trait AssetsAwareness {
 	 * @return Asset[]
 	 */
 	protected function get_assets() {
-		return array();
+		return [];
 	}
 
 	/**

@@ -30,5 +30,5 @@ interface Renderable {
 	 *
 	 * @return string Rendered HTML.
 	 */
-	public function render( array $context = array() );
+	public function render( array $context = [] );
 }

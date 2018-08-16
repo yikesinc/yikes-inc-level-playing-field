@@ -47,10 +47,10 @@ class ApplicationRepository extends CustomPostTypeRepository {
 	 * @return Application[]
 	 */
 	public function find_all() {
-		$args  = array(
+		$args  = [
 			'post_type'   => ApplicationManagerCPT::SLUG,
-			'post_status' => array( 'publish' ),
-		);
+			'post_status' => [ 'publish' ],
+		];
 		$query = new \WP_Query( $args );
 
 		$jobs = array();

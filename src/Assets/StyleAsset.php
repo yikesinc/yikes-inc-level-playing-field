@@ -79,7 +79,7 @@ class StyleAsset extends BaseAsset {
 	public function __construct(
 		$handle,
 		$source,
-		$dependencies = array(),
+		$dependencies = [],
 		$version = false,
 		$media = self::MEDIA_ALL
 	) {

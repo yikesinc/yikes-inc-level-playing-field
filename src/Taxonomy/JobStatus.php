@@ -128,7 +128,7 @@ class JobStatus extends BaseTaxonomy {
 		?>
 		<div class="tagsdiv">
 			<?php
-			do_action( "{$tax_name}_metabox_before" );
+			do_action( "{$tax_name}_metabox_before" ); // WPCS: prefix ok.
 			if ( current_user_can( $taxonomy->cap->assign_terms ) ) {
 				$this->term_select( $post );
 			}
@@ -155,7 +155,7 @@ class JobStatus extends BaseTaxonomy {
 		] );
 
 		$post_terms = get_the_terms( $post->ID, $tax_name );
-		$post_terms = $post_terms ? wp_list_pluck( $post_terms, 'term_id', 'slug' ) : array();
+		$post_terms = $post_terms ? wp_list_pluck( $post_terms, 'term_id', 'slug' ) : [];
 		?>
 		<label for="<?php echo esc_attr( $tax_name ); ?>">
 			<?php echo esc_html( $taxonomy->labels->update_item ); ?>

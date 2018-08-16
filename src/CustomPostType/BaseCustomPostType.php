@@ -32,8 +32,8 @@ abstract class BaseCustomPostType implements Service {
 	 * @since %VERSION%
 	 */
 	public function register() {
-		add_action( 'init', array( $this, 'register_post_type' ) );
-		add_filter( 'post_updated_messages', array( $this, 'updated_messages' ) );
+		add_action( 'init', [ $this, 'register_post_type' ] );
+		add_filter( 'post_updated_messages', [ $this, 'updated_messages' ] );
 	}
 
 	/**

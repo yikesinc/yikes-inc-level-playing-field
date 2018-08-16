@@ -29,7 +29,7 @@ class JobCategory extends BaseTaxonomy {
 	 * @return array
 	 */
 	protected function get_arguments() {
-		return array(
+		return [
 			'hierarchical'          => true,
 			'public'                => true,
 			'show_in_nav_menus'     => true,
@@ -38,13 +38,13 @@ class JobCategory extends BaseTaxonomy {
 			'show_in_quick_edit'    => true,
 			'query_var'             => true,
 			'rewrite'               => true,
-			'capabilities'          => array(
+			'capabilities'          => [
 				'manage_terms' => Capabilities::EDIT_JOBS,
 				'edit_terms'   => Capabilities::EDIT_JOBS,
 				'delete_terms' => Capabilities::EDIT_JOBS,
 				'assign_terms' => Capabilities::EDIT_JOBS,
-			),
-			'labels'                => array(
+			],
+			'labels'                => [
 				'name'                       => __( 'Job Categories', 'yikes-level-playing-field' ),
 				'singular_name'              => _x( 'Job Category', 'taxonomy general name', 'yikes-level-playing-field' ),
 				'search_items'               => __( 'Search Job Categories', 'yikes-level-playing-field' ),
@@ -61,11 +61,11 @@ class JobCategory extends BaseTaxonomy {
 				'choose_from_most_used'      => __( 'Choose from the most used Job Categories', 'yikes-level-playing-field' ),
 				'not_found'                  => __( 'No Job Categories found.', 'yikes-level-playing-field' ),
 				'menu_name'                  => __( 'Job Categories', 'yikes-level-playing-field' ),
-			),
+			],
 			'show_in_rest'          => true,
 			'rest_base'             => self::SLUG,
 			'rest_controller_class' => 'WP_REST_Terms_Controller',
-		);
+		];
 	}
 
 	/**
@@ -75,8 +75,8 @@ class JobCategory extends BaseTaxonomy {
 	 * @return array
 	 */
 	protected function get_object_types() {
-		return array(
+		return [
 			JobManager::SLUG,
-		);
+		];
 	}
 }
