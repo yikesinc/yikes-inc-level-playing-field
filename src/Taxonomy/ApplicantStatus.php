@@ -152,9 +152,9 @@ class ApplicantStatus extends BaseTaxonomy implements AssetsAware {
 		<div class="tax-btn-group">
 			<?php
 			foreach ( $all_terms as $term ) {
-				$selected_bool = array_key_exists( $term->slug, $post_terms ) ? $term->slug : false;
+				$selected_bool = array_key_exists( $term->term_id, $post_terms ) ? $term->term_id : false;
 				if ( $selected_bool ) {
-					$selected_term = $term->slug;
+					$selected_term = $term->term_id;
 				}
 				?>
 				<button
