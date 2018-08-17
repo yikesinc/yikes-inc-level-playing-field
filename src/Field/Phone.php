@@ -27,5 +27,4 @@ class Phone extends BaseInput {
 		parent::render_extra_attributes();
 		echo 'autocomplete="tel" ';
 	}
-
 }

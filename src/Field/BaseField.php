@@ -20,6 +20,15 @@ use Yikes\LevelPlayingField\Exception\InvalidField;
 abstract class BaseField implements Field {
 
 	/**
+	 * The filter for sanitizing.
+	 *
+	 * Override in child classes to use a different sanitize filter.
+	 *
+	 * @see http://php.net/manual/en/filter.filters.sanitize.php.
+	 */
+	const SANITIZE = FILTER_SANITIZE_STRING;
+
+	/**
 	 * The field ID.
 	 *
 	 * Used in HTML for id and name tags.
@@ -66,8 +75,7 @@ abstract class BaseField implements Field {
 	/**
 	 * The pattern used for matching an field's ID.
 	 *
-	 * @link https://regex101.com/r/ZTgsNa/1
-	 *
+	 * @link  https://regex101.com/r/ZTgsNa/1
 	 * @since %VERSION%
 	 * @var string
 	 */
@@ -167,15 +175,68 @@ abstract class BaseField implements Field {
 	}
 
 	/**
+	 * Validate the submission for the given field.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param array $data The submission data to use for validation.
+	 *
+	 * @return mixed The validated value.
+	 * @throws InvalidField When the submission isn't valid.
+	 */
+	public function validate_submission( $data ) {
+		$raw = $this->get_raw_value( $data );
+		if ( empty( $raw ) && $this->required ) {
+			throw InvalidField::field_required( $this->label );
+		}
+
+		$filtered = $this->sanitize_value( $raw );
+		if ( false === $filtered || empty( $filtered ) ) {
+			throw InvalidField::value_invalid( $this->label );
+		}
+
+		return $filtered;
+	}
+
+	/**
 	 * Get the raw submitted value.
 	 *
 	 * @since %VERSION%
+	 *
+	 * @param array $data Array where the raw value can be obtained.
+	 *
 	 * @return mixed
 	 */
-	protected function get_raw_value() {
+	protected function get_raw_value( $data ) {
 		preg_match( $this->id_pattern, $this->id, $m );
 		return ! isset( $m[2] )
-			? ( isset( $_POST[ $m[1] ] ) ? $_POST[ $m[1] ] : '' )
-			: ( isset( $_POST[ $m[1] ][ $m[2] ] ) ? $_POST[ $m[1] ][ $m[2] ] : '' );
+			? ( isset( $data[ $m[1] ] ) ? $data[ $m[1] ] : '' )
+			: ( isset( $data[ $m[1] ][ $m[2] ] ) ? $data[ $m[1] ][ $m[2] ] : '' );
+	}
+
+	/**
+	 * Sanitize a submitted value.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param string $raw The raw value for the field.
+	 *
+	 * @return mixed
+	 */
+	protected function sanitize_value( $raw ) {
+		return filter_var( $raw, static::SANITIZE, $this->get_filter_options() );
+	}
+
+	/**
+	 * Return options to use when sanitizing a submitted value.
+	 *
+	 * @link  http://php.net/manual/en/function.filter-var.php
+	 * @see   filter_var()
+	 * @since %VERSION%
+	 * @return null|callable|int|array Return null for no options, a callable, an int when using filter flags, or an
+	 *                                 array when using additional options for the filter.
+	 */
+	protected function get_filter_options() {
+		return null;
 	}
 }
