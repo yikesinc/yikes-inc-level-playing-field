@@ -70,8 +70,29 @@ class InvalidField extends \InvalidArgumentException implements Exception {
 	 */
 	public static function field_required( $field, $context = '' ) {
 		$message = sprintf(
-			/* translators: %1$s is the field name, %2$s is the optional additional context */
+			/* translators: %1$s is the field label, %2$s is the optional additional context */
 			esc_html__( 'The field %1$s is required. %$2s', 'yikes-level-playing-field' ),
+			$field,
+			$context
+		);
+
+		return new static( $message );
+	}
+
+	/**
+	 * Create a new instance of the exception when the form field value is invalid.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param string $field   The field label.
+	 * @param string $context Optional additional context about the field.
+	 *
+	 * @return InvalidField
+	 */
+	public static function value_invalid( $field, $context = '' ) {
+		$message = sprintf(
+			/* translators: %1$s is the field label, %2$s is the optional additional context */
+			esc_html__( 'The value submitted for the field %1$s is invalid. %2$s', 'yikes-level-playing-field' ),
 			$field,
 			$context
 		);
