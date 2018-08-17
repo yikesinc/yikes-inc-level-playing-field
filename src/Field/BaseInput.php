@@ -51,14 +51,16 @@ class BaseInput extends BaseField {
 		$type    = $this->get_type();
 		$classes = array_merge( $this->classes, [ "lpf-field-{$type}" ] );
 		?>
-		<label class="lpf-input-label"><?php echo esc_html( $this->label ); ?>
-			<input type="<?php echo esc_attr( $type ); ?>"
-				   class="<?php echo esc_attr( join( ' ', $classes ) ); ?>"
-				   name="<?php echo esc_attr( $this->id ); ?>"
-				   id="<?php echo esc_attr( $this->id ); ?>"
-				<?php $this->render_extra_attributes(); ?>
-			/>
-		</label>
+		<div class="lpf-field-container">
+			<label class="lpf-input-label"><?php echo esc_html( $this->label ); ?>
+				<input type="<?php echo esc_attr( $type ); ?>"
+					   class="<?php echo esc_attr( join( ' ', $classes ) ); ?>"
+					   name="<?php echo esc_attr( $this->id ); ?>"
+					   id="<?php echo esc_attr( $this->id ); ?>"
+					<?php $this->render_extra_attributes(); ?>
+				/>
+			</label>
+		</div>
 		<?php
 	}
 

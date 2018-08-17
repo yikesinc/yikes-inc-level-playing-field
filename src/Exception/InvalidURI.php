@@ -38,4 +38,24 @@ class InvalidURI extends \InvalidArgumentException implements Exception {
 
 		return new static( $message );
 	}
+
+	/**
+	 * Create a new instance of the exception for a file that is not in the list.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param string $uri  The invalid URI.
+	 * @param array  $list The list of valid URIs.
+	 *
+	 * @return InvalidURI
+	 */
+	public static function from_list( $uri, array $list ) {
+		$message = sprintf(
+			'The View URI "%1$s" is not one of the valid options: [%2$s]',
+			$uri,
+			join( ', ', $list )
+		);
+
+		return new static( $message );
+	}
 }

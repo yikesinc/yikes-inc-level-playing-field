@@ -17,15 +17,11 @@ namespace Yikes\LevelPlayingField\Field;
  */
 class Volunteer extends ComplexField {
 
-	/**
-	 * Get the array of classes to merge in with the default field classes.
-	 *
-	 * @since %VERSION%
-	 * @return array
-	 */
-	protected function get_classes() {
-		return [ 'lpf-field-volunteer' ];
-	}
+	/** @var string */
+	protected $class_base = 'volunteer';
+
+	/** @var bool */
+	protected $repeatable = true;
 
 	/**
 	 * Get the array of default fields.
@@ -71,7 +67,19 @@ class Volunteer extends ComplexField {
 	 * @since %VERSION%
 	 */
 	protected function render_grouping_label() {
-		// TODO: Implement render_grouping_label() method.
+		printf(
+			'<legend class="lpf-field-volunteer lpf-input-label">%s</legend>',
+			esc_html__( 'Volunteer:', 'yikes-level-playing-field' )
+		);
 	}
 
+	/**
+	 * Get the label to use when rendering the "Add New" button.
+	 *
+	 * @since %VERSION%
+	 * @return string
+	 */
+	protected function get_add_new_label() {
+		return esc_html_x( 'Volunteer', 'for "add new" button', 'yikes-level-playing-field' );
+	}
 }

@@ -17,15 +17,8 @@ namespace Yikes\LevelPlayingField\Field;
  */
 class Address extends ComplexField {
 
-	/**
-	 * Get the array of classes to merge in with the default field classes.
-	 *
-	 * @since %VERSION%
-	 * @return array
-	 */
-	protected function get_classes() {
-		return [ 'lpf-field-address' ];
-	}
+	/** @var string */
+	protected $class_base = 'address';
 
 	/**
 	 * Get the array of default fields.
@@ -75,7 +68,7 @@ class Address extends ComplexField {
 	 */
 	protected function render_grouping_label() {
 		printf(
-			'<label class="lpf-field-address lpf-input-label">%s</label>',
+			'<legend class="lpf-field-address lpf-input-label">%s</legend>',
 			esc_html__( 'Address: ', 'yikes-level-playing-field' )
 		);
 	}

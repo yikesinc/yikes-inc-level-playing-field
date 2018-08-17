@@ -9,8 +9,13 @@
 
 namespace Yikes\LevelPlayingField\Shortcode;
 
+use Yikes\LevelPlayingField\Assets\Asset;
+use Yikes\LevelPlayingField\Assets\ScriptAsset;
 use Yikes\LevelPlayingField\Exception\InvalidPostID;
+use Yikes\LevelPlayingField\Exception\InvalidURI;
+use Yikes\LevelPlayingField\Form\Application as ApplicationForm;
 use Yikes\LevelPlayingField\Model\ApplicationRepository;
+use Yikes\LevelPlayingField\Model\JobRepository;
 use Yikes\LevelPlayingField\View\FormEscapedView;
 use Yikes\LevelPlayingField\View\NoOverrideLocationView;
 
@@ -27,6 +32,17 @@ class Application extends BaseShortcode {
 	const SUBMITTED_URI = 'views/job-page-application-completed';
 
 	/**
+	 * The view URI to use.
+	 *
+	 * This property is used so that the view can be switched dynamically
+	 * as needed.
+	 *
+	 * @since %VERSION%
+	 * @var string
+	 */
+	protected $view_uri = self::VIEW_URI;
+
+	/**
 	 * Get the default array of attributes for the shortcode.
 	 *
 	 * @since %VERSION%
@@ -34,7 +50,7 @@ class Application extends BaseShortcode {
 	 */
 	protected function get_default_atts() {
 		return [
-			'id' => 0,
+			'job_id' => 0,
 		];
 	}
 
@@ -52,11 +68,36 @@ class Application extends BaseShortcode {
 	 * @throws InvalidPostID When the post ID is not valid.
 	 */
 	protected function get_context( array $atts ) {
-		$application_repository = new ApplicationRepository();
+		$job         = ( new JobRepository() )->find( $atts['job_id'] );
+		$application = ( new ApplicationRepository() )->find( $job->get_application_id() );
+
+		/**
+		 * Set up the classes we'll use for the form and the individual fields.
+		 */
+		$base_classes  = [ 'lpf-application', sprintf( 'lpf-application-%s', $application->get_id() ) ];
+		$form_classes  = array_merge( [ 'lpf-form' ], $base_classes );
+		$field_classes = array_merge( [ 'lpf-form-field' ], $base_classes );
 
 		return [
-			'application' => $application_repository->find( $atts['id'] ),
+			'application'      => $application,
+			'application_form' => new ApplicationForm( $job->get_id(), $application, $field_classes ),
+			'form_classes'     => $form_classes,
 		];
+	}
+
+	/**
+	 * Process the shortcode attributes and prepare rendering.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param array|string $atts Attributes as passed to the shortcode.
+	 *
+	 * @return string Rendered HTML of the shortcode.
+	 */
+	public function process_shortcode( $atts ) {
+		$atts = $this->process_attributes( $atts );
+
+		return $this->render( array_merge( $atts, $this->get_context( $atts ) ) );
 	}
 
 	/**
@@ -67,7 +108,26 @@ class Application extends BaseShortcode {
 	 * @return string View URI.
 	 */
 	protected function get_view_uri() {
-		return $this->is_submitting_application() ? self::SUBMITTED_URI : self::VIEW_URI;
+		return $this->view_uri;
+	}
+
+	/**
+	 * Set the view URI.
+	 *
+	 * Must be either the VIEW_URI or SUBMITTED_URI.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param string $uri The URI to use.
+	 *
+	 * @throws InvalidURI When the URI is not one of the valid values.
+	 */
+	protected function set_view_uri( $uri ) {
+		if ( self::VIEW_URI !== $uri && self::SUBMITTED_URI !== $uri ) {
+			throw InvalidURI::from_list( $uri, [ self::VIEW_URI, self::SUBMITTED_URI ] );
+		}
+
+		$this->view_uri = $uri;
 	}
 
 	/**
@@ -102,5 +162,23 @@ class Application extends BaseShortcode {
 				$e->getMessage()
 			);
 		}
+	}
+
+	/**
+	 * Get the array of known assets.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @return Asset[]
+	 */
+	protected function get_assets() {
+		$repeater = new ScriptAsset( 'lpf-repeater', 'assets/js/fields/repeater', [ 'jquery' ] );
+		$repeater->add_localization( 'lpfRepeater', [
+			'addNew' => _x( 'Add New', 'button for adding section in application', 'yikes-level-playing-field' ),
+		] );
+
+		return [
+			$repeater,
+		];
 	}
 }

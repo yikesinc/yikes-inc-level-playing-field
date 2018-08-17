@@ -20,6 +20,14 @@ use Yikes\LevelPlayingField\Exception\InvalidField;
 abstract class ComplexField extends BaseField {
 
 	/**
+	 * The base HTML class value.
+	 *
+	 * @since %VERSION%
+	 * @var string
+	 */
+	protected $class_base = 'complexfield';
+
+	/**
 	 * Whether the field is repeatable.
 	 *
 	 * @since %VERSION%
@@ -68,7 +76,7 @@ abstract class ComplexField extends BaseField {
 			] );
 
 			// Set up the field ID, depending on whether the field is repeatable.
-			$id = $this->id . ( $this->repeatable ? '[]' : '' ) . "[{$field}]";
+			$id = $this->id . ( $this->repeatable ? '[0]' : '' ) . "[{$field}]";
 
 			// Instantiate the sub field.
 			$this->sub_fields[] = new $settings['class'](
@@ -91,8 +99,28 @@ abstract class ComplexField extends BaseField {
 	 * @since %VERSION%
 	 */
 	public function render() {
+		$this->render_open_fieldset();
 		$this->render_grouping_label();
 		$this->render_sub_fields();
+		$this->render_close_fieldset();
+	}
+
+	/**
+	 * Render the opening of a fieldset element.
+	 *
+	 * @since %VERSION%
+	 */
+	protected function render_open_fieldset() {
+		$classes = [ 'lpf-fieldset', "lpf-fieldset-{$this->class_base}" ];
+		if ( $this->repeatable ) {
+			$classes[] = 'lpf-fieldset-repeatable';
+		}
+
+		printf(
+			'<div class="lpf-field-container"><fieldset class="%s" %s>',
+			esc_attr( join( ' ', $classes ) ),
+			$this->repeatable ? sprintf( 'data-add-new-label="%s"', esc_attr( $this->get_add_new_label() ) ) : ''
+		);
 	}
 
 	/**
@@ -108,12 +136,35 @@ abstract class ComplexField extends BaseField {
 	}
 
 	/**
+	 * Render the closing fieldset tag.
+	 *
+	 * @since %VERSION%
+	 */
+	protected function render_close_fieldset() {
+		echo '</fieldset></div>';
+	}
+
+	/**
 	 * Get the array of classes to merge in with the default field classes.
 	 *
 	 * @since %VERSION%
 	 * @return array
 	 */
-	abstract protected function get_classes();
+	protected function get_classes() {
+		return [ "lpf-field-{$this->class_base}" ];
+	}
+
+	/**
+	 * Get the label to use when rendering the "Add New" button.
+	 *
+	 * Only needs to be overridden when the field is repeatable.
+	 *
+	 * @since %VERSION%
+	 * @return string
+	 */
+	protected function get_add_new_label() {
+		return '';
+	}
 
 	/**
 	 * Get the array of default fields.

@@ -54,14 +54,14 @@ class Application extends CustomPostTypeEntity {
 		return apply_filters( 'lpf_application_fields_enabled_defaults', [
 			AMMeta::NAME           => true,
 			AMMeta::EMAIL          => true,
-			AMMeta::PHONE          => true,
-			AMMeta::ADDRESS        => true,
-			AMMeta::COVER_LETTER   => true,
+			AMMeta::PHONE          => false,
+			AMMeta::ADDRESS        => false,
+			AMMeta::COVER_LETTER   => false,
 			AMMeta::EDUCATION      => false,
 			AMMeta::CERTIFICATIONS => false,
 			AMMeta::SKILLS         => false,
 			AMMeta::LANGUAGES      => false,
-			AMMeta::EXPERIENCE     => true,
+			AMMeta::EXPERIENCE     => false,
 			AMMeta::VOLUNTEER      => false,
 		] );
 	}
@@ -74,7 +74,7 @@ class Application extends CustomPostTypeEntity {
 	 */
 	public function get_active_fields() {
 		$this->load_lazy_properties();
-		return array_keys( array_filter( get_object_vars( $this ), function ( $value ) {
+		return array_keys( array_filter( get_object_vars( $this ), function( $value ) {
 			return true === $value;
 		} ) );
 	}
@@ -109,6 +109,10 @@ class Application extends CustomPostTypeEntity {
 	 * @param string $property Name of the property to load.
 	 */
 	protected function load_lazy_property( $property ) {
+		if ( isset( $this->$property ) ) {
+			return;
+		}
+
 		$this->load_lazy_properties();
 	}
 }

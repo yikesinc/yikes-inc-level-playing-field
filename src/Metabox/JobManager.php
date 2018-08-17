@@ -13,8 +13,10 @@ use Yikes\LevelPlayingField\Assets\Asset;
 use Yikes\LevelPlayingField\Assets\AssetsAware;
 use Yikes\LevelPlayingField\Assets\AssetsAwareness;
 use Yikes\LevelPlayingField\Assets\ScriptAsset;
+use Yikes\LevelPlayingField\CustomPostType\ApplicationManager;
 use Yikes\LevelPlayingField\CustomPostType\JobManager as JobManagerCPT;
 use Yikes\LevelPlayingField\Model\JobMeta;
+use Yikes\LevelPlayingField\Model\MetaLinks;
 use Yikes\LevelPlayingField\Taxonomy\JobStatus;
 
 /**
@@ -187,6 +189,13 @@ class JobManager extends AwesomeBaseMetabox implements AssetsAware {
 							'id'   => $this->prefix_field( JobMeta::ADDRESS ),
 							'type' => 'address',
 						],
+						[
+							'name'      => __( 'Application', 'yikes-level-playing-field' ),
+							'desc'      => __( 'The application to use for this job', 'yikes-level-playing-field' ),
+							'id'        => MetaLinks::APPLICATION,
+							'type'      => 'select-post-type',
+							'post-type' => ApplicationManager::SLUG,
+						],
 					],
 				],
 				// Applicants here.
@@ -216,5 +225,4 @@ class JobManager extends AwesomeBaseMetabox implements AssetsAware {
 			new ScriptAsset( self::JS_HANDLE, self::JS_URI ),
 		];
 	}
-
 }

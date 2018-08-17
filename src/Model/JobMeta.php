@@ -26,7 +26,7 @@ interface JobMeta {
 	const TYPE        = 'type';
 	const LOCATION    = 'location';
 	const ADDRESS     = 'address';
-	const APPLICATION = MetaLinks::APPLICATION;
+	const APPLICATION = 'application';
 
 	// Responsibilities.
 	const RESPONSIBILITIES = 'responsibilities';
@@ -42,5 +42,21 @@ interface JobMeta {
 	// Properties that should be JSON-encoded.
 	const JSON_PROPERTIES = [
 		self::META_PREFIX . self::ADDRESS => true,
+	];
+
+	// Meta prefixed fields.
+	const META_PREFIXES = [
+		self::DESCRIPTION      => self::META_PREFIX . self::DESCRIPTION,
+		self::TYPE             => self::META_PREFIX . self::TYPE,
+		self::LOCATION         => self::META_PREFIX . self::LOCATION,
+		self::ADDRESS          => self::META_PREFIX . self::ADDRESS,
+		self::APPLICATION      => MetaLinks::APPLICATION,
+		self::RESPONSIBILITIES => self::META_PREFIX . self::RESPONSIBILITIES,
+		self::SCHEDULE         => self::META_PREFIX . self::SCHEDULE,
+		self::REQUIREMENTS     => self::META_PREFIX . self::REQUIREMENTS,
+		self::QUALIFICATIONS   => self::META_PREFIX . self::QUALIFICATIONS,
+		self::EDUCATION        => self::META_PREFIX . self::EDUCATION,
+		self::EXPERIENCE       => self::META_PREFIX . self::EXPERIENCE,
+		self::KNOWLEDGE        => self::META_PREFIX . self::KNOWLEDGE,
 	];
 }

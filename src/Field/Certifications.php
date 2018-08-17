@@ -17,6 +17,9 @@ namespace Yikes\LevelPlayingField\Field;
  */
 class Certifications extends ComplexField {
 
+	/** @var string */
+	protected $class_base = 'certifications';
+
 	/**
 	 * Whether the field is repeatable.
 	 *
@@ -24,16 +27,6 @@ class Certifications extends ComplexField {
 	 * @var bool
 	 */
 	protected $repeatable = true;
-
-	/**
-	 * Get the array of classes to merge in with the default field classes.
-	 *
-	 * @since %VERSION%
-	 * @return array
-	 */
-	protected function get_classes() {
-		return [ 'lpf-field-certifications' ];
-	}
 
 	/**
 	 * Get the array of default fields.
@@ -68,18 +61,6 @@ class Certifications extends ComplexField {
 	}
 
 	/**
-	 * Render the sub-fields.
-	 *
-	 * @since %VERSION%
-	 * @todo Control how many fields are rendered by default
-	 */
-	protected function render_sub_fields() {
-		for ( $i = 0; $i < 3; $i ++ ) {
-			parent::render_sub_fields();
-		}
-	}
-
-	/**
 	 * Render the grouping label for the sub-fields.
 	 *
 	 * This should echo the label directly.
@@ -87,6 +68,21 @@ class Certifications extends ComplexField {
 	 * @since %VERSION%
 	 */
 	protected function render_grouping_label() {
-		// TODO: Implement render_grouping_label() method.
+		printf(
+			'<legend class="lpf-field-certifications lpf-input-label">%s</legend>',
+			esc_html__( 'Certifications:', 'yikes-level-playing-field' )
+		);
+	}
+
+	/**
+	 * Get the label to use when rendering the "Add New" button.
+	 *
+	 * Only needs to be overridden when the field is repeatable.
+	 *
+	 * @since %VERSION%
+	 * @return string
+	 */
+	protected function get_add_new_label() {
+		return esc_html_x( 'Certification', 'for "add new" button', 'yikes-level-playing-field' );
 	}
 }

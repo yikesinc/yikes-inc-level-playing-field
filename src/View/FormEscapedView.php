@@ -73,6 +73,9 @@ final class FormEscapedView implements View {
 		'label'    => [
 			'for' => true,
 		],
+		'fieldset' => [
+			'data-add-new-label' => true,
+		],
 	];
 
 	/**

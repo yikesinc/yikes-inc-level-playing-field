@@ -66,10 +66,12 @@ abstract class BaseField implements Field {
 	/**
 	 * The pattern used for matching an field's ID.
 	 *
+	 * @link https://regex101.com/r/ZTgsNa/1
+	 *
 	 * @since %VERSION%
 	 * @var string
 	 */
-	protected $id_pattern = '#^([\w-]+)(\[\])?(?:\[([\w-]+)\])?#';
+	protected $id_pattern = '#^([\w-]+)(\[(\d+)?\])?(?:\[([\w-]+)\])?#';
 
 	/**
 	 * BaseField constructor.
