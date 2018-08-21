@@ -144,8 +144,9 @@ class ApplicantStatus extends BaseTaxonomy implements AssetsAware {
 			'orderby'    => 'term_id',
 		] );
 
-		$post_terms = get_the_terms( $post->ID, $tax_name );
-		$post_terms = $post_terms ? wp_list_pluck( $post_terms, 'term_id', 'slug' ) : [];
+		$post_terms    = get_the_terms( $post->ID, $tax_name );
+		$post_terms    = $post_terms ? wp_list_pluck( $post_terms, 'term_id', 'slug' ) : [];
+		$selected_term = '';
 		?>
 
 		<!-- Button group for selecting applicant status -->
