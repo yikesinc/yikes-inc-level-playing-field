@@ -16,6 +16,8 @@ use Yikes\LevelPlayingField\Exception\InvalidField;
  *
  * @since   %VERSION%
  * @package Yikes\LevelPlayingField
+ *
+ * @property Field parent The Parent field object.
  */
 abstract class BaseField implements Field {
 
@@ -73,6 +75,14 @@ abstract class BaseField implements Field {
 	protected $data = [];
 
 	/**
+	 * The parent field.
+	 *
+	 * @since %VERSION%
+	 * @var Field
+	 */
+	protected $parent;
+
+	/**
 	 * The pattern used for matching an field's ID.
 	 *
 	 * @link  https://regex101.com/r/ZTgsNa/1
@@ -97,6 +107,40 @@ abstract class BaseField implements Field {
 		$this->classes  = $classes;
 		$this->required = (bool) $required;
 		$this->validate_id();
+	}
+
+	/**
+	 * Maybe return data from inaccessible members.
+	 *
+	 * @link http://php.net/manual/en/language.oop5.overloading.php#language.oop5.overloading.members
+	 *
+	 * @param string $name The property to retrieve.
+	 *
+	 * @return mixed
+	 */
+	public function __get( $name ) {
+		switch ( $name ) {
+			case 'parent':
+				if ( ! isset( $this->parent ) ) {
+					$this->parent = new NullParent();
+				}
+
+				return $this->parent;
+
+			default:
+				return null;
+		}
+	}
+
+	/**
+	 * Set the parent field object for this field.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param Field $field The parent field object.
+	 */
+	public function set_parent( Field $field ) {
+		$this->parent = $field;
 	}
 
 	/**

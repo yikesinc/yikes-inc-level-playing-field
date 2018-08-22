@@ -39,7 +39,7 @@ abstract class ComplexField extends BaseField {
 	 * Array of sub-fields.
 	 *
 	 * @since %VERSION%
-	 * @var array
+	 * @var Field[]
 	 */
 	protected $sub_fields = [];
 
@@ -79,7 +79,7 @@ abstract class ComplexField extends BaseField {
 			$id = $this->id . ( $this->repeatable ? '[0]' : '' ) . "[{$field}]";
 
 			// Instantiate the sub field.
-			$this->sub_fields[] = new $settings['class'](
+			$this->sub_fields[ $field ] = new $settings['class'](
 				$id,
 				$settings['label'],
 				$classes,
@@ -87,9 +87,12 @@ abstract class ComplexField extends BaseField {
 			);
 
 			// Ensure the class extends the Field interface.
-			if ( ! ( end( $this->sub_fields ) instanceof Field ) ) {
+			if ( ! ( $this->sub_fields[ $field ] instanceof Field ) ) {
 				throw InvalidField::from_field( $settings['class'] );
 			}
+
+			// Assign the current object as the field parent.
+			$this->sub_fields[ $field ]->set_parent( $this );
 		}
 	}
 

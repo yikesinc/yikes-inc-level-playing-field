@@ -31,4 +31,13 @@ interface Field {
 	 * @throws InvalidField When the submission isn't valid.
 	 */
 	public function validate_submission( $data );
+
+	/**
+	 * Set the parent field object for this field.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param Field $field The parent field object.
+	 */
+	public function set_parent( Field $field );
 }
