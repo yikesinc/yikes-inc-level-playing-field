@@ -89,7 +89,7 @@ abstract class BaseField implements Field {
 	 * @since %VERSION%
 	 * @var string
 	 */
-	protected $id_pattern = '#^([\w-]+)(\[(\d+)?\])?(?:\[([\w-]+)\])?#';
+	protected $id_pattern = '#^([\w-]+)(?:\[(\d+)?\])?(?:\[([\w-]+)\])?#';
 
 	/**
 	 * BaseField constructor.
