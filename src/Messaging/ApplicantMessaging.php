@@ -77,6 +77,8 @@ class ApplicantMessaging extends BaseMessaging implements AssetsAware {
 
 		add_action( 'wp_ajax_send_message', [ $this, 'send_message' ] );
 		add_action( 'wp_ajax_refresh_conversation', [ $this, 'refresh_conversation' ] );
+		add_filter( 'comments_clauses', [ $this, 'exclude_applicant_messages' ], 10, 1 );
+		add_filter( 'comment_feed_where', [ $this, 'exclude_applicant_messages_from_feed_where' ], 10 );
 	}
 
 	/**
@@ -258,5 +260,41 @@ class ApplicantMessaging extends BaseMessaging implements AssetsAware {
 		$html = ob_get_clean();
 
 		wp_send_json_success( $html );
+	}
+
+	/**
+	 * Exclude Applicant Messages from queries and RSS.
+	 *
+	 * @param  string $where The WHERE clause of the query.
+	 * @return string
+	 */
+	public static function exclude_applicant_messages_from_feed_where( $where ) {
+		$type = ApplicantMessage::TYPE;
+		return $where . ( $where ? ' AND ' : '' ) . " comment_type != '{$type}' ";
+	}
+
+	/**
+	 * Exclude Applicant Messages from queries and RSS.
+	 *
+	 * @param  array $clauses A compacted array of comment query clauses.
+	 *
+	 * @return array
+	 */
+	public static function exclude_applicant_messages( $clauses ) {
+
+		// Ensure this is a real screen object.
+		$screen = get_current_screen();
+		if ( ! ( $screen instanceof \WP_Screen ) ) {
+			return $comments_query;
+		}
+
+		// If we're looking at our the post type, do not hide the comments.
+		if ( static::POST_TYPE === $screen->post_type ) {
+			return $clauses;
+		}
+
+		$type              = ApplicantMessage::TYPE;
+		$clauses['where'] .= ( $clauses['where'] ? ' AND ' : '' ) . " comment_type != '{$type}' ";
+		return $clauses;
 	}
 }
