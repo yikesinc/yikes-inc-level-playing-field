@@ -31,6 +31,7 @@ use Yikes\LevelPlayingField\Taxonomy\JobCategory;
 use Yikes\LevelPlayingField\Taxonomy\JobStatus;
 use Yikes\LevelPlayingField\TemplateController\SingleApplicationsTemplateController as SingleApplications;
 use Yikes\LevelPlayingField\TemplateController\SingleJobsTemplateController as SingleJobs;
+use Yikes\LevelPlayingField\Messaging\ApplicantMessaging;
 
 /**
  * Class PluginFactory
@@ -109,6 +110,9 @@ final class PluginFactory {
 			// Template Overrides.
 			SingleJobs::class           => 1,
 			SingleApplications::class   => 1,
+
+			// Messaging.
+			ApplicantMessaging::class   => 1,
 		] );
 	}
 }
