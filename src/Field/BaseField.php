@@ -88,7 +88,7 @@ abstract class BaseField implements Field {
 	 * @since %VERSION%
 	 * @var Field
 	 */
-	protected $parent;
+	protected $parent = null;
 
 	/**
 	 * The pattern used for matching an field's ID.
@@ -300,5 +300,15 @@ abstract class BaseField implements Field {
 	 */
 	protected function get_filter_options() {
 		return null;
+	}
+
+	/**
+	 * Determine if this is a child field.
+	 *
+	 * @since %VERSION%
+	 * @return bool
+	 */
+	public function is_child() {
+		return ( null !== $this->parent && ! ( $this->parent instanceof NullParent ) );
 	}
 }

@@ -42,6 +42,14 @@ interface Field {
 	public function set_parent( Field $field );
 
 	/**
+	 * Determine if this is a child field.
+	 *
+	 * @since %VERSION%
+	 * @return bool
+	 */
+	public function is_child();
+
+	/**
 	 * Whether the field is repeatable.
 	 *
 	 * @since %VERSION%
