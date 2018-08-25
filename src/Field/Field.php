@@ -40,4 +40,12 @@ interface Field {
 	 * @param Field $field The parent field object.
 	 */
 	public function set_parent( Field $field );
+
+	/**
+	 * Whether the field is repeatable.
+	 *
+	 * @since %VERSION%
+	 * @var bool
+	 */
+	public function is_repeatable();
 }

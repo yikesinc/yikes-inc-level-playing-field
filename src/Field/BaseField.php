@@ -59,6 +59,14 @@ abstract class BaseField implements Field {
 	protected $classes;
 
 	/**
+	 * Whether the field is repeatable.
+	 *
+	 * @since %VERSION%
+	 * @var bool
+	 */
+	protected $repeatable = false;
+
+	/**
 	 * Whether the field is required.
 	 *
 	 * @since %VERSION%
@@ -130,6 +138,16 @@ abstract class BaseField implements Field {
 			default:
 				return null;
 		}
+	}
+
+	/**
+	 * Whether this field is repeatable.
+	 *
+	 * @since %VERSION%
+	 * @return bool
+	 */
+	public function is_repeatable() {
+		return $this->repeatable;
 	}
 
 	/**
