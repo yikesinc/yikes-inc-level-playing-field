@@ -43,3 +43,15 @@ $form_classes = $this->form_classes
 	<?php $form->render(); ?>
 	<button type="submit" name="lpf_submit"><?php esc_html_e( 'Submit', 'yikes-level-playing-field' ); ?></button>
 </form>
+
+<?php
+
+// Display an edit link for the application.
+$link = get_edit_post_link( $application->get_id(), 'link' );
+if ( $link ) {
+	printf(
+		'<br/><p><a href="%1$s">%2$s</a></p>',
+		esc_url( $link ),
+		esc_html__( 'Edit Application', 'yikes-level-playing-field' )
+	);
+}
