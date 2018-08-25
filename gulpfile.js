@@ -33,7 +33,7 @@ const paths = {
 	'css': [ 'assets/css/*.css', '!assets/css/*.min.css' ],
 	'icons': 'assets/images/svg-icons/*.svg',
 	'images': [ 'assets/images/*', '!assets/images/*.svg' ],
-	'php': [ './*.php', './src/**/*.php' ],
+	'php': [ './*.php', './src/**/*.php', './views/**/*.php' ],
 	'sass': 'assets/css/sass/*.scss',
 	'concat_scripts': 'assets/js/concat/*.js',
 	'scripts': [ 'assets/js/*.js', '!assets/js/*.min.js' ],
