@@ -47,11 +47,21 @@ $form_classes = $this->form_classes
 <?php
 
 // Display an edit link for the application.
-$link = get_edit_post_link( $application->get_id(), 'link' );
-if ( $link ) {
+$application_link = get_edit_post_link( $application->get_id(), 'link' );
+if ( $application_link ) {
 	printf(
 		'<br/><p><a href="%1$s">%2$s</a></p>',
-		esc_url( $link ),
+		esc_url( $application_link ),
 		esc_html__( 'Edit Application', 'yikes-level-playing-field' )
+	);
+}
+
+// Display an edit link for the Job.
+$job_link = get_edit_post_link( $this->job_id, 'link' );
+if ( $job_link ) {
+	printf(
+		'<p><a href="%1$s">%2$s</a></p>',
+		esc_url( $job_link ),
+		esc_html__( 'Edit Job', 'yikes-level-playing-field' )
 	);
 }
