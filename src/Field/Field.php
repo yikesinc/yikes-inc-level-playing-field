@@ -25,12 +25,10 @@ interface Field {
 	 *
 	 * @since %VERSION%
 	 *
-	 * @param array $data The submission data to use for validation.
-	 *
 	 * @return mixed The validated value.
 	 * @throws InvalidField When the submission isn't valid.
 	 */
-	public function validate_submission( $data );
+	public function validate_submission();
 
 	/**
 	 * Set the parent field object for this field.
@@ -48,6 +46,15 @@ interface Field {
 	 * @return bool
 	 */
 	public function is_child();
+
+	/**
+	 * Set the data submitted to the field.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param mixed $data The submitted data for the field.
+	 */
+	public function set_submission( $data );
 
 	/**
 	 * Whether the field is repeatable.

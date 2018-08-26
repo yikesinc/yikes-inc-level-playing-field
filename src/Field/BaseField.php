@@ -59,6 +59,14 @@ abstract class BaseField implements Field {
 	protected $classes;
 
 	/**
+	 * Raw value submitted to the field.
+	 *
+	 * @since %VERSION%
+	 * @var mixed
+	 */
+	protected $raw_value;
+
+	/**
 	 * Whether the field is repeatable.
 	 *
 	 * @since %VERSION%
@@ -247,22 +255,27 @@ abstract class BaseField implements Field {
 	}
 
 	/**
+	 * Set the data submitted to the field.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param mixed $data The submitted data for the field.
+	 */
+	public function set_submission( $data ) {
+		$this->raw_value = $this->get_raw_value( $data );
+		$this->validate_raw_value();
+	}
+
+	/**
 	 * Validate the submission for the given field.
 	 *
 	 * @since %VERSION%
 	 *
-	 * @param array $data The submission data to use for validation.
-	 *
 	 * @return mixed The validated value.
 	 * @throws InvalidField When the submission isn't valid.
 	 */
-	public function validate_submission( $data ) {
-		$raw = $this->get_raw_value( $data );
-		if ( empty( $raw ) && $this->required ) {
-			throw InvalidField::field_required( $this->label );
-		}
-
-		$filtered = $this->sanitize_value( $raw );
+	public function validate_submission() {
+		$filtered = $this->sanitize_value( $this->raw_value );
 		if ( false === $filtered || empty( $filtered ) ) {
 			throw InvalidField::value_invalid( $this->label );
 		}
@@ -294,6 +307,19 @@ abstract class BaseField implements Field {
 
 		// Parent isn't repeatable, so get only the value we care about.
 		return isset( $data[ $m[3] ] ) ? $data[ $m[3] ] : '';
+	}
+
+	/**
+	 * Validate the raw value.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @throws InvalidField When the raw value is empty but the field is required.
+	 */
+	protected function validate_raw_value() {
+		if ( empty( $this->raw_value ) && $this->required ) {
+			throw InvalidField::field_required( $this->label );
+		}
 	}
 
 	/**
