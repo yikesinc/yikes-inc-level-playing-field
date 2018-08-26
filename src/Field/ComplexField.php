@@ -109,6 +109,19 @@ abstract class ComplexField extends BaseField {
 	}
 
 	/**
+	 * Get the raw submitted value.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param array $data Array where the raw value can be obtained.
+	 *
+	 * @return array
+	 */
+	protected function get_raw_value( $data ) {
+		return parent::get_raw_value( $data ) ?: [];
+	}
+
+	/**
 	 * Render the opening of a fieldset element.
 	 *
 	 * @since %VERSION%

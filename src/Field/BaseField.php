@@ -281,9 +281,19 @@ abstract class BaseField implements Field {
 	 */
 	protected function get_raw_value( $data ) {
 		preg_match( $this->id_pattern, $this->id, $m );
-		return ! isset( $m[2] )
-			? ( isset( $data[ $m[1] ] ) ? $data[ $m[1] ] : '' )
-			: ( isset( $data[ $m[1] ][ $m[2] ] ) ? $data[ $m[1] ][ $m[2] ] : '' );
+
+		// If this isn't a child field, return all of the data in the matching key.
+		if ( ! $this->is_child() ) {
+			return isset( $data[ $m[1] ] ) ? $data[ $m[1] ] : '';
+		}
+
+		// If the parent is repeatable, get all entries.
+		if ( $this->parent->is_repeatable() ) {
+			return array_column( $data, $m[3] );
+		}
+
+		// Parent isn't repeatable, so get only the value we care about.
+		return isset( $data[ $m[3] ] ) ? $data[ $m[3] ] : '';
 	}
 
 	/**
