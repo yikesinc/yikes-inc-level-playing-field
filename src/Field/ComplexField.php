@@ -68,6 +68,7 @@ abstract class ComplexField extends BaseField {
 	protected function generate_sub_fields() {
 		$classes        = array_merge( $this->classes, $this->get_classes() );
 		$default_fields = $this->get_default_fields();
+		$id_base        = $this->id . ( $this->repeatable ? '[0]' : '' );
 		foreach ( $default_fields as $field => $settings ) {
 			$settings = wp_parse_args( $settings, [
 				'label'    => ucwords( str_replace( [ '_', '-' ], ' ', $field ) ),
@@ -75,12 +76,9 @@ abstract class ComplexField extends BaseField {
 				'required' => true,
 			] );
 
-			// Set up the field ID, depending on whether the field is repeatable.
-			$id = $this->id . ( $this->repeatable ? '[0]' : '' ) . "[{$field}]";
-
 			// Instantiate the sub field.
 			$this->sub_fields[ $field ] = new $settings['class'](
-				$id,
+				"{$id_base}[{$field}]",
 				$settings['label'],
 				$classes,
 				(bool) $settings['required']
