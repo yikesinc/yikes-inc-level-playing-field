@@ -141,6 +141,16 @@ abstract class BaseField implements Field {
 	}
 
 	/**
+	 * Get whether this field is required or not.
+	 *
+	 * @since %VERSION%
+	 * @return bool
+	 */
+	public function is_required() {
+		return $this->required;
+	}
+
+	/**
 	 * Whether this field is repeatable.
 	 *
 	 * @since %VERSION%

@@ -56,4 +56,12 @@ interface Field {
 	 * @var bool
 	 */
 	public function is_repeatable();
+
+	/**
+	 * Get whether this field is required or not.
+	 *
+	 * @since %VERSION%
+	 * @return bool
+	 */
+	public function is_required();
 }
