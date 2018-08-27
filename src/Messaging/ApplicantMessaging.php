@@ -17,6 +17,7 @@ use Yikes\LevelPlayingField\Assets\StyleAsset;
 use Yikes\LevelPlayingField\CustomPostType\ApplicantManager;
 use Yikes\LevelPlayingField\Comment\ApplicantMessageRepository;
 use Yikes\LevelPlayingField\Comment\ApplicantMessage;
+use Yikes\LevelPlayingField\Email\ApplicantMessageEmail;
 
 /**
  * Class ApplicantMessaging.
@@ -235,6 +236,11 @@ class ApplicantMessaging extends BaseMessaging implements AssetsAware {
 		$new_message   = $message_class->create_comment( $post_id, $message );
 
 		if ( $new_message ) {
+
+			// Send the message as an email to the applicant.
+			// $email = new ApplicantMessageEmail( $post_id, $message );
+			// $email->send();
+
 			wp_send_json_success();
 		}
 
@@ -282,16 +288,20 @@ class ApplicantMessaging extends BaseMessaging implements AssetsAware {
 	 */
 	public static function exclude_applicant_messages( $clauses ) {
 
-		// Ensure this is a real screen object.
-		$screen = get_current_screen();
-		if ( ! ( $screen instanceof \WP_Screen ) ) {
-			return $comments_query;
-		}
+		// Always hide Applicant Messages on the front end.
+		if ( is_admin() ) {
 
-		// If we're looking at our the post type, do not hide the comments.
-		if ( static::POST_TYPE === $screen->post_type ) {
-			return $clauses;
-		}
+			// Ensure this is a real screen object.
+			$screen = get_current_screen();
+			if ( ! ( $screen instanceof \WP_Screen ) ) {
+				return $comments_query;
+			}
+
+			// If we're looking at our the post type, do not hide the comments.
+			if ( static::POST_TYPE === $screen->post_type ) {
+				return $clauses;
+			}
+		}			
 
 		$type              = ApplicantMessage::TYPE;
 		$clauses['where'] .= ( $clauses['where'] ? ' AND ' : '' ) . " comment_type != '{$type}' ";
