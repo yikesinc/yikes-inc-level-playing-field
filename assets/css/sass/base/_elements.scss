@@ -73,5 +73,7 @@ th {
 //--------------------------------------------------------------
 
 .lpf-form {
-	background-color: red;
+	.lpf-form-field.error-empty {
+		border: 1px solid #d76666;
+	}
 }
