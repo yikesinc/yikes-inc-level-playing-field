@@ -18,7 +18,6 @@ use Yikes\LevelPlayingField\Model\ApplicationRepository;
 use Yikes\LevelPlayingField\Model\JobRepository;
 use Yikes\LevelPlayingField\View\FormEscapedView;
 use Yikes\LevelPlayingField\View\NoOverrideLocationView;
-use Yikes\LevelPlayingField\Assets\Asset;
 use Yikes\LevelPlayingField\Assets\StyleAsset;
 
 /**
@@ -34,19 +33,6 @@ class Application extends BaseShortcode {
 	const SUBMITTED_URI = 'views/job-page-application-completed';
 	const CSS_HANDLE    = 'lpf-apps-css';
 	const CSS_URI       = 'assets/css/lpf-app-frontend';
-
-	/**
-	 * Get the array of known assets.
-	 *
-	 * @since %VERSION%
-	 *
-	 * @return Asset[]
-	 */
-	protected function get_assets() {
-		return [
-			new StyleAsset( self::CSS_HANDLE, self::CSS_URI ),
-		];
-	}
 
 	/**
 	 * The view URI to use.
@@ -196,6 +182,7 @@ class Application extends BaseShortcode {
 
 		return [
 			$repeater,
+			new StyleAsset( self::CSS_HANDLE, self::CSS_URI ),
 		];
 	}
 }

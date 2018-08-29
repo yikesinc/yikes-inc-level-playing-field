@@ -2,8 +2,10 @@
 jQuery(document).ready(function($) {
     $(window).load(function(){
         // Variables
-        const allFields = $('.lpf-form-field');
+        const allFields = $('.lpf-form-field:required');
         const submitBtn = $('.lpf-submit');
+
+        // Empty required field error checking.
         const submitValidation = (event) => {
             allFields.each( function() {
                 // Trim whitespace
@@ -12,12 +14,14 @@ jQuery(document).ready(function($) {
                 // If empty...
                 if (!trimmedValue) {
                     console.log('empty');
+                    $(this).before('<span class="error-prompt">Field can not be empty.</span>');
                     $(this).addClass('error-empty');
+                    event.preventDefault();
                 } else {
+                    $(this).parent().find('.error-prompt').remove();
                     $(this).removeClass('error-empty');
                 }
             });
-            event.preventDefault();
         }
 
         // When 'Submit' button is clicked...
