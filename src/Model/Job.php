@@ -110,7 +110,7 @@ final class Job extends CustomPostTypeEntity {
 	 * @return int
 	 */
 	public function get_application_id() {
-		return $this->application;
+		return (int) $this->application;
 	}
 
 	/**
