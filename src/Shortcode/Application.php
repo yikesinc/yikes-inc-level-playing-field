@@ -77,10 +77,21 @@ final class Application extends BaseShortcode {
 		$form_classes  = array_merge( [ 'lpf-form' ], $base_classes );
 		$field_classes = array_merge( [ 'lpf-form-field' ], $base_classes );
 
+		// Set up the form object.
+		$form = new ApplicationForm( $job->get_id(), $application, $field_classes );
+
+		// Look for a submission of the form.
+		$is_submitted = ! empty( $_POST );
+		if ( $is_submitted ) {
+			$form->set_submission( $_POST );
+			$form->validate_submission();
+		}
+
 		return [
 			'application'      => $application,
-			'application_form' => new ApplicationForm( $job->get_id(), $application, $field_classes ),
+			'application_form' => $form,
 			'form_classes'     => $form_classes,
+			'submitted'        => $is_submitted,
 		];
 	}
 
