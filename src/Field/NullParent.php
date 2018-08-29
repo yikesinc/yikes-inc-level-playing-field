@@ -45,11 +45,9 @@ class NullParent extends BaseField {
 	 *
 	 * @since %VERSION%
 	 *
-	 * @param array $data The submission data to use for validation.
-	 *
 	 * @return null A null placeholder.
 	 */
-	public function validate_submission( $data ) {
+	public function validate_submission() {
 		return null;
 	}
 }
