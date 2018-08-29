@@ -6,12 +6,9 @@
  * @author    Jeremy Pry
  * @license   GPL2
  */
-
 namespace Yikes\LevelPlayingField\View;
-
 use Yikes\LevelPlayingField\Exception\FailedToLoadView;
 use Yikes\LevelPlayingField\Exception\InvalidURI;
-
 /**
  * Class FormEscapedView.
  *
@@ -24,7 +21,6 @@ use Yikes\LevelPlayingField\Exception\InvalidURI;
  * @author  Jeremy Pry
  */
 final class FormEscapedView implements View {
-
 	/**
 	 * Form tags that are allowed to be rendered.
 	 *
@@ -77,7 +73,6 @@ final class FormEscapedView implements View {
 			'data-add-new-label' => true,
 		],
 	];
-
 	/**
 	 * View instance to decorate.
 	 *
@@ -86,7 +81,6 @@ final class FormEscapedView implements View {
 	 * @var View
 	 */
 	private $view;
-
 	/**
 	 * Tags that are allowed to pass through the escaping function.
 	 *
@@ -95,7 +89,6 @@ final class FormEscapedView implements View {
 	 * @var array
 	 */
 	private $allowed_tags = [];
-
 	/**
 	 * Instantiate a FormEscapedView object.
 	 *
@@ -112,7 +105,6 @@ final class FormEscapedView implements View {
 			? $this->prepare_allowed_tags( wp_kses_allowed_html( 'post' ) )
 			: $allowed_tags;
 	}
-
 	/**
 	 * Prepare an array of allowed tags by adding form elements to the existing
 	 * array.
@@ -130,7 +122,6 @@ final class FormEscapedView implements View {
 	private function prepare_allowed_tags( $allowed_tags ) {
 		return array_replace_recursive( $allowed_tags, $this->form_tags );
 	}
-
 	/**
 	 * Render a given URI.
 	 *
@@ -144,7 +135,6 @@ final class FormEscapedView implements View {
 	public function render( array $context = [] ) {
 		return wp_kses( $this->view->render( $context ), $this->allowed_tags );
 	}
-
 	/**
 	 * Render a partial view.
 	 *

@@ -118,6 +118,8 @@ class Application {
 			$type           = isset( Meta::FIELD_MAP[ $name ] ) ? Meta::FIELD_MAP[ $name ] : Types::TEXT;
 			$this->fields[] = new $type( $field_name, $field_label, $this->field_classes );
 		}
+		// Manually add the hidden Job ID field.
+		$this->fields[] = new Hidden( 'job_id', $this->application->get_id() );
 	}
 	/**
 	 * Set the array of classes to use for fields.
@@ -129,6 +131,7 @@ class Application {
 	public function set_field_classes( array $classes ) {
 		$this->field_classes = $classes;
 	}
+
 	/**
 	 * Render the form fields.
 	 *
