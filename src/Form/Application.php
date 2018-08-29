@@ -26,7 +26,7 @@ use Yikes\LevelPlayingField\Model\ApplicationMeta;
  * @property array   field_classes The array of classes used for field objects.
  * @property array   form_classes  The array of classes used for the main form element.
  */
-class Application {
+final class Application {
 
 	/**
 	 * The application object.

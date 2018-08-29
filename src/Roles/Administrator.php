@@ -15,7 +15,7 @@ namespace Yikes\LevelPlayingField\Roles;
  * @since   %VERSION%
  * @package Yikes\LevelPlayingField
  */
-class Administrator extends ExistingRole {
+final class Administrator extends ExistingRole {
 
 	const SLUG = 'administrator';
 

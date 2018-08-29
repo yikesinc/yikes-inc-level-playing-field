@@ -23,7 +23,7 @@ use Yikes\LevelPlayingField\Taxonomy\ApplicantStatus;
  * @since   %VERSION%
  * @package Yikes\LevelPlayingField
  */
-class ApplicantManager extends BasePostType implements AssetsAware {
+final class ApplicantManager extends BasePostType implements AssetsAware {
 
 	use AssetsAwareness;
 

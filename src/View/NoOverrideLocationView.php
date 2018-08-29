@@ -18,7 +18,7 @@ namespace Yikes\LevelPlayingField\View;
  * @since   %VERSION%
  * @package Yikes\LevelPlayingField
  */
-class NoOverrideLocationView extends TemplatedView {
+final class NoOverrideLocationView extends TemplatedView {
 
 	/**
 	 * Get the possible locations for the view.

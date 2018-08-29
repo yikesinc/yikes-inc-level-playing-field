@@ -15,7 +15,7 @@ namespace Yikes\LevelPlayingField\Roles;
  * @since   %VERSION%
  * @package Yikes\LevelPlayingField
  */
-class HumanResources extends BaseRole {
+final class HumanResources extends BaseRole {
 
 	const SLUG = 'human-resources';
 

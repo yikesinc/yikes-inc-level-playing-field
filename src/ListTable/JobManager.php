@@ -20,7 +20,7 @@ use Yikes\LevelPlayingField\Taxonomy\JobStatus;
  * @since   %VERSION%
  * @package Yikes\LevelPlayingField
  */
-class JobManager extends BasePostType {
+final class JobManager extends BasePostType {
 
 	/**
 	 * Register the WordPress hooks.

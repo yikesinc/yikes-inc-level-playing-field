@@ -23,7 +23,7 @@ use Yikes\LevelPlayingField\Assets\StyleAsset;
  * @since   %VERSION%
  * @package Yikes\LevelPlayingField
  */
-class ApplicantStatus extends BaseTaxonomy implements AssetsAware {
+final class ApplicantStatus extends BaseTaxonomy implements AssetsAware {
 
 	use AssetsAwareness;
 

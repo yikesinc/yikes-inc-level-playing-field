@@ -17,7 +17,7 @@ use Yikes\LevelPlayingField\Roles\Capabilities;
  * @package    Yikes\LevelPlayingField
  * @subpackage CustomPostType
  */
-class ApplicantManager extends BaseCustomPostType {
+final class ApplicantManager extends BaseCustomPostType {
 
 	const SLUG          = 'applicants';
 	const SINGULAR_SLUG = 'applicant';

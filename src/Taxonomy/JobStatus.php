@@ -18,7 +18,7 @@ use Yikes\LevelPlayingField\Roles\Capabilities;
  * @since   %VERSION%
  * @package Yikes\LevelPlayingField
  */
-class JobStatus extends BaseTaxonomy {
+final class JobStatus extends BaseTaxonomy {
 
 	const SLUG = 'job_status';
 

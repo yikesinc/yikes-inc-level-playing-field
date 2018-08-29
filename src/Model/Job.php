@@ -24,7 +24,7 @@ use Yikes\LevelPlayingField\Taxonomy\JobStatus;
  * @property array  address     The Job location address.
  * @property int    application The Job application ID.
  */
-class Job extends CustomPostTypeEntity {
+final class Job extends CustomPostTypeEntity {
 
 	/**
 	 * Get the job status.

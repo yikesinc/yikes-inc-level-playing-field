@@ -25,7 +25,7 @@ use Yikes\LevelPlayingField\View\NoOverrideLocationView;
  * @since   %VERSION%
  * @package Yikes\LevelPlayingField
  */
-class Application extends BaseShortcode {
+final class Application extends BaseShortcode {
 
 	const TAG           = 'lpf_application';
 	const VIEW_URI      = 'views/job-page-application';
