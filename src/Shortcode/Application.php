@@ -27,7 +27,6 @@ use Yikes\LevelPlayingField\Assets\StyleAsset;
  * @package Yikes\LevelPlayingField
  */
 class Application extends BaseShortcode {
-
 	const TAG           = 'lpf_application';
 	const VIEW_URI      = 'views/job-page-application';
 	const SUBMITTED_URI = 'views/job-page-application-completed';
@@ -179,10 +178,13 @@ class Application extends BaseShortcode {
 		$repeater->add_localization( 'lpfRepeater', [
 			'addNew' => _x( 'Add New', 'button for adding section in application', 'yikes-level-playing-field' ),
 		] );
+		$styles = new StyleAsset( self::CSS_HANDLE, self::CSS_URI );
+		$empty_input_check = new ScriptAsset( 'lpf-empty-input-check', 'assets/js/fields/empty-input-check', [ 'jquery' ] );
 
 		return [
 			$repeater,
-			new StyleAsset( self::CSS_HANDLE, self::CSS_URI ),
+			$styles,
+			$empty_input_check,
 		];
 	}
 }

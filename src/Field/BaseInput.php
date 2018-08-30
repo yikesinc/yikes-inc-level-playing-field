@@ -50,7 +50,6 @@ class BaseInput extends BaseField {
 	public function render() {
 		$type    = $this->get_type();
 		$classes = array_merge( $this->classes, [ "lpf-field-{$type}" ] );
-		$this->enqueue_validation_js();
 		?>
 		<div class="lpf-field-container">
 			<label class="lpf-input-label"><?php echo esc_html( $this->label ); ?>
@@ -73,14 +72,5 @@ class BaseInput extends BaseField {
 	protected function render_extra_attributes() {
 		$this->render_required();
 		$this->render_data_attributes();
-	}
-
-	/**
-	 * Enqueue validation JS scripts.
-	 *
-	 * @since %VERSION%
-	 */
-	protected function enqueue_validation_js() {
-		wp_enqueue_script( 'base-input', plugin_dir_url( __FILE__ ) . '/Validation/base-input.js', array(), 'all', true );
 	}
 }
