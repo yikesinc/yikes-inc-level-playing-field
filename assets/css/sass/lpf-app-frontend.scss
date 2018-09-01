@@ -2,9 +2,13 @@
 @import 'base/index';
 
 // Form
-.lpf-input-label {
+
+.lpf-input-label.error-prompt {
   position: relative;
-  .error-prompt {
+  .lpf-form-field {
+    border: 1px solid $color-red;
+  }
+  .error-text {
     font-size: 14px;
     display: inline-block;
     position: absolute;
@@ -25,6 +29,15 @@
       border-left: 8px solid transparent;
       border-right: 8px solid transparent;
       border-bottom: 8px solid $trans-red;
+    }
+    &.error-email {
+      background: $trans-purple;
+      &::after {
+        border-bottom-color: $trans-purple;
+      }
+      & + .lpf-form-field {
+        border-color: $trans-purple;
+      }
     }
   }
 }
