@@ -5,14 +5,14 @@
 
 .lpf-input-label.error-prompt {
   position: relative;
-  .lpf-form-field {
+  .lpf-form-field, textarea {
     border: 1px solid $color-red;
   }
   .error-text {
     font-size: 14px;
     display: inline-block;
     position: absolute;
-    left: 0;
+    left: 200px;
     bottom: -34px;
     background: $trans-red;
     padding: 5px;
@@ -37,6 +37,24 @@
       }
       & + .lpf-form-field {
         border-color: $trans-purple;
+      }
+    }
+    &.error-zip {
+      background: $trans-blue;
+      &::after {
+        border-bottom-color: $trans-blue;
+      }
+      & + .lpf-form-field {
+        border-color: $trans-blue;
+      }
+    }
+    &.error-year {
+      background: $trans-green;
+      &::after {
+        border-bottom-color: $trans-green;
+      }
+      & + .lpf-form-field {
+        border-color: $trans-green;
       }
     }
   }
