@@ -15,6 +15,9 @@ use Yikes\LevelPlayingField\Assets\AssetsAware;
 use Yikes\LevelPlayingField\Assets\AssetsAwareness;
 use Yikes\LevelPlayingField\Assets\ScriptAsset;
 use Yikes\LevelPlayingField\CustomPostType\ApplicantManager as ApplicantManagerCPT;
+use Yikes\LevelPlayingField\Model\Applicant;
+use Yikes\LevelPlayingField\Model\ApplicantRepository;
+use Yikes\LevelPlayingField\Model\JobRepository;
 use Yikes\LevelPlayingField\Taxonomy\ApplicantStatus;
 
 /**
@@ -101,8 +104,17 @@ final class ApplicantManager extends BasePostType implements AssetsAware {
 	 * @return array
 	 */
 	public function columns( $original_columns ) {
-		// @todo Decide whether we need custom columns for Applicants.
-		return $original_columns;
+		$status_tax = get_taxonomy( ApplicantStatus::SLUG );
+		$columns    = [
+			'cb'                           => $original_columns['cb'],
+			'id'                           => _x( 'ID', 'column heading', 'yikes-level-playing-field' ),
+			'job_title'                    => _x( 'Job Title', 'column heading', 'yikes-level-playing-field' ),
+			'avatar'                       => _x( 'Avatar', 'column heading', 'yikes-level-playing-field' ),
+			'nickname'                     => _x( 'Nick Name', 'column heading', 'yikes-level-playing-field' ),
+			"taxonomy-{$status_tax->name}" => $status_tax->label,
+		];
+
+		return $columns;
 	}
 
 	/**
@@ -114,7 +126,49 @@ final class ApplicantManager extends BasePostType implements AssetsAware {
 	 * @param int    $post_id     The post ID.
 	 */
 	public function column_content( $column_name, $post_id ) {
-		// @todo Decide whether we need custom column content for Applicants.
+		/** @var Applicant[] $applicants */
+		static $applicants     = [];
+		static $applicant_repo = null;
+		static $job_repo       = null;
+		static $job_titles     = [];
+
+		// Set up the two repositories only once.
+		if ( null === $job_repo ) {
+			$job_repo = new JobRepository();
+		}
+		if ( null === $applicant_repo ) {
+			$applicant_repo = new ApplicantRepository();
+		}
+
+		// Cache the applicant object for subsequent columns.
+		if ( ! isset( $applicants[ $post_id ] ) ) {
+			$applicants[ $post_id ] = $applicant_repo->find( $post_id );
+		}
+
+		switch ( $column_name ) {
+			case 'id':
+				echo esc_html( $post_id );
+				break;
+
+			case 'job_title':
+				$job_id = $applicants[ $post_id ]->get_job_id();
+				if ( ! isset( $job_titles[ $job_id ] ) ) {
+					$job                   = $job_repo->find( $job_id );
+					$job_titles[ $job_id ] = $job->get_title();
+				}
+				echo esc_html( $job_titles[ $job_id ] );
+				break;
+
+			case 'avatar':
+				$avatar = get_avatar( $applicants[ $post_id ]->get_email(), 32, 'identicon', '', [
+					'force_default' => true,
+					'force_display' => true,
+				] );
+				if ( false !== $avatar ) {
+					echo $avatar; // XSS ok.
+				}
+				break;
+		}
 	}
 
 	/**
@@ -122,7 +176,8 @@ final class ApplicantManager extends BasePostType implements AssetsAware {
 	 *
 	 * @since %VERSION%
 	 *
-	 * @param string $which The location of the extra table nav markup: 'top' or 'bottom' for WP_Posts_List_Table, 'bar' for WP_Media_List_Table.
+	 * @param string $which The location of the extra table nav markup: 'top' or 'bottom' for WP_Posts_List_Table,
+	 *                      'bar' for WP_Media_List_Table.
 	 */
 	protected function create_custom_dropdowns( $which ) {
 		if ( 'top' === $which ) {

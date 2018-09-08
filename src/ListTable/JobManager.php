@@ -99,7 +99,6 @@ final class JobManager extends BasePostType {
 	 * @since %VERSION%
 	 */
 	protected function job_category_dropdown_filter() {
-
 		$taxonomy = get_taxonomy( JobCategory::SLUG );
 
 		// Make sure we have the taxonomy.
