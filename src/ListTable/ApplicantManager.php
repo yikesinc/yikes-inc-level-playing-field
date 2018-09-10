@@ -9,6 +9,7 @@
 
 namespace Yikes\LevelPlayingField\ListTable;
 
+use WP_Post;
 use YIKES\LevelPlayingField\AdminPage\ExportApplicantsPage as ExportApplicantsPage;
 use Yikes\LevelPlayingField\Assets\Asset;
 use Yikes\LevelPlayingField\Assets\AssetsAware;
@@ -18,6 +19,7 @@ use Yikes\LevelPlayingField\CustomPostType\ApplicantManager as ApplicantManagerC
 use Yikes\LevelPlayingField\Model\Applicant;
 use Yikes\LevelPlayingField\Model\ApplicantRepository;
 use Yikes\LevelPlayingField\Model\JobRepository;
+use Yikes\LevelPlayingField\Roles\Capabilities;
 use Yikes\LevelPlayingField\Taxonomy\ApplicantStatus;
 
 /**
@@ -45,26 +47,9 @@ final class ApplicantManager extends BasePostType implements AssetsAware {
 		parent::register();
 		$this->register_assets();
 
-		add_filter( 'admin_enqueue_scripts', function( $hook ) {
-
-			// This filter should only run on an edit page. Make sure get_current_screen() exists.
-			if ( 'edit.php' !== $hook || ! function_exists( 'get_current_screen' ) ) {
-				return;
-			}
-
-			// Ensure this is a real screen object.
-			$screen = get_current_screen();
-			if ( ! ( $screen instanceof \WP_Screen ) ) {
-				return;
-			}
-
-			// Ensure this is the edit screen for the correct post type.
-			if ( $this->get_post_type() !== $screen->post_type ) {
-				return;
-			}
-
-			$this->enqueue_assets();
-		} );
+		add_filter( 'admin_enqueue_scripts', $this->get_enqueue_function(), 10, 2 );
+		add_filter( 'post_date_column_status', $this->get_post_status_function(), 10, 2 );
+		add_filter( 'post_row_actions', $this->get_row_actions_function(), 10, 2 );
 	}
 
 	/**
@@ -74,7 +59,7 @@ final class ApplicantManager extends BasePostType implements AssetsAware {
 	 *
 	 * @return Asset[]
 	 */
-	protected function get_assets() {
+	private function get_assets() {
 		$script = new ScriptAsset( self::JS_HANDLE, self::JS_URI, self::JS_DEPENDENCIES, self::JS_VERSION, ScriptAsset::ENQUEUE_FOOTER );
 		$script->add_localization(
 			'applicant_admin',
@@ -104,15 +89,27 @@ final class ApplicantManager extends BasePostType implements AssetsAware {
 	 * @return array
 	 */
 	public function columns( $original_columns ) {
-		$status_tax = get_taxonomy( ApplicantStatus::SLUG );
-		$columns    = [
-			'cb'                           => $original_columns['cb'],
-			'id'                           => _x( 'ID', 'column heading', 'yikes-level-playing-field' ),
-			'job_title'                    => _x( 'Job Title', 'column heading', 'yikes-level-playing-field' ),
-			'avatar'                       => _x( 'Avatar', 'column heading', 'yikes-level-playing-field' ),
-			'nickname'                     => _x( 'Nick Name', 'column heading', 'yikes-level-playing-field' ),
-			"taxonomy-{$status_tax->name}" => $status_tax->label,
-		];
+		static $columns = null;
+
+		// This method is called multiple times. Let's only generate new columns once.
+		if ( null === $columns ) {
+			$status_tax = get_taxonomy( ApplicantStatus::SLUG );
+			$columns    = [
+				'cb'                           => $original_columns['cb'],
+				'id'                           => _x( 'ID', 'column heading', 'yikes-level-playing-field' ),
+				'job_title'                    => _x( 'Job Title', 'column heading', 'yikes-level-playing-field' ),
+				'avatar'                       => _x( 'Avatar', 'column heading', 'yikes-level-playing-field' ),
+				'nickname'                     => _x( 'Nick Name', 'column heading', 'yikes-level-playing-field' ),
+				"taxonomy-{$status_tax->name}" => $status_tax->label,
+				'date'                         => $original_columns['date'],
+			];
+
+			// Only show the view column if the user can edit.
+			if ( current_user_can( Capabilities::EDIT_APPLICANTS ) ) {
+				// The column has no header, so use an empty string.
+				$columns['view'] = '';
+			}
+		}
 
 		return $columns;
 	}
@@ -168,6 +165,22 @@ final class ApplicantManager extends BasePostType implements AssetsAware {
 					echo $avatar; // XSS ok.
 				}
 				break;
+
+			case 'nickname':
+				// something for the nickname.
+				break;
+
+			case 'view':
+				if ( current_user_can( Capabilities::EDIT_APPLICANT, $post_id ) ) {
+					printf(
+						'<a href="%1$s" aria-label="%2$s">%3$s</a>',
+						esc_url( get_edit_post_link( $post_id ) ),
+						/* translators: %s is the applicant ID */
+						esc_attr( sprintf( __( 'Edit Applicant &#8220;%s&#8221;', 'yikes-level-playing-field' ), $post_id ) ),
+						esc_html__( 'View', 'yikes-level-playing-field' )
+					);
+				}
+				break;
 		}
 	}
 
@@ -190,7 +203,7 @@ final class ApplicantManager extends BasePostType implements AssetsAware {
 	 *
 	 * @since %VERSION%
 	 */
-	protected function applicant_status_dropdown_filter() {
+	private function applicant_status_dropdown_filter() {
 		$taxonomy = get_taxonomy( ApplicantStatus::SLUG );
 
 		// Make sure we have the taxonomy.
@@ -227,5 +240,77 @@ final class ApplicantManager extends BasePostType implements AssetsAware {
 	 */
 	protected function get_post_type() {
 		return ApplicantManagerCPT::SLUG;
+	}
+
+	/**
+	 * Get the function used to enqueue our assets.
+	 *
+	 * @since %VERSION%
+	 * @return \Closure
+	 */
+	private function get_enqueue_function() {
+		return function( $hook ) {
+
+			// This filter should only run on an edit page. Make sure get_current_screen() exists.
+			if ( 'edit.php' !== $hook || ! function_exists( 'get_current_screen' ) ) {
+				return;
+			}
+
+			// Ensure this is a real screen object.
+			$screen = get_current_screen();
+			if ( ! ( $screen instanceof \WP_Screen ) ) {
+				return;
+			}
+
+			// Ensure this is the edit screen for the correct post type.
+			if ( $this->get_post_type() !== $screen->post_type ) {
+				return;
+			}
+
+			$this->enqueue_assets();
+		};
+	}
+
+	/**
+	 * Get the function that filters the post status display.
+	 *
+	 * @since %VERSION%
+	 * @return \Closure
+	 */
+	private function get_post_status_function() {
+		/**
+		 * @param string  $status The post status string.
+		 * @param WP_Post $post   The post object.
+		 *
+		 * @return string
+		 */
+		return function( $status, $post ) {
+			if ( $this->get_post_type() !== $post->post_type ) {
+				return $status;
+			}
+
+			return '';
+		};
+	}
+
+	/**
+	 * Get the function to filter the row action links.
+	 *
+	 * @since %VERSION%
+	 * @return \Closure
+	 */
+	private function get_row_actions_function() {
+		/**
+		 * @param array $actions Row action links.
+		 * @param WP_Post $post The post object.
+		 * @return array
+		 */
+		return function( $actions, $post ) {
+			if ( $this->get_post_type() !== $post->post_type ) {
+				return $actions;
+			}
+
+			return [];
+		};
 	}
 }
