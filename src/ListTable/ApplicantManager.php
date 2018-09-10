@@ -188,6 +188,7 @@ final class ApplicantManager extends BasePostType implements AssetsAware {
 	protected function create_custom_dropdowns( $which ) {
 		if ( 'top' === $which ) {
 			$this->applicant_status_dropdown_filter();
+			$this->jobs_dropdown_filter();
 		}
 	}
 
@@ -223,6 +224,15 @@ final class ApplicantManager extends BasePostType implements AssetsAware {
 		);
 
 		wp_dropdown_categories( $dropdown_options );
+	}
+
+	/**
+	 * Output a custom dropdown for the available jobs.
+	 *
+	 * @since %VERSION%
+	 */
+	private function jobs_dropdown_filter() {
+		// @todo: make the dropdown filter for jobs.
 	}
 
 	/**
