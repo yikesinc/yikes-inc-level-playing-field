@@ -150,20 +150,13 @@ final class ApplicantManager extends BasePostType implements AssetsAware {
 			case 'job_title':
 				$job_id = $applicants[ $post_id ]->get_job_id();
 				if ( ! isset( $job_titles[ $job_id ] ) ) {
-					$job                   = $job_repo->find( $job_id );
-					$job_titles[ $job_id ] = $job->get_title();
+					$job_titles[ $job_id ] = $job_repo->find( $job_id )->get_title();
 				}
 				echo esc_html( $job_titles[ $job_id ] );
 				break;
 
 			case 'avatar':
-				$avatar = get_avatar( $applicants[ $post_id ]->get_email(), 32, 'identicon', '', [
-					'force_default' => true,
-					'force_display' => true,
-				] );
-				if ( false !== $avatar ) {
-					echo $avatar; // XSS ok.
-				}
+				echo $applicants[ $post_id ]->get_avatar_img(); // XSS ok.
 				break;
 
 			case 'nickname':

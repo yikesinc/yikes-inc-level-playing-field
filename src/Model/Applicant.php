@@ -84,6 +84,24 @@ final class Applicant extends CustomPostTypeEntity {
 	}
 
 	/**
+	 * Get the avatar image tag.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param int $size The image size.
+	 *
+	 * @return string The avatar image tag, or an empty string.
+	 */
+	public function get_avatar_img( $size = 32 ) {
+		$avatar = get_avatar( $this->get_email(), $size, 'identicon', '', [
+			'force_default' => true,
+			'force_display' => true,
+		] );
+
+		return $avatar ?: '';
+	}
+
+	/**
 	 * Persist the additional properties of the entity.
 	 *
 	 * @since %VERSION%
