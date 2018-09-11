@@ -10,12 +10,13 @@
 namespace Yikes\LevelPlayingField\ListTable;
 
 use WP_Post;
-use YIKES\LevelPlayingField\AdminPage\ExportApplicantsPage as ExportApplicantsPage;
+use Yikes\LevelPlayingField\AdminPage\ExportApplicantsPage;
 use Yikes\LevelPlayingField\Assets\Asset;
 use Yikes\LevelPlayingField\Assets\AssetsAware;
 use Yikes\LevelPlayingField\Assets\AssetsAwareness;
 use Yikes\LevelPlayingField\Assets\ScriptAsset;
 use Yikes\LevelPlayingField\CustomPostType\ApplicantManager as ApplicantManagerCPT;
+use Yikes\LevelPlayingField\Exception\InvalidPostID;
 use Yikes\LevelPlayingField\Model\Applicant;
 use Yikes\LevelPlayingField\Model\ApplicantRepository;
 use Yikes\LevelPlayingField\Model\JobRepository;
@@ -150,7 +151,12 @@ final class ApplicantManager extends BasePostType implements AssetsAware {
 			case 'job_title':
 				$job_id = $applicants[ $post_id ]->get_job_id();
 				if ( ! isset( $job_titles[ $job_id ] ) ) {
-					$job_titles[ $job_id ] = $job_repo->find( $job_id )->get_title();
+					try {
+						$job_titles[ $job_id ] = $job_repo->find( $job_id )->get_title();
+					} catch ( InvalidPostID $e ) {
+						echo esc_html__( 'No job set for applicant.', 'yikes-level-playing-field' );
+						break;
+					}
 				}
 				echo esc_html( $job_titles[ $job_id ] );
 				break;
