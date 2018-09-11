@@ -57,7 +57,7 @@ final class ApplicantManager extends BaseCustomPostType {
 				'items_list_navigation' => __( 'Applicants list navigation', 'yikes-level-playing-field' ),
 				'filter_items_list'     => __( 'Filter Applicants list', 'yikes-level-playing-field' ),
 			],
-			'supports'            => [],
+			'supports'            => false,
 			'taxonomies'          => [],
 			'hierarchical'        => false,
 			'public'              => true,
