@@ -16,6 +16,7 @@ use Yikes\LevelPlayingField\Assets\AssetsAwareness;
 use Yikes\LevelPlayingField\Assets\ScriptAsset;
 use Yikes\LevelPlayingField\CustomPostType\ApplicantManager as ApplicantCPT;
 use Yikes\LevelPlayingField\Service;
+use Yikes\LevelPlayingField\Taxonomy\ApplicantStatus;
 
 /**
  * Class ApplicantManager
@@ -38,6 +39,40 @@ final class ApplicantManager implements AssetsAware, Service {
 		add_action( 'in_admin_header', function() {
 			$this->set_screen_columns();
 		} );
+
+		add_action( 'edit_form_top', function() {
+			$this->enqueue_assets();
+			$this->do_applicant_content();
+		} );
+
+		add_action( "add_meta_boxes_{$this->get_post_type()}", function() {
+			$this->meta_boxes();
+		} );
+	}
+
+	/**
+	 * Register our meta boxes, and remove some default boxes.
+	 *
+	 * @since %VERSION%
+	 */
+	private function meta_boxes() {
+		// Remove some of the core boxes.
+		remove_meta_box( 'submitdiv', $this->get_post_type(), 'side' );
+		remove_meta_box( 'slugdiv', $this->get_post_type(), 'normal' );
+		remove_meta_box( 'authordiv', $this->get_post_type(), 'normal' );
+	}
+
+	/**
+	 * Output the Applicant content.
+	 *
+	 * @since %VERSION%
+	 */
+	private function do_applicant_content() {
+		echo 'Applicant content';
+
+		// @todo: this isn't the proper way to display the taxonomy box; change it.
+		$status = new ApplicantStatus();
+		$status->meta_box_cb( get_post() );
 	}
 
 	/**
