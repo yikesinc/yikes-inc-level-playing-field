@@ -34,7 +34,7 @@ abstract class BasePostType implements Service {
 		add_action( "manage_{$this->post_type}_posts_custom_column", [ $this, 'column_content' ], 10, 2 );
 
 		// This action will customize the available dropdowns for filtering.
-		add_action( 'restrict_manage_posts', array( $this, 'custom_dropdowns' ), 10, 2 );
+		add_action( 'restrict_manage_posts', [ $this, 'custom_dropdowns' ], 10, 2 );
 	}
 
 	/**

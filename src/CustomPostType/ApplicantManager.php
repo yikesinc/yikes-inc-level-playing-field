@@ -17,7 +17,7 @@ use Yikes\LevelPlayingField\Roles\Capabilities;
  * @package    Yikes\LevelPlayingField
  * @subpackage CustomPostType
  */
-class ApplicantManager extends BaseCustomPostType {
+final class ApplicantManager extends BaseCustomPostType {
 
 	const SLUG          = 'applicants';
 	const SINGULAR_SLUG = 'applicant';
@@ -57,7 +57,7 @@ class ApplicantManager extends BaseCustomPostType {
 				'items_list_navigation' => __( 'Applicants list navigation', 'yikes-level-playing-field' ),
 				'filter_items_list'     => __( 'Filter Applicants list', 'yikes-level-playing-field' ),
 			],
-			'supports'            => [],
+			'supports'            => false,
 			'taxonomies'          => [],
 			'hierarchical'        => false,
 			'public'              => true,

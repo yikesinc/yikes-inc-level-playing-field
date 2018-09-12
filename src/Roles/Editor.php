@@ -15,7 +15,7 @@ namespace Yikes\LevelPlayingField\Roles;
  * @since   %VERSION%
  * @package Yikes\LevelPlayingField
  */
-class Editor extends ExistingRole {
+final class Editor extends ExistingRole {
 
 	const SLUG = 'editor';
 

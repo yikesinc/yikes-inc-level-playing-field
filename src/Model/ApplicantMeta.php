@@ -9,6 +9,8 @@
 
 namespace Yikes\LevelPlayingField\Model;
 
+use Yikes\LevelPlayingField\CustomPostType\ApplicationManager;
+use Yikes\LevelPlayingField\CustomPostType\JobManager;
 use Yikes\LevelPlayingField\Field\Types;
 
 /**
@@ -55,6 +57,10 @@ interface ApplicantMeta {
 	const SCHOOLING      = 'schooling';
 	const CERTIFICATIONS = 'certifications';
 
+	// Admin fields.
+	const NICKNAME = 'nickname';
+
+	// Fields to make anonymous.
 	const ANONYMOUS_FIELDS = [
 		self::NAME         => 1,
 		self::EMAIL        => 1,
@@ -78,5 +84,13 @@ interface ApplicantMeta {
 		self::VOLUNTEER      => Types::VOLUNTEER,
 		self::SCHOOLING      => Types::SCHOOLING,
 		self::CERTIFICATIONS => Types::CERTIFICATIONS,
+	];
+
+	// Meta prefixed fields.
+	const META_PREFIXES = [
+		JobManager::SINGULAR_SLUG         => MetaLinks::JOB,
+		ApplicationManager::SINGULAR_SLUG => MetaLinks::APPLICATION,
+		self::EMAIL                       => self::META_PREFIX . self::EMAIL,
+		self::NAME                        => self::META_PREFIX . self::NAME,
 	];
 }

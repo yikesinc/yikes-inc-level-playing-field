@@ -9,13 +9,14 @@
 
 namespace Yikes\LevelPlayingField\Taxonomy;
 
-use Yikes\LevelPlayingField\CustomPostType\ApplicantManager;
-use Yikes\LevelPlayingField\Roles\Capabilities;
+use WP_Error;
 use Yikes\LevelPlayingField\Assets\Asset;
 use Yikes\LevelPlayingField\Assets\AssetsAware;
 use Yikes\LevelPlayingField\Assets\AssetsAwareness;
 use Yikes\LevelPlayingField\Assets\ScriptAsset;
 use Yikes\LevelPlayingField\Assets\StyleAsset;
+use Yikes\LevelPlayingField\CustomPostType\ApplicantManager;
+use Yikes\LevelPlayingField\Roles\Capabilities;
 
 /**
  * Class ApplicantStatus
@@ -23,7 +24,7 @@ use Yikes\LevelPlayingField\Assets\StyleAsset;
  * @since   %VERSION%
  * @package Yikes\LevelPlayingField
  */
-class ApplicantStatus extends BaseTaxonomy implements AssetsAware {
+final class ApplicantStatus extends BaseTaxonomy implements AssetsAware {
 
 	use AssetsAwareness;
 
@@ -47,8 +48,8 @@ class ApplicantStatus extends BaseTaxonomy implements AssetsAware {
 		$this->register_assets();
 		add_action( 'init', [ $this, 'default_terms' ] );
 
+		// Possibly enqueue our assets.
 		add_filter( 'admin_enqueue_scripts', function( $hook ) {
-
 			// This filter should only run on an edit page. Make sure get_current_screen() exists.
 			if ( ( 'post-new.php' !== $hook && 'post.php' !== $hook ) || ! function_exists( 'get_current_screen' ) ) {
 				return;
@@ -67,6 +68,27 @@ class ApplicantStatus extends BaseTaxonomy implements AssetsAware {
 
 			$this->enqueue_assets();
 		} );
+
+		// Filter the terms to only the default list.
+		add_filter( 'pre_insert_term', function( $term, $taxonomy ) {
+			// Return early if this isn't the correct taxonomy.
+			if ( $this->get_slug() !== $taxonomy ) {
+				return $term;
+			}
+
+			if ( ! array_key_exists( $term, $this->get_default_terms() ) ) {
+				return new WP_Error(
+					'lpf_invalid_term',
+					sprintf(
+						/* translators: %s refers to the term that was attempted to be inserted. */
+						__( 'The term "%s" is not a valid Applicant status.', 'yikes-level-playing-field' ),
+						$term
+					)
+				);
+			}
+
+			return $term;
+		} );
 	}
 
 	/**
@@ -75,24 +97,7 @@ class ApplicantStatus extends BaseTaxonomy implements AssetsAware {
 	 * @since %VERSION%
 	 */
 	public function default_terms() {
-		$terms = [
-			static::DEFAULT_TERM_NAME => [
-				'description' => __( 'Acceptance is pending', 'yikes-level-playing-field' ),
-				'slug'        => static::DEFAULT_TERM_SLUG,
-			],
-			'Yes'                     => [
-				'description' => __( 'Accept the applicant', 'yikes-level-playing-field' ),
-				'slug'        => 'yes',
-			],
-			'No'                      => [
-				'description' => __( 'Do not accept the applicant', 'yikes-level-playing-field' ),
-				'slug'        => 'no',
-			],
-			'Maybe'                   => [
-				'description' => __( 'Maybe accept the applicant', 'yikes-level-playing-field' ),
-				'slug'        => 'maybe',
-			],
-		];
+		$terms = $this->get_default_terms();
 
 		foreach ( $terms as $term => $args ) {
 			if ( ! term_exists( $term, $this->get_slug() ) ) {
@@ -120,7 +125,9 @@ class ApplicantStatus extends BaseTaxonomy implements AssetsAware {
 
 				// For users who cannot edit the taxonomy, show the assigned term.
 				$statuses    = get_the_terms( $post->ID, $tax_name );
-				$status_name = is_array( $statuses ) && isset( $statuses[0] ) ? $statuses[0]->name : static::DEFAULT_TERM_NAME;
+				$status_name = is_array( $statuses ) && isset( $statuses[0] )
+					? $statuses[0]->name
+					: static::DEFAULT_TERM_NAME;
 				printf( '<strong>%s</strong>', esc_html( $status_name ) );
 			}
 			?>
@@ -137,7 +144,6 @@ class ApplicantStatus extends BaseTaxonomy implements AssetsAware {
 	 */
 	protected function term_select( $post ) {
 		$tax_name  = $this->get_slug();
-		$taxonomy  = get_taxonomy( $tax_name );
 		$all_terms = get_terms( [
 			'taxonomy'   => $tax_name,
 			'hide_empty' => false,
@@ -158,9 +164,9 @@ class ApplicantStatus extends BaseTaxonomy implements AssetsAware {
 				}
 				?>
 				<button
-					type="button" 
-					data-value="<?php echo esc_attr( $term->term_id ); ?>" 
-					data-taxonomy="<?php echo esc_attr( $tax_name ); ?>" 
+					type="button"
+					data-value="<?php echo esc_attr( $term->term_id ); ?>"
+					data-taxonomy="<?php echo esc_attr( $tax_name ); ?>"
 					class="<?php echo false !== $selected_bool ? 'active' : ''; ?>"
 				>
 					<?php echo esc_html( $term->name ); ?>
@@ -171,14 +177,14 @@ class ApplicantStatus extends BaseTaxonomy implements AssetsAware {
 		</div>
 
 		<!-- Hidden input to hold our taxonomy choice -->
-		<input 
-			type="hidden" 
-			class="tax-input <?php echo esc_attr( $tax_name ); ?>" 
-			name="tax_input[<?php echo esc_attr( $tax_name ); ?>]" 
-			id="tax_input[<?php echo esc_attr( $tax_name ); ?>]" 
+		<input
+			type="hidden"
+			class="tax-input <?php echo esc_attr( $tax_name ); ?>"
+			name="tax_input[<?php echo esc_attr( $tax_name ); ?>]"
+			id="tax_input[<?php echo esc_attr( $tax_name ); ?>]"
 			value="<?php echo esc_attr( $selected_term ); ?>"
 		/>
-		
+
 		<?php
 	}
 
@@ -211,7 +217,7 @@ class ApplicantStatus extends BaseTaxonomy implements AssetsAware {
 			'show_admin_column'  => true,
 			'show_in_quick_edit' => true,
 			'query_var'          => true,
-			'meta_box_cb'        => [ $this, 'meta_box_cb' ],
+			'meta_box_cb'        => false,
 			'rewrite'            => [
 				'slug' => 'status',
 			],
@@ -252,6 +258,33 @@ class ApplicantStatus extends BaseTaxonomy implements AssetsAware {
 	protected function get_object_types() {
 		return [
 			ApplicantManager::SLUG,
+		];
+	}
+
+	/**
+	 * Get the default terms that we're setting.
+	 *
+	 * @since %VERSION%
+	 * @return array
+	 */
+	private function get_default_terms() {
+		return [
+			static::DEFAULT_TERM_NAME => [
+				'description' => __( 'Acceptance is pending', 'yikes-level-playing-field' ),
+				'slug'        => static::DEFAULT_TERM_SLUG,
+			],
+			'Yes'                     => [
+				'description' => __( 'Accept the applicant', 'yikes-level-playing-field' ),
+				'slug'        => 'yes',
+			],
+			'No'                      => [
+				'description' => __( 'Do not accept the applicant', 'yikes-level-playing-field' ),
+				'slug'        => 'no',
+			],
+			'Maybe'                   => [
+				'description' => __( 'Maybe accept the applicant', 'yikes-level-playing-field' ),
+				'slug'        => 'maybe',
+			],
 		];
 	}
 }

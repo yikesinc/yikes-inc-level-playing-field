@@ -57,7 +57,7 @@ class Application extends CustomPostTypeEntity {
 			AMMeta::PHONE          => false,
 			AMMeta::ADDRESS        => false,
 			AMMeta::COVER_LETTER   => false,
-			AMMeta::EDUCATION      => false,
+			AMMeta::SCHOOLING      => false,
 			AMMeta::CERTIFICATIONS => false,
 			AMMeta::SKILLS         => false,
 			AMMeta::LANGUAGES      => false,

@@ -20,7 +20,7 @@ use Yikes\LevelPlayingField\Taxonomy\JobStatus;
  * @since   %VERSION%
  * @package Yikes\LevelPlayingField
  */
-class JobManager extends BasePostType {
+final class JobManager extends BasePostType {
 
 	/**
 	 * Register the WordPress hooks.
@@ -99,7 +99,6 @@ class JobManager extends BasePostType {
 	 * @since %VERSION%
 	 */
 	protected function job_category_dropdown_filter() {
-
 		$taxonomy = get_taxonomy( JobCategory::SLUG );
 
 		// Make sure we have the taxonomy.

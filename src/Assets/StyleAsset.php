@@ -19,7 +19,7 @@ use Closure;
  * @package Yikes\LevelPlayingField\Assets
  * @author  Jeremy Pry
  */
-class StyleAsset extends BaseAsset {
+final class StyleAsset extends BaseAsset {
 
 	const MEDIA_ALL    = 'all';
 	const MEDIA_PRINT  = 'print';

@@ -23,7 +23,7 @@ use Yikes\LevelPlayingField\Exception\InvalidAnonymousData;
  * @since   %VERSION%
  * @package Yikes\LevelPlayingField
  */
-class Base64Anonymizer implements AnonymizerInterface {
+final class Base64Anonymizer implements AnonymizerInterface {
 
 	/**
 	 * Anonymize data with base64 encoding.
