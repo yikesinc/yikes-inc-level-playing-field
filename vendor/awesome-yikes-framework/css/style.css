@@ -27,7 +27,7 @@
 .yks_mbox th label, table.yks_mbox th label, table.form-table th label {
   display: block;
 }
-.yks_mbox p.yks_mbox_description, table.yks_mbox p.yks_mbox_description, table.form-table p.yks_mbox_description {
+.yks_mbox p.yks_mbox_description, .yks_mbox span.yks_mbox_description, table.yks_mbox p.yks_mbox_description, table.yks_mbox span.yks_mbox_description, table.form-table p.yks_mbox_description, table.form-table span.yks_mbox_description {
   color: #AAA;
   font-style: italic;
   margin: 2px 0 !important;

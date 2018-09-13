@@ -35,7 +35,7 @@ $input-repeating-width: 85%;
     }
   }
 
-  p.yks_mbox_description {
+  p.yks_mbox_description, span.yks_mbox_description {
     color: $grey;
     font-style: italic;
     margin: 2px 0 !important;
