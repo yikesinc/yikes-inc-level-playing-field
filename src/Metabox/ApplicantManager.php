@@ -17,6 +17,7 @@ use Yikes\LevelPlayingField\Assets\ScriptAsset;
 use Yikes\LevelPlayingField\CustomPostType\ApplicantManager as ApplicantCPT;
 use Yikes\LevelPlayingField\Service;
 use Yikes\LevelPlayingField\Taxonomy\ApplicantStatus;
+use Yikes\LevelPlayingField\Assets\StyleAsset;
 
 /**
  * Class ApplicantManager
@@ -27,6 +28,9 @@ use Yikes\LevelPlayingField\Taxonomy\ApplicantStatus;
 final class ApplicantManager implements AssetsAware, Service {
 
 	use AssetsAwareness;
+
+	const CSS_HANDLE = 'lpf-admin-applicant-css';
+	const CSS_URI    = 'assets/css/lpf-applicant-admin';
 
 	/**
 	 * Register the current Registerable.
@@ -68,7 +72,10 @@ final class ApplicantManager implements AssetsAware, Service {
 	 * @since %VERSION%
 	 */
 	private function do_applicant_content() {
-		echo 'Applicant content';
+		$html = '<div id="single-applicant-view">';
+		$html .= 'Applicant content';
+		$html .= '</div>';
+		echo $html;
 
 		// @todo: this isn't the proper way to display the taxonomy box; change it.
 		$status = new ApplicantStatus();
@@ -107,6 +114,7 @@ final class ApplicantManager implements AssetsAware, Service {
 
 		return [
 			$applicant,
+			new StyleAsset( self::CSS_HANDLE, self::CSS_URI ),
 		];
 	}
 
