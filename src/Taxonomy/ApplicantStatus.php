@@ -152,8 +152,14 @@ final class ApplicantStatus extends BaseTaxonomy implements AssetsAware {
 
 		$post_terms = get_the_terms( $post->ID, $tax_name );
 		$post_terms = $post_terms ? wp_list_pluck( $post_terms, 'term_id', 'slug' ) : [];
-		?>
 
+		// Set the default term.
+		$selected_term = '';
+		if ( empty( $post_terms ) ) {
+			$default_term  = get_term_by( 'slug', self::DEFAULT_TERM_SLUG, self::SLUG );
+			$selected_term = $default_term->term_id;
+		}
+		?>
 		<!-- Button group for selecting applicant status -->
 		<div class="tax-btn-group">
 			<?php
