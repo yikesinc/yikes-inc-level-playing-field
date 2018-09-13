@@ -63,15 +63,15 @@ class YIKES_Page_Meta_Boxes {
 			if ( 'plugin' === $mbox['type'] ) {
 
 				// Create a new top level menu item.
-				add_menu_page( $mbox['page_title'], $mbox['menu_title'], 'administrator', $mbox['id'], array( $this, 'the_plugin_page' ), $mbox['icon'], $mbox['position'] );
+				add_menu_page( $mbox['page_title'], $mbox['menu_title'], apply_filters( 'yikes-awesome-framework-edit-page-meta-cap', 'manage_options' ), $mbox['id'], array( $this, 'the_plugin_page' ), $mbox['icon'], $mbox['position'] );
 			} elseif ( 'theme' === $mbox['type'] ) {
 
 				// Add a submenu item to themes.
-				add_submenu_page( 'themes.php', $mbox['page_title'], $mbox['menu_title'], 'administrator', $mbox['id'], array( $this, 'the_plugin_page' ) );
+				add_submenu_page( 'themes.php', $mbox['page_title'], $mbox['menu_title'], apply_filters('yikes-awesome-framework-edit-page-meta-cap', 'manage_options' ), $mbox['id'], array( $this, 'the_plugin_page' ) );
 			} elseif ( 'settings' === $mbox['type'] ) {
 
 				// Add a submenu item to options.
-				add_submenu_page( 'options-general.php', $mbox['page_title'], $mbox['menu_title'], 'administrator', $mbox['id'], array( $this, 'the_plugin_page' ) );
+				add_submenu_page( 'options-general.php', $mbox['page_title'], $mbox['menu_title'], apply_filters( 'yikes-awesome-framework-edit-page-meta-cap', 'manage_options' ), $mbox['id'], array( $this, 'the_plugin_page' ) );
 			}
 		}
 	}
@@ -257,7 +257,7 @@ class YIKES_Page_Meta_Boxes {
 /* End class */
 
 /* init */
-if ( current_user_can( 'manage_options' ) ) {
+if ( current_user_can( apply_filters( 'yikes-awesome-framework-edit-page-meta-cap', 'manage_options' ) ) ) {
 	$yks_opages       = apply_filters( 'yks_option_pages', array() );
 	$yks_opages_mboxs = apply_filters( 'yks_mbox_fields', array() );
 

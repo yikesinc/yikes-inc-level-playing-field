@@ -99,6 +99,22 @@ if ( ! class_exists( 'YIKES_Awesome_Framework_100', false ) ) {
 				}
 			}
 
+			$custom_field_locations = apply_filters( 'yikes-awesome-framework-custom-field-directories', array() );
+
+			if ( ! empty( $custom_field_locations ) ) {
+
+				foreach ( $custom_field_locations as $dir ) {
+
+					foreach ( glob( ( $dir . '/save-options/yks-save-*.php' ) ) as $file ) {
+
+						$theme_override_files[] = $this->yks_cpt_get_filename_from_filepath( $file );
+
+						// Include theme file.
+						include( $file );
+					}
+				}
+			}
+
 			/**
 			 *  Get post processing functions -- only include file if not in theme.
 			 */

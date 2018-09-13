@@ -19,8 +19,20 @@ function yikes_get_file_template_location( $field ) {
 
 	} else {
 
-		return false;
+		$custom_field_locations = apply_filters( 'yikes-awesome-framework-custom-field-directories', array() );
+
+		if ( ! empty( $custom_field_locations ) ) {
+
+			foreach ( $custom_field_locations as $dir ) {
+
+				if ( file_exists( $dir . '/yks-' . $field_name_with_dashes . '.php' ) !== false ) {
+					return $dir . '/yks-' . $field_name_with_dashes . '.php';
+				}
+			}
+		}
 	}
+
+	return false;
 }
 
 
