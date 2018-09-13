@@ -1,0 +1,19 @@
+.google-maps-search-container .maparea {
+	height: 50vh;
+	width: 100%;
+}
+
+
+.google-maps-search-container input[type="text"].map-search {
+	width: 80%;
+	padding-right: 5px;
+	margin-bottom: 10px;
+}
+
+.google-maps-search-container .map-search-submit {
+	vertical-align: unset;
+}
+
+.google-maps-search-container .map-reset {
+	vertical-align: unset;	
+}
