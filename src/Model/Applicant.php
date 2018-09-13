@@ -11,6 +11,10 @@ namespace Yikes\LevelPlayingField\Model;
 
 use Yikes\LevelPlayingField\CustomPostType\ApplicationManager;
 use Yikes\LevelPlayingField\CustomPostType\JobManager;
+use Yikes\LevelPlayingField\Field\Certifications;
+use Yikes\LevelPlayingField\Field\Experience;
+use Yikes\LevelPlayingField\Field\Schooling;
+use Yikes\LevelPlayingField\Field\Volunteer;
 use Yikes\LevelPlayingField\Taxonomy\ApplicantStatus;
 
 /**
@@ -19,9 +23,15 @@ use Yikes\LevelPlayingField\Taxonomy\ApplicantStatus;
  * @since   %VERSION%
  * @package Yikes\LevelPlayingField
  *
- * @property string email  The Applicant email address.
- * @property int    job    The Job ID.
- * @property string status The Applicant status.
+ * @property string email          The Applicant email address.
+ * @property int    job            The Job ID.
+ * @property string status         The Applicant status.
+ * @property string cover_letter   The Applicant's cover letter.
+ * @property array  schooling      The Applicant's schooling details.
+ * @property array  certifications The Applicant's certifications.
+ * @property array  skills         The Applicant's skills.
+ * @property array  experience     The Applicant's experience.
+ * @property array  volunteer      The Applicant's volunteer work.
  */
 final class Applicant extends CustomPostTypeEntity {
 
@@ -102,6 +112,74 @@ final class Applicant extends CustomPostTypeEntity {
 	}
 
 	/**
+	 * Get the cover letter for the applicant.
+	 *
+	 * @since %VERSION%
+	 * @return string
+	 */
+	public function get_cover_letter() {
+		return $this->cover_letter;
+	}
+
+	/**
+	 * Get the schooling details for the applicant.
+	 *
+	 * @see Schooling
+	 *
+	 * @since %VERSION%
+	 * @return array
+	 */
+	public function get_schooling() {
+		return $this->schooling;
+	}
+
+	/**
+	 * Get the certifications for the applicant.
+	 *
+	 * @see Certifications
+	 *
+	 * @since %VERSION%
+	 * @return array
+	 */
+	public function get_certifications() {
+		return $this->certifications;
+	}
+
+	/**
+	 * Get the skills of the applicant.
+	 *
+	 * @since %VERSION%
+	 * @return array
+	 */
+	public function get_skills() {
+		return $this->skills;
+	}
+
+	/**
+	 * Get the job experience of the applicant.
+	 *
+	 * @see Experience
+	 *
+	 * @since %VERSION%
+	 * @return array
+	 */
+	public function get_job_experience() {
+		return $this->experience;
+	}
+
+	/**
+	 * Get the volunteer work for the applicant.
+	 *
+	 * @see Volunteer
+	 *
+	 * @since %VERSION%
+	 * @return array
+	 */
+	public function get_volunteer_work() {
+		return $this->volunteer;
+	}
+
+	/**
 	 * Persist the additional properties of the entity.
 	 *
 	 * @since %VERSION%
@@ -123,7 +201,12 @@ final class Applicant extends CustomPostTypeEntity {
 			ApplicationManager::SINGULAR_SLUG => 0,
 			ApplicantMeta::EMAIL              => '',
 			ApplicantMeta::NAME               => '',
-
+			ApplicantMeta::COVER_LETTER       => '',
+			ApplicantMeta::SCHOOLING          => [],
+			ApplicantMeta::CERTIFICATIONS     => [],
+			ApplicantMeta::SKILLS             => [],
+			ApplicantMeta::EXPERIENCE         => [],
+			ApplicantMeta::VOLUNTEER          => [],
 		];
 	}
 
