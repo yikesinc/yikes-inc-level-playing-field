@@ -25,6 +25,9 @@ $basefont: 16px;
   font-size: $basefont;
   border: 1px solid $color-silver-chalice;
   padding: 1rem;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 3rem;
   h1, .h1 {
     @include font-40;
   }
@@ -47,5 +50,8 @@ $basefont: 16px;
 
   h6, .h6 {
     @include font-18;
+  }
+  section {
+    grid-column: span 2;
   }
 }
