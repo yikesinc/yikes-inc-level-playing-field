@@ -72,9 +72,33 @@ final class ApplicantManager implements AssetsAware, Service {
 	 * @since %VERSION%
 	 */
 	private function do_applicant_content() {
-		$html = '<div id="single-applicant-view">';
-		$html .= 'Applicant content';
-		$html .= '</div>';
+		$html = '<article id="single-applicant-view">';
+		//$html .= 'Applicant content';
+		$html .= '<img class="avatar" src="https://via.placeholder.com/350x350" alt="Placeholder" />';
+		$html .= '<h5>Nickname 123</h5>';
+		$html .= '<h5><span class="label">Job:</span>';
+		$html .= 'Job Title</h5>';
+		$html .= '<section id="basic-info">';
+		$html .= '<h2>Basic Info</h2>';
+		$html .= '<p class="location"><span class="label">Location:</span>';
+		$html .= 'City, ';
+		$html .= 'State</p>';
+		$html .= '</section>';
+		$html .= '<section id="education">';
+		$html .= '<h2>Education</h2>';
+		$html .= '';
+		$html .= '</section>';
+		$html .= '<section id="skills">';
+		$html .= '</section>';
+		$html .= '<section id="languages">';
+		$html .= '</section>';
+		$html .= '<section id="experience">';
+		$html .= '</section>';
+		$html .= '<section id="volunteer-work">';
+		$html .= '</section>';
+		$html .= '<section id="misc">';
+		$html .= '</section>';
+		$html .= '</article>';
 		echo $html;
 
 		// @todo: this isn't the proper way to display the taxonomy box; change it.
