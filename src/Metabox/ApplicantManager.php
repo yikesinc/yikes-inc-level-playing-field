@@ -117,7 +117,7 @@ final class ApplicantManager implements AssetsAware, Service {
 					<?php
 					foreach ( $applicant->get_schooling() as $schooling ) {
 						printf(
-							'<li>Graduated with a [%s] from [%s] with a major in [%s]',
+							'<li>Graduated with a [%s] from [%s] with a major in [%s]</li>',
 							esc_html( $schooling['degree'] ),
 							esc_html( $schooling['type'] ),
 							esc_html( $schooling['major'] )
