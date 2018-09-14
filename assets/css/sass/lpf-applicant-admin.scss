@@ -1,0 +1,57 @@
+@import "utilities/index";
+
+/* Variables */
+$basefont: 16px;
+
+@mixin font-12 {font-size: 0.75rem;}
+@mixin font-13 {font-size: 0.812rem;}
+@mixin font-14 {font-size: 0.875rem;}
+@mixin font-15 {font-size: 0.937rem;}
+@mixin font-18 {font-size: 1.125rem;}
+@mixin font-20 {font-size: 1.25rem;}
+@mixin font-22 {font-size: 1.375rem;}
+@mixin font-24 {font-size: 1.5rem;}
+@mixin font-26 {font-size: 1.625rem;}
+@mixin font-28 {font-size: 1.75rem;}
+@mixin font-30 {font-size: 1.875rem;}
+@mixin font-32 {font-size: 2rem;}
+@mixin font-36 {font-size: 2.25rem;}
+@mixin font-40 {font-size: 2.5rem;}
+@mixin font-44 {font-size: 2.75rem;}
+
+
+/* Single View */
+#single-applicant-view {
+  font-size: $basefont;
+  border: 1px solid $color-silver-chalice;
+  padding: 1rem;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 3rem;
+  h1, .h1 {
+    @include font-40;
+  }
+
+  h2, .h2 {
+    @include font-32;
+  }
+
+  h3, .h3 {
+    @include font-28;
+  }
+
+  h4, .h4 {
+    @include font-24;
+  }
+
+  h5, .h5 {
+    @include font-20;
+  }
+
+  h6, .h6 {
+    @include font-18;
+  }
+  section {
+    grid-column: span 2;
+  }
+}
