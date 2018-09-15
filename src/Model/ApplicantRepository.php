@@ -9,6 +9,7 @@
 
 namespace Yikes\LevelPlayingField\Model;
 
+use stdClass;
 use WP_Post;
 use WP_Query;
 use Yikes\LevelPlayingField\CustomPostType\ApplicantManager as ApplicantCPT;
@@ -66,7 +67,7 @@ class ApplicantRepository extends CustomPostTypeRepository {
 	 *
 	 * @param WP_Post $post The post object to use when instantiating the model.
 	 *
-	 * @return CustomPostTypeEntity
+	 * @return Applicant
 	 */
 	protected function get_model_object( WP_Post $post ) {
 		return new Applicant( $post );
@@ -132,5 +133,26 @@ class ApplicantRepository extends CustomPostTypeRepository {
 		$query = new WP_Query( $args );
 
 		return absint( $query->found_posts );
+	}
+
+	/**
+	 * Create a new Applicant.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @return Applicant
+	 */
+	public function create() {
+		$post                 = new stdClass();
+		$post->ID             = 0;
+		$post->post_author    = '';
+		$post->post_date      = '';
+		$post->post_date_gmt  = '';
+		$post->post_type      = $this->get_post_type();
+		$post->comment_status = 'open';
+		$post->ping_status    = 'closed';
+		$post->page_template  = 'default';
+
+		return $this->get_model_object( new WP_Post( $post ) );
 	}
 }
