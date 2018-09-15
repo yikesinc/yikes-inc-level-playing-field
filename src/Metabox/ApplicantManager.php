@@ -45,6 +45,10 @@ final class ApplicantManager implements AssetsAware, Service {
 		} );
 
 		add_action( 'edit_form_top', function() {
+			if ( ! $this->is_applicant_screen() ) {
+				return;
+			}
+
 			$this->enqueue_assets();
 			$this->do_applicant_content();
 		} );
@@ -199,12 +203,11 @@ final class ApplicantManager implements AssetsAware, Service {
 	 * @since %VERSION%
 	 */
 	private function set_screen_columns() {
-		$screen = get_current_screen();
-		if ( $this->get_post_type() !== $screen->post_type ) {
+		if ( ! $this->is_applicant_screen() ) {
 			return;
 		}
 
-		$screen->add_option( 'layout_columns', [
+		add_screen_option( 'layout_columns', [
 			'default' => 1,
 			'max'     => 1,
 		] );
@@ -237,5 +240,19 @@ final class ApplicantManager implements AssetsAware, Service {
 	 */
 	private function get_post_type() {
 		return ApplicantCPT::SLUG;
+	}
+
+	/**
+	 * Determine we're on the applicant screen.
+	 *
+	 * @since %VERSION%
+	 * @return bool
+	 */
+	private function is_applicant_screen() {
+		if ( ! is_admin() || ! function_exists( 'get_current_screen' ) ) {
+			return false;
+		}
+
+		return $this->get_post_type() === get_current_screen()->post_type;
 	}
 }
