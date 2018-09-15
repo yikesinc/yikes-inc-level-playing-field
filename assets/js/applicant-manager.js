@@ -11,6 +11,7 @@ jQuery( document ).ready( function( $ ) {
 		 */
 		init: function() {
 			this.replaceTitle();
+			// hook this.editNickname() to the appropriate button.
 		},
 
 		/**
@@ -22,6 +23,14 @@ jQuery( document ).ready( function( $ ) {
 			}
 
 			heading.innerHTML = `${i18n.title} ${applicantID}`;
+		},
+
+		/**
+		 * Handle editing the applicant nickname.
+		 */
+		editNickname: function() {
+			// todo: handle editing the nick name.
+			// see editPermalink() in wp-admin/js/post.js
 		}
 	};
 
