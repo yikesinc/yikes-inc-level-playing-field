@@ -88,6 +88,7 @@ interface ApplicantMeta {
 		self::VOLUNTEER      => Types::VOLUNTEER,
 		self::SCHOOLING      => Types::SCHOOLING,
 		self::CERTIFICATIONS => Types::CERTIFICATIONS,
+		self::SKILLS         => Types::SKILLS,
 	];
 
 	// Meta prefixed fields.
