@@ -53,6 +53,10 @@ interface ApplicantMeta {
 	const DATES         = 'dates';
 	const POSITION      = 'position';
 
+	// Fields for other objects.
+	const JOB         = JobManager::SINGULAR_SLUG;
+	const APPLICATION = ApplicationManager::SLUG;
+
 	// Complex fields.
 	const SCHOOLING      = 'schooling';
 	const CERTIFICATIONS = 'certifications';
@@ -88,15 +92,15 @@ interface ApplicantMeta {
 
 	// Meta prefixed fields.
 	const META_PREFIXES = [
-		JobManager::SINGULAR_SLUG         => MetaLinks::JOB,
-		ApplicationManager::SINGULAR_SLUG => MetaLinks::APPLICATION,
-		self::EMAIL                       => self::META_PREFIX . self::EMAIL,
-		self::NAME                        => self::META_PREFIX . self::NAME,
-		self::COVER_LETTER                => self::META_PREFIX . self::COVER_LETTER,
-		self::SCHOOLING                   => self::META_PREFIX . self::SCHOOLING,
-		self::CERTIFICATIONS              => self::META_PREFIX . self::CERTIFICATIONS,
-		self::SKILLS                      => self::META_PREFIX . self::SKILLS,
-		self::EXPERIENCE                  => self::META_PREFIX . self::EXPERIENCE,
-		self::VOLUNTEER                   => self::META_PREFIX . self::VOLUNTEER,
+		self::JOB            => MetaLinks::JOB,
+		self::APPLICATION    => MetaLinks::APPLICATION,
+		self::EMAIL          => self::META_PREFIX . self::EMAIL,
+		self::NAME           => self::META_PREFIX . self::NAME,
+		self::COVER_LETTER   => self::META_PREFIX . self::COVER_LETTER,
+		self::SCHOOLING      => self::META_PREFIX . self::SCHOOLING,
+		self::CERTIFICATIONS => self::META_PREFIX . self::CERTIFICATIONS,
+		self::SKILLS         => self::META_PREFIX . self::SKILLS,
+		self::EXPERIENCE     => self::META_PREFIX . self::EXPERIENCE,
+		self::VOLUNTEER      => self::META_PREFIX . self::VOLUNTEER,
 	];
 }
