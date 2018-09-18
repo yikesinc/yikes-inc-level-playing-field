@@ -9,8 +9,6 @@
 
 namespace Yikes\LevelPlayingField\Model;
 
-use Yikes\LevelPlayingField\CustomPostType\ApplicationManager;
-use Yikes\LevelPlayingField\CustomPostType\JobManager;
 use Yikes\LevelPlayingField\Field\Certifications;
 use Yikes\LevelPlayingField\Field\Experience;
 use Yikes\LevelPlayingField\Field\Schooling;
@@ -34,6 +32,44 @@ use Yikes\LevelPlayingField\Taxonomy\ApplicantStatus;
  * @property array  volunteer      The Applicant's volunteer work.
  */
 final class Applicant extends CustomPostTypeEntity {
+
+	const SANITIZATION = [
+		ApplicantMeta::JOB            => FILTER_SANITIZE_NUMBER_INT,
+		ApplicantMeta::APPLICATION    => FILTER_SANITIZE_NUMBER_INT,
+		ApplicantMeta::EMAIL          => FILTER_SANITIZE_EMAIL,
+		ApplicantMeta::NAME           => FILTER_SANITIZE_STRING,
+		ApplicantMeta::COVER_LETTER   => FILTER_SANITIZE_STRING,
+		ApplicantMeta::STATUS         => FILTER_SANITIZE_STRING,
+		ApplicantMeta::SCHOOLING      => [
+			ApplicantMeta::INSTITUTION => FILTER_SANITIZE_STRING,
+			ApplicantMeta::TYPE        => FILTER_SANITIZE_STRING,
+			ApplicantMeta::YEAR        => FILTER_SANITIZE_NUMBER_INT,
+			ApplicantMeta::MAJOR       => FILTER_SANITIZE_STRING,
+			ApplicantMeta::DEGREE      => FILTER_SANITIZE_STRING,
+		],
+		ApplicantMeta::CERTIFICATIONS => [
+			ApplicantMeta::INSTITUTION => FILTER_SANITIZE_STRING,
+			ApplicantMeta::YEAR        => FILTER_SANITIZE_NUMBER_INT,
+			ApplicantMeta::TYPE        => FILTER_SANITIZE_STRING,
+			ApplicantMeta::STATUS      => FILTER_SANITIZE_STRING,
+		],
+		ApplicantMeta::SKILLS         => [
+			ApplicantMeta::SKILL       => FILTER_SANITIZE_STRING,
+			ApplicantMeta::PROFICIENCY => FILTER_SANITIZE_STRING,
+		],
+		ApplicantMeta::EXPERIENCE     => [
+			// todo: start and end dates.
+			ApplicantMeta::ORGANIZATION => FILTER_SANITIZE_STRING,
+			ApplicantMeta::INDUSTRY     => FILTER_SANITIZE_STRING,
+			ApplicantMeta::POSITION     => FILTER_SANITIZE_NUMBER_INT,
+		],
+		ApplicantMeta::VOLUNTEER      => [
+			// todo: start and end dates.
+			ApplicantMeta::ORGANIZATION => FILTER_SANITIZE_STRING,
+			ApplicantMeta::INDUSTRY     => FILTER_SANITIZE_STRING,
+			ApplicantMeta::POSITION     => FILTER_SANITIZE_NUMBER_INT,
+		],
+	];
 
 	/**
 	 * The applicant status.
@@ -74,6 +110,17 @@ final class Applicant extends CustomPostTypeEntity {
 	}
 
 	/**
+	 * Set the status of the current Applicant.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param string $status The status.
+	 */
+	public function set_status( $status ) {
+		$this->status = filter_var( $status, self::SANITIZATION[ ApplicantMeta::STATUS ] );
+	}
+
+	/**
 	 * Get the email address of the applicant.
 	 *
 	 * @since %VERSION%
@@ -81,6 +128,17 @@ final class Applicant extends CustomPostTypeEntity {
 	 */
 	public function get_email() {
 		return $this->email;
+	}
+
+	/**
+	 * Set the email for the applicant.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param string $email The applicant's email address.
+	 */
+	public function set_email( $email ) {
+		$this->email = filter_var( $email, self::SANITIZATION[ ApplicantMeta::EMAIL ] );
 	}
 
 	/**
@@ -122,10 +180,20 @@ final class Applicant extends CustomPostTypeEntity {
 	}
 
 	/**
+	 * Set the cover letter for the applicant.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param string $cover_letter The cover letter text.
+	 */
+	public function set_cover_letter( $cover_letter ) {
+		$this->cover_letter = filter_var( $cover_letter, self::SANITIZATION[ ApplicantMeta::COVER_LETTER ] );
+	}
+
+	/**
 	 * Get the schooling details for the applicant.
 	 *
-	 * @see Schooling
-	 *
+	 * @see   Schooling
 	 * @since %VERSION%
 	 * @return array
 	 */
@@ -134,15 +202,84 @@ final class Applicant extends CustomPostTypeEntity {
 	}
 
 	/**
+	 * Add a schooling to the applicant.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param array $schooling Array of schooling data.
+	 */
+	public function add_schooling( array $schooling ) {
+		// Remove any extraneous keys.
+		$schooling = array_intersect_key( $schooling, self::SANITIZATION[ ApplicantMeta::SCHOOLING ] );
+
+		// Sanitize each piece of data.
+		foreach ( $schooling as $key => &$value ) {
+			$value = filter_var( $value, self::SANITIZATION[ ApplicantMeta::SCHOOLING ][ $key ] );
+		}
+
+		$this->schooling[] = $schooling;
+	}
+
+	/**
+	 * Set the schooling for the applicant.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param array $schooling All schooling data.
+	 */
+	public function set_schooling( array $schooling ) {
+		// Reset current schooling to empty array.
+		$this->schooling = [];
+
+		// Add each individual schooling.
+		foreach ( $schooling as $item ) {
+			$this->add_schooling( $item );
+		}
+	}
+
+	/**
 	 * Get the certifications for the applicant.
 	 *
-	 * @see Certifications
-	 *
+	 * @see   Certifications
 	 * @since %VERSION%
 	 * @return array
 	 */
 	public function get_certifications() {
 		return $this->certifications;
+	}
+
+	/**
+	 * Add a certification to the applicant.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param array $certification The certification data.
+	 */
+	public function add_certification( array $certification ) {
+		// Remove any extraneous keys.
+		$certification = array_intersect_key( $certification, self::SANITIZATION[ ApplicantMeta::CERTIFICATIONS ] );
+
+		// Sanitize each piece of data.
+		foreach ( $certification as $key => &$value ) {
+			$value = filter_var( $value, self::SANITIZATION[ ApplicantMeta::CERTIFICATIONS ][ $key ] );
+		}
+
+		$this->certifications[] = $certification;
+	}
+
+	/**
+	 * Set the certification data for the applicant.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param array $certifications All certification data.
+	 */
+	public function set_certifications( array $certifications ) {
+		$this->certifications = [];
+
+		foreach ( $certifications as $certification ) {
+			$this->add_certification( $certification );
+		}
 	}
 
 	/**
@@ -158,8 +295,7 @@ final class Applicant extends CustomPostTypeEntity {
 	/**
 	 * Get the job experience of the applicant.
 	 *
-	 * @see Experience
-	 *
+	 * @see   Experience
 	 * @since %VERSION%
 	 * @return array
 	 */
@@ -170,7 +306,7 @@ final class Applicant extends CustomPostTypeEntity {
 	/**
 	 * Get the volunteer work for the applicant.
 	 *
-	 * @see Volunteer
+	 * @see   Volunteer
 	 *
 	 * @since %VERSION%
 	 * @return array
@@ -197,16 +333,16 @@ final class Applicant extends CustomPostTypeEntity {
 	 */
 	protected function get_lazy_properties() {
 		return [
-			JobManager::SINGULAR_SLUG         => 0,
-			ApplicationManager::SINGULAR_SLUG => 0,
-			ApplicantMeta::EMAIL              => '',
-			ApplicantMeta::NAME               => '',
-			ApplicantMeta::COVER_LETTER       => '',
-			ApplicantMeta::SCHOOLING          => [],
-			ApplicantMeta::CERTIFICATIONS     => [],
-			ApplicantMeta::SKILLS             => [],
-			ApplicantMeta::EXPERIENCE         => [],
-			ApplicantMeta::VOLUNTEER          => [],
+			ApplicantMeta::JOB            => 0,
+			ApplicantMeta::APPLICATION    => 0,
+			ApplicantMeta::EMAIL          => '',
+			ApplicantMeta::NAME           => '',
+			ApplicantMeta::COVER_LETTER   => '',
+			ApplicantMeta::SCHOOLING      => [],
+			ApplicantMeta::CERTIFICATIONS => [],
+			ApplicantMeta::SKILLS         => [],
+			ApplicantMeta::EXPERIENCE     => [],
+			ApplicantMeta::VOLUNTEER      => [],
 		];
 	}
 
