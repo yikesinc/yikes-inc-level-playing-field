@@ -16,6 +16,7 @@ use Yikes\LevelPlayingField\Assets\ScriptAsset;
 use Yikes\LevelPlayingField\Assets\StyleAsset;
 use Yikes\LevelPlayingField\CustomPostType\ApplicantManager as ApplicantCPT;
 use Yikes\LevelPlayingField\Model\Applicant;
+use Yikes\LevelPlayingField\Model\JobRepository;
 use Yikes\LevelPlayingField\Service;
 use Yikes\LevelPlayingField\Taxonomy\ApplicantStatus;
 
@@ -79,13 +80,11 @@ final class ApplicantManager implements AssetsAware, Service {
 		$applicant = new Applicant( get_post() );
 
 		// Trigger loading of applicant data.
-		$applicant->schooling;
-
-		// @todo: this isn't the proper way to display the taxonomy box; change it.
-		$status = new ApplicantStatus();
-		$status->meta_box_cb( get_post() );
+		$applicant->get_schooling();
 
 		// Placeholder data.
+		$applicant->name = 'Jane Doe';
+		$applicant->job = 13;
 		$applicant->schooling = [
 			[
 				'degree' => 'Diploma',
@@ -98,20 +97,57 @@ final class ApplicantManager implements AssetsAware, Service {
 				'major'  => 'Accounting',
 			],
 		];
+		$applicant->certifications = [
+			[
+				'certification' => 'Something One',
+				'type'   => 'High School',
+				'status'  => 'Active',
+			],
+			[
+				'certification' => 'Something Two',
+				'type'   => 'College',
+				'status'  => 'Inactive',
+			],
+		];
+		$applicant->experience = [
+			[
+				'position' => 'Regional Manager',
+				'industry'   => 'Hospitality',
+				'dates'  => '3',
+			],
+			[
+				'position' => 'Assistant (to the) Regional Manager',
+				'industry'   => 'Construction',
+				'dates'  => '1',
+			],
+		];
+
+		// Get job data.
+		$job_repo = new JobRepository();
+		$job = $job_repo->find( $applicant->get_job_id() );
 		?>
 
 		<article id="single-applicant-view">
 			<section id="header">
 				<?php echo $applicant->get_avatar_img( 350 ); // XSS ok. ?>
-				<h5>Nickname 123</h5>
+				<h5><?php echo $applicant->name; ?></h5>
 				<h5><span class="label">Job:</span>
-					Job Title</h5>
+					<?php $job->get_title(); ?></h5>
+				<?php
+				// @todo: this isn't the proper way to display the taxonomy box; change it.
+				$status = new ApplicantStatus();
+				$status->meta_box_cb( get_post() );
+				?>
 			</section>
 			<section id="basic-info">
 				<h2>Basic Info</h2>
 				<p class="location"><span class="label">Location:</span>
 					City,
 					State</p>
+				<p class="cover-letter">
+					<span class="label">Cover Letter:</span>
+					<a href="#">View Cover Letter</a>
+				</p>
 			</section>
 			<section id="education">
 				<h2>Education</h2>
@@ -130,9 +166,16 @@ final class ApplicantManager implements AssetsAware, Service {
 				</ol>
 				<h5>Certifications</h5>
 				<ol>
-					<li>Certified in [ certification ] from [ institution type ]. Status: [ status ]</li>
-					<li>Certified in [ certification ] from [ institution type ]. Status: [ status ]</li>
-					<li>Certified in [ certification ] from [ institution type ]. Status: [ status ]</li>
+					<?php
+					foreach ( $applicant->get_certifications() as $certification ) {
+						printf(
+							'<li>Certified in [%s] from [%s]. Status: [%s]</li>',
+							esc_html( $certification['certification'] ),
+							esc_html( $certification['type'] ),
+							esc_html( $certification['status'] )
+						);
+					}
+					?>
 				</ol>
 			</section>
 			<section id="skills">
@@ -168,9 +211,16 @@ final class ApplicantManager implements AssetsAware, Service {
 			<section id="experience">
 				<h2>Experience</h2>
 				<ol>
-					<li>[ position ] in [ industry ] for x years</li>
-					<li>[ position ] in [ industry ] for x years</li>
-					<li>[ position ] in [ industry ] for x years</li>
+					<?php
+					foreach ( $applicant->get_job_experience() as $experience ) {
+						printf(
+							'<li>[ %s ] in [ %s ] for x years</li>',
+							esc_html( $experience['position'] ),
+							esc_html( $experience['industry'] ),
+							esc_html( $experience['dates'] )
+						);
+					}
+					?>
 				</ol>
 			</section>
 			<section id="volunteer-work">
