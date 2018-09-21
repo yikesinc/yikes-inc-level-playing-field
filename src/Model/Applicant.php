@@ -9,6 +9,7 @@
 
 namespace Yikes\LevelPlayingField\Model;
 
+use WP_Term;
 use Yikes\LevelPlayingField\Field\Certifications;
 use Yikes\LevelPlayingField\Field\Experience;
 use Yikes\LevelPlayingField\Field\Schooling;
@@ -78,26 +79,6 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @var string
 	 */
 	private $status;
-
-	/**
-	 * Magic getter method to fetch meta properties only when requested.
-	 *
-	 * @since %VERSION%
-	 *
-	 * @param string $property Property that was requested.
-	 *
-	 * @return mixed
-	 */
-	public function __get( $property ) {
-		// Set the status separately, since it is a taxonomy.
-		if ( 'status' === $property ) {
-			$this->status = wp_get_object_terms( $this->get_id(), ApplicantStatus::SLUG )[0];
-
-			return $this->status;
-		}
-
-		return parent::__get( $property );
-	}
 
 	/**
 	 * Get the status of the applicant.
@@ -343,6 +324,7 @@ final class Applicant extends CustomPostTypeEntity {
 			ApplicantMeta::SKILLS         => [],
 			ApplicantMeta::EXPERIENCE     => [],
 			ApplicantMeta::VOLUNTEER      => [],
+			ApplicantMeta::STATUS         => ApplicantStatus::DEFAULT_TERM_NAME,
 		];
 	}
 
@@ -358,7 +340,12 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @param string $property Name of the property to load.
 	 */
 	protected function load_lazy_property( $property ) {
-		// Load properties from post meta.
+		if ( ApplicantMeta::STATUS === $property ) {
+			$this->load_status();
+			return;
+		}
+
+		// Load other properties from post meta.
 		$meta = get_post_meta( $this->get_id() );
 		foreach ( $this->get_lazy_properties() as $key => $default ) {
 			if ( ! array_key_exists( $key, ApplicantMeta::META_PREFIXES ) ) {
@@ -370,5 +357,21 @@ final class Applicant extends CustomPostTypeEntity {
 				? $meta[ $prefixed_key ][0]
 				: $default;
 		}
+	}
+
+	/**
+	 * Load the status of the Applicant.
+	 *
+	 * @since %VERSION%
+	 */
+	private function load_status() {
+		/** @var WP_Term[] $terms */
+		$terms = wp_get_object_terms( $this->get_id(), ApplicantStatus::SLUG );
+		if ( empty( $terms ) || is_wp_error( $terms ) ) {
+			$this->status = $this->get_lazy_properties()[ ApplicantMeta::STATUS ];
+			return;
+		}
+
+		$this->status = $terms[0]->name;
 	}
 }
