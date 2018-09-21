@@ -10,6 +10,8 @@
 namespace Yikes\LevelPlayingField\Model;
 
 use WP_Term;
+use Yikes\LevelPlayingField\Exception\EmptyArray;
+use Yikes\LevelPlayingField\Exception\InvalidKey;
 use Yikes\LevelPlayingField\Field\Certifications;
 use Yikes\LevelPlayingField\Field\Experience;
 use Yikes\LevelPlayingField\Field\Schooling;
@@ -73,6 +75,14 @@ final class Applicant extends CustomPostTypeEntity {
 	];
 
 	/**
+	 * Array of changed properties.
+	 *
+	 * @since %VERSION%
+	 * @var array
+	 */
+	private $changes = [];
+
+	/**
 	 * The applicant status.
 	 *
 	 * @since %VERSION%
@@ -99,6 +109,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 */
 	public function set_status( $status ) {
 		$this->status = filter_var( $status, self::SANITIZATION[ ApplicantMeta::STATUS ] );
+		$this->changed_property( ApplicantMeta::STATUS );
 	}
 
 	/**
@@ -120,6 +131,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 */
 	public function set_email( $email ) {
 		$this->email = filter_var( $email, self::SANITIZATION[ ApplicantMeta::EMAIL ] );
+		$this->changed_property( ApplicantMeta::EMAIL );
 	}
 
 	/**
@@ -130,6 +142,18 @@ final class Applicant extends CustomPostTypeEntity {
 	 */
 	public function get_job_id() {
 		return (int) $this->job;
+	}
+
+	/**
+	 * Set the Job ID for the applicant.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param int $job_id The job ID.
+	 */
+	public function set_job_id( $job_id ) {
+		$this->job = (int) $job_id;
+		$this->changed_property( ApplicantMeta::JOB );
 	}
 
 	/**
@@ -169,6 +193,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 */
 	public function set_cover_letter( $cover_letter ) {
 		$this->cover_letter = filter_var( $cover_letter, self::SANITIZATION[ ApplicantMeta::COVER_LETTER ] );
+		$this->changed_property( ApplicantMeta::COVER_LETTER );
 	}
 
 	/**
@@ -190,15 +215,8 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @param array $schooling Array of schooling data.
 	 */
 	public function add_schooling( array $schooling ) {
-		// Remove any extraneous keys.
-		$schooling = array_intersect_key( $schooling, self::SANITIZATION[ ApplicantMeta::SCHOOLING ] );
-
-		// Sanitize each piece of data.
-		foreach ( $schooling as $key => &$value ) {
-			$value = filter_var( $value, self::SANITIZATION[ ApplicantMeta::SCHOOLING ][ $key ] );
-		}
-
-		$this->schooling[] = $schooling;
+		$this->schooling[] = $this->filter_and_sanitize( $schooling, ApplicantMeta::SCHOOLING );
+		$this->changed_property( ApplicantMeta::SCHOOLING );
 	}
 
 	/**
@@ -211,6 +229,12 @@ final class Applicant extends CustomPostTypeEntity {
 	public function set_schooling( array $schooling ) {
 		// Reset current schooling to empty array.
 		$this->schooling = [];
+
+		// Passing an empty array is a way to remove schooling.
+		if ( empty( $schooling ) ) {
+			$this->changed_property( ApplicantMeta::SCHOOLING );
+			return;
+		}
 
 		// Add each individual schooling.
 		foreach ( $schooling as $item ) {
@@ -237,15 +261,8 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @param array $certification The certification data.
 	 */
 	public function add_certification( array $certification ) {
-		// Remove any extraneous keys.
-		$certification = array_intersect_key( $certification, self::SANITIZATION[ ApplicantMeta::CERTIFICATIONS ] );
-
-		// Sanitize each piece of data.
-		foreach ( $certification as $key => &$value ) {
-			$value = filter_var( $value, self::SANITIZATION[ ApplicantMeta::CERTIFICATIONS ][ $key ] );
-		}
-
-		$this->certifications[] = $certification;
+		$this->certifications[] = $this->filter_and_sanitize( $certification, ApplicantMeta::CERTIFICATIONS );
+		$this->changed_property( ApplicantMeta::CERTIFICATIONS );
 	}
 
 	/**
@@ -257,6 +274,12 @@ final class Applicant extends CustomPostTypeEntity {
 	 */
 	public function set_certifications( array $certifications ) {
 		$this->certifications = [];
+
+		// Passing an empty array is a way to remove certifications.
+		if ( empty( $certifications ) ) {
+			$this->changed_property( ApplicantMeta::CERTIFICATIONS );
+			return;
+		}
 
 		foreach ( $certifications as $certification ) {
 			$this->add_certification( $certification );
@@ -274,6 +297,39 @@ final class Applicant extends CustomPostTypeEntity {
 	}
 
 	/**
+	 * Add a skill to the applicant.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param array $skill The skill data.
+	 */
+	public function add_skill( array $skill ) {
+		$this->skills[] = $this->filter_and_sanitize( $skill, ApplicantMeta::SKILLS );
+		$this->changed_property( ApplicantMeta::SKILLS );
+	}
+
+	/**
+	 * Set the skills for the applicant.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param array $skills The skills for the applicant.
+	 */
+	public function set_skills( array $skills ) {
+		$this->skills = [];
+
+		// Passing an empty array is a way to remove skills.
+		if ( empty( $skills ) ) {
+			$this->changed_property( ApplicantMeta::SKILLS );
+			return;
+		}
+
+		foreach ( $skills as $skill ) {
+			$this->add_skill( $skill );
+		}
+	}
+
+	/**
 	 * Get the job experience of the applicant.
 	 *
 	 * @see   Experience
@@ -282,6 +338,39 @@ final class Applicant extends CustomPostTypeEntity {
 	 */
 	public function get_job_experience() {
 		return $this->experience;
+	}
+
+	/**
+	 * Add a experience to the applicant.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param array $experience The experience data.
+	 */
+	public function add_experience( array $experience ) {
+		$this->experience[] = $this->filter_and_sanitize( $experience, ApplicantMeta::EXPERIENCE );
+		$this->changed_property( ApplicantMeta::EXPERIENCE );
+	}
+
+	/**
+	 * Set the experiences for the applicant.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param array $experiences The experiences for the applicant.
+	 */
+	public function set_experience( array $experiences ) {
+		$this->experience = [];
+
+		// Passing an empty array is a way to remove experiences.
+		if ( empty( $experiences ) ) {
+			$this->changed_property( ApplicantMeta::EXPERIENCE );
+			return;
+		}
+
+		foreach ( $experiences as $experience ) {
+			$this->add_experience( $experience );
+		}
 	}
 
 	/**
@@ -297,12 +386,62 @@ final class Applicant extends CustomPostTypeEntity {
 	}
 
 	/**
+	 * Add volunteer work to the applicant.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param array $volunteer Array of volunteer work.
+	 */
+	public function add_volunteer_work( array $volunteer ) {
+		$this->volunteer[] = $this->filter_and_sanitize( $volunteer, ApplicantMeta::VOLUNTEER );
+		$this->changed_property( ApplicantMeta::VOLUNTEER );
+	}
+
+	/**
+	 * Set the volunteer work for the applicant.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param array $volunteer The volunteer work for the applicant.
+	 */
+	public function set_volunteer_work( array $volunteer ) {
+		$this->volunteer = [];
+
+		// Passing an empty array will remove volunteer work.
+		if ( empty( $volunteer ) ) {
+			$this->changed_property( ApplicantMeta::VOLUNTEER );
+			return;
+		}
+
+		foreach ( $volunteer as $item ) {
+			$this->add_volunteer_work( $item );
+		}
+	}
+
+	/**
 	 * Persist the additional properties of the entity.
 	 *
 	 * @since %VERSION%
 	 */
 	public function persist_properties() {
-		// TODO: Implement persist_properties() method.
+		foreach ( $this->get_lazy_properties() as $key => $default ) {
+			// Only allow changes via class methods.
+			if ( ! array_key_exists( $key, $this->changes ) ) {
+				continue;
+			}
+
+			// Update the status.
+			if ( ApplicantMeta::STATUS === $key ) {
+				$this->persist_status();
+			} elseif ( $this->$key === $default ) {
+				// Default meta value can be deleted from the DB.
+				delete_post_meta( $this->post->ID, ApplicantMeta::META_PREFIXES[ $key ] );
+			} else {
+				update_post_meta( $this->post->ID, ApplicantMeta::META_PREFIXES[ $key ], $this->$key );
+			}
+
+			unset( $this->changes[ $key ] );
+		}
 	}
 
 	/**
@@ -324,7 +463,7 @@ final class Applicant extends CustomPostTypeEntity {
 			ApplicantMeta::SKILLS         => [],
 			ApplicantMeta::EXPERIENCE     => [],
 			ApplicantMeta::VOLUNTEER      => [],
-			ApplicantMeta::STATUS         => ApplicantStatus::DEFAULT_TERM_NAME,
+			ApplicantMeta::STATUS         => ApplicantStatus::DEFAULT_TERM_SLUG,
 		];
 	}
 
@@ -372,6 +511,57 @@ final class Applicant extends CustomPostTypeEntity {
 			return;
 		}
 
-		$this->status = $terms[0]->name;
+		$this->status = $terms[0]->slug;
+	}
+
+	/**
+	 * Filter and sanitize data according to the sanitization rules.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param array  $data The data to filter and sanitize.
+	 * @param string $key  The sanitization key.
+	 *
+	 * @return array
+	 * @throws InvalidKey When the provided key is not in self::SANITIZATION.
+	 * @throws EmptyArray When an empty array of data is provided.
+	 */
+	private function filter_and_sanitize( $data, $key ) {
+		if ( ! array_key_exists( $key, self::SANITIZATION ) ) {
+			throw InvalidKey::not_found( $key, __METHOD__ );
+		}
+
+		// Remove any extraneous keys.
+		$data = array_intersect_key( $data, self::SANITIZATION[ $key ] );
+		if ( empty( $data ) ) {
+			throw EmptyArray::from_function( __METHOD__ );
+		}
+
+		// Sanitize each piece of data.
+		foreach ( $data as $index => &$value ) {
+			$value = filter_var( $value, self::SANITIZATION[ $key ][ $index ] );
+		}
+
+		return $data;
+	}
+
+	/**
+	 * Persist the status of the applicant.
+	 *
+	 * @since %VERSION%
+	 */
+	private function persist_status() {
+		wp_set_object_terms( $this->post->ID, $this->status, ApplicantStatus::SLUG );
+	}
+
+	/**
+	 * Register that a property has been changed.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param string $property The property that has changed.
+	 */
+	private function changed_property( $property ) {
+		$this->changes[ $property ] = true;
 	}
 }
