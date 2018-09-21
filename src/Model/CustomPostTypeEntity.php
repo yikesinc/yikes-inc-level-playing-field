@@ -31,6 +31,14 @@ abstract class CustomPostTypeEntity implements Entity {
 	protected $post;
 
 	/**
+	 * Whether post in this object has been changed.
+	 *
+	 * @since %VERSION%
+	 * @var bool
+	 */
+	protected $post_changed = false;
+
+	/**
 	 * Instantiate a CustomPostTypeEntity object.
 	 *
 	 * @since %VERSION%
@@ -82,6 +90,7 @@ abstract class CustomPostTypeEntity implements Entity {
 	 * @param string $title New title of the post.
 	 */
 	public function set_title( $title ) {
+		$this->post_changed     = true;
 		$this->post->post_title = $title;
 	}
 
@@ -104,6 +113,7 @@ abstract class CustomPostTypeEntity implements Entity {
 	 * @param string $content New content of the post.
 	 */
 	public function set_content( $content ) {
+		$this->post_changed       = true;
 		$this->post->post_content = $content;
 	}
 
@@ -127,6 +137,35 @@ abstract class CustomPostTypeEntity implements Entity {
 		trigger_error( esc_html( $message ), E_USER_NOTICE );
 
 		return null;
+	}
+
+	/**
+	 * Persist the post object and post properties.
+	 *
+	 * @since %VERSION%
+	 */
+	public function persist() {
+		$this->persist_post();
+		$this->persist_properties();
+	}
+
+	/**
+	 * Save changes to the post object.
+	 *
+	 * @since %VERSION%
+	 * @return bool Whether the post was successfully updated.
+	 */
+	public function persist_post() {
+		if ( ! $this->post_changed ) {
+			return false;
+		}
+
+		$result = (bool) wp_insert_post( get_object_vars( $this->post ) );
+		if ( $result ) {
+			$this->post_changed = false;
+		}
+
+		return $result;
 	}
 
 	/**
