@@ -103,5 +103,6 @@ interface ApplicantMeta {
 		self::SKILLS         => self::META_PREFIX . self::SKILLS,
 		self::EXPERIENCE     => self::META_PREFIX . self::EXPERIENCE,
 		self::VOLUNTEER      => self::META_PREFIX . self::VOLUNTEER,
+		self::NICKNAME       => self::META_PREFIX . self::NICKNAME,
 	];
 }

@@ -33,6 +33,7 @@ use Yikes\LevelPlayingField\Taxonomy\ApplicantStatus;
  * @property array  skills         The Applicant's skills.
  * @property array  experience     The Applicant's experience.
  * @property array  volunteer      The Applicant's volunteer work.
+ * @property string nickname       The Applicant's nickname (for use when their data is anonymous).
  */
 final class Applicant extends CustomPostTypeEntity {
 
@@ -72,6 +73,7 @@ final class Applicant extends CustomPostTypeEntity {
 			ApplicantMeta::INDUSTRY     => FILTER_SANITIZE_STRING,
 			ApplicantMeta::POSITION     => FILTER_SANITIZE_NUMBER_INT,
 		],
+		ApplicantMeta::NICKNAME       => FILTER_SANITIZE_STRING,
 	];
 
 	/**
@@ -81,14 +83,6 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @var array
 	 */
 	private $changes = [];
-
-	/**
-	 * The applicant status.
-	 *
-	 * @since %VERSION%
-	 * @var string
-	 */
-	private $status;
 
 	/**
 	 * Get the status of the applicant.
@@ -419,6 +413,28 @@ final class Applicant extends CustomPostTypeEntity {
 	}
 
 	/**
+	 * Get the nickname of the applicant.
+	 *
+	 * @since %VERSION%
+	 * @return string
+	 */
+	public function get_nickname() {
+		return $this->nickname;
+	}
+
+	/**
+	 * Set the nickname of the applicant.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param string $nickname The applicant nickname.
+	 */
+	public function set_nickname( $nickname ) {
+		$this->nickname = filter_var( $nickname, self::SANITIZATION[ ApplicantMeta::NICKNAME ] );
+		$this->changed_property( ApplicantMeta::NICKNAME );
+	}
+
+	/**
 	 * Persist the additional properties of the entity.
 	 *
 	 * @since %VERSION%
@@ -464,6 +480,7 @@ final class Applicant extends CustomPostTypeEntity {
 			ApplicantMeta::EXPERIENCE     => [],
 			ApplicantMeta::VOLUNTEER      => [],
 			ApplicantMeta::STATUS         => ApplicantStatus::DEFAULT_TERM_SLUG,
+			ApplicantMeta::NICKNAME       => (string) $this->post->ID,
 		];
 	}
 
