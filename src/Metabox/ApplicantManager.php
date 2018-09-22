@@ -81,11 +81,11 @@ final class ApplicantManager implements AssetsAware, Service {
 
 		// Trigger loading of applicant data.
 		$applicant->get_schooling();
+		$applicant->get_status();
 
 		// Placeholder data.
-		$applicant->name = 'Jane Doe';
-		$applicant->job = 13;
-		$applicant->schooling = [
+		$applicant->nickname       = 'Jane Doe';
+		$applicant->schooling      = [
 			[
 				'degree' => 'Diploma',
 				'type'   => 'High School',
@@ -100,39 +100,44 @@ final class ApplicantManager implements AssetsAware, Service {
 		$applicant->certifications = [
 			[
 				'certification' => 'Something One',
-				'type'   => 'High School',
-				'status'  => 'Active',
+				'type'          => 'High School',
+				'status'        => 'Active',
 			],
 			[
 				'certification' => 'Something Two',
-				'type'   => 'College',
-				'status'  => 'Inactive',
+				'type'          => 'College',
+				'status'        => 'Inactive',
 			],
 		];
-		$applicant->experience = [
+		$applicant->experience     = [
 			[
 				'position' => 'Regional Manager',
-				'industry'   => 'Hospitality',
-				'dates'  => '3',
+				'industry' => 'Hospitality',
+				'dates'    => '3',
 			],
 			[
 				'position' => 'Assistant (to the) Regional Manager',
-				'industry'   => 'Construction',
-				'dates'  => '1',
+				'industry' => 'Construction',
+				'dates'    => '1',
 			],
 		];
 
 		// Get job data.
 		$job_repo = new JobRepository();
-		$job = $job_repo->find( $applicant->get_job_id() );
+		$job      = $job_repo->find( $applicant->get_job_id() );
 		?>
 
 		<article id="single-applicant-view">
 			<section id="header">
-				<?php echo $applicant->get_avatar_img( 350 ); // XSS ok. ?>
-				<h5><?php echo $applicant->name; ?></h5>
-				<h5><span class="label">Job:</span>
-					<?php $job->get_title(); ?></h5>
+				<?php echo $applicant->get_avatar_img( 160 ); // XSS ok. ?>
+				<h5>
+					<span class="label"><?php esc_html_e( 'Nickname:', 'yikes-level-playing-field' ); ?></span>
+					<?php echo esc_html( $applicant->get_nickname() ); ?>
+				</h5>
+				<h5>
+					<span class="label">Job:</span>
+					<?php echo esc_html( $job->get_title() ); ?>
+				</h5>
 				<?php
 				// @todo: this isn't the proper way to display the taxonomy box; change it.
 				$status = new ApplicantStatus();
@@ -140,7 +145,7 @@ final class ApplicantManager implements AssetsAware, Service {
 				?>
 			</section>
 			<section id="basic-info">
-				<h2>Basic Info</h2>
+				<h2><?php esc_html_e( 'Basic Info', 'yikes-level-playing-field' ); ?></h2>
 				<p class="location"><span class="label">Location:</span>
 					City,
 					State</p>
@@ -148,10 +153,13 @@ final class ApplicantManager implements AssetsAware, Service {
 					<span class="label">Cover Letter:</span>
 					<a href="#">View Cover Letter</a>
 				</p>
+				<div class="cover-letter-content">
+					<?php echo esc_html( $applicant->get_cover_letter() ); ?>
+				</div>
 			</section>
 			<section id="education">
-				<h2>Education</h2>
-				<h5>Schooling</h5>
+				<h2><?php esc_html_e( 'Education', 'yikes-level-playing-field' ); ?></h2>
+				<h5><?php esc_html_e( 'Schooling', 'yikes-level-playing-field' ); ?></h5>
 				<ol>
 					<?php
 					foreach ( $applicant->get_schooling() as $schooling ) {
@@ -164,7 +172,7 @@ final class ApplicantManager implements AssetsAware, Service {
 					}
 					?>
 				</ol>
-				<h5>Certifications</h5>
+				<h5><?php esc_html_e( 'Certifications', 'yikes-level-playing-field' ); ?></h5>
 				<ol>
 					<?php
 					foreach ( $applicant->get_certifications() as $certification ) {
@@ -179,7 +187,7 @@ final class ApplicantManager implements AssetsAware, Service {
 				</ol>
 			</section>
 			<section id="skills">
-				<h2>Skills</h2>
+				<h2><?php esc_html_e( 'Skills', 'yikes-level-playing-field' ); ?></h2>
 				<table>
 					<tr>
 						<th>Skill</th>
@@ -200,8 +208,8 @@ final class ApplicantManager implements AssetsAware, Service {
 				</table>
 			</section>
 			<section id="languages">
-				<h2>Languages</h2>
-				<h5>Multingual</h5>
+				<h2><?php esc_html_e( 'Languages', 'yikes-level-playing-field' ); ?></h2>
+				<h5><?php esc_html_e( 'Multingual', 'yikes-level-playing-field' ); ?></h5>
 				<ol>
 					<li>[ fluency ] x languages</li>
 					<li>Fluent in 2 languages</li>
@@ -209,7 +217,7 @@ final class ApplicantManager implements AssetsAware, Service {
 				</ol>
 			</section>
 			<section id="experience">
-				<h2>Experience</h2>
+				<h2><?php esc_html_e( 'Experience', 'yikes-level-playing-field' ); ?></h2>
 				<ol>
 					<?php
 					foreach ( $applicant->get_job_experience() as $experience ) {
@@ -224,7 +232,7 @@ final class ApplicantManager implements AssetsAware, Service {
 				</ol>
 			</section>
 			<section id="volunteer-work">
-				<h2>Volunteer Work</h2>
+				<h2><?php esc_html_e( 'Volunteer Work', 'yikes-level-playing-field' ); ?></h2>
 				<ol>
 					<li>[ position ] in [ organization type ] for x years</li>
 					<li>[ position ] in [ organization type ] for x years</li>
@@ -242,8 +250,6 @@ final class ApplicantManager implements AssetsAware, Service {
 					Vivamus nec ex volutpat, porta libero ut, malesuada lectus.</p>
 			</section>
 		</article>
-		
-		
 		<?php
 	}
 
