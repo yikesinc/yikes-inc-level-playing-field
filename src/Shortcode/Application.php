@@ -19,6 +19,7 @@ use Yikes\LevelPlayingField\Model\ApplicationRepository;
 use Yikes\LevelPlayingField\Model\JobRepository;
 use Yikes\LevelPlayingField\View\FormEscapedView;
 use Yikes\LevelPlayingField\View\NoOverrideLocationView;
+use Yikes\LevelPlayingField\Assets\StyleAsset;
 
 /**
  * Class Application
@@ -31,6 +32,8 @@ final class Application extends BaseShortcode {
 	const TAG           = 'lpf_application';
 	const VIEW_URI      = 'views/job-page-application';
 	const SUBMITTED_URI = 'views/job-page-application-completed';
+	const CSS_HANDLE    = 'lpf-apps-css';
+	const CSS_URI       = 'assets/css/lpf-app-frontend';
 
 	/**
 	 * The view URI to use.
@@ -185,9 +188,13 @@ final class Application extends BaseShortcode {
 		$repeater->add_localization( 'lpfRepeater', [
 			'addNew' => _x( 'Add New', 'button for adding section in application', 'yikes-level-playing-field' ),
 		] );
+		$styles = new StyleAsset( self::CSS_HANDLE, self::CSS_URI );
+		$input_validation = new ScriptAsset( 'lpf-input-validation', 'assets/js/fields/input-validation', [ 'jquery' ] );
 
 		return [
 			$repeater,
+			$styles,
+			$input_validation,
 		];
 	}
 

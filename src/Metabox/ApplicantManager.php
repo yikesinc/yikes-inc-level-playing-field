@@ -26,6 +26,7 @@ use Yikes\LevelPlayingField\Taxonomy\ApplicantStatus;
  * @since   %VERSION%
  * @package Yikes\LevelPlayingField
  */
+
 final class ApplicantManager implements AssetsAware, Service {
 
 	use AssetsAwareness;
