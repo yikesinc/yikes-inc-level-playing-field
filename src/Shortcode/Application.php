@@ -11,6 +11,7 @@ namespace Yikes\LevelPlayingField\Shortcode;
 
 use Yikes\LevelPlayingField\Assets\Asset;
 use Yikes\LevelPlayingField\Assets\ScriptAsset;
+use Yikes\LevelPlayingField\Assets\StyleAsset;
 use Yikes\LevelPlayingField\Exception\Exception;
 use Yikes\LevelPlayingField\Exception\InvalidPostID;
 use Yikes\LevelPlayingField\Exception\InvalidURI;
@@ -19,7 +20,6 @@ use Yikes\LevelPlayingField\Model\ApplicationRepository;
 use Yikes\LevelPlayingField\Model\JobRepository;
 use Yikes\LevelPlayingField\View\FormEscapedView;
 use Yikes\LevelPlayingField\View\NoOverrideLocationView;
-use Yikes\LevelPlayingField\Assets\StyleAsset;
 
 /**
  * Class Application
@@ -188,8 +188,21 @@ final class Application extends BaseShortcode {
 		$repeater->add_localization( 'lpfRepeater', [
 			'addNew' => _x( 'Add New', 'button for adding section in application', 'yikes-level-playing-field' ),
 		] );
+
+		$input_validation = new ScriptAsset(
+			'lpf-input-validation',
+			'assets/js/fields/input-validation',
+			[ 'jquery' ]
+		);
+		$input_validation->add_localization( 'lpfInputValidation', [
+			'errors' => [
+				'empty'   => __( 'Field cannot be empty.', 'yikes-level-playing-field' ),
+				/* translators: %TYPE% should not be translated. It is a placeholder for a field name. */
+				'invalid' => __( '%TYPE% is invalid.', 'yikes-level-playing-field' ),
+			],
+		] );
+
 		$styles = new StyleAsset( self::CSS_HANDLE, self::CSS_URI );
-		$input_validation = new ScriptAsset( 'lpf-input-validation', 'assets/js/fields/input-validation', [ 'jquery' ] );
 
 		return [
 			$repeater,

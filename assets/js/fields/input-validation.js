@@ -4,6 +4,14 @@ jQuery( document ).ready( function( $ ) {
 	let isError = false;
 	const $submitBtn = $( '.lpf-submit' );
 	const errorPrompt = 'error-prompt';
+	const i18n = $.extend( true, {
+		// These are defaults in case the window object is missing.
+		// See src/Shortcode/Application.php for localized strings.
+		errors: {
+			empty: 'Field cannot be empty.',
+			invalid: '%TYPE% is invalid.'
+		}
+	}, ( window.lpfInputValidation || {} ) );
 
 	/**
 	 * Test a field value against a regular expression.
@@ -16,17 +24,18 @@ jQuery( document ).ready( function( $ ) {
 	const regexTest = ( regex, field, type ) => {
 		const input = field.val();
 		const isValid = regex.test( input );
-		const errorClass = 'error-' + type.toLowerCase();
+		const errorClass = `error-${type.toLowerCase()}`;
 
 		if ( !isValid ) {
 			if ( field.parent().find( '.' + errorClass ).length === 0 ) {
-				field.before( '<span class="error-text ' + errorClass + '">' + type + ' is invalid.</span>' );
+				let message = i18n.errors.invalid.replace( '%TYPE%', type );
+				field.before( `<span class="error-text ${errorClass}">${message}</span>` );
 			}
 			field.parent().addClass( errorPrompt );
 			isError = true;
 			return true;
 		} else {
-			field.parent().find( '.' + errorClass ).remove();
+			field.parent().find( `.${errorClass}` ).remove();
 			field.parent().removeClass( errorPrompt );
 			return false;
 		}
@@ -41,17 +50,18 @@ jQuery( document ).ready( function( $ ) {
 	const emptyRequired = ( field ) => {
 		// Trim whitespace.
 		const trimmedValue = $.trim( field.val() );
+		const errorClass = '.error-empty';
 
 		// If empty...
 		if ( !trimmedValue ) {
-			if ( field.parent().find( '.error-empty' ).length === 0 ) {
-				field.before( '<span class="error-text error-empty">Field can not be empty.</span>' );
+			if ( field.parent().find( errorClass ).length === 0 ) {
+				field.before( `<span class="error-text error-empty">${i18n.errors.empty}</span>` );
 				field.parent().addClass( errorPrompt );
 			}
 			isError = true;
 			return true;
 		} else {
-			field.parent().find( '.error-empty' ).remove();
+			field.parent().find( errorClass ).remove();
 			field.parent().removeClass( errorPrompt );
 			return false;
 		}
