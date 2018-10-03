@@ -86,6 +86,7 @@ final class ApplicantManager implements AssetsAware, Service {
 
 		// Placeholder data.
 		$applicant->nickname       = 'Jane Doe';
+		$applicant->job            = 13;
 		$applicant->schooling      = [
 			[
 				'degree' => 'Diploma',
