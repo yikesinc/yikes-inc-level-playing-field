@@ -87,6 +87,7 @@ final class ApplicantManager implements AssetsAware, Service {
 		// Placeholder data.
 		$applicant->nickname       = 'Jane Doe';
 		$applicant->job            = 13;
+		$applicant->cover_letter   = '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque at sollicitudin orci, faucibus euismod elit. Praesent luctus ultrices velit eu accumsan. Sed eu ullamcorper turpis. Suspendisse bibendum metus ac ultricies maximus. Proin ac dapibus dui, quis placerat ex. Proin iaculis eget magna vel pulvinar. Ut vulputate et tellus at vulputate. Nam mattis, turpis vitae fringilla efficitur, augue erat sodales augue, quis mollis enim ipsum ut arcu. Pellentesque in augue in diam placerat eleifend. Morbi iaculis eleifend velit vel maximus.</p>';
 		$applicant->schooling      = [
 			[
 				'degree' => 'Diploma',
@@ -109,6 +110,20 @@ final class ApplicantManager implements AssetsAware, Service {
 				'certification' => 'Something Two',
 				'type'          => 'College',
 				'status'        => 'Inactive',
+			],
+		];
+		$applicant->skills = [
+			[
+				'skill'       => 'Skill 1',
+				'proficiency' => 'Proficiency 1',
+			],
+			[
+				'skill'       => 'Skill 2',
+				'proficiency' => 'Proficiency 2',
+			],
+			[
+				'skill'       => 'Skill 3',
+				'proficiency' => 'Proficiency 3',
 			],
 		];
 		$applicant->experience     = [
@@ -155,8 +170,11 @@ final class ApplicantManager implements AssetsAware, Service {
 					<span class="label">Cover Letter:</span>
 					<a href="#">View Cover Letter</a>
 				</p>
+				<?php
+				// @todo: Should HTML be allowed in the cover letter?
+				?>
 				<div class="cover-letter-content">
-					<?php echo esc_html( $applicant->get_cover_letter() ); ?>
+					<?php echo $applicant->get_cover_letter(); ?>
 				</div>
 			</section>
 			<section id="education">
@@ -240,6 +258,9 @@ final class ApplicantManager implements AssetsAware, Service {
 					<li>[ position ] in [ organization type ] for x years</li>
 				</ol>
 			</section>
+			<?php
+			// @todo: Misc is a pro feature. Might need to add check.
+			?>
 			<section id="misc">
 				<h2>Miscellaneous</h2>
 				<p><span class="label">Question:</span>
