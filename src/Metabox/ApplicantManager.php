@@ -79,6 +79,7 @@ final class ApplicantManager implements AssetsAware, Service {
 	private function do_applicant_content() {
 		$applicant = ( new ApplicantRepository() )->find( get_the_ID() );
 		$job       = ( new JobRepository() )->find( $applicant->get_job_id() );
+
 		?>
 		<article id="single-applicant-view">
 			<section id="header">
@@ -106,8 +107,11 @@ final class ApplicantManager implements AssetsAware, Service {
 					<span class="label">Cover Letter:</span>
 					<a href="#">View Cover Letter</a>
 				</p>
+				<?php
+				// @todo: Should HTML be allowed in the cover letter?
+				?>
 				<div class="cover-letter-content">
-					<?php echo esc_html( $applicant->get_cover_letter() ); ?>
+					<?php echo $applicant->get_cover_letter(); ?>
 				</div>
 			</section>
 			<section id="education">
@@ -191,6 +195,9 @@ final class ApplicantManager implements AssetsAware, Service {
 					<li>[ position ] in [ organization type ] for x years</li>
 				</ol>
 			</section>
+			<?php
+			// @todo: Misc is a pro feature. Might need to add check.
+			?>
 			<section id="misc">
 				<h2>Miscellaneous</h2>
 				<p><span class="label">Question:</span>
