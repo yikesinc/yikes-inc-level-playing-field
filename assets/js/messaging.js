@@ -1,23 +1,24 @@
 jQuery( function ( $ ) {
 
-	const message = document.getElementById( 'new-applicant-message' );
-	const post_id = parseInt( document.getElementById( 'post_ID' ).value );
+	const get_message = function() { return document.getElementById( 'new-applicant-message' ).value; }
+	const set_message = function( value ) { document.getElementById( 'new-applicant-message' ).value = value; }
+	const post_id     = parseInt( document.getElementById( 'post_ID' ).value );
 
 	$( document ).ready( function() {
 
-		$( '#send-new-applicant-message' ).click( function() {
+		$( 'body' ).on( 'click', '#send-new-applicant-message', function() {
 
-			const message_value = message.value;
+			const message = get_message();
 
 			// Validate the message.
-			if ( ! validate_message_data( message_value, post_id ) ) {
+			if ( ! validate_message_data( message, post_id ) ) {
 				return;
 			}
 
-			send_message( message_value, post_id );
+			send_message( message, post_id );
 		});
 
-		$( '#conversation-show-all' ).click( function() {
+		$( 'body' ).on( 'click', '#conversation-show-all', function() {
 
 			const additional_messages = $( '.conversation-container .hidden' );
 			const headline            = $( '#conversation-show-all' );
@@ -54,17 +55,17 @@ jQuery( function ( $ ) {
 			action : 'send_message'
 		}
 
-		$.post( messaging_data.ajax.url, data, function( response, post_id ){ send_message_response( response, post_id ); } );
+		$.post( messaging_data.ajax.url, data, function( response ){ send_message_response( response ); } );
 	}
 
-	function send_message_response( response, post_id ) {
+	function send_message_response( response ) {
 		console.log( response );
 
-		// Clear the message.
-		message.value = '';
+		// Clear the message textarea.
+		set_message( '' );
 
 		// Show the new message on the message board.
-		refresh_message_board( post_id );
+		refresh_message_board( response.data.post_id );
 	}
 
 	function refresh_message_board( post_id ) {
@@ -78,7 +79,7 @@ jQuery( function ( $ ) {
 	}
 
 	function refresh_message_board_response( response ) {
-		$( '.conversation-container' ).replaceWith( response.data );
+		$( '#applicant-messaging .inside' ).html( response.data );
 	}
 
 });

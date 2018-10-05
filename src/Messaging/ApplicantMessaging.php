@@ -9,15 +9,13 @@
 
 namespace Yikes\LevelPlayingField\Messaging;
 
-use Yikes\LevelPlayingField\Assets\Asset;
-use Yikes\LevelPlayingField\Assets\AssetsAware;
-use Yikes\LevelPlayingField\Assets\AssetsAwareness;
 use Yikes\LevelPlayingField\Assets\ScriptAsset;
 use Yikes\LevelPlayingField\Assets\StyleAsset;
 use Yikes\LevelPlayingField\CustomPostType\ApplicantManager;
 use Yikes\LevelPlayingField\Comment\ApplicantMessageRepository;
 use Yikes\LevelPlayingField\Comment\ApplicantMessage;
 use Yikes\LevelPlayingField\Email\ApplicantMessageEmail;
+use Yikes\LevelPlayingField\Metabox;
 
 /**
  * Class ApplicantMessaging.
@@ -27,15 +25,13 @@ use Yikes\LevelPlayingField\Email\ApplicantMessageEmail;
  * @package Yikes\LevelPlayingField
  * @author  Jeremy Pry
  */
-class ApplicantMessaging extends BaseMessaging implements AssetsAware {
+class ApplicantMessaging extends Metabox\BaseMetabox {
 
-	use AssetsAwareness;
-
-	const HOOK_PRIORITY = 10;
-	const CONTEXT       = 'normal';
-	const POST_TYPE     = ApplicantManager::SLUG;
-	const BOX_ID        = 'applicant-messaging';
-	const BOX_TITLE     = 'Messaging';
+	const CONTEXT   = 'normal';
+	const POST_TYPE = ApplicantManager::SLUG;
+	const BOX_ID    = 'applicant-messaging';
+	const BOX_TITLE = 'Messaging';
+	const VIEW      = 'views/admin-applicant-messaging';
 
 	// Define the JavaScript & CSS files.
 	const JS_HANDLE       = 'lpf-messaging-admin-script';
@@ -52,8 +48,6 @@ class ApplicantMessaging extends BaseMessaging implements AssetsAware {
 	 */
 	public function register() {
 		parent::register();
-
-		$this->register_assets();
 
 		add_filter( 'admin_enqueue_scripts', function( $hook ) {
 
@@ -80,6 +74,7 @@ class ApplicantMessaging extends BaseMessaging implements AssetsAware {
 		add_action( 'wp_ajax_refresh_conversation', [ $this, 'refresh_conversation' ] );
 		add_filter( 'comments_clauses', [ $this, 'exclude_applicant_messages' ], 10, 1 );
 		add_filter( 'comment_feed_where', [ $this, 'exclude_applicant_messages_from_feed_where' ], 10 );
+		add_action( 'admin_menu', [ $this, 'remove_default_comments_meta_boxes' ], 1 );
 	}
 
 	/**
@@ -114,101 +109,101 @@ class ApplicantMessaging extends BaseMessaging implements AssetsAware {
 	}
 
 	/**
-	 * Return the screen that this metabox should appear on.
+	 * Get the ID to use for the metabox.
 	 *
 	 * @since %VERSION%
 	 *
-	 * @return string | array | WP_Screen.
+	 * @return string ID to use for the metabox.
 	 */
-	protected function screen() {
+	protected function get_id() {
+		return static::BOX_ID;
+	}
+
+	/**
+	 * Get the title to use for the metabox.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @return string Title to use for the metabox.
+	 */
+	protected function get_title() {
+		return static::BOX_TITLE;
+	}
+
+	/**
+	 * Get the screen on which to show the metabox.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @return string|array|\WP_Screen Screen on which to show the metabox.
+	 */
+	protected function get_screen() {
 		return static::POST_TYPE;
 	}
 
 	/**
-	 * Create the metabox.
+	 * Get the context in which to show the metabox.
 	 *
 	 * @since %VERSION%
 	 *
-	 * @param WP_Post $post The $post object.
+	 * @return string Context to use.
 	 */
-	public function create_meta_box( $post ) {
-
-		$this->conversation( $post->ID );
-		$this->messaging_input();
+	protected function get_context() {
+		return static::CONTEXT_NORMAL;
 	}
 
 	/**
-	 * Show the conversation.
+	 * Get the array of arguments to pass to the render callback.
 	 *
 	 * @since %VERSION%
 	 *
-	 * @param int $post_id The post ID.
+	 * @return array Array of arguments.
 	 */
-	private function conversation( $post_id ) {
+	protected function get_callback_args() {
+		global $post;
+		return [ $post ];
+	}
+
+	/**
+	 * Do the actual persistence of the changed data.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param int $post_id ID of the post to persist.
+	 */
+	protected function persist( $post_id ) {}
+
+	/**
+	 * Get the View URI to use for rendering the metabox.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @return string View URI.
+	 */
+	protected function get_view_uri() {
+		return static::VIEW;
+	}
+
+	/**
+	 * Process the metabox attributes.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param array|string $atts Raw metabox attributes passed into the
+	 *                           metabox function.
+	 *
+	 * @return array Processed metabox attributes.
+	 */
+	protected function process_attributes( $atts ) {
 
 		// Fetch all comments.
 		$repository = new ApplicantMessageRepository();
-		$comments   = $repository->find_all( $post_id );
+		$comments   = $repository->find_all( $atts->ID );
 
-		?>
-		<div class="conversation-container">
-		<?php
-
-		if ( empty( $comments ) ) {
-			?>
-			<strong>Start the conversation.</strong>
-			<?php
-		} else {
-
-			$count    = count( $comments );
-			$suppress = $count > 10;
-			$counter  = 1;
-
-			foreach ( $comments as $comment ) {
-
-				if ( 1 === $counter && $suppress ) {
-					?>
-					<h3 id="conversation-show-all"><?php esc_html_e( 'Show All Messages', 'yikes-level-playing-field' ); ?></h3>
-					<?php
-				}
-
-				$classes = [];
-
-				$classes[] = $suppress && ( $count - $counter >= 10 ) ? 'hidden' : '';
-
-				$classes[] = $comment->get_author() === ApplicantMessage::DEFAULT_AUTHOR ? 'message-to-applicant' : 'message-from-applicant';
-
-				$classes = array_map( 'sanitize_html_class', $classes );
-				?>
-				<div class="<?php echo esc_attr( implode( ' ', $classes ) ); ?>">
-					<span class="message"><?php echo esc_html( $comment->get_content() ); ?></span>
-					<small class="message-timestamp"><?php echo esc_html( $comment->get_formatted_date() ); ?></small>
-				</div>
-				<?php
-				$counter++;
-			}
-		}
-		?>
-		</div>
-		<?php
-	}
-
-	/**
-	 * Show the textarea & send button.
-	 *
-	 * @since %VERSION%
-	 */
-	private function messaging_input() {
-		// This is where the user can enter their message to send to the Applicant.
-		?>
-			<div class="new-applicant-message-container">
-				<textarea id="new-applicant-message" name="new-applicant-message"></textarea>
-			</div>
-
-			<div class="send-new-applicant-message-container">
-				<button type="button" id="send-new-applicant-message" class="button button-primary">Send</button>
-			</div>
-		<?php
+		return [
+			'post'     => $atts,
+			'comments' => $comments,
+		];
 	}
 
 	/**
@@ -241,7 +236,7 @@ class ApplicantMessaging extends BaseMessaging implements AssetsAware {
 			// $email = new ApplicantMessageEmail( $post_id, $message );
 			// $email->send();
 
-			wp_send_json_success();
+			wp_send_json_success( [ 'post_id' => $post_id ] );
 		}
 
 		wp_send_json_error();
@@ -262,7 +257,7 @@ class ApplicantMessaging extends BaseMessaging implements AssetsAware {
 		$post_id = filter_var( $_POST['post_id'], FILTER_SANITIZE_NUMBER_INT );
 
 		ob_start();
-		$this->conversation( $post_id );
+		$this->process_metabox( get_post( $post_id ) );
 		$html = ob_get_clean();
 
 		wp_send_json_success( $html );
@@ -294,17 +289,30 @@ class ApplicantMessaging extends BaseMessaging implements AssetsAware {
 			// Ensure this is a real screen object.
 			$screen = get_current_screen();
 			if ( ! ( $screen instanceof \WP_Screen ) ) {
-				return $comments_query;
+				return $clauses;
 			}
 
 			// If we're looking at our the post type, do not hide the comments.
 			if ( static::POST_TYPE === $screen->post_type ) {
 				return $clauses;
 			}
-		}			
+		}
 
 		$type              = ApplicantMessage::TYPE;
 		$clauses['where'] .= ( $clauses['where'] ? ' AND ' : '' ) . " comment_type != '{$type}' ";
 		return $clauses;
 	}
+
+	/**
+	 * Remove the default comments' meta boxes.
+	 *
+	 * @since %VERSION%
+	 */
+	public function remove_default_comments_meta_boxes() {
+
+		// Removes comments' status & comments' meta boxes.
+		remove_meta_box( 'commentstatusdiv', static::POST_TYPE, 'normal' );
+		remove_meta_box( 'commentsdiv', static::POST_TYPE, 'normal' );
+	}
+
 }

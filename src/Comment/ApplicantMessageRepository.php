@@ -49,15 +49,15 @@ class ApplicantMessageRepository {
 	 * @return ApplicantMessage[]
 	 */
 	public function find_all( $post_id ) {
-		$args  = [
+		$args = [
 			'post_id' => $post_id,
 			'type'    => ApplicantMessage::TYPE,
 			'fields'  => 'ids',
 			'orderby' => 'comment_date',
 			'order'   => 'ASC',
 		];
-		$query = new \WP_Comment_Query( $args );
 
+		$query    = new \WP_Comment_Query( $args );
 		$comments = [];
 		foreach ( $query->comments as $comment ) {
 			$comments[ $comment ] = new ApplicantMessage( $comment );
