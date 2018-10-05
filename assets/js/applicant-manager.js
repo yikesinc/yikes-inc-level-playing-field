@@ -2,11 +2,12 @@ jQuery( document ).ready( function( $ ) {
 	'use strict';
 
 	const heading = document.querySelector( '.wp-heading-inline' );
+	const nicknameBtns = document.querySelector( '#edit-nickname-buttons' );
+	const nicknameEdit = document.querySelector( '#edit-nickname-buttons .edit-nickname' );
 	const coverLetter = document.querySelector( '.cover-letter a' );
     const coverLetterContent = document.querySelector( '.cover-letter-content' );
-    coverLetterContent.style.display = 'none';
 	const applicantID = document.getElementById( 'post_ID' ).value;
-	const i18n = Object.assign( {}, { title: '' }, window.applicantManager || {} );
+	const i18n = Object.assign( {}, { title: '' }, window.applicantManager || {}, {ok: 'Ok'}, {cancel: 'Cancel'} );
 	const applicantActions = {
 
 		/**
@@ -15,7 +16,9 @@ jQuery( document ).ready( function( $ ) {
 		init: function() {
 			this.replaceTitle();
 			// hook this.editNickname() to the appropriate button.
+			coverLetterContent.style.display = 'none';
 			coverLetter.addEventListener('click', this.toggleCoverLetter );
+			nicknameEdit.addEventListener('click', this.editNickname );
 		},
 
 		/**
@@ -35,6 +38,9 @@ jQuery( document ).ready( function( $ ) {
 		editNickname: function() {
 			// todo: handle editing the nick name.
 			// see editPermalink() in wp-admin/js/post.js
+			nicknameBtns.innerHTML = '<button type="button" class="save button button-small">' + i18n.ok + '</button> <button type="button" class="cancel button-link">' + i18n.cancel + '</button>';
+			//$el.html( '<input type="text" id="new-post-slug" value="' + slug_value + '" autocomplete="off" />' ).children( 'input' ).keydown( function( e ) {
+
 		},
 
         /**
