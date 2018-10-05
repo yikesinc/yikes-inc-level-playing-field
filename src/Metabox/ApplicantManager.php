@@ -87,6 +87,9 @@ final class ApplicantManager implements AssetsAware, Service {
 				<h5>
 					<span class="label"><?php esc_html_e( 'Nickname:', 'yikes-level-playing-field' ); ?></span>
 					<?php echo esc_html( $applicant->get_nickname() ); ?>
+					<span id="edit-nickname-buttons">
+						<button type="button" class="edit-nickname button button-small hide-if-no-js" aria-label="Edit nickname"><?php esc_html_e( 'Edit', 'yikes-level-playing-field' ); ?></button>
+					</span>
 				</h5>
 				<h5>
 					<span class="label">Job:</span>
