@@ -109,7 +109,7 @@ class ApplicantMessagingTemplateController extends TemplateController {
 	/**
 	 * Get the data needed for this context, i.e. the $post/application ID.
 	 *
-	 * @return int The application ID.
+	 * @return int The page ID.
 	 */
 	protected function get_context_data() {
 		return get_queried_object_id();

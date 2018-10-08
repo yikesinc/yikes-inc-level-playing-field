@@ -287,7 +287,6 @@ class ApplicantMessaging extends Metabox\BaseMetabox {
 	 * @return array
 	 */
 	public static function exclude_applicant_messages( $clauses ) {
-		
 
 		// Check if we're on the admin.
 		if ( is_admin() ) {
