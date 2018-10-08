@@ -16,6 +16,8 @@ use Yikes\LevelPlayingField\Comment\ApplicantMessageRepository;
 use Yikes\LevelPlayingField\Comment\ApplicantMessage;
 use Yikes\LevelPlayingField\Email\ApplicantMessageEmail;
 use Yikes\LevelPlayingField\Metabox;
+use Yikes\LevelPlayingField\RequiredPages\ApplicantMessagingPage;
+use Yikes\LevelPlayingField\RequiredPages\BaseRequiredPage;
 
 /**
  * Class ApplicantMessaging.
@@ -31,7 +33,7 @@ class ApplicantMessaging extends Metabox\BaseMetabox {
 	const POST_TYPE = ApplicantManager::SLUG;
 	const BOX_ID    = 'applicant-messaging';
 	const BOX_TITLE = 'Messaging';
-	const VIEW      = 'views/admin-applicant-messaging';
+	const VIEW      = 'views/applicant-messaging';
 
 	// Define the JavaScript & CSS files.
 	const JS_HANDLE       = 'lpf-messaging-admin-script';
@@ -85,11 +87,14 @@ class ApplicantMessaging extends Metabox\BaseMetabox {
 	 * @return Asset[]
 	 */
 	protected function get_assets() {
-
-		$script = new ScriptAsset( self::JS_HANDLE, self::JS_URI, self::JS_DEPENDENCIES, self::JS_VERSION, ScriptAsset::ENQUEUE_FOOTER );
+		$post_id = isset( $_GET['post'] ) ? filter_var( $_GET['post'], FILTER_SANITIZE_NUMBER_INT ) : 0;
+		$script  = new ScriptAsset( self::JS_HANDLE, self::JS_URI, self::JS_DEPENDENCIES, self::JS_VERSION, ScriptAsset::ENQUEUE_FOOTER );
 		$script->add_localization(
 			'messaging_data',
 			[
+				'post'    => [
+					'ID' => $post_id,
+				],
 				'ajax'    => [
 					'url'           => admin_url( 'admin-ajax.php' ),
 					'send_nonce'    => wp_create_nonce( 'send_message' ),
@@ -282,8 +287,9 @@ class ApplicantMessaging extends Metabox\BaseMetabox {
 	 * @return array
 	 */
 	public static function exclude_applicant_messages( $clauses ) {
+		
 
-		// Always hide Applicant Messages on the front end.
+		// Check if we're on the admin.
 		if ( is_admin() ) {
 
 			// Ensure this is a real screen object.
@@ -296,6 +302,8 @@ class ApplicantMessaging extends Metabox\BaseMetabox {
 			if ( static::POST_TYPE === $screen->post_type ) {
 				return $clauses;
 			}
+		} elseif ( BaseRequiredPage::get_required_page_id( ApplicantMessagingPage::PAGE_SLUG ) === get_queried_object_id() ) {
+			return $clauses;
 		}
 
 		$type              = ApplicantMessage::TYPE;

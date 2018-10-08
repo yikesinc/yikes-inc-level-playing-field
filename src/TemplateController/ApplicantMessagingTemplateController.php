@@ -9,10 +9,14 @@
 
 namespace Yikes\LevelPlayingField\TemplateController;
 
+use Yikes\LevelPlayingField\Assets\ScriptAsset;
+use Yikes\LevelPlayingField\Assets\StyleAsset;
 use Yikes\LevelPlayingField\RequiredPages\ApplicantMessagingPage;
 use Yikes\LevelPlayingField\RequiredPages\BaseRequiredPage;
 use Yikes\LevelPlayingField\View\PostEscapedView;
 use Yikes\LevelPlayingField\View\TemplatedView;
+use Yikes\LevelPlayingField\Comment\ApplicantMessageRepository;
+use Yikes\LevelPlayingField\Messaging\ApplicantMessaging;
 
 /**
  * Class ApplicantMessagingTemplateController.
@@ -27,7 +31,21 @@ use Yikes\LevelPlayingField\View\TemplatedView;
 class ApplicantMessagingTemplateController extends TemplateController {
 
 	const PRIORITY = 10;
-	const VIEW_URI = 'views/applicant-messaging';
+	const VIEW_URI = ApplicantMessaging::VIEW;
+
+	/**
+	 * Get the array of known assets.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @return Asset[]
+	 */
+	protected function get_assets() {
+		return [
+			new ScriptAsset( ApplicantMessaging::JS_HANDLE, ApplicantMessaging::JS_URI, ApplicantMessaging::JS_DEPENDENCIES, ApplicantMessaging::JS_VERSION, ScriptAsset::ENQUEUE_FOOTER ),
+			new StyleAsset( ApplicantMessaging::CSS_HANDLE, ApplicantMessaging::CSS_URI ),
+		];
+	}
 
 	/**
 	 * Check if the current request is for this class' object and supply the current post w/ content.
@@ -52,8 +70,16 @@ class ApplicantMessagingTemplateController extends TemplateController {
 	 * @return bool True if the current request should use your template.
 	 */
 	protected function is_template_request() {
-		global $post;
 		return BaseRequiredPage::get_required_page_id( ApplicantMessagingPage::PAGE_SLUG ) === get_queried_object_id();
+	}
+
+	/**
+	 * Retrieve the applicant ID based on parameters in the URL.
+	 *
+	 * @return int $post_id ID of the applicant object.
+	 */
+	protected function get_applicant_post_id() {
+		return isset( $_GET['post'] ) ? filter_var( $_GET['post'], FILTER_SANITIZE_NUMBER_INT ) : 0;
 	}
 
 	/**
@@ -100,6 +126,15 @@ class ApplicantMessagingTemplateController extends TemplateController {
 	 * @throws InvalidPostID When the post ID cannot be found as an Application.
 	 */
 	protected function get_context( $id ) {
-		return [ $id ];
+
+		// Fetch all comments.
+		$post_id    = $this->get_applicant_post_id();
+		$repository = new ApplicantMessageRepository();
+		$comments   = $repository->find_all( $post_id );
+
+		return [
+			'post'     => get_post( $post_id ),
+			'comments' => $comments,
+		];
 	}
 }

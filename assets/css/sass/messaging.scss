@@ -19,6 +19,10 @@
 
 .conversation-container {
 
+    .lpf-message.hidden {
+        display: none;
+    }
+
     .message-from-applicant, .message-to-applicant {
         margin-top: 2px;
     }

@@ -2,7 +2,11 @@ jQuery( function ( $ ) {
 
 	const get_message = function() { return document.getElementById( 'new-applicant-message' ).value; }
 	const set_message = function( value ) { document.getElementById( 'new-applicant-message' ).value = value; }
-	const post_id     = parseInt( document.getElementById( 'post_ID' ).value );
+	const post_id     = typeof messaging_data.post !== 'undefined' && typeof messaging_data.post.ID !== 'undefined' ? parseInt( messaging_data.post.ID ) : 0;
+
+	if ( 0 === post_id ) {
+		return;
+	}
 
 	$( document ).ready( function() {
 
@@ -79,7 +83,7 @@ jQuery( function ( $ ) {
 	}
 
 	function refresh_message_board_response( response ) {
-		$( '#applicant-messaging .inside' ).html( response.data );
+		$( '.messaging-container' ).html( response.data );
 	}
 
 });
