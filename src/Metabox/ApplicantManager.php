@@ -69,10 +69,10 @@ final class ApplicantManager implements AssetsAware, Service {
 	}
 
 	/**
- * Register our meta boxes, and remove some default boxes.
- *
- * @since %VERSION%
- */
+	 * Register our meta boxes, and remove some default boxes.
+	 *
+	 * @since %VERSION%
+	 */
 	private function meta_boxes() {
 		// Remove some of the core boxes.
 		remove_meta_box( 'submitdiv', $this->get_post_type(), 'side' );
