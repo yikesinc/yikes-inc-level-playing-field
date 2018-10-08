@@ -233,7 +233,8 @@ class ApplicantMessaging extends Metabox\BaseMetabox {
 		}
 
 		$message_class = new ApplicantMessage();
-		$new_message   = $message_class->create_comment( $post_id, $message );
+		$author        = is_user_logged_in() ? ApplicantMessage::ADMIN_AUTHOR : ApplicantMessage::APPLICANT_AUTHOR;
+		$new_message   = $message_class->create_comment( $post_id, $message, $author );
 
 		if ( $new_message ) {
 

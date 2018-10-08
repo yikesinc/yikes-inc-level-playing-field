@@ -19,7 +19,9 @@ namespace Yikes\LevelPlayingField\Comment;
  */
 class ApplicantMessage extends Comment {
 
-	const TYPE = 'applicant_message';
+	const TYPE             = 'applicant_message';
+	const ADMIN_AUTHOR     = 'Job Manager';
+	const APPLICANT_AUTHOR = 'Applicant';
 
 	/**
 	 * Set the class' comment object if provided.

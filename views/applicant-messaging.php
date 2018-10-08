@@ -40,7 +40,7 @@ $comments = $this->comments;
 
 			$classes[] = $suppress && ( $count - $counter >= 10 ) ? 'hidden' : '';
 
-			$classes[] = $comment->get_author() === ApplicantMessage::DEFAULT_AUTHOR ? 'message-to-applicant' : 'message-from-applicant';
+			$classes[] = $comment->get_author() === ApplicantMessage::ADMIN_AUTHOR ? 'message-to-applicant' : 'message-from-applicant';
 
 			$classes = array_map( 'sanitize_html_class', $classes );
 			?>

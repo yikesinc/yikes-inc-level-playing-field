@@ -17,14 +17,13 @@ namespace Yikes\LevelPlayingField\Comment;
  */
 abstract class Comment {
 
-	const DEFAULT_APPROVED     = 1;
-	const DEFAULT_PARENT       = 0;
-	const DEFAULT_AUTHOR_URL   = '';
-	const DEFAULT_AUTHOR_EMAIL = '';
-	const DEFAULT_AUTHOR       = 'Job Manager';
-	const DEFAULT_AUTHOR_IP    = '';
-	const DEFAULT_AGENT        = 'LevelPlayingField';
-	const TYPE                 = '';
+	const APPROVED     = 1;
+	const PARENT       = 0;
+	const AUTHOR_URL   = '';
+	const AUTHOR_EMAIL = '';
+	const AUTHOR_IP    = '';
+	const AGENT        = 'LevelPlayingField';
+	const TYPE         = '';
 
 	/**
 	 * WP_Comment Object.
@@ -49,26 +48,26 @@ abstract class Comment {
 	}
 
 	/**
-	 * Return the default values for creating a new comment.
+	 * Return the values for creating a new comment.
 	 *
 	 * @since  %VERSION%
 	 *
 	 * @return array
 	 */
-	protected function default_new_comment() {
+	protected function new_comment() {
 		return [
 			'comment_post_ID'      => '',
-			'comment_author'       => $this->default_author(),
-			'comment_author_url'   => $this->default_author_url(),
-			'comment_author_email' => $this->default_author_email(),
+			'comment_author'       => '',
+			'comment_author_url'   => $this->author_url(),
+			'comment_author_email' => $this->author_email(),
 			'comment_content'      => '',
 			'comment_type'         => $this->type(),
-			'comment_parent'       => $this->default_parent(),
-			'user_id'              => $this->default_user_id(),
-			'comment_author_IP'    => $this->default_author_IP(),
-			'comment_agent'        => $this->default_agent(),
-			'comment_date'         => $this->default_date(),
-			'comment_approved'     => $this->default_approved(),
+			'comment_parent'       => $this->parent(),
+			'user_id'              => $this->user_id(),
+			'comment_author_IP'    => $this->author_IP(),
+			'comment_agent'        => $this->agent(),
+			'comment_date'         => $this->date(),
+			'comment_approved'     => $this->approved(),
 		];
 	}
 
@@ -229,73 +228,62 @@ abstract class Comment {
 	}
 
 	/**
-	 * Return the default date for a new comment.
+	 * Return the date for a new comment.
 	 *
 	 * @since  %VERSION%
 	 *
 	 * @return string
 	 */
-	protected function default_date() {
+	protected function date() {
 		return current_time( 'mysql' );
 	}
 
 	/**
-	 * Return the default approval status for a new comment.
+	 * Return the approval status for a new comment.
 	 *
 	 * @since  %VERSION%
 	 *
 	 * @return int
 	 */
-	protected function default_approved() {
-		return static::DEFAULT_APPROVED;
+	protected function approved() {
+		return static::APPROVED;
 	}
 
 	/**
-	 * Return the default parent for a new comment.
+	 * Return the parent for a new comment.
 	 *
 	 * @since  %VERSION%
 	 *
 	 * @return int
 	 */
-	protected function default_parent() {
-		return static::DEFAULT_PARENT;
+	protected function parent() {
+		return static::PARENT;
 	}
 
 	/**
-	 * Return the default author email for a new comment.
+	 * Return the author email for a new comment.
 	 *
 	 * @since  %VERSION%
 	 *
 	 * @return string
 	 */
-	protected function default_author_email() {
-		return static::DEFAULT_AUTHOR_EMAIL;
+	protected function author_email() {
+		return static::AUTHOR_EMAIL;
 	}
 
 	/**
-	 * Return the default author URL for a new comment.
+	 * Return the author URL for a new comment.
 	 *
 	 * @since  %VERSION%
 	 *
 	 * @return string
 	 */
-	protected function default_author_url() {
-		return static::DEFAULT_AUTHOR_URL;
+	protected function author_url() {
+		return static::AUTHOR_URL;
 	}
 
 	/**
-	 * Return the default author for a new comment.
-	 *
-	 * @since  %VERSION%
-	 *
-	 * @return string
-	 */
-	protected function default_author() {
-		return static::DEFAULT_AUTHOR;
-	}
-
-	/**
-	 * Return the default type for a new comment.
+	 * Return the type for a new comment.
 	 *
 	 * @since  %VERSION%
 	 *
@@ -306,35 +294,35 @@ abstract class Comment {
 	}
 
 	/**
-	 * Return the default IP for a new comment.
+	 * Return the IP for a new comment.
 	 *
 	 * @since  %VERSION%
 	 *
 	 * @return string
 	 */
-	protected function default_author_ip() {
-		return static::DEFAULT_AUTHOR_IP;
+	protected function author_ip() {
+		return static::AUTHOR_IP;
 	}
 
 	/**
-	 * Return the default agent for a new comment.
+	 * Return the agent for a new comment.
 	 *
 	 * @since  %VERSION%
 	 *
 	 * @return string
 	 */
-	protected function default_agent() {
-		return static::DEFAULT_AGENT;
+	protected function agent() {
+		return static::AGENT;
 	}
 
 	/**
-	 * Return the default user ID for a new comment.
+	 * Return the user ID for a new comment.
 	 *
 	 * @since  %VERSION%
 	 *
 	 * @return int
 	 */
-	protected function default_user_id() {
+	protected function user_id() {
 		return wp_get_current_user();
 	}
 
@@ -345,20 +333,22 @@ abstract class Comment {
 	 *
 	 * @param int    $post_id The post ID this comment is attached to.
 	 * @param string $content The content for this comment.
+	 * @param string $author  The author of this comment.
 	 *
 	 * @return bool
 	 */
-	public function create_comment( $post_id, $content ) {
+	public function create_comment( $post_id, $content, $author ) {
 
-		if ( empty( $post_id ) || empty( $content ) ) {
+		if ( empty( $post_id ) || empty( $content ) || empty( $author ) ) {
 			return false;
 		}
 
 		$comment_data = [
 			'comment_post_ID' => $post_id,
 			'comment_content' => $content,
+			'comment_author'  => $author,
 		];
-		$comment      = array_merge( $this->default_new_comment(), $comment_data );
+		$comment      = array_merge( $this->new_comment(), $comment_data );
 		$comment_id   = wp_insert_comment( $comment );
 
 		if ( false !== $comment_id ) {
