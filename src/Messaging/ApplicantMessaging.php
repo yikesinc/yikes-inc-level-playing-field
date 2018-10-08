@@ -73,7 +73,9 @@ class ApplicantMessaging extends Metabox\BaseMetabox {
 		} );
 
 		add_action( 'wp_ajax_send_message', [ $this, 'send_message' ] );
+		add_action( 'wp_ajax_nopriv_send_message', [ $this, 'send_message' ] );
 		add_action( 'wp_ajax_refresh_conversation', [ $this, 'refresh_conversation' ] );
+		add_action( 'wp_ajax_nopriv_refresh_conversation', [ $this, 'refresh_conversation' ] );
 		add_filter( 'comments_clauses', [ $this, 'exclude_applicant_messages' ], 10, 1 );
 		add_filter( 'comment_feed_where', [ $this, 'exclude_applicant_messages_from_feed_where' ], 10 );
 		add_action( 'admin_menu', [ $this, 'remove_default_comments_meta_boxes' ], 1 );
