@@ -32,9 +32,12 @@
         border: 2px solid rgba(90, 121, 49, 1);
         border-radius: 5px;
         padding: 3px;
-        padding-bottom: 60px;
         margin-left: 60%;
         float: right;
+    }
+
+    .lpf-message.message-from-applicant {
+        padding-bottom: 60px;
     }
 
     .message-from-applicant .message-timestamp {
