@@ -57,18 +57,44 @@ final class ApplicantManager implements AssetsAware, Service {
 		add_action( "add_meta_boxes_{$this->get_post_type()}", function() {
 			$this->meta_boxes();
 		} );
+
+		add_action( 'wp_ajax_nopriv_save_nickname', function() {
+			$this->save_nickname();
+		} );
+
+		add_action( 'wp_ajax_save_nickname', function() {
+			$this->save_nickname();
+		} );
 	}
 
 	/**
-	 * Register our meta boxes, and remove some default boxes.
-	 *
-	 * @since %VERSION%
-	 */
+ * Register our meta boxes, and remove some default boxes.
+ *
+ * @since %VERSION%
+ */
 	private function meta_boxes() {
 		// Remove some of the core boxes.
 		remove_meta_box( 'submitdiv', $this->get_post_type(), 'side' );
 		remove_meta_box( 'slugdiv', $this->get_post_type(), 'normal' );
 		remove_meta_box( 'authordiv', $this->get_post_type(), 'normal' );
+	}
+
+	/**
+	 * Save new nickname upon edit.
+	 *
+	 * @since %VERSION%
+	 */
+	private function save_nickname() {
+		// Handle nonce.
+		if ( ! isset( $_POST['nonce'] ) || ! check_ajax_referer( 'applicant_nonce', 'nonce', false ) ) { // Input var okay.
+			wp_send_json_error();
+		}
+		error_log('we on the server!');
+		$ID = isset( $_POST['ID'] ) && $_POST['ID'] !== 'false' ? sanitize_text_field( wp_unslash( $_POST['ID'] ) ) : false; // Input var okay.
+		$nickname = isset( $_POST['nickname'] ) && $_POST['nickname'] !== 'false' ? sanitize_text_field( wp_unslash( $_POST['nickname'] ) ) : false; // Input var okay.
+
+		$applicant = new Applicant( get_post( $ID ) );
+		$applicant->set_nickname( $nickname );
 	}
 
 	/**
@@ -86,7 +112,7 @@ final class ApplicantManager implements AssetsAware, Service {
 				<?php echo $applicant->get_avatar_img( 160 ); // XSS ok. ?>
 				<h5>
 					<span class="label"><?php esc_html_e( 'Nickname:', 'yikes-level-playing-field' ); ?></span>
-					<?php echo esc_html( $applicant->get_nickname() ); ?>
+					<span id="editable-nick-name"><?php echo esc_html( $applicant->get_nickname() ); ?></span>
 					<span id="edit-nickname-buttons">
 						<button type="button" class="edit-nickname button button-small hide-if-no-js" aria-label="Edit nickname"><?php esc_html_e( 'Edit', 'yikes-level-playing-field' ); ?></button>
 					</span>
@@ -240,9 +266,13 @@ final class ApplicantManager implements AssetsAware, Service {
 	 * @return Asset[]
 	 */
 	protected function get_assets() {
+		$post_id = isset( $_GET['post'] ) ? filter_var( $_GET['post'], FILTER_SANITIZE_NUMBER_INT ) : 0;
 		$applicant = new ScriptAsset( 'lpf-applicant-manager-js', 'assets/js/applicant-manager', [ 'jquery' ] );
 		$applicant->add_localization( 'applicantManager', [
 			'title' => _x( 'Applicants | Applicant ID', 'heading when viewing an applicant', 'yikes-level-playing-field' ),
+			'ID'  => $post_id,
+			'url'   => admin_url( 'admin-ajax.php' ),
+			'nonce' => wp_create_nonce( 'applicant_nonce' ),
 		] );
 
 		return [
