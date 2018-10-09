@@ -16,5 +16,6 @@ namespace Yikes\LevelPlayingField\Field;
  * @package Yikes\LevelPlayingField
  */
 class Email extends BaseInput {
-	const TYPE = 'email';
+	const TYPE     = 'email';
+	const SANITIZE = FILTER_SANITIZE_EMAIL;
 }

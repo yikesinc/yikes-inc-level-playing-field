@@ -22,7 +22,7 @@ use Yikes\LevelPlayingField\Model\ApplicationMeta;
  * @since   %VERSION%
  * @package Yikes\LevelPlayingField
  */
-class ApplicationManager extends AwesomeBaseMetabox implements AssetsAware {
+final class ApplicationManager extends AwesomeBaseMetabox implements AssetsAware {
 
 	use AssetsAwareness;
 

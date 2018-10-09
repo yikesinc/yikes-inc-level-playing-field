@@ -9,6 +9,8 @@
 
 namespace Yikes\LevelPlayingField\Model;
 
+use Yikes\LevelPlayingField\CustomPostType\ApplicationManager;
+use Yikes\LevelPlayingField\CustomPostType\JobManager;
 use Yikes\LevelPlayingField\Field\Types;
 
 /**
@@ -51,10 +53,18 @@ interface ApplicantMeta {
 	const DATES         = 'dates';
 	const POSITION      = 'position';
 
+	// Fields for other objects.
+	const JOB         = JobManager::SINGULAR_SLUG;
+	const APPLICATION = ApplicationManager::SLUG;
+
 	// Complex fields.
 	const SCHOOLING      = 'schooling';
 	const CERTIFICATIONS = 'certifications';
 
+	// Admin fields.
+	const NICKNAME = 'nickname';
+
+	// Fields to make anonymous.
 	const ANONYMOUS_FIELDS = [
 		self::NAME         => 1,
 		self::EMAIL        => 1,
@@ -78,5 +88,21 @@ interface ApplicantMeta {
 		self::VOLUNTEER      => Types::VOLUNTEER,
 		self::SCHOOLING      => Types::SCHOOLING,
 		self::CERTIFICATIONS => Types::CERTIFICATIONS,
+		self::SKILLS         => Types::SKILLS,
+	];
+
+	// Meta prefixed fields.
+	const META_PREFIXES = [
+		self::JOB            => MetaLinks::JOB,
+		self::APPLICATION    => MetaLinks::APPLICATION,
+		self::EMAIL          => self::META_PREFIX . self::EMAIL,
+		self::NAME           => self::META_PREFIX . self::NAME,
+		self::COVER_LETTER   => self::META_PREFIX . self::COVER_LETTER,
+		self::SCHOOLING      => self::META_PREFIX . self::SCHOOLING,
+		self::CERTIFICATIONS => self::META_PREFIX . self::CERTIFICATIONS,
+		self::SKILLS         => self::META_PREFIX . self::SKILLS,
+		self::EXPERIENCE     => self::META_PREFIX . self::EXPERIENCE,
+		self::VOLUNTEER      => self::META_PREFIX . self::VOLUNTEER,
+		self::NICKNAME       => self::META_PREFIX . self::NICKNAME,
 	];
 }

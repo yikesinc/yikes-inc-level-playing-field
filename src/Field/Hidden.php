@@ -9,6 +9,8 @@
 
 namespace Yikes\LevelPlayingField\Field;
 
+use Yikes\LevelPlayingField\Exception\InvalidField;
+
 /**
  * Class Hidden
  *
@@ -53,5 +55,21 @@ class Hidden extends BaseField {
 			<?php $this->render_data_attributes(); ?>
 		/>
 		<?php
+	}
+
+	/**
+	 * Validate the raw value.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @throws InvalidField When the raw value is different from the provided value, or empty.
+	 */
+	protected function validate_raw_value() {
+		if ( $this->value !== $this->raw_value ) {
+			throw InvalidField::value_invalid(
+				static::class,
+				__( 'Hidden field values cannot be changed.', 'yikes-level-playing-field' )
+			);
+		}
 	}
 }

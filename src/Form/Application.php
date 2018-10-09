@@ -9,6 +9,7 @@
 
 namespace Yikes\LevelPlayingField\Form;
 
+use Yikes\LevelPlayingField\Exception\InvalidField;
 use Yikes\LevelPlayingField\Field\Field;
 use Yikes\LevelPlayingField\Field\Hidden;
 use Yikes\LevelPlayingField\Field\Types;
@@ -26,7 +27,7 @@ use Yikes\LevelPlayingField\Model\ApplicationMeta;
  * @property array   field_classes The array of classes used for field objects.
  * @property array   form_classes  The array of classes used for the main form element.
  */
-class Application {
+final class Application {
 
 	/**
 	 * The application object.
@@ -45,12 +46,44 @@ class Application {
 	protected $field_classes = [];
 
 	/**
+	 * Whether the form has any errors.
+	 *
+	 * @since %VERSION%
+	 * @var bool
+	 */
+	protected $has_errors = false;
+
+	/**
+	 * Whether the form has been submitted.
+	 *
+	 * @since %VERSION%
+	 * @var bool
+	 */
+	protected $is_submitted = false;
+
+	/**
 	 * The ID of the Job.
 	 *
 	 * @since %VERSION%
 	 * @var int
 	 */
 	protected $job_id = 0;
+
+	/**
+	 * The data submitted with this form.
+	 *
+	 * @since %VERSION%
+	 * @var array
+	 */
+	protected $submitted_data = [];
+
+	/**
+	 * The validated data for this form.
+	 *
+	 * @since %VERSION%
+	 * @var array
+	 */
+	protected $valid_data = [];
 
 	/**
 	 * Application constructor.
@@ -98,7 +131,7 @@ class Application {
 				return $this->fields;
 
 			case 'field_classes':
-				return $this->$name;
+				return $this->field_classes;
 
 			default:
 				$message = sprintf( 'Undefined property: %s::$%s', static::class, $name );
@@ -153,5 +186,26 @@ class Application {
 		foreach ( $this->fields as $field ) {
 			$field->render();
 		}
+	}
+
+	/**
+	 * Set the submission data.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param array $data Submitted data.
+	 */
+	public function set_submission( array $data ) {
+		$this->is_submitted   = true;
+		$this->submitted_data = $data;
+	}
+
+	/**
+	 * Validate the submission.
+	 *
+	 * @since %VERSION%
+	 */
+	public function validate_submission() {
+
 	}
 }

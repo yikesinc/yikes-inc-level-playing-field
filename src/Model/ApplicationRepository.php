@@ -9,6 +9,7 @@
 
 namespace Yikes\LevelPlayingField\Model;
 
+use WP_Post;
 use Yikes\LevelPlayingField\CustomPostType\ApplicationManager as ApplicationManagerCPT;
 use Yikes\LevelPlayingField\Exception\InvalidPostID;
 
@@ -18,46 +19,55 @@ use Yikes\LevelPlayingField\Exception\InvalidPostID;
  * @since   %VERSION%
  * @package Yikes\LevelPlayingField
  */
-class ApplicationRepository extends CustomPostTypeRepository {
+final class ApplicationRepository extends CustomPostTypeRepository {
+
+	use PostFinder;
 
 	/**
-	 * Find the Application with a given post ID.
+	 * Find the item with a given post ID.
 	 *
 	 * @since %VERSION%
 	 *
 	 * @param int $id Post ID to retrieve.
 	 *
 	 * @return Application
-	 * @throws InvalidPostID If the post for the requested ID was not found.
+	 * @throws InvalidPostID If the post for the requested ID was not found or is not the correct type.
 	 */
 	public function find( $id ) {
-		$post = get_post( $id );
-		if ( null === $post ) {
-			throw InvalidPostID::from_id( $id );
-		}
-
-		return new Application( $post );
+		return $this->find_item( $id );
 	}
 
 	/**
-	 * Find all the published Applications.
+	 * Find all the published items.
 	 *
 	 * @since %VERSION%
 	 *
 	 * @return Application[]
 	 */
 	public function find_all() {
-		$args  = [
-			'post_type'   => ApplicationManagerCPT::SLUG,
-			'post_status' => [ 'publish' ],
-		];
-		$query = new \WP_Query( $args );
+		return $this->find_all_items();
+	}
 
-		$applications = [];
-		foreach ( $query->posts as $post ) {
-			$applications[ $post->ID ] = new Application( $post );
-		}
+	/**
+	 * Get the post type slug to find.
+	 *
+	 * @since %VERSION%
+	 * @return string
+	 */
+	protected function get_post_type() {
+		return ApplicationManagerCPT::SLUG;
+	}
 
-		return $applications;
+	/**
+	 * Get the name of the class to use when instantiating a model object.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param WP_Post $post The post object to use when instantiating the model.
+	 *
+	 * @return CustomPostTypeEntity
+	 */
+	protected function get_model_object( WP_Post $post ) {
+		return new Application( $post );
 	}
 }

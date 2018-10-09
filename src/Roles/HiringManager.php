@@ -15,7 +15,7 @@ namespace Yikes\LevelPlayingField\Roles;
  * @since   %VERSION%
  * @package Yikes\LevelPlayingField
  */
-class HiringManager extends BaseRole {
+final class HiringManager extends BaseRole {
 
 	const SLUG = 'hiring-manager';
 
