@@ -14,7 +14,8 @@ use Yikes\LevelPlayingField\Assets\StyleAsset;
 use Yikes\LevelPlayingField\CustomPostType\ApplicantManager;
 use Yikes\LevelPlayingField\Comment\ApplicantMessageRepository;
 use Yikes\LevelPlayingField\Comment\ApplicantMessage;
-use Yikes\LevelPlayingField\Email\ApplicantMessageEmail;
+use Yikes\LevelPlayingField\Email\ApplicantMessageToApplicantEmail;
+use Yikes\LevelPlayingField\Email\ApplicantMessageFromApplicantEmail;
 use Yikes\LevelPlayingField\Metabox;
 use Yikes\LevelPlayingField\RequiredPages\ApplicantMessagingPage;
 use Yikes\LevelPlayingField\RequiredPages\BaseRequiredPage;
@@ -226,25 +227,34 @@ class ApplicantMessaging extends Metabox\BaseMetabox {
 		}
 
 		// Sanitize our variables.
-		$message = filter_var( $_POST['message'], FILTER_SANITIZE_STRING );
+		$comment = filter_var( $_POST['message'], FILTER_SANITIZE_STRING );
 		$post_id = filter_var( $_POST['post_id'], FILTER_SANITIZE_NUMBER_INT );
 
 		// Confirm we have our variables.
-		if ( empty( $message ) || empty( $post_id ) ) {
+		if ( empty( $comment ) || empty( $post_id ) ) {
 			wp_send_json_error();
 		}
 
 		$message_class = new ApplicantMessage();
 		$author        = is_user_logged_in() ? ApplicantMessage::ADMIN_AUTHOR : ApplicantMessage::APPLICANT_AUTHOR;
-		$new_message   = $message_class->create_comment( $post_id, $message, $author );
+		$new_message   = $message_class->create_comment( $post_id, $comment, $author );
 
 		if ( $new_message ) {
 
-			// Send the message as an email to the applicant.
-			// $email = new ApplicantMessageEmail( $post_id, $message );
-			// $email->send();
+			if ( ApplicantMessage::APPLICANT_AUTHOR === $author ) {
 
-			wp_send_json_success( [ 'post_id' => $post_id ] );
+				// Send the message as an email to the applicant.
+				$email = ( new ApplicantMessageToApplicantEmail( $post_id, $comment ) )->send();
+			} else {
+
+				// Send the message as an email to the admin/job manager.
+				$email = ( new ApplicantMessageFromApplicantEmail( $post_id, $comment ) )->send();
+			}
+
+			wp_send_json_success([
+				'post_id' => $post_id,
+				'success' => $email,
+			]);
 		}
 
 		wp_send_json_error();

@@ -67,19 +67,43 @@ class ApplicantMessagingTemplateController extends TemplateController {
 	/**
 	 * Custom logic to determine if the current request should be displayed with your template.
 	 *
+	 * @since %VERSION%
+	 *
 	 * @return bool True if the current request should use your template.
 	 */
 	protected function is_template_request() {
-		return BaseRequiredPage::get_required_page_id( ApplicantMessagingPage::PAGE_SLUG ) === get_queried_object_id();
+		$applicant_id        = $this->get_applicant_post_id();
+		$applicant_id_exists = $applicant_id > 0;
+		$is_messaging_page   = BaseRequiredPage::get_required_page_id( ApplicantMessagingPage::PAGE_SLUG ) === get_queried_object_id();
+		$is_allowed_to_view  = ! is_user_logged_in() && $this->verify_url_hash( $applicant_id ) || is_user_logged_in() && current_user_can( 'lpf_message_applicants' );
+		return $applicant_id_exists && $is_messaging_page && $is_allowed_to_view;
 	}
 
 	/**
 	 * Retrieve the applicant ID based on parameters in the URL.
 	 *
+	 * @since %VERSION%
+	 *
 	 * @return int $post_id ID of the applicant object.
 	 */
 	protected function get_applicant_post_id() {
 		return isset( $_GET['post'] ) ? filter_var( $_GET['post'], FILTER_SANITIZE_NUMBER_INT ) : 0;
+	}
+
+	/**
+	 * Verify that the value in the URL is valid.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param  int $applicant_id The applicant's post ID.
+	 *
+	 * @return bool True if the URL has a valid value.
+	 */
+	protected function verify_url_hash( $applicant_id ) {
+
+		// To do: fetch the applicant object based on the $id.
+		// Retrieve the 'guid' field and verify it against the URL.
+		return true;
 	}
 
 	/**
@@ -109,6 +133,8 @@ class ApplicantMessagingTemplateController extends TemplateController {
 	/**
 	 * Get the data needed for this context, i.e. the $post/application ID.
 	 *
+	 * @since %VERSION%
+	 *
 	 * @return int The page ID.
 	 */
 	protected function get_context_data() {
@@ -120,7 +146,7 @@ class ApplicantMessagingTemplateController extends TemplateController {
 	 *
 	 * @since %VERSION%
 	 *
-	 * @param int $id The Job ID.
+	 * @param  int $id The Job ID.
 	 *
 	 * @return array Context to pass onto view.
 	 * @throws InvalidPostID When the post ID cannot be found as an Application.
