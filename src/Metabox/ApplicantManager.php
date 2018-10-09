@@ -118,7 +118,7 @@ final class ApplicantManager implements AssetsAware, Service {
 					</span>
 				</h5>
 				<h5>
-					<span class="label">Job:</span>
+					<span class="label"><?php esc_html_e( 'Job:', 'yikes-level-playing-field' ); ?></span>
 					<?php echo esc_html( $job->get_title() ); ?>
 				</h5>
 				<?php
@@ -129,12 +129,12 @@ final class ApplicantManager implements AssetsAware, Service {
 			</section>
 			<section id="basic-info">
 				<h2><?php esc_html_e( 'Basic Info', 'yikes-level-playing-field' ); ?></h2>
-				<p class="location"><span class="label">Location:</span>
+				<p class="location"><span class="label"><?php esc_html_e( 'Location:', 'yikes-level-playing-field' ); ?></span>
 					City,
 					State</p>
 				<p class="cover-letter">
-					<span class="label">Cover Letter:</span>
-					<a href="#">View Cover Letter</a>
+					<span class="label"><?php esc_html_e( 'Cover Letter:', 'yikes-level-playing-field' ); ?></span>
+					<a href="#"><?php esc_html_e( 'View Cover Letter', 'yikes-level-playing-field' ); ?></a>
 				</p>
 				<?php
 				// @todo: Should HTML be allowed in the cover letter?
