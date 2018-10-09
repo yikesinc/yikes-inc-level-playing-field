@@ -58,13 +58,12 @@ final class ApplicantManager implements AssetsAware, Service {
 			$this->meta_boxes();
 		} );
 
-		add_action( 'wp_ajax_nopriv_save_nickname', function() {
+		$save_nickname = function() {
 			$this->save_nickname();
-		} );
+		};
 
-		add_action( 'wp_ajax_save_nickname', function() {
-			$this->save_nickname();
-		} );
+		add_action( 'wp_ajax_nopriv_save_nickname', $save_nickname );
+		add_action( 'wp_ajax_save_nickname', $save_nickname );
 	}
 
 	/**
@@ -86,14 +85,14 @@ final class ApplicantManager implements AssetsAware, Service {
 	 */
 	private function save_nickname() {
 		// Handle nonce.
-		if ( ! isset( $_POST['nonce'] ) || ! check_ajax_referer( 'applicant_nonce', 'nonce', false ) ) { // Input var okay.
+		if ( ! isset( $_POST['nonce'] ) || ! check_ajax_referer( 'lpf_applicant_nonce', 'nonce', false ) ) { // Input var okay.
 			wp_send_json_error();
 		}
-		error_log('we on the server!');
-		$ID = isset( $_POST['ID'] ) && $_POST['ID'] !== 'false' ? sanitize_text_field( wp_unslash( $_POST['ID'] ) ) : false; // Input var okay.
+
+		$id = isset( $_POST['id'] ) && $_POST['id'] !== 'false' ? sanitize_text_field( wp_unslash( $_POST['id'] ) ) : false; // Input var okay.
 		$nickname = isset( $_POST['nickname'] ) && $_POST['nickname'] !== 'false' ? sanitize_text_field( wp_unslash( $_POST['nickname'] ) ) : false; // Input var okay.
 
-		$applicant = new Applicant( get_post( $ID ) );
+		$applicant = new Applicant( get_post( $id ) );
 		$applicant->set_nickname( $nickname );
 	}
 
@@ -266,13 +265,10 @@ final class ApplicantManager implements AssetsAware, Service {
 	 * @return Asset[]
 	 */
 	protected function get_assets() {
-		$post_id = isset( $_GET['post'] ) ? filter_var( $_GET['post'], FILTER_SANITIZE_NUMBER_INT ) : 0;
 		$applicant = new ScriptAsset( 'lpf-applicant-manager-js', 'assets/js/applicant-manager', [ 'jquery' ] );
 		$applicant->add_localization( 'applicantManager', [
 			'title' => _x( 'Applicants | Applicant ID', 'heading when viewing an applicant', 'yikes-level-playing-field' ),
-			'ID'  => $post_id,
-			'url'   => admin_url( 'admin-ajax.php' ),
-			'nonce' => wp_create_nonce( 'applicant_nonce' ),
+			'nonce' => wp_create_nonce( 'lpf_applicant_nonce' ),
 		] );
 
 		return [

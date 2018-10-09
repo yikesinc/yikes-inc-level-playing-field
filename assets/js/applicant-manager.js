@@ -1,8 +1,12 @@
 jQuery( document ).ready( function( $ ) {
     'use strict';
 
+    // Globals.
     const heading = document.querySelector( '.wp-heading-inline' );
     const nicknameBtns = $( '#edit-nickname-buttons' );
+    const nickname = $( '#editable-nick-name' );
+    let rNicknameBtns = nicknameBtns.html();
+    let rNickname = nickname.html();
     const coverLetter = $( '.cover-letter a' );
     const coverLetterContent = $( '.cover-letter-content' );
     const applicantID = document.getElementById( 'post_ID' ).value;
@@ -35,10 +39,9 @@ jQuery( document ).ready( function( $ ) {
          * Handle editing the applicant nickname.
          */
         editNickname: function() {
-            // Get current nickname and save current nickname and button set for revert.
-            const nickname = $( '#editable-nick-name' );
-            const rNicknameBtns = nicknameBtns.html();
-            const rNickname = nickname.html();
+            // Save current nickname and button set for revert.
+            rNicknameBtns = nicknameBtns.html();
+            rNickname = nickname.html();
 
             // Replace current button set with ok/cancel buttons.
             nicknameBtns.html('');
@@ -54,7 +57,7 @@ jQuery( document ).ready( function( $ ) {
             cancelBtn.innerText = i18n.cancel;
             nicknameBtns.append( cancelBtn );
 
-            // Replace current nickname text with input to make editable.
+            // Replace current nickname text with input element to make nickname editable.
             nickname.html('');
             const inputNickname = document.createElement( 'input' );
             inputNickname.setAttribute( 'type', 'text' );
@@ -64,45 +67,46 @@ jQuery( document ).ready( function( $ ) {
             nickname.append( inputNickname );
 
             // Save new nickname.
-            nicknameBtns.children('.save').click( function() {
-                const newNickname = nickname.children( 'input' ).val();
-
-                // If nickname hasn't changed.
-                if ( newNickname === rNickname ) {
-                    nicknameBtns.children('.cancel').click();
-                    return;
-                }
-
-                // Otherwise, trigger ajax and send new nickname to server.
-                $.ajax({
-                    url: i18n.url,
-                    type: 'post',
-                    data: {
-                        action: 'save_nickname',
-                        nickname: newNickname,
-                        ID: window.applicantManager.ID,
-                        nonce: window.applicantManager.nonce,
-                    },
-                    beforeSend: function() {
-                        nickname.children('input').prop('disabled', true);
-                    },
-                    success: function( response ) {
-                        nicknameBtns.html( rNicknameBtns );
-                        nickname.html( newNickname );
-                    },
-                    error: function() { // if error occurred
-                        console.log('error');
-                        nicknameBtns.html( rNicknameBtns );
-                        nickname.html( rNickname );
-                    }
-                })
-            });
+            nicknameBtns.children('.save').click( applicantActions.saveNickname );
 
             // Cancel editing of nickname.
             nicknameBtns.children('.cancel').click( function() {
                 nicknameBtns.html( rNicknameBtns );
                 nickname.html( rNickname );
             });
+        },
+
+        saveNickname: function() {
+            const newNickname = nickname.children( 'input' ).val();
+
+            // If nickname hasn't changed.
+            if ( newNickname === rNickname ) {
+                nicknameBtns.children('.cancel').click();
+                return;
+            }
+
+            // Otherwise, trigger ajax and send new nickname to server.
+            $.ajax({
+                url: window.ajaxurl,
+                type: 'post',
+                data: {
+                    action: 'save_nickname',
+                    nickname: newNickname,
+                    id: applicantID,
+                    nonce: window.applicantManager.nonce,
+                },
+                beforeSend: function() {
+                    nickname.children('input').prop('disabled', true);
+                },
+                success: function( response ) {
+                    nicknameBtns.html( rNicknameBtns );
+                    nickname.html( newNickname );
+                },
+                error: function() {
+                    nicknameBtns.html( rNicknameBtns );
+                    nickname.html( rNickname );
+                }
+            })
         },
 
         /**
