@@ -45,7 +45,7 @@ $comments = $this->comments;
 			$classes = array_map( 'sanitize_html_class', $classes );
 			?>
 			<div class="<?php echo esc_attr( implode( ' ', $classes ) ); ?>">
-				<span class="message"><?php echo esc_html( $comment->get_content() ); ?></span>
+				<span class="message"><?php echo nl2br( esc_html( $comment->get_content() ) ); ?></span>
 				<small class="message-timestamp"><?php echo esc_html( $comment->get_formatted_date() ); ?></small>
 			</div>
 			<?php

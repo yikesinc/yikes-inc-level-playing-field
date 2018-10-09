@@ -45,8 +45,29 @@ abstract class ApplicantMessageEmail extends BaseEmail {
 	 * @param string $comment      The content of the comment.
 	 */
 	public function __construct( $applicant_id, $comment ) {
+		$this->set_applicant( $applicant_id );
+		$this->set_comment( $comment );
+	}
+
+	/**
+	 * Instantiate the Applicant object and assign it to the class,
+	 *
+	 * @param int $applicant_id The post ID of the applicant.
+	 */
+	protected function set_applicant( $applicant_id ) {
 		$this->applicant = new Applicant( get_post( $applicant_id ) );
-		$this->comment   = $comment;
+	}
+
+	/**
+	 * Prep the comment for use in email.
+	 *
+	 * @uses stripslashes() to remove slashes from the comment.
+	 * @uses nl2br() to convert \r\n's to <br>'s for use in an HTML email.
+	 *
+	 * @param string $comment The raw comment to/from the applicant.
+	 */
+	protected function set_comment( $comment ) {
+		$this->comment = nl2br( stripslashes( $comment ) );
 	}
 
 	/**
