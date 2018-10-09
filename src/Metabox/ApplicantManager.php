@@ -267,8 +267,12 @@ final class ApplicantManager implements AssetsAware, Service {
 	protected function get_assets() {
 		$applicant = new ScriptAsset( 'lpf-applicant-manager-js', 'assets/js/applicant-manager', [ 'jquery' ] );
 		$applicant->add_localization( 'applicantManager', [
-			'title' => _x( 'Applicants | Applicant ID', 'heading when viewing an applicant', 'yikes-level-playing-field' ),
+			'cancel'  => _x( 'Cancel', 'yikes-level-playing-field' ),
+			'hide'  => _x( 'Hide Cover Letter', 'yikes-level-playing-field' ),
+			'ok'  => _x( 'OK', 'yikes-level-playing-field' ),
 			'nonce' => wp_create_nonce( 'lpf_applicant_nonce' ),
+			'title' => _x( 'Applicants | Applicant ID', 'heading when viewing an applicant', 'yikes-level-playing-field' ),
+			'view'  => _x( 'View Cover Letter', 'yikes-level-playing-field' ),
 		] );
 
 		return [
