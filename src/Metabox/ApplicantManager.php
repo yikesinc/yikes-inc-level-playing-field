@@ -109,9 +109,9 @@ final class ApplicantManager implements AssetsAware, Service {
 		$applicant->get_schooling();
 		$applicant->get_status();
 
-		// Placeholder data.
+		// Placeholder data. Change as you please for your local instance.
 		$applicant->nickname       = 'Jane Doe';
-		$applicant->job            = 9;
+		$applicant->job            = 13;
 		$applicant->cover_letter   = '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque at sollicitudin orci, faucibus euismod elit. Praesent luctus ultrices velit eu accumsan. Sed eu ullamcorper turpis. Suspendisse bibendum metus ac ultricies maximus. Proin ac dapibus dui, quis placerat ex. Proin iaculis eget magna vel pulvinar. Ut vulputate et tellus at vulputate. Nam mattis, turpis vitae fringilla efficitur, augue erat sodales augue, quis mollis enim ipsum ut arcu. Pellentesque in augue in diam placerat eleifend. Morbi iaculis eleifend velit vel maximus.</p>';
 		$applicant->schooling      = [
 			[
@@ -180,7 +180,7 @@ final class ApplicantManager implements AssetsAware, Service {
 					</span>
 				</h5>
 				<h5>
-					<span class="label">Job:</span>
+					<span class="label"><?php esc_html_e( 'Job:', 'yikes-level-playing-field' ); ?></span>
 					<?php echo esc_html( $job->get_title() ); ?>
 				</h5>
 				<?php
@@ -191,12 +191,12 @@ final class ApplicantManager implements AssetsAware, Service {
 			</section>
 			<section id="basic-info">
 				<h2><?php esc_html_e( 'Basic Info', 'yikes-level-playing-field' ); ?></h2>
-				<p class="location"><span class="label">Location:</span>
+				<p class="location"><span class="label"><?php esc_html_e( 'Location:', 'yikes-level-playing-field' ); ?></span>
 					City,
 					State</p>
 				<p class="cover-letter">
-					<span class="label">Cover Letter:</span>
-					<a href="#">View Cover Letter</a>
+					<span class="label"><?php esc_html_e( 'Cover Letter:', 'yikes-level-playing-field' ); ?></span>
+					<a href="#"><?php esc_html_e( 'View Cover Letter', 'yikes-level-playing-field' ); ?></a>
 				</p>
 				<?php
 				// @todo: Should HTML be allowed in the cover letter?
