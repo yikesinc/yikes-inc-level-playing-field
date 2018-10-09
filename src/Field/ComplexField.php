@@ -39,7 +39,7 @@ abstract class ComplexField extends BaseField {
 	 * Array of sub-fields.
 	 *
 	 * @since %VERSION%
-	 * @var array
+	 * @var Field[]
 	 */
 	protected $sub_fields = [];
 
@@ -68,6 +68,7 @@ abstract class ComplexField extends BaseField {
 	protected function generate_sub_fields() {
 		$classes        = array_merge( $this->classes, $this->get_classes() );
 		$default_fields = $this->get_default_fields();
+		$id_base        = $this->id . ( $this->repeatable ? '[0]' : '' );
 		foreach ( $default_fields as $field => $settings ) {
 			$settings = wp_parse_args( $settings, [
 				'label'    => ucwords( str_replace( [ '_', '-' ], ' ', $field ) ),
@@ -75,21 +76,21 @@ abstract class ComplexField extends BaseField {
 				'required' => true,
 			] );
 
-			// Set up the field ID, depending on whether the field is repeatable.
-			$id = $this->id . ( $this->repeatable ? '[0]' : '' ) . "[{$field}]";
-
 			// Instantiate the sub field.
-			$this->sub_fields[] = new $settings['class'](
-				$id,
+			$this->sub_fields[ $field ] = new $settings['class'](
+				"{$id_base}[{$field}]",
 				$settings['label'],
 				$classes,
 				(bool) $settings['required']
 			);
 
 			// Ensure the class extends the Field interface.
-			if ( ! ( end( $this->sub_fields ) instanceof Field ) ) {
+			if ( ! ( $this->sub_fields[ $field ] instanceof Field ) ) {
 				throw InvalidField::from_field( $settings['class'] );
 			}
+
+			// Assign the current object as the field parent.
+			$this->sub_fields[ $field ]->set_parent( $this );
 		}
 	}
 
@@ -103,6 +104,19 @@ abstract class ComplexField extends BaseField {
 		$this->render_grouping_label();
 		$this->render_sub_fields();
 		$this->render_close_fieldset();
+	}
+
+	/**
+	 * Get the raw submitted value.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param array $data Array where the raw value can be obtained.
+	 *
+	 * @return array
+	 */
+	protected function get_raw_value( $data ) {
+		return parent::get_raw_value( $data ) ?: [];
 	}
 
 	/**

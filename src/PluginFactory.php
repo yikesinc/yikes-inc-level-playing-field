@@ -16,6 +16,7 @@ use Yikes\LevelPlayingField\CustomPostType\LimitedJobManager;
 use Yikes\LevelPlayingField\ListTable\ApplicantManager as ApplicantListTable;
 use Yikes\LevelPlayingField\ListTable\ApplicationManager as ApplicationListTable;
 use Yikes\LevelPlayingField\ListTable\JobManager as JobListTable;
+use Yikes\LevelPlayingField\Metabox\ApplicantManager as ApplicantMetabox;
 use Yikes\LevelPlayingField\Metabox\ApplicationManager as ApplicationMetabox;
 use Yikes\LevelPlayingField\Metabox\JobManager;
 use Yikes\LevelPlayingField\Roles\Administrator;
@@ -82,6 +83,7 @@ final class PluginFactory {
 			// Metaboxes.
 			JobManager::class           => 1,
 			ApplicationMetabox::class   => 1,
+			ApplicantMetabox::class     => 1,
 
 			// Custom List Tables.
 			JobListTable::class         => 1,

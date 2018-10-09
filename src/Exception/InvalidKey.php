@@ -31,4 +31,20 @@ class InvalidKey extends \InvalidArgumentException implements Exception {
 
 		return new static( $message );
 	}
+
+	/**
+	 * Create a new instance of an exception when a key is not found for the function.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param string $key      The key that wasn't found.
+	 * @param string $function The function where the key isn't found.
+	 *
+	 * @return static
+	 */
+	public static function not_found( $key, $function ) {
+		$message = sprintf( 'The key "%s" was not found for function "%s".', $key, $function );
+
+		return new static( $message );
+	}
 }

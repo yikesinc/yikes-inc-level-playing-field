@@ -24,14 +24,17 @@ class InvalidPostID extends \InvalidArgumentException implements Exception {
 	 *
 	 * @since %VERSION%
 	 *
-	 * @param int $id Post ID that is not valid.
+	 * @param string $id   Post ID that is not valid.
+	 * @param string $type The object type that is meant to be used.
 	 *
 	 * @return static
 	 */
-	public static function from_id( $id ) {
+	public static function from_id( $id, $type ) {
 		$message = sprintf(
-			'The post ID "%d" is not valid.',
-			$id
+			/* translators: %1$s: the post ID. %2$s is a post type */
+			__( 'The post ID "%1$s" is not a valid %2$s.', 'yikes-level-playing-field' ),
+			$id,
+			$type
 		);
 
 		return new static( $message );

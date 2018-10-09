@@ -17,7 +17,7 @@ use Carbon_Fields\Carbon_Fields;
  * @since   %VERSION%
  * @package Yikes\LevelPlayingField
  */
-class FieldLoader implements Service {
+final class FieldLoader implements Service {
 
 	/**
 	 * Register the current Registerable.

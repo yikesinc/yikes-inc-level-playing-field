@@ -19,7 +19,7 @@ use Yikes\LevelPlayingField\Model\JobRepository;
  * @since   %VERSION%
  * @package Yikes\LevelPlayingField
  */
-class AllJobs extends BaseJobs {
+final class AllJobs extends BaseJobs {
 
 	const TAG      = 'lpf_all_jobs';
 	const VIEW_URI = 'views/job-page';

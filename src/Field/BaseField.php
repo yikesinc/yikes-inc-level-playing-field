@@ -16,8 +16,19 @@ use Yikes\LevelPlayingField\Exception\InvalidField;
  *
  * @since   %VERSION%
  * @package Yikes\LevelPlayingField
+ *
+ * @property Field parent The Parent field object.
  */
 abstract class BaseField implements Field {
+
+	/**
+	 * The filter for sanitizing.
+	 *
+	 * Override in child classes to use a different sanitize filter.
+	 *
+	 * @see http://php.net/manual/en/filter.filters.sanitize.php.
+	 */
+	const SANITIZE = FILTER_SANITIZE_STRING;
 
 	/**
 	 * The field ID.
@@ -48,6 +59,22 @@ abstract class BaseField implements Field {
 	protected $classes;
 
 	/**
+	 * Raw value submitted to the field.
+	 *
+	 * @since %VERSION%
+	 * @var mixed
+	 */
+	protected $raw_value;
+
+	/**
+	 * Whether the field is repeatable.
+	 *
+	 * @since %VERSION%
+	 * @var bool
+	 */
+	protected $repeatable = false;
+
+	/**
 	 * Whether the field is required.
 	 *
 	 * @since %VERSION%
@@ -64,14 +91,21 @@ abstract class BaseField implements Field {
 	protected $data = [];
 
 	/**
+	 * The parent field.
+	 *
+	 * @since %VERSION%
+	 * @var Field
+	 */
+	protected $parent = null;
+
+	/**
 	 * The pattern used for matching an field's ID.
 	 *
-	 * @link https://regex101.com/r/ZTgsNa/1
-	 *
+	 * @link  https://regex101.com/r/ZTgsNa/1
 	 * @since %VERSION%
 	 * @var string
 	 */
-	protected $id_pattern = '#^([\w-]+)(\[(\d+)?\])?(?:\[([\w-]+)\])?#';
+	protected $id_pattern = '#^([\w-]+)(?:\[(\d+)?\])?(?:\[([\w-]+)\])?#';
 
 	/**
 	 * BaseField constructor.
@@ -89,6 +123,60 @@ abstract class BaseField implements Field {
 		$this->classes  = $classes;
 		$this->required = (bool) $required;
 		$this->validate_id();
+	}
+
+	/**
+	 * Maybe return data from inaccessible members.
+	 *
+	 * @link http://php.net/manual/en/language.oop5.overloading.php#language.oop5.overloading.members
+	 *
+	 * @param string $name The property to retrieve.
+	 *
+	 * @return mixed
+	 */
+	public function __get( $name ) {
+		switch ( $name ) {
+			case 'parent':
+				if ( ! isset( $this->parent ) ) {
+					$this->parent = new NullParent();
+				}
+
+				return $this->parent;
+
+			default:
+				return null;
+		}
+	}
+
+	/**
+	 * Get whether this field is required or not.
+	 *
+	 * @since %VERSION%
+	 * @return bool
+	 */
+	public function is_required() {
+		return $this->required;
+	}
+
+	/**
+	 * Whether this field is repeatable.
+	 *
+	 * @since %VERSION%
+	 * @return bool
+	 */
+	public function is_repeatable() {
+		return $this->repeatable;
+	}
+
+	/**
+	 * Set the parent field object for this field.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param Field $field The parent field object.
+	 */
+	public function set_parent( Field $field ) {
+		$this->parent = $field;
 	}
 
 	/**
@@ -167,15 +255,106 @@ abstract class BaseField implements Field {
 	}
 
 	/**
+	 * Set the data submitted to the field.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param mixed $data The submitted data for the field.
+	 */
+	public function set_submission( $data ) {
+		$this->raw_value = $this->get_raw_value( $data );
+		$this->validate_raw_value();
+	}
+
+	/**
+	 * Validate the submission for the given field.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @return mixed The validated value.
+	 * @throws InvalidField When the submission isn't valid.
+	 */
+	public function validate_submission() {
+		$filtered = $this->sanitize_value( $this->raw_value );
+		if ( false === $filtered || empty( $filtered ) ) {
+			throw InvalidField::value_invalid( $this->label );
+		}
+
+		return $filtered;
+	}
+
+	/**
 	 * Get the raw submitted value.
 	 *
 	 * @since %VERSION%
+	 *
+	 * @param array $data Array where the raw value can be obtained.
+	 *
 	 * @return mixed
 	 */
-	protected function get_raw_value() {
+	protected function get_raw_value( $data ) {
 		preg_match( $this->id_pattern, $this->id, $m );
-		return ! isset( $m[2] )
-			? ( isset( $_POST[ $m[1] ] ) ? $_POST[ $m[1] ] : '' )
-			: ( isset( $_POST[ $m[1] ][ $m[2] ] ) ? $_POST[ $m[1] ][ $m[2] ] : '' );
+
+		// If this isn't a child field, return all of the data in the matching key.
+		if ( ! $this->is_child() ) {
+			return isset( $data[ $m[1] ] ) ? $data[ $m[1] ] : '';
+		}
+
+		// If the parent is repeatable, get all entries.
+		if ( $this->parent->is_repeatable() ) {
+			return array_column( $data, $m[3] );
+		}
+
+		// Parent isn't repeatable, so get only the value we care about.
+		return isset( $data[ $m[3] ] ) ? $data[ $m[3] ] : '';
+	}
+
+	/**
+	 * Validate the raw value.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @throws InvalidField When the raw value is empty but the field is required.
+	 */
+	protected function validate_raw_value() {
+		if ( empty( $this->raw_value ) && $this->required ) {
+			throw InvalidField::field_required( $this->label );
+		}
+	}
+
+	/**
+	 * Sanitize a submitted value.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param string $raw The raw value for the field.
+	 *
+	 * @return mixed
+	 */
+	protected function sanitize_value( $raw ) {
+		return filter_var( $raw, static::SANITIZE, $this->get_filter_options() );
+	}
+
+	/**
+	 * Return options to use when sanitizing a submitted value.
+	 *
+	 * @link  http://php.net/manual/en/function.filter-var.php
+	 * @see   filter_var()
+	 * @since %VERSION%
+	 * @return null|callable|int|array Return null for no options, a callable, an int when using filter flags, or an
+	 *                                 array when using additional options for the filter.
+	 */
+	protected function get_filter_options() {
+		return null;
+	}
+
+	/**
+	 * Determine if this is a child field.
+	 *
+	 * @since %VERSION%
+	 * @return bool
+	 */
+	public function is_child() {
+		return ( null !== $this->parent && ! ( $this->parent instanceof NullParent ) );
 	}
 }

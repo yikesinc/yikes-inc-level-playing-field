@@ -11,6 +11,8 @@ namespace Yikes\LevelPlayingField\Shortcode;
 
 use Yikes\LevelPlayingField\Assets\Asset;
 use Yikes\LevelPlayingField\Assets\ScriptAsset;
+use Yikes\LevelPlayingField\Assets\StyleAsset;
+use Yikes\LevelPlayingField\Exception\Exception;
 use Yikes\LevelPlayingField\Exception\InvalidPostID;
 use Yikes\LevelPlayingField\Exception\InvalidURI;
 use Yikes\LevelPlayingField\Form\Application as ApplicationForm;
@@ -25,11 +27,13 @@ use Yikes\LevelPlayingField\View\NoOverrideLocationView;
  * @since   %VERSION%
  * @package Yikes\LevelPlayingField
  */
-class Application extends BaseShortcode {
+final class Application extends BaseShortcode {
 
 	const TAG           = 'lpf_application';
 	const VIEW_URI      = 'views/job-page-application';
 	const SUBMITTED_URI = 'views/job-page-application-completed';
+	const CSS_HANDLE    = 'lpf-apps-css';
+	const CSS_URI       = 'assets/css/lpf-app-frontend';
 
 	/**
 	 * The view URI to use.
@@ -71,17 +75,26 @@ class Application extends BaseShortcode {
 		$job         = ( new JobRepository() )->find( $atts['job_id'] );
 		$application = ( new ApplicationRepository() )->find( $job->get_application_id() );
 
-		/**
-		 * Set up the classes we'll use for the form and the individual fields.
-		 */
+		// Set up the classes we'll use for the form and the individual fields.
 		$base_classes  = [ 'lpf-application', sprintf( 'lpf-application-%s', $application->get_id() ) ];
 		$form_classes  = array_merge( [ 'lpf-form' ], $base_classes );
 		$field_classes = array_merge( [ 'lpf-form-field' ], $base_classes );
 
+		// Set up the form object.
+		$form = new ApplicationForm( $job->get_id(), $application, $field_classes );
+
+		// Look for a submission of the form.
+		$is_submitted = ! empty( $_POST );
+		if ( $is_submitted ) {
+			$form->set_submission( $_POST );
+			$form->validate_submission();
+		}
+
 		return [
 			'application'      => $application,
-			'application_form' => new ApplicationForm( $job->get_id(), $application, $field_classes ),
+			'application_form' => $form,
 			'form_classes'     => $form_classes,
+			'submitted'        => $is_submitted,
 		];
 	}
 
@@ -95,9 +108,12 @@ class Application extends BaseShortcode {
 	 * @return string Rendered HTML of the shortcode.
 	 */
 	public function process_shortcode( $atts ) {
-		$atts = $this->process_attributes( $atts );
-
-		return $this->render( array_merge( $atts, $this->get_context( $atts ) ) );
+		try {
+			$atts = $this->process_attributes( $atts );
+			return $this->render( array_merge( $atts, $this->get_context( $atts ) ) );
+		} catch ( Exception $e ) {
+			return $this->exception_to_string( $e );
+		}
 	}
 
 	/**
@@ -156,11 +172,7 @@ class Application extends BaseShortcode {
 
 			return $view->render( $context );
 		} catch ( \Exception $e ) {
-			return sprintf(
-				/* translators: %s refers to the error message */
-				esc_html__( 'There was an error displaying the form: %s', 'yikes-level-playing-field' ),
-				$e->getMessage()
-			);
+			return $this->exception_to_string( $e );
 		}
 	}
 
@@ -177,8 +189,42 @@ class Application extends BaseShortcode {
 			'addNew' => _x( 'Add New', 'button for adding section in application', 'yikes-level-playing-field' ),
 		] );
 
+		$input_validation = new ScriptAsset(
+			'lpf-input-validation',
+			'assets/js/fields/input-validation',
+			[ 'jquery' ]
+		);
+		$input_validation->add_localization( 'lpfInputValidation', [
+			'errors' => [
+				'empty'   => __( 'Field cannot be empty.', 'yikes-level-playing-field' ),
+				/* translators: %TYPE% should not be translated. It is a placeholder for a field name. */
+				'invalid' => __( '%TYPE% is invalid.', 'yikes-level-playing-field' ),
+			],
+		] );
+
+		$styles = new StyleAsset( self::CSS_HANDLE, self::CSS_URI );
+
 		return [
 			$repeater,
+			$styles,
+			$input_validation,
 		];
+	}
+
+	/**
+	 * Convert an exception to a string.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param \Exception $e The exception object.
+	 *
+	 * @return string
+	 */
+	protected function exception_to_string( $e ) {
+		return sprintf(
+			/* translators: %s refers to the error message */
+			esc_html__( 'There was an error displaying the form: %s', 'yikes-level-playing-field' ),
+			$e->getMessage()
+		);
 	}
 }

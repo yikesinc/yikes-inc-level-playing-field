@@ -1,0 +1,62 @@
+@import "utilities/index";
+@import 'base/index';
+
+@mixin error_color($color) {
+	background: $color;
+
+	&::after {
+		border-bottom-color: $color;
+	}
+
+	& + .lpf-form-field {
+		border-color: $color;
+	}
+}
+
+// Form
+.lpf-form {
+	.lpf-input-label.error-prompt {
+		position: relative;
+
+		.lpf-form-field, textarea {
+			border: 1px solid $color-red;
+		}
+
+		.error-text {
+			font-size: 14px;
+			display: inline-block;
+			position: absolute;
+			left: 200px;
+			bottom: -34px;
+			background: $trans-red;
+			padding: 5px;
+			z-index: 2;
+			color: $color-white;
+			border-radius: 0.25em;
+
+			&::after {
+				content: '';
+				position: absolute;
+				left: 22px;
+				bottom: 100%;
+				height: 0;
+				width: 0;
+				border-left: 8px solid transparent;
+				border-right: 8px solid transparent;
+				border-bottom: 8px solid $trans-red;
+			}
+
+			&.error-email {
+				@include error_color($trans-purple);
+			}
+
+			&.error-zip {
+				@include error_color($trans-blue);
+			}
+
+			&.error-year {
+				@include error_color($trans-green);
+			}
+		}
+	}
+}

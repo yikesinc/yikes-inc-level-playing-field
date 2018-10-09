@@ -9,6 +9,8 @@
 
 namespace Yikes\LevelPlayingField\Field;
 
+use Yikes\LevelPlayingField\Exception\InvalidField;
+
 interface Field {
 
 	/**
@@ -17,4 +19,56 @@ interface Field {
 	 * @since %VERSION%
 	 */
 	public function render();
+
+	/**
+	 * Validate the submission for the given field.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @return mixed The validated value.
+	 * @throws InvalidField When the submission isn't valid.
+	 */
+	public function validate_submission();
+
+	/**
+	 * Set the parent field object for this field.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param Field $field The parent field object.
+	 */
+	public function set_parent( Field $field );
+
+	/**
+	 * Determine if this is a child field.
+	 *
+	 * @since %VERSION%
+	 * @return bool
+	 */
+	public function is_child();
+
+	/**
+	 * Set the data submitted to the field.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param mixed $data The submitted data for the field.
+	 */
+	public function set_submission( $data );
+
+	/**
+	 * Whether the field is repeatable.
+	 *
+	 * @since %VERSION%
+	 * @var bool
+	 */
+	public function is_repeatable();
+
+	/**
+	 * Get whether this field is required or not.
+	 *
+	 * @since %VERSION%
+	 * @return bool
+	 */
+	public function is_required();
 }

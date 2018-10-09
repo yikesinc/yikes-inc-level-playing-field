@@ -15,7 +15,7 @@ namespace Yikes\LevelPlayingField;
  * @since   %VERSION%
  * @package Yikes\LevelPlayingField
  */
-class Container {
+final class Container {
 
 	/**
 	 * The registered services for the container.
@@ -30,7 +30,7 @@ class Container {
 	 *
 	 * @param array $services Services to register with the container.
 	 */
-	public function __construct( $services = null ) {
+	public function __construct( array $services = [] ) {
 		$this->services = $services ?: [];
 	}
 

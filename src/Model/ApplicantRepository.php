@@ -9,7 +9,11 @@
 
 namespace Yikes\LevelPlayingField\Model;
 
+use stdClass;
+use WP_Post;
+use WP_Query;
 use Yikes\LevelPlayingField\CustomPostType\ApplicantManager as ApplicantCPT;
+use Yikes\LevelPlayingField\Exception\InvalidPostID;
 
 /**
  * Class ApplicantRepository
@@ -18,6 +22,56 @@ use Yikes\LevelPlayingField\CustomPostType\ApplicantManager as ApplicantCPT;
  * @package Yikes\LevelPlayingField
  */
 class ApplicantRepository extends CustomPostTypeRepository {
+
+	use PostFinder;
+
+	/**
+	 * Find the Applicant with a given post ID.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param int $id Post ID to retrieve.
+	 *
+	 * @return Applicant
+	 * @throws InvalidPostID If the post for the requested ID was not found or is not the correct type.
+	 */
+	public function find( $id ) {
+		return $this->find_item( $id );
+	}
+
+	/**
+	 * Find all the published Applicants.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @return Applicant[]
+	 */
+	public function find_all() {
+		return $this->find_all_items();
+	}
+
+	/**
+	 * Get the post type slug to find.
+	 *
+	 * @since %VERSION%
+	 * @return string
+	 */
+	protected function get_post_type() {
+		return ApplicantCPT::SLUG;
+	}
+
+	/**
+	 * Get the name of the class to use when instantiating a model object.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param WP_Post $post The post object to use when instantiating the model.
+	 *
+	 * @return Applicant
+	 */
+	protected function get_model_object( WP_Post $post ) {
+		return new Applicant( $post );
+	}
 
 	/**
 	 * Get the count of applicants for a given Job ID.
@@ -30,7 +84,7 @@ class ApplicantRepository extends CustomPostTypeRepository {
 	 */
 	public function get_applicant_count_for_job( $job_id ) {
 		$args = [
-			'post_type'              => ApplicantCPT::SLUG,
+			'post_type'              => $this->get_post_type(),
 			'post_status'            => [ 'any' ],
 			// Limit posts per page, because WP_Query will still tell us the total.
 			'posts_per_page'         => 1,
@@ -39,13 +93,13 @@ class ApplicantRepository extends CustomPostTypeRepository {
 			'fields'                 => 'ids',
 			'meta_query'             => [
 				[
-					'key'   => '_job_id',
+					'key'   => MetaLinks::JOB,
 					'value' => $job_id,
 				],
 			],
 		];
 
-		$query = new \WP_Query( $args );
+		$query = new WP_Query( $args );
 
 		return absint( $query->found_posts );
 	}
@@ -61,7 +115,7 @@ class ApplicantRepository extends CustomPostTypeRepository {
 	 */
 	public function get_count_for_application( $application_id ) {
 		$args = [
-			'post_type'              => ApplicantCPT::SLUG,
+			'post_type'              => $this->get_post_type(),
 			'post_status'            => [ 'any' ],
 			// Limit posts per page, because WP_Query will still tell us the total.
 			'posts_per_page'         => 1,
@@ -70,14 +124,35 @@ class ApplicantRepository extends CustomPostTypeRepository {
 			'fields'                 => 'ids',
 			'meta_query'             => [
 				[
-					'key'   => '_application_id',
+					'key'   => MetaLinks::APPLICATION,
 					'value' => $application_id,
 				],
 			],
 		];
 
-		$query = new \WP_Query( $args );
+		$query = new WP_Query( $args );
 
 		return absint( $query->found_posts );
+	}
+
+	/**
+	 * Create a new Applicant.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @return Applicant
+	 */
+	public function create() {
+		$post                 = new stdClass();
+		$post->ID             = 0;
+		$post->post_author    = '';
+		$post->post_date      = '';
+		$post->post_date_gmt  = '';
+		$post->post_type      = $this->get_post_type();
+		$post->comment_status = 'open';
+		$post->ping_status    = 'closed';
+		$post->page_template  = 'default';
+
+		return $this->get_model_object( new WP_Post( $post ) );
 	}
 }

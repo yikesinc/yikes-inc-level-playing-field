@@ -16,7 +16,6 @@
 	</rule>
 
 	<!-- Other generic sniffs to include -->
-	<rule ref="Generic.CodeAnalysis.UnusedFunctionParameter"/>
 	<rule ref="Generic.Arrays.DisallowLongArraySyntax"/>
 	<rule ref="Generic.Commenting.Todo"/>
 
