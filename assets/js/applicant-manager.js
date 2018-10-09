@@ -6,7 +6,7 @@ jQuery( document ).ready( function( $ ) {
 	const coverLetter = $( '.cover-letter a' );
     const coverLetterContent = $( '.cover-letter-content' );
 	const applicantID = document.getElementById( 'post_ID' ).value;
-	const i18n = Object.assign( {}, { title: '' }, window.applicantManager || {}, {ok: 'Ok'}, {cancel: 'Cancel'} );
+	const i18n = Object.assign( {}, { title: '' }, window.applicantManager || {}, {ok: 'Ok'}, {cancel: 'Cancel'}, {view: 'View Cover Letter'}, {hide: 'Hide Cover Letter'} );
 	const applicantActions = {
 
 		/**
@@ -95,10 +95,10 @@ jQuery( document ).ready( function( $ ) {
             coverLetterContent.toggle();
             if ( coverLetterContent.is(':visible') ) {
                 // todo: Not sure what it means to "localize translation strings" and if it applies here.
-            	coverLetter.html('Hide Cover Letter');
+            	coverLetter.html(i18n.hide);
             } else {
                 // todo: Not sure what it means to "localize translation strings" and if it applies here.
-                coverLetter.html('View Cover Letter');
+                coverLetter.html(i18n.view);
             }
         }
 	};
