@@ -12,6 +12,7 @@ namespace Yikes\LevelPlayingField\AdminPage;
 use Yikes\LevelPlayingField\Service;
 use Yikes\LevelPlayingField\Roles\Capabilities;
 use Yikes\LevelPlayingField\CustomPostType\JobManager;
+use Yikes\LevelPlayingField\View\AdminView;
 
 /**
  * Abstract class BaseAdminPage.
@@ -105,11 +106,14 @@ abstract class BaseAdminPage implements Service {
 	}
 
 	/**
-	 * This function will generate the admin page.
+	 * Display the admin page's HTML.
 	 *
 	 * @since %VERSION%
 	 */
-	abstract public function callback();
+	public function callback() {
+		$view = new AdminView( static::VIEW_URI );
+		echo $view->render();
+	}
 
 	/**
 	 * Get the priority for this admin page.

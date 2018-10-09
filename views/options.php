@@ -9,4 +9,4 @@
 
 namespace Yikes\LevelPlayingField;
 
-echo 'The Applicant Export Page, for now.'; ?>
+echo 'The options page, for now.';

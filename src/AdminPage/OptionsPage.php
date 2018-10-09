@@ -14,25 +14,23 @@ use Yikes\LevelPlayingField\Assets\AssetsAware;
 use Yikes\LevelPlayingField\Assets\AssetsAwareness;
 use Yikes\LevelPlayingField\Assets\ScriptAsset;
 use Yikes\LevelPlayingField\CustomPostType\JobManager;
-use Yikes\LevelPlayingField\View\AdminView;
 
 /**
- * Class ExportApplicantsPage
+ * Class OptionsPage
  *
  * @since   %VERSION%
  * @package Yikes\LevelPlayingField
  */
-class ExportApplicantsPage extends BaseAdminPage implements AssetsAware {
+class OptionsPage extends BaseAdminPage implements AssetsAware {
 
 	use AssetsAwareness;
 
-	const POST_TYPE = JobManager::SLUG;
-	const PAGE_SLUG = 'lpf-export-applicants';
-	const PRIORITY  = 15;
-	const VIEW_URI  = 'views/applicant-export';
+	const PAGE_SLUG = 'lpf-options';
+	const PRIORITY  = 50;
+	const VIEW_URI  = 'views/options';
 
 	// Define the JavaScript file.
-	const JS_HANDLE       = 'lpf-export-page-admin-script';
+	const JS_HANDLE       = 'lpf-options-script';
 	const JS_URI          = 'assets/js/export';
 	const JS_DEPENDENCIES = [ 'jquery' ];
 	const JS_VERSION      = false;
@@ -80,7 +78,7 @@ class ExportApplicantsPage extends BaseAdminPage implements AssetsAware {
 	 * @return string The text to be displayed in the title tags of the page when the menu is.
 	 */
 	protected function get_page_title() {
-		return __( 'Export Applicants', 'yikes-level-playing-field' );
+		return __( 'Options - Level Playing Field', 'yikes-level-playing-field' );
 	}
 
 	/**
@@ -91,7 +89,7 @@ class ExportApplicantsPage extends BaseAdminPage implements AssetsAware {
 	 * @return string The text to be used for the menu.
 	 */
 	protected function get_menu_title() {
-		return __( 'Export', 'yikes-level-playing-field' );
+		return __( 'Options', 'yikes-level-playing-field' );
 	}
 
 	/**
