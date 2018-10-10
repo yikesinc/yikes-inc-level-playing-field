@@ -10,6 +10,7 @@
 namespace Yikes\LevelPlayingField;
 
 use Yikes\LevelPlayingField\AdminPage\ExportApplicantsPage;
+use Yikes\LevelPlayingField\AdminPage\OptionsPage;
 use Yikes\LevelPlayingField\CustomPostType\ApplicantManager;
 use Yikes\LevelPlayingField\CustomPostType\ApplicationManager;
 use Yikes\LevelPlayingField\CustomPostType\LimitedJobManager;
@@ -101,7 +102,8 @@ final class PluginFactory {
 			Application::class          => 1,
 
 			// Admin Pages.
-			ExportApplicantsPage::class => 1,
+			ExportApplicantsPage::class     => 1,
+			OptionsPage::class              => 1,
 
 			// Carbon Fields.
 			FieldLoader::class          => 1,
