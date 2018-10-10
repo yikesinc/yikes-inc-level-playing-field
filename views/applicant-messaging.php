@@ -5,6 +5,8 @@
  * @package Yikes\LevelPlayingField
  * @author  Jeremy Pry
  * @license GPL2
+ *
+ * phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
  */
 
 namespace Yikes\LevelPlayingField;
