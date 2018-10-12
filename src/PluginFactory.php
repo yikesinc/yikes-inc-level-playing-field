@@ -99,8 +99,8 @@ final class PluginFactory {
 			Editor::class               => 1,
 
 			// Widgets.
-			Status::class,
-
+			Status::class               => 1,
+			
 			// Shortcodes.
 			AllJobs::class              => 1,
 			Job::class                  => 1,
