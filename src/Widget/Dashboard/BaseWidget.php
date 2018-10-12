@@ -6,12 +6,9 @@
  * @author    Ebonie Butler
  * @license   GPL2
  */
-
 namespace Yikes\LevelPlayingField\Widget\Dashboard;
-
 use Yikes\LevelPlayingField\Exception\MustExtend;
 use Yikes\LevelPlayingField\Service;
-
 /**
  * Abstract class BaseWidget.
  *
@@ -22,11 +19,9 @@ use Yikes\LevelPlayingField\Service;
  *
  */
 abstract class BaseWidget implements Service {
-
 	const SLUG   = '_basewidget_';
 	const TITLE  = '_basetitle_';
 	const F_NAME = '_basedisplay_';
-
 	/**
 	 * Register the WordPress hooks.
 	 *
@@ -42,7 +37,7 @@ abstract class BaseWidget implements Service {
 		wp_add_dashboard_widget(
 			$this->get_slug(),         // Widget slug.
 			$this->get_widget_title(),         // Title.
-			array( $this, 'render_widget' ) // Display function.
+			array( $this, 'render' ) // Display function.
 		);
 	}
 	/**
@@ -78,5 +73,5 @@ abstract class BaseWidget implements Service {
 	 *
 	 * @since %VERSION%
 	 */
-	abstract public function render_widget();
+	abstract public function render();
 }
