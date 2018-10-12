@@ -102,6 +102,9 @@ final class PluginFactory {
 			// Widgets.
 			Status::class,
 
+			// Widgets.
+			Status::class,
+
 			// Shortcodes.
 			AllJobs::class              => 1,
 			Job::class                  => 1,
