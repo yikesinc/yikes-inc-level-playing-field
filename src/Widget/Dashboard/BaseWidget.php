@@ -9,6 +9,7 @@
 
 namespace Yikes\LevelPlayingField\Widget\Dashboard;
 
+use Yikes\LevelPlayingField\Assets\AssetsAware;
 use Yikes\LevelPlayingField\Exception\MustExtend;
 use Yikes\LevelPlayingField\Service;
 
@@ -21,7 +22,7 @@ use Yikes\LevelPlayingField\Service;
  * @author  Ebonie Butler
  *
  */
-abstract class BaseWidget implements Service {
+abstract class BaseWidget implements AssetsAware, Service {
 
 	const SLUG   = '_basewidget_';
 	const TITLE  = '_basetitle_';
@@ -39,6 +40,7 @@ abstract class BaseWidget implements Service {
 	 * Add custom dashboard widget.
 	 */
 	public function add_dashboard_widget() {
+		$this->register_assets();
 		wp_add_dashboard_widget(
 			$this->get_slug(),         // Widget slug.
 			$this->get_widget_title(),         // Title.
