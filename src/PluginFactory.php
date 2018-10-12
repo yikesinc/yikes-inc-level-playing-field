@@ -32,7 +32,6 @@ use Yikes\LevelPlayingField\Taxonomy\JobCategory;
 use Yikes\LevelPlayingField\Taxonomy\JobStatus;
 use Yikes\LevelPlayingField\TemplateController\SingleApplicationsTemplateController as SingleApplications;
 use Yikes\LevelPlayingField\TemplateController\SingleJobsTemplateController as SingleJobs;
-use Yikes\LevelPlayingField\Widget\Dashboard\DashboardStatistics;
 use Yikes\LevelPlayingField\Widget\Dashboard\Status;
 
 /**
@@ -100,10 +99,8 @@ final class PluginFactory {
 			Editor::class               => 1,
 
 			// Widgets.
-			Status::class,
+			Status::class               => 1,
 
-			// Widgets.
-			Status::class,
 
 			// Shortcodes.
 			AllJobs::class              => 1,
