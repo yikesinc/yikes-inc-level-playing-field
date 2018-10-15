@@ -13,6 +13,8 @@ use Yikes\LevelPlayingField\Assets\AssetsAware;
 use Yikes\LevelPlayingField\Assets\AssetsAwareness;
 use Yikes\LevelPlayingField\Assets\StyleAsset;
 use Yikes\LevelPlayingField\Assets\ScriptAsset;
+use Yikes\LevelPlayingField\Model\JobRepository;
+
 
 /**
  * Applicant Status Dashboard Widget.
@@ -54,13 +56,32 @@ class Status extends BaseWidget implements AssetsAware {
 	 * @since %VERSION%
 	 */
 	public function render() {
+		// Get job data.
+		$job_repo = new JobRepository();
+		$all_jobs = $job_repo->find_all();
+		//get_applicant_count_for_job( $job_id )
 		?>
-		<h3>Job Title</h3>
-		<a href="#">Regional Manager</a>
-		<h3>New</h3>
-		<a href="#">2</a>
-		<h3>Total</h3>
-		<a href="#">32</a>
+		<table>
+			<thead>
+				<tr>
+					<th>Job Title</th>
+					<th>New</th>
+					<th>Total</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Regional Manager</td>
+					<td>2</td>
+					<td>32</td>
+				</tr>
+			</tbody>
+			<tfoot>
+			<tr>
+				<td colspan="3">The table footer</td>
+			</tr>
+			</tfoot>
+		</table>
 		<?php
 	}
 
