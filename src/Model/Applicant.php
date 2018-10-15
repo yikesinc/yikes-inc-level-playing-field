@@ -440,6 +440,11 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @since %VERSION%
 	 */
 	public function persist_properties() {
+		// Always make sure we have a status set.
+		if ( empty( $this->status ) ) {
+			$this->set_status( ApplicantStatus::DEFAULT_TERM_SLUG );
+		}
+
 		foreach ( $this->get_lazy_properties() as $key => $default ) {
 			// Only allow changes via class methods.
 			if ( ! array_key_exists( $key, $this->changes ) ) {
