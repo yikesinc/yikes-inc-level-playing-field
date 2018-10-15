@@ -53,7 +53,7 @@ abstract class ExistingRole extends BaseRole {
 	 * @since %VERSION%
 	 * @return string
 	 */
-	protected function get_title() {
+	public function get_title() {
 		return '';
 	}
 }

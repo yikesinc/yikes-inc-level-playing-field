@@ -15,7 +15,7 @@ namespace Yikes\LevelPlayingField\Roles;
  * @since   %VERSION%
  * @package Yikes\LevelPlayingField
  */
-class HumanResources extends BaseRole {
+final class HumanResources extends BaseRole {
 
 	const SLUG = 'human-resources';
 
@@ -25,7 +25,7 @@ class HumanResources extends BaseRole {
 	 * @since %VERSION%
 	 * @return string
 	 */
-	protected function get_title() {
+	public function get_title() {
 		return esc_html__( 'Human Resources', 'yikes-level-playing-field' );
 	}
 

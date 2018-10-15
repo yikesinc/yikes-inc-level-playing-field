@@ -93,15 +93,4 @@ class ExportApplicantsPage extends BaseAdminPage implements AssetsAware {
 	protected function get_menu_title() {
 		return __( 'Export', 'yikes-level-playing-field' );
 	}
-
-	/**
-	 * Get the slug name to refer to this menu by.
-	 *
-	 * @since %VERSION%
-	 *
-	 * @return string The slug name to refer to this menu by.
-	 */
-	protected function get_menu_slug() {
-		return static::PAGE_SLUG;
-	}
 }

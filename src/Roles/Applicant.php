@@ -15,7 +15,7 @@ namespace Yikes\LevelPlayingField\Roles;
  * @since   %VERSION%
  * @package Yikes\LevelPlayingField
  */
-class Applicant extends BaseRole {
+final class Applicant extends BaseRole {
 
 	const SLUG = 'applicant';
 
@@ -25,7 +25,7 @@ class Applicant extends BaseRole {
 	 * @since %VERSION%
 	 * @return string
 	 */
-	protected function get_title() {
+	public function get_title() {
 		return esc_html__( 'Applicant', 'yikes-level-playing-field' );
 	}
 

@@ -13,7 +13,8 @@ use Yikes\LevelPlayingField\Assets\Asset;
 use Yikes\LevelPlayingField\Assets\AssetsAware;
 use Yikes\LevelPlayingField\Assets\AssetsAwareness;
 use Yikes\LevelPlayingField\Assets\ScriptAsset;
-use Yikes\LevelPlayingField\CustomPostType\JobManager;
+use Yikes\LevelPlayingField\Assets\StyleAsset;
+use Yikes\LevelPlayingField\Options\Options;
 
 /**
  * Class OptionsPage
@@ -25,15 +26,18 @@ class OptionsPage extends BaseAdminPage implements AssetsAware {
 
 	use AssetsAwareness;
 
-	const PAGE_SLUG = 'lpf-options';
-	const PRIORITY  = 50;
-	const VIEW_URI  = 'views/options';
+	const PAGE_SLUG    = 'lpf-options';
+	const PRIORITY     = 50;
+	const VIEW_URI     = 'views/options';
+	const OPTIONS_SLUG = 'lpf_options';
 
 	// Define the JavaScript file.
 	const JS_HANDLE       = 'lpf-options-script';
-	const JS_URI          = 'assets/js/export';
+	const JS_URI          = 'assets/js/options';
 	const JS_DEPENDENCIES = [ 'jquery' ];
 	const JS_VERSION      = false;
+	const CSS_HANDLE      = 'lpf-options-styles';
+	const CSS_URI         = 'assets/css/options';
 
 	/**
 	 * Register hooks.
@@ -65,8 +69,26 @@ class OptionsPage extends BaseAdminPage implements AssetsAware {
 	 * @return Asset[]
 	 */
 	protected function get_assets() {
+
+		$script = new ScriptAsset( self::JS_HANDLE, self::JS_URI, self::JS_DEPENDENCIES, self::JS_VERSION, ScriptAsset::ENQUEUE_FOOTER );
+		$script->add_localization(
+			'options_data',
+			[
+				'ajax'    => [
+					'url'         => admin_url( 'admin-ajax.php' ),
+					'save_nonce'  => wp_create_nonce( 'save_options' ),
+					'save_action' => 'save_options',
+				],
+				'options' => wp_json_encode( new Options( true ) ),
+				'strings' => [
+					'save_success' => __( 'Success: Settings Saved.', 'yikes-level-playing-field' ),
+				],
+			]
+		);
+
 		return [
-			new ScriptAsset( self::JS_HANDLE, self::JS_URI, self::JS_DEPENDENCIES, self::JS_VERSION, ScriptAsset::ENQUEUE_FOOTER ),
+			$script,
+			new StyleAsset( self::CSS_HANDLE, self::CSS_URI ),
 		];
 	}
 
@@ -93,13 +115,15 @@ class OptionsPage extends BaseAdminPage implements AssetsAware {
 	}
 
 	/**
-	 * Get the slug name to refer to this menu by.
+	 * Include the variables required for this admin page.
 	 *
 	 * @since %VERSION%
 	 *
-	 * @return string The slug name to refer to this menu by.
+	 * @return array $context The context.
 	 */
-	protected function get_menu_slug() {
-		return static::PAGE_SLUG;
+	protected function get_context() {
+		return [
+			'options' => new Options( true ),
+		];
 	}
 }

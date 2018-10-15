@@ -62,7 +62,7 @@ abstract class BaseRole implements Service {
 	 * @since %VERSION%
 	 * @return string
 	 */
-	abstract protected function get_title();
+	abstract public function get_title();
 
 	/**
 	 * Get the capability array for the role.
