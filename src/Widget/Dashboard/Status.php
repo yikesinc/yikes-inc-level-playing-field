@@ -9,94 +9,38 @@
 
 namespace Yikes\LevelPlayingField\Widget\Dashboard;
 
-use Yikes\LevelPlayingField\Assets\AssetsAware;
-use Yikes\LevelPlayingField\Assets\AssetsAwareness;
-use Yikes\LevelPlayingField\Assets\StyleAsset;
-use Yikes\LevelPlayingField\Assets\ScriptAsset;
-use Yikes\LevelPlayingField\Model\JobRepository;
-use Yikes\LevelPlayingField\Model\ApplicantRepository;
-
-
 /**
- * Applicant Status Dashboard Widget.
+ * Applicant Manager CPT.
  *
  * @package    Yikes\LevelPlayingField
  * @subpackage Widget
  */
-class Status extends BaseWidget implements AssetsAware {
+class Status extends BaseWidget {
 
-	use AssetsAwareness;
-	const SLUG  = 'yikes_lpf_widget';
-	const TITLE = 'Applicants';
-
-	// Define the CSS file.
-	const CSS_HANDLE = 'lpf-dashboard-widget-css';
-	const CSS_URI    = 'assets/css/lpf-dashboard-widget';
-
-	// Define the JavaScript file.
-	const JS_HANDLE       = 'lpf-dashboard-widget-script';
-	const JS_URI          = 'assets/js/dashboard-widget';
-	const JS_DEPENDENCIES = [ 'jquery' ];
-	const JS_VERSION      = false;
-
+	const PREFIX = 'yikes_stats_';
 
 	/**
-	 * Register the WordPress hooks.
+	 * Add a widget to the dashboard.
+	 * This function is hooked into the 'wp_dashboard_setup' action above.
 	 *
-	 * @since %VERSION%
+	 * @return void
 	 */
-	public function register() {
-		parent::register();
-		$this->register_assets();
+	public function yikes_stats_add_widget() {
+		wp_add_dashboard_widget(
+			'yikes_lpf_widget',         // Widget slug.
+			'Yikes Level Playing Field',         // Title.
+			array( $this, 'yikes_stats_display_status' ) // Display function.
+		);
 	}
 
 	/**
-	 * Output the widget content.
+	 * Output the contents of our Dashboard Widget.
 	 *
-	 * @since %VERSION%
+	 * @return void
 	 */
-	public function render() {
-		$this->enqueue_assets();
-		// Get job data.
-		$job_repo = new JobRepository();
-		$applicant_repo = new ApplicantRepository();
-		$all_jobs = $job_repo->find_all();
-		foreach ( $all_jobs as $job_id => $job ) {
-			$tmp = $applicant_repo->get_applicant_count_for_job( $job_id );
-		}
-
-		?>
-		<table>
-			<thead>
-				<tr>
-					<th>Job Title</th>
-					<th>New</th>
-					<th>Total</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>Regional Manager</td>
-					<td>2</td>
-					<td>32</td>
-				</tr>
-			</tbody>
-		</table>
-		<?php
+	public function yikes_stats_display_status() {
+		$html = '<h3>Placeholder text.</h3>';
+		echo $html;
 	}
 
-	/**
-	 * Get the array of known assets.
-	 *
-	 * @since %VERSION%
-	 *
-	 * @return Asset[]
-	 */
-	protected function get_assets() {
-
-		return [
-			new StyleAsset( self::CSS_HANDLE, self::CSS_URI ),
-			new ScriptAsset( self::JS_HANDLE, self::JS_URI, self::JS_DEPENDENCIES, self::JS_VERSION, ScriptAsset::ENQUEUE_FOOTER ),
-		];
-	}
 }
