@@ -11,6 +11,7 @@ namespace Yikes\LevelPlayingField\Email;
 
 use Yikes\LevelPlayingField\Service;
 use Yikes\LevelPlayingField\Applicant;
+use Yikes\LevelPlayingField\Options\OptionsManager;
 
 /**
  * Class ApplicantMessageFromApplicantEmail.
@@ -34,7 +35,7 @@ class ApplicantMessageFromApplicantEmail extends ApplicantMessageEmail {
 	protected function recipient() {
 
 		// Fetch the email of the job manager(s).
-		return 'kevin@yikesinc.com';
+		return ( new OptionsManager() )->fetch_from_applicant_email_recipients();
 	}
 
 	/**

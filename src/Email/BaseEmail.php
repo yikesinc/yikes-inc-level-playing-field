@@ -43,6 +43,7 @@ abstract class BaseEmail {
 		 * @return mixed  $email The recipient's email address.
 		 */
 		$recipient = apply_filters( 'lpf_email_recipient', $this->recipient(), static::EMAIL_TYPE );
+		$recipient = apply_filters( 'lpf_email_recipient_' . static::EMAIL_TYPE, $recipient, static::EMAIL_TYPE );
 
 		/**
 		 * Filter the subject of the email.
@@ -55,6 +56,7 @@ abstract class BaseEmail {
 		 * @return string $subject The subject of the email.
 		 */
 		$subject = apply_filters( 'lpf_email_subject', $this->subject(), static::EMAIL_TYPE );
+		$subject = apply_filters( 'lpf_email_subject_' . static::EMAIL_TYPE, $subject, static::EMAIL_TYPE );
 
 		/**
 		 * Filter the message of the email.
@@ -67,6 +69,7 @@ abstract class BaseEmail {
 		 * @return string $message The email's message.
 		 */
 		$message = apply_filters( 'lpf_email_message', $this->message(), static::EMAIL_TYPE );
+		$message = apply_filters( 'lpf_email_message_' . static::EMAIL_TYPE, $message, static::EMAIL_TYPE );
 
 		/**
 		 * Filter the headers of the email.
@@ -85,6 +88,7 @@ abstract class BaseEmail {
 		 * @return array  $headers The array of headers for this email.
 		 */
 		$headers = apply_filters( 'lpf_email_headers', $this->construct_headers(), static::EMAIL_TYPE );
+		$headers = apply_filters( 'lpf_email_headers_' . static::EMAIL_TYPE, $headers, static::EMAIL_TYPE );
 
 		/**
 		 * Filter the attachments of the email.
@@ -97,6 +101,7 @@ abstract class BaseEmail {
 		 * @return array  $attachments The array of attachments for this email.
 		 */
 		$attachments = apply_filters( 'lpf_email_attachments', $this->attachments(), static::EMAIL_TYPE );
+		$attachments = apply_filters( 'lpf_email_attachments_' . static::EMAIL_TYPE, $attachments, static::EMAIL_TYPE );
 
 		// Send the email.
 		return wp_mail( $recipient, $subject, $message, $headers, $attachments );
