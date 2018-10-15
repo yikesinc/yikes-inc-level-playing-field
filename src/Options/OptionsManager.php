@@ -55,11 +55,11 @@ final class OptionsManager implements Service {
 		$email_recipient_roles = array_filter( $options->get_option( EmailRecipientRoles::SLUG ) );
 
 		foreach ( $email_recipient_roles as $role => $enabled ) {
-			$recipients = array_merge( $recipients, $this->get_email_addresses_by_role( $role ) );
+			$recipients = array_merge( $recipients, $this->get_recipients_by_role( $role ) );
 		}
 
 		// Return only unique email addresses.
-		return array_unique( array_filter( array_filter( $recipients, 'is_email' ) ) );
+		return array_unique( array_filter( $recipients, 'is_email' ) );
 	}
 
 	/**
@@ -70,7 +70,7 @@ final class OptionsManager implements Service {
 	 * @param  string $role       The role we're fetching emails for.
 	 * @return array  $recipients An array of email recipients.
 	 */
-	public function get_email_addresses_by_role( $role ) {
+	public function get_recipients_by_role( $role ) {
 		$email_addresses = get_transient( static::EMAILS_TRANSIENT_PREFIX . $role );
 		if ( false !== $email_addresses ) {
 			return $email_addresses;
