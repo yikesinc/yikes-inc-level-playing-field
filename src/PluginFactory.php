@@ -31,6 +31,7 @@ use Yikes\LevelPlayingField\Taxonomy\JobStatus;
 use Yikes\LevelPlayingField\TemplateController\SingleApplicationsTemplateController as SingleApplications;
 use Yikes\LevelPlayingField\TemplateController\SingleJobsTemplateController as SingleJobs;
 use Yikes\LevelPlayingField\Widget\Dashboard\Status;
+
 /**
  * Class PluginFactory
  *
