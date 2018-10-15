@@ -9,8 +9,10 @@
 
 namespace Yikes\LevelPlayingField\Widget\Dashboard;
 
+use Yikes\LevelPlayingField\Assets\AssetsAware;
 use Yikes\LevelPlayingField\Assets\AssetsAwareness;
 use Yikes\LevelPlayingField\Assets\StyleAsset;
+use Yikes\LevelPlayingField\Assets\ScriptAsset;
 
 /**
  * Applicant Status Dashboard Widget.
@@ -18,22 +20,40 @@ use Yikes\LevelPlayingField\Assets\StyleAsset;
  * @package    Yikes\LevelPlayingField
  * @subpackage Widget
  */
-class Status extends BaseWidget {
+class Status extends BaseWidget implements AssetsAware {
 
 	use AssetsAwareness;
-
-	const CSS_HANDLE = 'lpf-dashboard-widget-css';
-	const CSS_URI    = 'assets/css/lpf-dashboard-widget';
 	const SLUG  = 'yikes_lpf_widget';
 	const TITLE = 'Applicants';
+
+	// Define the CSS file.
+	const CSS_HANDLE = 'lpf-dashboard-widget-css';
+	const CSS_URI    = 'assets/css/lpf-dashboard-widget';
+
+	// Define the JavaScript file.
+	const JS_HANDLE       = 'lpf-dashboard-widget-script';
+	const JS_URI          = 'assets/js/dashboard-widget';
+	const JS_DEPENDENCIES = [ 'jquery' ];
+	const JS_VERSION      = false;
+
+
+	/**
+	 * Register the WordPress hooks.
+	 *
+	 * @since %VERSION%
+	 */
+	public function register() {
+		parent::register();
+		$this->register_assets();
+		$this->enqueue_assets();
+	}
 
 	/**
 	 * Output the widget content.
 	 *
 	 * @since %VERSION%
 	 */
-	public function render_widget() {
-		$this->enqueue_assets();
+	public function render() {
 		?>
 		<h3>Job Title</h3>
 		<a href="#">Regional Manager</a>
@@ -55,6 +75,7 @@ class Status extends BaseWidget {
 
 		return [
 			new StyleAsset( self::CSS_HANDLE, self::CSS_URI ),
+			new ScriptAsset( self::JS_HANDLE, self::JS_URI, self::JS_DEPENDENCIES, self::JS_VERSION, ScriptAsset::ENQUEUE_FOOTER ),
 		];
 	}
 }
