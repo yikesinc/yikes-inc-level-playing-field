@@ -10,6 +10,7 @@
 namespace Yikes\LevelPlayingField\Model;
 
 use WP_Post;
+use Yikes\LevelPlayingField\Exception\FailedToSavePost;
 
 /**
  * Abstract class CustomPostTypeEntity.
@@ -20,6 +21,14 @@ use WP_Post;
  * @author  Jeremy Pry
  */
 abstract class CustomPostTypeEntity implements Entity {
+
+	/**
+	 * Whether this is a new Entity.
+	 *
+	 * @since %VERSION%
+	 * @var bool
+	 */
+	protected $new;
 
 	/**
 	 * WordPress post data representing the post.
@@ -47,6 +56,7 @@ abstract class CustomPostTypeEntity implements Entity {
 	 */
 	public function __construct( WP_Post $post ) {
 		$this->post = $post;
+		$this->new  = 0 === $post->ID;
 	}
 
 	/**
@@ -154,16 +164,24 @@ abstract class CustomPostTypeEntity implements Entity {
 	 *
 	 * @since %VERSION%
 	 * @return bool Whether the post was successfully updated.
+	 * @throws FailedToSavePost When the post cannot be saved.
 	 */
 	public function persist_post() {
-		if ( ! $this->post_changed ) {
+		if ( ! $this->post_changed && ! $this->new ) {
 			return false;
 		}
 
-		$result = (bool) wp_insert_post( get_object_vars( $this->post ) );
-		if ( $result ) {
-			$this->post_changed = false;
+		$result = wp_insert_post( get_object_vars( $this->post ), true );
+		if ( is_wp_error( $result ) ) {
+			throw FailedToSavePost::from_type( $this->post->post_type, $result->get_error_message() );
 		}
+
+		if ( $this->new ) {
+			$this->post = get_post( $result );
+			$this->new  = false;
+		}
+
+		$this->post_changed = false;
 
 		return $result;
 	}
