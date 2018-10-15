@@ -32,6 +32,7 @@ use Yikes\LevelPlayingField\Taxonomy\JobCategory;
 use Yikes\LevelPlayingField\Taxonomy\JobStatus;
 use Yikes\LevelPlayingField\TemplateController\SingleApplicationsTemplateController as SingleApplications;
 use Yikes\LevelPlayingField\TemplateController\SingleJobsTemplateController as SingleJobs;
+use Yikes\LevelPlayingField\Options\OptionsManager;
 
 /**
  * Class PluginFactory
@@ -101,9 +102,12 @@ final class PluginFactory {
 			Job::class                  => 1,
 			Application::class          => 1,
 
+			// Options.
+			OptionsManager::class       => 1,
+
 			// Admin Pages.
-			ExportApplicantsPage::class     => 1,
-			OptionsPage::class              => 1,
+			ExportApplicantsPage::class => 1,
+			OptionsPage::class          => 1,
 
 			// Carbon Fields.
 			FieldLoader::class          => 1,
