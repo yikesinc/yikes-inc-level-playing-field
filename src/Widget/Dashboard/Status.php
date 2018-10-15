@@ -13,9 +13,9 @@ namespace Yikes\LevelPlayingField\Widget\Dashboard;
  * Applicant Manager CPT.
  *
  * @package    Yikes\LevelPlayingField
- * @subpackage CustomPostType
+ * @subpackage Widget
  */
-class DashboardStatistics extends BaseWidget {
+class Status extends BaseWidget {
 
 	const PREFIX = 'yikes_stats_';
 
