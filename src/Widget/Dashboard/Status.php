@@ -14,6 +14,7 @@ use Yikes\LevelPlayingField\Assets\AssetsAwareness;
 use Yikes\LevelPlayingField\Assets\StyleAsset;
 use Yikes\LevelPlayingField\Assets\ScriptAsset;
 use Yikes\LevelPlayingField\Model\JobRepository;
+use Yikes\LevelPlayingField\Model\ApplicantRepository;
 
 
 /**
@@ -47,7 +48,6 @@ class Status extends BaseWidget implements AssetsAware {
 	public function register() {
 		parent::register();
 		$this->register_assets();
-		$this->enqueue_assets();
 	}
 
 	/**
@@ -56,10 +56,15 @@ class Status extends BaseWidget implements AssetsAware {
 	 * @since %VERSION%
 	 */
 	public function render() {
+		$this->enqueue_assets();
 		// Get job data.
 		$job_repo = new JobRepository();
+		$applicant_repo = new ApplicantRepository();
 		$all_jobs = $job_repo->find_all();
-		//get_applicant_count_for_job( $job_id )
+		foreach ( $all_jobs as $job_id => $job ) {
+			$tmp = $applicant_repo->get_applicant_count_for_job( $job_id );
+		}
+
 		?>
 		<table>
 			<thead>
@@ -76,11 +81,6 @@ class Status extends BaseWidget implements AssetsAware {
 					<td>32</td>
 				</tr>
 			</tbody>
-			<tfoot>
-			<tr>
-				<td colspan="3">The table footer</td>
-			</tr>
-			</tfoot>
 		</table>
 		<?php
 	}
