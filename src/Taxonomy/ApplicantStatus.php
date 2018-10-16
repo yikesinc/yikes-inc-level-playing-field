@@ -89,6 +89,11 @@ final class ApplicantStatus extends BaseTaxonomy implements AssetsAware {
 
 			return $term;
 		} );
+
+		// AJAX handler for changing the post's term.
+		add_action( 'wp_ajax_lpf_add_post_term', function() {
+			$this->add_post_term();
+		});
 	}
 
 	/**
@@ -151,7 +156,7 @@ final class ApplicantStatus extends BaseTaxonomy implements AssetsAware {
 		] );
 
 		$post_terms = get_the_terms( $post->ID, $tax_name );
-		$post_terms = $post_terms ? wp_list_pluck( $post_terms, 'term_id', 'slug' ) : [];
+		$post_terms = $post_terms ? wp_list_pluck( $post_terms, 'slug', 'term_id' ) : [];
 
 		// Set the default term.
 		$selected_term = '';
@@ -165,9 +170,6 @@ final class ApplicantStatus extends BaseTaxonomy implements AssetsAware {
 			<?php
 			foreach ( $all_terms as $term ) {
 				$selected_bool = array_key_exists( $term->term_id, $post_terms ) ? $term->term_id : false;
-				if ( $selected_bool ) {
-					$selected_term = $term->term_id;
-				}
 				?>
 				<button
 					type="button"
@@ -181,16 +183,6 @@ final class ApplicantStatus extends BaseTaxonomy implements AssetsAware {
 			}
 			?>
 		</div>
-
-		<!-- Hidden input to hold our taxonomy choice -->
-		<input
-			type="hidden"
-			class="tax-input <?php echo esc_attr( $tax_name ); ?>"
-			name="tax_input[<?php echo esc_attr( $tax_name ); ?>]"
-			id="tax_input[<?php echo esc_attr( $tax_name ); ?>]"
-			value="<?php echo esc_attr( $selected_term ); ?>"
-		/>
-
 		<?php
 	}
 
@@ -202,8 +194,19 @@ final class ApplicantStatus extends BaseTaxonomy implements AssetsAware {
 	 * @return Asset[]
 	 */
 	protected function get_assets() {
+		$script = new ScriptAsset( self::JS_HANDLE, self::JS_URI, self::JS_DEPENDENCIES, self::JS_VERSION, ScriptAsset::ENQUEUE_FOOTER );
+		$script->add_localization(
+			'taxonomy_button_group_data',
+			[
+				'ajax' => [
+					'url'   => admin_url( 'admin-ajax.php' ),
+					'nonce' => wp_create_nonce( 'add_post_terms' ),
+				],
+			]
+		);
+
 		return [
-			new ScriptAsset( self::JS_HANDLE, self::JS_URI, self::JS_DEPENDENCIES, self::JS_VERSION, ScriptAsset::ENQUEUE_FOOTER ),
+			$script,
 			new StyleAsset( self::CSS_HANDLE, self::CSS_URI ),
 		];
 	}
@@ -292,5 +295,35 @@ final class ApplicantStatus extends BaseTaxonomy implements AssetsAware {
 				'slug'        => 'maybe',
 			],
 		];
+	}
+
+	/**
+	 * Assign a term to the post.
+	 *
+	 * @since %VERSION%
+	 */
+	private function add_post_term() {
+
+		// Handle nonce.
+		if ( ! isset( $_POST['nonce'] ) || ! check_ajax_referer( 'add_post_terms', 'nonce', false ) ) {
+			wp_send_json_error();
+		}
+
+		// Sanitize vars.
+		$taxonomy = isset( $_POST['tax'] ) ? filter_var( wp_unslash( $_POST['tax'] ), FILTER_SANITIZE_STRING ) : '';
+		$term     = isset( $_POST['term'] ) ? filter_var( wp_unslash( $_POST['term'] ), FILTER_SANITIZE_NUMBER_INT ) : 0;
+		$post_id  = isset( $_POST['post_id'] ) ? filter_var( wp_unslash( $_POST['post_id'] ), FILTER_SANITIZE_NUMBER_INT ) : 0;
+
+		if ( empty( $taxonomy ) || empty( $term ) || empty( $post_id ) ) {
+			wp_send_json_error();
+		}
+
+		$result = wp_set_post_terms( $post_id, $term, $taxonomy, $append = false );
+
+		if ( is_array( $result ) ) {
+			wp_send_json_success();
+		}
+
+		wp_send_json_error();
 	}
 }
