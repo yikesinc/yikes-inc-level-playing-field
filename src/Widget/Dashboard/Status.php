@@ -64,6 +64,7 @@ class Status extends BaseWidget implements AssetsAware {
 		$records = array();
 		foreach ( $all_jobs as $job_id => $job ) {
 			$total = $applicant_repo->get_applicant_count_for_job( $job_id );
+			// @todo: need method to get new applicant count for job.
 			$name = $job->get_title();
 			$tmp = $job->get_post_object();
 
