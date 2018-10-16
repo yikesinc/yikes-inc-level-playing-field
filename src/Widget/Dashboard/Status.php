@@ -61,8 +61,23 @@ class Status extends BaseWidget implements AssetsAware {
 		$job_repo = new JobRepository();
 		$applicant_repo = new ApplicantRepository();
 		$all_jobs = $job_repo->find_all();
+		$records = array();
 		foreach ( $all_jobs as $job_id => $job ) {
-			$tmp = $applicant_repo->get_applicant_count_for_job( $job_id );
+			$total = $applicant_repo->get_applicant_count_for_job( $job_id );
+			$name = $job->get_title();
+			$tmp = $job->get_post_object();
+
+			$records[] = [
+				'job_name'         => $name,
+				'job_link'         => get_the_permalink( $job_id ),
+				// @todo: call function to get new applicants based on job ID.
+				'new_applicants'   => 0,
+				// @todo: call function to get link to filtered list of applicants.
+				'new_link'         => '#',
+				'total_applicants' => $total,
+				// @todo: call function to get link to filtered list of applicants.
+				'total_link'       => '#',
+			];
 		}
 
 		?>
@@ -75,11 +90,15 @@ class Status extends BaseWidget implements AssetsAware {
 				</tr>
 			</thead>
 			<tbody>
-				<tr>
-					<td>Regional Manager</td>
-					<td>2</td>
-					<td>32</td>
-				</tr>
+			<?php
+			foreach ( $records as $record ) {
+				echo '<tr>';
+				echo '<td><a href="' . esc_attr( $record['job_link'] ) . '">' . esc_html__( $record['job_name'], 'yikes-level-playing-field' ) . '</a></td>';
+				echo '<td><a href="' . esc_attr( $record['new_link'] ) . '">' . esc_html__( $record['new_applicants'], 'yikes-level-playing-field' ) . '</a></td>';
+				echo '<td><a href="' . esc_attr( $record['total_link'] ) . '">3' . esc_html__( $record['total_applicants'], 'yikes-level-playing-field' ) . '</a></td>';
+				echo '</tr>';
+			}
+			?>
 			</tbody>
 		</table>
 		<?php
