@@ -73,10 +73,10 @@ class Status extends BaseWidget implements AssetsAware {
 				// @todo: call function to get new applicants based on job ID.
 				'new_applicants'   => 0,
 				// @todo: call function to get link to filtered list of applicants.
-				'new_link'         => '#',
+				'new_link'         => admin_url('edit.php?post_type=applicants'),
 				'total_applicants' => $total,
 				// @todo: call function to get link to filtered list of applicants.
-				'total_link'       => '#',
+				'total_link'       => admin_url('edit.php?post_type=applicants'),
 			];
 		}
 
