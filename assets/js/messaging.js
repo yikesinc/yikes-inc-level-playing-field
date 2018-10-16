@@ -1,8 +1,16 @@
 jQuery( function ( $ ) {
 
-	const get_message = function() { return document.getElementById( 'new-applicant-message' ).value; }
-	const set_message = function( value ) { document.getElementById( 'new-applicant-message' ).value = value; }
-	const post_id     = typeof messaging_data.post !== 'undefined' && typeof messaging_data.post.ID !== 'undefined' ? parseInt( messaging_data.post.ID ) : 0;
+	const get_message            = function() { return document.getElementById( 'new-applicant-message' ).value; }
+	const set_message            = function( value ) { document.getElementById( 'new-applicant-message' ).value = value; }
+	const get_interview_date     = function() { return document.getElementById( 'interview-date' ).value; }
+	const set_interview_date     = function( value ) { document.getElementById( 'interview-date' ).value = value; }
+	const get_interview_time     = function() { return document.getElementById( 'interview-time' ).value; }
+	const set_interview_time     = function( value ) { document.getElementById( 'interview-time' ).value = value; }
+	const get_interview_location = function() { return document.getElementById( 'interview-location' ).value; }
+	const set_interview_location = function( value ) { document.getElementById( 'interview-location' ).value = value; }
+	const get_interview_message  = function() { return document.getElementById( 'interview-message' ).value; }
+	const set_interview_message  = function( value ) { document.getElementById( 'interview-message' ).value = value; }
+	const post_id                = typeof messaging_data.post !== 'undefined' && typeof messaging_data.post.ID !== 'undefined' ? parseInt( messaging_data.post.ID ) : 0;
 
 	if ( 0 === post_id ) {
 		return;
@@ -15,7 +23,7 @@ jQuery( function ( $ ) {
 			const message = get_message();
 
 			// Validate the message.
-			if ( ! validate_message_data( message, post_id ) ) {
+			if ( ! validate_message_data( message ) ) {
 				return;
 			}
 
@@ -36,14 +44,66 @@ jQuery( function ( $ ) {
 				headline.fadeOut( 'fast', function() { headline.text( messaging_data.strings.hide_additional_messages ).fadeIn() });
 			}
 		});
+
+		// Admin side functions.
+		if ( $( '#interview-scheduler' ).length > 0 ) {
+
+			$( '#interview-scheduler' ).click( function() { 
+				$( '#interview-scheduler-fields-container, #send-interview-confirmation-button-container' ).toggleClass( 'hidden' ); 
+			});
+			$( '.lpf-datepicker' ).datepicker({
+
+			});
+			$( '.lpf-timepicker' ).timepicker({
+				minTime: '5:00am',
+				maxTime: '11:00pm',
+				step: 15,
+			});
+			$( '#send-interview-confirmation' ).click( function() {
+				const date     = get_interview_date();
+				const time     = get_interview_time();
+				const location = get_interview_location();
+				const message  = get_interview_message();
+
+				// Validate the interview data.
+				if ( ! validate_interview_data( date, time, location, message ) ) {
+					return;
+				}
+
+				send_interview_confirmation( date, time, location, message );
+			});
+		}
 	});
 
-	function validate_message_data( message_value, post_id ) {
-		if ( message_value.length === 0 ) {
+	function send_interview_confirmation( date, time, location, message ) {
+		const data = {
+			nonce   : messaging_data.ajax.interview_nonce,
+			date    : date,
+			time    : time,
+			location: location,
+			message : message,
+			post_id : post_id,
+			action  : 'send_interview_confirmation'
+		}
+
+		$.post( messaging_data.ajax.url, data, function( response ){ send_interview_confirmation_response( response ); } );
+	}
+
+	function validate_interview_data( date, time, location, message ) {
+
+		if ( date.length === 0 || time.length === 0 || location.length === 0 || message.length === 0 ) {
 			return false;
 		}
 
-		if ( isNaN( post_id ) || post_id <= 0 ) {
+		return true;
+	}
+
+	function send_interview_confirmation_response( response ) {
+
+	}
+
+	function validate_message_data( message_value ) {
+		if ( message_value.length === 0 ) {
 			return false;
 		}
 
@@ -63,7 +123,6 @@ jQuery( function ( $ ) {
 	}
 
 	function send_message_response( response ) {
-		console.log( response );
 
 		// Clear the message textarea.
 		set_message( '' );
@@ -85,5 +144,4 @@ jQuery( function ( $ ) {
 	function refresh_message_board_response( response ) {
 		$( '.messaging-container' ).html( response.data );
 	}
-
 });

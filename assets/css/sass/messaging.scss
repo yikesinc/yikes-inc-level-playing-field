@@ -66,3 +66,17 @@
         cursor: pointer;   
     }
 }
+
+#interview-scheduler-fields-container {
+    .inline-label {
+        display: inline-block;
+    }
+    .block-label {
+        display: block;
+    }
+    #interview-location, #interview-message {
+        width: 100%;
+        height: 120px;
+    }
+}
+    
