@@ -4,7 +4,7 @@
 
 	$( document ).ready( function() {
 		$( '.tax-btn-group button' ).click( function() {
-			const button  = $( this );
+			const button = $( this );
 
 			// Remove active class from all buttons, add it to the clicked button.
 			button.siblings( 'button' ).removeClass( 'active' );
