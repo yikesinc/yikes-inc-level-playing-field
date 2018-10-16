@@ -101,6 +101,7 @@ class Status extends BaseWidget implements AssetsAware {
 			?>
 			</tbody>
 		</table>
+		<a href="#" class="button">View All Job Listings</a>
 		<?php
 	}
 
