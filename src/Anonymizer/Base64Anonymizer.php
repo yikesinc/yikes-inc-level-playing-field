@@ -7,7 +7,7 @@
  * @license GPL2
  */
 
-namespace Yikes\LevelPlayingField\Tools;
+namespace Yikes\LevelPlayingField\Anonymizer;
 
 use Yikes\LevelPlayingField\Exception\InvalidAnonymousData;
 
