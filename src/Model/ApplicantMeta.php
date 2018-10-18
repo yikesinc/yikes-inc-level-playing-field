@@ -62,7 +62,8 @@ interface ApplicantMeta {
 	const CERTIFICATIONS = 'certifications';
 
 	// Admin fields.
-	const NICKNAME = 'nickname';
+	const NICKNAME   = 'nickname';
+	const ANONYMIZED = 'anonymized';
 
 	// Fields to make anonymous.
 	const ANONYMOUS_FIELDS = [
@@ -104,5 +105,6 @@ interface ApplicantMeta {
 		self::EXPERIENCE     => self::META_PREFIX . self::EXPERIENCE,
 		self::VOLUNTEER      => self::META_PREFIX . self::VOLUNTEER,
 		self::NICKNAME       => self::META_PREFIX . self::NICKNAME,
+		self::ANONYMIZED     => self::META_PREFIX . self::ANONYMIZED,
 	];
 }

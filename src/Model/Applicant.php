@@ -34,6 +34,7 @@ use Yikes\LevelPlayingField\Taxonomy\ApplicantStatus;
  * @property array  experience     The Applicant's experience.
  * @property array  volunteer      The Applicant's volunteer work.
  * @property string nickname       The Applicant's nickname (for use when their data is anonymous).
+ * @property bool   anonymized     Whether the applicant is anonymized.
  */
 final class Applicant extends CustomPostTypeEntity {
 
@@ -435,6 +436,16 @@ final class Applicant extends CustomPostTypeEntity {
 	}
 
 	/**
+	 * Whether this applicant's data is currently anonymized.
+	 *
+	 * @since %VERSION%
+	 * @return mixed
+	 */
+	public function is_anonymized() {
+		return $this->anonymized;
+	}
+
+	/**
 	 * Persist the additional properties of the entity.
 	 *
 	 * @since %VERSION%
@@ -486,6 +497,7 @@ final class Applicant extends CustomPostTypeEntity {
 			ApplicantMeta::VOLUNTEER      => [],
 			ApplicantMeta::STATUS         => ApplicantStatus::DEFAULT_TERM_SLUG,
 			ApplicantMeta::NICKNAME       => (string) $this->post->ID,
+			ApplicantMeta::ANONYMIZED     => false,
 		];
 	}
 
