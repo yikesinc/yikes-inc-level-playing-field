@@ -35,6 +35,7 @@ use Yikes\LevelPlayingField\Taxonomy\ApplicantStatus;
  * @property array  volunteer      The Applicant's volunteer work.
  * @property string nickname       The Applicant's nickname (for use when their data is anonymous).
  * @property bool   anonymized     Whether the applicant is anonymized.
+ * @property int    viewed         User ID who viewed the applicant.
  */
 final class Applicant extends CustomPostTypeEntity {
 
@@ -75,6 +76,7 @@ final class Applicant extends CustomPostTypeEntity {
 			ApplicantMeta::POSITION     => FILTER_SANITIZE_NUMBER_INT,
 		],
 		ApplicantMeta::NICKNAME       => FILTER_SANITIZE_STRING,
+		ApplicantMeta::VIEWED         => FILTER_SANITIZE_NUMBER_INT,
 	];
 
 	/**
@@ -446,6 +448,28 @@ final class Applicant extends CustomPostTypeEntity {
 	}
 
 	/**
+	 * Get the user ID who viewed the applicant.
+	 *
+	 * @since %VERSION%
+	 * @return int
+	 */
+	public function viewed_by() {
+		return $this->viewed;
+	}
+
+	/**
+	 * Set the user who viewed the applicant.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param int $id The user ID who viewed the applicant.
+	 */
+	public function set_viewed_by( $id ) {
+		$this->viewed = filter_var( $id, self::SANITIZATION[ ApplicantMeta::VIEWED ] );
+		$this->changed_property( ApplicantMeta::VIEWED );
+	}
+
+	/**
 	 * Persist the additional properties of the entity.
 	 *
 	 * @since %VERSION%
@@ -498,6 +522,7 @@ final class Applicant extends CustomPostTypeEntity {
 			ApplicantMeta::STATUS         => ApplicantStatus::DEFAULT_TERM_SLUG,
 			ApplicantMeta::NICKNAME       => (string) $this->post->ID,
 			ApplicantMeta::ANONYMIZED     => false,
+			ApplicantMeta::VIEWED         => 0,
 		];
 	}
 
