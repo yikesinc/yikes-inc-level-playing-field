@@ -55,7 +55,7 @@ interface ApplicantMeta {
 
 	// Fields for other objects.
 	const JOB         = JobManager::SINGULAR_SLUG;
-	const APPLICATION = ApplicationManager::SLUG;
+	const APPLICATION = ApplicationManager::SINGULAR_SLUG;
 
 	// Complex fields.
 	const SCHOOLING      = 'schooling';
