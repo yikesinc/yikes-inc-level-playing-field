@@ -153,6 +153,7 @@ abstract class CustomPostTypeEntity implements Entity {
 	 * Persist the post object and post properties.
 	 *
 	 * @since %VERSION%
+	 * @throws FailedToSavePost When there is a problem saving the post.
 	 */
 	public function persist() {
 		$this->persist_post();
