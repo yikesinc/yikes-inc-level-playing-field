@@ -83,25 +83,61 @@ class ApplicantRepository extends CustomPostTypeRepository {
 	 * @return int The count of applicants for the Job.
 	 */
 	public function get_applicant_count_for_job( $job_id ) {
-		$args = [
-			'post_type'              => $this->get_post_type(),
-			'post_status'            => [ 'any' ],
-			// Limit posts per page, because WP_Query will still tell us the total.
-			'posts_per_page'         => 1,
-			'update_post_meta_cache' => false,
-			'update_post_term_cache' => false,
-			'fields'                 => 'ids',
-			'meta_query'             => [
-				[
-					'key'   => MetaLinks::JOB,
-					'value' => $job_id,
-				],
-			],
-		];
+		$args = $this->get_default_query_vars();
+
+		// Specifics for this query.
+		$args['posts_per_page'] = 1;
+		$args['fields']         = 'ids';
+		$args['meta_query'][]   = $this->get_job_meta_query( $job_id );
 
 		$query = new WP_Query( $args );
 
 		return absint( $query->found_posts );
+	}
+
+	/**
+	 * Get the count of Applicants who have been viewed for a Job.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param int $job_id The Job ID.
+	 *
+	 * @return int The count of applicants for the Job who have been viewed.
+	 */
+	public function get_viewed_applicant_count_for_job( $job_id ) {
+		$args = $this->get_default_query_vars();
+
+		// Specifics for this query.
+		$args['posts_per_page'] = 1;
+		$args['fields']         = 'ids';
+		$args['meta_query'][]   = $this->get_job_meta_query( $job_id );
+		$args['meta_query'][]   = $this->get_viewed_applicant_meta_query();
+
+		$query = new WP_Query( $args );
+
+		return absint( $query->found_posts );
+	}
+
+	/**
+	 * Get Applicants that have applied for a particular job.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param int $job_id The Job ID.
+	 *
+	 * @return Applicant[]
+	 */
+	public function get_applicants_for_job( $job_id ) {
+		$args                 = $this->get_default_query_vars();
+		$args['meta_query'][] = $this->get_job_meta_query( $job_id );
+		$query                = new WP_Query( $args );
+
+		$applicants = [];
+		foreach ( $query->posts as $post ) {
+			$applicants[ $post->ID ] = $this->get_model_object( $post );
+		}
+
+		return $applicants;
 	}
 
 	/**
@@ -114,21 +150,12 @@ class ApplicantRepository extends CustomPostTypeRepository {
 	 * @return int The count of applicants for the Application.
 	 */
 	public function get_count_for_application( $application_id ) {
-		$args = [
-			'post_type'              => $this->get_post_type(),
-			'post_status'            => [ 'any' ],
-			// Limit posts per page, because WP_Query will still tell us the total.
-			'posts_per_page'         => 1,
-			'update_post_meta_cache' => false,
-			'update_post_term_cache' => false,
-			'fields'                 => 'ids',
-			'meta_query'             => [
-				[
-					'key'   => MetaLinks::APPLICATION,
-					'value' => $application_id,
-				],
-			],
-		];
+		$args = $this->get_default_query_vars();
+
+		// Specifics for this query.
+		$args['posts_per_page'] = 1;
+		$args['fields']         = 'ids';
+		$args['meta_query'][]   = $this->get_application_meta_query( $application_id );
 
 		$query = new WP_Query( $args );
 
@@ -154,5 +181,21 @@ class ApplicantRepository extends CustomPostTypeRepository {
 		$post->page_template  = 'default';
 
 		return $this->get_model_object( new WP_Post( $post ) );
+	}
+
+	/**
+	 * Get the default arguments to use when querying for this repository.
+	 *
+	 * @since %VERSION%
+	 * @return array
+	 */
+	private function get_default_query_vars() {
+		return [
+			'post_type'              => $this->get_post_type(),
+			'post_status'            => [ 'any' ],
+			'update_post_meta_cache' => false,
+			'update_post_term_cache' => false,
+			'meta_query'             => [],
+		];
 	}
 }
