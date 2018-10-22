@@ -6,9 +6,12 @@
  * @author    Ebonie Butler
  * @license   GPL2
  */
+
 namespace Yikes\LevelPlayingField\Widget\Dashboard;
+
 use Yikes\LevelPlayingField\Exception\MustExtend;
 use Yikes\LevelPlayingField\Service;
+
 /**
  * Abstract class BaseWidget.
  *
@@ -19,9 +22,11 @@ use Yikes\LevelPlayingField\Service;
  *
  */
 abstract class BaseWidget implements Service {
+
 	const SLUG   = '_basewidget_';
 	const TITLE  = '_basetitle_';
 	const F_NAME = '_basedisplay_';
+
 	/**
 	 * Register the WordPress hooks.
 	 *
