@@ -105,6 +105,42 @@ class ApplicantRepository extends CustomPostTypeRepository {
 	}
 
 	/**
+	 * Get the count of new (unviewed) applicants for a given Job ID.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param int $job_id The Job ID.
+	 *
+	 * @return int The count of new applicants for the Job.
+	 */
+	public function get_new_applicant_count_for_job( $job_id ) {
+		$args = [
+			'post_type'              => $this->get_post_type(),
+			'post_status'            => [ 'any' ],
+			// Limit posts per page, because WP_Query will still tell us the total.
+			'posts_per_page'         => 1,
+			'update_post_meta_cache' => false,
+			'update_post_term_cache' => false,
+			'fields'                 => 'ids',
+			'meta_query'             => [
+				'relation' => 'AND',
+				[
+					'key'     => ApplicantMeta::VIEWED,
+					'compare' => 'NOT EXISTS',
+				],
+				[
+					'key'   => MetaLinks::JOB,
+					'value' => $job_id,
+				],
+			],
+		];
+
+		$query = new WP_Query( $args );
+
+		return absint( $query->found_posts );
+	}
+
+	/**
 	 * Get the count of applicants for a given Application ID.
 	 *
 	 * @since %VERSION%
