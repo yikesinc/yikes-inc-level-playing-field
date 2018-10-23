@@ -103,6 +103,7 @@ final class ApplicantManager extends BasePostType implements AssetsAware {
 				'nickname'                     => _x( 'Nick Name', 'column heading', 'yikes-level-playing-field' ),
 				"taxonomy-{$status_tax->name}" => $status_tax->label,
 				'date'                         => $original_columns['date'],
+				'viewed'                       => _x( 'Viewed by', 'column heading', 'yikes-level-playing-field' ),
 			];
 
 			// Only show the view column if the user can edit.
@@ -168,7 +169,11 @@ final class ApplicantManager extends BasePostType implements AssetsAware {
 			case 'nickname':
 				echo esc_html( $applicants[ $post_id ]->get_nickname() );
 				break;
-
+			case 'viewed':
+				//something for viewed.
+				$viewed = $applicants[ $post_id ]->viewed_by() === 0 ? 'No one' : $applicants[ $post_id ]->viewed_by();
+				echo $viewed;
+				break;
 			case 'view':
 				if ( current_user_can( Capabilities::EDIT_APPLICANT, $post_id ) ) {
 					printf(
@@ -195,6 +200,7 @@ final class ApplicantManager extends BasePostType implements AssetsAware {
 		if ( 'top' === $which ) {
 			$this->applicant_status_dropdown_filter();
 			$this->jobs_dropdown_filter();
+			$this->viewed_dropdown_filter();
 		}
 	}
 
@@ -230,6 +236,30 @@ final class ApplicantManager extends BasePostType implements AssetsAware {
 		);
 
 		wp_dropdown_categories( $dropdown_options );
+	}
+
+	/**
+	 * Output a custom dropdown for the viewed status.
+	 *
+	 * @since %VERSION%
+	 */
+	private function viewed_dropdown_filter() {
+		// @todo: make the dropdown filter for viewed.
+		global $typenow;
+		global $wp_query;
+		if ( $typenow == 'applicants' ) { // Your custom post type slug
+			$plugins = array( 'uk-cookie-consent', 'wp-discussion-board', 'discussion-board-pro' ); // Options for the filter select field
+			$current_plugin = '';
+			if( isset( $_GET['slug'] ) ) {
+				$current_plugin = $_GET['slug']; // Check if option has been selected
+			} ?>
+			<select name="slug" id="slug">
+				<option value="all" <?php selected( 'all', $current_plugin ); ?>><?php _e( 'All Viewed', 'wisdom-plugin' ); ?></option>
+				<?php foreach( $plugins as $key=>$value ) { ?>
+					<option value="<?php echo esc_attr( $key ); ?>" <?php selected( $key, $current_plugin ); ?>><?php echo esc_attr( $key ); ?></option>
+				<?php } ?>
+			</select>
+		<?php }
 	}
 
 	/**
