@@ -26,7 +26,7 @@ use Yikes\LevelPlayingField\Model\ApplicantRepository;
 class Status extends BaseWidget implements AssetsAware {
 
 	use AssetsAwareness;
-	const SLUG  = 'yikes_lpf_widget';
+	const SLUG  = 'yikes_lpf_applicant_widget';
 	const TITLE = 'Applicants';
 
 	// Define the CSS file.
@@ -65,7 +65,6 @@ class Status extends BaseWidget implements AssetsAware {
 		foreach ( $all_jobs as $job_id => $job ) {
 			$total = $applicant_repo->get_applicant_count_for_job( $job_id );
 			$new = $applicant_repo->get_new_applicant_count_for_job( $job_id );
-			// @todo: need method to get new applicant count for job.
 			$name = $job->get_title();
 			$tmp = $job->get_post_object();
 
@@ -102,7 +101,7 @@ class Status extends BaseWidget implements AssetsAware {
 			?>
 			</tbody>
 		</table>
-		<a href="#" class="button">View All Job Listings</a>
+		<a href="<?php echo admin_url('edit.php?post_type=jobs'); ?>" class="button">View All Job Listings</a>
 		<?php
 	}
 
