@@ -567,16 +567,25 @@ final class Applicant extends CustomPostTypeEntity {
 		}
 
 		// Load other properties from post meta.
-		$meta = get_post_meta( $this->get_id() );
+		$meta = $this->new ? [] : get_post_meta( $this->get_id() );
 		foreach ( $this->get_lazy_properties() as $key => $default ) {
+			// Only include the meta we care about.
 			if ( ! array_key_exists( $key, ApplicantMeta::META_PREFIXES ) ) {
 				continue;
 			}
 
+			// If they key has been changed, don't overwrite the change.
+			if ( array_key_exists( $key, $this->changes ) ) {
+				continue;
+			}
+
 			$prefixed_key = ApplicantMeta::META_PREFIXES[ $key ];
-			$this->$key   = array_key_exists( $prefixed_key, $meta )
-				? $meta[ $prefixed_key ][0]
-				: $default;
+			if ( array_key_exists( $prefixed_key, $meta ) ) {
+				$this->$key = $meta[ $prefixed_key ][0];
+			} else {
+				$this->$key = $default;
+				$this->changed_property( $key );
+			}
 		}
 	}
 
@@ -590,6 +599,7 @@ final class Applicant extends CustomPostTypeEntity {
 		$terms = wp_get_object_terms( $this->get_id(), ApplicantStatus::SLUG );
 		if ( empty( $terms ) || is_wp_error( $terms ) ) {
 			$this->status = $this->get_lazy_properties()[ ApplicantMeta::STATUS ];
+			$this->changed_property( ApplicantMeta::STATUS );
 			return;
 		}
 
