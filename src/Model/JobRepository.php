@@ -65,11 +65,7 @@ final class JobRepository extends CustomPostTypeRepository {
 			'posts_per_page' => $limit,
 			'orderby'        => 'title',
 			'tax_query'      => [
-				[
-					'taxonomy' => JobStatus::SLUG,
-					'field'    => 'slug',
-					'terms'    => 'active',
-				],
+				$this->get_active_job_status_tax_query(),
 			],
 		] );
 
@@ -97,11 +93,7 @@ final class JobRepository extends CustomPostTypeRepository {
 			'update_post_term_cache' => false,
 			'fields'                 => 'ids',
 			'tax_query'              => [
-				[
-					'taxonomy' => JobStatus::SLUG,
-					'field'    => 'slug',
-					'terms'    => 'active',
-				],
+				$this->get_active_job_status_tax_query(),
 			],
 		];
 
@@ -129,10 +121,7 @@ final class JobRepository extends CustomPostTypeRepository {
 			'update_post_term_cache' => false,
 			'fields'                 => 'ids',
 			'meta_query'             => [
-				[
-					'key'   => MetaLinks::APPLICATION,
-					'value' => $application_id,
-				],
+				$this->get_application_meta_query( $application_id ),
 			],
 		];
 
@@ -162,5 +151,19 @@ final class JobRepository extends CustomPostTypeRepository {
 	 */
 	protected function get_model_object( WP_Post $post ) {
 		return new Job( $post );
+	}
+
+	/**
+	 * Get the query for Jobs with Active status.
+	 *
+	 * @since %VERSION%
+	 * @return array
+	 */
+	private function get_active_job_status_tax_query() {
+		return [
+			'taxonomy' => JobStatus::SLUG,
+			'field'    => 'slug',
+			'terms'    => 'active',
+		];
 	}
 }
