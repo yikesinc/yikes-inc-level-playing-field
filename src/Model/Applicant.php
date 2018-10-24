@@ -150,7 +150,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @param int $job_id The job ID.
 	 */
 	public function set_job_id( $job_id ) {
-		$this->job = (int) $job_id;
+		$this->job = filter_var( $job_id, self::SANITIZATION[ ApplicantMeta::JOB ] );
 		$this->changed_property( ApplicantMeta::JOB );
 	}
 
