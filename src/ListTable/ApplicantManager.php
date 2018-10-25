@@ -250,7 +250,7 @@ final class ApplicantManager extends BasePostType implements AssetsAware {
 		if ( $typenow == 'applicants' ) { // Your custom post type slug
 			global $wpdb;
 			$meta_key = ApplicantMeta::META_PREFIXES['viewed'];
-			$current_viewed = isset( $_GET['viewed'] ) ? $_GET['viewed'] : '';
+			$current_viewed = isset( $_GET['viewed'] ) ? $_GET['viewed'] : 'all';
 			$result = $wpdb->get_col(
 				$wpdb->prepare( "
 			SELECT DISTINCT meta_value FROM $wpdb->postmeta
@@ -260,9 +260,9 @@ final class ApplicantManager extends BasePostType implements AssetsAware {
 				)
 			);
 			?>
-			<select name="viewed" id="viewed">
+			<select name="<?php echo ApplicantMeta::VIEWED; ?>" id="<?php echo ApplicantMeta::VIEWED; ?>">
 				<option value="all" <?php selected( 'all', $current_viewed ); ?>><?php _e( 'All Viewed', 'yikes-level-playing-field' ); ?></option>
-				<option value="none" <?php selected( 'all', $current_viewed ); ?>><?php _e( 'No One Viewed', 'yikes-level-playing-field' ); ?></option>
+				<option value="none" <?php selected( 'none', $current_viewed ); ?>><?php _e( 'No One Viewed', 'yikes-level-playing-field' ); ?></option>
 				<?php foreach( $result as $user_id ) { ?>
 					<option value="<?php echo esc_attr( $user_id ); ?>" <?php selected( $user_id, $current_viewed ); ?>><?php echo esc_html( get_user_meta( $user_id )['nickname'][0] ); ?></option>
 				<?php } ?>
@@ -292,10 +292,14 @@ final class ApplicantManager extends BasePostType implements AssetsAware {
 		global $pagenow;
 		// Get the post type
 		$post_type = isset( $_GET['post_type'] ) ? $_GET['post_type'] : '';
-		if ( is_admin() && $pagenow=='edit.php' && $post_type == 'applicants' && isset( $_GET['viewed'] ) && $_GET['viewed'] !='all' ) {
+		if ( is_admin() && $pagenow === 'edit.php' && $post_type == 'applicants' && isset( $_GET[ ApplicantMeta::VIEWED ] ) && $_GET[ ApplicantMeta::VIEWED ] !== 'all' ) {
 			$original_query->query_vars['meta_key'] = ApplicantMeta::META_PREFIXES['viewed'];
-			$original_query->query_vars['meta_value'] = $_GET['viewed'];
-			$original_query->query_vars['meta_compare'] = '=';
+			if ( $_GET[ ApplicantMeta::VIEWED ] === 'none' ) {
+				$original_query->query_vars['meta_compare'] = 'NOT EXISTS';
+			} else {
+				$original_query->query_vars['meta_value'] = $_GET['viewed'];
+				$original_query->query_vars['meta_compare'] = '=';
+			}
 		}
 	}
 
