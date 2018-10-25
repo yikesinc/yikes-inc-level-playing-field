@@ -262,7 +262,7 @@ final class ApplicantManager extends BasePostType implements AssetsAware {
 			?>
 			<select name="viewed" id="viewed">
 				<option value="all" <?php selected( 'all', $current_viewed ); ?>><?php _e( 'All Viewed', 'yikes-level-playing-field' ); ?></option>
-				<option value="all" <?php selected( 'all', $current_viewed ); ?>><?php _e( 'No One Viewed', 'yikes-level-playing-field' ); ?></option>
+				<option value="none" <?php selected( 'all', $current_viewed ); ?>><?php _e( 'No One Viewed', 'yikes-level-playing-field' ); ?></option>
 				<?php foreach( $result as $user_id ) { ?>
 					<option value="<?php echo esc_attr( $user_id ); ?>" <?php selected( $user_id, $current_viewed ); ?>><?php echo esc_html( get_user_meta( $user_id )['nickname'][0] ); ?></option>
 				<?php } ?>
@@ -277,6 +277,26 @@ final class ApplicantManager extends BasePostType implements AssetsAware {
 	 */
 	private function jobs_dropdown_filter() {
 		// @todo: make the dropdown filter for jobs.
+	}
+
+	/**
+	 * Modifies current query variables.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param array $original_query The original array of query variables.
+	 *
+	 * @return array The filtered array of query variables.
+	 */
+	public function custom_query_vars( $original_query ) {
+		global $pagenow;
+		// Get the post type
+		$post_type = isset( $_GET['post_type'] ) ? $_GET['post_type'] : '';
+		if ( is_admin() && $pagenow=='edit.php' && $post_type == 'applicants' && isset( $_GET['viewed'] ) && $_GET['viewed'] !='all' ) {
+			$original_query->query_vars['meta_key'] = ApplicantMeta::META_PREFIXES['viewed'];
+			$original_query->query_vars['meta_value'] = $_GET['viewed'];
+			$original_query->query_vars['meta_compare'] = '=';
+		}
 	}
 
 	/**

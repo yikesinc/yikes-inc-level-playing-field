@@ -35,6 +35,10 @@ abstract class BasePostType implements Service {
 
 		// This action will customize the available dropdowns for filtering.
 		add_action( 'restrict_manage_posts', [ $this, 'custom_dropdowns' ], 10, 2 );
+
+		// This action will customize the main query vars.
+		add_filter( 'parse_query', [ $this, 'custom_query_vars' ] );
+
 	}
 
 	/**
@@ -110,6 +114,17 @@ abstract class BasePostType implements Service {
 
 		$this->create_custom_dropdowns( $which );
 	}
+
+	/**
+	 * Modifies current query variables.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param array $original_query The original array of query variables.
+	 *
+	 * @return array The filtered array of query variables.
+	 */
+	abstract public function custom_query_vars( $original_query );
 
 	/**
 	 * Output custom dropdowns for filtering.
