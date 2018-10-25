@@ -18,6 +18,7 @@ use Yikes\LevelPlayingField\Assets\ScriptAsset;
 use Yikes\LevelPlayingField\CustomPostType\ApplicantManager as ApplicantManagerCPT;
 use Yikes\LevelPlayingField\Exception\InvalidPostID;
 use Yikes\LevelPlayingField\Model\Applicant;
+use Yikes\LevelPlayingField\Model\ApplicantMeta;
 use Yikes\LevelPlayingField\Model\ApplicantRepository;
 use Yikes\LevelPlayingField\Model\JobRepository;
 use Yikes\LevelPlayingField\Roles\Capabilities;
@@ -171,7 +172,7 @@ final class ApplicantManager extends BasePostType implements AssetsAware {
 				break;
 			case 'viewed':
 				//something for viewed.
-				$viewed = $applicants[ $post_id ]->viewed_by() === 0 ? 'No one' : $applicants[ $post_id ]->viewed_by();
+				$viewed = $applicants[ $post_id ]->viewed_by() === 0 ? 'No one' : get_user_meta( $applicants[ $post_id ]->viewed_by() )['nickname'][0];
 				echo $viewed;
 				break;
 			case 'view':
@@ -246,17 +247,24 @@ final class ApplicantManager extends BasePostType implements AssetsAware {
 	private function viewed_dropdown_filter() {
 		// @todo: make the dropdown filter for viewed.
 		global $typenow;
-		global $wp_query;
 		if ( $typenow == 'applicants' ) { // Your custom post type slug
-			$plugins = array( 'uk-cookie-consent', 'wp-discussion-board', 'discussion-board-pro' ); // Options for the filter select field
-			$current_plugin = '';
-			if( isset( $_GET['slug'] ) ) {
-				$current_plugin = $_GET['slug']; // Check if option has been selected
-			} ?>
-			<select name="slug" id="slug">
-				<option value="all" <?php selected( 'all', $current_plugin ); ?>><?php _e( 'All Viewed', 'wisdom-plugin' ); ?></option>
-				<?php foreach( $plugins as $key=>$value ) { ?>
-					<option value="<?php echo esc_attr( $key ); ?>" <?php selected( $key, $current_plugin ); ?>><?php echo esc_attr( $key ); ?></option>
+			global $wpdb;
+			$meta_key = ApplicantMeta::META_PREFIXES['viewed'];
+			$current_viewed = isset( $_GET['viewed'] ) ? $_GET['viewed'] : '';
+			$result = $wpdb->get_col(
+				$wpdb->prepare( "
+			SELECT DISTINCT meta_value FROM $wpdb->postmeta
+			WHERE meta_key = '%s' 
+			ORDER BY meta_value",
+					$meta_key
+				)
+			);
+			?>
+			<select name="viewed" id="viewed">
+				<option value="all" <?php selected( 'all', $current_viewed ); ?>><?php _e( 'All Viewed', 'yikes-level-playing-field' ); ?></option>
+				<option value="all" <?php selected( 'all', $current_viewed ); ?>><?php _e( 'No One Viewed', 'yikes-level-playing-field' ); ?></option>
+				<?php foreach( $result as $user_id ) { ?>
+					<option value="<?php echo esc_attr( $user_id ); ?>" <?php selected( $user_id, $current_viewed ); ?>><?php echo esc_html( get_user_meta( $user_id )['nickname'][0] ); ?></option>
 				<?php } ?>
 			</select>
 		<?php }
