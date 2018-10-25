@@ -124,7 +124,9 @@ abstract class BasePostType implements Service {
 	 *
 	 * @return array The filtered array of query variables.
 	 */
-	abstract public function custom_query_vars( $original_query );
+	public function custom_query_vars( $original_query ) {
+		return $original_query;
+	}
 
 	/**
 	 * Output custom dropdowns for filtering.
