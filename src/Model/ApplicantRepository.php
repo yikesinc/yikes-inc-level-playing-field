@@ -125,7 +125,7 @@ class ApplicantRepository extends CustomPostTypeRepository {
 			'meta_query'             => [
 				'relation' => 'AND',
 				[
-					'key'     => ApplicantMeta::VIEWED,
+					'key'     => ApplicantMeta::META_PREFIXES['viewed'],
 					'compare' => 'NOT EXISTS',
 				],
 				[

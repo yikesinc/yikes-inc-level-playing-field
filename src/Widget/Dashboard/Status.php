@@ -15,6 +15,8 @@ use Yikes\LevelPlayingField\Assets\StyleAsset;
 use Yikes\LevelPlayingField\Assets\ScriptAsset;
 use Yikes\LevelPlayingField\Model\JobRepository;
 use Yikes\LevelPlayingField\Model\ApplicantRepository;
+use Yikes\LevelPlayingField\Model\ApplicantMeta;
+use Yikes\LevelPlayingField\CustomPostType\ApplicantManager;
 
 
 /**
@@ -66,14 +68,13 @@ class Status extends BaseWidget implements AssetsAware {
 			$total = $applicant_repo->get_applicant_count_for_job( $job_id );
 			$new = $applicant_repo->get_new_applicant_count_for_job( $job_id );
 			$name = $job->get_title();
-			$tmp = $job->get_post_object();
 
 			$records[] = [
 				'job_name'         => $name,
 				'job_link'         => get_the_permalink( $job_id ),
 				'new_applicants'   => $new,
 				// @todo: call function to get link to filtered list of applicants.
-				'new_link'         => admin_url('edit.php?post_type=applicants'),
+				'new_link'         => add_query_arg( array( ApplicantMeta::VIEWED => 'none', 'post_type' => ApplicantManager::SLUG ), admin_url( 'edit.php' ) ),
 				'total_applicants' => $total,
 				// @todo: call function to get link to filtered list of applicants.
 				'total_link'       => admin_url('edit.php?post_type=applicants'),
