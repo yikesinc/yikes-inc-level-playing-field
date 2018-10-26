@@ -17,6 +17,7 @@ use Yikes\LevelPlayingField\Model\JobRepository;
 use Yikes\LevelPlayingField\Model\ApplicantRepository;
 use Yikes\LevelPlayingField\Model\ApplicantMeta;
 use Yikes\LevelPlayingField\CustomPostType\ApplicantManager;
+use Yikes\LevelPlayingField\Model\MetaLinks;
 
 
 /**
@@ -73,11 +74,10 @@ class Status extends BaseWidget implements AssetsAware {
 				'job_name'         => $name,
 				'job_link'         => get_the_permalink( $job_id ),
 				'new_applicants'   => $new,
-				// @todo: call function to get link to filtered list of applicants.
-				'new_link'         => add_query_arg( array( ApplicantMeta::VIEWED => 'none', 'post_type' => ApplicantManager::SLUG ), admin_url( 'edit.php' ) ),
+				'new_link'         => add_query_arg( array( ApplicantMeta::VIEWED => 'none', MetaLinks::JOB => $job_id, 'post_type' => ApplicantManager::SLUG ), admin_url( 'edit.php' ) ),
 				'total_applicants' => $total,
 				// @todo: call function to get link to filtered list of applicants.
-				'total_link'       => admin_url('edit.php?post_type=applicants'),
+				'total_link'       => add_query_arg( array( MetaLinks::JOB => $job_id, 'post_type' => ApplicantManager::SLUG ), admin_url( 'edit.php' ) ),
 			];
 		}
 
