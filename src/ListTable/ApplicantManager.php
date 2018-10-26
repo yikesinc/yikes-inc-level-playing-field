@@ -19,6 +19,7 @@ use Yikes\LevelPlayingField\CustomPostType\ApplicantManager as ApplicantManagerC
 use Yikes\LevelPlayingField\Exception\InvalidPostID;
 use Yikes\LevelPlayingField\Model\Applicant;
 use Yikes\LevelPlayingField\Model\ApplicantMeta;
+use Yikes\LevelPlayingField\Model\MetaLinks;
 use Yikes\LevelPlayingField\Model\ApplicantRepository;
 use Yikes\LevelPlayingField\Model\JobRepository;
 use Yikes\LevelPlayingField\Roles\Capabilities;
@@ -245,12 +246,11 @@ final class ApplicantManager extends BasePostType implements AssetsAware {
 	 * @since %VERSION%
 	 */
 	private function viewed_dropdown_filter() {
-		// @todo: make the dropdown filter for viewed.
 		global $typenow;
-		if ( $typenow == 'applicants' ) { // Your custom post type slug
+		if ( $typenow === 'applicants' ) {
 			global $wpdb;
 			$meta_key = ApplicantMeta::META_PREFIXES['viewed'];
-			$current_viewed = isset( $_GET['viewed'] ) ? $_GET['viewed'] : 'all';
+			$current_viewed = isset( $_GET[ApplicantMeta::VIEWED] ) ? $_GET[ApplicantMeta::VIEWED] : 'all';
 			$result = $wpdb->get_col(
 				$wpdb->prepare( "
 			SELECT DISTINCT meta_value FROM $wpdb->postmeta
@@ -277,6 +277,27 @@ final class ApplicantManager extends BasePostType implements AssetsAware {
 	 */
 	private function jobs_dropdown_filter() {
 		// @todo: make the dropdown filter for jobs.
+		global $typenow;
+		if ( $typenow == 'applicants' ) {
+			global $wpdb;
+			$meta_key = MetaLinks::JOB;
+			$current_job = isset( $_GET[ $meta_key ] ) ? $_GET[ $meta_key ] : 'all';
+			$result = $wpdb->get_col(
+				$wpdb->prepare( "
+			SELECT DISTINCT meta_value FROM $wpdb->postmeta
+			WHERE meta_key = '%s' 
+			ORDER BY meta_value",
+					$meta_key
+				)
+			);
+			?>
+			<select name="<?php echo $meta_key ?>" id="<?php echo $meta_key ?>">
+				<option value="all" <?php selected( 'all', $current_job ); ?>><?php _e( 'All Jobs', 'yikes-level-playing-field' ); ?></option>
+				<?php foreach( $result as $job_id ) { ?>
+					<option value="<?php echo esc_attr( $job_id ); ?>" <?php selected( $job_id, $current_job ); ?>><?php echo esc_html( get_the_title( $job_id ) ); ?></option>
+				<?php } ?>
+			</select>
+		<?php }
 	}
 
 	/**
@@ -292,14 +313,34 @@ final class ApplicantManager extends BasePostType implements AssetsAware {
 		global $pagenow;
 		// Get the post type
 		$post_type = isset( $_GET['post_type'] ) ? $_GET['post_type'] : '';
-		if ( is_admin() && $pagenow === 'edit.php' && $post_type == 'applicants' && isset( $_GET[ ApplicantMeta::VIEWED ] ) && $_GET[ ApplicantMeta::VIEWED ] !== 'all' ) {
-			$original_query->query_vars['meta_key'] = ApplicantMeta::META_PREFIXES['viewed'];
-			if ( $_GET[ ApplicantMeta::VIEWED ] === 'none' ) {
-				$original_query->query_vars['meta_compare'] = 'NOT EXISTS';
-			} else {
-				$original_query->query_vars['meta_value'] = $_GET['viewed'];
-				$original_query->query_vars['meta_compare'] = '=';
+
+		if ( is_admin() && $pagenow === 'edit.php' && $post_type == 'applicants' ) {
+			$meta_query = array();
+			if ( isset( $_GET[ ApplicantMeta::VIEWED ] ) && $_GET[ ApplicantMeta::VIEWED ] !== 'all' && isset( $_GET[ MetaLinks::JOB ] ) && $_GET[ MetaLinks::JOB ] !== 'all' ) {
+				$meta_query['relation'] = 'AND';
 			}
+			if ( isset( $_GET[ ApplicantMeta::VIEWED ] ) && $_GET[ ApplicantMeta::VIEWED ] !== 'all' ) {
+				if ( $_GET[ ApplicantMeta::VIEWED ] === 'none' ) {
+					$meta_query[] = array(
+						'key'     => ApplicantMeta::META_PREFIXES['viewed'],
+						'compare' => 'NOT EXISTS',
+					);
+				} else {
+					$meta_query[] = array(
+						'key'     => ApplicantMeta::META_PREFIXES['viewed'],
+						'value'   => $_GET[ApplicantMeta::VIEWED],
+						'compare' => '=',
+					);
+				}
+			}
+			if ( isset( $_GET[ MetaLinks::JOB ] ) && $_GET[ MetaLinks::JOB ] !== 'all' ) {
+				$meta_query[] = array(
+					'key'     => MetaLinks::JOB,
+					'value'   => $_GET[MetaLinks::JOB],
+					'compare' => '=',
+				);
+			}
+			$original_query->query_vars['meta_query'] = $meta_query;
 		}
 	}
 
