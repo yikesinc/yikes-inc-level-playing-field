@@ -9,11 +9,13 @@
 
 namespace Yikes\LevelPlayingField\Model;
 
+use InvalidArgumentException;
 use stdClass;
 use WP_Post;
 use WP_Query;
 use Yikes\LevelPlayingField\CustomPostType\ApplicantManager as ApplicantCPT;
 use Yikes\LevelPlayingField\Exception\InvalidPostID;
+use Yikes\LevelPlayingField\Form\Application;
 
 /**
  * Class ApplicantRepository
@@ -181,6 +183,39 @@ class ApplicantRepository extends CustomPostTypeRepository {
 		$post->page_template  = 'default';
 
 		return $this->get_model_object( new WP_Post( $post ) );
+	}
+
+	/**
+	 * Create a new Applicant from a submitted form.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param Application $form The form object.
+	 *
+	 * @return Applicant The new applicant object.
+	 *
+	 * @throws InvalidArgumentException When the provided form has errors.
+	 */
+	public function create_from_form( Application $form ) {
+		// Don't create an object if there are errors in the form.
+		if ( $form->has_errors() ) {
+			throw new InvalidArgumentException( 'An applicant object cannot be created because the form has errors.' );
+		}
+
+		$applicant = $this->create();
+		foreach ( $form->fields as $field ) {
+			$name   = str_replace( ApplicationMeta::FORM_FIELD_PREFIX, '', $field->get_id() );
+			$method = "set_{$name}";
+			if ( ! method_exists( $applicant, $method ) ) {
+				continue;
+			}
+
+			$applicant->{$method}( $field->get_sanitized_value() );
+		}
+
+		$applicant->persist();
+
+		return $applicant;
 	}
 
 	/**
