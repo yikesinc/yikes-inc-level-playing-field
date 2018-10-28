@@ -424,7 +424,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @since %VERSION%
 	 * @return array
 	 */
-	public function get_volunteer_work() {
+	public function get_volunteer() {
 		return $this->volunteer;
 	}
 
@@ -435,7 +435,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 *
 	 * @param array $volunteer Array of volunteer work.
 	 */
-	public function add_volunteer_work( array $volunteer ) {
+	public function add_volunteer( array $volunteer ) {
 		$this->volunteer[] = $this->filter_and_sanitize( $volunteer, ApplicantMeta::VOLUNTEER );
 		$this->changed_property( ApplicantMeta::VOLUNTEER );
 	}
@@ -447,7 +447,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 *
 	 * @param array $volunteer The volunteer work for the applicant.
 	 */
-	public function set_volunteer_work( array $volunteer ) {
+	public function set_volunteer( array $volunteer ) {
 		$this->volunteer = [];
 
 		// Passing an empty array will remove volunteer work.
@@ -457,7 +457,7 @@ final class Applicant extends CustomPostTypeEntity {
 		}
 
 		foreach ( $volunteer as $item ) {
-			$this->add_volunteer_work( $item );
+			$this->add_volunteer( $item );
 		}
 	}
 
