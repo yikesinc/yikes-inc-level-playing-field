@@ -55,14 +55,16 @@ interface ApplicantMeta {
 
 	// Fields for other objects.
 	const JOB         = JobManager::SINGULAR_SLUG;
-	const APPLICATION = ApplicationManager::SLUG;
+	const APPLICATION = ApplicationManager::SINGULAR_SLUG;
 
 	// Complex fields.
 	const SCHOOLING      = 'schooling';
 	const CERTIFICATIONS = 'certifications';
 
 	// Admin fields.
-	const NICKNAME = 'nickname';
+	const NICKNAME   = 'nickname';
+	const ANONYMIZED = 'anonymized';
+	const VIEWED     = 'viewed';
 
 	// Fields to make anonymous.
 	const ANONYMOUS_FIELDS = [
@@ -104,5 +106,7 @@ interface ApplicantMeta {
 		self::EXPERIENCE     => self::META_PREFIX . self::EXPERIENCE,
 		self::VOLUNTEER      => self::META_PREFIX . self::VOLUNTEER,
 		self::NICKNAME       => self::META_PREFIX . self::NICKNAME,
+		self::ANONYMIZED     => self::META_PREFIX . self::ANONYMIZED,
+		self::VIEWED         => self::META_PREFIX . self::VIEWED,
 	];
 }

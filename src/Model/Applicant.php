@@ -26,6 +26,8 @@ use Yikes\LevelPlayingField\Taxonomy\ApplicantStatus;
  *
  * @property string email          The Applicant email address.
  * @property int    job            The Job ID.
+ * @property string name           The Applicant's name.
+ * @property int    application    The Application ID.
  * @property string status         The Applicant status.
  * @property string cover_letter   The Applicant's cover letter.
  * @property array  schooling      The Applicant's schooling details.
@@ -34,6 +36,8 @@ use Yikes\LevelPlayingField\Taxonomy\ApplicantStatus;
  * @property array  experience     The Applicant's experience.
  * @property array  volunteer      The Applicant's volunteer work.
  * @property string nickname       The Applicant's nickname (for use when their data is anonymous).
+ * @property bool   anonymized     Whether the applicant is anonymized.
+ * @property int    viewed         User ID who viewed the applicant.
  */
 final class Applicant extends CustomPostTypeEntity {
 
@@ -74,6 +78,7 @@ final class Applicant extends CustomPostTypeEntity {
 			ApplicantMeta::POSITION     => FILTER_SANITIZE_NUMBER_INT,
 		],
 		ApplicantMeta::NICKNAME       => FILTER_SANITIZE_STRING,
+		ApplicantMeta::VIEWED         => FILTER_SANITIZE_NUMBER_INT,
 	];
 
 	/**
@@ -146,8 +151,52 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @param int $job_id The job ID.
 	 */
 	public function set_job_id( $job_id ) {
-		$this->job = (int) $job_id;
+		$this->job = filter_var( $job_id, self::SANITIZATION[ ApplicantMeta::JOB ] );
 		$this->changed_property( ApplicantMeta::JOB );
+	}
+
+	/**
+	 * Get the name of the applicant.
+	 *
+	 * @since %VERSION%
+	 * @return string The applicant name.
+	 */
+	public function get_name() {
+		return $this->name;
+	}
+
+	/**
+	 * Set the name of the applicant.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param string $name The applicant name.
+	 */
+	public function set_name( $name ) {
+		$this->name = filter_var( $name, self::SANITIZATION[ ApplicantMeta::NAME ] );
+		$this->changed_property( ApplicantMeta::NAME );
+	}
+
+	/**
+	 * Get the ID of the application that the Applicant filled out.
+	 *
+	 * @since %VERSION%
+	 * @return int
+	 */
+	public function get_application_id() {
+		return $this->application;
+	}
+
+	/**
+	 * Set the ID of the application that the Applicant filled out.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param int $id The application ID.
+	 */
+	public function set_application_id( $id ) {
+		$this->application = filter_var( $id, self::SANITIZATION[ ApplicantMeta::APPLICATION ] );
+		$this->changed_property( ApplicantMeta::APPLICATION );
 	}
 
 	/**
@@ -375,7 +424,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @since %VERSION%
 	 * @return array
 	 */
-	public function get_volunteer_work() {
+	public function get_volunteer() {
 		return $this->volunteer;
 	}
 
@@ -386,7 +435,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 *
 	 * @param array $volunteer Array of volunteer work.
 	 */
-	public function add_volunteer_work( array $volunteer ) {
+	public function add_volunteer( array $volunteer ) {
 		$this->volunteer[] = $this->filter_and_sanitize( $volunteer, ApplicantMeta::VOLUNTEER );
 		$this->changed_property( ApplicantMeta::VOLUNTEER );
 	}
@@ -398,7 +447,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 *
 	 * @param array $volunteer The volunteer work for the applicant.
 	 */
-	public function set_volunteer_work( array $volunteer ) {
+	public function set_volunteer( array $volunteer ) {
 		$this->volunteer = [];
 
 		// Passing an empty array will remove volunteer work.
@@ -408,7 +457,7 @@ final class Applicant extends CustomPostTypeEntity {
 		}
 
 		foreach ( $volunteer as $item ) {
-			$this->add_volunteer_work( $item );
+			$this->add_volunteer( $item );
 		}
 	}
 
@@ -432,6 +481,38 @@ final class Applicant extends CustomPostTypeEntity {
 	public function set_nickname( $nickname ) {
 		$this->nickname = filter_var( $nickname, self::SANITIZATION[ ApplicantMeta::NICKNAME ] );
 		$this->changed_property( ApplicantMeta::NICKNAME );
+	}
+
+	/**
+	 * Whether this applicant's data is currently anonymized.
+	 *
+	 * @since %VERSION%
+	 * @return mixed
+	 */
+	public function is_anonymized() {
+		return $this->anonymized;
+	}
+
+	/**
+	 * Get the user ID who viewed the applicant.
+	 *
+	 * @since %VERSION%
+	 * @return int
+	 */
+	public function viewed_by() {
+		return $this->viewed;
+	}
+
+	/**
+	 * Set the user who viewed the applicant.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param int $id The user ID who viewed the applicant.
+	 */
+	public function set_viewed_by( $id ) {
+		$this->viewed = filter_var( $id, self::SANITIZATION[ ApplicantMeta::VIEWED ] );
+		$this->changed_property( ApplicantMeta::VIEWED );
 	}
 
 	/**
@@ -486,6 +567,8 @@ final class Applicant extends CustomPostTypeEntity {
 			ApplicantMeta::VOLUNTEER      => [],
 			ApplicantMeta::STATUS         => ApplicantStatus::DEFAULT_TERM_SLUG,
 			ApplicantMeta::NICKNAME       => (string) $this->post->ID,
+			ApplicantMeta::ANONYMIZED     => false,
+			ApplicantMeta::VIEWED         => 0,
 		];
 	}
 
@@ -507,16 +590,25 @@ final class Applicant extends CustomPostTypeEntity {
 		}
 
 		// Load other properties from post meta.
-		$meta = get_post_meta( $this->get_id() );
+		$meta = $this->new ? [] : get_post_meta( $this->get_id() );
 		foreach ( $this->get_lazy_properties() as $key => $default ) {
+			// Only include the meta we care about.
 			if ( ! array_key_exists( $key, ApplicantMeta::META_PREFIXES ) ) {
 				continue;
 			}
 
+			// If they key has been changed, don't overwrite the change.
+			if ( array_key_exists( $key, $this->changes ) ) {
+				continue;
+			}
+
 			$prefixed_key = ApplicantMeta::META_PREFIXES[ $key ];
-			$this->$key   = array_key_exists( $prefixed_key, $meta )
-				? $meta[ $prefixed_key ][0]
-				: $default;
+			if ( array_key_exists( $prefixed_key, $meta ) ) {
+				$this->$key = $meta[ $prefixed_key ][0];
+			} else {
+				$this->$key = $default;
+				$this->changed_property( $key );
+			}
 		}
 	}
 
@@ -530,6 +622,7 @@ final class Applicant extends CustomPostTypeEntity {
 		$terms = wp_get_object_terms( $this->get_id(), ApplicantStatus::SLUG );
 		if ( empty( $terms ) || is_wp_error( $terms ) ) {
 			$this->status = $this->get_lazy_properties()[ ApplicantMeta::STATUS ];
+			$this->changed_property( ApplicantMeta::STATUS );
 			return;
 		}
 

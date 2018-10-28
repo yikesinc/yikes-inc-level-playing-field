@@ -16,6 +16,9 @@ use Yikes\LevelPlayingField\Exception\Exception;
 use Yikes\LevelPlayingField\Exception\InvalidPostID;
 use Yikes\LevelPlayingField\Exception\InvalidURI;
 use Yikes\LevelPlayingField\Form\Application as ApplicationForm;
+use Yikes\LevelPlayingField\Model\Applicant;
+use Yikes\LevelPlayingField\Model\ApplicantRepository;
+use Yikes\LevelPlayingField\Model\Application as ApplicationModel;
 use Yikes\LevelPlayingField\Model\ApplicationRepository;
 use Yikes\LevelPlayingField\Model\JobRepository;
 use Yikes\LevelPlayingField\View\FormEscapedView;
@@ -36,6 +39,14 @@ final class Application extends BaseShortcode {
 	const CSS_URI       = 'assets/css/lpf-app-frontend';
 
 	/**
+	 * Whether a form has been submitted.
+	 *
+	 * @since %VERSION%
+	 * @var bool
+	 */
+	private $is_submitted = false;
+
+	/**
 	 * The view URI to use.
 	 *
 	 * This property is used so that the view can be switched dynamically
@@ -44,7 +55,7 @@ final class Application extends BaseShortcode {
 	 * @since %VERSION%
 	 * @var string
 	 */
-	protected $view_uri = self::VIEW_URI;
+	private $view_uri = self::VIEW_URI;
 
 	/**
 	 * Get the default array of attributes for the shortcode.
@@ -72,8 +83,9 @@ final class Application extends BaseShortcode {
 	 * @throws InvalidPostID When the post ID is not valid.
 	 */
 	protected function get_context( array $atts ) {
-		$job         = ( new JobRepository() )->find( $atts['job_id'] );
-		$application = ( new ApplicationRepository() )->find( $job->get_application_id() );
+		$job                = ( new JobRepository() )->find( $atts['job_id'] );
+		$application        = ( new ApplicationRepository() )->find( $job->get_application_id() );
+		$this->is_submitted = $this->is_submitting_application();
 
 		// Set up the classes we'll use for the form and the individual fields.
 		$base_classes  = [ 'lpf-application', sprintf( 'lpf-application-%s', $application->get_id() ) ];
@@ -81,20 +93,13 @@ final class Application extends BaseShortcode {
 		$field_classes = array_merge( [ 'lpf-form-field' ], $base_classes );
 
 		// Set up the form object.
-		$form = new ApplicationForm( $job->get_id(), $application, $field_classes );
-
-		// Look for a submission of the form.
-		$is_submitted = ! empty( $_POST );
-		if ( $is_submitted ) {
-			$form->set_submission( $_POST );
-			$form->validate_submission();
-		}
+		$form = $this->get_application_form( $job->get_id(), $application, $field_classes );
 
 		return [
 			'application'      => $application,
 			'application_form' => $form,
 			'form_classes'     => $form_classes,
-			'submitted'        => $is_submitted,
+			'submitted'        => $this->is_submitted,
 		];
 	}
 
@@ -109,8 +114,14 @@ final class Application extends BaseShortcode {
 	 */
 	public function process_shortcode( $atts ) {
 		try {
-			$atts = $this->process_attributes( $atts );
-			return $this->render( array_merge( $atts, $this->get_context( $atts ) ) );
+			// Determine if the form has been submitted.
+			$this->is_submitted = $this->is_submitting_application();
+
+			// Process the shortcode attributes.
+			$atts    = $this->process_attributes( $atts );
+			$context = $this->get_context( $atts );
+
+			return $this->render( $context );
 		} catch ( Exception $e ) {
 			return $this->exception_to_string( $e );
 		}
@@ -138,7 +149,7 @@ final class Application extends BaseShortcode {
 	 *
 	 * @throws InvalidURI When the URI is not one of the valid values.
 	 */
-	protected function set_view_uri( $uri ) {
+	private function set_view_uri( $uri ) {
 		if ( self::VIEW_URI !== $uri && self::SUBMITTED_URI !== $uri ) {
 			throw InvalidURI::from_list( $uri, [ self::VIEW_URI, self::SUBMITTED_URI ] );
 		}
@@ -152,7 +163,7 @@ final class Application extends BaseShortcode {
 	 * @since %VERSION%
 	 * @return bool
 	 */
-	protected function is_submitting_application() {
+	private function is_submitting_application() {
 		return ! empty( $_POST );
 	}
 
@@ -212,6 +223,50 @@ final class Application extends BaseShortcode {
 	}
 
 	/**
+	 * Get the Application form object.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param int              $job_id        The Job ID for the form.
+	 * @param ApplicationModel $application   The application Object.
+	 * @param array            $field_classes The classes for fields in the form.
+	 *
+	 * @return ApplicationForm
+	 */
+	private function get_application_form( $job_id, $application, $field_classes ) {
+		$form = new ApplicationForm( $job_id, $application, $field_classes );
+
+		if ( $this->is_submitted ) {
+			$this->handle_submission( $form );
+		}
+
+		return $form;
+	}
+
+	/**
+	 * Handle the form submission.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param ApplicationForm $form The form object.
+	 *
+	 * @return Applicant|null Returns a new Appliant object, or null if one was not created.
+	 * @throws InvalidURI When an invalid URI is set for the view.
+	 */
+	private function handle_submission( ApplicationForm $form ) {
+		$form->set_submission( $_POST );
+		$form->validate_submission();
+
+		// Maybe update the view URI.
+		if ( ! $form->has_errors() ) {
+			$this->set_view_uri( self::SUBMITTED_URI );
+			$applicant = ( new ApplicantRepository() )->create_from_form( $form );
+		}
+
+		return isset( $applicant ) ? $applicant : null;
+	}
+
+	/**
 	 * Convert an exception to a string.
 	 *
 	 * @since %VERSION%
@@ -220,7 +275,7 @@ final class Application extends BaseShortcode {
 	 *
 	 * @return string
 	 */
-	protected function exception_to_string( $e ) {
+	private function exception_to_string( \Exception $e ) {
 		return sprintf(
 			/* translators: %s refers to the error message */
 			esc_html__( 'There was an error displaying the form: %s', 'yikes-level-playing-field' ),

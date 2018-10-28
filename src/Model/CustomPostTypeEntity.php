@@ -57,6 +57,11 @@ abstract class CustomPostTypeEntity implements Entity {
 	public function __construct( WP_Post $post ) {
 		$this->post = $post;
 		$this->new  = 0 === $post->ID;
+
+		// Initialize all property defaults for new objects.
+		if ( $this->new ) {
+			$this->load_all_lazy_properties();
+		}
 	}
 
 	/**
@@ -153,6 +158,7 @@ abstract class CustomPostTypeEntity implements Entity {
 	 * Persist the post object and post properties.
 	 *
 	 * @since %VERSION%
+	 * @throws FailedToSavePost When there is a problem saving the post.
 	 */
 	public function persist() {
 		$this->persist_post();
@@ -184,6 +190,21 @@ abstract class CustomPostTypeEntity implements Entity {
 		$this->post_changed = false;
 
 		return $result;
+	}
+
+	/**
+	 * Load all lazy properties.
+	 *
+	 * @since %VERSION%
+	 */
+	protected function load_all_lazy_properties() {
+		foreach ( $this->get_lazy_properties() as $property => $default ) {
+			if ( isset( $this->$property ) ) {
+				continue;
+			}
+
+			$this->load_lazy_property( $property );
+		}
 	}
 
 	/**

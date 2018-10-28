@@ -166,7 +166,7 @@ final class ApplicantManager extends BasePostType implements AssetsAware {
 				break;
 
 			case 'nickname':
-				// something for the nickname.
+				echo esc_html( $applicants[ $post_id ]->get_nickname() );
 				break;
 
 			case 'view':
