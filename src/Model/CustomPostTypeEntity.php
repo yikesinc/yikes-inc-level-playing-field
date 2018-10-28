@@ -198,7 +198,7 @@ abstract class CustomPostTypeEntity implements Entity {
 	 * @since %VERSION%
 	 */
 	protected function load_all_lazy_properties() {
-		foreach ( $this->get_lazy_properties() as $property ) {
+		foreach ( $this->get_lazy_properties() as $property => $default ) {
 			if ( isset( $this->$property ) ) {
 				continue;
 			}
