@@ -203,6 +203,7 @@ class ApplicantRepository extends CustomPostTypeRepository {
 		}
 
 		$applicant = $this->create();
+		$applicant->persist();
 		foreach ( $form->fields as $field ) {
 			$name   = str_replace( ApplicationMeta::FORM_FIELD_PREFIX, '', $field->get_id() );
 			$method = "set_{$name}";
@@ -213,6 +214,14 @@ class ApplicantRepository extends CustomPostTypeRepository {
 			$applicant->{$method}( $field->get_sanitized_value() );
 		}
 
+		// Set the nickname after the post object has been saved.
+		$applicant->set_nickname( sprintf(
+			'%s%d',
+			_x( 'Applicant #', 'Default applicant nickname. Followed by a number', 'yikes-level-playing-field' ),
+			$applicant->get_id()
+		) );
+
+		// Save the changes.
 		$applicant->persist();
 
 		return $applicant;
