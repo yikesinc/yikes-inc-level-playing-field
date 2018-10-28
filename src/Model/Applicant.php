@@ -26,6 +26,7 @@ use Yikes\LevelPlayingField\Taxonomy\ApplicantStatus;
  *
  * @property string email          The Applicant email address.
  * @property int    job            The Job ID.
+ * @property string name           The Applicant's name.
  * @property int    application    The Application ID.
  * @property string status         The Applicant status.
  * @property string cover_letter   The Applicant's cover letter.
@@ -152,6 +153,28 @@ final class Applicant extends CustomPostTypeEntity {
 	public function set_job_id( $job_id ) {
 		$this->job = filter_var( $job_id, self::SANITIZATION[ ApplicantMeta::JOB ] );
 		$this->changed_property( ApplicantMeta::JOB );
+	}
+
+	/**
+	 * Get the name of the applicant.
+	 *
+	 * @since %VERSION%
+	 * @return string The applicant name.
+	 */
+	public function get_name() {
+		return $this->name;
+	}
+
+	/**
+	 * Set the name of the applicant.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param string $name The applicant name.
+	 */
+	public function set_name( $name ) {
+		$this->name = filter_var( $name, self::SANITIZATION[ ApplicantMeta::NAME ] );
+		$this->changed_property( ApplicantMeta::NAME );
 	}
 
 	/**
