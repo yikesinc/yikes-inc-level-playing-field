@@ -31,6 +31,14 @@ abstract class BaseField implements Field {
 	const SANITIZE = FILTER_SANITIZE_STRING;
 
 	/**
+	 * An error message to display for the field.
+	 *
+	 * @since %VERSION%
+	 * @var string
+	 */
+	protected $error_message;
+
+	/**
 	 * The field ID.
 	 *
 	 * Used in HTML for id and name tags.
@@ -67,12 +75,12 @@ abstract class BaseField implements Field {
 	protected $raw_value;
 
 	/**
-	 * Whether the field is repeatable.
+	 * Whether this field is read-only.
 	 *
 	 * @since %VERSION%
 	 * @var bool
 	 */
-	protected $repeatable = false;
+	protected $read_only = false;
 
 	/**
 	 * Whether the field is required.
@@ -99,6 +107,14 @@ abstract class BaseField implements Field {
 	protected $parent = null;
 
 	/**
+	 * The value for the field.
+	 *
+	 * @since %VERSION%
+	 * @var null
+	 */
+	protected $value = null;
+
+	/**
 	 * The pattern used for matching an field's ID.
 	 *
 	 * @link  https://regex101.com/r/ZTgsNa/1
@@ -118,11 +134,10 @@ abstract class BaseField implements Field {
 	 * @throws InvalidField When the provided ID is invalid.
 	 */
 	public function __construct( $id, $label, array $classes, $required = true ) {
-		$this->id       = $id;
 		$this->label    = $label;
 		$this->classes  = $classes;
 		$this->required = (bool) $required;
-		$this->validate_id();
+		$this->set_id( $id );
 	}
 
 	/**
@@ -144,8 +159,35 @@ abstract class BaseField implements Field {
 				return $this->parent;
 
 			default:
+				$message = sprintf( 'Undefined property: %s::$%s', static::class, $name );
+				trigger_error( esc_html( $message ), E_USER_NOTICE );
+
 				return null;
 		}
+	}
+
+	/**
+	 * Get the field ID.
+	 *
+	 * @since %VERSION%
+	 * @return string
+	 */
+	public function get_id() {
+		return $this->id;
+	}
+
+	/**
+	 * Set the ID for the field.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param string $id The ID of the field.
+	 *
+	 * @throws InvalidField When the provided ID is invalid.
+	 */
+	public function set_id( $id ) {
+		$this->id = $id;
+		$this->validate_id();
 	}
 
 	/**
@@ -159,16 +201,6 @@ abstract class BaseField implements Field {
 	}
 
 	/**
-	 * Whether this field is repeatable.
-	 *
-	 * @since %VERSION%
-	 * @return bool
-	 */
-	public function is_repeatable() {
-		return $this->repeatable;
-	}
-
-	/**
 	 * Set the parent field object for this field.
 	 *
 	 * @since %VERSION%
@@ -177,6 +209,16 @@ abstract class BaseField implements Field {
 	 */
 	public function set_parent( Field $field ) {
 		$this->parent = $field;
+	}
+
+	/**
+	 * Get the parent field object.
+	 *
+	 * @since %VERSION%
+	 * @return Field
+	 */
+	public function get_parent() {
+		return $this->parent;
 	}
 
 	/**
@@ -260,10 +302,18 @@ abstract class BaseField implements Field {
 	 * @since %VERSION%
 	 *
 	 * @param mixed $data The submitted data for the field.
+	 *
+	 * @throws InvalidField When the field submission is invalid.
 	 */
 	public function set_submission( $data ) {
-		$this->raw_value = $this->get_raw_value( $data );
-		$this->validate_raw_value();
+		try {
+			$this->raw_value = $data;
+			$this->validate_raw_value();
+			$this->value = $this->get_sanitized_value();
+		} catch ( InvalidField $e ) {
+			$this->error_message = $e->getMessage();
+			throw $e;
+		}
 	}
 
 	/**
@@ -274,39 +324,13 @@ abstract class BaseField implements Field {
 	 * @return mixed The validated value.
 	 * @throws InvalidField When the submission isn't valid.
 	 */
-	public function validate_submission() {
+	public function get_sanitized_value() {
 		$filtered = $this->sanitize_value( $this->raw_value );
 		if ( false === $filtered || empty( $filtered ) ) {
 			throw InvalidField::value_invalid( $this->label );
 		}
 
 		return $filtered;
-	}
-
-	/**
-	 * Get the raw submitted value.
-	 *
-	 * @since %VERSION%
-	 *
-	 * @param array $data Array where the raw value can be obtained.
-	 *
-	 * @return mixed
-	 */
-	protected function get_raw_value( $data ) {
-		preg_match( $this->id_pattern, $this->id, $m );
-
-		// If this isn't a child field, return all of the data in the matching key.
-		if ( ! $this->is_child() ) {
-			return isset( $data[ $m[1] ] ) ? $data[ $m[1] ] : '';
-		}
-
-		// If the parent is repeatable, get all entries.
-		if ( $this->parent->is_repeatable() ) {
-			return array_column( $data, $m[3] );
-		}
-
-		// Parent isn't repeatable, so get only the value we care about.
-		return isset( $data[ $m[3] ] ) ? $data[ $m[3] ] : '';
 	}
 
 	/**

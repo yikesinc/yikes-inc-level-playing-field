@@ -15,6 +15,7 @@ jQuery( document ).ready( function() {
 		 */
 		init: function() {
 			this.addRepeaterButtons();
+			document.querySelectorAll( `.${deleteButton}` ).forEach( this.hookDeletButton );
 		},
 
 		/**
@@ -24,15 +25,26 @@ jQuery( document ).ready( function() {
 			repeatFieldsets.forEach( this.addRepeaterButton );
 		},
 
+		hookDeletButton: function( item ) {
+			item.addEventListener( 'click', repeater.deleteSection );
+		},
+
 		/**
 		 * Add a repeater button to an individual fieldset section.
 		 *
 		 * @param {HTMLSelectElement} item
 		 */
 		addRepeaterButton: function( item ) {
-			const button = document.createElement( 'button' );
+			const existing = item.querySelector( `.${repeatButton}` );
 
-			// Set the necessary properties for the button.
+			// If we have an existing button, hook the listener and return.
+			if ( null !== existing ) {
+				existing.addEventListener( 'click', repeater.repeatSection );
+				return;
+			}
+
+			// Set up the new button.
+			const button = document.createElement( 'button' );
 			button.setAttribute( 'type', 'button' );
 			button.classList.add( repeatButton );
 			button.innerText = i18n.addNew + ' ' + item.dataset.addNewLabel;
@@ -82,7 +94,7 @@ jQuery( document ).ready( function() {
 			if ( null === button ) {
 				repeater.addDeleteButton( newNode );
 			} else {
-				button.addEventListener( 'click', repeater.deleteSection );
+				repeater.hookDeletButton( button )
 			}
 
 			// Insert the new section.
@@ -100,7 +112,7 @@ jQuery( document ).ready( function() {
 			button.setAttribute( 'type', 'button' );
 			button.classList.add( deleteButton );
 			button.innerText = 'X';
-			button.addEventListener( 'click', repeater.deleteSection );
+			repeater.hookDeletButton( button );
 
 			// Add the button to the beginning of the fieldset element.
 			fieldset.insertBefore( button, fieldset.querySelector( '.lpf-field-container' ) );

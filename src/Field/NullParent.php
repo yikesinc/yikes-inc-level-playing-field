@@ -47,7 +47,7 @@ class NullParent extends BaseField {
 	 *
 	 * @return null A null placeholder.
 	 */
-	public function validate_submission() {
+	public function get_sanitized_value() {
 		return null;
 	}
 }
