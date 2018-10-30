@@ -259,12 +259,12 @@ class ApplicantMessaging extends Metabox\BaseMetabox {
 
 			if ( ApplicantMessage::APPLICANT_AUTHOR === $author ) {
 
-				// Send the message as an email to the applicant.
-				$email = ( new ApplicantMessageToApplicantEmail( $post_id, $comment ) )->send();
-			} else {
-
 				// Send the message as an email to the admin/job manager.
 				$email = ( new ApplicantMessageFromApplicantEmail( $post_id, $comment ) )->send();
+			} else {
+
+				// Send the message as an email to the applicant.
+				$email = ( new ApplicantMessageToApplicantEmail( $post_id, $comment ) )->send();
 			}
 
 			wp_send_json_success([
