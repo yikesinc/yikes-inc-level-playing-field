@@ -31,12 +31,12 @@ final class ApplicantStatus extends BaseTaxonomy implements AssetsAware {
 	const SLUG              = 'applicant_status';
 	const DEFAULT_TERM_NAME = 'Pending';
 	const DEFAULT_TERM_SLUG = 'pending';
-	const JS_HANDLE         = 'lpf-taxonomy-button-groups-script';
-	const JS_URI            = 'assets/js/taxonomy-button-groups';
+	const JS_HANDLE         = 'lpf-applicant-status-button-groups-script';
+	const JS_URI            = 'assets/js/applicant-status-button-groups';
 	const JS_DEPENDENCIES   = [ 'jquery' ];
 	const JS_VERSION        = false;
-	const CSS_HANDLE        = 'lpf-taxonomy-button-groups-style';
-	const CSS_URI           = 'assets/css/taxonomy-button-groups';
+	const CSS_HANDLE        = 'lpf-applicant-status-button-groups-style';
+	const CSS_URI           = 'assets/css/applicant-status-button-groups';
 
 	/**
 	 * Register the WordPress hooks.
@@ -174,7 +174,6 @@ final class ApplicantStatus extends BaseTaxonomy implements AssetsAware {
 				<button
 					type="button"
 					data-value="<?php echo esc_attr( $term->term_id ); ?>"
-					data-taxonomy="<?php echo esc_attr( $tax_name ); ?>"
 					class="<?php echo false !== $selected_bool ? 'active' : ''; ?>"
 				>
 					<?php echo esc_html( $term->name ); ?>
@@ -306,24 +305,35 @@ final class ApplicantStatus extends BaseTaxonomy implements AssetsAware {
 
 		// Handle nonce.
 		if ( ! isset( $_POST['nonce'] ) || ! check_ajax_referer( 'add_post_terms', 'nonce', false ) ) {
-			wp_send_json_error();
+			wp_send_json_error([
+				'reason' => 'Failed to validate the nonce.',
+			]);
 		}
 
 		// Sanitize vars.
-		$taxonomy = isset( $_POST['tax'] ) ? filter_var( wp_unslash( $_POST['tax'] ), FILTER_SANITIZE_STRING ) : '';
-		$term     = isset( $_POST['term'] ) ? filter_var( wp_unslash( $_POST['term'] ), FILTER_SANITIZE_NUMBER_INT ) : 0;
-		$post_id  = isset( $_POST['post_id'] ) ? filter_var( wp_unslash( $_POST['post_id'] ), FILTER_SANITIZE_NUMBER_INT ) : 0;
+		$term    = isset( $_POST['term'] ) ? filter_var( wp_unslash( $_POST['term'] ), FILTER_SANITIZE_NUMBER_INT ) : 0;
+		$post_id = isset( $_POST['post_id'] ) ? filter_var( wp_unslash( $_POST['post_id'] ), FILTER_SANITIZE_NUMBER_INT ) : 0;
 
-		if ( empty( $taxonomy ) || empty( $term ) || empty( $post_id ) ) {
-			wp_send_json_error();
+		if ( empty( $term ) || empty( $post_id ) ) {
+			wp_send_json_error([
+				'reason'  => 'Term ID and/or post ID are empty after sanitization.',
+				'term'    => $term,
+				'post_id' => $post_id,
+			]);
 		}
 
-		$result = wp_set_post_terms( $post_id, $term, $taxonomy, $append = false );
+		$result = wp_set_post_terms( $post_id, $term, static::SLUG );
 
 		if ( is_array( $result ) ) {
-			wp_send_json_success();
+			wp_send_json_success([
+				'reason' => 'Term successfully set.',
+			]);
 		}
 
-		wp_send_json_error();
+		wp_send_json_error([
+			'reason'  => 'Failed to set post term.',
+			'term'    => $term,
+			'post_id' => $post_id,
+		]);
 	}
 }
