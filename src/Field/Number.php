@@ -16,5 +16,6 @@ namespace Yikes\LevelPlayingField\Field;
  * @package Yikes\LevelPlayingField
  */
 class Number extends BaseInput {
-	const TYPE = 'number';
+	const TYPE     = 'number';
+	const SANITIZE = FILTER_SANITIZE_NUMBER_INT;
 }

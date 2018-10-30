@@ -19,7 +19,7 @@ use Yikes\LevelPlayingField\Model\JobRepository;
  * @since   %VERSION%
  * @package Yikes\LevelPlayingField
  */
-class ApplicationManager extends BasePostType {
+final class ApplicationManager extends BasePostType {
 
 	/**
 	 * Register the WordPress hooks.

@@ -10,18 +10,15 @@
 namespace Yikes\LevelPlayingField\Model;
 
 use WP_Post;
-use Yikes\LevelPlayingField\CustomPostType\ApplicationManager as ApplicationManagerCPT;
 use Yikes\LevelPlayingField\Exception\InvalidPostID;
 
 /**
- * Class ApplicationRepository
+ * Trait PostFinder
  *
  * @since   %VERSION%
  * @package Yikes\LevelPlayingField
  */
-final class ApplicationRepository extends CustomPostTypeRepository {
-
-	use PostFinder;
+trait PostFinder {
 
 	/**
 	 * Find the item with a given post ID.
@@ -30,11 +27,18 @@ final class ApplicationRepository extends CustomPostTypeRepository {
 	 *
 	 * @param int $id Post ID to retrieve.
 	 *
-	 * @return Application
+	 * @return CustomPostTypeEntity
 	 * @throws InvalidPostID If the post for the requested ID was not found or is not the correct type.
 	 */
-	public function find( $id ) {
-		return $this->find_item( $id );
+	private function find_item( $id ) {
+		$id   = intval( $id );
+		$post = get_post( $id );
+		if ( null === $post || $this->get_post_type() !== $post->post_type ) {
+			$post_type = get_post_type_object( $this->get_post_type() );
+			throw InvalidPostID::from_id( $id, $post_type->labels->singular_name );
+		}
+
+		return $this->get_model_object( $post );
 	}
 
 	/**
@@ -42,10 +46,20 @@ final class ApplicationRepository extends CustomPostTypeRepository {
 	 *
 	 * @since %VERSION%
 	 *
-	 * @return Application[]
+	 * @return CustomPostTypeEntity[]
 	 */
-	public function find_all() {
-		return $this->find_all_items();
+	private function find_all_items() {
+		$items = [];
+		$query = new \WP_Query( [
+			'post_type'   => $this->get_post_type(),
+			'post_status' => [ 'any' ],
+		] );
+
+		foreach ( $query->posts as $post ) {
+			$items[ $post->ID ] = $this->get_model_object( $post );
+		}
+
+		return $items;
 	}
 
 	/**
@@ -54,9 +68,7 @@ final class ApplicationRepository extends CustomPostTypeRepository {
 	 * @since %VERSION%
 	 * @return string
 	 */
-	protected function get_post_type() {
-		return ApplicationManagerCPT::SLUG;
-	}
+	abstract protected function get_post_type();
 
 	/**
 	 * Get the name of the class to use when instantiating a model object.
@@ -67,7 +79,5 @@ final class ApplicationRepository extends CustomPostTypeRepository {
 	 *
 	 * @return CustomPostTypeEntity
 	 */
-	protected function get_model_object( WP_Post $post ) {
-		return new Application( $post );
-	}
+	abstract protected function get_model_object( WP_Post $post );
 }

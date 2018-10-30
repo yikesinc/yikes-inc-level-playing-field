@@ -9,6 +9,7 @@
 
 namespace Yikes\LevelPlayingField\Form;
 
+use Yikes\LevelPlayingField\Exception\InvalidField;
 use Yikes\LevelPlayingField\Field\Field;
 use Yikes\LevelPlayingField\Field\Hidden;
 use Yikes\LevelPlayingField\Field\Types;
@@ -26,7 +27,7 @@ use Yikes\LevelPlayingField\Model\ApplicationMeta;
  * @property array   field_classes The array of classes used for field objects.
  * @property array   form_classes  The array of classes used for the main form element.
  */
-class Application {
+final class Application {
 
 	/**
 	 * The application object.
@@ -34,7 +35,7 @@ class Application {
 	 * @since %VERSION%
 	 * @var AppModel
 	 */
-	protected $application;
+	private $application;
 
 	/**
 	 * Array of classes to use for fields.
@@ -42,7 +43,23 @@ class Application {
 	 * @since %VERSION%
 	 * @var array
 	 */
-	protected $field_classes = [];
+	private $field_classes = [];
+
+	/**
+	 * Whether the form has any errors.
+	 *
+	 * @since %VERSION%
+	 * @var bool
+	 */
+	private $has_errors = false;
+
+	/**
+	 * Whether the form has been submitted.
+	 *
+	 * @since %VERSION%
+	 * @var bool
+	 */
+	private $is_submitted = false;
 
 	/**
 	 * The ID of the Job.
@@ -50,7 +67,23 @@ class Application {
 	 * @since %VERSION%
 	 * @var int
 	 */
-	protected $job_id = 0;
+	private $job_id = 0;
+
+	/**
+	 * The data submitted with this form.
+	 *
+	 * @since %VERSION%
+	 * @var array
+	 */
+	private $submitted_data = [];
+
+	/**
+	 * The validated data for this form.
+	 *
+	 * @since %VERSION%
+	 * @var array
+	 */
+	private $valid_data = [];
 
 	/**
 	 * Application constructor.
@@ -73,7 +106,7 @@ class Application {
 	 *
 	 * @since %VERSION%
 	 */
-	protected function set_default_classes() {
+	private function set_default_classes() {
 		$base_classes = [
 			'lpf-application',
 			sprintf( 'lpf-application-%s', $this->application->get_id() ),
@@ -98,7 +131,7 @@ class Application {
 				return $this->fields;
 
 			case 'field_classes':
-				return $this->$name;
+				return $this->field_classes;
 
 			default:
 				$message = sprintf( 'Undefined property: %s::$%s', static::class, $name );
@@ -113,7 +146,7 @@ class Application {
 	 *
 	 * @since %VERSION%
 	 */
-	protected function create_fields() {
+	private function create_fields() {
 		$this->fields = [];
 
 		// Manually add the hidden nonce and referrer fields.
@@ -125,10 +158,9 @@ class Application {
 
 		// Add all of the active fields.
 		foreach ( $this->application->get_active_fields() as $field ) {
-			$name           = str_replace( ApplicationMeta::META_PREFIX, '', $field );
-			$field_name     = ApplicationMeta::FORM_FIELD_PREFIX . $name;
-			$field_label    = ucwords( str_replace( [ '-', '_' ], ' ', $name ) );
-			$type           = isset( Meta::FIELD_MAP[ $name ] ) ? Meta::FIELD_MAP[ $name ] : Types::TEXT;
+			$field_name     = ApplicationMeta::FORM_FIELD_PREFIX . $field;
+			$field_label    = ucwords( str_replace( [ '-', '_' ], ' ', $field ) );
+			$type           = isset( Meta::FIELD_MAP[ $field ] ) ? Meta::FIELD_MAP[ $field ] : Types::TEXT;
 			$this->fields[] = new $type( $field_name, $field_label, $this->field_classes );
 		}
 	}
@@ -153,5 +185,50 @@ class Application {
 		foreach ( $this->fields as $field ) {
 			$field->render();
 		}
+	}
+
+	/**
+	 * Set the submission data.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param array $data Submitted data.
+	 */
+	public function set_submission( array $data ) {
+		$this->is_submitted   = true;
+		$this->submitted_data = $data;
+	}
+
+	/**
+	 * Determine whether the form has errors.
+	 *
+	 * @since %VERSION%
+	 * @return bool
+	 */
+	public function has_errors() {
+		return $this->is_submitted && $this->has_errors;
+	}
+
+	/**
+	 * Validate the submission.
+	 *
+	 * @since %VERSION%
+	 */
+	public function validate_submission() {
+		$valid = [];
+		foreach ( $this->fields as $field ) {
+			try {
+				$submitted = array_key_exists( $field->get_id(), $this->submitted_data )
+					? $this->submitted_data[ $field->get_id() ]
+					: '';
+
+				$field->set_submission( $submitted );
+				$valid[ $field->get_id() ] = $field->get_sanitized_value();
+			} catch ( InvalidField $e ) {
+				$this->has_errors = true;
+			}
+		}
+
+		$this->valid_data = $valid;
 	}
 }

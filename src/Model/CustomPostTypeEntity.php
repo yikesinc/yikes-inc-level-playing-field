@@ -10,6 +10,7 @@
 namespace Yikes\LevelPlayingField\Model;
 
 use WP_Post;
+use Yikes\LevelPlayingField\Exception\FailedToSavePost;
 
 /**
  * Abstract class CustomPostTypeEntity.
@@ -22,6 +23,14 @@ use WP_Post;
 abstract class CustomPostTypeEntity implements Entity {
 
 	/**
+	 * Whether this is a new Entity.
+	 *
+	 * @since %VERSION%
+	 * @var bool
+	 */
+	protected $new;
+
+	/**
 	 * WordPress post data representing the post.
 	 *
 	 * @since %VERSION%
@@ -29,6 +38,14 @@ abstract class CustomPostTypeEntity implements Entity {
 	 * @var WP_Post
 	 */
 	protected $post;
+
+	/**
+	 * Whether post in this object has been changed.
+	 *
+	 * @since %VERSION%
+	 * @var bool
+	 */
+	protected $post_changed = false;
 
 	/**
 	 * Instantiate a CustomPostTypeEntity object.
@@ -39,6 +56,12 @@ abstract class CustomPostTypeEntity implements Entity {
 	 */
 	public function __construct( WP_Post $post ) {
 		$this->post = $post;
+		$this->new  = 0 === $post->ID;
+
+		// Initialize all property defaults for new objects.
+		if ( $this->new ) {
+			$this->load_all_lazy_properties();
+		}
 	}
 
 	/**
@@ -82,6 +105,7 @@ abstract class CustomPostTypeEntity implements Entity {
 	 * @param string $title New title of the post.
 	 */
 	public function set_title( $title ) {
+		$this->post_changed     = true;
 		$this->post->post_title = $title;
 	}
 
@@ -104,6 +128,7 @@ abstract class CustomPostTypeEntity implements Entity {
 	 * @param string $content New content of the post.
 	 */
 	public function set_content( $content ) {
+		$this->post_changed       = true;
 		$this->post->post_content = $content;
 	}
 
@@ -127,6 +152,59 @@ abstract class CustomPostTypeEntity implements Entity {
 		trigger_error( esc_html( $message ), E_USER_NOTICE );
 
 		return null;
+	}
+
+	/**
+	 * Persist the post object and post properties.
+	 *
+	 * @since %VERSION%
+	 * @throws FailedToSavePost When there is a problem saving the post.
+	 */
+	public function persist() {
+		$this->persist_post();
+		$this->persist_properties();
+	}
+
+	/**
+	 * Save changes to the post object.
+	 *
+	 * @since %VERSION%
+	 * @return bool Whether the post was successfully updated.
+	 * @throws FailedToSavePost When the post cannot be saved.
+	 */
+	public function persist_post() {
+		if ( ! $this->post_changed && ! $this->new ) {
+			return false;
+		}
+
+		$result = wp_insert_post( get_object_vars( $this->post ), true );
+		if ( is_wp_error( $result ) ) {
+			throw FailedToSavePost::from_type( $this->post->post_type, $result->get_error_message() );
+		}
+
+		if ( $this->new ) {
+			$this->post = get_post( $result );
+			$this->new  = false;
+		}
+
+		$this->post_changed = false;
+
+		return $result;
+	}
+
+	/**
+	 * Load all lazy properties.
+	 *
+	 * @since %VERSION%
+	 */
+	protected function load_all_lazy_properties() {
+		foreach ( $this->get_lazy_properties() as $property => $default ) {
+			if ( isset( $this->$property ) ) {
+				continue;
+			}
+
+			$this->load_lazy_property( $property );
+		}
 	}
 
 	/**

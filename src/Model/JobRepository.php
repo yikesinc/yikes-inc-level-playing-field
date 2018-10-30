@@ -9,6 +9,7 @@
 
 namespace Yikes\LevelPlayingField\Model;
 
+use WP_Post;
 use Yikes\LevelPlayingField\CustomPostType\JobManager as JobManagerCPT;
 use Yikes\LevelPlayingField\Exception\InvalidPostID;
 use Yikes\LevelPlayingField\Taxonomy\JobStatus;
@@ -19,7 +20,9 @@ use Yikes\LevelPlayingField\Taxonomy\JobStatus;
  * @since   %VERSION%
  * @package Yikes\LevelPlayingField
  */
-class JobRepository extends CustomPostTypeRepository {
+final class JobRepository extends CustomPostTypeRepository {
+
+	use PostFinder;
 
 	/**
 	 * Find the Job with a given post ID.
@@ -29,15 +32,10 @@ class JobRepository extends CustomPostTypeRepository {
 	 * @param int $id Post ID to retrieve.
 	 *
 	 * @return Job
-	 * @throws InvalidPostID If the post for the requested ID was not found.
+	 * @throws InvalidPostID If the post for the requested ID was not found or is not the correct type.
 	 */
 	public function find( $id ) {
-		$post = get_post( $id );
-		if ( null === $post ) {
-			throw InvalidPostID::from_id( $id );
-		}
-
-		return new Job( $post );
+		return $this->find_item( $id );
 	}
 
 	/**
@@ -48,18 +46,7 @@ class JobRepository extends CustomPostTypeRepository {
 	 * @return Job[]
 	 */
 	public function find_all() {
-		$args  = [
-			'post_type'   => JobManagerCPT::SLUG,
-			'post_status' => [ 'any' ],
-		];
-		$query = new \WP_Query( $args );
-
-		$jobs = [];
-		foreach ( $query->posts as $post ) {
-			$jobs[ $post->ID ] = new Job( $post );
-		}
-
-		return $jobs;
+		return $this->find_all_items();
 	}
 
 	/**
@@ -73,22 +60,18 @@ class JobRepository extends CustomPostTypeRepository {
 	 */
 	public function find_active( $limit = 10 ) {
 		$query = new \WP_Query( [
-			'post_type'      => JobManagerCPT::SLUG,
+			'post_type'      => $this->get_post_type(),
 			'post_status'    => [ 'publish' ],
 			'posts_per_page' => $limit,
 			'orderby'        => 'title',
 			'tax_query'      => [
-				[
-					'taxonomy' => JobStatus::SLUG,
-					'field'    => 'slug',
-					'terms'    => 'active',
-				],
+				$this->get_active_job_status_tax_query(),
 			],
 		] );
 
 		$jobs = [];
 		foreach ( $query->posts as $post ) {
-			$jobs[ $post->ID ] = new Job( $post );
+			$jobs[ $post->ID ] = $this->get_model_object( $post );
 		}
 
 		return $jobs;
@@ -102,7 +85,7 @@ class JobRepository extends CustomPostTypeRepository {
 	 */
 	public function count_active() {
 		$args = [
-			'post_type'              => JobManagerCPT::SLUG,
+			'post_type'              => $this->get_post_type(),
 			'post_status'            => [ 'any' ],
 			// Limit posts per page, because WP_Query will still tell us the total.
 			'posts_per_page'         => 1,
@@ -110,11 +93,7 @@ class JobRepository extends CustomPostTypeRepository {
 			'update_post_term_cache' => false,
 			'fields'                 => 'ids',
 			'tax_query'              => [
-				[
-					'taxonomy' => JobStatus::SLUG,
-					'field'    => 'slug',
-					'terms'    => 'active',
-				],
+				$this->get_active_job_status_tax_query(),
 			],
 		];
 
@@ -134,7 +113,7 @@ class JobRepository extends CustomPostTypeRepository {
 	 */
 	public function get_count_for_application( $application_id ) {
 		$args = [
-			'post_type'              => JobManagerCPT::SLUG,
+			'post_type'              => $this->get_post_type(),
 			'post_status'            => [ 'any' ],
 			// Limit posts per page, because WP_Query will still tell us the total.
 			'posts_per_page'         => 1,
@@ -142,15 +121,49 @@ class JobRepository extends CustomPostTypeRepository {
 			'update_post_term_cache' => false,
 			'fields'                 => 'ids',
 			'meta_query'             => [
-				[
-					'key'   => '_application_id',
-					'value' => $application_id,
-				],
+				$this->get_application_meta_query( $application_id ),
 			],
 		];
 
 		$query = new \WP_Query( $args );
 
 		return absint( $query->found_posts );
+	}
+
+	/**
+	 * Get the post type slug to find.
+	 *
+	 * @since %VERSION%
+	 * @return string
+	 */
+	protected function get_post_type() {
+		return JobManagerCPT::SLUG;
+	}
+
+	/**
+	 * Get the name of the class to use when instantiating a model object.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param WP_Post $post The post object to use when instantiating the model.
+	 *
+	 * @return Job
+	 */
+	protected function get_model_object( WP_Post $post ) {
+		return new Job( $post );
+	}
+
+	/**
+	 * Get the query for Jobs with Active status.
+	 *
+	 * @since %VERSION%
+	 * @return array
+	 */
+	private function get_active_job_status_tax_query() {
+		return [
+			'taxonomy' => JobStatus::SLUG,
+			'field'    => 'slug',
+			'terms'    => 'active',
+		];
 	}
 }

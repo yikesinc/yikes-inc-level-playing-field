@@ -25,7 +25,7 @@ use Yikes\LevelPlayingField\Taxonomy\JobStatus;
  * @since   %VERSION%
  * @package Yikes\LevelPlayingField
  */
-class JobManager extends AwesomeBaseMetabox implements AssetsAware {
+final class JobManager extends AwesomeBaseMetabox implements AssetsAware {
 
 	use AssetsAwareness;
 

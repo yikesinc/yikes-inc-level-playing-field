@@ -16,8 +16,27 @@ use Yikes\LevelPlayingField\Exception\InvalidField;
  *
  * @since   %VERSION%
  * @package Yikes\LevelPlayingField
+ *
+ * @property Field parent The Parent field object.
  */
 abstract class BaseField implements Field {
+
+	/**
+	 * The filter for sanitizing.
+	 *
+	 * Override in child classes to use a different sanitize filter.
+	 *
+	 * @see http://php.net/manual/en/filter.filters.sanitize.php.
+	 */
+	const SANITIZE = FILTER_SANITIZE_STRING;
+
+	/**
+	 * An error message to display for the field.
+	 *
+	 * @since %VERSION%
+	 * @var string
+	 */
+	protected $error_message;
 
 	/**
 	 * The field ID.
@@ -48,6 +67,22 @@ abstract class BaseField implements Field {
 	protected $classes;
 
 	/**
+	 * Raw value submitted to the field.
+	 *
+	 * @since %VERSION%
+	 * @var mixed
+	 */
+	protected $raw_value;
+
+	/**
+	 * Whether this field is read-only.
+	 *
+	 * @since %VERSION%
+	 * @var bool
+	 */
+	protected $read_only = false;
+
+	/**
 	 * Whether the field is required.
 	 *
 	 * @since %VERSION%
@@ -64,14 +99,29 @@ abstract class BaseField implements Field {
 	protected $data = [];
 
 	/**
+	 * The parent field.
+	 *
+	 * @since %VERSION%
+	 * @var Field
+	 */
+	protected $parent = null;
+
+	/**
+	 * The value for the field.
+	 *
+	 * @since %VERSION%
+	 * @var null
+	 */
+	protected $value = null;
+
+	/**
 	 * The pattern used for matching an field's ID.
 	 *
-	 * @link https://regex101.com/r/ZTgsNa/1
-	 *
+	 * @link  https://regex101.com/r/ZTgsNa/1
 	 * @since %VERSION%
 	 * @var string
 	 */
-	protected $id_pattern = '#^([\w-]+)(\[(\d+)?\])?(?:\[([\w-]+)\])?#';
+	protected $id_pattern = '#^([\w-]+)(?:\[(\d+)?\])?(?:\[([\w-]+)\])?#';
 
 	/**
 	 * BaseField constructor.
@@ -84,11 +134,91 @@ abstract class BaseField implements Field {
 	 * @throws InvalidField When the provided ID is invalid.
 	 */
 	public function __construct( $id, $label, array $classes, $required = true ) {
-		$this->id       = $id;
 		$this->label    = $label;
 		$this->classes  = $classes;
 		$this->required = (bool) $required;
+		$this->set_id( $id );
+	}
+
+	/**
+	 * Maybe return data from inaccessible members.
+	 *
+	 * @link http://php.net/manual/en/language.oop5.overloading.php#language.oop5.overloading.members
+	 *
+	 * @param string $name The property to retrieve.
+	 *
+	 * @return mixed
+	 */
+	public function __get( $name ) {
+		switch ( $name ) {
+			case 'parent':
+				if ( ! isset( $this->parent ) ) {
+					$this->parent = new NullParent();
+				}
+
+				return $this->parent;
+
+			default:
+				$message = sprintf( 'Undefined property: %s::$%s', static::class, $name );
+				trigger_error( esc_html( $message ), E_USER_NOTICE );
+
+				return null;
+		}
+	}
+
+	/**
+	 * Get the field ID.
+	 *
+	 * @since %VERSION%
+	 * @return string
+	 */
+	public function get_id() {
+		return $this->id;
+	}
+
+	/**
+	 * Set the ID for the field.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param string $id The ID of the field.
+	 *
+	 * @throws InvalidField When the provided ID is invalid.
+	 */
+	public function set_id( $id ) {
+		$this->id = $id;
 		$this->validate_id();
+	}
+
+	/**
+	 * Get whether this field is required or not.
+	 *
+	 * @since %VERSION%
+	 * @return bool
+	 */
+	public function is_required() {
+		return $this->required;
+	}
+
+	/**
+	 * Set the parent field object for this field.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param Field $field The parent field object.
+	 */
+	public function set_parent( Field $field ) {
+		$this->parent = $field;
+	}
+
+	/**
+	 * Get the parent field object.
+	 *
+	 * @since %VERSION%
+	 * @return Field
+	 */
+	public function get_parent() {
+		return $this->parent;
 	}
 
 	/**
@@ -167,15 +297,88 @@ abstract class BaseField implements Field {
 	}
 
 	/**
-	 * Get the raw submitted value.
+	 * Set the data submitted to the field.
 	 *
 	 * @since %VERSION%
+	 *
+	 * @param mixed $data The submitted data for the field.
+	 *
+	 * @throws InvalidField When the field submission is invalid.
+	 */
+	public function set_submission( $data ) {
+		try {
+			$this->raw_value = $data;
+			$this->validate_raw_value();
+			$this->value = $this->get_sanitized_value();
+		} catch ( InvalidField $e ) {
+			$this->error_message = $e->getMessage();
+			throw $e;
+		}
+	}
+
+	/**
+	 * Validate the submission for the given field.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @return mixed The validated value.
+	 * @throws InvalidField When the submission isn't valid.
+	 */
+	public function get_sanitized_value() {
+		$filtered = $this->sanitize_value( $this->raw_value );
+		if ( false === $filtered || empty( $filtered ) ) {
+			throw InvalidField::value_invalid( $this->label );
+		}
+
+		return $filtered;
+	}
+
+	/**
+	 * Validate the raw value.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @throws InvalidField When the raw value is empty but the field is required.
+	 */
+	protected function validate_raw_value() {
+		if ( empty( $this->raw_value ) && $this->required ) {
+			throw InvalidField::field_required( $this->label );
+		}
+	}
+
+	/**
+	 * Sanitize a submitted value.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param string $raw The raw value for the field.
+	 *
 	 * @return mixed
 	 */
-	protected function get_raw_value() {
-		preg_match( $this->id_pattern, $this->id, $m );
-		return ! isset( $m[2] )
-			? ( isset( $_POST[ $m[1] ] ) ? $_POST[ $m[1] ] : '' )
-			: ( isset( $_POST[ $m[1] ][ $m[2] ] ) ? $_POST[ $m[1] ][ $m[2] ] : '' );
+	protected function sanitize_value( $raw ) {
+		return filter_var( $raw, static::SANITIZE, $this->get_filter_options() );
+	}
+
+	/**
+	 * Return options to use when sanitizing a submitted value.
+	 *
+	 * @link  http://php.net/manual/en/function.filter-var.php
+	 * @see   filter_var()
+	 * @since %VERSION%
+	 * @return null|callable|int|array Return null for no options, a callable, an int when using filter flags, or an
+	 *                                 array when using additional options for the filter.
+	 */
+	protected function get_filter_options() {
+		return null;
+	}
+
+	/**
+	 * Determine if this is a child field.
+	 *
+	 * @since %VERSION%
+	 * @return bool
+	 */
+	public function is_child() {
+		return ( null !== $this->parent && ! ( $this->parent instanceof NullParent ) );
 	}
 }
