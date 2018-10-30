@@ -15,13 +15,10 @@ namespace Yikes\LevelPlayingField\Field;
  * @since   %VERSION%
  * @package Yikes\LevelPlayingField
  */
-class Volunteer extends ComplexField {
+class Volunteer extends RepeatableField {
 
 	/** @var string */
 	protected $class_base = 'volunteer';
-
-	/** @var bool */
-	protected $repeatable = true;
 
 	/**
 	 * Get the array of default fields.

@@ -35,7 +35,7 @@ final class Application {
 	 * @since %VERSION%
 	 * @var AppModel
 	 */
-	protected $application;
+	private $application;
 
 	/**
 	 * Array of classes to use for fields.
@@ -43,7 +43,7 @@ final class Application {
 	 * @since %VERSION%
 	 * @var array
 	 */
-	protected $field_classes = [];
+	private $field_classes = [];
 
 	/**
 	 * Whether the form has any errors.
@@ -51,7 +51,7 @@ final class Application {
 	 * @since %VERSION%
 	 * @var bool
 	 */
-	protected $has_errors = false;
+	private $has_errors = false;
 
 	/**
 	 * Whether the form has been submitted.
@@ -59,7 +59,7 @@ final class Application {
 	 * @since %VERSION%
 	 * @var bool
 	 */
-	protected $is_submitted = false;
+	private $is_submitted = false;
 
 	/**
 	 * The ID of the Job.
@@ -67,7 +67,7 @@ final class Application {
 	 * @since %VERSION%
 	 * @var int
 	 */
-	protected $job_id = 0;
+	private $job_id = 0;
 
 	/**
 	 * The data submitted with this form.
@@ -75,7 +75,7 @@ final class Application {
 	 * @since %VERSION%
 	 * @var array
 	 */
-	protected $submitted_data = [];
+	private $submitted_data = [];
 
 	/**
 	 * The validated data for this form.
@@ -83,7 +83,7 @@ final class Application {
 	 * @since %VERSION%
 	 * @var array
 	 */
-	protected $valid_data = [];
+	private $valid_data = [];
 
 	/**
 	 * Application constructor.
@@ -106,7 +106,7 @@ final class Application {
 	 *
 	 * @since %VERSION%
 	 */
-	protected function set_default_classes() {
+	private function set_default_classes() {
 		$base_classes = [
 			'lpf-application',
 			sprintf( 'lpf-application-%s', $this->application->get_id() ),
@@ -146,7 +146,7 @@ final class Application {
 	 *
 	 * @since %VERSION%
 	 */
-	protected function create_fields() {
+	private function create_fields() {
 		$this->fields = [];
 
 		// Manually add the hidden nonce and referrer fields.
@@ -158,10 +158,9 @@ final class Application {
 
 		// Add all of the active fields.
 		foreach ( $this->application->get_active_fields() as $field ) {
-			$name           = str_replace( ApplicationMeta::META_PREFIX, '', $field );
-			$field_name     = ApplicationMeta::FORM_FIELD_PREFIX . $name;
-			$field_label    = ucwords( str_replace( [ '-', '_' ], ' ', $name ) );
-			$type           = isset( Meta::FIELD_MAP[ $name ] ) ? Meta::FIELD_MAP[ $name ] : Types::TEXT;
+			$field_name     = ApplicationMeta::FORM_FIELD_PREFIX . $field;
+			$field_label    = ucwords( str_replace( [ '-', '_' ], ' ', $field ) );
+			$type           = isset( Meta::FIELD_MAP[ $field ] ) ? Meta::FIELD_MAP[ $field ] : Types::TEXT;
 			$this->fields[] = new $type( $field_name, $field_label, $this->field_classes );
 		}
 	}
@@ -201,11 +200,35 @@ final class Application {
 	}
 
 	/**
+	 * Determine whether the form has errors.
+	 *
+	 * @since %VERSION%
+	 * @return bool
+	 */
+	public function has_errors() {
+		return $this->is_submitted && $this->has_errors;
+	}
+
+	/**
 	 * Validate the submission.
 	 *
 	 * @since %VERSION%
 	 */
 	public function validate_submission() {
+		$valid = [];
+		foreach ( $this->fields as $field ) {
+			try {
+				$submitted = array_key_exists( $field->get_id(), $this->submitted_data )
+					? $this->submitted_data[ $field->get_id() ]
+					: '';
 
+				$field->set_submission( $submitted );
+				$valid[ $field->get_id() ] = $field->get_sanitized_value();
+			} catch ( InvalidField $e ) {
+				$this->has_errors = true;
+			}
+		}
+
+		$this->valid_data = $valid;
 	}
 }

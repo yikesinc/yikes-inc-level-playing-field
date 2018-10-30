@@ -28,14 +28,6 @@ abstract class ComplexField extends BaseField {
 	protected $class_base = 'complexfield';
 
 	/**
-	 * Whether the field is repeatable.
-	 *
-	 * @since %VERSION%
-	 * @var bool
-	 */
-	protected $repeatable = false;
-
-	/**
 	 * Array of sub-fields.
 	 *
 	 * @since %VERSION%
@@ -55,7 +47,27 @@ abstract class ComplexField extends BaseField {
 	 */
 	public function __construct( $id, $label, array $classes, $required = true ) {
 		parent::__construct( $id, $label, $classes, $required );
-		$this->generate_sub_fields();
+		$this->setup_sub_fields();
+	}
+
+	/**
+	 * Set up the sub fields for this field.
+	 *
+	 * @since %VERSION%
+	 * @throws InvalidField When an invalid field class is provided through the filter.
+	 */
+	protected function setup_sub_fields() {
+		$this->sub_fields = $this->generate_sub_fields();
+	}
+
+	/**
+	 * Get the ID base for sub-fields.
+	 *
+	 * @since %VERSION%
+	 * @return string
+	 */
+	protected function get_id_base() {
+		return $this->id;
 	}
 
 	/**
@@ -68,7 +80,9 @@ abstract class ComplexField extends BaseField {
 	protected function generate_sub_fields() {
 		$classes        = array_merge( $this->classes, $this->get_classes() );
 		$default_fields = $this->get_default_fields();
-		$id_base        = $this->id . ( $this->repeatable ? '[0]' : '' );
+		$id_base        = $this->get_id_base();
+		$sub_fields     = [];
+
 		foreach ( $default_fields as $field => $settings ) {
 			$settings = wp_parse_args( $settings, [
 				'label'    => ucwords( str_replace( [ '_', '-' ], ' ', $field ) ),
@@ -77,7 +91,7 @@ abstract class ComplexField extends BaseField {
 			] );
 
 			// Instantiate the sub field.
-			$this->sub_fields[ $field ] = new $settings['class'](
+			$sub_field = new $settings['class'](
 				"{$id_base}[{$field}]",
 				$settings['label'],
 				$classes,
@@ -85,13 +99,18 @@ abstract class ComplexField extends BaseField {
 			);
 
 			// Ensure the class extends the Field interface.
-			if ( ! ( $this->sub_fields[ $field ] instanceof Field ) ) {
+			if ( ! ( $sub_field instanceof Field ) ) {
 				throw InvalidField::from_field( $settings['class'] );
 			}
 
 			// Assign the current object as the field parent.
-			$this->sub_fields[ $field ]->set_parent( $this );
+			$sub_field->set_parent( $this );
+
+			// Add to the array.
+			$sub_fields[ $field ] = $sub_field;
 		}
+
+		return $sub_fields;
 	}
 
 	/**
@@ -100,6 +119,17 @@ abstract class ComplexField extends BaseField {
 	 * @since %VERSION%
 	 */
 	public function render() {
+		$this->render_container_open();
+		$this->render_fieldset_group();
+		$this->render_container_close();
+	}
+
+	/**
+	 * Render an individual fieldset group.
+	 *
+	 * @since %VERSION%
+	 */
+	protected function render_fieldset_group() {
 		$this->render_open_fieldset();
 		$this->render_grouping_label();
 		$this->render_sub_fields();
@@ -107,16 +137,12 @@ abstract class ComplexField extends BaseField {
 	}
 
 	/**
-	 * Get the raw submitted value.
+	 * Render the opening of the main content container.
 	 *
 	 * @since %VERSION%
-	 *
-	 * @param array $data Array where the raw value can be obtained.
-	 *
-	 * @return array
 	 */
-	protected function get_raw_value( $data ) {
-		return parent::get_raw_value( $data ) ?: [];
+	protected function render_container_open() {
+		echo '<div class="lpf-field-container">';
 	}
 
 	/**
@@ -125,16 +151,12 @@ abstract class ComplexField extends BaseField {
 	 * @since %VERSION%
 	 */
 	protected function render_open_fieldset() {
-		$classes = [ 'lpf-fieldset', "lpf-fieldset-{$this->class_base}" ];
-		if ( $this->repeatable ) {
-			$classes[] = 'lpf-fieldset-repeatable';
-		}
+		$classes = [
+			'lpf-fieldset',
+			"lpf-fieldset-{$this->class_base}",
+		];
 
-		printf(
-			'<div class="lpf-field-container"><fieldset class="%s" %s>',
-			esc_attr( join( ' ', $classes ) ),
-			$this->repeatable ? sprintf( 'data-add-new-label="%s"', esc_attr( $this->get_add_new_label() ) ) : ''
-		);
+		printf( '<fieldset class="%s">', esc_attr( join( ' ', $classes ) ) );
 	}
 
 	/**
@@ -155,7 +177,16 @@ abstract class ComplexField extends BaseField {
 	 * @since %VERSION%
 	 */
 	protected function render_close_fieldset() {
-		echo '</fieldset></div>';
+		echo '</fieldset>';
+	}
+
+	/**
+	 * Render the closing of the main container.
+	 *
+	 * @since %VERSION%
+	 */
+	protected function render_container_close() {
+		echo '</div>';
 	}
 
 	/**
@@ -169,15 +200,61 @@ abstract class ComplexField extends BaseField {
 	}
 
 	/**
-	 * Get the label to use when rendering the "Add New" button.
-	 *
-	 * Only needs to be overridden when the field is repeatable.
+	 * Set the data submitted to the field.
 	 *
 	 * @since %VERSION%
-	 * @return string
+	 *
+	 * @param mixed $data The submitted data for the field.
+	 *
+	 * @throws InvalidField When the field submission is invalid.
 	 */
-	protected function get_add_new_label() {
-		return '';
+	public function set_submission( $data ) {
+		try {
+			$this->raw_value = $data;
+			$this->validate_raw_value();
+
+			foreach ( $this->sub_fields as $name => $field ) {
+				$field->set_submission( isset( $data[ $name ] ) ? $data[ $name ] : '' );
+			}
+		} catch ( InvalidField $e ) {
+			$this->error_message = $e->getMessage();
+			throw $e;
+		}
+	}
+
+	/**
+	 * Validate the submission for the given field.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @return mixed The validated value.
+	 * @throws InvalidField When the submission isn't valid.
+	 */
+	public function get_sanitized_value() {
+		$values = [];
+		foreach ( $this->sub_fields as $field ) {
+			$values[ $field->get_id() ] = $field->get_sanitized_value();
+		}
+
+		if ( empty( $values ) ) {
+			throw InvalidField::value_invalid( $this->label );
+		}
+
+		return $values;
+	}
+
+	/**
+	 * Validate the raw value.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @throws InvalidField When the raw value is empty but the field is required.
+	 */
+	protected function validate_raw_value() {
+		// We cannot have an empty array.
+		if ( empty( $this->raw_value ) ) {
+			throw InvalidField::value_invalid( $this->label, 'Empty array received for complex field.' );
+		}
 	}
 
 	/**

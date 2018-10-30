@@ -166,7 +166,7 @@ For organizational purposes, each of the subdirectories has its own purpose. Eac
 
 **Classes:**
 
-* `Base64Anonymizer`
+* `Base64`
 
 ### View
 

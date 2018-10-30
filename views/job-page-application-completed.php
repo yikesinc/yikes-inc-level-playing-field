@@ -9,10 +9,7 @@
 
 namespace Yikes\LevelPlayingField;
 
-use Yikes\LevelPlayingField\Model\Application;
-
-?>
-
-
-
-
+printf(
+	'<p>%s</p>',
+	esc_html__( 'Congratulations! Your form has been successfully submitted!', 'yikes-level-playing-field' )
+);
