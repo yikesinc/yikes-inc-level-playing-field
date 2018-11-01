@@ -30,7 +30,6 @@
 			nonce: taxonomy_button_group_data.nonce
 		};
 
-		// $.post( window.ajaxurl, data, function( response ) { console.log( 'fdskjhfdkjdsff' ); add_post_term_callback( response ); });
 		$.post( window.ajaxurl, data ).always( function( response, successText ) {
 			if ( 'error' === successText ) {
 				add_post_term_failure( response.responseJSON );
