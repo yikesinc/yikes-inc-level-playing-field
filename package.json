@@ -25,6 +25,7 @@
         "gulp-eslint": "^4",
         "gulp-git": "^2",
         "gulp-imagemin": "^3",
+        "gulp-js-import": "^1.0.6",
         "gulp-notify": "^3",
         "gulp-plumber": "^1",
         "gulp-postcss": "^7",
