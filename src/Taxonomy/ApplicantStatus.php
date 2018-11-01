@@ -305,9 +305,9 @@ final class ApplicantStatus extends BaseTaxonomy implements AssetsAware {
 
 		// Handle nonce.
 		if ( ! isset( $_POST['nonce'] ) || ! check_ajax_referer( 'add_post_terms', 'nonce', false ) ) {
-			wp_send_json_error([
+			wp_send_json_error( [
 				'reason' => 'Failed to validate the nonce.',
-			]);
+			], 403 );
 		}
 
 		// Sanitize vars.
@@ -315,25 +315,26 @@ final class ApplicantStatus extends BaseTaxonomy implements AssetsAware {
 		$post_id = isset( $_POST['post_id'] ) ? filter_var( wp_unslash( $_POST['post_id'] ), FILTER_SANITIZE_NUMBER_INT ) : 0;
 
 		if ( empty( $term ) || empty( $post_id ) ) {
-			wp_send_json_error([
+			wp_send_json_error( [
 				'reason'  => 'Term ID and/or post ID are empty after sanitization.',
 				'term'    => $term,
 				'post_id' => $post_id,
-			]);
+			], 400 );
 		}
 
 		$result = wp_set_post_terms( $post_id, $term, static::SLUG );
-
-		if ( is_array( $result ) ) {
-			wp_send_json_success([
+		if ( is_wp_error( $result ) ) {
+			wp_send_json_error( $result );
+		} elseif ( false === $result ) {
+			wp_send_json_error( [
+				'reason'  => 'Failed to set post term.',
+				'term'    => $term,
+				'post_id' => $post_id,
+			], 422 );
+		} else {
+			wp_send_json_success( [
 				'reason' => 'Term successfully set.',
-			]);
+			], 200 );
 		}
-
-		wp_send_json_error([
-			'reason'  => 'Failed to set post term.',
-			'term'    => $term,
-			'post_id' => $post_id,
-		]);
 	}
 }
