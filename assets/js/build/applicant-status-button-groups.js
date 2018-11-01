@@ -1,11 +1,7 @@
 ( function( $ ) {
 
-	const notice         = function display_notice( type, message ) {
-	return '<div class="lpf-notice notice notice-' + type + '"><p>' + message + '</p></div>';
-};
-	const remove_notices = function remove_notices() {
-	$( '.lpf-notice' ).remove();
-};
+	const notice         = @import './assets/js/functions/display-notice.js';
+	const remove_notices = @import './assets/js/functions/remove-notices.js';
 	const post_id        = document.getElementById( 'post_ID' ).value;
 
 	if ( post_id.length === 0 ) {
