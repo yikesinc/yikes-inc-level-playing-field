@@ -172,9 +172,8 @@ final class ApplicantManager extends BasePostType implements AssetsAware {
 				// something for the nickname.
 				break;
 			case 'viewed':
-				//something for viewed.
 				$viewed = $applicants[ $post_id ]->viewed_by() === 0 ? 'No one' : get_user_meta( $applicants[ $post_id ]->viewed_by() )['nickname'][0];
-				echo $viewed;
+				echo esc_html( $viewed );
 				break;
 			case 'view':
 				if ( current_user_can( Capabilities::EDIT_APPLICANT, $post_id ) ) {
@@ -247,10 +246,13 @@ final class ApplicantManager extends BasePostType implements AssetsAware {
 	 */
 	private function viewed_dropdown_filter() {
 		global $typenow;
-		if ( $typenow === 'applicants' ) {
+		if ( 'applicants' === $typenow ) {
 			global $wpdb;
+			// Get meta key.
 			$meta_key = ApplicantMeta::META_PREFIXES['viewed'];
+			// Get current selected view.
 			$current_viewed = isset( $_GET[ApplicantMeta::VIEWED] ) ? $_GET[ApplicantMeta::VIEWED] : 'all';
+			// Query for all unique views.
 			$result = $wpdb->get_col(
 				$wpdb->prepare( "
 			SELECT DISTINCT meta_value FROM $wpdb->postmeta
