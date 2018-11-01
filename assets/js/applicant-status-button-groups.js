@@ -11,6 +11,9 @@
 		$( '.tax-btn-group button' ).click( function() {
 			const button = $( this );
 
+			// Remove any warnings.
+			$( '.lpf-notice' ).remove();
+
 			// Remove active class from all buttons, add it to the clicked button.
 			button.addClass( 'active' ).siblings( 'button' ).removeClass( 'active' );
 
@@ -24,10 +27,20 @@
 			action: 'lpf_add_post_term',
 			term: term,
 			post_id: post_id,
-			nonce: taxonomy_button_group_data.ajax.nonce
+			nonce: taxonomy_button_group_data.nonce
 		};
 
-		$.post( taxonomy_button_group_data.ajax.url, data, function( response ) { console.log( response ); });
+		// $.post( window.ajaxurl, data, function( response ) { console.log( 'fdskjhfdkjdsff' ); add_post_term_callback( response ); });
+		$.post( window.ajaxurl, data ).always( function( response, successText ) {
+			if ( 'error' === successText ) {
+				add_post_term_failure( response.responseJSON );
+			}
+		});
 	}
 
+	function add_post_term_failure( response ) {
+		if ( response.success !== true && typeof response.data === 'object' && typeof response.data.reason === 'string' ) {
+			$( '.tax-btn-group' ).parent().after( '<div class="lpf-notice notice notice-error"><p>' + response.data.reason + '</p></div' );
+		}
+	}
 })( jQuery );

@@ -194,15 +194,9 @@ final class ApplicantStatus extends BaseTaxonomy implements AssetsAware {
 	 */
 	protected function get_assets() {
 		$script = new ScriptAsset( self::JS_HANDLE, self::JS_URI, self::JS_DEPENDENCIES, self::JS_VERSION, ScriptAsset::ENQUEUE_FOOTER );
-		$script->add_localization(
-			'taxonomy_button_group_data',
-			[
-				'ajax' => [
-					'url'   => admin_url( 'admin-ajax.php' ),
-					'nonce' => wp_create_nonce( 'add_post_terms' ),
-				],
-			]
-		);
+		$script->add_localization( 'taxonomy_button_group_data', [
+			'nonce' => wp_create_nonce( 'add_post_terms' ),
+		]);
 
 		return [
 			$script,
@@ -306,7 +300,7 @@ final class ApplicantStatus extends BaseTaxonomy implements AssetsAware {
 		// Handle nonce.
 		if ( ! isset( $_POST['nonce'] ) || ! check_ajax_referer( 'add_post_terms', 'nonce', false ) ) {
 			wp_send_json_error( [
-				'reason' => 'Failed to validate the nonce.',
+				'reason' => __( 'An error occurred: Failed to validate the nonce.', 'yikes-level-playing-field' ),
 			], 403 );
 		}
 
@@ -316,7 +310,7 @@ final class ApplicantStatus extends BaseTaxonomy implements AssetsAware {
 
 		if ( empty( $term ) || empty( $post_id ) ) {
 			wp_send_json_error( [
-				'reason'  => 'Term ID and/or post ID are empty after sanitization.',
+				'reason'  => __( 'An error occurred: the term or post ID failed validation.', 'yikes-level-playing-field' ),
 				'term'    => $term,
 				'post_id' => $post_id,
 			], 400 );
@@ -324,16 +318,20 @@ final class ApplicantStatus extends BaseTaxonomy implements AssetsAware {
 
 		$result = wp_set_post_terms( $post_id, $term, static::SLUG );
 		if ( is_wp_error( $result ) ) {
-			wp_send_json_error( $result );
+			wp_send_json_error( [
+				/* translators: the placeholder is an error message returned by the WP_Error object */
+				'reason'   => sprintf( __( 'An error occurred: %s', 'yikes-level-playing-field' ), $result->get_error_message() ),
+				'wp_error' => $result,
+			], 422 );
 		} elseif ( false === $result ) {
 			wp_send_json_error( [
-				'reason'  => 'Failed to set post term.',
+				'reason'  => __( 'An error occurred: Failed to set post term.', 'yikes-level-playing-field' ),
 				'term'    => $term,
 				'post_id' => $post_id,
 			], 422 );
 		} else {
 			wp_send_json_success( [
-				'reason' => 'Term successfully set.',
+				'reason' => __( 'Term successfully set.', 'yikes-level-playing-field' ),
 			], 200 );
 		}
 	}
