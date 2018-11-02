@@ -37,7 +37,7 @@ abstract class BasePostType implements Service {
 		add_action( 'restrict_manage_posts', [ $this, 'custom_dropdowns' ], 10, 2 );
 
 		// This action will customize the main query vars.
-		add_filter( 'parse_query', [ $this, 'custom_query_vars' ] );
+		add_action( 'parse_query', [ $this, 'custom_query_vars' ] );
 
 	}
 

@@ -19,7 +19,6 @@ use Yikes\LevelPlayingField\Service;
  *
  * @package Yikes\LevelPlayingField
  * @author  Ebonie Butler
- *
  */
 abstract class BaseWidget implements Service {
 
@@ -33,7 +32,7 @@ abstract class BaseWidget implements Service {
 	 * @since %VERSION%
 	 */
 	public function register() {
-		add_action( 'wp_dashboard_setup', array( $this, 'add_dashboard_widget' ) );
+		add_action( 'wp_dashboard_setup', [ $this, 'add_dashboard_widget' ] );
 	}
 	/**
 	 * Add custom dashboard widget.
@@ -42,7 +41,7 @@ abstract class BaseWidget implements Service {
 		wp_add_dashboard_widget(
 			$this->get_slug(),         // Widget slug.
 			$this->get_widget_title(),         // Title.
-			array( $this, 'render' ) // Display function.
+			[ $this, 'render' ] // Display function.
 		);
 	}
 	/**

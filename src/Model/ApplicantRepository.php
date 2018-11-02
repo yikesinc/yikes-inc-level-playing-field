@@ -113,6 +113,7 @@ class ApplicantRepository extends CustomPostTypeRepository {
 		$args['fields']         = 'ids';
 		$args['meta_query'][]   = $this->get_job_meta_query( $job_id );
 		$args['meta_query'][]   = $this->get_viewed_applicant_meta_query();
+		// Create new query obj.
 		$query = new WP_Query( $args );
 		return absint( $query->found_posts );
 	}
@@ -127,10 +128,9 @@ class ApplicantRepository extends CustomPostTypeRepository {
 	 * @return int The count of new applicants for the Job.
 	 */
 	public function get_new_applicant_count_for_job( $job_id ) {
-		$args = [
+		$args  = [
 			'post_type'              => $this->get_post_type(),
 			'post_status'            => [ 'any' ],
-			// Limit posts per page, because WP_Query will still tell us the total.
 			'posts_per_page'         => 1,
 			'update_post_meta_cache' => false,
 			'update_post_term_cache' => false,
@@ -164,7 +164,7 @@ class ApplicantRepository extends CustomPostTypeRepository {
 		$args                 = $this->get_default_query_vars();
 		$args['meta_query'][] = $this->get_job_meta_query( $job_id );
 		$query                = new WP_Query( $args );
-		$applicants = [];
+		$applicants           = [];
 		foreach ( $query->posts as $post ) {
 			$applicants[ $post->ID ] = $this->get_model_object( $post );
 		}
