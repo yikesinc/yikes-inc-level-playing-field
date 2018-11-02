@@ -164,12 +164,10 @@ class ApplicantRepository extends CustomPostTypeRepository {
 		$args                 = $this->get_default_query_vars();
 		$args['meta_query'][] = $this->get_job_meta_query( $job_id );
 		$query                = new WP_Query( $args );
-
 		$applicants = [];
 		foreach ( $query->posts as $post ) {
 			$applicants[ $post->ID ] = $this->get_model_object( $post );
 		}
-
 		return $applicants;
 	}
 
