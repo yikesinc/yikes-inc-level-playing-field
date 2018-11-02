@@ -171,14 +171,14 @@ final class ApplicantManager extends BasePostType implements AssetsAware {
 			case 'nickname':
 				echo esc_html( $applicants[ $post_id ]->get_nickname() );
 				break;
+
 			case 'viewed':
-				$viewed = $applicants[ $post_id ]->viewed_by() === 0 ? 'No one' : get_user_meta( $applicants[ $post_id ]->viewed_by() )['nickname'][0];
+				$viewed = $applicants[ $post_id ]->viewed_by() === 0
+					? __( 'No one', 'yikes-level-playing-field' ) :
+					get_user_meta( $applicants[ $post_id ]->viewed_by() )['nickname'][0];
 				echo esc_html( $viewed );
 				break;
-			case 'viewed':
-				$viewed = $applicants[ $post_id ]->viewed_by() === 0 ? 'No one' : get_user_meta( $applicants[ $post_id ]->viewed_by() )['nickname'][0];
-				echo esc_html( $viewed );
-				break;
+
 			case 'view':
 				if ( current_user_can( Capabilities::EDIT_APPLICANT, $post_id ) ) {
 					printf(
@@ -249,32 +249,29 @@ final class ApplicantManager extends BasePostType implements AssetsAware {
 	 * @since %VERSION%
 	 */
 	private function viewed_dropdown_filter() {
-		global $typenow;
-		if ( 'applicants' === $typenow ) {
-			global $wpdb;
-			// Get meta key.
-			$meta_key = ApplicantMeta::META_PREFIXES['viewed'];
-			// Get current selected view.
-			$current_viewed = isset( $_GET[ ApplicantMeta::VIEWED ] ) ? $_GET[ ApplicantMeta::VIEWED ] : 'all';
-			// Query for all unique views.
-			$result = $wpdb->get_col(
-				$wpdb->prepare( "
-			SELECT DISTINCT meta_value FROM $wpdb->postmeta
-			WHERE meta_key = %s
-			ORDER BY meta_value",
-					$meta_key
-				)
-			);
-			?>
-			<select name="<?php echo esc_attr( ApplicantMeta::VIEWED ); ?>" id="<?php echo esc_attr( ApplicantMeta::VIEWED ); ?>">
-				<option value="all" <?php selected( 'all', $current_viewed ); ?>><?php esc_html_e( 'All Viewed', 'yikes-level-playing-field' ); ?></option>
-				<option value="none" <?php selected( 'none', $current_viewed ); ?>><?php esc_html_e( 'No One Viewed', 'yikes-level-playing-field' ); ?></option>
-				<?php foreach ( $result as $user_id ) { ?>
-					<option value="<?php echo esc_attr( $user_id ); ?>" <?php selected( $user_id, $current_viewed ); ?>><?php echo esc_html( get_user_meta( $user_id )['nickname'][0] ); ?></option>
-				<?php } ?>
-			</select>
-			<?php
-		}
+		global $wpdb;
+		// Get meta key.
+		$meta_key = ApplicantMeta::META_PREFIXES[ ApplicantMeta::VIEWED ];
+		// Get current selected view.
+		$current_viewed = isset( $_GET[ ApplicantMeta::VIEWED ] ) ? $_GET[ ApplicantMeta::VIEWED ] : 'all';
+		// Query for all unique views.
+		$result = $wpdb->get_col(
+			$wpdb->prepare( "
+				SELECT DISTINCT meta_value FROM $wpdb->postmeta
+				WHERE meta_key = %s
+				ORDER BY meta_value",
+				$meta_key
+			)
+		);
+		?>
+		<select name="<?php echo esc_attr( ApplicantMeta::VIEWED ); ?>" id="<?php echo esc_attr( ApplicantMeta::VIEWED ); ?>">
+			<option value="all" <?php selected( 'all', $current_viewed ); ?>><?php esc_html_e( 'All Viewed', 'yikes-level-playing-field' ); ?></option>
+			<option value="none" <?php selected( 'none', $current_viewed ); ?>><?php esc_html_e( 'No One Viewed', 'yikes-level-playing-field' ); ?></option>
+			<?php foreach ( $result as $user_id ) { ?>
+				<option value="<?php echo esc_attr( $user_id ); ?>" <?php selected( $user_id, $current_viewed ); ?>><?php echo esc_html( get_user_meta( $user_id )['nickname'][0] ); ?></option>
+			<?php } ?>
+		</select>
+		<?php
 	}
 
 	/**
@@ -283,71 +280,67 @@ final class ApplicantManager extends BasePostType implements AssetsAware {
 	 * @since %VERSION%
 	 */
 	private function jobs_dropdown_filter() {
-		// @todo: make the dropdown filter for jobs.
-		global $typenow;
-		if ( 'applicants' === $typenow ) {
-			global $wpdb;
-			$meta_key    = MetaLinks::JOB;
-			$current_job = isset( $_GET[ $meta_key ] ) ? $_GET[ $meta_key ] : 'all';
-			$result      = $wpdb->get_col(
-				$wpdb->prepare( "
-			SELECT DISTINCT meta_value FROM $wpdb->postmeta
-			WHERE meta_key = %s 
-			ORDER BY meta_value",
-					$meta_key
-				)
-			);
-			?>
-			<select name="<?php echo esc_attr( $meta_key ); ?>" id="<?php echo esc_attr( $meta_key ); ?>">
-				<option value="all" <?php selected( 'all', $current_job ); ?>><?php esc_html_e( 'All Jobs', 'yikes-level-playing-field' ); ?></option>
-				<?php foreach ( $result as $job_id ) { ?>
-					<option value="<?php echo esc_attr( $job_id ); ?>" <?php selected( $job_id, $current_job ); ?>><?php echo esc_html( get_the_title( $job_id ) ); ?></option>
-				<?php } ?>
-			</select>
-			<?php
-		}
+		global $wpdb;
+		$meta_key    = MetaLinks::JOB;
+		$current_job = isset( $_GET[ $meta_key ] ) ? $_GET[ $meta_key ] : 'all';
+		$result      = $wpdb->get_col(
+			$wpdb->prepare( "
+				SELECT DISTINCT meta_value FROM $wpdb->postmeta
+				WHERE meta_key = %s 
+				ORDER BY meta_value",
+				$meta_key
+			)
+		);
+		?>
+		<select name="<?php echo esc_attr( $meta_key ); ?>" id="<?php echo esc_attr( $meta_key ); ?>">
+			<option value="all" <?php selected( 'all', $current_job ); ?>><?php esc_html_e( 'All Jobs', 'yikes-level-playing-field' ); ?></option>
+			<?php foreach ( $result as $job_id ) { ?>
+				<option value="<?php echo esc_attr( $job_id ); ?>" <?php selected( $job_id, $current_job ); ?>><?php echo esc_html( get_the_title( $job_id ) ); ?></option>
+			<?php } ?>
+		</select>
+		<?php
 	}
 
 	/**
 	 * Modifies current query variables.
 	 *
 	 * @since %VERSION%
-	 *
-	 * @param array $original_query The original array of query variables.
 	 */
-	public function custom_query_vars( $original_query ) {
-		global $pagenow;
+	public function custom_query_vars() {
 		// Get the post type.
 		$post_type = isset( $_GET['post_type'] ) ? $_GET['post_type'] : '';
+		$screen = get_current_screen();
 
-		if ( is_admin() && 'edit.php' === $pagenow && 'applicants' === $post_type ) {
-			$meta_query = [];
-			if ( isset( $_GET[ ApplicantMeta::VIEWED ] ) && 'all' !== $_GET[ ApplicantMeta::VIEWED ] && isset( $_GET[ MetaLinks::JOB ] ) && 'all' !== $_GET[ MetaLinks::JOB ] ) {
-				$meta_query['relation'] = 'AND';
-			}
-			if ( isset( $_GET[ ApplicantMeta::VIEWED ] ) && 'all' !== $_GET[ ApplicantMeta::VIEWED ] ) {
-				if ( 'none' === $_GET[ ApplicantMeta::VIEWED ] ) {
-					$meta_query[] = [
-						'key'     => ApplicantMeta::META_PREFIXES['viewed'],
-						'compare' => 'NOT EXISTS',
-					];
-				} else {
-					$meta_query[] = [
-						'key'     => ApplicantMeta::META_PREFIXES['viewed'],
-						'value'   => $_GET[ ApplicantMeta::VIEWED ],
-						'compare' => '=',
-					];
-				}
-			}
-			if ( isset( $_GET[ MetaLinks::JOB ] ) && 'all' !== $_GET[ MetaLinks::JOB ] ) {
+		if ( 'edit' !== $screen->base || 'applicants' !== $screen->post_type ) {
+			return;
+		}
+
+		$meta_query = [];
+		if ( isset( $_GET[ ApplicantMeta::VIEWED ] ) && 'all' !== $_GET[ ApplicantMeta::VIEWED ] && isset( $_GET[ MetaLinks::JOB ] ) && 'all' !== $_GET[ MetaLinks::JOB ] ) {
+			$meta_query['relation'] = 'AND';
+		}
+		if ( isset( $_GET[ ApplicantMeta::VIEWED ] ) && 'all' !== $_GET[ ApplicantMeta::VIEWED ] ) {
+			if ( 'none' === $_GET[ ApplicantMeta::VIEWED ] ) {
 				$meta_query[] = [
-					'key'     => MetaLinks::JOB,
-					'value'   => $_GET[ MetaLinks::JOB ],
+					'key'     => ApplicantMeta::META_PREFIXES['viewed'],
+					'compare' => 'NOT EXISTS',
+				];
+			} else {
+				$meta_query[] = [
+					'key'     => ApplicantMeta::META_PREFIXES['viewed'],
+					'value'   => $_GET[ ApplicantMeta::VIEWED ],
 					'compare' => '=',
 				];
 			}
-			$original_query->query_vars['meta_query'] = $meta_query;
 		}
+		if ( isset( $_GET[ MetaLinks::JOB ] ) && 'all' !== $_GET[ MetaLinks::JOB ] ) {
+			$meta_query[] = [
+				'key'     => MetaLinks::JOB,
+				'value'   => $_GET[ MetaLinks::JOB ],
+				'compare' => '=',
+			];
+		}
+		set_query_var( 'meta_query', $meta_query );
 	}
 
 	/**
