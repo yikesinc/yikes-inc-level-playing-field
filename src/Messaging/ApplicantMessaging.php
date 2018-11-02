@@ -20,6 +20,8 @@ use Yikes\LevelPlayingField\Email\InterviewConfirmationToApplicantEmail;
 use Yikes\LevelPlayingField\Metabox;
 use Yikes\LevelPlayingField\RequiredPages\ApplicantMessagingPage;
 use Yikes\LevelPlayingField\RequiredPages\BaseRequiredPage;
+use Yikes\LevelPlayingField\Model\ApplicantMeta;
+use Yikes\LevelPlayingField\Model\Applicant;
 
 /**
  * Class ApplicantMessaging.
@@ -237,7 +239,9 @@ class ApplicantMessaging extends Metabox\BaseMetabox {
 
 		// Handle nonce.
 		if ( ! isset( $_POST['nonce'] ) || ! check_ajax_referer( 'send_message', 'nonce', false ) ) {
-			wp_send_json_error();
+			wp_send_json_error( [
+				'reason' => __( 'An error occurred: Failed to validate the nonce.', 'yikes-level-playing-field' ),
+			], 403 );
 		}
 
 		// For security reasons, I think we should pass the GUID along with the post request and verify it.
@@ -248,7 +252,11 @@ class ApplicantMessaging extends Metabox\BaseMetabox {
 
 		// Confirm we have our variables.
 		if ( empty( $comment ) || empty( $post_id ) ) {
-			wp_send_json_error();
+			wp_send_json_error( [
+				'reason'  => __( 'An error occurred: a required field is missing.', 'yikes-level-playing-field' ),
+				'comment' => $comment,
+				'post_id' => $post_id,
+			], 400 );
 		}
 
 		$message_class = new ApplicantMessage();
@@ -267,13 +275,16 @@ class ApplicantMessaging extends Metabox\BaseMetabox {
 				$email = ( new ApplicantMessageToApplicantEmail( $post_id, $comment ) )->send();
 			}
 
-			wp_send_json_success([
+			wp_send_json_success( [
+				'reason'  => __( 'The message was successfully sent.', 'yikes-level-playing-field' ),
 				'post_id' => $post_id,
-				'success' => $email,
-			]);
+				'email'   => $email,
+			], 200 );
 		}
 
-		wp_send_json_error();
+		wp_send_json_error( [
+			'reason' => __( 'The comment could not be inserted.', 'yikes-level-playing-field' ),
+		], 400 );
 	}
 
 	/**
@@ -285,7 +296,9 @@ class ApplicantMessaging extends Metabox\BaseMetabox {
 
 		// Handle nonce.
 		if ( ! isset( $_POST['nonce'] ) || ! check_ajax_referer( 'refresh_conversation', 'nonce', false ) ) {
-			wp_send_json_error();
+			wp_send_json_error( [
+				'reason' => __( 'An error occurred: Failed to validate the nonce.', 'yikes-level-playing-field' ),
+			], 403 );
 		}
 
 		// For security reasons, I think we should pass the GUID along with the post request and verify it.
@@ -296,7 +309,7 @@ class ApplicantMessaging extends Metabox\BaseMetabox {
 		$this->process_metabox( get_post( $post_id ) );
 		$html = ob_get_clean();
 
-		wp_send_json_success( $html );
+		wp_send_json_success( $html, 200 );
 	}
 
 	/**
@@ -407,7 +420,9 @@ class ApplicantMessaging extends Metabox\BaseMetabox {
 
 		// Handle nonce.
 		if ( ! isset( $_POST['nonce'] ) || ! check_ajax_referer( 'send_interview_confirmation', 'nonce', false ) ) {
-			wp_send_json_error();
+			wp_send_json_error( [
+				'reason' => __( 'An error occurred: Failed to validate the nonce.', 'yikes-level-playing-field' ),
+			], 403 );
 		}
 
 		// For security reasons, I think we should pass the GUID along with the post request and verify it.
@@ -421,11 +436,19 @@ class ApplicantMessaging extends Metabox\BaseMetabox {
 
 		// Confirm we have our variables.
 		if ( empty( $comment ) || empty( $date ) || empty( $time ) || empty( $location ) || empty( $post_id ) ) {
-			wp_send_json_error();
+			wp_send_json_error( [
+				'reason'   => __( 'An error occurred: a required field is missing.', 'yikes-level-playing-field' ),
+				'comment'  => $comment,
+				'date'     => $date,
+				'time'     => $time,
+				'location' => $location,
+				'post_id'  => $post_id,
+			], 400 );
 		}
 
 		// Get the un-anonymizer endpoint.
-		$endpoint = home_url();
+		$unanonymization_endpoint = home_url();
+		$cancellation_endpoint    = home_url();
 
 		/* translators: %1$s is the date and %2$s is the time. */
 		$message  = sprintf( __( 'You have been requested for an interview on %1$s at %2$s.', 'yikes-level-playing-field' ), $date, $time );
@@ -438,6 +461,8 @@ class ApplicantMessaging extends Metabox\BaseMetabox {
 		$message .= __( 'A few statements on un-anonymization.', 'yikes-level-playing-field' );
 		$message .= '<br>';
 		$message .= '<a href="' . esc_url( $endpoint ) . '">' . __( 'Click Here to Unanonymize your Information and Confirm your Interview', 'yikes-level-playing-field' ) . '</a>';
+		$message .= '<br>';
+		$message .= '<a href="' . esc_url( $cancellation_endpoint ) . '">' . __( 'Click Here to Decline your Interview Request', 'yikes-level-playing-field' ) . '</a>';
 
 		$message_class = new ApplicantMessage();
 		$new_message   = $message_class->create_comment( $post_id, $message, ApplicantMessage::ADMIN_AUTHOR );
@@ -448,13 +473,25 @@ class ApplicantMessaging extends Metabox\BaseMetabox {
 			$email = ( new InterviewConfirmationToApplicantEmail( $post_id, $message ) )->send();
 
 			// Save the interview variables to the applicant model.
-
-			wp_send_json_success([
-				'post_id' => $post_id,
-				'success' => $email,
+			$applicant = new Applicant( get_post( $post_id ) );
+			$applicant->set_interview_scheduled( true );
+			$applicant->set_interview([
+				ApplicantMeta::DATE     => $date,
+				ApplicantMeta::TIME     => $time,
+				ApplicantMeta::LOCATION => $location,
+				ApplicantMeta::MESSAGE  => $comment,
 			]);
+			$applicant->persist_properties();
+
+			wp_send_json_success( [
+				'reason'  => __( 'The interview request was successfully sent.', 'yikes-level-playing-field' ),
+				'email'   => $email,
+				'post_id' => $post_id,
+			], 200 );
 		}
 
-		wp_send_json_error();
+		wp_send_json_error( [
+			'reason' => __( 'The comment could not be inserted.', 'yikes-level-playing-field' ),
+		], 400 );
 	}
 }

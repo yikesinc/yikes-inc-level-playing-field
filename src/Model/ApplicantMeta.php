@@ -60,11 +60,18 @@ interface ApplicantMeta {
 	// Complex fields.
 	const SCHOOLING      = 'schooling';
 	const CERTIFICATIONS = 'certifications';
+	const INTERVIEW      = 'interview';
 
 	// Admin fields.
-	const NICKNAME   = 'nickname';
-	const ANONYMIZED = 'anonymized';
-	const VIEWED     = 'viewed';
+	const NICKNAME            = 'nickname';
+	const ANONYMIZED          = 'anonymized';
+	const VIEWED              = 'viewed';
+	const INTERVIEW_SCHEDULED = 'interview_scheduled';
+	const INTERVIEW_CONFIRMED = 'interview_confirmed';
+	const DATE                = 'date';
+	const TIME                = 'time';
+	const LOCATION            = 'location';
+	const MESSAGE             = 'message';
 
 	// Fields to make anonymous.
 	const ANONYMOUS_FIELDS = [
@@ -95,18 +102,21 @@ interface ApplicantMeta {
 
 	// Meta prefixed fields.
 	const META_PREFIXES = [
-		self::JOB            => MetaLinks::JOB,
-		self::APPLICATION    => MetaLinks::APPLICATION,
-		self::EMAIL          => self::META_PREFIX . self::EMAIL,
-		self::NAME           => self::META_PREFIX . self::NAME,
-		self::COVER_LETTER   => self::META_PREFIX . self::COVER_LETTER,
-		self::SCHOOLING      => self::META_PREFIX . self::SCHOOLING,
-		self::CERTIFICATIONS => self::META_PREFIX . self::CERTIFICATIONS,
-		self::SKILLS         => self::META_PREFIX . self::SKILLS,
-		self::EXPERIENCE     => self::META_PREFIX . self::EXPERIENCE,
-		self::VOLUNTEER      => self::META_PREFIX . self::VOLUNTEER,
-		self::NICKNAME       => self::META_PREFIX . self::NICKNAME,
-		self::ANONYMIZED     => self::META_PREFIX . self::ANONYMIZED,
-		self::VIEWED         => self::META_PREFIX . self::VIEWED,
+		self::JOB                 => MetaLinks::JOB,
+		self::APPLICATION         => MetaLinks::APPLICATION,
+		self::EMAIL               => self::META_PREFIX . self::EMAIL,
+		self::NAME                => self::META_PREFIX . self::NAME,
+		self::COVER_LETTER        => self::META_PREFIX . self::COVER_LETTER,
+		self::SCHOOLING           => self::META_PREFIX . self::SCHOOLING,
+		self::CERTIFICATIONS      => self::META_PREFIX . self::CERTIFICATIONS,
+		self::SKILLS              => self::META_PREFIX . self::SKILLS,
+		self::EXPERIENCE          => self::META_PREFIX . self::EXPERIENCE,
+		self::VOLUNTEER           => self::META_PREFIX . self::VOLUNTEER,
+		self::NICKNAME            => self::META_PREFIX . self::NICKNAME,
+		self::ANONYMIZED          => self::META_PREFIX . self::ANONYMIZED,
+		self::VIEWED              => self::META_PREFIX . self::VIEWED,
+		self::INTERVIEW           => self::META_PREFIX . self::INTERVIEW,
+		self::INTERVIEW_CONFIRMED => self::META_PREFIX . self::INTERVIEW_CONFIRMED,
+		self::INTERVIEW_SCHEDULED => self::META_PREFIX . self::INTERVIEW_SCHEDULED,
 	];
 }

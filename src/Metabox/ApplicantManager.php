@@ -249,6 +249,23 @@ final class ApplicantManager implements AssetsAware, Service {
 				<p><span class="label">Answer:</span>
 					Vivamus nec ex volutpat, porta libero ut, malesuada lectus.</p>
 			</section>
+			<section id="interview">
+				<h2>Interview Details</h2>
+				<?php if ( $applicant->get_interview_scheduled() ) { ?>
+					<?php // @todo: fetch interview data with $applicant->get_interview(). ?>
+					<?php $interview = maybe_unserialize( $applicant->__get( 'interview' ) ); ?>
+					<p><span class="label">Date:</span>
+					<?php echo esc_html( $interview['date'] ); ?></p>
+					<p><span class="label">Time:</span>
+						<?php echo esc_html( $interview['time'] ); ?></p>
+					<p><span class="label">Location:</span>
+						<?php echo esc_html( $interview['location'] ); ?></p>
+					<p><span class="label">Message:</span>
+						<?php echo esc_html( $interview['message'] ); ?></p>
+				<?php } else { ?>
+					<p><span class="label">An interview has not been scheduled yet.</span>	
+				<?php } ?>
+			</section>
 		</article>
 		<?php
 	}
