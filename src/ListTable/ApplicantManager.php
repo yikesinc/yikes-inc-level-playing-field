@@ -19,9 +19,9 @@ use Yikes\LevelPlayingField\CustomPostType\ApplicantManager as ApplicantManagerC
 use Yikes\LevelPlayingField\Exception\InvalidPostID;
 use Yikes\LevelPlayingField\Model\Applicant;
 use Yikes\LevelPlayingField\Model\ApplicantMeta;
-use Yikes\LevelPlayingField\Model\MetaLinks;
 use Yikes\LevelPlayingField\Model\ApplicantRepository;
 use Yikes\LevelPlayingField\Model\JobRepository;
+use Yikes\LevelPlayingField\Model\MetaLinks;
 use Yikes\LevelPlayingField\Roles\Capabilities;
 use Yikes\LevelPlayingField\Taxonomy\ApplicantStatus;
 
@@ -280,21 +280,13 @@ final class ApplicantManager extends BasePostType implements AssetsAware {
 	 * @since %VERSION%
 	 */
 	private function jobs_dropdown_filter() {
-		global $wpdb;
+		$ids         = ( new JobRepository() )->find_all_item_ids();
 		$meta_key    = MetaLinks::JOB;
 		$current_job = isset( $_GET[ $meta_key ] ) ? $_GET[ $meta_key ] : 'all';
-		$result      = $wpdb->get_col(
-			$wpdb->prepare( "
-				SELECT DISTINCT meta_value FROM $wpdb->postmeta
-				WHERE meta_key = %s 
-				ORDER BY meta_value",
-				$meta_key
-			)
-		);
 		?>
 		<select name="<?php echo esc_attr( $meta_key ); ?>" id="<?php echo esc_attr( $meta_key ); ?>">
 			<option value="all" <?php selected( 'all', $current_job ); ?>><?php esc_html_e( 'All Jobs', 'yikes-level-playing-field' ); ?></option>
-			<?php foreach ( $result as $job_id ) { ?>
+			<?php foreach ( $ids as $job_id ) { ?>
 				<option value="<?php echo esc_attr( $job_id ); ?>" <?php selected( $job_id, $current_job ); ?>><?php echo esc_html( get_the_title( $job_id ) ); ?></option>
 			<?php } ?>
 		</select>

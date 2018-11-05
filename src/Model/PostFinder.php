@@ -49,17 +49,44 @@ trait PostFinder {
 	 * @return CustomPostTypeEntity[]
 	 */
 	private function find_all_items() {
+		$ids   = $this->find_all_item_ids();
 		$items = [];
-		$query = new \WP_Query( [
-			'post_type'   => $this->get_post_type(),
-			'post_status' => [ 'any' ],
-		] );
-
-		foreach ( $query->posts as $post ) {
-			$items[ $post->ID ] = $this->get_model_object( $post );
+		foreach ( $ids as $id ) {
+			$items[ $id ] = $this->get_model_object( get_post( $id ) );
 		}
 
 		return $items;
+	}
+
+	/**
+	 * Find all item IDs.
+	 *
+	 * @since %VERSION%
+	 * @return array
+	 */
+	public function find_all_item_ids() {
+		/**
+		 * Filter the posts_per_page value.
+		 *
+		 * @param int    $posts_per_page The posts per page passed to WP_Query.
+		 * @param string $post_type      The current post type.
+		 */
+		$posts_per_page = intval( apply_filters( 'lpf_posts_per_page', 100, $this->get_post_type() ) );
+
+		// If -1 was passed, reset to the default.
+		if ( -1 === $posts_per_page ) {
+			$posts_per_page = 100;
+			_doing_it_wrong( __METHOD__, esc_html( "Don't use unlimited queries for {$this->get_post_type()}" ), null );
+		}
+
+		$query = new \WP_Query( [
+			'post_type'      => $this->get_post_type(),
+			'post_status'    => [ 'any' ],
+			'fields'         => 'ids',
+			'posts_per_page' => $posts_per_page,
+		] );
+
+		return $query->posts;
 	}
 
 	/**
