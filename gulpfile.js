@@ -39,6 +39,7 @@ const paths = {
 	'concat_scripts': 'assets/js/concat/*.js',
 	'scripts': [ 'assets/js/*.js', '!assets/js/*.min.js' ],
 	'sprites': 'assets/images/sprites/*.png',
+	'devscripts': 'assets/js/dev/*.js',
 	'build': [
 		'assets/css/*.css',
 		'assets/js/*.js',
@@ -427,7 +428,7 @@ gulp.task( 'build', [ 'default' ], function() {
  * Process @import statements.
  */
 gulp.task( 'import', function() {
-  return gulp.src( 'assets/js/build/*.js' )
+  return gulp.src( paths.devscripts )
         .pipe( importJS( { hideConsole: true } ) )
         .pipe( gulp.dest( 'assets/js/' ) );
 });
