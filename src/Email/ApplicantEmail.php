@@ -13,14 +13,14 @@ use Yikes\LevelPlayingField\Service;
 use Yikes\LevelPlayingField\Model\Applicant;
 
 /**
- * Class ApplicantMessageFromApplicantEmail.
+ * Class ApplicantEmail.
  *
  * @since   %VERSION%
  *
  * @package Yikes\LevelPlayingField
  * @author  Kevin Utz / Jeremy Pry
  */
-abstract class ApplicantMessageEmail extends BaseEmail {
+abstract class ApplicantEmail extends BaseEmail {
 
 	/**
 	 * The applicant object.
@@ -41,21 +41,25 @@ abstract class ApplicantMessageEmail extends BaseEmail {
 	 *
 	 * @since %VERSION%
 	 *
-	 * @param int    $applicant_id The post ID of the applicant.
-	 * @param string $comment      The content of the comment.
+	 * @param mixed  $applicant An applicant object or applicant post ID.
+	 * @param string $comment   The content of the comment.
 	 */
-	public function __construct( $applicant_id, $comment ) {
-		$this->set_applicant( $applicant_id );
+	public function __construct( $applicant, $comment = '' ) {
+		$this->set_applicant( $applicant );
 		$this->set_comment( $comment );
 	}
 
 	/**
 	 * Instantiate the Applicant object and assign it to the class,
 	 *
-	 * @param int $applicant_id The post ID of the applicant.
+	 * @param mixed $applicant An applicant object or applicant post ID.
 	 */
-	protected function set_applicant( $applicant_id ) {
-		$this->applicant = new Applicant( get_post( $applicant_id ) );
+	protected function set_applicant( $applicant ) {
+
+		if ( is_numeric( $applicant ) ) {
+			$applicant = new Applicant( get_post( $applicant ) );
+		}
+		$this->applicant = $applicant;
 	}
 
 	/**
@@ -96,4 +100,13 @@ abstract class ApplicantMessageEmail extends BaseEmail {
 	 * @return string The email's message.
 	 */
 	abstract protected function message();
+
+	/**
+	 * Get the HTML link to the applicant's messaging page.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @return string The HTML of message with the URL appended.
+	 */
+	abstract protected function get_messaging_link();
 }

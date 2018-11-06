@@ -17,6 +17,8 @@ use Yikes\LevelPlayingField\View\PostEscapedView;
 use Yikes\LevelPlayingField\View\TemplatedView;
 use Yikes\LevelPlayingField\Comment\ApplicantMessageRepository;
 use Yikes\LevelPlayingField\Messaging\ApplicantMessaging;
+use Yikes\LevelPlayingField\Model\Applicant;
+use Yikes\LevelPlayingField\Model\ApplicantRepository;
 
 /**
  * Class ApplicantMessagingTemplateController.
@@ -75,7 +77,7 @@ class ApplicantMessagingTemplateController extends TemplateController {
 		$applicant_id        = $this->get_applicant_post_id();
 		$applicant_id_exists = $applicant_id > 0;
 		$is_messaging_page   = BaseRequiredPage::get_required_page_id( ApplicantMessagingPage::PAGE_SLUG ) === get_queried_object_id();
-		$is_allowed_to_view  = ! is_user_logged_in() && $this->verify_url_hash( $applicant_id ) || is_user_logged_in() && current_user_can( 'lpf_message_applicants' );
+		$is_allowed_to_view  = $this->verify_url_hash( $applicant_id ) || is_user_logged_in() && current_user_can( 'lpf_message_applicants' );
 		return $applicant_id_exists && $is_messaging_page && $is_allowed_to_view;
 	}
 
@@ -87,7 +89,7 @@ class ApplicantMessagingTemplateController extends TemplateController {
 	 * @return int $post_id ID of the applicant object.
 	 */
 	protected function get_applicant_post_id() {
-		return isset( $_GET['post'] ) ? filter_var( $_GET['post'], FILTER_SANITIZE_NUMBER_INT ) : 0;
+		return isset( $_GET['post'] ) ? filter_var( wp_unslash( $_GET['post'] ), FILTER_SANITIZE_NUMBER_INT ) : 0;
 	}
 
 	/**
@@ -100,38 +102,33 @@ class ApplicantMessagingTemplateController extends TemplateController {
 	 * @return bool True if the URL has a valid value.
 	 */
 	protected function verify_url_hash( $applicant_id ) {
-
-		// To do: fetch the applicant object based on the $id.
-		// Retrieve the 'guid' field and verify it against the URL.
-		return true;
+		return isset( $_GET['guid'] ) && ( new Applicant( get_post( $applicant_id ) ) )->get_guid() === filter_var( wp_unslash( $_GET['guid'] ), FILTER_SANITIZE_STRING );
 	}
 
 	/**
-	 * Render the current Renderable.
+	 * Check if this is an interview cancellation request.
 	 *
 	 * @since %VERSION%
 	 *
-	 * @param array $context Context in which to render.
-	 *
-	 * @return string Rendered HTML.
+	 * @return bool True if this is a cancellation request.
 	 */
-	public function render( array $context = [] ) {
-		try {
-			$this->enqueue_assets();
-			$view = new PostEscapedView( new TemplatedView( $this->get_view_uri() ) );
-
-			return $view->render( $context );
-		} catch ( \Exception $e ) {
-			return sprintf(
-				/* translators: %s refers to the error message */
-				esc_html__( 'There was an error displaying the form: %s', 'yikes-level-playing-field' ),
-				$e->getMessage()
-			);
-		}
+	protected function is_interview_cancellation() {
+		return isset( $_GET['cancel'] ) && filter_var( wp_unslash( $_GET['cancel'] ), FILTER_SANITIZE_NUMBER_INT ) === '1';
 	}
 
 	/**
-	 * Get the data needed for this context, i.e. the $post/application ID.
+	 * Check if this is an interview confirmation request.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @return bool True if this is a confirmation request.
+	 */
+	protected function is_interview_confirmation() {
+		return isset( $_GET['confirm'] ) && filter_var( wp_unslash( $_GET['confirm'] ), FILTER_SANITIZE_NUMBER_INT ) === '1';
+	}
+
+	/**
+	 * Get the data needed for this context. In this case, the page ID.
 	 *
 	 * @since %VERSION%
 	 *
@@ -146,21 +143,14 @@ class ApplicantMessagingTemplateController extends TemplateController {
 	 *
 	 * @since %VERSION%
 	 *
-	 * @param  int $id The Job ID.
+	 * @param  int $id The Page ID.
 	 *
 	 * @return array Context to pass onto view.
-	 * @throws InvalidPostID When the post ID cannot be found as an Application.
 	 */
 	protected function get_context( $id ) {
-
-		// Fetch all comments.
-		$post_id    = $this->get_applicant_post_id();
-		$repository = new ApplicantMessageRepository();
-		$comments   = $repository->find_all( $post_id );
-
-		return [
-			'post'     => get_post( $post_id ),
-			'comments' => $comments,
-		];
+		$context               = ApplicantMessaging::get_context_data( $this->get_applicant_post_id(), false );
+		$context['is_cancel']  = $this->is_interview_cancellation();
+		$context['is_confirm'] = $this->is_interview_confirmation();
+		return $context;
 	}
 }

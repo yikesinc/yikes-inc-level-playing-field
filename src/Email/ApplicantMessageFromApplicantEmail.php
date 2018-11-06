@@ -11,7 +11,6 @@ namespace Yikes\LevelPlayingField\Email;
 
 use Yikes\LevelPlayingField\Service;
 use Yikes\LevelPlayingField\Applicant;
-use Yikes\LevelPlayingField\Options\OptionsManager;
 
 /**
  * Class ApplicantMessageFromApplicantEmail.
@@ -21,22 +20,7 @@ use Yikes\LevelPlayingField\Options\OptionsManager;
  * @package Yikes\LevelPlayingField
  * @author  Kevin Utz / Jeremy Pry
  */
-class ApplicantMessageFromApplicantEmail extends ApplicantMessageEmail {
-
-	const EMAIL_TYPE = 'message-from-applicant';
-
-	/**
-	 * Get the recipient's email address.
-	 *
-	 * @since %VERSION%
-	 *
-	 * @return mixed An array or comma-separated list of email addresses.
-	 */
-	protected function recipient() {
-
-		// Fetch the email of the job manager(s).
-		return ( new OptionsManager() )->fetch_from_applicant_email_recipients();
-	}
+class ApplicantMessageFromApplicantEmail extends FromApplicantEmail {
 
 	/**
 	 * Get the email subject.
@@ -60,6 +44,7 @@ class ApplicantMessageFromApplicantEmail extends ApplicantMessageEmail {
 		$message  = $this->subject();
 		$message .= '<br>';
 		$message .= $this->comment;
+		$message .= $this->get_messaging_link();
 		return $message;
 	}
 }

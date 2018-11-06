@@ -14,15 +14,21 @@ namespace Yikes\LevelPlayingField;
 use Yikes\LevelPlayingField\Comment\ApplicantMessage;
 
 $comments = $this->comments;
-
 ?>
+
 <div class="messaging-container">
+	<?php
+	if ( false === $this->is_metabox ) {
+		echo $this->render_partial( $this->partials['interview_confirmation'] );
+	}
+	?>
+
 	<div class="conversation-container">
 	<?php
 
 	if ( empty( $comments ) ) {
 		?>
-		<strong>Start the conversation.</strong>
+		<strong><?php esc_html_e( 'Start the conversation.', 'yikes-level-playing-field' ); ?></strong>
 		<?php
 	} else {
 
@@ -64,5 +70,9 @@ $comments = $this->comments;
 	<div class="send-new-applicant-message-container">
 		<button type="button" id="send-new-applicant-message" class="button button-primary">Send</button>
 	</div>
-	<?php do_action( 'lpf_messaging_after_send' ); ?>
+	<?php
+	if ( true === $this->is_metabox ) {
+		echo $this->render_partial( $this->partials['interview_scheduler'] );
+	}
+	?>
 </div>

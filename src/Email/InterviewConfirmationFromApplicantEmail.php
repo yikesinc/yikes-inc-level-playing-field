@@ -10,16 +10,17 @@
 namespace Yikes\LevelPlayingField\Email;
 
 use Yikes\LevelPlayingField\Service;
+use Yikes\LevelPlayingField\Applicant;
 
 /**
- * Class InterviewConfirmationToApplicantEmail.
+ * Class InterviewConfirmationFromApplicantEmail.
  *
  * @since   %VERSION%
  *
  * @package Yikes\LevelPlayingField
  * @author  Kevin Utz / Jeremy Pry
  */
-class InterviewConfirmationToApplicantEmail extends ToApplicantEmail {
+class InterviewConfirmationFromApplicantEmail extends FromApplicantEmail {
 
 	const EMAIL_TYPE = 'interview-confirmation';
 
@@ -31,7 +32,7 @@ class InterviewConfirmationToApplicantEmail extends ToApplicantEmail {
 	 * @return string The subject of the email.
 	 */
 	protected function subject() {
-		return __( 'You have confirmed your interview.', 'yikes-level-playing-field' );
+		return __( 'An applicant has confirmed their interview request.', 'yikes-level-playing-field' );
 	}
 
 	/**
@@ -44,8 +45,7 @@ class InterviewConfirmationToApplicantEmail extends ToApplicantEmail {
 	protected function message() {
 		$message  = $this->subject();
 		$message .= '<br>';
-		$message .= __( 'Maybe show the interview details again...', 'yikes-level-playing-field' );
-		$message .= __( 'Maybe some further confirmation that your personal information is now unanonymized.', 'yikes-level-playing-field' );
+		$message .=  __( 'Maybe some further notification that the applicant\'s personal information is now unanonymized.', 'yikes-level-playing-field' );
 		$message .= $this->get_messaging_link();
 		return $message;
 	}

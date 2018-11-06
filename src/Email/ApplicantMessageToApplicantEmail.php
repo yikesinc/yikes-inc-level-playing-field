@@ -19,20 +19,7 @@ use Yikes\LevelPlayingField\Service;
  * @package Yikes\LevelPlayingField
  * @author  Kevin Utz / Jeremy Pry
  */
-class ApplicantMessageToApplicantEmail extends ApplicantMessageEmail {
-
-	const EMAIL_TYPE = 'message-to-applicant';
-
-	/**
-	 * Get the recipient's email address.
-	 *
-	 * @since %VERSION%
-	 *
-	 * @return mixed An array or comma-separated list of email addresses.
-	 */
-	protected function recipient() {
-		return $this->applicant->get_email();
-	}
+class ApplicantMessageToApplicantEmail extends ToApplicantEmail {
 
 	/**
 	 * Get the email subject.
@@ -56,6 +43,7 @@ class ApplicantMessageToApplicantEmail extends ApplicantMessageEmail {
 		$message  = $this->subject();
 		$message .= '<br>';
 		$message .= $this->comment;
+		$message .= $this->get_messaging_link();
 		return $message;
 	}
 }
