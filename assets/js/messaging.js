@@ -49,17 +49,19 @@ jQuery( function ( $ ) {
 		if ( $( '#interview-scheduler' ).length > 0 ) {
 
 			$( '#interview-scheduler' ).click( function() { 
-				$( '#interview-scheduler-fields-container, #send-interview-confirmation-button-container' ).toggleClass( 'hidden' ); 
+				const dashicon = $( this ).children( '.dashicons' );
+				dashicon.hasClass( 'dashicons-arrow-down' ) ? dashicon.removeClass( 'dashicons-arrow-down' ).addClass( 'dashicons-arrow-up' ) : dashicon.removeClass( 'dashicons-arrow-up' ).addClass( 'dashicons-arrow-down' );
+				$( '#interview-scheduler-fields-container, #send-interview-request-button-container' ).toggleClass( 'hidden' ); 
+				$( '.new-applicant-message-container' ).toggleClass( 'cursor-disabled' ); 
+				$( '#new-applicant-message' ).toggleClass( 'disabled-for-interview' ); 
 			});
-			$( '.lpf-datepicker' ).datepicker({
-
-			});
+			$( '.lpf-datepicker' ).datepicker({});
 			$( '.lpf-timepicker' ).timepicker({
 				minTime: '5:00am',
 				maxTime: '11:00pm',
 				step: 15,
 			});
-			$( '#send-interview-confirmation' ).click( function() {
+			$( '#send-interview-request' ).click( function() {
 				const date     = get_interview_date();
 				const time     = get_interview_time();
 				const location = get_interview_location();
@@ -70,12 +72,12 @@ jQuery( function ( $ ) {
 					return;
 				}
 
-				send_interview_confirmation( date, time, location, message );
+				send_interview_request( date, time, location, message );
 			});
 		}
 	});
 
-	function send_interview_confirmation( date, time, location, message ) {
+	function send_interview_request( date, time, location, message ) {
 		const data = {
 			nonce   : messaging_data.ajax.interview_nonce,
 			date    : date,
@@ -83,10 +85,10 @@ jQuery( function ( $ ) {
 			location: location,
 			message : message,
 			post_id : post_id,
-			action  : 'send_interview_confirmation'
-		}
+			action  : 'send_interview_request'
+		};
 
-		$.post( messaging_data.ajax.url, data, function( response ){ send_interview_confirmation_response( response ); } );
+		$.post( messaging_data.ajax.url, data, function( response ){ send_interview_request_response( response ); } );
 	}
 
 	function validate_interview_data( date, time, location, message ) {
@@ -98,8 +100,15 @@ jQuery( function ( $ ) {
 		return true;
 	}
 
-	function send_interview_confirmation_response( response ) {
+	function send_interview_request_response( response ) {
+		// Clear the interview fields.
+		set_interview_date( '' );
+		set_interview_time( '' );
+		set_interview_location( '' );
+		set_interview_message( '' );
 
+		// Show the new message on the message board.
+		refresh_message_board( response.data.post_id );
 	}
 
 	function validate_message_data( message_value ) {
@@ -117,7 +126,7 @@ jQuery( function ( $ ) {
 			message: message_value,
 			post_id: post_id,
 			action : 'send_message'
-		}
+		};
 
 		$.post( messaging_data.ajax.url, data, function( response ){ send_message_response( response ); } );
 	}
@@ -133,10 +142,11 @@ jQuery( function ( $ ) {
 
 	function refresh_message_board( post_id ) {
 		const data = {
-			nonce  : messaging_data.ajax.refresh_nonce,
-			post_id: post_id,
-			action : 'refresh_conversation'
-		}
+			nonce     : messaging_data.ajax.refresh_nonce,
+			post_id   : post_id,
+			action    : 'refresh_conversation',
+			is_metabox: messaging_data.is_metabox
+		};
 
 		$.post( messaging_data.ajax.url, data, function( response ){ refresh_message_board_response( response ); } );
 	}
