@@ -12,7 +12,6 @@ namespace Yikes\LevelPlayingField\Widget\Dashboard;
 use Yikes\LevelPlayingField\Assets\AssetsAware;
 use Yikes\LevelPlayingField\Assets\AssetsAwareness;
 use Yikes\LevelPlayingField\Assets\StyleAsset;
-use Yikes\LevelPlayingField\Assets\ScriptAsset;
 use Yikes\LevelPlayingField\Model\JobRepository;
 use Yikes\LevelPlayingField\Model\ApplicantRepository;
 use Yikes\LevelPlayingField\Model\ApplicantMeta;
@@ -35,13 +34,6 @@ class Status extends BaseWidget implements AssetsAware {
 	// Define the CSS file.
 	const CSS_HANDLE = 'lpf-dashboard-widget-css';
 	const CSS_URI    = 'assets/css/lpf-dashboard-widget';
-
-	// Define the JavaScript file.
-	const JS_HANDLE       = 'lpf-dashboard-widget-script';
-	const JS_URI          = 'assets/js/dashboard-widget';
-	const JS_DEPENDENCIES = [ 'jquery' ];
-	const JS_VERSION      = false;
-
 
 	/**
 	 * Register the WordPress hooks.
@@ -124,7 +116,6 @@ class Status extends BaseWidget implements AssetsAware {
 
 		return [
 			new StyleAsset( self::CSS_HANDLE, self::CSS_URI ),
-			new ScriptAsset( self::JS_HANDLE, self::JS_URI, self::JS_DEPENDENCIES, self::JS_VERSION, ScriptAsset::ENQUEUE_FOOTER ),
 		];
 	}
 }

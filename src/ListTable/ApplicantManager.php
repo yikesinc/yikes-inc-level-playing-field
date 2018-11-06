@@ -175,7 +175,7 @@ final class ApplicantManager extends BasePostType implements AssetsAware {
 			case 'viewed':
 				$viewed = $applicants[ $post_id ]->viewed_by() === 0
 					? __( 'No one', 'yikes-level-playing-field' ) :
-					get_user_meta( $applicants[ $post_id ]->viewed_by() )['nickname'][0];
+					get_user_meta( $applicants[ $post_id ]->viewed_by(), 'nickname', true );
 				echo esc_html( $viewed );
 				break;
 
@@ -250,9 +250,7 @@ final class ApplicantManager extends BasePostType implements AssetsAware {
 	 */
 	private function viewed_dropdown_filter() {
 		global $wpdb;
-		// Get meta key.
 		$meta_key = ApplicantMeta::META_PREFIXES[ ApplicantMeta::VIEWED ];
-		// Get current selected view.
 		$current_viewed = isset( $_GET[ ApplicantMeta::VIEWED ] ) ? $_GET[ ApplicantMeta::VIEWED ] : 'all';
 		// Query for all unique views.
 		$result = $wpdb->get_col(
@@ -268,7 +266,7 @@ final class ApplicantManager extends BasePostType implements AssetsAware {
 			<option value="all" <?php selected( 'all', $current_viewed ); ?>><?php esc_html_e( 'All Viewed', 'yikes-level-playing-field' ); ?></option>
 			<option value="none" <?php selected( 'none', $current_viewed ); ?>><?php esc_html_e( 'No One Viewed', 'yikes-level-playing-field' ); ?></option>
 			<?php foreach ( $result as $user_id ) { ?>
-				<option value="<?php echo esc_attr( $user_id ); ?>" <?php selected( $user_id, $current_viewed ); ?>><?php echo esc_html( get_user_meta( $user_id )['nickname'][0] ); ?></option>
+				<option value="<?php echo esc_attr( $user_id ); ?>" <?php selected( $user_id, $current_viewed ); ?>><?php echo esc_html( get_user_meta( $user_id, 'nickname', true ) ); ?></option>
 			<?php } ?>
 		</select>
 		<?php
@@ -299,11 +297,18 @@ final class ApplicantManager extends BasePostType implements AssetsAware {
 	 * @since %VERSION%
 	 */
 	public function custom_query_vars() {
-		// Get the post type.
-		$post_type = isset( $_GET['post_type'] ) ? $_GET['post_type'] : '';
+		/**
+		 * This is hooked to the parse_query action, which is triggered for all queries, including the frontend.
+		 * The get_current_screen() function is only available in the admin area.
+		 * Check if function exists before execution.
+		*/
+		if ( ! function_exists( 'get_current_screen' ) ) {
+			return;
+		}
 		$screen = get_current_screen();
 
-		if ( 'edit' !== $screen->base || 'applicants' !== $screen->post_type ) {
+		// Check if current page is edit page for post type applicant.
+		if ( "edit-{$this->get_post_type()}" !== $screen->id ) {
 			return;
 		}
 
