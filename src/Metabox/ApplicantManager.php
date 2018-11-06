@@ -251,16 +251,16 @@ final class ApplicantManager implements AssetsAware, Service {
 			</section>
 			<section id="interview">
 				<h2>Interview Details</h2>
-				<?php if ( $applicant->get_interview_scheduled() ) { ?>
+				<?php if ( $applicant->get_interview_status() === 'scheduled' || $applicant->get_interview_status() === 'confirmed' ) { ?>
 					<?php // @todo: fetch interview data with $applicant->get_interview(). ?>
 					<?php $interview = maybe_unserialize( $applicant->__get( 'interview' ) ); ?>
-					<p><span class="label">Date:</span>
+					<p><span class="label"><?php esc_html_e( 'Date:', 'yikes-level-playing-field' ); ?></span>
 					<?php echo esc_html( $interview['date'] ); ?></p>
-					<p><span class="label">Time:</span>
+					<p><span class="label"><?php esc_html_e( 'Time:', 'yikes-level-playing-field' ); ?></span>
 						<?php echo esc_html( $interview['time'] ); ?></p>
-					<p><span class="label">Location:</span>
+					<p><span class="label"><?php esc_html_e( 'Location:', 'yikes-level-playing-field' ); ?></span>
 						<?php echo esc_html( $interview['location'] ); ?></p>
-					<p><span class="label">Message:</span>
+					<p><span class="label"><?php esc_html_e( 'Message:', 'yikes-level-playing-field' ); ?></span>
 						<?php echo esc_html( $interview['message'] ); ?></p>
 				<?php } else { ?>
 					<p><span class="label">An interview has not been scheduled yet.</span>	
