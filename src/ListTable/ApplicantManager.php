@@ -145,6 +145,15 @@ final class ApplicantManager extends BasePostType implements AssetsAware {
 
 		switch ( $column_name ) {
 			case 'id':
+				if ( current_user_can( Capabilities::EDIT_APPLICANT, $post_id ) ) {
+					printf(
+						'<a href="%1$s" aria-label="%2$s">%3$s</a>',
+						esc_url( get_edit_post_link( $post_id ) ),
+						esc_attr( sprintf( __( 'Edit Applicant &#8220;%s&#8221;', 'yikes-level-playing-field' ), $post_id ) ),
+						esc_html( $post_id )
+					);
+					break;
+				}
 				echo esc_html( $post_id );
 				break;
 
