@@ -62,7 +62,7 @@ trait PostFinder {
 	 * Find all item IDs.
 	 *
 	 * @since %VERSION%
-	 * @return array
+	 * @return int[] Array of post IDs.
 	 */
 	public function find_all_item_ids() {
 		/**
