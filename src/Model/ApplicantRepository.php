@@ -108,13 +108,15 @@ class ApplicantRepository extends CustomPostTypeRepository {
 	 */
 	public function get_viewed_applicant_count_for_job( $job_id ) {
 		$args = $this->get_default_query_vars();
+
 		// Specifics for this query.
 		$args['posts_per_page'] = 1;
 		$args['fields']         = 'ids';
 		$args['meta_query'][]   = $this->get_job_meta_query( $job_id );
 		$args['meta_query'][]   = $this->get_viewed_applicant_meta_query();
-		// Create new query obj.
+
 		$query = new WP_Query( $args );
+
 		return absint( $query->found_posts );
 	}
 
@@ -128,26 +130,19 @@ class ApplicantRepository extends CustomPostTypeRepository {
 	 * @return int The count of new applicants for the Job.
 	 */
 	public function get_new_applicant_count_for_job( $job_id ) {
-		$args  = [
-			'post_type'              => $this->get_post_type(),
-			'post_status'            => [ 'any' ],
-			'posts_per_page'         => 1,
-			'update_post_meta_cache' => false,
-			'update_post_term_cache' => false,
-			'fields'                 => 'ids',
-			'meta_query'             => [
-				'relation' => 'AND',
-				[
-					'key'     => ApplicantMeta::META_PREFIXES['viewed'],
-					'compare' => 'NOT EXISTS',
-				],
-				[
-					'key'   => MetaLinks::JOB,
-					'value' => $job_id,
-				],
-			],
+		$args = $this->get_default_query_vars();
+
+		// Specifics for this query.
+		$args['posts_per_page'] = 1;
+		$args['fields']         = 'ids';
+		$args['meta_query'][]   = $this->get_job_meta_query( $job_id );
+		$args['meta_query'][]   = [
+			'key'     => ApplicantMeta::META_PREFIXES['viewed'],
+			'compare' => 'NOT EXISTS',
 		];
+
 		$query = new WP_Query( $args );
+
 		return absint( $query->found_posts );
 	}
 
@@ -164,10 +159,12 @@ class ApplicantRepository extends CustomPostTypeRepository {
 		$args                 = $this->get_default_query_vars();
 		$args['meta_query'][] = $this->get_job_meta_query( $job_id );
 		$query                = new WP_Query( $args );
-		$applicants           = [];
+
+		$applicants = [];
 		foreach ( $query->posts as $post ) {
 			$applicants[ $post->ID ] = $this->get_model_object( $post );
 		}
+
 		return $applicants;
 	}
 
