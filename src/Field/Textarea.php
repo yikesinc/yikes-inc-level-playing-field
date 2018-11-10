@@ -30,9 +30,10 @@ class Textarea extends BaseField {
 				<textarea name="<?php echo esc_attr( $this->id ); ?>"
 						  id="<?php echo esc_attr( $this->id ); ?>"
 						  class="<?php esc_attr( join( ' ', $classes ) ); ?>"
+						  rows="10"
 					<?php $this->render_required(); ?>
 					<?php $this->render_data_attributes(); ?>
-				></textarea>
+				><?php echo esc_textarea( $this->value ); ?></textarea>
 			</label>
 		</div>
 		<?php
