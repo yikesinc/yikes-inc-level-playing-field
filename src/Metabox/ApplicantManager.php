@@ -103,67 +103,8 @@ final class ApplicantManager implements AssetsAware, Service {
 	 * @since %VERSION%
 	 */
 	private function do_applicant_content() {
+		// Trigger loading of applicant and job data.
 		$applicant = new Applicant( get_post() );
-		// Trigger loading of applicant data.
-		$applicant->get_schooling();
-		$applicant->get_status();
-
-		// Placeholder data. Change as you please for your local instance.
-		$applicant->nickname       = 'Jane Doe';
-		$applicant->job            = 13;
-		$applicant->cover_letter   = '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque at sollicitudin orci, faucibus euismod elit. Praesent luctus ultrices velit eu accumsan. Sed eu ullamcorper turpis. Suspendisse bibendum metus ac ultricies maximus. Proin ac dapibus dui, quis placerat ex. Proin iaculis eget magna vel pulvinar. Ut vulputate et tellus at vulputate. Nam mattis, turpis vitae fringilla efficitur, augue erat sodales augue, quis mollis enim ipsum ut arcu. Pellentesque in augue in diam placerat eleifend. Morbi iaculis eleifend velit vel maximus.</p>';
-		$applicant->schooling      = [
-			[
-				'degree' => 'Diploma',
-				'type'   => 'High School',
-				'major'  => 'n/a',
-			],
-			[
-				'degree' => 'B.S.',
-				'type'   => 'College',
-				'major'  => 'Accounting',
-			],
-		];
-		$applicant->certifications = [
-			[
-				'certification' => 'Something One',
-				'type'          => 'High School',
-				'status'        => 'Active',
-			],
-			[
-				'certification' => 'Something Two',
-				'type'          => 'College',
-				'status'        => 'Inactive',
-			],
-		];
-		$applicant->skills = [
-			[
-				'skill'       => 'Skill 1',
-				'proficiency' => 'Proficiency 1',
-			],
-			[
-				'skill'       => 'Skill 2',
-				'proficiency' => 'Proficiency 2',
-			],
-			[
-				'skill'       => 'Skill 3',
-				'proficiency' => 'Proficiency 3',
-			],
-		];
-		$applicant->experience     = [
-			[
-				'position' => 'Regional Manager',
-				'industry' => 'Hospitality',
-				'dates'    => '3',
-			],
-			[
-				'position' => 'Assistant (to the) Regional Manager',
-				'industry' => 'Construction',
-				'dates'    => '1',
-			],
-		];
-
-		// Get job data.
 		$job_repo = new JobRepository();
 		$job      = $job_repo->find( $applicant->get_job_id() );
 		?>
@@ -211,7 +152,7 @@ final class ApplicantManager implements AssetsAware, Service {
 					<?php
 					foreach ( $applicant->get_schooling() as $schooling ) {
 						printf(
-							'<li>Graduated with a [%s] from [%s] with a major in [%s]</li>',
+							'<li>Graduated with a %s from %s with a major in %s</li>',
 							esc_html( $schooling['degree'] ),
 							esc_html( $schooling['type'] ),
 							esc_html( $schooling['major'] )
@@ -224,7 +165,7 @@ final class ApplicantManager implements AssetsAware, Service {
 					<?php
 					foreach ( $applicant->get_certifications() as $certification ) {
 						printf(
-							'<li>Certified in [%s] from [%s]. Status: [%s]</li>',
+							'<li>Certified in %s from %s. Status: %s</li>',
 							esc_html( $certification['certification'] ),
 							esc_html( $certification['type'] ),
 							esc_html( $certification['status'] )
@@ -236,27 +177,21 @@ final class ApplicantManager implements AssetsAware, Service {
 			<section id="skills">
 				<h2><?php esc_html_e( 'Skills', 'yikes-level-playing-field' ); ?></h2>
 				<table>
-					<tr>
-						<th>Skill</th>
-						<th>Proficiency</th>
-					</tr>
-					<tr>
-						<td>[ skill ]</td>
-						<td>[ proficiency ]</td>
-					</tr>
-					<tr>
-						<td>[ skill ]</td>
-						<td>[ proficiency ]</td>
-					</tr>
-					<tr>
-						<td>[ skill ]</td>
-						<td>[ proficiency ]</td>
-					</tr>
+					<?php
+					foreach ( $applicant->get_skills() as $skill ) {
+						?>
+						<tr>
+							<td><?php echo esc_html( $skill['skill'] ); ?></td>
+							<td><?php echo esc_html( $skill['proficiency'] ); ?></td>
+						</tr>
+						<?php
+					}
+					?>
 				</table>
 			</section>
 			<section id="languages">
 				<h2><?php esc_html_e( 'Languages', 'yikes-level-playing-field' ); ?></h2>
-				<h5><?php esc_html_e( 'Multingual', 'yikes-level-playing-field' ); ?></h5>
+				<h5><?php esc_html_e( 'Multilingual', 'yikes-level-playing-field' ); ?></h5>
 				<ol>
 					<li>[ fluency ] x languages</li>
 					<li>Fluent in 2 languages</li>
@@ -269,7 +204,7 @@ final class ApplicantManager implements AssetsAware, Service {
 					<?php
 					foreach ( $applicant->get_job_experience() as $experience ) {
 						printf(
-							'<li>[ %s ] in [ %s ] for x years</li>',
+							'<li>%s in %s for x years</li>',
 							esc_html( $experience['position'] ),
 							esc_html( $experience['industry'] ),
 							esc_html( $experience['dates'] )
@@ -281,24 +216,21 @@ final class ApplicantManager implements AssetsAware, Service {
 			<section id="volunteer-work">
 				<h2><?php esc_html_e( 'Volunteer Work', 'yikes-level-playing-field' ); ?></h2>
 				<ol>
-					<li>[ position ] in [ organization type ] for x years</li>
-					<li>[ position ] in [ organization type ] for x years</li>
+					<?php
+					foreach ( $applicant->get_volunteer_work() as $experience ) {
+						printf(
+							'<li>%s in %s for x years</li>',
+							esc_html( $experience['organization'] ),
+							esc_html( $experience['position'] )
+						);
+					}
+					?>
 				</ol>
 			</section>
 			<?php
 			// @todo: Misc is a pro feature. Might need to add check.
 			?>
-			<section id="misc">
-				<h2>Miscellaneous</h2>
-				<p><span class="label">Question:</span>
-					Lorem ipsum dolor sit amet, consectetur adipiscing elit?</p>
-				<p><span class="label">Answer:</span>
-					Vivamus nec ex volutpat, porta libero ut, malesuada lectus.</p>
-				<p><span class="label">Question:</span>
-					Lorem ipsum dolor sit amet, consectetur adipiscing elit?</p>
-				<p><span class="label">Answer:</span>
-					Vivamus nec ex volutpat, porta libero ut, malesuada lectus.</p>
-			</section>
+			<section id="misc"></section>
 		</article>
 		<?php
 	}
