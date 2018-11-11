@@ -149,7 +149,7 @@ final class ApplicantManager implements AssetsAware, Service {
 					<?php
 					foreach ( $applicant->get_schooling() as $schooling ) {
 						printf(
-							'<li>Graduated with a [%s] from [%s] with a major in [%s]</li>',
+							'<li>Graduated with a %s from %s with a major in %s</li>',
 							esc_html( $schooling['degree'] ),
 							esc_html( $schooling['type'] ),
 							esc_html( $schooling['major'] )
@@ -162,7 +162,7 @@ final class ApplicantManager implements AssetsAware, Service {
 					<?php
 					foreach ( $applicant->get_certifications() as $certification ) {
 						printf(
-							'<li>Certified in [%s] from [%s]. Status: [%s]</li>',
+							'<li>Certified in %s from %s. Status: %s</li>',
 							esc_html( $certification['institution'] ),
 							esc_html( $certification['type'] ),
 							esc_html( $certification['status'] )
@@ -174,27 +174,21 @@ final class ApplicantManager implements AssetsAware, Service {
 			<section id="skills">
 				<h2><?php esc_html_e( 'Skills', 'yikes-level-playing-field' ); ?></h2>
 				<table>
-					<tr>
-						<th>Skill</th>
-						<th>Proficiency</th>
-					</tr>
-					<tr>
-						<td>[ skill ]</td>
-						<td>[ proficiency ]</td>
-					</tr>
-					<tr>
-						<td>[ skill ]</td>
-						<td>[ proficiency ]</td>
-					</tr>
-					<tr>
-						<td>[ skill ]</td>
-						<td>[ proficiency ]</td>
-					</tr>
+					<?php
+					foreach ( $applicant->get_skills() as $skill ) {
+						?>
+						<tr>
+							<td><?php echo esc_html( $skill['skill'] ); ?></td>
+							<td><?php echo esc_html( $skill['proficiency'] ); ?></td>
+						</tr>
+						<?php
+					}
+					?>
 				</table>
 			</section>
 			<section id="languages">
 				<h2><?php esc_html_e( 'Languages', 'yikes-level-playing-field' ); ?></h2>
-				<h5><?php esc_html_e( 'Multingual', 'yikes-level-playing-field' ); ?></h5>
+				<h5><?php esc_html_e( 'Multilingual', 'yikes-level-playing-field' ); ?></h5>
 				<ol>
 					<li>[ fluency ] x languages</li>
 					<li>Fluent in 2 languages</li>
@@ -207,7 +201,7 @@ final class ApplicantManager implements AssetsAware, Service {
 					<?php
 					foreach ( $applicant->get_job_experience() as $experience ) {
 						printf(
-							'<li>[ %s ] in [ %s ] for x years</li>',
+							'<li>%s in %s for x years</li>',
 							esc_html( $experience['position'] ),
 							esc_html( $experience['industry'] ),
 							esc_html( $experience['dates'] )
@@ -219,24 +213,21 @@ final class ApplicantManager implements AssetsAware, Service {
 			<section id="volunteer-work">
 				<h2><?php esc_html_e( 'Volunteer Work', 'yikes-level-playing-field' ); ?></h2>
 				<ol>
-					<li>[ position ] in [ organization type ] for x years</li>
-					<li>[ position ] in [ organization type ] for x years</li>
+					<?php
+					foreach ( $applicant->get_volunteer_work() as $experience ) {
+						printf(
+							'<li>%s in %s for x years</li>',
+							esc_html( $experience['organization'] ),
+							esc_html( $experience['position'] )
+						);
+					}
+					?>
 				</ol>
 			</section>
 			<?php
 			// @todo: Misc is a pro feature. Might need to add check.
 			?>
-			<section id="misc">
-				<h2>Miscellaneous</h2>
-				<p><span class="label">Question:</span>
-					Lorem ipsum dolor sit amet, consectetur adipiscing elit?</p>
-				<p><span class="label">Answer:</span>
-					Vivamus nec ex volutpat, porta libero ut, malesuada lectus.</p>
-				<p><span class="label">Question:</span>
-					Lorem ipsum dolor sit amet, consectetur adipiscing elit?</p>
-				<p><span class="label">Answer:</span>
-					Vivamus nec ex volutpat, porta libero ut, malesuada lectus.</p>
-			</section>
+			<section id="misc"></section>
 		</article>
 		<?php
 	}
