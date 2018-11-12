@@ -326,7 +326,7 @@ abstract class BaseField implements Field {
 	 */
 	public function get_sanitized_value() {
 		$filtered = $this->sanitize_value( $this->raw_value );
-		if ( false === $filtered || empty( $filtered ) ) {
+		if ( false === $filtered || ( empty( $filtered ) && $this->required ) ) {
 			throw InvalidField::value_invalid( $this->label );
 		}
 
