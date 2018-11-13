@@ -99,6 +99,7 @@ final class Application extends BaseShortcode {
 			'application'      => $application,
 			'application_form' => $form,
 			'form_classes'     => $form_classes,
+			'job_id'           => $job->get_id(),
 			'submitted'        => $this->is_submitted,
 		];
 	}
