@@ -604,7 +604,7 @@ final class Applicant extends CustomPostTypeEntity {
 
 			$prefixed_key = ApplicantMeta::META_PREFIXES[ $key ];
 			if ( array_key_exists( $prefixed_key, $meta ) ) {
-				$this->$key = $meta[ $prefixed_key ][0];
+				$this->$key = maybe_unserialize( $meta[ $prefixed_key ][0] );
 			} else {
 				$this->$key = $default;
 				$this->changed_property( $key );
