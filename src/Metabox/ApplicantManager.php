@@ -15,7 +15,7 @@ use Yikes\LevelPlayingField\Assets\AssetsAwareness;
 use Yikes\LevelPlayingField\Assets\ScriptAsset;
 use Yikes\LevelPlayingField\Assets\StyleAsset;
 use Yikes\LevelPlayingField\CustomPostType\ApplicantManager as ApplicantCPT;
-use Yikes\LevelPlayingField\Model\Applicant;
+use Yikes\LevelPlayingField\Model\ApplicantRepository;
 use Yikes\LevelPlayingField\Model\JobRepository;
 use Yikes\LevelPlayingField\Service;
 use Yikes\LevelPlayingField\Taxonomy\ApplicantStatus;
@@ -77,56 +77,10 @@ final class ApplicantManager implements AssetsAware, Service {
 	 * @since %VERSION%
 	 */
 	private function do_applicant_content() {
-		$applicant = new Applicant( get_post() );
+		$applicant = ( new ApplicantRepository() )->find( get_the_ID() );
+		$job       = ( new JobRepository() )->find( $applicant->get_job_id() );
 
-		// Trigger loading of applicant data.
-		$applicant->get_schooling();
-		$applicant->get_status();
-
-		// Placeholder data.
-		$applicant->nickname       = 'Jane Doe';
-		$applicant->schooling      = [
-			[
-				'degree' => 'Diploma',
-				'type'   => 'High School',
-				'major'  => 'n/a',
-			],
-			[
-				'degree' => 'B.S.',
-				'type'   => 'College',
-				'major'  => 'Accounting',
-			],
-		];
-		$applicant->certifications = [
-			[
-				'certification' => 'Something One',
-				'type'          => 'High School',
-				'status'        => 'Active',
-			],
-			[
-				'certification' => 'Something Two',
-				'type'          => 'College',
-				'status'        => 'Inactive',
-			],
-		];
-		$applicant->experience     = [
-			[
-				'position' => 'Regional Manager',
-				'industry' => 'Hospitality',
-				'dates'    => '3',
-			],
-			[
-				'position' => 'Assistant (to the) Regional Manager',
-				'industry' => 'Construction',
-				'dates'    => '1',
-			],
-		];
-
-		// Get job data.
-		$job_repo = new JobRepository();
-		$job      = $job_repo->find( $applicant->get_job_id() );
 		?>
-
 		<article id="single-applicant-view">
 			<section id="header">
 				<?php echo $applicant->get_avatar_img( 160 ); // XSS ok. ?>
@@ -178,7 +132,7 @@ final class ApplicantManager implements AssetsAware, Service {
 					foreach ( $applicant->get_certifications() as $certification ) {
 						printf(
 							'<li>Certified in [%s] from [%s]. Status: [%s]</li>',
-							esc_html( $certification['certification'] ),
+							esc_html( $certification['institution'] ),
 							esc_html( $certification['type'] ),
 							esc_html( $certification['status'] )
 						);
