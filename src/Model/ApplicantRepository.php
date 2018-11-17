@@ -13,6 +13,7 @@ use InvalidArgumentException;
 use stdClass;
 use WP_Post;
 use WP_Query;
+use Yikes\LevelPlayingField\Anonymizer\AnonymizerFactory;
 use Yikes\LevelPlayingField\CustomPostType\ApplicantManager as ApplicantCPT;
 use Yikes\LevelPlayingField\Exception\InvalidPostID;
 use Yikes\LevelPlayingField\Form\Application;
@@ -213,6 +214,9 @@ class ApplicantRepository extends CustomPostTypeRepository {
 
 			$applicant->{$method}( $field->get_sanitized_value() );
 		}
+
+		// Anonymize!
+		$applicant->anonymize( AnonymizerFactory::get_anonymizer() );
 
 		// Set the nickname after the post object has been saved.
 		$applicant->set_nickname( sprintf(

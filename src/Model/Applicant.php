@@ -10,12 +10,14 @@
 namespace Yikes\LevelPlayingField\Model;
 
 use WP_Term;
+use Yikes\LevelPlayingField\Anonymizer\AnonymizerInterface;
 use Yikes\LevelPlayingField\Exception\EmptyArray;
 use Yikes\LevelPlayingField\Exception\InvalidKey;
 use Yikes\LevelPlayingField\Field\Certifications;
 use Yikes\LevelPlayingField\Field\Experience;
 use Yikes\LevelPlayingField\Field\Schooling;
 use Yikes\LevelPlayingField\Field\Volunteer;
+use Yikes\LevelPlayingField\Roles\Capabilities;
 use Yikes\LevelPlayingField\Taxonomy\ApplicantStatus;
 
 /**
@@ -544,6 +546,23 @@ final class Applicant extends CustomPostTypeEntity {
 
 			unset( $this->changes[ $key ] );
 		}
+	}
+
+	public function anonymize( AnonymizerInterface $anonymizer ) {
+
+	}
+
+	public function unanonymize( AnonymizerInterface $anonymizer ) {
+		if ( ! current_user_can( Capabilities::UNANONYMIZE ) ) {
+
+		}
+	}
+
+
+	private function get_anonymous_properties() {
+		return [
+
+		];
 	}
 
 	/**
