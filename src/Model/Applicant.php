@@ -69,13 +69,13 @@ final class Applicant extends CustomPostTypeEntity {
 			// todo: start and end dates.
 			ApplicantMeta::ORGANIZATION => FILTER_SANITIZE_STRING,
 			ApplicantMeta::INDUSTRY     => FILTER_SANITIZE_STRING,
-			ApplicantMeta::POSITION     => FILTER_SANITIZE_NUMBER_INT,
+			ApplicantMeta::POSITION     => FILTER_SANITIZE_STRING,
 		],
 		ApplicantMeta::VOLUNTEER      => [
 			// todo: start and end dates.
 			ApplicantMeta::ORGANIZATION => FILTER_SANITIZE_STRING,
 			ApplicantMeta::INDUSTRY     => FILTER_SANITIZE_STRING,
-			ApplicantMeta::POSITION     => FILTER_SANITIZE_NUMBER_INT,
+			ApplicantMeta::POSITION     => FILTER_SANITIZE_STRING,
 		],
 		ApplicantMeta::NICKNAME       => FILTER_SANITIZE_STRING,
 		ApplicantMeta::VIEWED         => FILTER_SANITIZE_NUMBER_INT,
@@ -151,7 +151,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @param int $job_id The job ID.
 	 */
 	public function set_job_id( $job_id ) {
-		$this->job = filter_var( $job_id, self::SANITIZATION[ ApplicantMeta::JOB ] );
+		$this->job = (int) filter_var( $job_id, self::SANITIZATION[ ApplicantMeta::JOB ] );
 		$this->changed_property( ApplicantMeta::JOB );
 	}
 
@@ -184,7 +184,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @return int
 	 */
 	public function get_application_id() {
-		return $this->application;
+		return (int) $this->application;
 	}
 
 	/**
@@ -195,7 +195,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @param int $id The application ID.
 	 */
 	public function set_application_id( $id ) {
-		$this->application = filter_var( $id, self::SANITIZATION[ ApplicantMeta::APPLICATION ] );
+		$this->application = (int) filter_var( $id, self::SANITIZATION[ ApplicantMeta::APPLICATION ] );
 		$this->changed_property( ApplicantMeta::APPLICATION );
 	}
 
