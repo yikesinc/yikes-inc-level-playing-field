@@ -52,4 +52,22 @@ class InvalidClass extends InvalidArgumentException implements Exception {
 			$class
 		) );
 	}
+
+	/**
+	 * Return a new instance of this exception when we expected one class but got another.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param string $class    The class name we received.
+	 * @param string $expected The Class name we expected.
+	 *
+	 * @return static
+	 */
+	public static function mismatch( $class, $expected ) {
+		return new static( sprintf(
+			'Invalid class "%s". The "%s" class was expected.',
+			$class,
+			$expected
+		) );
+	}
 }
