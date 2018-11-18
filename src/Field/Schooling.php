@@ -9,6 +9,8 @@
 
 namespace Yikes\LevelPlayingField\Field;
 
+use Yikes\LevelPlayingField\Model\ApplicantMeta;
+
 /**
  * Class Schooling
  *
@@ -36,20 +38,20 @@ class Schooling extends RepeatableField {
 		 * @param array $fields Array of schooling fields.
 		 */
 		return apply_filters( 'lpf_field_schooling_fields', [
-			'institution' => [
+			ApplicantMeta::INSTITUTION => [
 				'label' => esc_html__( 'Institution', 'yikes-level-playing-field' ),
 			],
-			'type'        => [
+			ApplicantMeta::TYPE        => [
 				'label' => esc_html__( 'Institution Type', 'yikes-level-playing-field' ),
 			],
-			'year'        => [
+			ApplicantMeta::YEAR        => [
 				'label' => esc_html__( 'Graduation Year', 'yikes-level-playing-field' ),
 				'class' => Types::YEAR,
 			],
-			'major'       => [
+			ApplicantMeta::MAJOR       => [
 				'label' => esc_html__( 'Major', 'yikes-level-playing-field' ),
 			],
-			'degree'      => [
+			ApplicantMeta::DEGREE      => [
 				'label' => esc_html__( 'Degree', 'yikes-level-playing-field' ),
 			],
 		] );

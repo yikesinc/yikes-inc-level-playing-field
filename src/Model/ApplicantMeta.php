@@ -52,6 +52,16 @@ interface ApplicantMeta {
 	const INDUSTRY      = 'industry';
 	const DATES         = 'dates';
 	const POSITION      = 'position';
+	const START_DATE    = 'start_date';
+	const END_DATE      = 'end_date';
+
+	// Address Fields.
+	const LINE_1  = 'address-1';
+	const LINE_2  = 'address-2';
+	const CITY    = 'city';
+	const STATE   = 'state';
+	const COUNTRY = 'country';
+	const ZIP     = 'zip';
 
 	// Fields for other objects.
 	const JOB         = JobManager::SINGULAR_SLUG;
@@ -76,6 +86,8 @@ interface ApplicantMeta {
 		self::YEAR         => 1,
 		self::ORGANIZATION => 1,
 		self::DATES        => 1,
+		self::START_DATE   => 1,
+		self::END_DATE     => 1,
 	];
 
 	const FIELD_MAP = [
