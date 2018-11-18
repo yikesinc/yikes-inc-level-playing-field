@@ -66,6 +66,7 @@ interface ApplicantMeta {
 	// Fields for other objects.
 	const JOB         = JobManager::SINGULAR_SLUG;
 	const APPLICATION = ApplicationManager::SINGULAR_SLUG;
+	const ANONYMIZER  = 'anonymizer';
 
 	// Complex fields.
 	const SCHOOLING      = 'schooling';
@@ -81,7 +82,8 @@ interface ApplicantMeta {
 		self::NAME         => 1,
 		self::EMAIL        => 1,
 		self::PHONE        => 1,
-		self::ADDRESS      => 1,
+		self::LINE_1       => 1,
+		self::LINE_2       => 1,
 		self::INSTITUTION  => 1,
 		self::YEAR         => 1,
 		self::ORGANIZATION => 1,

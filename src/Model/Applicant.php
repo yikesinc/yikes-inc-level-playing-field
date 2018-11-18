@@ -12,6 +12,7 @@ namespace Yikes\LevelPlayingField\Model;
 use WP_Term;
 use Yikes\LevelPlayingField\Anonymizer\AnonymizerInterface;
 use Yikes\LevelPlayingField\Exception\EmptyArray;
+use Yikes\LevelPlayingField\Exception\InvalidClass;
 use Yikes\LevelPlayingField\Exception\InvalidKey;
 use Yikes\LevelPlayingField\Field\Certifications;
 use Yikes\LevelPlayingField\Field\Experience;
@@ -82,6 +83,14 @@ final class Applicant extends CustomPostTypeEntity {
 		ApplicantMeta::NICKNAME       => FILTER_SANITIZE_STRING,
 		ApplicantMeta::VIEWED         => FILTER_SANITIZE_NUMBER_INT,
 	];
+
+	/**
+	 * The anonymizer class used for anonymization.
+	 *
+	 * @since %VERSION%
+	 * @var string
+	 */
+	private $anonymizer = '';
 
 	/**
 	 * Array of changed properties.
@@ -548,21 +557,124 @@ final class Applicant extends CustomPostTypeEntity {
 		}
 	}
 
+	/**
+	 * Anonymize this applicant's data.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param AnonymizerInterface $anonymizer The anonymizer object.
+	 */
 	public function anonymize( AnonymizerInterface $anonymizer ) {
-
-	}
-
-	public function unanonymize( AnonymizerInterface $anonymizer ) {
-		if ( ! current_user_can( Capabilities::UNANONYMIZE ) ) {
-
+		// Don't anonymize multiple times.
+		if ( $this->is_anonymized() ) {
+			return;
 		}
+
+		$this->{ApplicantMeta::ANONYMIZER} = get_class( $anonymizer );
+		$this->changed_property( ApplicantMeta::ANONYMIZER );
+
+		// Walk through the object properties, anonymizing them.
+		$properties = get_object_vars( $this );
+		array_walk_recursive( $properties, $this->get_anonymizer_callback( $anonymizer ) );
+
+		// Copy the changed properties back.
+		$this->update_properties( $properties );
 	}
 
+	/**
+	 * Get the callback for anonymizing.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param AnonymizerInterface $anonymizer The anonymizer object.
+	 *
+	 * @return \Closure
+	 */
+	private function get_anonymizer_callback( AnonymizerInterface $anonymizer ) {
+		$defaults = $this->get_lazy_properties();
+		return function( &$value, $key ) use ( $anonymizer, $defaults ) {
+			if ( ! array_key_exists( $key, ApplicantMeta::ANONYMOUS_FIELDS ) ) {
+				return;
+			}
 
-	private function get_anonymous_properties() {
-		return [
+			if ( isset( $defaults[ $key ] ) && $value === $defaults[ $key ] ) {
+				return;
+			}
 
-		];
+			$value = $anonymizer->anonymize( $value );
+		};
+	}
+
+	/**
+	 * Unanonymize this Applicant's data.
+	 *
+	 * Role checking should be handled outside of this function.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param AnonymizerInterface $anonymizer The anonymizer object.
+	 * @throws InvalidClass When the passed anonymizer object does not match the type used to anonymize the applicant.
+	 */
+	public function unanonymize( AnonymizerInterface $anonymizer ) {
+		// Nothing to do if this isn't anonymized.
+		if ( ! $this->is_anonymized() ) {
+			return;
+		}
+
+		// Ensure the unanonymizer class is the same that was used to anonymize.
+		if ( get_class( $anonymizer ) !== $this->anonymizer ) {
+			throw InvalidClass::mismatch( get_class( $anonymizer ), $this->anonymizer );
+		}
+
+		$this->{ApplicantMeta::ANONYMIZER} = '';
+		$this->changed_property( ApplicantMeta::ANONYMIZER );
+
+		// Walk through the object properties, undanonymizing them.
+		$properties = get_object_vars( $this );
+		array_walk_recursive( $properties, $this->get_unanonymizer_callback( $anonymizer ) );
+
+		// Copy the changed properties back.
+		$this->update_properties( $properties );
+	}
+
+	/**
+	 * Get the callback for unanonymizing.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param AnonymizerInterface $anonymizer The anonymizer object.
+	 *
+	 * @return \Closure
+	 */
+	private function get_unanonymizer_callback( AnonymizerInterface $anonymizer ) {
+		$defaults = $this->get_lazy_properties();
+		return function( &$value, $key ) use ( $anonymizer, $defaults ) {
+			if ( ! array_key_exists( $key, ApplicantMeta::ANONYMOUS_FIELDS ) ) {
+				return;
+			}
+
+			if ( isset( $defaults[ $key ] ) && $value === $defaults[ $key ] ) {
+				return;
+			}
+
+			$value = $anonymizer->reveal( $value );
+		};
+	}
+
+	/**
+	 * Copy changed properties back to the object.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param array $properties Properties changed by anonymization process.
+	 */
+	private function update_properties( $properties ) {
+		foreach ( $properties as $key => $value ) {
+			if ( $value !== $this->$key ) {
+				$this->$key = $value;
+				$this->changed_property( $key );
+			}
+		}
 	}
 
 	/**
@@ -587,6 +699,7 @@ final class Applicant extends CustomPostTypeEntity {
 			ApplicantMeta::STATUS         => ApplicantStatus::DEFAULT_TERM_SLUG,
 			ApplicantMeta::NICKNAME       => (string) $this->post->ID,
 			ApplicantMeta::ANONYMIZED     => false,
+			ApplicantMeta::ANONYMIZER     => '',
 			ApplicantMeta::VIEWED         => 0,
 		];
 	}
