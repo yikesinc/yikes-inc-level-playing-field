@@ -1,8 +1,8 @@
 ( function( $ ) {
 
-	const notices_class = @import './assets/js/functions/notices.js';
-	const notices       = new notices_class();
-	const post_id       = document.getElementById( 'post_ID' ).value;
+	/*=include ../functions/notices.js */
+	const notices = new class_lpf_notices();
+	const post_id = document.getElementById( 'post_ID' ).value;
 
 	if ( post_id.length === 0 ) {
 		console.log( 'could not find a post ID: ' + post_id );

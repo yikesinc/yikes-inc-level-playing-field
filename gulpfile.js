@@ -24,7 +24,8 @@ const svgmin      = require( 'gulp-svgmin' );
 const svgstore    = require( 'gulp-svgstore' );
 const uglify      = require( 'gulp-uglify' );
 const print       = require( 'gulp-print' );
-const importJS    = require( 'gulp-js-import' );
+const debug       = require( 'gulp-debug' );
+const include     = require( 'gulp-include' );
 
 // Environment variables.
 const gitKey = process.env.gitKey;
@@ -427,9 +428,11 @@ gulp.task( 'build', [ 'default' ], function() {
 /**
  * Process @import statements.
  */
-gulp.task( 'import', function() {
+gulp.task( 'import', () => {
+
   return gulp.src( paths.devscripts )
-        .pipe( importJS( { hideConsole: true } ) )
+  		.pipe( debug() )
+        .pipe( include() )
         .pipe( gulp.dest( 'assets/js/' ) );
 });
 
