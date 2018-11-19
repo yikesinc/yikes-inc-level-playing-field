@@ -1,3 +1,3 @@
 function remove_notices() {
-	$( '.lpf-notice' ).remove();
+	jQuery( '.lpf-notice' ).remove();
 }
