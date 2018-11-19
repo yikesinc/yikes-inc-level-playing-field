@@ -1,8 +1,8 @@
 ( function( $ ) {
 
-	const notice         = @import './assets/js/functions/display-notice.js';
-	const remove_notices = @import './assets/js/functions/remove-notices.js';
-	const post_id        = document.getElementById( 'post_ID' ).value;
+	const notices_class = @import './assets/js/functions/notices.js';
+	const notices       = new notices_class();
+	const post_id       = document.getElementById( 'post_ID' ).value;
 
 	if ( post_id.length === 0 ) {
 		console.log( 'could not find a post ID: ' + post_id );
@@ -14,7 +14,7 @@
 			const button = $( this );
 
 			// Remove any notices we added to the page.
-			remove_notices();
+			notices.remove_notices();
 
 			// Remove active class from all buttons, add it to the clicked button.
 			button.addClass( 'active' ).siblings( 'button' ).removeClass( 'active' );
@@ -41,7 +41,7 @@
 
 	function add_post_term_failure( response ) {
 		if ( response.success !== true && typeof response.data === 'object' && typeof response.data.reason === 'string' ) {
-			$( '.tax-btn-group' ).parent().after( notice( 'error', response.data.reason ) );
+			$( '.tax-btn-group' ).parent().after( notices.admin_notice( 'error', response.data.reason ) );
 		}
 	}
 })( jQuery );
