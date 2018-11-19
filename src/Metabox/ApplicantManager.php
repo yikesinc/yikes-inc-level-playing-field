@@ -59,12 +59,9 @@ final class ApplicantManager implements AssetsAware, Service {
 			$this->meta_boxes();
 		} );
 
-		$save_nickname = function() {
+		add_action( 'wp_ajax_save_nickname', function() {
 			$this->save_nickname();
-		};
-
-		add_action( 'wp_ajax_nopriv_save_nickname', $save_nickname );
-		add_action( 'wp_ajax_save_nickname', $save_nickname );
+		} );
 	}
 
 	/**
@@ -86,15 +83,16 @@ final class ApplicantManager implements AssetsAware, Service {
 	 */
 	private function save_nickname() {
 		// Handle nonce.
-		if ( ! isset( $_POST['nonce'] ) || ! check_ajax_referer( 'lpf_applicant_nonce', 'nonce', false ) ) { // Input var okay.
+		if ( ! check_ajax_referer( 'lpf_applicant_nonce', 'nonce', false ) ) {
 			wp_send_json_error();
 		}
 
-		$id = isset( $_POST['id'] ) && $_POST['id'] !== 'false' ? sanitize_text_field( wp_unslash( $_POST['id'] ) ) : false; // Input var okay.
-		$nickname = isset( $_POST['nickname'] ) && $_POST['nickname'] !== 'false' ? sanitize_text_field( wp_unslash( $_POST['nickname'] ) ) : false; // Input var okay.
+		$id = isset( $_POST['id'] ) ? sanitize_text_field( wp_unslash( $_POST['id'] ) ) : false;
+		$nickname = isset( $_POST['nickname'] ) && $_POST['nickname'] !== 'false' ? absint(  $_POST['nickname'] ) : false; // Input var okay.
 
 		$applicant = new Applicant( get_post( $id ) );
 		$applicant->set_nickname( $nickname );
+		$applicant->persist();
 	}
 
 	/**
@@ -261,12 +259,12 @@ final class ApplicantManager implements AssetsAware, Service {
 	protected function get_assets() {
 		$applicant = new ScriptAsset( 'lpf-applicant-manager-js', 'assets/js/applicant-manager', [ 'jquery' ] );
 		$applicant->add_localization( 'applicantManager', [
-			'cancel'  => _x( 'Cancel', 'yikes-level-playing-field' ),
-			'hide'  => _x( 'Hide Cover Letter', 'yikes-level-playing-field' ),
-			'ok'  => _x( 'OK', 'yikes-level-playing-field' ),
-			'nonce' => wp_create_nonce( 'lpf_applicant_nonce' ),
-			'title' => _x( 'Applicants | Applicant ID', 'heading when viewing an applicant', 'yikes-level-playing-field' ),
-			'view'  => _x( 'View Cover Letter', 'yikes-level-playing-field' ),
+			'cancel' => _x( 'Cancel', 'undo action to edit nickname when viewing an applicant', 'yikes-level-playing-field' ),
+			'hide'   => _x( 'Hide Cover Letter', 'hide cover letter when viewing an applicant', 'yikes-level-playing-field' ),
+			'ok'     => _x( 'OK', 'confirm action to edit nickname when viewing an applicant', 'yikes-level-playing-field' ),
+			'nonce'  => wp_create_nonce( 'lpf_applicant_nonce' ),
+			'title'  => _x( 'Applicants | Applicant ID', 'heading when viewing an applicant', 'yikes-level-playing-field' ),
+			'view'   => _x( 'View Cover Letter', 'view cover letter when viewing an applicant', 'yikes-level-playing-field' ),
 		] );
 
 		return [
