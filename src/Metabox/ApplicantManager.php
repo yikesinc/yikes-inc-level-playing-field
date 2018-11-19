@@ -102,7 +102,6 @@ final class ApplicantManager implements AssetsAware, Service {
 	private function do_applicant_content() {
 		$applicant = ( new ApplicantRepository() )->find( get_the_ID() );
 		$job       = ( new JobRepository() )->find( $applicant->get_job_id() );
-
 		?>
 		<article id="single-applicant-view">
 			<section id="header">
