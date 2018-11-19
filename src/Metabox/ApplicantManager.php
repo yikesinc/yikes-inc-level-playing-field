@@ -161,8 +161,8 @@ final class ApplicantManager implements AssetsAware, Service {
 					foreach ( $applicant->get_certifications() as $certification ) {
 						printf(
 							'<li>Certified in %s from %s. Status: %s</li>',
-							esc_html( $certification['institution'] ),
 							esc_html( $certification['type'] ),
+							esc_html( $certification['institution'] ),
 							esc_html( $certification['status'] )
 						);
 					}
