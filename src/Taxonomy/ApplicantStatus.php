@@ -88,7 +88,7 @@ final class ApplicantStatus extends BaseTaxonomy implements AssetsAware {
 			}
 
 			return $term;
-		} );
+		}, 10, 2 );
 	}
 
 	/**
