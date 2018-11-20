@@ -60,6 +60,7 @@ class BaseInput extends BaseField {
 					   class="<?php echo esc_attr( join( ' ', $classes ) ); ?>"
 					   name="<?php echo esc_attr( $this->id ); ?>"
 					   id="<?php echo esc_attr( $this->id ); ?>"
+					   value="<?php echo esc_attr( $this->value ); ?>"
 					<?php $this->render_extra_attributes(); ?>
 				/>
 			</label>

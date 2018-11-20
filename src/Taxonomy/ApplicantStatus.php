@@ -88,7 +88,8 @@ final class ApplicantStatus extends BaseTaxonomy implements AssetsAware {
 			}
 
 			return $term;
-		} );
+
+		}, 10, 2 );
 
 		// AJAX handler for changing the post's term.
 		add_action( 'wp_ajax_lpf_add_post_term', function() {
