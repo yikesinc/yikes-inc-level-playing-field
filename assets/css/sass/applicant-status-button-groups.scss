@@ -9,7 +9,6 @@ $tax-btn-group-contrast-bg-color: #025674;
 $tax-btn-group-border-color: #056f96;
 
 .tax-btn-group {
-	float: right;
 
 	button {
 		background-color: $tax-btn-group-bg-color; 
@@ -41,4 +40,15 @@ $tax-btn-group-border-color: #056f96;
 	button.active {
 		background-color: $tax-btn-group-contrast-bg-color;   
 	}
-} 
+}
+
+.lpf-notice.lpf-admin-notice {
+    -ms-grid-column: 3;
+    grid-column-start: 3;
+    -ms-grid-row: 2;
+    grid-row-start: 2;
+    justify-self: end;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    width: 250px;
+}
