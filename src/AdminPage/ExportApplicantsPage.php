@@ -50,8 +50,8 @@ class ExportApplicantsPage extends BaseAdminPage implements AssetsAware {
 
 		add_filter( 'admin_enqueue_scripts', function( $hook ) {
 
-			// This filter should only run on our export page.
-			if ( 'jobs_page_' . static::PAGE_SLUG !== $hook ) {
+			// Only enqueue on the export page.
+			if ( $this->get_screen_base() !== $hook ) {
 				return;
 			}
 

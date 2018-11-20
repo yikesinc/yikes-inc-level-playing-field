@@ -142,4 +142,15 @@ abstract class BaseAdminPage implements Service {
 	protected function get_context() {
 		return [];
 	}
+
+	/**
+	 * Get the screen base for an admin page.
+	 *
+	 * This is the same value as get_current_screen()['base'] or the $hook variable passed into the admin_enqueue_scripts filter.
+	 *
+	 * @return string The screen's base.
+	 */
+	protected function get_screen_base() {
+		return JobManager::SLUG . '_page_' . static::PAGE_SLUG;
+	}
 }

@@ -52,8 +52,8 @@ class OptionsPage extends BaseAdminPage implements AssetsAware {
 
 		add_filter( 'admin_enqueue_scripts', function( $hook ) {
 
-			// This filter should only run on our export page.
-			if ( 'jobs_page_' . static::PAGE_SLUG !== $hook ) {
+			// Only enqueue on the options page.
+			if ( $this->get_screen_base() !== $hook ) {
 				return;
 			}
 
@@ -82,6 +82,7 @@ class OptionsPage extends BaseAdminPage implements AssetsAware {
 				'options' => wp_json_encode( new Options( true ) ),
 				'strings' => [
 					'save_success' => __( 'Success: Settings Saved.', 'yikes-level-playing-field' ),
+					'save_error'   => __( 'Error: The settings could not be saved.', 'yikes-level-playing-field' ),
 				],
 			]
 		);
