@@ -24,7 +24,8 @@ const svgmin      = require( 'gulp-svgmin' );
 const svgstore    = require( 'gulp-svgstore' );
 const uglify      = require( 'gulp-uglify' );
 const print       = require( 'gulp-print' );
-const importJS    = require( 'gulp-js-import' );
+const debug       = require( 'gulp-debug' );
+const include     = require( 'gulp-include' );
 
 // Environment variables.
 const gitKey = process.env.gitKey;
@@ -39,6 +40,7 @@ const paths = {
 	'concat_scripts': 'assets/js/concat/*.js',
 	'scripts': [ 'assets/js/*.js', '!assets/js/*.min.js' ],
 	'sprites': 'assets/images/sprites/*.png',
+	'devscripts': 'assets/js/dev/*.js',
 	'build': [
 		'assets/css/*.css',
 		'assets/js/*.js',
@@ -426,9 +428,11 @@ gulp.task( 'build', [ 'default' ], function() {
 /**
  * Process @import statements.
  */
-gulp.task( 'import', function() {
-  return gulp.src( 'assets/js/build/*.js' )
-        .pipe( importJS( { hideConsole: true } ) )
+gulp.task( 'import', () => {
+
+  return gulp.src( paths.devscripts )
+  		.pipe( debug() )
+        .pipe( include() )
         .pipe( gulp.dest( 'assets/js/' ) );
 });
 
