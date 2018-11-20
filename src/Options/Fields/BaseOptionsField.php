@@ -24,7 +24,7 @@ abstract class BaseOptionsField implements Service {
 	/**
 	 * The option's field's value.
 	 *
-	 * @var mixed $value An value for an option field.
+	 * @var mixed $value A value for an option field.
 	 */
 	public $value;
 
@@ -111,5 +111,15 @@ abstract class BaseOptionsField implements Service {
 		?>
 		<p class="lpf-field-help"><?php esc_html( $this->help_text() ); ?></p>
 		<?php
+	}
+
+	/**
+	 * Get the default class names, i.e. `options-field` and the field's ID.
+	 *
+	 * @return string $class_names The classes, sanitized.
+	 */
+	protected function html_classes() {
+		// Sanitize class names, remove empties, join each with a space, and then remove the trailing space.
+		return rtrim( implode( ' ', array_filter( array_map( 'sanitize_html_class', [ 'options-field', static::NAME ] ) ) ) );
 	}
 }

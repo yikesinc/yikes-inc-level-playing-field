@@ -19,7 +19,6 @@ use Yikes\LevelPlayingField\Options\OptionFields;
  */
 final class AdditionalEmailRecipients extends BaseOptionsField {
 
-	const ID   = 'additional-email-recipients';
 	const NAME = 'additional-email-recipients';
 	const SLUG = OptionFields::ADDITIONAL_EMAIL_RECIPIENTS;
 
@@ -30,7 +29,7 @@ final class AdditionalEmailRecipients extends BaseOptionsField {
 	 */
 	protected function field() {
 		?>
-		<textarea cols="80" rows="4" class="settings-field" id="<?php echo esc_attr( static::ID ); ?>" name="<?php echo esc_attr( static::NAME ); ?>" placeholder="<?php echo esc_attr( $this->placeholder_text() ); ?>"><?php echo esc_html( $this->get_value() ); ?></textarea>
+		<textarea cols="80" rows="4" class="<?php echo $this->html_classes(); ?>" id="<?php echo esc_attr( static::NAME ); ?>" name="<?php echo esc_attr( static::NAME ); ?>" placeholder="<?php echo esc_attr( $this->placeholder_text() ); ?>"><?php echo esc_html( $this->get_value() ); ?></textarea>
 		<?php
 	}
 
