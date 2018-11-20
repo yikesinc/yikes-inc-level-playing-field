@@ -13,6 +13,7 @@ use Yikes\LevelPlayingField\Assets\Asset;
 use Yikes\LevelPlayingField\Assets\AssetsAware;
 use Yikes\LevelPlayingField\Assets\AssetsAwareness;
 use Yikes\LevelPlayingField\Assets\ScriptAsset;
+use Yikes\LevelPlayingField\Assets\StyleAsset;
 use Yikes\LevelPlayingField\CustomPostType\ApplicationManager;
 use Yikes\LevelPlayingField\CustomPostType\JobManager as JobManagerCPT;
 use Yikes\LevelPlayingField\Model\JobMeta;
@@ -29,8 +30,10 @@ final class JobManager extends AwesomeBaseMetabox implements AssetsAware {
 
 	use AssetsAwareness;
 
-	const JS_HANDLE = 'lpf-job-manager-js';
-	const JS_URI    = 'assets/js/job-manager';
+	const CSS_HANDLE = 'lpf-admin-jobs-css';
+	const CSS_URI    = 'assets/css/lpf-jobs-admin';
+	const JS_HANDLE  = 'lpf-job-manager-js';
+	const JS_URI     = 'assets/js/job-manager';
 
 	/**
 	 * Register hooks.
@@ -128,8 +131,8 @@ final class JobManager extends AwesomeBaseMetabox implements AssetsAware {
 					'type'   => 'group',
 					'fields' => [
 						[
-							'name'     => __( 'Status', 'yikes-level-playing-field' ),
-							'desc'     => __( 'The job status', 'yikes-level-playing-field' ),
+							'name'     => __( 'Job Status', 'yikes-level-playing-field' ),
+							'desc'     => __( 'Is this job currently active or inactive', 'yikes-level-playing-field' ),
 							'id'       => 'tax_input[' . JobStatus::SLUG . ']',
 							'type'     => 'taxonomy-select',
 							'taxonomy' => JobStatus::SLUG,
@@ -216,12 +219,13 @@ final class JobManager extends AwesomeBaseMetabox implements AssetsAware {
 	/**
 	 * Get the array of known assets.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0
 	 *
 	 * @return Asset[]
 	 */
 	protected function get_assets() {
 		return [
+			new StyleAsset( self::CSS_HANDLE, self::CSS_URI ),
 			new ScriptAsset( self::JS_HANDLE, self::JS_URI ),
 		];
 	}

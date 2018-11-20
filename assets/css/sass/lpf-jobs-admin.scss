@@ -1,0 +1,23 @@
+@import "utilities/index";
+
+// Variable are in utilities/variables/forms
+
+.group.yks_mbox {
+
+  label {
+    @include font-18;
+    font-size: $basefont;
+    font-weight: 600;
+  }
+
+  label[for="tax_input[job_status]"] {
+    width: auto;
+    padding-right: $lpf-padding-right;
+  }
+
+  label[for="job_cpt_meta_description"] {
+    margin-bottom: 1rem;
+  }
+  
+
+}

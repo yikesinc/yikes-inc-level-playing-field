@@ -36,7 +36,7 @@ class JobManager extends BaseCustomPostType {
 			'labels'              => [
 				'name'                  => _x( 'Jobs', 'Post Type General Name', 'yikes-level-playing-field' ),
 				'singular_name'         => _x( 'Job', 'Post Type Singular Name', 'yikes-level-playing-field' ),
-				'menu_name'             => __( 'Job Manager', 'yikes-level-playing-field' ),
+				'menu_name'             => __( 'Level Playing Field', 'yikes-level-playing-field' ),
 				'name_admin_bar'        => __( 'Jobs', 'yikes-level-playing-field' ),
 				'archives'              => __( 'Job Archives', 'yikes-level-playing-field' ),
 				'parent_item_colon'     => __( 'Parent Job:', 'yikes-level-playing-field' ),
@@ -89,7 +89,7 @@ class JobManager extends BaseCustomPostType {
 				'edit_published_posts'   => Capabilities::EDIT_PUBLISHED_JOBS,
 				'create_posts'           => Capabilities::CREATE_JOBS,
 			],
-			'menu_icon'           => 'dashicons-businessman',
+			'menu_icon'           => 'dashicons-feedback',
 		];
 	}
 

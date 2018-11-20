@@ -10,48 +10,6 @@ msgstr ""
 "X-Poedit-KeywordsList: __;_e;_ex:1,2c;_n:1,2;_n_noop:1,2;_nx:1,2,4c;_nx_noop:1,2,3c;_x:1,2c;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#. translators: %1$s is the required PHP version, %2$s is the current version
-#: yikes-level-playing-field.php:75
-msgid "Yikes, Inc. Level Playing Fields requires PHP version %1$s or above. Your site is using PHP version %2$s."
-msgstr ""
-
-#: views/job-page-application-completed.php:14
-msgid "Congratulations! Your form has been successfully submitted!"
-msgstr ""
-
-#: views/job-page-application.php:39
-msgid "Your application has errors. Please correct the errors below before resubmitting."
-msgstr ""
-
-#: views/job-page-application.php:48
-msgid "Submit"
-msgstr ""
-
-#: views/job-page-application.php:60, src/CustomPostType/ApplicationManager.php:44
-msgid "Edit Application"
-msgstr ""
-
-#: views/job-page-application.php:70, src/CustomPostType/JobManager.php:47
-msgid "Edit Job"
-msgstr ""
-
-#: views/job-page-job.php:36
-msgid "Type:"
-msgstr ""
-
-#: views/job-page-job.php:41
-msgid "Location:"
-msgstr ""
-
-#: views/job-page-job.php:44
-msgctxt "Description of the job location"
-msgid "Remote"
-msgstr ""
-
-#: views/job-page.php:26
-msgid "link to single job"
-msgstr ""
-
 #: src/AdminPage/ExportApplicantsPage.php:82
 msgid "Export Applicants"
 msgstr ""
@@ -241,6 +199,10 @@ msgstr ""
 msgid "New Application"
 msgstr ""
 
+#: src/CustomPostType/ApplicationManager.php:44, views/job-page-application.php:60
+msgid "Edit Application"
+msgstr ""
+
 #: src/CustomPostType/ApplicationManager.php:45
 msgid "Update Application"
 msgstr ""
@@ -354,7 +316,7 @@ msgid "Job"
 msgstr ""
 
 #: src/CustomPostType/JobManager.php:39
-msgid "Job Manager"
+msgid "Level Playing Field"
 msgstr ""
 
 #: src/CustomPostType/JobManager.php:40
@@ -379,6 +341,10 @@ msgstr ""
 
 #: src/CustomPostType/JobManager.php:46
 msgid "New Job"
+msgstr ""
+
+#: src/CustomPostType/JobManager.php:47, views/job-page-application.php:70
+msgid "Edit Job"
 msgstr ""
 
 #: src/CustomPostType/JobManager.php:48
@@ -620,7 +586,7 @@ msgstr ""
 msgid "Hidden field values cannot be changed."
 msgstr ""
 
-#: src/Field/RepeatableField.php:121, src/Shortcode/Application.php:200
+#: src/Field/RepeatableField.php:121, src/Shortcode/Application.php:201
 msgctxt "button for adding section in application"
 msgid "Add New"
 msgstr ""
@@ -745,47 +711,47 @@ msgstr ""
 msgid "Filter Job Categories"
 msgstr ""
 
-#: src/Metabox/ApplicantManager.php:134
+#: src/Metabox/ApplicantManager.php:88
 msgid "Nickname:"
 msgstr ""
 
-#: src/Metabox/ApplicantManager.php:148, src/Metabox/ApplicationManager.php:70, src/Metabox/ApplicationManager.php:76, src/Metabox/ApplicationManager.php:85
+#: src/Metabox/ApplicantManager.php:102, src/Metabox/ApplicationManager.php:70, src/Metabox/ApplicationManager.php:76, src/Metabox/ApplicationManager.php:85
 msgid "Basic Info"
 msgstr ""
 
-#: src/Metabox/ApplicantManager.php:161, src/Metabox/ApplicationManager.php:131
+#: src/Metabox/ApplicantManager.php:115, src/Metabox/ApplicationManager.php:131
 msgid "Education"
 msgstr ""
 
-#: src/Metabox/ApplicantManager.php:162, src/Metabox/ApplicationManager.php:136, src/Metabox/ApplicationManager.php:137
+#: src/Metabox/ApplicantManager.php:116, src/Metabox/ApplicationManager.php:136, src/Metabox/ApplicationManager.php:137
 msgid "Schooling"
 msgstr ""
 
-#: src/Metabox/ApplicantManager.php:175, src/Metabox/ApplicationManager.php:152, src/Metabox/ApplicationManager.php:153
+#: src/Metabox/ApplicantManager.php:129, src/Metabox/ApplicationManager.php:152, src/Metabox/ApplicationManager.php:153
 msgid "Certifications"
 msgstr ""
 
-#: src/Metabox/ApplicantManager.php:190, src/Metabox/ApplicationManager.php:170
+#: src/Metabox/ApplicantManager.php:144, src/Metabox/ApplicationManager.php:170
 msgid "Skills"
 msgstr ""
 
-#: src/Metabox/ApplicantManager.php:211, src/Metabox/ApplicationManager.php:185
+#: src/Metabox/ApplicantManager.php:165, src/Metabox/ApplicationManager.php:185
 msgid "Languages"
 msgstr ""
 
-#: src/Metabox/ApplicantManager.php:212
+#: src/Metabox/ApplicantManager.php:166
 msgid "Multingual"
 msgstr ""
 
-#: src/Metabox/ApplicantManager.php:220, src/Metabox/ApplicationManager.php:200, src/Metabox/ApplicationManager.php:205, src/Metabox/ApplicationManager.php:206
+#: src/Metabox/ApplicantManager.php:174, src/Metabox/ApplicationManager.php:200, src/Metabox/ApplicationManager.php:205, src/Metabox/ApplicationManager.php:206
 msgid "Experience"
 msgstr ""
 
-#: src/Metabox/ApplicantManager.php:235, src/Metabox/ApplicationManager.php:223, src/Metabox/ApplicationManager.php:228, src/Metabox/ApplicationManager.php:229
+#: src/Metabox/ApplicantManager.php:189, src/Metabox/ApplicationManager.php:223, src/Metabox/ApplicationManager.php:228, src/Metabox/ApplicationManager.php:229
 msgid "Volunteer Work"
 msgstr ""
 
-#: src/Metabox/ApplicantManager.php:282
+#: src/Metabox/ApplicantManager.php:236
 msgctxt "heading when viewing an applicant"
 msgid "Applicants | Applicant ID"
 msgstr ""
@@ -806,7 +772,7 @@ msgstr ""
 msgid "Phone Number"
 msgstr ""
 
-#: src/Metabox/ApplicationManager.php:113, src/Metabox/ApplicationManager.php:114, src/Metabox/JobManager.php:177, src/Metabox/JobManager.php:187
+#: src/Metabox/ApplicationManager.php:113, src/Metabox/ApplicationManager.php:114, src/Metabox/JobManager.php:180, src/Metabox/JobManager.php:190
 msgid "Address"
 msgstr ""
 
@@ -826,71 +792,71 @@ msgstr ""
 msgid "Dates"
 msgstr ""
 
-#: src/Metabox/JobManager.php:120, src/Metabox/JobManager.php:126
+#: src/Metabox/JobManager.php:123, src/Metabox/JobManager.php:129
 msgid "General Info"
 msgstr ""
 
-#: src/Metabox/JobManager.php:131, src/Taxonomy/ApplicantStatus.php:237, src/Taxonomy/JobStatus.php:61
+#: src/Metabox/JobManager.php:134, src/Taxonomy/ApplicantStatus.php:237, src/Taxonomy/JobStatus.php:61
 msgid "Status"
 msgstr ""
 
-#: src/Metabox/JobManager.php:132
+#: src/Metabox/JobManager.php:135
 msgid "The job status"
 msgstr ""
 
-#: src/Metabox/JobManager.php:138
+#: src/Metabox/JobManager.php:141
 msgid "Job Description"
 msgstr ""
 
-#: src/Metabox/JobManager.php:139
+#: src/Metabox/JobManager.php:142
 msgid "General overview of the Job and its requirements."
 msgstr ""
 
-#: src/Metabox/JobManager.php:144
+#: src/Metabox/JobManager.php:147
 msgid "Job Type"
 msgstr ""
 
-#: src/Metabox/JobManager.php:145
+#: src/Metabox/JobManager.php:148
 msgid "The type of job being offered"
 msgstr ""
 
-#: src/Metabox/JobManager.php:150
+#: src/Metabox/JobManager.php:153
 msgid "Full Time"
 msgstr ""
 
-#: src/Metabox/JobManager.php:154
+#: src/Metabox/JobManager.php:157
 msgid "Part Time"
 msgstr ""
 
-#: src/Metabox/JobManager.php:158
+#: src/Metabox/JobManager.php:161
 msgid "Contract"
 msgstr ""
 
-#: src/Metabox/JobManager.php:162
+#: src/Metabox/JobManager.php:165
 msgid "Per Diem"
 msgstr ""
 
-#: src/Metabox/JobManager.php:166
+#: src/Metabox/JobManager.php:169
 msgid "Other"
 msgstr ""
 
-#: src/Metabox/JobManager.php:172
+#: src/Metabox/JobManager.php:175
 msgid "Location"
 msgstr ""
 
-#: src/Metabox/JobManager.php:181
+#: src/Metabox/JobManager.php:184
 msgid "Remote"
 msgstr ""
 
-#: src/Metabox/JobManager.php:188
+#: src/Metabox/JobManager.php:191
 msgid "Address where the job is located"
 msgstr ""
 
-#: src/Metabox/JobManager.php:193
+#: src/Metabox/JobManager.php:196
 msgid "Application"
 msgstr ""
 
-#: src/Metabox/JobManager.php:194
+#: src/Metabox/JobManager.php:197
 msgid "The application to use for this job"
 msgstr ""
 
@@ -907,18 +873,18 @@ msgstr ""
 msgid "Human Resources"
 msgstr ""
 
-#: src/Shortcode/Application.php:210
+#: src/Shortcode/Application.php:211
 msgid "Field cannot be empty."
 msgstr ""
 
 #. translators: %TYPE% should not be translated. It is a placeholder for a field name.
-#: src/Shortcode/Application.php:212
+#: src/Shortcode/Application.php:213
 msgid "%TYPE% is invalid."
 msgstr ""
 
 #. translators: %s refers to the error message
 #. translators: %s refers to the error message
-#: src/Shortcode/Application.php:281, src/TemplateController/SingleApplicationsTemplateController.php:77
+#: src/Shortcode/Application.php:282, src/TemplateController/SingleApplicationsTemplateController.php:77
 msgid "There was an error displaying the form: %s"
 msgstr ""
 
@@ -1068,4 +1034,38 @@ msgstr ""
 #. translators: %s refers to the error message
 #: src/TemplateController/TemplateController.php:82
 msgid "There was an error displaying the template: %s"
+msgstr ""
+
+#: views/job-page-application-completed.php:14
+msgid "Congratulations! Your form has been successfully submitted!"
+msgstr ""
+
+#: views/job-page-application.php:39
+msgid "Your application has errors. Please correct the errors below before resubmitting."
+msgstr ""
+
+#: views/job-page-application.php:48
+msgid "Submit"
+msgstr ""
+
+#: views/job-page-job.php:36
+msgid "Type:"
+msgstr ""
+
+#: views/job-page-job.php:41
+msgid "Location:"
+msgstr ""
+
+#: views/job-page-job.php:44
+msgctxt "Description of the job location"
+msgid "Remote"
+msgstr ""
+
+#: views/job-page.php:26
+msgid "link to single job"
+msgstr ""
+
+#. translators: %1$s is the required PHP version, %2$s is the current version
+#: yikes-level-playing-field.php:75
+msgid "Yikes, Inc. Level Playing Fields requires PHP version %1$s or above. Your site is using PHP version %2$s."
 msgstr ""
