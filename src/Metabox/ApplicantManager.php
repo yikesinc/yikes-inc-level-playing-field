@@ -198,7 +198,7 @@ final class ApplicantManager implements AssetsAware, Service {
 					<li>[ position ] in [ organization type ] for x years</li>
 				</ol>
 			</section>
-			<?php do_action( "lpf_{$this->get_post_type()}_after_misc", $applicant, $job ); ?>
+			<?php do_action( "lpf_{$this->get_post_type()}_after_volunteer_work", $applicant, $job ); ?>
 			<section id="misc">
 				<h2>Miscellaneous</h2>
 				<p><span class="label">Question:</span>
