@@ -92,11 +92,6 @@ final class ApplicantManager implements AssetsAware, Service {
 					<span class="label">Job:</span>
 					<?php echo esc_html( $job->get_title() ); ?>
 				</h5>
-				<?php
-				// @todo: this isn't the proper way to display the taxonomy box; change it.
-				$status = new ApplicantStatus();
-				$status->meta_box_cb( get_post() );
-				?>
 			</section>
 			<?php do_action( "lpf_{$this->get_post_type()}_after_header", $applicant, $job ); ?>
 			<section id="basic-info">
