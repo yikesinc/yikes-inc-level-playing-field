@@ -19,6 +19,16 @@ use Yikes\LevelPlayingField\Roles\HumanResources;
  * @since   %VERSION%
  * @package Yikes\LevelPlayingField
  */
+
+/**
+ * Class Applicant
+ *
+ * @since   %VERSION%
+ * @package Yikes\LevelPlayingField
+ *
+ * @property string additional_email_recipients Email addresses that should receive applicant message emails.
+ * @property array  email_recipient_roles       Roles whose members should receive applicant message emails.
+ */
 final class Options {
 
 	const FIELDS = [
