@@ -31,12 +31,12 @@ final class ApplicantStatus extends BaseTaxonomy implements AssetsAware {
 	const SLUG              = 'applicant_status';
 	const DEFAULT_TERM_NAME = 'Pending';
 	const DEFAULT_TERM_SLUG = 'pending';
-	const JS_HANDLE         = 'lpf-taxonomy-button-groups-script';
-	const JS_URI            = 'assets/js/taxonomy-button-groups';
+	const JS_HANDLE         = 'lpf-applicant-status-button-groups-script';
+	const JS_URI            = 'assets/js/applicant-status-button-groups';
 	const JS_DEPENDENCIES   = [ 'jquery' ];
 	const JS_VERSION        = false;
-	const CSS_HANDLE        = 'lpf-taxonomy-button-groups-style';
-	const CSS_URI           = 'assets/css/taxonomy-button-groups';
+	const CSS_HANDLE        = 'lpf-applicant-status-button-groups-style';
+	const CSS_URI           = 'assets/css/applicant-status-button-groups';
 
 	/**
 	 * Register the WordPress hooks.
@@ -88,10 +88,17 @@ final class ApplicantStatus extends BaseTaxonomy implements AssetsAware {
 			}
 
 			return $term;
-		} );
+		}, 10, 2 );
+
+		// AJAX handler for changing the post's term.
+		add_action( 'wp_ajax_lpf_add_post_term', function() {
+			$this->add_post_term();
+		});
+
+		// Render the applicant status metabox.
 		add_action( 'lpf_' . ApplicantManager::SLUG . '_after_header', function( $applicant, $job ) {
 			$this->meta_box_cb( $applicant->get_post_object() );
-		}, 10, 2 );
+		});
 	}
 
 	/**
@@ -154,7 +161,7 @@ final class ApplicantStatus extends BaseTaxonomy implements AssetsAware {
 		] );
 
 		$post_terms = get_the_terms( $post->ID, $tax_name );
-		$post_terms = $post_terms ? wp_list_pluck( $post_terms, 'term_id', 'slug' ) : [];
+		$post_terms = $post_terms ? wp_list_pluck( $post_terms, 'slug', 'term_id' ) : [];
 
 		// Set the default term.
 		$selected_term = '';
@@ -168,14 +175,10 @@ final class ApplicantStatus extends BaseTaxonomy implements AssetsAware {
 			<?php
 			foreach ( $all_terms as $term ) {
 				$selected_bool = array_key_exists( $term->term_id, $post_terms ) ? $term->term_id : false;
-				if ( $selected_bool ) {
-					$selected_term = $term->term_id;
-				}
 				?>
 				<button
 					type="button"
 					data-value="<?php echo esc_attr( $term->term_id ); ?>"
-					data-taxonomy="<?php echo esc_attr( $tax_name ); ?>"
 					class="<?php echo false !== $selected_bool ? 'active' : ''; ?>"
 				>
 					<?php echo esc_html( $term->name ); ?>
@@ -184,16 +187,6 @@ final class ApplicantStatus extends BaseTaxonomy implements AssetsAware {
 			}
 			?>
 		</div>
-
-		<!-- Hidden input to hold our taxonomy choice -->
-		<input
-			type="hidden"
-			class="tax-input <?php echo esc_attr( $tax_name ); ?>"
-			name="tax_input[<?php echo esc_attr( $tax_name ); ?>]"
-			id="tax_input[<?php echo esc_attr( $tax_name ); ?>]"
-			value="<?php echo esc_attr( $selected_term ); ?>"
-		/>
-
 		<?php
 	}
 
@@ -205,8 +198,13 @@ final class ApplicantStatus extends BaseTaxonomy implements AssetsAware {
 	 * @return Asset[]
 	 */
 	protected function get_assets() {
+		$script = new ScriptAsset( self::JS_HANDLE, self::JS_URI, self::JS_DEPENDENCIES, self::JS_VERSION, ScriptAsset::ENQUEUE_FOOTER );
+		$script->add_localization( 'taxonomy_button_group_data', [
+			'nonce' => wp_create_nonce( 'add_post_terms' ),
+		]);
+
 		return [
-			new ScriptAsset( self::JS_HANDLE, self::JS_URI, self::JS_DEPENDENCIES, self::JS_VERSION, ScriptAsset::ENQUEUE_FOOTER ),
+			$script,
 			new StyleAsset( self::CSS_HANDLE, self::CSS_URI ),
 		];
 	}
@@ -295,5 +293,51 @@ final class ApplicantStatus extends BaseTaxonomy implements AssetsAware {
 				'slug'        => 'maybe',
 			],
 		];
+	}
+
+	/**
+	 * Assign a term to the post.
+	 *
+	 * @since %VERSION%
+	 */
+	private function add_post_term() {
+
+		// Handle nonce.
+		if ( ! isset( $_POST['nonce'] ) || ! check_ajax_referer( 'add_post_terms', 'nonce', false ) ) {
+			wp_send_json_error( [
+				'reason' => __( 'An error occurred: Failed to validate the nonce.', 'yikes-level-playing-field' ),
+			], 403 );
+		}
+
+		// Sanitize vars.
+		$term    = isset( $_POST['term'] ) ? filter_var( wp_unslash( $_POST['term'] ), FILTER_SANITIZE_NUMBER_INT ) : 0;
+		$post_id = isset( $_POST['post_id'] ) ? filter_var( wp_unslash( $_POST['post_id'] ), FILTER_SANITIZE_NUMBER_INT ) : 0;
+
+		if ( empty( $term ) || empty( $post_id ) ) {
+			wp_send_json_error( [
+				'reason'  => __( 'An error occurred: the term or post ID failed validation.', 'yikes-level-playing-field' ),
+				'term'    => $term,
+				'post_id' => $post_id,
+			], 400 );
+		}
+
+		$result = wp_set_post_terms( $post_id, $term, static::SLUG );
+		if ( is_wp_error( $result ) ) {
+			wp_send_json_error( [
+				/* translators: the placeholder is an error message returned by the WP_Error object */
+				'reason'   => sprintf( __( 'An error occurred: %s', 'yikes-level-playing-field' ), $result->get_error_message() ),
+				'wp_error' => $result,
+			], 422 );
+		} elseif ( false === $result ) {
+			wp_send_json_error( [
+				'reason'  => __( 'An error occurred: Failed to set post term.', 'yikes-level-playing-field' ),
+				'term'    => $term,
+				'post_id' => $post_id,
+			], 422 );
+		} else {
+			wp_send_json_success( [
+				'reason' => __( 'Term successfully set.', 'yikes-level-playing-field' ),
+			], 200 );
+		}
 	}
 }
