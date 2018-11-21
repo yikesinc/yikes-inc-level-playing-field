@@ -126,7 +126,9 @@ final class OptionsManager implements Service {
 
 		// Handle nonce.
 		if ( ! isset( $_POST['nonce'] ) || ! check_ajax_referer( 'save_options', 'nonce', false ) ) {
-			wp_send_json_error();
+			wp_send_json_error( [
+				'reason' => __( 'An error occurred: Failed to validate the nonce.', 'yikes-level-playing-field' ),
+			], 400 );
 		}
 
 		// Fetch our current options.
@@ -141,6 +143,8 @@ final class OptionsManager implements Service {
 
 		$options->save();
 
-		wp_send_json_success( $success );
+		wp_send_json_success( [
+			'reason' => __( 'Success: Settings Saved.', 'yikes-level-playing-field' ),
+		], 200 );
 	}
 }
