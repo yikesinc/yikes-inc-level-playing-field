@@ -30,20 +30,23 @@ use Yikes\LevelPlayingField\Email\InterviewCancellationToApplicantEmail;
  * @since   %VERSION%
  * @package Yikes\LevelPlayingField
  *
- * @property string email          The Applicant email address.
- * @property int    job            The Job ID.
- * @property string name           The Applicant's name.
- * @property int    application    The Application ID.
- * @property string status         The Applicant status.
- * @property string cover_letter   The Applicant's cover letter.
- * @property array  schooling      The Applicant's schooling details.
- * @property array  certifications The Applicant's certifications.
- * @property array  skills         The Applicant's skills.
- * @property array  experience     The Applicant's experience.
- * @property array  volunteer      The Applicant's volunteer work.
- * @property string nickname       The Applicant's nickname (for use when their data is anonymous).
- * @property bool   anonymized     Whether the applicant is anonymized.
- * @property int    viewed         User ID who viewed the applicant.
+ * @property string email            The Applicant email address.
+ * @property int    job              The Job ID.
+ * @property string name             The Applicant's name.
+ * @property int    application      The Application ID.
+ * @property string status           The Applicant status.
+ * @property string cover_letter     The Applicant's cover letter.
+ * @property array  schooling        The Applicant's schooling details.
+ * @property array  certifications   The Applicant's certifications.
+ * @property array  skills           The Applicant's skills.
+ * @property array  experience       The Applicant's experience.
+ * @property array  volunteer        The Applicant's volunteer work.
+ * @property string nickname         The Applicant's nickname (for use when their data is anonymous).
+ * @property bool   anonymized       Whether the applicant is anonymized.
+ * @property int    viewed           User ID who viewed the applicant.
+ * @property array  interview        The Applicant's interview details.
+ * @property string interview_status The Applicant's interview status.
+ * @property string guid             A unique hash for the applicant.
  */
 final class Applicant extends CustomPostTypeEntity {
 
@@ -598,6 +601,9 @@ final class Applicant extends CustomPostTypeEntity {
 		if ( $this->get_interview_status() !== 'scheduled' ) {
 			return;
 		}
+
+		// Maybe add a message like 'The applicant has confirmed the interview'?
+
 		$this->set_interview_status( 'cancelled' );
 		$this->set_interview( [] );
 		$this->persist_properties();
@@ -617,6 +623,8 @@ final class Applicant extends CustomPostTypeEntity {
 		$this->persist_properties();
 
 		// Unanonymize!
+
+		// Maybe add a message like 'The applicant has confirmed the interview'?
 
 		// Send off confirmed interview email to both the applicant and job managers.
 		( new InterviewConfirmationToApplicantEmail( $this ) )->send();
