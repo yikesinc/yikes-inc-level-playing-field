@@ -18,7 +18,6 @@ use Yikes\LevelPlayingField\CustomPostType\ApplicantManager as ApplicantCPT;
 use Yikes\LevelPlayingField\Model\ApplicantRepository;
 use Yikes\LevelPlayingField\Model\JobRepository;
 use Yikes\LevelPlayingField\Service;
-use Yikes\LevelPlayingField\Taxonomy\ApplicantStatus;
 
 /**
  * Class ApplicantManager
@@ -57,6 +56,10 @@ final class ApplicantManager implements AssetsAware, Service {
 		add_action( "add_meta_boxes_{$this->get_post_type()}", function() {
 			$this->meta_boxes();
 		} );
+
+		add_action( 'wp_ajax_save_nickname', function() {
+			$this->save_nickname();
+		} );
 	}
 
 	/**
@@ -72,6 +75,25 @@ final class ApplicantManager implements AssetsAware, Service {
 	}
 
 	/**
+	 * Save new nickname upon edit.
+	 *
+	 * @since %VERSION%
+	 */
+	private function save_nickname() {
+		// Handle nonce.
+		if ( ! check_ajax_referer( 'lpf_applicant_nonce', 'nonce', false ) ) {
+			wp_send_json_error();
+		}
+
+		$id       = isset( $_POST['id'] ) ? absint( $_POST['id'] ) : 0;
+		$nickname = isset( $_POST['nickname'] ) ? sanitize_text_field( $_POST['nickname'] ) : '';
+
+		$applicant = new Applicant( get_post( $id ) );
+		$applicant->set_nickname( $nickname );
+		$applicant->persist();
+	}
+
+	/**
 	 * Output the Applicant content.
 	 *
 	 * @since %VERSION%
@@ -79,32 +101,37 @@ final class ApplicantManager implements AssetsAware, Service {
 	private function do_applicant_content() {
 		$applicant = ( new ApplicantRepository() )->find( get_the_ID() );
 		$job       = ( new JobRepository() )->find( $applicant->get_job_id() );
-
 		?>
 		<article id="single-applicant-view">
 			<section id="header">
 				<?php echo $applicant->get_avatar_img( 160 ); // XSS ok. ?>
 				<h5>
 					<span class="label"><?php esc_html_e( 'Nickname:', 'yikes-level-playing-field' ); ?></span>
-					<?php echo esc_html( $applicant->get_nickname() ); ?>
+					<span id="editable-nick-name"><?php echo esc_html( $applicant->get_nickname() ); ?></span>
+					<span id="edit-nickname-buttons">
+						<button type="button" class="edit-nickname button button-small hide-if-no-js" aria-label="Edit nickname"><?php esc_html_e( 'Edit', 'yikes-level-playing-field' ); ?></button>
+					</span>
 				</h5>
 				<h5>
-					<span class="label">Job:</span>
+					<span class="label"><?php esc_html_e( 'Job:', 'yikes-level-playing-field' ); ?></span>
 					<?php echo esc_html( $job->get_title() ); ?>
 				</h5>
 			</section>
 			<?php do_action( "lpf_{$this->get_post_type()}_after_header", $applicant, $job ); ?>
 			<section id="basic-info">
 				<h2><?php esc_html_e( 'Basic Info', 'yikes-level-playing-field' ); ?></h2>
-				<p class="location"><span class="label">Location:</span>
+				<p class="location"><span class="label"><?php esc_html_e( 'Location:', 'yikes-level-playing-field' ); ?></span>
 					City,
 					State</p>
 				<p class="cover-letter">
-					<span class="label">Cover Letter:</span>
-					<a href="#">View Cover Letter</a>
+					<span class="label"><?php esc_html_e( 'Cover Letter:', 'yikes-level-playing-field' ); ?></span>
+					<a href="#"><?php esc_html_e( 'View Cover Letter', 'yikes-level-playing-field' ); ?></a>
 				</p>
+				<?php
+				// @todo: Should HTML be allowed in the cover letter?
+				?>
 				<div class="cover-letter-content">
-					<?php echo esc_html( $applicant->get_cover_letter() ); ?>
+					<?php echo $applicant->get_cover_letter(); ?>
 				</div>
 			</section>
 			<?php do_action( "lpf_{$this->get_post_type()}_after_basic_info", $applicant, $job ); ?>
@@ -115,7 +142,7 @@ final class ApplicantManager implements AssetsAware, Service {
 					<?php
 					foreach ( $applicant->get_schooling() as $schooling ) {
 						printf(
-							'<li>Graduated with a [%s] from [%s] with a major in [%s]</li>',
+							'<li>Graduated with a %s from %s with a major in %s</li>',
 							esc_html( $schooling['degree'] ),
 							esc_html( $schooling['type'] ),
 							esc_html( $schooling['major'] )
@@ -128,9 +155,9 @@ final class ApplicantManager implements AssetsAware, Service {
 					<?php
 					foreach ( $applicant->get_certifications() as $certification ) {
 						printf(
-							'<li>Certified in [%s] from [%s]. Status: [%s]</li>',
-							esc_html( $certification['institution'] ),
+							'<li>Certified in %s from %s. Status: %s</li>',
 							esc_html( $certification['type'] ),
+							esc_html( $certification['institution'] ),
 							esc_html( $certification['status'] )
 						);
 					}
@@ -141,28 +168,22 @@ final class ApplicantManager implements AssetsAware, Service {
 			<section id="skills">
 				<h2><?php esc_html_e( 'Skills', 'yikes-level-playing-field' ); ?></h2>
 				<table>
-					<tr>
-						<th>Skill</th>
-						<th>Proficiency</th>
-					</tr>
-					<tr>
-						<td>[ skill ]</td>
-						<td>[ proficiency ]</td>
-					</tr>
-					<tr>
-						<td>[ skill ]</td>
-						<td>[ proficiency ]</td>
-					</tr>
-					<tr>
-						<td>[ skill ]</td>
-						<td>[ proficiency ]</td>
-					</tr>
+					<?php
+					foreach ( $applicant->get_skills() as $skill ) {
+						?>
+						<tr>
+							<td><?php echo esc_html( $skill['skill'] ); ?></td>
+							<td><?php echo esc_html( $skill['proficiency'] ); ?></td>
+						</tr>
+						<?php
+					}
+					?>
 				</table>
 			</section>
 			<?php do_action( "lpf_{$this->get_post_type()}_after_skills", $applicant, $job ); ?>
 			<section id="languages">
 				<h2><?php esc_html_e( 'Languages', 'yikes-level-playing-field' ); ?></h2>
-				<h5><?php esc_html_e( 'Multingual', 'yikes-level-playing-field' ); ?></h5>
+				<h5><?php esc_html_e( 'Multilingual', 'yikes-level-playing-field' ); ?></h5>
 				<ol>
 					<li>[ fluency ] x languages</li>
 					<li>Fluent in 2 languages</li>
@@ -176,7 +197,7 @@ final class ApplicantManager implements AssetsAware, Service {
 					<?php
 					foreach ( $applicant->get_job_experience() as $experience ) {
 						printf(
-							'<li>[ %s ] in [ %s ] for x years</li>',
+							'<li>%s in %s for x years</li>',
 							esc_html( $experience['position'] ),
 							esc_html( $experience['industry'] ),
 							esc_html( $experience['dates'] )
@@ -189,22 +210,20 @@ final class ApplicantManager implements AssetsAware, Service {
 			<section id="volunteer-work">
 				<h2><?php esc_html_e( 'Volunteer Work', 'yikes-level-playing-field' ); ?></h2>
 				<ol>
-					<li>[ position ] in [ organization type ] for x years</li>
-					<li>[ position ] in [ organization type ] for x years</li>
+					<?php
+					foreach ( $applicant->get_volunteer_work() as $experience ) {
+						printf(
+							'<li>%s in %s for x years</li>',
+							esc_html( $experience['organization'] ),
+							esc_html( $experience['position'] )
+						);
+					}
+					?>
 				</ol>
 			</section>
 			<?php do_action( "lpf_{$this->get_post_type()}_after_volunteer_work", $applicant, $job ); ?>
-			<section id="misc">
-				<h2>Miscellaneous</h2>
-				<p><span class="label">Question:</span>
-					Lorem ipsum dolor sit amet, consectetur adipiscing elit?</p>
-				<p><span class="label">Answer:</span>
-					Vivamus nec ex volutpat, porta libero ut, malesuada lectus.</p>
-				<p><span class="label">Question:</span>
-					Lorem ipsum dolor sit amet, consectetur adipiscing elit?</p>
-				<p><span class="label">Answer:</span>
-					Vivamus nec ex volutpat, porta libero ut, malesuada lectus.</p>
-			</section>
+
+			<section id="misc"></section>
 			<?php do_action( "lpf_{$this->get_post_type()}_after_misc", $applicant, $job ); ?>
 		</article>
 		<?php
@@ -236,7 +255,12 @@ final class ApplicantManager implements AssetsAware, Service {
 	protected function get_assets() {
 		$applicant = new ScriptAsset( 'lpf-applicant-manager-js', 'assets/js/applicant-manager', [ 'jquery' ] );
 		$applicant->add_localization( 'applicantManager', [
-			'title' => _x( 'Applicants | Applicant ID', 'heading when viewing an applicant', 'yikes-level-playing-field' ),
+			'cancel' => _x( 'Cancel', 'undo action to edit nickname when viewing an applicant', 'yikes-level-playing-field' ),
+			'hide'   => _x( 'Hide Cover Letter', 'hide cover letter when viewing an applicant', 'yikes-level-playing-field' ),
+			'ok'     => _x( 'OK', 'confirm action to edit nickname when viewing an applicant', 'yikes-level-playing-field' ),
+			'nonce'  => wp_create_nonce( 'lpf_applicant_nonce' ),
+			'title'  => _x( 'Applicants | Applicant ID', 'heading when viewing an applicant', 'yikes-level-playing-field' ),
+			'view'   => _x( 'View Cover Letter', 'view cover letter when viewing an applicant', 'yikes-level-playing-field' ),
 		] );
 
 		return [
