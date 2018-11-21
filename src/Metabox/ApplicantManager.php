@@ -92,12 +92,8 @@ final class ApplicantManager implements AssetsAware, Service {
 					<span class="label">Job:</span>
 					<?php echo esc_html( $job->get_title() ); ?>
 				</h5>
-				<?php
-				// @todo: this isn't the proper way to display the taxonomy box; change it.
-				$status = new ApplicantStatus();
-				$status->meta_box_cb( get_post() );
-				?>
 			</section>
+			<?php do_action( "lpf_{$this->get_post_type()}_after_header", $applicant, $job ); ?>
 			<section id="basic-info">
 				<h2><?php esc_html_e( 'Basic Info', 'yikes-level-playing-field' ); ?></h2>
 				<p class="location"><span class="label">Location:</span>
@@ -111,6 +107,7 @@ final class ApplicantManager implements AssetsAware, Service {
 					<?php echo esc_html( $applicant->get_cover_letter() ); ?>
 				</div>
 			</section>
+			<?php do_action( "lpf_{$this->get_post_type()}_after_basic_info", $applicant, $job ); ?>
 			<section id="education">
 				<h2><?php esc_html_e( 'Education', 'yikes-level-playing-field' ); ?></h2>
 				<h5><?php esc_html_e( 'Schooling', 'yikes-level-playing-field' ); ?></h5>
@@ -140,6 +137,7 @@ final class ApplicantManager implements AssetsAware, Service {
 					?>
 				</ol>
 			</section>
+			<?php do_action( "lpf_{$this->get_post_type()}_after_education", $applicant, $job ); ?>
 			<section id="skills">
 				<h2><?php esc_html_e( 'Skills', 'yikes-level-playing-field' ); ?></h2>
 				<table>
@@ -161,6 +159,7 @@ final class ApplicantManager implements AssetsAware, Service {
 					</tr>
 				</table>
 			</section>
+			<?php do_action( "lpf_{$this->get_post_type()}_after_skills", $applicant, $job ); ?>
 			<section id="languages">
 				<h2><?php esc_html_e( 'Languages', 'yikes-level-playing-field' ); ?></h2>
 				<h5><?php esc_html_e( 'Multingual', 'yikes-level-playing-field' ); ?></h5>
@@ -170,6 +169,7 @@ final class ApplicantManager implements AssetsAware, Service {
 					<li>Limited proficiency in 1 language</li>
 				</ol>
 			</section>
+			<?php do_action( "lpf_{$this->get_post_type()}_after_languages", $applicant, $job ); ?>
 			<section id="experience">
 				<h2><?php esc_html_e( 'Experience', 'yikes-level-playing-field' ); ?></h2>
 				<ol>
@@ -185,6 +185,7 @@ final class ApplicantManager implements AssetsAware, Service {
 					?>
 				</ol>
 			</section>
+			<?php do_action( "lpf_{$this->get_post_type()}_after_experience", $applicant, $job ); ?>
 			<section id="volunteer-work">
 				<h2><?php esc_html_e( 'Volunteer Work', 'yikes-level-playing-field' ); ?></h2>
 				<ol>
@@ -192,6 +193,7 @@ final class ApplicantManager implements AssetsAware, Service {
 					<li>[ position ] in [ organization type ] for x years</li>
 				</ol>
 			</section>
+			<?php do_action( "lpf_{$this->get_post_type()}_after_volunteer_work", $applicant, $job ); ?>
 			<section id="misc">
 				<h2>Miscellaneous</h2>
 				<p><span class="label">Question:</span>
@@ -203,6 +205,7 @@ final class ApplicantManager implements AssetsAware, Service {
 				<p><span class="label">Answer:</span>
 					Vivamus nec ex volutpat, porta libero ut, malesuada lectus.</p>
 			</section>
+			<?php do_action( "lpf_{$this->get_post_type()}_after_misc", $applicant, $job ); ?>
 		</article>
 		<?php
 	}
