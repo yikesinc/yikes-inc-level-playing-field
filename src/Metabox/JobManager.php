@@ -120,7 +120,7 @@ final class JobManager extends AwesomeBaseMetabox implements AssetsAware {
 	public function register_boxes( $meta_boxes ) {
 		$job_boxes = [
 			'id'         => JobMeta::META_PREFIX . 'metabox',
-			'title'      => __( 'General Info', 'yikes-level-playing-field' ),
+			'title'      => __( 'Job Listing Information', 'yikes-level-playing-field' ),
 			'pages'      => [ JobManagerCPT::SLUG ],
 			'show_names' => true,
 			'group'      => true,
@@ -173,6 +173,7 @@ final class JobManager extends AwesomeBaseMetabox implements AssetsAware {
 						],
 						[
 							'name'    => __( 'Location', 'yikes-level-playing-field' ),
+							'desc'    => __( 'Is this job at a location or can employees work remotely', 'yikes-level-playing-field' ),
 							'id'      => $this->prefix_field( JobMeta::LOCATION ),
 							'type'    => 'radio-inline',
 							'options' => [
@@ -187,14 +188,14 @@ final class JobManager extends AwesomeBaseMetabox implements AssetsAware {
 							],
 						],
 						[
-							'name' => __( 'Address', 'yikes-level-playing-field' ),
+							'name' => __( 'Location Address', 'yikes-level-playing-field' ),
 							'desc' => __( 'Address where the job is located', 'yikes-level-playing-field' ),
 							'id'   => $this->prefix_field( JobMeta::ADDRESS ),
 							'type' => 'address',
 						],
 						[
-							'name'      => __( 'Application', 'yikes-level-playing-field' ),
-							'desc'      => __( 'The application to use for this job', 'yikes-level-playing-field' ),
+							'name'      => __( 'Application Form', 'yikes-level-playing-field' ),
+							'desc'      => __( 'Choose the application form to use for this job', 'yikes-level-playing-field' ),
 							'id'        => MetaLinks::APPLICATION,
 							'type'      => 'select-post-type',
 							'post-type' => ApplicationManager::SLUG,
