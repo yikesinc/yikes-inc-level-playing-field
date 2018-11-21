@@ -1,29 +1,31 @@
 // Require our dependencies
-const babel = require( 'gulp-babel' );
-const bourbon = require( 'bourbon' ).includePaths;
+const babel       = require( 'gulp-babel' );
+const bourbon     = require( 'bourbon' ).includePaths;
 const browserSync = require( 'browser-sync' );
-const cheerio = require( 'gulp-cheerio' );
-const concat = require( 'gulp-concat' );
-const cssnano = require( 'gulp-cssnano' );
-const del = require( 'del' );
-const eslint = require( 'gulp-eslint' );
-const gulp = require( 'gulp' );
-const gutil = require( 'gulp-util' );
-const imagemin = require( 'gulp-imagemin' );
-const mqpacker = require( 'css-mqpacker' );
-const neat = require( 'bourbon-neat' ).includePaths;
-const notify = require( 'gulp-notify' );
-const plumber = require( 'gulp-plumber' );
-const postcss = require( 'gulp-postcss' );
-const rename = require( 'gulp-rename' );
-const sassLint = require( 'gulp-sass-lint' );
-const sort = require( 'gulp-sort' );
-const sourcemaps = require( 'gulp-sourcemaps' );
+const cheerio     = require( 'gulp-cheerio' );
+const concat      = require( 'gulp-concat' );
+const cssnano     = require( 'gulp-cssnano' );
+const del         = require( 'del' );
+const eslint      = require( 'gulp-eslint' );
+const gulp        = require( 'gulp' );
+const gutil       = require( 'gulp-util' );
+const imagemin    = require( 'gulp-imagemin' );
+const mqpacker    = require( 'css-mqpacker' );
+const neat        = require( 'bourbon-neat' ).includePaths;
+const notify      = require( 'gulp-notify' );
+const plumber     = require( 'gulp-plumber' );
+const postcss     = require( 'gulp-postcss' );
+const rename      = require( 'gulp-rename' );
+const sassLint    = require( 'gulp-sass-lint' );
+const sort        = require( 'gulp-sort' );
+const sourcemaps  = require( 'gulp-sourcemaps' );
 const spritesmith = require( 'gulp.spritesmith' );
-const svgmin = require( 'gulp-svgmin' );
-const svgstore = require( 'gulp-svgstore' );
-const uglify = require( 'gulp-uglify' );
-const print = require( 'gulp-print' );
+const svgmin      = require( 'gulp-svgmin' );
+const svgstore    = require( 'gulp-svgstore' );
+const uglify      = require( 'gulp-uglify' );
+const print       = require( 'gulp-print' );
+const debug       = require( 'gulp-debug' );
+const include     = require( 'gulp-include' );
 
 // Environment variables.
 const gitKey = process.env.gitKey;
@@ -38,6 +40,7 @@ const paths = {
 	'concat_scripts': 'assets/js/concat/*.js',
 	'scripts': [ 'assets/js/*.js', '!assets/js/*.min.js' ],
 	'sprites': 'assets/images/sprites/*.png',
+	'devscripts': 'assets/js/dev/*.js',
 	'build': [
 		'assets/css/*.css',
 		'assets/js/*.js',
@@ -423,12 +426,23 @@ gulp.task( 'build', [ 'default' ], function() {
 } );
 
 /**
+ * Process @import statements.
+ */
+gulp.task( 'import', () => {
+
+  return gulp.src( paths.devscripts )
+  		.pipe( debug() )
+        .pipe( include() )
+        .pipe( gulp.dest( 'assets/js/' ) );
+});
+
+/**
  * Create individual tasks.
  */
 gulp.task( 'markup', browserSync.reload );
 gulp.task( 'i18n', [ 'wp-pot' ] );
 gulp.task( 'icons', [ 'svg' ] );
-gulp.task( 'scripts', [ 'uglify' ] );
+gulp.task( 'scripts', [ 'import', 'uglify' ] );
 gulp.task( 'styles', [ 'cssnano' ] );
 gulp.task( 'sprites', [ 'spritesmith' ] );
 gulp.task( 'lint', [ 'sass:lint', 'js:lint' ] );
