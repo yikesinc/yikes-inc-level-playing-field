@@ -211,7 +211,7 @@ final class ApplicantManager implements AssetsAware, Service {
 				<h2><?php esc_html_e( 'Volunteer Work', 'yikes-level-playing-field' ); ?></h2>
 				<ol>
 					<?php
-					foreach ( $applicant->get_volunteer_work() as $experience ) {
+					foreach ( $applicant->get_volunteer() as $experience ) {
 						printf(
 							'<li>%s in %s for x years</li>',
 							esc_html( $experience['organization'] ),
