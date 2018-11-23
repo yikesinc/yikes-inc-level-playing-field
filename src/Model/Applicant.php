@@ -12,6 +12,7 @@ namespace Yikes\LevelPlayingField\Model;
 use WP_Term;
 use Yikes\LevelPlayingField\Anonymizer\AnonymizerInterface;
 use Yikes\LevelPlayingField\Exception\EmptyArray;
+use Yikes\LevelPlayingField\Exception\FailedToUnanonymize;
 use Yikes\LevelPlayingField\Exception\InvalidClass;
 use Yikes\LevelPlayingField\Exception\InvalidKey;
 use Yikes\LevelPlayingField\Field\Certifications;
@@ -570,12 +571,13 @@ final class Applicant extends CustomPostTypeEntity {
 			return;
 		}
 
-		$this->{ApplicantMeta::ANONYMIZER} = get_class( $anonymizer );
-		$this->changed_property( ApplicantMeta::ANONYMIZER );
-
 		// Walk through the object properties, anonymizing them.
 		$properties = get_object_vars( $this );
 		array_walk_recursive( $properties, $this->get_anonymizer_callback( $anonymizer ) );
+
+		// Manually set anonymizer properties.
+		$properties[ ApplicantMeta::ANONYMIZED ] = true;
+		$properties[ ApplicantMeta::ANONYMIZER ] = get_class( $anonymizer );
 
 		// Copy the changed properties back.
 		$this->update_properties( $properties );
@@ -583,6 +585,8 @@ final class Applicant extends CustomPostTypeEntity {
 
 	/**
 	 * Get the callback for anonymizing.
+	 *
+	 * The Closure that is returned by this method is expected to be compatible with array_walk_recursive().
 	 *
 	 * @since %VERSION%
 	 *
@@ -614,6 +618,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 *
 	 * @param AnonymizerInterface $anonymizer The anonymizer object.
 	 * @throws InvalidClass When the passed anonymizer object does not match the type used to anonymize the applicant.
+	 * @throws FailedToUnanonymize When the current user is not capable of unanonyming.
 	 */
 	public function unanonymize( AnonymizerInterface $anonymizer ) {
 		// Nothing to do if this isn't anonymized.
@@ -621,17 +626,23 @@ final class Applicant extends CustomPostTypeEntity {
 			return;
 		}
 
+		// Don't allow unanonymizing without the proper role.
+		if ( ! current_user_can( Capabilities::UNANONYMIZE, $this ) ) {
+			throw FailedToUnanonymize::not_capable();
+		}
+
 		// Ensure the unanonymizer class is the same that was used to anonymize.
 		if ( get_class( $anonymizer ) !== $this->anonymizer ) {
 			throw InvalidClass::mismatch( get_class( $anonymizer ), $this->anonymizer );
 		}
 
-		$this->{ApplicantMeta::ANONYMIZER} = '';
-		$this->changed_property( ApplicantMeta::ANONYMIZER );
-
-		// Walk through the object properties, undanonymizing them.
+		// Walk through the object properties, unanonymizing them.
 		$properties = get_object_vars( $this );
 		array_walk_recursive( $properties, $this->get_unanonymizer_callback( $anonymizer ) );
+
+		// Set the anonymized property.
+		$properties[ ApplicantMeta::ANONYMIZED ] = false;
+		$properties[ ApplicantMeta::ANONYMIZER ] = '';
 
 		// Copy the changed properties back.
 		$this->update_properties( $properties );
@@ -639,6 +650,8 @@ final class Applicant extends CustomPostTypeEntity {
 
 	/**
 	 * Get the callback for unanonymizing.
+	 *
+	 * The Closure that is returned by this method is expected to be compatible with array_walk_recursive().
 	 *
 	 * @since %VERSION%
 	 *
