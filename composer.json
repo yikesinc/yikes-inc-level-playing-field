@@ -35,5 +35,10 @@
         "platform": {
             "php": "5.6"
         }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Yikes\\LevelPlayingField\\Tests\\": "tests/"
+        }
     }
 }

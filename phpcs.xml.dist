@@ -60,9 +60,10 @@
 	</rule>
 	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
 		<properties>
-			<property name="prefixes" type="array" value="lpf,ylpf"/>
+			<property name="prefixes" type="array" value="lpf"/>
 		</properties>
 		<exclude-pattern type="relative">/views/*</exclude-pattern>
+		<exclude-pattern type="relative">/tests/*</exclude-pattern>
 	</rule>
 
 	<!-- Check all PHP files in directory tree by default. -->
