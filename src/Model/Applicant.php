@@ -572,7 +572,7 @@ final class Applicant extends CustomPostTypeEntity {
 		}
 
 		// Walk through the object properties, anonymizing them.
-		$properties = get_object_vars( $this );
+		$properties = array_diff_key( get_object_vars( $this ), $this->get_excluded_properties() );
 		array_walk_recursive( $properties, $this->get_anonymizer_callback( $anonymizer ) );
 
 		// Manually set anonymizer properties.
@@ -637,7 +637,7 @@ final class Applicant extends CustomPostTypeEntity {
 		}
 
 		// Walk through the object properties, unanonymizing them.
-		$properties = get_object_vars( $this );
+		$properties = array_diff_key( get_object_vars( $this ), $this->get_excluded_properties() );
 		array_walk_recursive( $properties, $this->get_unanonymizer_callback( $anonymizer ) );
 
 		// Set the anonymized property.
@@ -823,5 +823,26 @@ final class Applicant extends CustomPostTypeEntity {
 	 */
 	private function changed_property( $property ) {
 		$this->changes[ $property ] = true;
+	}
+
+	/**
+	 * Get properties to exclude from anonymizer.
+	 *
+	 * @since %VERSION%
+	 * @return array
+	 */
+	private function get_excluded_properties() {
+		static $properties = [];
+		if ( empty( $properties ) ) {
+			$properties = [
+				'anonymizer'   => 1,
+				'changes'      => 1,
+				'post'         => 1,
+				'new'          => 1,
+				'post_changed' => 1,
+			];
+		}
+
+		return $properties;
 	}
 }
