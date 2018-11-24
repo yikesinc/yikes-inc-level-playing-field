@@ -80,7 +80,6 @@ interface ApplicantMeta {
 	// Fields to make anonymous.
 	const ANONYMOUS_FIELDS = [
 		self::NAME         => 1,
-		self::EMAIL        => 1,
 		self::PHONE        => 1,
 		self::LINE_1       => 1,
 		self::LINE_2       => 1,
