@@ -28,21 +28,6 @@ use Yikes\LevelPlayingField\Taxonomy\ApplicantStatus;
  *
  * @since   %VERSION%
  * @package Yikes\LevelPlayingField
- *
- * @property string email          The Applicant email address.
- * @property int    job            The Job ID.
- * @property string name           The Applicant's name.
- * @property int    application    The Application ID.
- * @property string status         The Applicant status.
- * @property string cover_letter   The Applicant's cover letter.
- * @property array  schooling      The Applicant's schooling details.
- * @property array  certifications The Applicant's certifications.
- * @property array  skills         The Applicant's skills.
- * @property array  experience     The Applicant's experience.
- * @property array  volunteer      The Applicant's volunteer work.
- * @property string nickname       The Applicant's nickname (for use when their data is anonymous).
- * @property bool   anonymized     Whether the applicant is anonymized.
- * @property int    viewed         User ID who viewed the applicant.
  */
 final class Applicant extends CustomPostTypeEntity {
 
