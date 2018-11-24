@@ -217,8 +217,12 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @return string The avatar image tag, or an empty string.
 	 */
 	public function get_avatar_img( $size = 32 ) {
+		/*
+		 * Use different arguments depending on whether the applicant is anonymized.
+		 * Non-anonymized applicants are allowed to show their regular avatars.
+		 */
 		$avatar = get_avatar( $this->get_email(), $size, 'identicon', '', [
-			'force_default' => true,
+			'force_default' => $this->is_anonymized(),
 			'force_display' => true,
 		] );
 
