@@ -195,7 +195,7 @@ final class ApplicantManager implements AssetsAware, Service {
 				<h2><?php esc_html_e( 'Experience', 'yikes-level-playing-field' ); ?></h2>
 				<ol>
 					<?php
-					foreach ( $applicant->get_job_experience() as $experience ) {
+					foreach ( $applicant->get_experience() as $experience ) {
 						printf(
 							'<li>%s in %s for x years</li>',
 							esc_html( $experience['position'] ),

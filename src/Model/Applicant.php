@@ -386,7 +386,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @since %VERSION%
 	 * @return array
 	 */
-	public function get_job_experience() {
+	public function get_experience() {
 		return $this->experience;
 	}
 
