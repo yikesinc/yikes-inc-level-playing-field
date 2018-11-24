@@ -172,14 +172,17 @@ final class ApplicantManager implements AssetsAware, Service {
 			<section id="skills">
 				<h2><?php esc_html_e( 'Skills', 'yikes-level-playing-field' ); ?></h2>
 				<table>
+					<tr>
+						<th><?php esc_html_e( 'Skill', 'yikes-level-playing-field' ); ?></th>
+						<th><?php esc_html_e( 'Proficiency', 'yikes-level-playing-field' ); ?></th>
+					</tr>
 					<?php
 					foreach ( $applicant->get_skills() as $skill ) {
-						?>
-						<tr>
-							<td><?php echo esc_html( $skill['skill'] ); ?></td>
-							<td><?php echo esc_html( $skill['proficiency'] ); ?></td>
-						</tr>
-						<?php
+						printf(
+							'<tr><td>%s</td><td>%s</td></tr>',
+							esc_html( $skill['skill'] ),
+							esc_html( $skill['proficiency'] )
+						);
 					}
 					?>
 				</table>
