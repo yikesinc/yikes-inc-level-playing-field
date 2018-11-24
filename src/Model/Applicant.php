@@ -84,6 +84,14 @@ final class Applicant extends CustomPostTypeEntity {
 		],
 		ApplicantMeta::NICKNAME       => FILTER_SANITIZE_STRING,
 		ApplicantMeta::VIEWED         => FILTER_SANITIZE_NUMBER_INT,
+		ApplicantMeta::ADDRESS        => [
+			ApplicantMeta::LINE_1  => FILTER_SANITIZE_STRING,
+			ApplicantMeta::LINE_2  => FILTER_SANITIZE_STRING,
+			ApplicantMeta::CITY    => FILTER_SANITIZE_STRING,
+			ApplicantMeta::STATE   => FILTER_SANITIZE_STRING,
+			ApplicantMeta::COUNTRY => FILTER_SANITIZE_STRING,
+			ApplicantMeta::ZIP     => FILTER_SANITIZE_NUMBER_INT,
+		],
 	];
 
 	/**
@@ -315,7 +323,10 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @param array $certification The certification data.
 	 */
 	public function add_certification( array $certification ) {
-		$this->{ApplicantMeta::CERTIFICATIONS}[] = $this->filter_and_sanitize( $certification, ApplicantMeta::CERTIFICATIONS );
+		$this->{ApplicantMeta::CERTIFICATIONS}[] = $this->filter_and_sanitize(
+			$certification,
+			ApplicantMeta::CERTIFICATIONS
+		);
 		$this->changed_property( ApplicantMeta::CERTIFICATIONS );
 	}
 
@@ -491,6 +502,38 @@ final class Applicant extends CustomPostTypeEntity {
 	 */
 	public function set_nickname( $nickname ) {
 		$this->set_property( ApplicantMeta::NICKNAME, $nickname );
+	}
+
+	/**
+	 * Get the address of the applicant.
+	 *
+	 * When the applicant is anonymized, only the City and State will be returned.
+	 *
+	 * @since %VERSION%
+	 * @return array The address data.
+	 */
+	public function get_address() {
+		return $this->is_anonymized()
+			? array_intersect_key(
+				$this->{ApplicantMeta::ADDRESS},
+				[
+					ApplicantMeta::CITY  => 1,
+					ApplicantMeta::STATE => 1,
+				]
+			)
+			: $this->{ApplicantMeta::ADDRESS};
+	}
+
+	/**
+	 * Set the address of the Applicant.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param array $address The array of address data.
+	 */
+	public function set_address( $address ) {
+		$this->{ApplicantMeta::ADDRESS} = $this->filter_and_sanitize( $address, ApplicantMeta::ADDRESS );
+		$this->changed_property( ApplicantMeta::ADDRESS );
 	}
 
 	/**
@@ -712,6 +755,7 @@ final class Applicant extends CustomPostTypeEntity {
 			ApplicantMeta::ANONYMIZED     => false,
 			ApplicantMeta::ANONYMIZER     => '',
 			ApplicantMeta::VIEWED         => 0,
+			ApplicantMeta::ADDRESS        => [],
 		];
 	}
 

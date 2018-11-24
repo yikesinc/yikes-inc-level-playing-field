@@ -122,5 +122,6 @@ interface ApplicantMeta {
 		self::NICKNAME       => self::META_PREFIX . self::NICKNAME,
 		self::ANONYMIZED     => self::META_PREFIX . self::ANONYMIZED,
 		self::VIEWED         => self::META_PREFIX . self::VIEWED,
+		self::ADDRESS        => self::META_PREFIX . self::ADDRESS,
 	];
 }
