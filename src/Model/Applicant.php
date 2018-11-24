@@ -13,6 +13,7 @@ use WP_Term;
 use Yikes\LevelPlayingField\Anonymizer\AnonymizerInterface;
 use Yikes\LevelPlayingField\Exception\EmptyArray;
 use Yikes\LevelPlayingField\Exception\FailedToUnanonymize;
+use Yikes\LevelPlayingField\Exception\InvalidApplicantValue;
 use Yikes\LevelPlayingField\Exception\InvalidClass;
 use Yikes\LevelPlayingField\Exception\InvalidKey;
 use Yikes\LevelPlayingField\Field\Certifications;
@@ -119,8 +120,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @param string $status The status.
 	 */
 	public function set_status( $status ) {
-		$this->status = filter_var( $status, self::SANITIZATION[ ApplicantMeta::STATUS ] );
-		$this->changed_property( ApplicantMeta::STATUS );
+		$this->set_property( ApplicantMeta::STATUS, $status );
 	}
 
 	/**
@@ -141,8 +141,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @param string $email The applicant's email address.
 	 */
 	public function set_email( $email ) {
-		$this->email = filter_var( $email, self::SANITIZATION[ ApplicantMeta::EMAIL ] );
-		$this->changed_property( ApplicantMeta::EMAIL );
+		$this->set_property( ApplicantMeta::EMAIL, $email );
 	}
 
 	/**
@@ -163,8 +162,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @param int $job_id The job ID.
 	 */
 	public function set_job_id( $job_id ) {
-		$this->job = (int) filter_var( $job_id, self::SANITIZATION[ ApplicantMeta::JOB ] );
-		$this->changed_property( ApplicantMeta::JOB );
+		$this->set_property( ApplicantMeta::JOB, $job_id );
 	}
 
 	/**
@@ -185,8 +183,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @param string $name The applicant name.
 	 */
 	public function set_name( $name ) {
-		$this->name = filter_var( $name, self::SANITIZATION[ ApplicantMeta::NAME ] );
-		$this->changed_property( ApplicantMeta::NAME );
+		$this->set_property( ApplicantMeta::NAME, $name );
 	}
 
 	/**
@@ -207,8 +204,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @param int $id The application ID.
 	 */
 	public function set_application_id( $id ) {
-		$this->application = (int) filter_var( $id, self::SANITIZATION[ ApplicantMeta::APPLICATION ] );
-		$this->changed_property( ApplicantMeta::APPLICATION );
+		$this->set_property( ApplicantMeta::APPLICATION, $id );
 	}
 
 	/**
@@ -247,8 +243,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @param string $cover_letter The cover letter text.
 	 */
 	public function set_cover_letter( $cover_letter ) {
-		$this->cover_letter = filter_var( $cover_letter, self::SANITIZATION[ ApplicantMeta::COVER_LETTER ] );
-		$this->changed_property( ApplicantMeta::COVER_LETTER );
+		$this->set_property( ApplicantMeta::COVER_LETTER, $cover_letter );
 	}
 
 	/**
@@ -491,8 +486,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @param string $nickname The applicant nickname.
 	 */
 	public function set_nickname( $nickname ) {
-		$this->nickname = filter_var( $nickname, self::SANITIZATION[ ApplicantMeta::NICKNAME ] );
-		$this->changed_property( ApplicantMeta::NICKNAME );
+		$this->set_property( ApplicantMeta::NICKNAME, $nickname );
 	}
 
 	/**
@@ -523,8 +517,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @param int $id The user ID who viewed the applicant.
 	 */
 	public function set_viewed_by( $id ) {
-		$this->viewed = filter_var( $id, self::SANITIZATION[ ApplicantMeta::VIEWED ] );
-		$this->changed_property( ApplicantMeta::VIEWED );
+		$this->set_property( ApplicantMeta::VIEWED, $id );
 	}
 
 	/**
@@ -803,6 +796,30 @@ final class Applicant extends CustomPostTypeEntity {
 		}
 
 		return $data;
+	}
+
+	/**
+	 * Set a property for this Applicant.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param string $property The property to set.
+	 * @param string $value    The value of that property.
+	 *
+	 * @throws InvalidApplicantValue When the value is not valid, or when there is no sanitization setting.
+	 */
+	private function set_property( $property, $value ) {
+		if ( ! array_key_exists( $property, self::SANITIZATION ) ) {
+			throw InvalidApplicantValue::no_sanitization( $property );
+		}
+
+		$filtered = filter_var( $value, self::SANITIZATION[ $property ] );
+		if ( false === $value ) {
+			throw InvalidApplicantValue::property_value( $property, $value );
+		}
+
+		$this->$property = $filtered;
+		$this->changed_property( $property );
 	}
 
 	/**
