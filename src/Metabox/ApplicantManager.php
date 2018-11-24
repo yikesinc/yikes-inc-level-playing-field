@@ -121,8 +121,12 @@ final class ApplicantManager implements AssetsAware, Service {
 			<section id="basic-info">
 				<h2><?php esc_html_e( 'Basic Info', 'yikes-level-playing-field' ); ?></h2>
 				<p class="location"><span class="label"><?php esc_html_e( 'Location:', 'yikes-level-playing-field' ); ?></span>
-					City,
-					State</p>
+					<?php
+					foreach ( $applicant->get_address() as $field ) {
+						echo esc_html( $field ), '<br>';
+					}
+					?>
+				</p>
 				<p class="cover-letter">
 					<span class="label"><?php esc_html_e( 'Cover Letter:', 'yikes-level-playing-field' ); ?></span>
 					<a href="#"><?php esc_html_e( 'View Cover Letter', 'yikes-level-playing-field' ); ?></a>
