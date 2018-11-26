@@ -8,45 +8,39 @@
 
 $basefont: 16px;
 
-@mixin font-12 {font-size: 0.75rem;}
-@mixin font-13 {font-size: 0.812rem;}
-@mixin font-14 {font-size: 0.875rem;}
-@mixin font-15 {font-size: 0.937rem;}
-@mixin font-18 {font-size: 1.125rem;}
-@mixin font-20 {font-size: 1.25rem;}
-@mixin font-22 {font-size: 1.375rem;}
-@mixin font-24 {font-size: 1.5rem;}
-@mixin font-26 {font-size: 1.625rem;}
-@mixin font-28 {font-size: 1.75rem;}
-@mixin font-30 {font-size: 1.875rem;}
-@mixin font-32 {font-size: 2rem;}
-@mixin font-36 {font-size: 2.25rem;}
-@mixin font-40 {font-size: 2.5rem;}
-@mixin font-44 {font-size: 2.75rem;}
+@function calculaterem($size) {
+  $remsize: $size / $basefont;
+  @return #{$remsize}rem;
+}
+
+@mixin fontsize($size) {
+  font-size: $size; // Fallback in px
+  font-size: calculaterem($size);
+}
 
 h1, h2, h3, h4, h5, h6, p {
 	margin: 0;
 }
 h1 {
-	@include font-40;
+	@include fontsize(40px);
 }
 
 h2 {
-	@include font-32;
+	@include fontsize(32px);
 }
 
 h3 {
-	@include font-28;
+	@include fontsize(28px);
 }
 
 h4 {
-	@include font-24;
+	@include fontsize(24px);
 }
 
 h5 {
-	@include font-20;
+	@include fontsize(20px);
 }
 
 h6 {
-	@include font-18;
+	@include fontsize(18px);
 }

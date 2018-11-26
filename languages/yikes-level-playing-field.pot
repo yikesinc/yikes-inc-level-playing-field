@@ -670,20 +670,21 @@ msgctxt "column heading"
 msgid "Nick Name"
 msgstr ""
 
-#: src/ListTable/ApplicantManager.php:157
-msgid "No job set for applicant."
-msgstr ""
-
 #. translators: %s is the applicant ID
-#: src/ListTable/ApplicantManager.php:178
+#. translators: %s is the applicant ID
+#: src/ListTable/ApplicantManager.php:153, src/ListTable/ApplicantManager.php:188
 msgid "Edit Applicant &#8220;%s&#8221;"
 msgstr ""
 
-#: src/ListTable/ApplicantManager.php:179
+#: src/ListTable/ApplicantManager.php:167
+msgid "No job set for applicant."
+msgstr ""
+
+#: src/ListTable/ApplicantManager.php:189
 msgid "View"
 msgstr ""
 
-#: src/ListTable/ApplicantManager.php:229
+#: src/ListTable/ApplicantManager.php:239
 msgid "Filter Applicant Statuses"
 msgstr ""
 
@@ -711,49 +712,89 @@ msgstr ""
 msgid "Filter Job Categories"
 msgstr ""
 
-#: src/Metabox/ApplicantManager.php:88
+#: src/Metabox/ApplicantManager.php:109
 msgid "Nickname:"
 msgstr ""
 
-#: src/Metabox/ApplicantManager.php:102, src/Metabox/ApplicationManager.php:70, src/Metabox/ApplicationManager.php:76, src/Metabox/ApplicationManager.php:85
+#: src/Metabox/ApplicantManager.php:112
+msgid "Edit"
+msgstr ""
+
+#: src/Metabox/ApplicantManager.php:116
+msgid "Job:"
+msgstr ""
+
+#: src/Metabox/ApplicantManager.php:122, src/Metabox/ApplicationManager.php:70, src/Metabox/ApplicationManager.php:76, src/Metabox/ApplicationManager.php:85
 msgid "Basic Info"
 msgstr ""
 
-#: src/Metabox/ApplicantManager.php:115, src/Metabox/ApplicationManager.php:131
+#: src/Metabox/ApplicantManager.php:123, views/job-page-job.php:41
+msgid "Location:"
+msgstr ""
+
+#: src/Metabox/ApplicantManager.php:127
+msgid "Cover Letter:"
+msgstr ""
+
+#: src/Metabox/ApplicantManager.php:128
+msgid "View Cover Letter"
+msgstr ""
+
+#: src/Metabox/ApplicantManager.php:139, src/Metabox/ApplicationManager.php:131
 msgid "Education"
 msgstr ""
 
-#: src/Metabox/ApplicantManager.php:116, src/Metabox/ApplicationManager.php:136, src/Metabox/ApplicationManager.php:137
+#: src/Metabox/ApplicantManager.php:140, src/Metabox/ApplicationManager.php:136, src/Metabox/ApplicationManager.php:137
 msgid "Schooling"
 msgstr ""
 
-#: src/Metabox/ApplicantManager.php:129, src/Metabox/ApplicationManager.php:152, src/Metabox/ApplicationManager.php:153
+#: src/Metabox/ApplicantManager.php:153, src/Metabox/ApplicationManager.php:152, src/Metabox/ApplicationManager.php:153
 msgid "Certifications"
 msgstr ""
 
-#: src/Metabox/ApplicantManager.php:144, src/Metabox/ApplicationManager.php:170
+#: src/Metabox/ApplicantManager.php:169, src/Metabox/ApplicationManager.php:170
 msgid "Skills"
 msgstr ""
 
-#: src/Metabox/ApplicantManager.php:165, src/Metabox/ApplicationManager.php:185
+#: src/Metabox/ApplicantManager.php:185, src/Metabox/ApplicationManager.php:185
 msgid "Languages"
 msgstr ""
 
-#: src/Metabox/ApplicantManager.php:166
-msgid "Multingual"
+#: src/Metabox/ApplicantManager.php:186
+msgid "Multilingual"
 msgstr ""
 
-#: src/Metabox/ApplicantManager.php:174, src/Metabox/ApplicationManager.php:200, src/Metabox/ApplicationManager.php:205, src/Metabox/ApplicationManager.php:206
+#: src/Metabox/ApplicantManager.php:195, src/Metabox/ApplicationManager.php:200, src/Metabox/ApplicationManager.php:205, src/Metabox/ApplicationManager.php:206
 msgid "Experience"
 msgstr ""
 
-#: src/Metabox/ApplicantManager.php:189, src/Metabox/ApplicationManager.php:223, src/Metabox/ApplicationManager.php:228, src/Metabox/ApplicationManager.php:229
+#: src/Metabox/ApplicantManager.php:211, src/Metabox/ApplicationManager.php:223, src/Metabox/ApplicationManager.php:228, src/Metabox/ApplicationManager.php:229
 msgid "Volunteer Work"
 msgstr ""
 
-#: src/Metabox/ApplicantManager.php:236
+#: src/Metabox/ApplicantManager.php:258
+msgctxt "undo action to edit nickname when viewing an applicant"
+msgid "Cancel"
+msgstr ""
+
+#: src/Metabox/ApplicantManager.php:259
+msgctxt "hide cover letter when viewing an applicant"
+msgid "Hide Cover Letter"
+msgstr ""
+
+#: src/Metabox/ApplicantManager.php:260
+msgctxt "confirm action to edit nickname when viewing an applicant"
+msgid "OK"
+msgstr ""
+
+#: src/Metabox/ApplicantManager.php:262
 msgctxt "heading when viewing an applicant"
 msgid "Applicants | Applicant ID"
+msgstr ""
+
+#: src/Metabox/ApplicantManager.php:263
+msgctxt "view cover letter when viewing an applicant"
+msgid "View Cover Letter"
 msgstr ""
 
 #: src/Metabox/ApplicationManager.php:81
@@ -772,7 +813,7 @@ msgstr ""
 msgid "Phone Number"
 msgstr ""
 
-#: src/Metabox/ApplicationManager.php:113, src/Metabox/ApplicationManager.php:114, src/Metabox/JobManager.php:180, src/Metabox/JobManager.php:190
+#: src/Metabox/ApplicationManager.php:113, src/Metabox/ApplicationManager.php:114, src/Metabox/JobManager.php:181
 msgid "Address"
 msgstr ""
 
@@ -792,16 +833,20 @@ msgstr ""
 msgid "Dates"
 msgstr ""
 
-#: src/Metabox/JobManager.php:123, src/Metabox/JobManager.php:129
+#: src/Metabox/JobManager.php:123
+msgid "Job Listing Information"
+msgstr ""
+
+#: src/Metabox/JobManager.php:129
 msgid "General Info"
 msgstr ""
 
-#: src/Metabox/JobManager.php:134, src/Taxonomy/ApplicantStatus.php:237, src/Taxonomy/JobStatus.php:61
-msgid "Status"
+#: src/Metabox/JobManager.php:134
+msgid "Job Status"
 msgstr ""
 
 #: src/Metabox/JobManager.php:135
-msgid "The job status"
+msgid "Is this job currently active or inactive"
 msgstr ""
 
 #: src/Metabox/JobManager.php:141
@@ -844,20 +889,28 @@ msgstr ""
 msgid "Location"
 msgstr ""
 
-#: src/Metabox/JobManager.php:184
+#: src/Metabox/JobManager.php:176
+msgid "Is this job at a location or can employees work remotely"
+msgstr ""
+
+#: src/Metabox/JobManager.php:185
 msgid "Remote"
 msgstr ""
 
 #: src/Metabox/JobManager.php:191
+msgid "Location Address"
+msgstr ""
+
+#: src/Metabox/JobManager.php:192
 msgid "Address where the job is located"
 msgstr ""
 
-#: src/Metabox/JobManager.php:196
-msgid "Application"
+#: src/Metabox/JobManager.php:197
+msgid "Application Form"
 msgstr ""
 
-#: src/Metabox/JobManager.php:197
-msgid "The application to use for this job"
+#: src/Metabox/JobManager.php:198
+msgid "Choose the application form to use for this job"
 msgstr ""
 
 #: src/Model/ApplicantRepository.php:220
@@ -893,77 +946,102 @@ msgstr ""
 msgid "The term \"%s\" is not a valid Applicant status."
 msgstr ""
 
-#: src/Taxonomy/ApplicantStatus.php:238, src/Taxonomy/JobStatus.php:62
+#: src/Taxonomy/ApplicantStatus.php:240, src/Taxonomy/JobStatus.php:61
+msgid "Status"
+msgstr ""
+
+#: src/Taxonomy/ApplicantStatus.php:241, src/Taxonomy/JobStatus.php:62
 msgctxt "taxonomy general name"
 msgid "Status"
 msgstr ""
 
-#: src/Taxonomy/ApplicantStatus.php:239, src/Taxonomy/JobStatus.php:63
+#: src/Taxonomy/ApplicantStatus.php:242, src/Taxonomy/JobStatus.php:63
 msgid "Search Statuses"
 msgstr ""
 
-#: src/Taxonomy/ApplicantStatus.php:240, src/Taxonomy/JobStatus.php:64
+#: src/Taxonomy/ApplicantStatus.php:243, src/Taxonomy/JobStatus.php:64
 msgid "Popular Statuses"
 msgstr ""
 
-#: src/Taxonomy/ApplicantStatus.php:241, src/Taxonomy/JobStatus.php:65
+#: src/Taxonomy/ApplicantStatus.php:244, src/Taxonomy/JobStatus.php:65
 msgid "All Statuses"
 msgstr ""
 
-#: src/Taxonomy/ApplicantStatus.php:242, src/Taxonomy/JobStatus.php:66
+#: src/Taxonomy/ApplicantStatus.php:245, src/Taxonomy/JobStatus.php:66
 msgid "Parent Status"
 msgstr ""
 
-#: src/Taxonomy/ApplicantStatus.php:243, src/Taxonomy/JobStatus.php:67
+#: src/Taxonomy/ApplicantStatus.php:246, src/Taxonomy/JobStatus.php:67
 msgid "Parent Status:"
 msgstr ""
 
-#: src/Taxonomy/ApplicantStatus.php:244, src/Taxonomy/JobStatus.php:68
+#: src/Taxonomy/ApplicantStatus.php:247, src/Taxonomy/JobStatus.php:68
 msgid "Edit Status"
 msgstr ""
 
-#: src/Taxonomy/ApplicantStatus.php:245, src/Taxonomy/JobStatus.php:69
+#: src/Taxonomy/ApplicantStatus.php:248, src/Taxonomy/JobStatus.php:69
 msgid "Update Status"
 msgstr ""
 
-#: src/Taxonomy/ApplicantStatus.php:246, src/Taxonomy/ApplicantStatus.php:247, src/Taxonomy/JobStatus.php:70, src/Taxonomy/JobStatus.php:71
+#: src/Taxonomy/ApplicantStatus.php:249, src/Taxonomy/ApplicantStatus.php:250, src/Taxonomy/JobStatus.php:70, src/Taxonomy/JobStatus.php:71
 msgid "New Status"
 msgstr ""
 
-#: src/Taxonomy/ApplicantStatus.php:248, src/Taxonomy/JobStatus.php:72
+#: src/Taxonomy/ApplicantStatus.php:251, src/Taxonomy/JobStatus.php:72
 msgid "Separate Statuses with commas"
 msgstr ""
 
-#: src/Taxonomy/ApplicantStatus.php:249, src/Taxonomy/JobStatus.php:73
+#: src/Taxonomy/ApplicantStatus.php:252, src/Taxonomy/JobStatus.php:73
 msgid "Add or remove Statuses"
 msgstr ""
 
-#: src/Taxonomy/ApplicantStatus.php:250, src/Taxonomy/JobStatus.php:74
+#: src/Taxonomy/ApplicantStatus.php:253, src/Taxonomy/JobStatus.php:74
 msgid "Choose from the most used Statuses"
 msgstr ""
 
-#: src/Taxonomy/ApplicantStatus.php:251, src/Taxonomy/JobStatus.php:75
+#: src/Taxonomy/ApplicantStatus.php:254, src/Taxonomy/JobStatus.php:75
 msgid "No Statuses found."
 msgstr ""
 
-#: src/Taxonomy/ApplicantStatus.php:252, src/Taxonomy/JobStatus.php:76
+#: src/Taxonomy/ApplicantStatus.php:255, src/Taxonomy/JobStatus.php:76
 msgid "Statuses"
 msgstr ""
 
-#: src/Taxonomy/ApplicantStatus.php:279
+#: src/Taxonomy/ApplicantStatus.php:282
 msgid "Acceptance is pending"
 msgstr ""
 
-#: src/Taxonomy/ApplicantStatus.php:283
+#: src/Taxonomy/ApplicantStatus.php:286
 msgid "Accept the applicant"
 msgstr ""
 
-#: src/Taxonomy/ApplicantStatus.php:287
+#: src/Taxonomy/ApplicantStatus.php:290
 msgid "Do not accept the applicant"
 msgstr ""
 
-#: src/Taxonomy/ApplicantStatus.php:291
+#: src/Taxonomy/ApplicantStatus.php:294
 msgid "Maybe accept the applicant"
+msgstr ""
+
+#: src/Taxonomy/ApplicantStatus.php:310
+msgid "An error occurred: Failed to validate the nonce."
+msgstr ""
+
+#: src/Taxonomy/ApplicantStatus.php:320
+msgid "An error occurred: the term or post ID failed validation."
+msgstr ""
+
+#. translators: the placeholder is an error message returned by the WP_Error object
+#: src/Taxonomy/ApplicantStatus.php:330
+msgid "An error occurred: %s"
+msgstr ""
+
+#: src/Taxonomy/ApplicantStatus.php:335
+msgid "An error occurred: Failed to set post term."
+msgstr ""
+
+#: src/Taxonomy/ApplicantStatus.php:341
+msgid "Term successfully set."
 msgstr ""
 
 #: src/Taxonomy/JobCategory.php:48, src/Taxonomy/JobCategory.php:63
@@ -1050,10 +1128,6 @@ msgstr ""
 
 #: views/job-page-job.php:36
 msgid "Type:"
-msgstr ""
-
-#: views/job-page-job.php:41
-msgid "Location:"
 msgstr ""
 
 #: views/job-page-job.php:44

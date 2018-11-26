@@ -10,6 +10,6 @@
 /// LPF Admin-side forms
 
 @mixin lpf-form-smaller-font {
-	@include font-14
+	@include fontsize(14px);
     font-weight: 400;
 }

@@ -220,7 +220,7 @@ final class JobManager extends AwesomeBaseMetabox implements AssetsAware {
 	/**
 	 * Get the array of known assets.
 	 *
-	 * @since 1.0
+	 * @since %VERSION%
 	 *
 	 * @return Asset[]
 	 */
