@@ -1,15 +1,15 @@
 //--------------------------------------------------------------
-// Form Variables
+// Form Mixins
 //--------------------------------------------------------------
 
 ////
-/// @group variables
+/// @group mixins
 ////
 
 
 /// LPF Admin-side forms
 
-$lpf-padding-right: 0.6rem;
-
-$lpf-margin-bottom: 1rem;
-$lpf-margin-bottom2: 0.5rem;
+@mixin lpf-form-smaller-font {
+	@include fontsize(14px);
+    font-weight: 400;
+}
