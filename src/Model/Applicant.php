@@ -868,11 +868,11 @@ final class Applicant extends CustomPostTypeEntity {
 		static $properties = [];
 		if ( empty( $properties ) ) {
 			$properties = [
-				'anonymizer'   => 1,
-				'changes'      => 1,
-				'post'         => 1,
-				'new'          => 1,
-				'post_changed' => 1,
+				ApplicantMeta::ANONYMIZER => 1,
+				'changes'                 => 1,
+				'post'                    => 1,
+				'new'                     => 1,
+				'post_changed'            => 1,
 			];
 		}
 

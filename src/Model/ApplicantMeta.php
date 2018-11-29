@@ -83,6 +83,7 @@ interface ApplicantMeta {
 		self::PHONE        => 1,
 		self::LINE_1       => 1,
 		self::LINE_2       => 1,
+		self::ZIP          => 1,
 		self::INSTITUTION  => 1,
 		self::YEAR         => 1,
 		self::ORGANIZATION => 1,
