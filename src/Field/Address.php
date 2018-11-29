@@ -9,6 +9,8 @@
 
 namespace Yikes\LevelPlayingField\Field;
 
+use Yikes\LevelPlayingField\Model\ApplicantMeta;
+
 /**
  * Class Address
  *
@@ -36,23 +38,23 @@ class Address extends ComplexField {
 		 * @param array $fields Array of address fields.
 		 */
 		return apply_filters( 'lpf_field_address_fields', [
-			'address-1' => [
+			ApplicantMeta::LINE_1  => [
 				'label' => esc_html__( 'Line 1', 'yikes-level-playing-field' ),
 			],
-			'address-2' => [
+			ApplicantMeta::LINE_2  => [
 				'label'    => esc_html__( 'Line 2', 'yikes-level-playing-field' ),
 				'required' => false,
 			],
-			'city'      => [
+			ApplicantMeta::CITY    => [
 				'label' => esc_html__( 'City', 'yikes-level-playing-field' ),
 			],
-			'state'     => [
+			ApplicantMeta::STATE   => [
 				'label' => esc_html__( 'State', 'yikes-level-playing-field' ),
 			],
-			'country'   => [
+			ApplicantMeta::COUNTRY => [
 				'label' => esc_html__( 'Country', 'yikes-level-playing-field' ),
 			],
-			'zip'       => [
+			ApplicantMeta::ZIP     => [
 				'label' => esc_html__( 'Postal Code', 'yikes-level-playing-field' ),
 				'class' => Types::POSTAL_CODE,
 			],

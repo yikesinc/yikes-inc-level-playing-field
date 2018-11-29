@@ -52,10 +52,21 @@ interface ApplicantMeta {
 	const INDUSTRY      = 'industry';
 	const DATES         = 'dates';
 	const POSITION      = 'position';
+	const START_DATE    = 'start_date';
+	const END_DATE      = 'end_date';
+
+	// Address Fields.
+	const LINE_1  = 'address-1';
+	const LINE_2  = 'address-2';
+	const CITY    = 'city';
+	const STATE   = 'state';
+	const COUNTRY = 'country';
+	const ZIP     = 'zip';
 
 	// Fields for other objects.
 	const JOB         = JobManager::SINGULAR_SLUG;
 	const APPLICATION = ApplicationManager::SINGULAR_SLUG;
+	const ANONYMIZER  = 'anonymizer';
 
 	// Complex fields.
 	const SCHOOLING      = 'schooling';
@@ -69,13 +80,16 @@ interface ApplicantMeta {
 	// Fields to make anonymous.
 	const ANONYMOUS_FIELDS = [
 		self::NAME         => 1,
-		self::EMAIL        => 1,
 		self::PHONE        => 1,
-		self::ADDRESS      => 1,
+		self::LINE_1       => 1,
+		self::LINE_2       => 1,
+		self::ZIP          => 1,
 		self::INSTITUTION  => 1,
 		self::YEAR         => 1,
 		self::ORGANIZATION => 1,
 		self::DATES        => 1,
+		self::START_DATE   => 1,
+		self::END_DATE     => 1,
 	];
 
 	const FIELD_MAP = [
@@ -108,5 +122,6 @@ interface ApplicantMeta {
 		self::NICKNAME       => self::META_PREFIX . self::NICKNAME,
 		self::ANONYMIZED     => self::META_PREFIX . self::ANONYMIZED,
 		self::VIEWED         => self::META_PREFIX . self::VIEWED,
+		self::ADDRESS        => self::META_PREFIX . self::ADDRESS,
 	];
 }
