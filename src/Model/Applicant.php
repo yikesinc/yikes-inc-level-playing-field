@@ -525,7 +525,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * Whether this applicant's data is currently anonymized.
 	 *
 	 * @since %VERSION%
-	 * @return mixed
+	 * @return bool
 	 */
 	public function is_anonymized() {
 		return (bool) $this->{ApplicantMeta::ANONYMIZED};
