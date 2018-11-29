@@ -16,6 +16,7 @@ use Yikes\LevelPlayingField\Exception\FailedToUnanonymize;
 use Yikes\LevelPlayingField\Exception\InvalidApplicantValue;
 use Yikes\LevelPlayingField\Exception\InvalidClass;
 use Yikes\LevelPlayingField\Exception\InvalidKey;
+use Yikes\LevelPlayingField\Exception\InvalidMethod;
 use Yikes\LevelPlayingField\Field\Certifications;
 use Yikes\LevelPlayingField\Field\Experience;
 use Yikes\LevelPlayingField\Field\Schooling;
@@ -598,7 +599,7 @@ final class Applicant extends CustomPostTypeEntity {
 
 		// Walk through the object properties, anonymizing them.
 		$properties = array_diff_key( get_object_vars( $this ), $this->get_excluded_properties() );
-		array_walk_recursive( $properties, $this->get_anonymizer_callback( $anonymizer ) );
+		array_walk_recursive( $properties, $this->get_anonymizer_callback( $anonymizer, 'anonymize' ) );
 
 		// Manually set anonymizer properties.
 		$properties[ ApplicantMeta::ANONYMIZED ] = true;
@@ -616,12 +617,19 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @since %VERSION%
 	 *
 	 * @param AnonymizerInterface $anonymizer The anonymizer object.
+	 * @param string              $method     The method to use from the anonymizer class.
 	 *
 	 * @return \Closure
+	 * @throws InvalidMethod When the method provided doesn't exist for the anonymizer object.
 	 */
-	private function get_anonymizer_callback( AnonymizerInterface $anonymizer ) {
+	private function get_anonymizer_callback( AnonymizerInterface $anonymizer, $method ) {
+		// Sanity check: make sure the method exists.
+		if ( ! method_exists( $anonymizer, $method ) ) {
+			throw InvalidMethod::from_method( $anonymizer, $method );
+		}
+
 		$defaults = $this->get_lazy_properties();
-		return function( &$value, $key ) use ( $anonymizer, $defaults ) {
+		return function( &$value, $key ) use ( $anonymizer, $defaults, $method ) {
 			if ( ! array_key_exists( $key, ApplicantMeta::ANONYMOUS_FIELDS ) ) {
 				return;
 			}
@@ -630,7 +638,7 @@ final class Applicant extends CustomPostTypeEntity {
 				return;
 			}
 
-			$value = $anonymizer->anonymize( $value );
+			$value = $anonymizer->{$method}( $value );
 		};
 	}
 
@@ -664,7 +672,7 @@ final class Applicant extends CustomPostTypeEntity {
 
 		// Walk through the object properties, unanonymizing them.
 		$properties = array_diff_key( get_object_vars( $this ), $this->get_excluded_properties() );
-		array_walk_recursive( $properties, $this->get_unanonymizer_callback( $anonymizer ) );
+		array_walk_recursive( $properties, $this->get_anonymizer_callback( $anonymizer, 'reveal' ) );
 
 		// Set the anonymized property.
 		$properties[ ApplicantMeta::ANONYMIZED ] = false;
@@ -672,32 +680,6 @@ final class Applicant extends CustomPostTypeEntity {
 
 		// Copy the changed properties back.
 		$this->update_properties( $properties );
-	}
-
-	/**
-	 * Get the callback for unanonymizing.
-	 *
-	 * The Closure that is returned by this method is expected to be compatible with array_walk_recursive().
-	 *
-	 * @since %VERSION%
-	 *
-	 * @param AnonymizerInterface $anonymizer The anonymizer object.
-	 *
-	 * @return \Closure
-	 */
-	private function get_unanonymizer_callback( AnonymizerInterface $anonymizer ) {
-		$defaults = $this->get_lazy_properties();
-		return function( &$value, $key ) use ( $anonymizer, $defaults ) {
-			if ( ! array_key_exists( $key, ApplicantMeta::ANONYMOUS_FIELDS ) ) {
-				return;
-			}
-
-			if ( isset( $defaults[ $key ] ) && $value === $defaults[ $key ] ) {
-				return;
-			}
-
-			$value = $anonymizer->reveal( $value );
-		};
 	}
 
 	/**
