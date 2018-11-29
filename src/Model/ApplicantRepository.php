@@ -121,32 +121,6 @@ class ApplicantRepository extends CustomPostTypeRepository {
 	}
 
 	/**
-	 * Get the count of new (unviewed) applicants for a given Job ID.
-	 *
-	 * @since %VERSION%
-	 *
-	 * @param int $job_id The Job ID.
-	 *
-	 * @return int The count of new applicants for the Job.
-	 */
-	public function get_new_applicant_count_for_job( $job_id ) {
-		$args = $this->get_default_query_vars();
-
-		// Specifics for this query.
-		$args['posts_per_page'] = 1;
-		$args['fields']         = 'ids';
-		$args['meta_query'][]   = $this->get_job_meta_query( $job_id );
-		$args['meta_query'][]   = [
-			'key'     => ApplicantMeta::META_PREFIXES['viewed'],
-			'compare' => 'NOT EXISTS',
-		];
-
-		$query = new WP_Query( $args );
-
-		return absint( $query->found_posts );
-	}
-
-	/**
 	 * Get Applicants that have applied for a particular job.
 	 *
 	 * @since %VERSION%

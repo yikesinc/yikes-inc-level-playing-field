@@ -18,10 +18,8 @@ use Yikes\LevelPlayingField\Assets\ScriptAsset;
 use Yikes\LevelPlayingField\CustomPostType\ApplicantManager as ApplicantManagerCPT;
 use Yikes\LevelPlayingField\Exception\InvalidPostID;
 use Yikes\LevelPlayingField\Model\Applicant;
-use Yikes\LevelPlayingField\Model\ApplicantMeta;
 use Yikes\LevelPlayingField\Model\ApplicantRepository;
 use Yikes\LevelPlayingField\Model\JobRepository;
-use Yikes\LevelPlayingField\Model\MetaLinks;
 use Yikes\LevelPlayingField\Roles\Capabilities;
 use Yikes\LevelPlayingField\Taxonomy\ApplicantStatus;
 
@@ -105,7 +103,6 @@ final class ApplicantManager extends BasePostType implements AssetsAware {
 				'nickname'                     => _x( 'Nick Name', 'column heading', 'yikes-level-playing-field' ),
 				"taxonomy-{$status_tax->name}" => $status_tax->label,
 				'date'                         => $original_columns['date'],
-				'viewed'                       => _x( 'Viewed by', 'column heading', 'yikes-level-playing-field' ),
 			];
 
 			// Only show the view column if the user can edit.
@@ -182,13 +179,6 @@ final class ApplicantManager extends BasePostType implements AssetsAware {
 				echo esc_html( $applicants[ $post_id ]->get_nickname() );
 				break;
 
-			case 'viewed':
-				$viewed = $applicants[ $post_id ]->viewed_by() === 0
-					? __( 'No one', 'yikes-level-playing-field' ) :
-					get_user_meta( $applicants[ $post_id ]->viewed_by(), 'nickname', true );
-				echo esc_html( $viewed );
-				break;
-
 			case 'view':
 				if ( current_user_can( Capabilities::EDIT_APPLICANT, $post_id ) ) {
 					printf(
@@ -215,7 +205,6 @@ final class ApplicantManager extends BasePostType implements AssetsAware {
 		if ( 'top' === $which ) {
 			$this->applicant_status_dropdown_filter();
 			$this->jobs_dropdown_filter();
-			$this->viewed_dropdown_filter();
 		}
 	}
 
@@ -254,100 +243,12 @@ final class ApplicantManager extends BasePostType implements AssetsAware {
 	}
 
 	/**
-	 * Output a custom dropdown for the viewed status.
-	 *
-	 * @since %VERSION%
-	 */
-	private function viewed_dropdown_filter() {
-		global $wpdb;
-		$meta_key = ApplicantMeta::META_PREFIXES[ ApplicantMeta::VIEWED ];
-		$current_viewed = isset( $_GET[ ApplicantMeta::VIEWED ] ) ? $_GET[ ApplicantMeta::VIEWED ] : 'all';
-		// Query for all unique views.
-		$result = $wpdb->get_col(
-			$wpdb->prepare( "
-				SELECT DISTINCT meta_value FROM $wpdb->postmeta
-				WHERE meta_key = %s
-				ORDER BY meta_value",
-				$meta_key
-			)
-		);
-		?>
-		<select name="<?php echo esc_attr( ApplicantMeta::VIEWED ); ?>" id="<?php echo esc_attr( ApplicantMeta::VIEWED ); ?>">
-			<option value="all" <?php selected( 'all', $current_viewed ); ?>><?php esc_html_e( 'All Viewed', 'yikes-level-playing-field' ); ?></option>
-			<option value="none" <?php selected( 'none', $current_viewed ); ?>><?php esc_html_e( 'No One Viewed', 'yikes-level-playing-field' ); ?></option>
-			<?php foreach ( $result as $user_id ) { ?>
-				<option value="<?php echo esc_attr( $user_id ); ?>" <?php selected( $user_id, $current_viewed ); ?>><?php echo esc_html( get_user_meta( $user_id, 'nickname', true ) ); ?></option>
-			<?php } ?>
-		</select>
-		<?php
-	}
-
-	/**
 	 * Output a custom dropdown for the available jobs.
 	 *
 	 * @since %VERSION%
 	 */
 	private function jobs_dropdown_filter() {
-		$ids         = ( new JobRepository() )->find_all_item_ids();
-		$meta_key    = MetaLinks::JOB;
-		$current_job = isset( $_GET[ $meta_key ] ) ? $_GET[ $meta_key ] : 'all';
-		?>
-		<select name="<?php echo esc_attr( $meta_key ); ?>" id="<?php echo esc_attr( $meta_key ); ?>">
-			<option value="all" <?php selected( 'all', $current_job ); ?>><?php esc_html_e( 'All Jobs', 'yikes-level-playing-field' ); ?></option>
-			<?php foreach ( $ids as $job_id ) { ?>
-				<option value="<?php echo esc_attr( $job_id ); ?>" <?php selected( $job_id, $current_job ); ?>><?php echo esc_html( get_the_title( $job_id ) ); ?></option>
-			<?php } ?>
-		</select>
-		<?php
-	}
-
-	/**
-	 * Modifies current query variables.
-	 *
-	 * @since %VERSION%
-	 */
-	public function custom_query_vars() {
-		/**
-		 * This is hooked to the parse_query action, which is triggered for all queries, including the frontend.
-		 * The get_current_screen() function is only available in the admin area.
-		 * Check if function exists before execution.
-		*/
-		if ( ! function_exists( 'get_current_screen' ) ) {
-			return;
-		}
-		$screen = get_current_screen();
-
-		// Check if current page is edit page for post type applicant.
-		if ( "edit-{$this->get_post_type()}" !== $screen->id ) {
-			return;
-		}
-
-		$meta_query = [];
-		if ( isset( $_GET[ ApplicantMeta::VIEWED ] ) && 'all' !== $_GET[ ApplicantMeta::VIEWED ] && isset( $_GET[ MetaLinks::JOB ] ) && 'all' !== $_GET[ MetaLinks::JOB ] ) {
-			$meta_query['relation'] = 'AND';
-		}
-		if ( isset( $_GET[ ApplicantMeta::VIEWED ] ) && 'all' !== $_GET[ ApplicantMeta::VIEWED ] ) {
-			if ( 'none' === $_GET[ ApplicantMeta::VIEWED ] ) {
-				$meta_query[] = [
-					'key'     => ApplicantMeta::META_PREFIXES['viewed'],
-					'compare' => 'NOT EXISTS',
-				];
-			} else {
-				$meta_query[] = [
-					'key'     => ApplicantMeta::META_PREFIXES['viewed'],
-					'value'   => $_GET[ ApplicantMeta::VIEWED ],
-					'compare' => '=',
-				];
-			}
-		}
-		if ( isset( $_GET[ MetaLinks::JOB ] ) && 'all' !== $_GET[ MetaLinks::JOB ] ) {
-			$meta_query[] = [
-				'key'     => MetaLinks::JOB,
-				'value'   => $_GET[ MetaLinks::JOB ],
-				'compare' => '=',
-			];
-		}
-		set_query_var( 'meta_query', $meta_query );
+		// @todo: make the dropdown filter for jobs.
 	}
 
 	/**
