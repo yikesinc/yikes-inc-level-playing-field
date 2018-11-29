@@ -1,0 +1,20 @@
+#yikes_lpf_applicant_widget {
+  .inside {
+    text-align: right;
+    table {
+      width: 100%;
+      text-align: center;
+      margin-bottom: 1rem;
+      border-spacing: 0;
+      thead tr th {
+        border-bottom: 1px solid #dee2e6;
+      }
+      thead tr th:first-child, tbody tr td:first-child {
+        text-align: left;
+      }
+      th, td {
+        padding: .5rem;
+      }
+    }
+  }
+}
