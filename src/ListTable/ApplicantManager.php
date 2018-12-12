@@ -260,8 +260,8 @@ final class ApplicantManager extends BasePostType implements AssetsAware {
 	 */
 	private function viewed_dropdown_filter() {
 		global $wpdb;
-		$meta_key = ApplicantMeta::META_PREFIXES[ ApplicantMeta::VIEWED ];
-		$current_viewed = isset( $_GET[ ApplicantMeta::VIEWED ] ) ? $_GET[ ApplicantMeta::VIEWED ] : 'all';
+		$meta_key       = ApplicantMeta::META_PREFIXES[ ApplicantMeta::VIEWED ];
+		$current_viewed = isset( $_GET[ ApplicantMeta::VIEWED ] ) ? filter_var( $_GET[ ApplicantMeta::VIEWED ], FILTER_SANITIZE_STRING ) : 'all';
 		// Query for all unique views.
 		$result = $wpdb->get_col(
 			$wpdb->prepare( "
