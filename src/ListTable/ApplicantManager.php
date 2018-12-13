@@ -288,14 +288,13 @@ final class ApplicantManager extends BasePostType implements AssetsAware {
 	 * @since %VERSION%
 	 */
 	private function jobs_dropdown_filter() {
-		$ids         = ( new JobRepository() )->find_all_item_ids();
-		$meta_key    = MetaLinks::JOB;
-		$current_job = isset( $_GET[ $meta_key ] ) ? $_GET[ $meta_key ] : 'all';
+		$jobs        = ( new JobRepository() )->find_all();
+		$current_job = isset( $_GET[ MetaLinks::JOB ] ) ? $_GET[ MetaLinks::JOB ] : 'all';
 		?>
-		<select name="<?php echo esc_attr( $meta_key ); ?>" id="<?php echo esc_attr( $meta_key ); ?>">
+		<select name="<?php echo esc_attr( MetaLinks::JOB ); ?>" id="<?php echo esc_attr( MetaLinks::JOB ); ?>">
 			<option value="all" <?php selected( 'all', $current_job ); ?>><?php esc_html_e( 'All Jobs', 'yikes-level-playing-field' ); ?></option>
-			<?php foreach ( $ids as $job_id ) { ?>
-				<option value="<?php echo esc_attr( $job_id ); ?>" <?php selected( $job_id, $current_job ); ?>><?php echo esc_html( get_the_title( $job_id ) ); ?></option>
+			<?php foreach ( $jobs as $job ) { ?>
+				<option value="<?php echo esc_attr( $job->get_id() ); ?>" <?php selected( $job->get_id(), $current_job ); ?>><?php echo esc_html( $job->get_title() ); ?></option>
 			<?php } ?>
 		</select>
 		<?php
@@ -305,13 +304,15 @@ final class ApplicantManager extends BasePostType implements AssetsAware {
 	 * Modifies current query variables.
 	 *
 	 * @since %VERSION%
+	 *
+	 * @param \WP_Query $query Query object.
 	 */
-	public function custom_query_vars() {
-		/**
+	public function custom_query_vars( $query ) {
+		/*
 		 * This is hooked to the parse_query action, which is triggered for all queries, including the frontend.
 		 * The get_current_screen() function is only available in the admin area.
 		 * Check if function exists before execution.
-		*/
+		 */
 		if ( ! function_exists( 'get_current_screen' ) ) {
 			return;
 		}
@@ -347,7 +348,7 @@ final class ApplicantManager extends BasePostType implements AssetsAware {
 				'compare' => '=',
 			];
 		}
-		set_query_var( 'meta_query', $meta_query );
+		$query->set( 'meta_query', $meta_query );
 	}
 
 	/**

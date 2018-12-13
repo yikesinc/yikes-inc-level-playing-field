@@ -20,12 +20,12 @@ use Yikes\LevelPlayingField\Model\MetaLinks;
 
 
 /**
- * Applicant Status Dashboard Widget.
+ * Job Applicants Dashboard Widget.
  *
  * @package    Yikes\LevelPlayingField
  * @subpackage Widget
  */
-class Status extends BaseWidget implements AssetsAware {
+class JobApplicants extends BaseWidget implements AssetsAware {
 
 	use AssetsAwareness;
 	const SLUG  = 'yikes_lpf_applicant_widget';
@@ -52,26 +52,25 @@ class Status extends BaseWidget implements AssetsAware {
 	 */
 	public function render() {
 		$this->enqueue_assets();
+
 		// Get job data.
 		$job_repo       = new JobRepository();
 		$applicant_repo = new ApplicantRepository();
 		$all_jobs       = $job_repo->find_all();
 		$records        = [];
+
 		foreach ( $all_jobs as $job_id => $job ) {
-			$total = $applicant_repo->get_applicant_count_for_job( $job_id );
-			$new   = $applicant_repo->get_new_applicant_count_for_job( $job_id );
-			$name  = $job->get_title();
 
 			$records[] = [
-				'job_name'         => $name,
+				'job_name'         => $job->get_title(),
 				'job_link'         => get_the_permalink( $job_id ),
-				'new_applicants'   => $new,
+				'new_applicants'   => $applicant_repo->get_new_applicant_count_for_job( $job_id ),
 				'new_link'         => add_query_arg( [
 					ApplicantMeta::VIEWED => 'none',
 					MetaLinks::JOB        => $job_id,
 					'post_type'           => ApplicantManager::SLUG,
 				], admin_url( 'edit.php' ) ),
-				'total_applicants' => $total,
+				'total_applicants' => $applicant_repo->get_applicant_count_for_job( $job_id ),
 				// @todo: call function to get link to filtered list of applicants.
 				'total_link'       => add_query_arg( [
 					MetaLinks::JOB => $job_id,
@@ -92,16 +91,25 @@ class Status extends BaseWidget implements AssetsAware {
 			<tbody>
 			<?php
 			foreach ( $records as $record ) {
-				echo '<tr>';
-				echo '<td><a href="' . esc_attr( $record['job_link'] ) . '">' . esc_html( $record['job_name'] ) . '</a></td>';
-				echo '<td><a href="' . esc_attr( $record['new_link'] ) . '">' . esc_html( $record['new_applicants'] ) . '</a></td>';
-				echo '<td><a href="' . esc_attr( $record['total_link'] ) . '">' . esc_html( $record['total_applicants'] ) . '</a></td>';
-				echo '</tr>';
+				?>
+				<tr>
+					<td>
+						<a href="<?php echo esc_attr( $record['job_link'] ); ?>"><?php echo esc_html( $record['job_name'] ); ?></a>
+					</td>
+					<td>
+						<a href="<?php echo esc_attr( $record['new_link'] ); ?>"><?php echo esc_html( $record['new_applicants'] ); ?></a>
+					</td>
+					<td>
+						<a href="<?php echo esc_attr( $record['total_link'] ); ?>"><?php echo esc_html( $record['total_applicants'] ); ?></a>
+					</td>
+				</tr>
+				<?php
 			}
 			?>
 			</tbody>
 		</table>
 		<a href="<?php echo esc_url( admin_url( 'edit.php?post_type=jobs' ) ); ?>" class="button"><?php esc_html_e( 'View All Job Listings', 'yikes-level-playing-field' ); ?></a>
+		<a href="<?php echo esc_url( admin_url( 'edit.php?post_type=applicants' ) ); ?>" class="button"><?php esc_html_e( 'View All Applicants', 'yikes-level-playing-field' ); ?></a>
 		<?php
 	}
 

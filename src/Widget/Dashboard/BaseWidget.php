@@ -22,9 +22,8 @@ use Yikes\LevelPlayingField\Service;
  */
 abstract class BaseWidget implements Service {
 
-	const SLUG   = '_basewidget_';
-	const TITLE  = '_basetitle_';
-	const F_NAME = '_basedisplay_';
+	const SLUG  = '_basewidget_';
+	const TITLE = '_basetitle_';
 
 	/**
 	 * Register the WordPress hooks.
@@ -34,16 +33,18 @@ abstract class BaseWidget implements Service {
 	public function register() {
 		add_action( 'wp_dashboard_setup', [ $this, 'add_dashboard_widget' ] );
 	}
+
 	/**
 	 * Add custom dashboard widget.
 	 */
 	public function add_dashboard_widget() {
 		wp_add_dashboard_widget(
-			$this->get_slug(),         // Widget slug.
-			$this->get_widget_title(),         // Title.
-			[ $this, 'render' ] // Display function.
+			$this->get_slug(),
+			$this->get_widget_title(),
+			[ $this, 'render' ]
 		);
 	}
+
 	/**
 	 * Get the slug to use for the dashboard widget.
 	 *
@@ -58,6 +59,7 @@ abstract class BaseWidget implements Service {
 		}
 		return static::SLUG;
 	}
+
 	/**
 	 * Get the title to use for the dashboard widget.
 	 *
@@ -72,6 +74,7 @@ abstract class BaseWidget implements Service {
 		}
 		return static::TITLE;
 	}
+
 	/**
 	 * Render widget to dashboard.
 	 *

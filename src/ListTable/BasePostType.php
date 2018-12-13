@@ -120,11 +120,9 @@ abstract class BasePostType implements Service {
 	 *
 	 * @since %VERSION%
 	 *
-	 * @param array $original_query The original array of query variables.
-	 *
-	 * @return WP_Object
+	 * @param \WP_Query $query Query object.
 	 */
-	public function custom_query_vars() {}
+	public function custom_query_vars( $query ) {}
 
 	/**
 	 * Output custom dropdowns for filtering.
