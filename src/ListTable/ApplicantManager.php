@@ -21,9 +21,11 @@ use Yikes\LevelPlayingField\Model\Applicant;
 use Yikes\LevelPlayingField\Model\ApplicantMeta;
 use Yikes\LevelPlayingField\Model\ApplicantRepository;
 use Yikes\LevelPlayingField\Model\JobRepository;
+use Yikes\LevelPlayingField\Model\JobDropdown;
 use Yikes\LevelPlayingField\Model\MetaLinks;
 use Yikes\LevelPlayingField\Roles\Capabilities;
 use Yikes\LevelPlayingField\Taxonomy\ApplicantStatus;
+use Yikes\LevelPlayingField\Taxonomy\ApplicantStatusDropdown;
 
 /**
  * Class ApplicantManager
@@ -34,6 +36,8 @@ use Yikes\LevelPlayingField\Taxonomy\ApplicantStatus;
 final class ApplicantManager extends BasePostType implements AssetsAware {
 
 	use AssetsAwareness;
+	use JobDropdown;
+	use ApplicantStatusDropdown;
 
 	const JS_HANDLE       = 'lpf-applicants-admin-script';
 	const JS_URI          = 'assets/js/applicants-admin';
@@ -225,32 +229,7 @@ final class ApplicantManager extends BasePostType implements AssetsAware {
 	 * @since %VERSION%
 	 */
 	private function applicant_status_dropdown_filter() {
-		$taxonomy = get_taxonomy( ApplicantStatus::SLUG );
-
-		// Make sure we have the taxonomy.
-		if ( ! is_object( $taxonomy ) ) {
-			return;
-		}
-
-		$dropdown_options = [
-			'show_option_all' => $taxonomy->labels->all_items,
-			'hide_empty'      => false,
-			'hierarchical'    => $taxonomy->hierarchical,
-			'show_count'      => false,
-			'orderby'         => 'name',
-			'selected'        => get_query_var( ApplicantStatus::SLUG ),
-			'name'            => ApplicantStatus::SLUG,
-			'taxonomy'        => ApplicantStatus::SLUG,
-			'value_field'     => 'slug',
-		];
-
-		printf(
-			'<label class="screen-reader-text" for="%1$s">%2$s</label>',
-			esc_attr( ApplicantStatus::SLUG ),
-			esc_html__( 'Filter Applicant Statuses', 'yikes-level-playing-field' )
-		);
-
-		wp_dropdown_categories( $dropdown_options );
+		$this->applicant_status_dropdown();
 	}
 
 	/**
@@ -262,6 +241,7 @@ final class ApplicantManager extends BasePostType implements AssetsAware {
 		global $wpdb;
 		$meta_key       = ApplicantMeta::META_PREFIXES[ ApplicantMeta::VIEWED ];
 		$current_viewed = isset( $_GET[ ApplicantMeta::VIEWED ] ) ? filter_var( $_GET[ ApplicantMeta::VIEWED ], FILTER_SANITIZE_STRING ) : 'all';
+
 		// Query for all unique views.
 		$result = $wpdb->get_col(
 			$wpdb->prepare( "
@@ -290,14 +270,7 @@ final class ApplicantManager extends BasePostType implements AssetsAware {
 	private function jobs_dropdown_filter() {
 		$jobs        = ( new JobRepository() )->find_all();
 		$current_job = isset( $_GET[ MetaLinks::JOB ] ) ? $_GET[ MetaLinks::JOB ] : 'all';
-		?>
-		<select name="<?php echo esc_attr( MetaLinks::JOB ); ?>" id="<?php echo esc_attr( MetaLinks::JOB ); ?>">
-			<option value="all" <?php selected( 'all', $current_job ); ?>><?php esc_html_e( 'All Jobs', 'yikes-level-playing-field' ); ?></option>
-			<?php foreach ( $jobs as $job ) { ?>
-				<option value="<?php echo esc_attr( $job->get_id() ); ?>" <?php selected( $job->get_id(), $current_job ); ?>><?php echo esc_html( $job->get_title() ); ?></option>
-			<?php } ?>
-		</select>
-		<?php
+		echo $this->job_dropdown( $jobs, $current_job );
 	}
 
 	/**
