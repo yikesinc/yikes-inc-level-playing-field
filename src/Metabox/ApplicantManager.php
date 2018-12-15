@@ -15,6 +15,7 @@ use Yikes\LevelPlayingField\Assets\AssetsAwareness;
 use Yikes\LevelPlayingField\Assets\ScriptAsset;
 use Yikes\LevelPlayingField\Assets\StyleAsset;
 use Yikes\LevelPlayingField\CustomPostType\ApplicantManager as ApplicantCPT;
+use Yikes\LevelPlayingField\Exception\Exception;
 use Yikes\LevelPlayingField\Model\ApplicantRepository;
 use Yikes\LevelPlayingField\Model\JobRepository;
 use Yikes\LevelPlayingField\Service;
@@ -88,9 +89,21 @@ final class ApplicantManager implements AssetsAware, Service {
 		$id       = isset( $_POST['id'] ) ? absint( $_POST['id'] ) : 0;
 		$nickname = isset( $_POST['nickname'] ) ? sanitize_text_field( $_POST['nickname'] ) : '';
 
-		$applicant = new Applicant( get_post( $id ) );
-		$applicant->set_nickname( $nickname );
-		$applicant->persist();
+		try {
+			$applicant = ( new ApplicantRepository() )->find( $id );
+			$applicant->set_nickname( $nickname );
+			$applicant->persist();
+		} catch ( Exception $e ) {
+			wp_send_json_error( [
+				'code'    => get_class( $e ),
+				'message' => esc_js( $e->getMessage() ),
+			], 400 );
+		}
+
+		wp_send_json_success( [
+			'id'       => $id,
+			'nickname' => $applicant->get_nickname(),
+		] );
 	}
 
 	/**
