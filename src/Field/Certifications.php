@@ -9,6 +9,8 @@
 
 namespace Yikes\LevelPlayingField\Field;
 
+use Yikes\LevelPlayingField\Model\ApplicantMeta;
+
 /**
  * Class Certifications
  *
@@ -36,17 +38,17 @@ class Certifications extends RepeatableField {
 		 * @param array $fields Array of certification fields.
 		 */
 		return apply_filters( 'lpf_field_certification_fields', [
-			'institution' => [
+			ApplicantMeta::INSTITUTION => [
 				'label' => esc_html__( 'Certifying Institution', 'yikes-level-playing-field' ),
 			],
-			'year'        => [
+			ApplicantMeta::YEAR        => [
 				'label' => esc_html__( 'Year Certified', 'yikes-level-playing-field' ),
 				'class' => Types::YEAR,
 			],
-			'type'        => [
+			ApplicantMeta::TYPE        => [
 				'label' => esc_html__( 'Certification Type', 'yikes-level-playing-field' ),
 			],
-			'status'      => [
+			ApplicantMeta::STATUS      => [
 				'label' => esc_html__( 'Certification Status', 'yikes-level-playing-field' ),
 			],
 		] );

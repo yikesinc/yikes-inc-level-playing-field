@@ -9,6 +9,8 @@
 
 namespace Yikes\LevelPlayingField\Field;
 
+use Yikes\LevelPlayingField\Model\ApplicantMeta;
+
 /**
  * Class Volunteer
  *
@@ -36,21 +38,21 @@ class Volunteer extends RepeatableField {
 		 * @param array $fields Array of fields for Volunteer data.
 		 */
 		return apply_filters( 'lpf_field_volunteer_fields', [
-			'organization' => [
+			ApplicantMeta::ORGANIZATION => [
 				'label' => esc_html__( 'Organization', 'yikes-level-playing-field' ),
 			],
-			'type'         => [
+			ApplicantMeta::TYPE         => [
 				'label' => esc_html__( 'Organization Type', 'yikes-level-playing-field' ),
 			],
-			'start_date'   => [
+			ApplicantMeta::START_DATE   => [
 				'label' => esc_html__( 'Start Date', 'yikes-level-playing-field' ),
 				'class' => Types::DATE,
 			],
-			'end_date'     => [
+			ApplicantMeta::END_DATE     => [
 				'label' => esc_html__( 'End Date', 'yikes-level-playing-field' ),
 				'class' => Types::DATE,
 			],
-			'position'     => [
+			ApplicantMeta::POSITION     => [
 				'label' => esc_html__( 'Position', 'yikes-level-playing-field' ),
 			],
 		] );

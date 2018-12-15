@@ -1,0 +1,46 @@
+//--------------------------------------------------------------
+//   Font Sizes
+//-------------------------------------------------------------
+
+////
+/// @group variables
+////
+
+$basefont: 16px;
+
+@function calculaterem($size) {
+  $remsize: $size / $basefont;
+  @return #{$remsize}rem;
+}
+
+@mixin fontsize($size) {
+  font-size: $size; // Fallback in px
+  font-size: calculaterem($size);
+}
+
+h1, h2, h3, h4, h5, h6, p {
+	margin: 0;
+}
+h1 {
+	@include fontsize(40px);
+}
+
+h2 {
+	@include fontsize(32px);
+}
+
+h3 {
+	@include fontsize(28px);
+}
+
+h4 {
+	@include fontsize(24px);
+}
+
+h5 {
+	@include fontsize(20px);
+}
+
+h6 {
+	@include fontsize(18px);
+}

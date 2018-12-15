@@ -1,0 +1,53 @@
+@import "utilities/index";
+
+// Variable are in utilities/variables/forms
+
+.group.yks_mbox {
+
+  .yks-mbox-group-field {
+    margin-bottom: $lpf-margin-bottom;
+  }
+
+  label {
+    font-size: $basefont;
+    font-weight: 600;
+  }
+
+  label[for="tax_input[job_status]"] {
+    width: auto;
+    padding-right: $lpf-padding-right;
+  }
+
+  label[for="job_cpt_meta_description"],
+  label[for="job_cpt_meta_type"] {
+    margin-bottom: $lpf-margin-bottom2;
+  }
+
+  label.yks_radio_inline_label {
+    display: inline-block;
+    @include lpf-form-smaller-font;
+    margin-bottom: $lpf-margin-bottom2;
+    margin-left: 0;
+    margin-top: 0;
+    width: auto;
+  }
+
+  label[for="job_cpt_meta_address_address-1"], label[for="job_cpt_meta_address_address-2"],
+  label[for="job_cpt_meta_address_city"], label[for="job_cpt_meta_address_state"],
+  label[for="job_cpt_meta_address_province"], label[for="job_cpt_meta_address_country"], 
+  label[for="job_cpt_meta_address_zip"] {
+     @include lpf-form-smaller-font;
+  }
+
+  input, select {
+    &.yks_address {
+      margin-top: 0;
+    }
+  }
+
+  select.yks_address {
+    display: inline-block;
+  }
+  
+
+}

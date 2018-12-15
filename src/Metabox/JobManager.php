@@ -13,6 +13,7 @@ use Yikes\LevelPlayingField\Assets\Asset;
 use Yikes\LevelPlayingField\Assets\AssetsAware;
 use Yikes\LevelPlayingField\Assets\AssetsAwareness;
 use Yikes\LevelPlayingField\Assets\ScriptAsset;
+use Yikes\LevelPlayingField\Assets\StyleAsset;
 use Yikes\LevelPlayingField\CustomPostType\ApplicationManager;
 use Yikes\LevelPlayingField\CustomPostType\JobManager as JobManagerCPT;
 use Yikes\LevelPlayingField\Model\JobMeta;
@@ -29,8 +30,10 @@ final class JobManager extends AwesomeBaseMetabox implements AssetsAware {
 
 	use AssetsAwareness;
 
-	const JS_HANDLE = 'lpf-job-manager-js';
-	const JS_URI    = 'assets/js/job-manager';
+	const CSS_HANDLE = 'lpf-admin-jobs-css';
+	const CSS_URI    = 'assets/css/lpf-jobs-admin';
+	const JS_HANDLE  = 'lpf-job-manager-js';
+	const JS_URI     = 'assets/js/job-manager';
 
 	/**
 	 * Register hooks.
@@ -117,7 +120,7 @@ final class JobManager extends AwesomeBaseMetabox implements AssetsAware {
 	public function register_boxes( $meta_boxes ) {
 		$job_boxes = [
 			'id'         => JobMeta::META_PREFIX . 'metabox',
-			'title'      => __( 'General Info', 'yikes-level-playing-field' ),
+			'title'      => __( 'Job Listing Information', 'yikes-level-playing-field' ),
 			'pages'      => [ JobManagerCPT::SLUG ],
 			'show_names' => true,
 			'group'      => true,
@@ -128,8 +131,8 @@ final class JobManager extends AwesomeBaseMetabox implements AssetsAware {
 					'type'   => 'group',
 					'fields' => [
 						[
-							'name'     => __( 'Status', 'yikes-level-playing-field' ),
-							'desc'     => __( 'The job status', 'yikes-level-playing-field' ),
+							'name'     => __( 'Job Status', 'yikes-level-playing-field' ),
+							'desc'     => __( 'Is this job currently active or inactive', 'yikes-level-playing-field' ),
 							'id'       => 'tax_input[' . JobStatus::SLUG . ']',
 							'type'     => 'taxonomy-select',
 							'taxonomy' => JobStatus::SLUG,
@@ -170,6 +173,7 @@ final class JobManager extends AwesomeBaseMetabox implements AssetsAware {
 						],
 						[
 							'name'    => __( 'Location', 'yikes-level-playing-field' ),
+							'desc'    => __( 'Is this job at a location or can employees work remotely', 'yikes-level-playing-field' ),
 							'id'      => $this->prefix_field( JobMeta::LOCATION ),
 							'type'    => 'radio-inline',
 							'options' => [
@@ -184,14 +188,14 @@ final class JobManager extends AwesomeBaseMetabox implements AssetsAware {
 							],
 						],
 						[
-							'name' => __( 'Address', 'yikes-level-playing-field' ),
+							'name' => __( 'Location Address', 'yikes-level-playing-field' ),
 							'desc' => __( 'Address where the job is located', 'yikes-level-playing-field' ),
 							'id'   => $this->prefix_field( JobMeta::ADDRESS ),
 							'type' => 'address',
 						],
 						[
-							'name'      => __( 'Application', 'yikes-level-playing-field' ),
-							'desc'      => __( 'The application to use for this job', 'yikes-level-playing-field' ),
+							'name'      => __( 'Application Form', 'yikes-level-playing-field' ),
+							'desc'      => __( 'Choose the application form to use for this job', 'yikes-level-playing-field' ),
 							'id'        => MetaLinks::APPLICATION,
 							'type'      => 'select-post-type',
 							'post-type' => ApplicationManager::SLUG,
@@ -222,6 +226,7 @@ final class JobManager extends AwesomeBaseMetabox implements AssetsAware {
 	 */
 	protected function get_assets() {
 		return [
+			new StyleAsset( self::CSS_HANDLE, self::CSS_URI ),
 			new ScriptAsset( self::JS_HANDLE, self::JS_URI ),
 		];
 	}

@@ -11,6 +11,7 @@ namespace Yikes\LevelPlayingField;
 
 use Yikes\LevelPlayingField\Assets\AssetsAware;
 use Yikes\LevelPlayingField\Assets\AssetsHandler;
+use Yikes\LevelPlayingField\Exception\InvalidClass;
 
 /**
  * Class Plugin.
@@ -83,7 +84,7 @@ final class Plugin implements Registerable {
 	public function register_services() {
 		$services = $this->get_services();
 		$services = array_map( [ $this, 'instantiate_service' ], $services );
-		array_walk( $services, function ( Service $service ) {
+		array_walk( $services, function( Service $service ) {
 			$service->register();
 		} );
 	}
@@ -148,13 +149,13 @@ final class Plugin implements Registerable {
 	 */
 	protected function instantiate_service( $class ) {
 		if ( ! class_exists( $class ) ) {
-			throw Exception\InvalidService::from_service( $class );
+			throw InvalidClass::not_found( $class );
 		}
 
 		$service = new $class();
 
-		if ( ! $service instanceof Service ) {
-			throw Exception\InvalidService::from_service( $service );
+		if ( ! ( $service instanceof Service ) ) {
+			throw InvalidClass::from_interface( $class, Service::class );
 		}
 
 		if ( $service instanceof AssetsAware ) {
