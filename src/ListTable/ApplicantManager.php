@@ -187,10 +187,10 @@ final class ApplicantManager extends BasePostType implements AssetsAware {
 				break;
 
 			case 'viewed':
-				$viewed = $applicants[ $post_id ]->viewed_by() === 0
-					? __( 'No one', 'yikes-level-playing-field' ) :
+				$viewed_by = $applicants[ $post_id ]->viewed_by() === 0
+					? _x( 'No one', 'No one has viewed applicant submission', 'yikes-level-playing-field' ) :
 					get_user_meta( $applicants[ $post_id ]->viewed_by(), 'nickname', true );
-				echo esc_html( $viewed );
+				echo esc_html( $viewed_by );
 				break;
 
 			case 'view':
@@ -220,16 +220,8 @@ final class ApplicantManager extends BasePostType implements AssetsAware {
 			$this->applicant_status_dropdown_filter();
 			$this->jobs_dropdown_filter();
 			$this->viewed_dropdown_filter();
+			$this->applicant_status_dropdown();
 		}
-	}
-
-	/**
-	 * Output a custom dropdown for the applicant_status taxonomy.
-	 *
-	 * @since %VERSION%
-	 */
-	private function applicant_status_dropdown_filter() {
-		$this->applicant_status_dropdown();
 	}
 
 	/**
@@ -270,7 +262,7 @@ final class ApplicantManager extends BasePostType implements AssetsAware {
 	private function jobs_dropdown_filter() {
 		$jobs        = ( new JobRepository() )->find_all();
 		$current_job = isset( $_GET[ MetaLinks::JOB ] ) ? $_GET[ MetaLinks::JOB ] : 'all';
-		echo $this->job_dropdown( $jobs, $current_job );
+		echo $this->job_dropdown( $jobs, $current_job ); // phpcs:ignore WordPress.Security.EscapeOutput
 	}
 
 	/**
