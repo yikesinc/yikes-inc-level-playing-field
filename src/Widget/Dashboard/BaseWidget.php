@@ -22,7 +22,7 @@ use Yikes\LevelPlayingField\Service;
  */
 abstract class BaseWidget implements Service {
 
-	const SLUG  = '_basewidget_';
+	const SLUG = '_basewidget_';
 
 	/**
 	 * Register the WordPress hooks.

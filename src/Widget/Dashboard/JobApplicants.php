@@ -9,6 +9,7 @@
 
 namespace Yikes\LevelPlayingField\Widget\Dashboard;
 
+use Yikes\LevelPlayingField\Assets\Asset;
 use Yikes\LevelPlayingField\Assets\AssetsAware;
 use Yikes\LevelPlayingField\Assets\AssetsAwareness;
 use Yikes\LevelPlayingField\Assets\StyleAsset;
@@ -17,7 +18,6 @@ use Yikes\LevelPlayingField\Model\ApplicantRepository;
 use Yikes\LevelPlayingField\Model\ApplicantMeta;
 use Yikes\LevelPlayingField\CustomPostType\ApplicantManager;
 use Yikes\LevelPlayingField\Model\MetaLinks;
-
 
 /**
  * Job Applicants Dashboard Widget.
@@ -28,7 +28,7 @@ use Yikes\LevelPlayingField\Model\MetaLinks;
 class JobApplicants extends BaseWidget implements AssetsAware {
 
 	use AssetsAwareness;
-	const SLUG  = 'yikes_lpf_applicant_widget';
+	const SLUG = 'yikes_lpf_applicant_widget';
 
 	// Define the CSS file.
 	const CSS_HANDLE = 'lpf-dashboard-widget-css';
@@ -79,7 +79,6 @@ class JobApplicants extends BaseWidget implements AssetsAware {
 					'post_type'           => ApplicantManager::SLUG,
 				], admin_url( 'edit.php' ) ),
 				'total_applicants' => $applicant_repo->get_applicant_count_for_job( $job_id ),
-				// @todo: call function to get link to filtered list of applicants.
 				'total_link'       => add_query_arg( [
 					MetaLinks::JOB => $job_id,
 					'post_type'    => ApplicantManager::SLUG,
@@ -129,7 +128,6 @@ class JobApplicants extends BaseWidget implements AssetsAware {
 	 * @return Asset[]
 	 */
 	protected function get_assets() {
-
 		return [
 			new StyleAsset( self::CSS_HANDLE, self::CSS_URI ),
 		];

@@ -27,9 +27,16 @@ trait JobDropdown {
 	 *
 	 * @return string An HTML dropdown of jobs.
 	 */
-	private function job_dropdown( $jobs = [], $selected = '' ) {
+	private function job_dropdown( $jobs, $selected = 'all' ) {
 		if ( empty( $jobs ) || ! is_array( $jobs ) ) {
-			$jobs = ( new JobRepository() )->find_all();
+			return;
+		}
+
+		// Make sure that all array elements are Job objects.
+		foreach ( $jobs as $job ) {
+			if ( ! is_object( $job ) || ! is_a( $job, 'Yikes\LevelPlayingField\Model\Job' ) ) {
+				return;
+			}
 		}
 
 		ob_start();
