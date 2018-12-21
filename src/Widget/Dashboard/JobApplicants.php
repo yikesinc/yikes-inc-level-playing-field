@@ -29,11 +29,19 @@ class JobApplicants extends BaseWidget implements AssetsAware {
 
 	use AssetsAwareness;
 	const SLUG  = 'yikes_lpf_applicant_widget';
-	const TITLE = 'Applicants';
 
 	// Define the CSS file.
 	const CSS_HANDLE = 'lpf-dashboard-widget-css';
 	const CSS_URI    = 'assets/css/lpf-dashboard-widget';
+
+	/**
+	 * Get the title of the dashboard widget.
+	 *
+	 * @since %VERSION%
+	 */
+	public function get_title() {
+		return __( 'Applicants', 'yikes-level-playing-field' );
+	}
 
 	/**
 	 * Register the WordPress hooks.

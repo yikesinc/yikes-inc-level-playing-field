@@ -217,7 +217,6 @@ final class ApplicantManager extends BasePostType implements AssetsAware {
 	 */
 	protected function create_custom_dropdowns( $which ) {
 		if ( 'top' === $which ) {
-			$this->applicant_status_dropdown_filter();
 			$this->jobs_dropdown_filter();
 			$this->viewed_dropdown_filter();
 			$this->applicant_status_dropdown();
@@ -273,14 +272,10 @@ final class ApplicantManager extends BasePostType implements AssetsAware {
 	 * @param \WP_Query $query Query object.
 	 */
 	public function custom_query_vars( $query ) {
-		/*
-		 * This is hooked to the parse_query action, which is triggered for all queries, including the frontend.
-		 * The get_current_screen() function is only available in the admin area.
-		 * Check if function exists before execution.
-		 */
-		if ( ! function_exists( 'get_current_screen' ) ) {
+		if ( ! $query->is_main_query() || ! is_admin() ) {
 			return;
 		}
+
 		$screen = get_current_screen();
 
 		// Check if current page is edit page for post type applicant.

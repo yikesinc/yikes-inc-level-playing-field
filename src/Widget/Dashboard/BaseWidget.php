@@ -23,7 +23,6 @@ use Yikes\LevelPlayingField\Service;
 abstract class BaseWidget implements Service {
 
 	const SLUG  = '_basewidget_';
-	const TITLE = '_basetitle_';
 
 	/**
 	 * Register the WordPress hooks.
@@ -40,7 +39,7 @@ abstract class BaseWidget implements Service {
 	public function add_dashboard_widget() {
 		wp_add_dashboard_widget(
 			$this->get_slug(),
-			$this->get_widget_title(),
+			$this->get_title(),
 			[ $this, 'render' ]
 		);
 	}
@@ -61,19 +60,11 @@ abstract class BaseWidget implements Service {
 	}
 
 	/**
-	 * Get the title to use for the dashboard widget.
+	 * Get the title of the dashboard widget.
 	 *
 	 * @since %VERSION%
-	 *
-	 * @return string widget title.
-	 * @throws MustExtend When the default title has not been extended.
 	 */
-	protected function get_widget_title() {
-		if ( self::TITLE === static::TITLE ) {
-			throw MustExtend::default_slug( self::TITLE );
-		}
-		return static::TITLE;
-	}
+	abstract public function get_title();
 
 	/**
 	 * Render widget to dashboard.
