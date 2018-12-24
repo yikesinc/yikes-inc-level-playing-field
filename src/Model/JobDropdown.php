@@ -49,7 +49,9 @@ trait JobDropdown {
 				<?php esc_html_e( 'All Jobs', 'yikes-level-playing-field' ); ?>
 			</option>
 			<?php foreach ( $jobs as $job_id => $job ) : ?>
-				<option value="<?php echo esc_attr( $job_id ); ?>" <?php selected( $job_id, $selected ); ?>><?php echo esc_html( $job->get_title() ); ?></option>
+				<option value="<?php echo esc_attr( $job_id ); ?>" <?php selected( $job_id, $selected ); ?>>
+					<?php echo esc_html( $job->get_title() ); ?>
+				</option>
 			<?php endforeach; ?>
 		</select>
 		<?php
