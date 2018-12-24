@@ -179,7 +179,7 @@ final class ApplicantManager extends BasePostType implements AssetsAware {
 				break;
 
 			case 'avatar':
-				echo $applicants[ $post_id ]->get_avatar_img(); // XSS ok.
+				echo $applicants[ $post_id ]->get_avatar_img(); // phpcs:ignore WordPress.Security.EscapeOutput
 				break;
 
 			case 'nickname':
