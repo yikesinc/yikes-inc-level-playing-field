@@ -29,13 +29,13 @@ trait JobDropdown {
 	 */
 	private function job_dropdown( $jobs, $selected = 'all' ) {
 		if ( empty( $jobs ) || ! is_array( $jobs ) ) {
-			return;
+			return '';
 		}
 
 		// Make sure that all array elements are Job objects.
 		foreach ( $jobs as $job ) {
-			if ( ! is_object( $job ) || ! is_a( $job, 'Yikes\LevelPlayingField\Model\Job' ) ) {
-				return;
+			if ( ! ( $job instanceof Job ) ) {
+				return '';
 			}
 		}
 
