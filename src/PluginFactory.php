@@ -32,6 +32,7 @@ use Yikes\LevelPlayingField\Taxonomy\JobCategory;
 use Yikes\LevelPlayingField\Taxonomy\JobStatus;
 use Yikes\LevelPlayingField\TemplateController\SingleApplicationsTemplateController as SingleApplications;
 use Yikes\LevelPlayingField\TemplateController\SingleJobsTemplateController as SingleJobs;
+use Yikes\LevelPlayingField\Widget\Dashboard\JobApplicants;
 
 /**
  * Class PluginFactory
@@ -96,6 +97,9 @@ final class PluginFactory {
 			Applicant::class            => 1,
 			Administrator::class        => 1,
 			Editor::class               => 1,
+
+			// Widgets.
+			JobApplicants::class        => 1,
 
 			// Shortcodes.
 			AllJobs::class              => 1,
