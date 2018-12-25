@@ -6,6 +6,8 @@
     "author": "YIKES, Inc.",
     "devDependencies": {
         "@wordpress/babel-preset-default": "^1.2.0",
+        "@wordpress/components": "^7.0.4",
+        "@wordpress/compose": "^3.0.0",
         "babel-core": "^6.26.3",
         "babel-eslint": "^8.2.3",
         "babel-loader": "^7.1.4",

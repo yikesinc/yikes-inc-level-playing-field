@@ -31,6 +31,7 @@ const extractConfig = {
 module.exports = {
 	entry: {
 		'job-description': './blocks/job-description/index.js',
+		'job-type': './blocks/job-type/index.js',
 	},
 	output: {
 		path: path.resolve( __dirname ),
