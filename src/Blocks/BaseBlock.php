@@ -24,6 +24,8 @@ abstract class BaseBlock implements Service, AssetsAware {
 
 	use AssetsAwareness;
 
+	const SLUG_BASE = 'ylpf/';
+
 	/**
 	 * Register the current Registerable.
 	 *
@@ -34,8 +36,10 @@ abstract class BaseBlock implements Service, AssetsAware {
 			return;
 		}
 
+		$this->register_assets();
+
+		// Register the block type.
 		add_action( 'init', function() {
-			$this->register_assets();
 			register_block_type( $this->get_block_slug(), $this->get_block_args() );
 		} );
 	}

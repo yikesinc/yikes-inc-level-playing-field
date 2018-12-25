@@ -23,6 +23,42 @@ class JobManager extends BaseCustomPostType {
 	const SINGULAR_SLUG = 'job';
 
 	/**
+	 * Register the WordPress hooks.
+	 *
+	 * @since %VERSION%
+	 */
+	public function register() {
+		parent::register();
+
+		// Modify the default title for the block editor.
+		add_filter( 'enter_title_here', function( $title, $post ) {
+			if ( $this->get_slug() !== $post->post_type ) {
+				return $title;
+			}
+
+			return __( 'Add Job Title', 'yikes-level-playing-field' );
+		}, 10, 2 );
+
+		// Modify the available block categories.
+		add_filter( 'block_categories', function( $categories, $post ) {
+			if ( $this->get_slug() !== $post->post_type ) {
+				return $categories;
+			}
+
+			return array_merge(
+				$categories,
+				[
+					[
+						'slug'  => 'ylpf-job',
+						'title' => __( 'Job Attributes', 'yikes-level-playing-field' ),
+						'icon'  => 'wordpress',
+					],
+				]
+			);
+		}, 10, 2 );
+	}
+
+	/**
 	 * Get the arguments that configure the custom post type.
 	 *
 	 * @since %VERSION%
@@ -60,7 +96,7 @@ class JobManager extends BaseCustomPostType {
 				'items_list_navigation' => __( 'Jobs list navigation', 'yikes-level-playing-field' ),
 				'filter_items_list'     => __( 'Filter Jobs list', 'yikes-level-playing-field' ),
 			],
-			'supports'            => [ 'title' ],
+			'supports'            => [ 'title', 'editor' ],
 			'hierarchical'        => false,
 			'public'              => true,
 			'show_ui'             => true,
@@ -93,6 +129,11 @@ class JobManager extends BaseCustomPostType {
 			'rewrite'             => [
 				'slug' => _x( 'lpf-jobs', "The CPT's rewrite slug. Translatable as per WP's documentation.", 'yikes-level-playing-field' ),
 			],
+			'show_in_rest'        => true,
+			'template'            => [
+				[ 'ylpf/job-description' ],
+			],
+			'template_lock'       => 'all',
 		];
 	}
 

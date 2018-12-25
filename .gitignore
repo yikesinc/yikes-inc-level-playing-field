@@ -13,4 +13,4 @@ assets/js/applicant-status-button-groups.js
 assets/js/settings.js
 
 # Compiled files for blocks
-assets/js/blocks-*.js
+assets/js/blocks/

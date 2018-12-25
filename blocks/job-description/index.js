@@ -17,7 +17,7 @@ const { RichText } = wp.editor;
 export default registerBlockType( 'ylpf/job-description', {
 	title: __( 'Job Description', 'yikes-level-playing-field' ),
 	description: __( 'General overview of the Job and its requirements.', 'yikes-level-playing-field' ),
-	category: 'common',
+	category: 'ylpf-job',
 	icon: 'forms',
 	attributes: {
 		message: {
@@ -33,7 +33,6 @@ export default registerBlockType( 'ylpf/job-description', {
 		};
 		return (
 			<div className={className}>
-				<h2>{__( 'Call to Action', 'yikes-level-playing-field' )}</h2>
 				<RichText
 					tagName="div"
 					multiline="p"
@@ -48,7 +47,6 @@ export default registerBlockType( 'ylpf/job-description', {
 		const { attributes: { message } } = props;
 		return (
 			<div>
-				<h2>{__( 'Call to Action', 'yikes-level-playing-field' )}</h2>
 				<div className="message-body">
 					{message}
 				</div>
