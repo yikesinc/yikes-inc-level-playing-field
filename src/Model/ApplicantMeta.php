@@ -123,5 +123,6 @@ interface ApplicantMeta {
 		self::ANONYMIZED     => self::META_PREFIX . self::ANONYMIZED,
 		self::VIEWED         => self::META_PREFIX . self::VIEWED,
 		self::ADDRESS        => self::META_PREFIX . self::ADDRESS,
+		self::ANONYMIZER     => self::META_PREFIX . self::ANONYMIZER,
 	];
 }
