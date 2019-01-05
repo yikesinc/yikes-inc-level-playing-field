@@ -21,6 +21,8 @@ interface OptionInterface {
 	 * Render the current option.
 	 *
 	 * @since %VERSION%
+	 *
+	 * @param string $selected_value The currently selected value.
 	 */
-	public function render();
+	public function render( $selected_value );
 }
