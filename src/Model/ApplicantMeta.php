@@ -45,6 +45,7 @@ interface ApplicantMeta {
 	const MAJOR         = 'major';
 	const DEGREE        = 'degree';
 	const CERTIFICATION = 'certification';
+	const CERT_TYPE     = 'certification_type';
 	const STATUS        = 'status';
 	const SKILL         = 'skill';
 	const LANGUAGE      = 'language';

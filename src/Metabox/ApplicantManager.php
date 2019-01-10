@@ -173,8 +173,8 @@ final class ApplicantManager implements AssetsAware, Service {
 					foreach ( $applicant->get_certifications() as $certification ) {
 						printf(
 							'<li>Certified in %s from %s. Status: %s</li>',
+							esc_html( $certification['certification_type'] ),
 							esc_html( $certification['type'] ),
-							esc_html( $certification['institution'] ),
 							esc_html( $certification['status'] )
 						);
 					}
@@ -219,8 +219,7 @@ final class ApplicantManager implements AssetsAware, Service {
 						printf(
 							'<li>%s in %s for x years</li>',
 							esc_html( $experience['position'] ),
-							esc_html( $experience['industry'] ),
-							esc_html( $experience['dates'] )
+							esc_html( $experience['industry'] )
 						);
 					}
 					?>
@@ -234,8 +233,8 @@ final class ApplicantManager implements AssetsAware, Service {
 					foreach ( $applicant->get_volunteer() as $experience ) {
 						printf(
 							'<li>%s in %s for x years</li>',
-							esc_html( $experience['organization'] ),
-							esc_html( $experience['position'] )
+							esc_html( $experience['position'] ),
+							esc_html( $experience['industry'] )
 						);
 					}
 					?>

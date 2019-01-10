@@ -41,8 +41,8 @@ class Volunteer extends RepeatableField {
 			ApplicantMeta::ORGANIZATION => [
 				'label' => esc_html__( 'Organization', 'yikes-level-playing-field' ),
 			],
-			ApplicantMeta::TYPE         => [
-				'label' => esc_html__( 'Organization Type', 'yikes-level-playing-field' ),
+			ApplicantMeta::INDUSTRY     => [
+				'label' => esc_html__( 'Industry', 'yikes-level-playing-field' ),
 			],
 			ApplicantMeta::START_DATE   => [
 				'label' => esc_html__( 'Start Date', 'yikes-level-playing-field' ),

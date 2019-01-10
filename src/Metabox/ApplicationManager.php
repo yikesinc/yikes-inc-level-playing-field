@@ -294,6 +294,7 @@ final class ApplicationManager extends AwesomeBaseMetabox implements AssetsAware
 		?>
 		<ul class="lpf_details lpf_certification">
 			<li><?php esc_html_e( 'Certifying Institution', 'yikes-level-playing-field' ); ?></li>
+			<li><?php esc_html_e( 'Certifying Institution Type', 'yikes-level-playing-field' ); ?></li>
 			<li><?php esc_html_e( 'Year Certified', 'yikes-level-playing-field' ); ?></li>
 			<li><?php esc_html_e( 'Certification Type', 'yikes-level-playing-field' ); ?></li>
 			<li><?php esc_html_e( 'Certification Status', 'yikes-level-playing-field' ); ?></li>

@@ -48,8 +48,9 @@ final class Applicant extends CustomPostTypeEntity {
 		],
 		ApplicantMeta::CERTIFICATIONS => [
 			ApplicantMeta::INSTITUTION => FILTER_SANITIZE_STRING,
-			ApplicantMeta::YEAR        => FILTER_SANITIZE_NUMBER_INT,
 			ApplicantMeta::TYPE        => FILTER_SANITIZE_STRING,
+			ApplicantMeta::CERT_TYPE   => FILTER_SANITIZE_STRING,
+			ApplicantMeta::YEAR        => FILTER_SANITIZE_NUMBER_INT,
 			ApplicantMeta::STATUS      => FILTER_SANITIZE_STRING,
 		],
 		ApplicantMeta::SKILLS         => [
