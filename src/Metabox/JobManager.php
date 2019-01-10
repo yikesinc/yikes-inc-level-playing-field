@@ -90,7 +90,10 @@ final class JobManager extends AwesomeBaseMetabox implements AssetsAware {
 			}
 
 			$filtering = true;
-			$check     = json_decode( get_metadata( 'post', $id, $key, $single ), true );
+			$check     = get_metadata( 'post', $id, $key, $single );
+			if ( is_string( $check ) ) {
+				$check = json_decode( $check, true );
+			}
 			$filtering = false;
 
 			return $check;
