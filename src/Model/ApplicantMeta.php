@@ -42,6 +42,7 @@ interface ApplicantMeta {
 	const ORGANIZATION  = 'organization';
 	const TYPE          = 'type';
 	const YEAR          = 'year';
+	const YEAR_DURATION = 'year_duration';
 	const MAJOR         = 'major';
 	const DEGREE        = 'degree';
 	const CERTIFICATION = 'certification';
