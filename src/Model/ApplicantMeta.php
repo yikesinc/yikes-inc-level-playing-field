@@ -114,6 +114,7 @@ interface ApplicantMeta {
 		self::SCHOOLING      => Types::SCHOOLING,
 		self::CERTIFICATIONS => Types::CERTIFICATIONS,
 		self::SKILLS         => Types::SKILLS,
+		self::LANGUAGES      => Types::LANGUAGES,
 	];
 
 	// Meta prefixed fields.

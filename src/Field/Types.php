@@ -26,6 +26,7 @@ interface Types {
 	const NUMBER         = Number::class;
 	const PHONE          = Phone::class;
 	const DATE           = Date::class;
+	const SELECT         = Select::class;
 	const ADDRESS        = Address::class;
 	const POSTAL_CODE    = PostalCode::class;
 	const YEAR           = Year::class;
@@ -34,4 +35,5 @@ interface Types {
 	const EXPERIENCE     = Experience::class;
 	const VOLUNTEER      = Volunteer::class;
 	const SKILLS         = Skills::class;
+	const LANGUAGES      = Languages::class;
 }
