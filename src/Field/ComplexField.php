@@ -86,7 +86,7 @@ abstract class ComplexField extends BaseField {
 	 * @throws InvalidField When an invalid field class is provided through the filter.
 	 */
 	protected function generate_sub_fields() {
-		$classes        = array_merge( $this->classes, $this->get_classes() );
+		$classes        = $this->get_classes();
 		$default_fields = $this->get_default_fields();
 		$id_base        = $this->get_id_base();
 		$sub_fields     = [];
@@ -204,7 +204,7 @@ abstract class ComplexField extends BaseField {
 	 * @return array
 	 */
 	protected function get_classes() {
-		return [ "lpf-field-{$this->class_base}" ];
+		return array_merge( $this->classes, [ "lpf-field-{$this->class_base}" ] );
 	}
 
 	/**
