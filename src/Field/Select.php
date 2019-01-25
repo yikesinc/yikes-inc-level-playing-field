@@ -42,9 +42,9 @@ class Select extends BaseField {
 			if ( ! $option instanceof OptionInterface ) {
 				throw InvalidOption::from_option( $option );
 			}
-		}
 
-		$this->options = $options;
+			$this->options[ $option->get_value() ] = $option;
+		}
 	}
 
 	/**
@@ -90,7 +90,26 @@ class Select extends BaseField {
 	 * @return string
 	 */
 	protected function get_error_type() {
-		// todo: customize the "type" for errors?
 		return 'select';
+	}
+
+	/**
+	 * Validate the raw value.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @throws InvalidField When the raw value is empty but the field is required.
+	 */
+	protected function validate_raw_value() {
+		// Keep the normal validation.
+		parent::validate_raw_value();
+
+		// Validate that the option is one of the available options.
+		if ( ! isset( $this->options[ $this->raw_value ] ) ) {
+			throw InvalidField::value_invalid(
+				$this->label,
+				esc_html__( 'The submitted value is not one of the allowed options.', 'yikes-level-playing-field' )
+			);
+		}
 	}
 }
