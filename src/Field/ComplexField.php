@@ -295,4 +295,14 @@ abstract class ComplexField extends BaseField {
 	 * @since %VERSION%
 	 */
 	abstract protected function render_grouping_label();
+
+	/**
+	 * Get the type for use with errors.
+	 *
+	 * @since %VERSION%
+	 * @return string
+	 */
+	protected function get_error_type() {
+		return $this->get_id();
+	}
 }

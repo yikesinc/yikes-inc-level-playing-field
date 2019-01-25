@@ -38,4 +38,14 @@ class Textarea extends BaseField {
 		</div>
 		<?php
 	}
+
+	/**
+	 * Get the type for use with errors.
+	 *
+	 * @since %VERSION%
+	 * @return string
+	 */
+	protected function get_error_type() {
+		return 'textarea';
+	}
 }

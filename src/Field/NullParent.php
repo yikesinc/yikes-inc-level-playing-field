@@ -50,4 +50,14 @@ class NullParent extends BaseField {
 	public function get_sanitized_value() {
 		return null;
 	}
+
+	/**
+	 * Get the type for use with errors.
+	 *
+	 * @since %VERSION%
+	 * @return string
+	 */
+	protected function get_error_type() {
+		return '';
+	}
 }

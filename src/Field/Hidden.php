@@ -82,4 +82,23 @@ class Hidden extends BaseField {
 			);
 		}
 	}
+
+	/**
+	 * Render the error message for the field.
+	 *
+	 * @since %VERSION%
+	 */
+	protected function render_error_message() {
+		// Don't do anything.
+	}
+
+	/**
+	 * Get the type for use with errors.
+	 *
+	 * @since %VERSION%
+	 * @return string
+	 */
+	protected function get_error_type() {
+		return '';
+	}
 }
