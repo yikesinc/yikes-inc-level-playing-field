@@ -111,10 +111,8 @@ abstract class ComplexField extends BaseField {
 				throw InvalidField::from_field( $settings['class'] );
 			}
 
-			// Assign the current object as the field parent.
+			$this->validate_sub_field( $sub_field, $settings['class'] );
 			$sub_field->set_parent( $this );
-
-			// Add to the array.
 			$sub_fields[ $field ] = $sub_field;
 		}
 
@@ -295,6 +293,22 @@ abstract class ComplexField extends BaseField {
 	 * @since %VERSION%
 	 */
 	abstract protected function render_grouping_label();
+
+	/**
+	 * Validate that the object is an instance of the Field interface.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param object $sub_field  The sub-field object.
+	 * @param string $from_class The class used to instantiate the field.
+	 *
+	 * @throws InvalidField When the field is not of the correct type.
+	 */
+	protected function validate_sub_field( $sub_field, $from_class ) {
+		if ( ! ( $sub_field instanceof Field ) ) {
+			throw InvalidField::from_field( $from_class );
+		}
+	}
 
 	/**
 	 * Get the type for use with errors.
