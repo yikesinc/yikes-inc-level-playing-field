@@ -96,19 +96,25 @@ abstract class ComplexField extends BaseField {
 				'label'    => ucwords( str_replace( [ '_', '-' ], ' ', $field ) ),
 				'class'    => Types::TEXT,
 				'required' => true,
+				'callback' => null,
+				'options'  => [],
 			] );
 
-			// Instantiate the sub field.
-			$sub_field = new $settings['class'](
-				"{$id_base}[{$field}]",
-				$settings['label'],
-				$classes,
-				(bool) $settings['required']
-			);
-
-			// Ensure the class extends the Field interface.
-			if ( ! ( $sub_field instanceof Field ) ) {
-				throw InvalidField::from_field( $settings['class'] );
+			// Instantiate the sub field, using callback if available.
+			if ( isset( $settings['callback'] ) && is_callable( $settings['callback'] ) ) {
+				$sub_field = call_user_func_array( $settings['callback'], [
+					$id_base,
+					$field,
+					$classes,
+					$settings,
+				] );
+			} else {
+				$sub_field = new $settings['class'](
+					"{$id_base}[{$field}]",
+					$settings['label'],
+					$classes,
+					(bool) $settings['required']
+				);
 			}
 
 			$this->validate_sub_field( $sub_field, $settings['class'] );
