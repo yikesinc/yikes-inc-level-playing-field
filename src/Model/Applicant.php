@@ -11,6 +11,10 @@ namespace Yikes\LevelPlayingField\Model;
 
 use WP_Term;
 use Yikes\LevelPlayingField\Anonymizer\AnonymizerInterface;
+use Yikes\LevelPlayingField\Email\InterviewCancellationFromApplicantEmail;
+use Yikes\LevelPlayingField\Email\InterviewCancellationToApplicantEmail;
+use Yikes\LevelPlayingField\Email\InterviewConfirmationFromApplicantEmail;
+use Yikes\LevelPlayingField\Email\InterviewConfirmationToApplicantEmail;
 use Yikes\LevelPlayingField\Exception\EmptyArray;
 use Yikes\LevelPlayingField\Exception\FailedToUnanonymize;
 use Yikes\LevelPlayingField\Exception\InvalidApplicantValue;
@@ -21,14 +25,10 @@ use Yikes\LevelPlayingField\Field\Certifications;
 use Yikes\LevelPlayingField\Field\Experience;
 use Yikes\LevelPlayingField\Field\Schooling;
 use Yikes\LevelPlayingField\Field\Volunteer;
-use Yikes\LevelPlayingField\Roles\Capabilities;
-use Yikes\LevelPlayingField\Taxonomy\ApplicantStatus;
 use Yikes\LevelPlayingField\RequiredPages\ApplicantMessagingPage;
 use Yikes\LevelPlayingField\RequiredPages\BaseRequiredPage;
-use Yikes\LevelPlayingField\Email\InterviewConfirmationToApplicantEmail;
-use Yikes\LevelPlayingField\Email\InterviewConfirmationFromApplicantEmail;
-use Yikes\LevelPlayingField\Email\InterviewCancellationFromApplicantEmail;
-use Yikes\LevelPlayingField\Email\InterviewCancellationToApplicantEmail;
+use Yikes\LevelPlayingField\Roles\Capabilities;
+use Yikes\LevelPlayingField\Taxonomy\ApplicantStatus;
 
 /**
  * Class Applicant
@@ -113,6 +113,10 @@ final class Applicant extends CustomPostTypeEntity {
 		],
 		ApplicantMeta::INTERVIEW_STATUS => FILTER_SANITIZE_STRING,
 		ApplicantMeta::GUID             => FILTER_SANITIZE_STRING,
+		ApplicantMeta::LANGUAGES      => [
+			ApplicantMeta::LANGUAGE    => FILTER_SANITIZE_STRING,
+			ApplicantMeta::PROFICIENCY => FILTER_SANITIZE_STRING,
+		],
 	];
 
 	/**
@@ -596,6 +600,48 @@ final class Applicant extends CustomPostTypeEntity {
 	}
 
 	/**
+	 * Get the languages and proficiency.
+	 *
+	 * @since %VERSION%
+	 * @return array
+	 */
+	public function get_languages() {
+		return $this->{ApplicantMeta::LANGUAGES};
+	}
+
+	/**
+	 * Add a language to the applicant.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param array $language Array of language data.
+	 */
+	public function add_language( array $language ) {
+		$this->{ApplicantMeta::LANGUAGES}[] = $this->filter_and_sanitize( $language, ApplicantMeta::LANGUAGES );
+		$this->changed_property( ApplicantMeta::LANGUAGES );
+	}
+
+	/**
+	 * Set the languages of the applicant.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param array $languages Array of language arrays.
+	 */
+	public function set_languages( array $languages ) {
+		$this->{ApplicantMeta::LANGUAGES} = [];
+
+		if ( empty( $languages ) ) {
+			$this->changed_property( ApplicantMeta::LANGUAGES );
+			return;
+		}
+
+		foreach ( $languages as $language ) {
+			$this->add_language( $language );
+		}
+	}
+
+	/**
 	 * Get the interview details for the applicant.
 	 *
 	 * @since %VERSION%
@@ -942,13 +988,14 @@ final class Applicant extends CustomPostTypeEntity {
 			ApplicantMeta::VOLUNTEER        => [],
 			ApplicantMeta::STATUS           => ApplicantStatus::DEFAULT_TERM_SLUG,
 			ApplicantMeta::NICKNAME         => (string) $this->post->ID,
-      ApplicantMeta::ANONYMIZER       => '',
+			ApplicantMeta::ANONYMIZER       => '',
 			ApplicantMeta::ANONYMIZED       => false,
 			ApplicantMeta::VIEWED           => 0,
-      ApplicantMeta::ADDRESS          => [],
+			ApplicantMeta::ADDRESS          => [],
 			ApplicantMeta::INTERVIEW_STATUS => '',
 			ApplicantMeta::INTERVIEW        => [],
 			ApplicantMeta::GUID             => '',
+			ApplicantMeta::LANGUAGES        => [],
 		];
 	}
 
