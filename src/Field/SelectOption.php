@@ -49,4 +49,14 @@ final class SelectOption implements OptionInterface {
 			selected( $selected_value, $this->value, false )
 		);
 	}
+
+	/**
+	 * Get the value for the option.
+	 *
+	 * @since %VERSION%
+	 * @return string The option value.
+	 */
+	public function get_value() {
+		return $this->value;
+	}
 }

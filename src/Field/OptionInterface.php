@@ -25,4 +25,12 @@ interface OptionInterface {
 	 * @param string $selected_value The currently selected value.
 	 */
 	public function render( $selected_value );
+
+	/**
+	 * Get the value for the option.
+	 *
+	 * @since %VERSION%
+	 * @return string The option value.
+	 */
+	public function get_value();
 }
