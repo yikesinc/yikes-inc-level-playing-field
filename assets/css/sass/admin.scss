@@ -1,1 +1,8 @@
-@import "utilities/index";
+// Tracy, replace with the better SASS :)
+#adminmenu {
+	#menu-posts-jobs {
+		.wp-menu-name {
+			padding-right: 10px;
+		}
+	}
+}
