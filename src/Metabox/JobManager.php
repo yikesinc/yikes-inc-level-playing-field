@@ -134,6 +134,12 @@ final class JobManager extends AwesomeBaseMetabox implements AssetsAware {
 					'type'   => 'group',
 					'fields' => [
 						[
+							'name' => __( 'General Information', 'yikes-level-playing-field' ),
+							'desc' => __( 'Enter the details for this job listing.', 'yikes-level-playing-field' ),
+							'id'   => $this->prefix_field( 'general_message' ),
+							'type' => 'title',
+						],
+						[
 							'name'     => __( 'Job Status', 'yikes-level-playing-field' ),
 							'desc'     => __( 'Is this job currently active or inactive', 'yikes-level-playing-field' ),
 							'id'       => 'tax_input[' . JobStatus::SLUG . ']',
