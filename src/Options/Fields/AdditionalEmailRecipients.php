@@ -29,7 +29,15 @@ final class AdditionalEmailRecipients extends BaseOptionsField {
 	 */
 	protected function field() {
 		?>
-		<textarea cols="80" rows="4" class="<?php echo $this->html_classes(); ?>" id="<?php echo esc_attr( static::NAME ); ?>" name="<?php echo esc_attr( static::NAME ); ?>" placeholder="<?php echo esc_attr( $this->placeholder_text() ); ?>"><?php echo esc_html( $this->get_value() ); ?></textarea>
+		<textarea cols="80"
+			rows="4"
+			class="<?php echo esc_attr( $this->html_classes() ); ?>"
+			id="<?php echo esc_attr( static::NAME ); ?>"
+			name="<?php echo esc_attr( static::NAME ); ?>"
+			placeholder="<?php echo esc_attr( $this->placeholder_text() ); ?>"
+		>
+			<?php echo esc_html( $this->get_value() ); ?>
+		</textarea>
 		<?php
 	}
 

@@ -75,7 +75,6 @@ class OptionsPage extends BaseAdminPage implements AssetsAware {
 			'options_data',
 			[
 				'ajax'    => [
-					'url'         => admin_url( 'admin-ajax.php' ),
 					'save_nonce'  => wp_create_nonce( 'save_options' ),
 					'save_action' => 'save_options',
 				],

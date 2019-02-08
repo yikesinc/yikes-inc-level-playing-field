@@ -82,11 +82,8 @@
 			case 'textarea':
 			case 'text':
 				return element.value;	
-			break;
-
 			case 'checkbox':
 				return element.checked;
-			break;
 		}		
 	}
 
@@ -94,14 +91,7 @@
 	 * Convert all dashes to underscores.
 	 */
 	function convert_dashes( name ) {
-		return replace_all( name, '-', '_' );
-	} 
-
-	/**
-	 * Replace all `search` with `replacement` in `target`.
-	 */
-	function replace_all( target, search, replacement ) {
-		return target.split( search ).join( replacement );
+		return name.replace( /-/g, '_' );
 	}
 
 })( jQuery );

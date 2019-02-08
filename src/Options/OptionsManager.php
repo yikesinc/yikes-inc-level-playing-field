@@ -9,7 +9,6 @@
 
 namespace Yikes\LevelPlayingField\Options;
 
-use Yikes\LevelPlayingField\Options\Options;
 use Yikes\LevelPlayingField\Service;
 use Yikes\LevelPlayingField\Options\Fields\AdditionalEmailRecipients;
 use Yikes\LevelPlayingField\Options\Fields\EmailRecipientRoles;
@@ -108,7 +107,7 @@ final class OptionsManager implements Service {
 		$roles = get_userdata( $user_id )->roles;
 
 		// Fetch the enabled roles for email addresses.
-		$email_recipient_roles = array_filter( $options->get_option( EmailRecipientRoles::SLUG ) );
+		$email_recipient_roles = array_filter( ( new Options() )->get_option( EmailRecipientRoles::SLUG ) );
 
 		foreach ( $email_recipient_roles as $role => $enabled ) {
 			if ( isset( array_flip( $roles )[ $role ] ) ) {

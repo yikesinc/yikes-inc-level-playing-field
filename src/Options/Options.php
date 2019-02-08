@@ -9,9 +9,9 @@
 
 namespace Yikes\LevelPlayingField\Options;
 
-use Yikes\LevelPlayingField\Options\OptionFields;
 use Yikes\LevelPlayingField\Roles\HiringManager;
 use Yikes\LevelPlayingField\Roles\HumanResources;
+use Yikes\LevelPlayingField\Exception\NoDefault;
 
 /**
  * Class Options
@@ -80,7 +80,12 @@ final class Options {
 	 */
 	public function save() {
 		foreach ( static::FIELDS as $field_name ) {
-			update_option( $this->prefix_field( $field_name ), is_array( $this->$field_name ) ? filter_var_array( $this->$field_name, static::SANITIZATION[ $field_name ] ) : filter_var( $this->$field_name, static::SANITIZATION[ $field_name ] ) );
+			update_option(
+				$this->prefix_field( $field_name ),
+				is_array( $this->$field_name )
+					? filter_var_array( $this->$field_name, static::SANITIZATION[ $field_name ] )
+					: filter_var( $this->$field_name, static::SANITIZATION[ $field_name ] )
+			);
 		}
 	}
 
@@ -90,12 +95,12 @@ final class Options {
 	 * @since %VERSION%
 	 *
 	 * @param string $option_name The name of the option, without the options prefix.
+	 *
+	 * @return mixed The option's value.
 	 */
 	public function get_option( $option_name ) {
 		if ( ! isset( static::DEFAULTS[ $option_name ] ) ) {
-
-			// Should we throw an error?
-			return '';
+			throw NoDefault::default_value( $option_name );
 		}
 		return get_option( $this->prefix_field( $option_name ), $this->get_default_value( $option_name ) );
 	}

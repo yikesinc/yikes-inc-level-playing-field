@@ -3,13 +3,12 @@
  * YIKES Inc. Level Playing Field Plugin.
  *
  * @package Yikes\LevelPlayingField
- * @author  Jeremy Pry
+ * @author  Kevin Utz
  * @license GPL2
  */
 
 namespace Yikes\LevelPlayingField\Options\Fields;
 
-use Yikes\LevelPlayingField\Options\OptionFields;
 use Yikes\LevelPlayingField\Options\Options;
 use Yikes\LevelPlayingField\Service;
 

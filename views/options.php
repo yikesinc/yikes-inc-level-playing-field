@@ -11,8 +11,6 @@
 
 namespace Yikes\LevelPlayingField;
 
-use Yikes\LevelPlayingField\Roles\HiringManager;
-use Yikes\LevelPlayingField\Roles\HumanResources;
 use Yikes\LevelPlayingField\Options\Fields\AdditionalEmailRecipients;
 use Yikes\LevelPlayingField\Options\Fields\EmailRecipientRoles;
 
@@ -20,11 +18,11 @@ $options = $this->options;
 
 ?>
 <div id="lpf-options">
-	<h1><?php esc_html_e( 'Level Playing Field | Options', 'yikes-level-playing-field' ); ?></h1>
+	<h2><?php esc_html_e( 'Options', 'yikes-level-playing-field' ); ?></h2>
 
 	<div id="notice-container"></div>
 
-	<h2><?php esc_html_e( 'Email', 'yikes-level-playing-field' ); ?></h2>
+	<h3><?php esc_html_e( 'Email', 'yikes-level-playing-field' ); ?></h3>
 
 	<div class="lpf-options lpf-options-options-container">
 
