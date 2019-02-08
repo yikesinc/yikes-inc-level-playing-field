@@ -13,7 +13,6 @@ namespace Yikes\LevelPlayingField;
 
 use Yikes\LevelPlayingField\Options\Fields\AdditionalEmailRecipients;
 use Yikes\LevelPlayingField\Options\Fields\EmailRecipientRoles;
-use Yikes\LevelPlayingField\AdminPage\TabbedPage;
 
 $options = $this->options;
 

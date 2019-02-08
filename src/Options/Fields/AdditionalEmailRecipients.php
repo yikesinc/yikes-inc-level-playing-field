@@ -35,7 +35,9 @@ final class AdditionalEmailRecipients extends BaseOptionsField {
 			id="<?php echo esc_attr( static::NAME ); ?>"
 			name="<?php echo esc_attr( static::NAME ); ?>"
 			placeholder="<?php echo esc_attr( $this->placeholder_text() ); ?>"
-		><?php echo esc_html( $this->get_value() ); ?></textarea>
+		>
+			<?php echo esc_html( $this->get_value() ); ?>
+		</textarea>
 		<?php
 	}
 
