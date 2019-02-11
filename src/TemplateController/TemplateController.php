@@ -48,11 +48,11 @@ abstract class TemplateController implements Renderable, AssetsAware, Service {
 	 *
 	 * @since %VERSION%
 	 *
-	 * @param  string $template The default template file WordPress is handing us.
+	 * @param  string $content The default post content.
 	 *
-	 * @return string The text to be used for the menu.
+	 * @return string The post's content, maybe overridden.
 	 */
-	abstract public function set_content( $template );
+	abstract public function set_content( $content );
 
 	/**
 	 * Custom logic to determine if the current template request should be filled with your object's content.
