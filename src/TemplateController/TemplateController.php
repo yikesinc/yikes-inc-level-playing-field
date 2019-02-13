@@ -40,7 +40,7 @@ abstract class TemplateController implements Renderable, AssetsAware, Service {
 	 * @since %VERSION%
 	 */
 	public function register() {
-		add_filter( 'the_content', [ $this, 'set_content' ], 20 );
+		add_filter( 'the_content', [ $this, 'set_content' ], static::PRIORITY );
 	}
 
 	/**
