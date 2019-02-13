@@ -42,9 +42,11 @@ interface ApplicantMeta {
 	const ORGANIZATION  = 'organization';
 	const TYPE          = 'type';
 	const YEAR          = 'year';
+	const YEAR_DURATION = 'year_duration';
 	const MAJOR         = 'major';
 	const DEGREE        = 'degree';
 	const CERTIFICATION = 'certification';
+	const CERT_TYPE     = 'certification_type';
 	const STATUS        = 'status';
 	const SKILL         = 'skill';
 	const LANGUAGE      = 'language';

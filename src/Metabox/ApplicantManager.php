@@ -16,6 +16,7 @@ use Yikes\LevelPlayingField\Assets\ScriptAsset;
 use Yikes\LevelPlayingField\Assets\StyleAsset;
 use Yikes\LevelPlayingField\CustomPostType\ApplicantManager as ApplicantCPT;
 use Yikes\LevelPlayingField\Exception\Exception;
+use Yikes\LevelPlayingField\Model\ApplicantMeta;
 use Yikes\LevelPlayingField\Model\ApplicantRepository;
 use Yikes\LevelPlayingField\Model\JobRepository;
 use Yikes\LevelPlayingField\Service;
@@ -117,7 +118,7 @@ final class ApplicantManager implements AssetsAware, Service {
 		?>
 		<article id="single-applicant-view">
 			<section id="header">
-				<?php echo $applicant->get_avatar_img( 160 ); // XSS ok. ?>
+				<?php echo $applicant->get_avatar_img( 160 ); //phpcs:ignore WordPress.Security.EscapeOutput ?>
 				<h5>
 					<span class="label"><?php esc_html_e( 'Nickname:', 'yikes-level-playing-field' ); ?></span>
 					<span id="editable-nick-name"><?php echo esc_html( $applicant->get_nickname() ); ?></span>
@@ -148,7 +149,7 @@ final class ApplicantManager implements AssetsAware, Service {
 				// @todo: Should HTML be allowed in the cover letter?
 				?>
 				<div class="cover-letter-content">
-					<?php echo $applicant->get_cover_letter(); ?>
+					<?php echo esc_html( $applicant->get_cover_letter() ); ?>
 				</div>
 			</section>
 			<?php do_action( "lpf_{$this->get_post_type()}_after_basic_info", $applicant, $job ); ?>
@@ -173,8 +174,8 @@ final class ApplicantManager implements AssetsAware, Service {
 					foreach ( $applicant->get_certifications() as $certification ) {
 						printf(
 							'<li>Certified in %s from %s. Status: %s</li>',
+							esc_html( $certification['certification_type'] ),
 							esc_html( $certification['type'] ),
-							esc_html( $certification['institution'] ),
 							esc_html( $certification['status'] )
 						);
 					}
@@ -217,10 +218,10 @@ final class ApplicantManager implements AssetsAware, Service {
 					<?php
 					foreach ( $applicant->get_experience() as $experience ) {
 						printf(
-							'<li>%s in %s for x years</li>',
-							esc_html( $experience['position'] ),
-							esc_html( $experience['industry'] ),
-							esc_html( $experience['dates'] )
+							'<li>%s in %s for %s</li>',
+							esc_html( $experience[ ApplicantMeta::POSITION ] ),
+							esc_html( $experience[ ApplicantMeta::INDUSTRY ] ),
+							esc_html( $experience[ ApplicantMeta::YEAR_DURATION ] )
 						);
 					}
 					?>
@@ -234,8 +235,8 @@ final class ApplicantManager implements AssetsAware, Service {
 					foreach ( $applicant->get_volunteer() as $experience ) {
 						printf(
 							'<li>%s in %s for x years</li>',
-							esc_html( $experience['organization'] ),
-							esc_html( $experience['position'] )
+							esc_html( $experience['position'] ),
+							esc_html( $experience['industry'] )
 						);
 					}
 					?>

@@ -48,8 +48,9 @@ final class Applicant extends CustomPostTypeEntity {
 		],
 		ApplicantMeta::CERTIFICATIONS => [
 			ApplicantMeta::INSTITUTION => FILTER_SANITIZE_STRING,
-			ApplicantMeta::YEAR        => FILTER_SANITIZE_NUMBER_INT,
 			ApplicantMeta::TYPE        => FILTER_SANITIZE_STRING,
+			ApplicantMeta::CERT_TYPE   => FILTER_SANITIZE_STRING,
+			ApplicantMeta::YEAR        => FILTER_SANITIZE_NUMBER_INT,
 			ApplicantMeta::STATUS      => FILTER_SANITIZE_STRING,
 		],
 		ApplicantMeta::SKILLS         => [
@@ -57,10 +58,12 @@ final class Applicant extends CustomPostTypeEntity {
 			ApplicantMeta::PROFICIENCY => FILTER_SANITIZE_STRING,
 		],
 		ApplicantMeta::EXPERIENCE     => [
-			// todo: start and end dates.
-			ApplicantMeta::ORGANIZATION => FILTER_SANITIZE_STRING,
-			ApplicantMeta::INDUSTRY     => FILTER_SANITIZE_STRING,
-			ApplicantMeta::POSITION     => FILTER_SANITIZE_STRING,
+			ApplicantMeta::ORGANIZATION  => FILTER_SANITIZE_STRING,
+			ApplicantMeta::INDUSTRY      => FILTER_SANITIZE_STRING,
+			ApplicantMeta::POSITION      => FILTER_SANITIZE_STRING,
+			ApplicantMeta::START_DATE    => FILTER_SANITIZE_STRING,
+			ApplicantMeta::END_DATE      => FILTER_SANITIZE_STRING,
+			ApplicantMeta::YEAR_DURATION => FILTER_SANITIZE_STRING,
 		],
 		ApplicantMeta::VOLUNTEER      => [
 			// todo: start and end dates.
@@ -399,6 +402,13 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @param array $experience The experience data.
 	 */
 	public function add_experience( array $experience ) {
+		// Calculate duration between start and end dates.
+		$start = date_create( $experience[ ApplicantMeta::START_DATE ] );
+		$end   = date_create( $experience[ ApplicantMeta::END_DATE ] );
+		$diff  = date_diff( $start, $end );
+
+		// Add calculated duration to experience and save.
+		$experience[ ApplicantMeta::YEAR_DURATION ] = $diff->format( '%y Year(s) %m Month(s) %d Days' );
 		$this->{ApplicantMeta::EXPERIENCE}[] = $this->filter_and_sanitize( $experience, ApplicantMeta::EXPERIENCE );
 		$this->changed_property( ApplicantMeta::EXPERIENCE );
 	}
