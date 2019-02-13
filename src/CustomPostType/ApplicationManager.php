@@ -60,7 +60,7 @@ final class ApplicationManager extends BaseCustomPostType {
 			'supports'            => [ 'title' ],
 			'taxonomies'          => [],
 			'hierarchical'        => false,
-			'public'              => true,
+			'public'              => false,
 			'show_ui'             => true,
 			'show_in_menu'        => 'edit.php?post_type=jobs',
 			'rewrite'             => [
@@ -71,7 +71,7 @@ final class ApplicationManager extends BaseCustomPostType {
 			'can_export'          => true,
 			'has_archive'         => false,
 			'exclude_from_search' => true,
-			'publicly_queryable'  => true,
+			'publicly_queryable'  => false,
 			'map_meta_cap'        => true,
 			'capabilities'        => [
 				'edit_post'              => Capabilities::EDIT_APPLICATION,
