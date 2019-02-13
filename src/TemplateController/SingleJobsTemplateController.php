@@ -32,18 +32,17 @@ class SingleJobsTemplateController extends TemplateController {
 	 *
 	 * @since %VERSION%
 	 *
-	 * @param  string $template The default template file WordPress is handing us.
+	 * @param  string $content The default post content.
 	 *
-	 * @return string The text to be used for the menu.
+	 * @return string The post's content, maybe overridden.
 	 */
-	public function set_content( $template ) {
+	public function set_content( $content ) {
 
 		if ( $this->is_template_request() ) {
-			global $post;
-			$post->post_content = $this->render( $this->get_context( $this->get_context_data() ) );
+			$content = $this->render( $this->get_context( $this->get_context_data() ) );
 		}
 
-		return $template;
+		return $content;
 	}
 
 	/**

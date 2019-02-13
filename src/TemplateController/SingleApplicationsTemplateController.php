@@ -35,9 +35,9 @@ class SingleApplicationsTemplateController extends TemplateController {
 	 *
 	 * @since %VERSION%
 	 *
-	 * @param  string $content The default template file WordPress is handing us.
+	 * @param  string $content The default post content.
 	 *
-	 * @return string The text to be used for the menu.
+	 * @return string The post's content, maybe overridden.
 	 */
 	public function set_content( $content ) {
 		if ( $this->is_template_request() ) {
