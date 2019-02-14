@@ -203,13 +203,48 @@ final class ApplicantManager implements AssetsAware, Service {
 			</section>
 			<?php do_action( "lpf_{$this->get_post_type()}_after_skills", $applicant, $job ); ?>
 			<section id="languages">
+				<?php
+				$languages       = $applicant->get_languages();
+				$is_multilingual = count( $languages ) > 1;
+
+				// Build up language proficiency data.
+				$proficiency_labels = [
+					'fluent'       => __( 'Fluent', 'yikes-level-playing-field' ),
+					'professional' => __( 'Working Professional proficiency', 'yikes-level-playing-field' ),
+					'limited'      => __( 'Limited proficiency', 'yikes-level-playing-field' ),
+					'elementary'   => __( 'Elementary proficiency', 'yikes-level-playing-field' ),
+				];
+
+				$proficiency_counts = [];
+				foreach ( $languages as $language ) {
+					if ( ! array_key_exists( $language['proficiency'], $proficiency_counts ) ) {
+						$proficiency_counts[ $language['proficiency'] ] = 1;
+						continue;
+					}
+
+					$proficiency_counts[ $language['proficiency'] ]++;
+				}
+
+				// Set up a counter for when we need to output a comma.
+				$needs_comma = count( $proficiency_counts ) - 1;
+
+				?>
 				<h2><?php esc_html_e( 'Languages', 'yikes-level-playing-field' ); ?></h2>
-				<h5><?php esc_html_e( 'Multilingual', 'yikes-level-playing-field' ); ?></h5>
-				<ol>
-					<li>[ fluency ] x languages</li>
-					<li>Fluent in 2 languages</li>
-					<li>Limited proficiency in 1 language</li>
-				</ol>
+				<p>
+					<?php
+					echo $is_multilingual ? esc_html__( 'Multilingual', 'yikes-level-playing-field' ) . ' &ndash; ' : '';
+					foreach ( $proficiency_counts as $proficiency => $count ) {
+						echo esc_html( $proficiency_labels[ $proficiency ] ), ' ';
+						echo esc_html( sprintf(
+							/* translators: %d is the number of languages for the given fluency level */
+							_n( 'in %d language', 'in %d languages', $count, 'yikes-level-playing-field' ),
+							$count
+						) );
+						echo $needs_comma ? ', ' : ' ';
+						$needs_comma--;
+					}
+					?>
+				</p>
 			</section>
 			<?php do_action( "lpf_{$this->get_post_type()}_after_languages", $applicant, $job ); ?>
 			<section id="experience">
@@ -242,9 +277,9 @@ final class ApplicantManager implements AssetsAware, Service {
 					?>
 				</ol>
 			</section>
-      <?php do_action( "lpf_{$this->get_post_type()}_after_volunteer_work", $applicant, $job ); ?>
+			<?php do_action( "lpf_{$this->get_post_type()}_after_volunteer_work", $applicant, $job ); ?>
 			<section id="misc"></section>
-      <?php do_action( "lpf_{$this->get_post_type()}_after_misc", $applicant, $job ); ?>
+			<?php do_action( "lpf_{$this->get_post_type()}_after_misc", $applicant, $job ); ?>
 			<section id="interview">
 				<h2>Interview Details</h2>
 				<?php if ( $applicant->get_interview_status() === 'scheduled' || $applicant->get_interview_status() === 'confirmed' ) { ?>
@@ -262,7 +297,7 @@ final class ApplicantManager implements AssetsAware, Service {
 					<p><span class="label">An interview has not been scheduled yet.</span>	
 				<?php } ?>
 			</section>
-      <?php do_action( "lpf_{$this->get_post_type()}_after_interview", $applicant, $job ); ?>
+			<?php do_action( "lpf_{$this->get_post_type()}_after_interview", $applicant, $job ); ?>
 		</article>
 		<?php
 	}
