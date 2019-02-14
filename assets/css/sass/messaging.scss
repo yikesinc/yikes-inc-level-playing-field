@@ -1,0 +1,91 @@
+#applicant-messaging {
+	border: 3px solid #006799;
+}
+
+#applicant-messaging h2 {
+	border-bottom: 3px solid #006799;
+}
+
+.new-applicant-message-container {
+	margin-top: 20px;
+	padding-top: 20px;
+	border-top: 1px solid #006799;
+
+	&.cursor-disabled {
+		cursor: not-allowed;
+	}
+
+	.disabled-for-interview {
+		background-color: rgba(0, 0, 0, 0.1);
+		pointer-events: none;
+	}
+
+	textarea {
+		width: 100%;
+		height: 150px;
+	}
+}
+
+.conversation-container {
+
+	.lpf-message.hidden {
+		display: none;
+	}
+
+	.message-from-applicant, .message-to-applicant {
+		margin-top: 2px;
+	}
+
+	.message-from-applicant .message { 
+		display: inline-block;
+		border: 2px solid rgba(90, 121, 49, 1);
+		border-radius: 5px;
+		padding: 3px;
+		margin-left: 60%;
+		float: right;
+	}
+
+	.lpf-message.message-from-applicant {
+		padding-bottom: 60px;
+	}
+
+	.message-from-applicant .message-timestamp {
+		display: inline-block;
+		padding: 3px;
+		margin-left: 60%;
+		float: right;
+	}
+
+	.message-to-applicant .message { 
+		display: inline-block;
+		border: 2px solid #5b9dd9;
+		border-radius: 5px;
+		padding: 3px;
+		margin-right: 60%; 
+	}
+
+	.message-to-applicant .message-timestamp {
+		display: inline-block;
+		padding: 3px;
+		margin-right: 60%;
+	}
+
+	#conversation-show-all {
+		text-align: center;
+		cursor: pointer;   
+	}
+}
+
+#interview-scheduler-fields-container {
+	.inline-label {
+		display: inline-block;
+	}
+	.block-label {
+		display: block;
+	}
+	#interview-location, #interview-message {
+		width: 100%;
+		height: 120px;
+	}
+}
+	

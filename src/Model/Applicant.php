@@ -23,37 +23,61 @@ use Yikes\LevelPlayingField\Field\Schooling;
 use Yikes\LevelPlayingField\Field\Volunteer;
 use Yikes\LevelPlayingField\Roles\Capabilities;
 use Yikes\LevelPlayingField\Taxonomy\ApplicantStatus;
+use Yikes\LevelPlayingField\RequiredPages\ApplicantMessagingPage;
+use Yikes\LevelPlayingField\RequiredPages\BaseRequiredPage;
+use Yikes\LevelPlayingField\Email\InterviewConfirmationToApplicantEmail;
+use Yikes\LevelPlayingField\Email\InterviewConfirmationFromApplicantEmail;
+use Yikes\LevelPlayingField\Email\InterviewCancellationFromApplicantEmail;
+use Yikes\LevelPlayingField\Email\InterviewCancellationToApplicantEmail;
 
 /**
  * Class Applicant
  *
  * @since   %VERSION%
  * @package Yikes\LevelPlayingField
+ *
+ * @property string email            The Applicant email address.
+ * @property int    job              The Job ID.
+ * @property string name             The Applicant's name.
+ * @property int    application      The Application ID.
+ * @property string status           The Applicant status.
+ * @property string cover_letter     The Applicant's cover letter.
+ * @property array  schooling        The Applicant's schooling details.
+ * @property array  certifications   The Applicant's certifications.
+ * @property array  skills           The Applicant's skills.
+ * @property array  experience       The Applicant's experience.
+ * @property array  volunteer        The Applicant's volunteer work.
+ * @property string nickname         The Applicant's nickname (for use when their data is anonymous).
+ * @property bool   anonymized       Whether the applicant is anonymized.
+ * @property int    viewed           User ID who viewed the applicant.
+ * @property array  interview        The Applicant's interview details.
+ * @property string interview_status The Applicant's interview status.
+ * @property string guid             A unique hash for the applicant.
  */
 final class Applicant extends CustomPostTypeEntity {
 
 	const SANITIZATION = [
-		ApplicantMeta::JOB            => FILTER_SANITIZE_NUMBER_INT,
-		ApplicantMeta::APPLICATION    => FILTER_SANITIZE_NUMBER_INT,
-		ApplicantMeta::EMAIL          => FILTER_SANITIZE_EMAIL,
-		ApplicantMeta::NAME           => FILTER_SANITIZE_STRING,
-		ApplicantMeta::COVER_LETTER   => FILTER_SANITIZE_STRING,
-		ApplicantMeta::STATUS         => FILTER_SANITIZE_STRING,
-		ApplicantMeta::SCHOOLING      => [
+		ApplicantMeta::JOB              => FILTER_SANITIZE_NUMBER_INT,
+		ApplicantMeta::APPLICATION      => FILTER_SANITIZE_NUMBER_INT,
+		ApplicantMeta::EMAIL            => FILTER_SANITIZE_EMAIL,
+		ApplicantMeta::NAME             => FILTER_SANITIZE_STRING,
+		ApplicantMeta::COVER_LETTER     => FILTER_SANITIZE_STRING,
+		ApplicantMeta::STATUS           => FILTER_SANITIZE_STRING,
+		ApplicantMeta::SCHOOLING        => [
 			ApplicantMeta::INSTITUTION => FILTER_SANITIZE_STRING,
 			ApplicantMeta::TYPE        => FILTER_SANITIZE_STRING,
 			ApplicantMeta::YEAR        => FILTER_SANITIZE_NUMBER_INT,
 			ApplicantMeta::MAJOR       => FILTER_SANITIZE_STRING,
 			ApplicantMeta::DEGREE      => FILTER_SANITIZE_STRING,
 		],
-		ApplicantMeta::CERTIFICATIONS => [
+		ApplicantMeta::CERTIFICATIONS   => [
 			ApplicantMeta::INSTITUTION => FILTER_SANITIZE_STRING,
 			ApplicantMeta::TYPE        => FILTER_SANITIZE_STRING,
 			ApplicantMeta::CERT_TYPE   => FILTER_SANITIZE_STRING,
 			ApplicantMeta::YEAR        => FILTER_SANITIZE_NUMBER_INT,
 			ApplicantMeta::STATUS      => FILTER_SANITIZE_STRING,
 		],
-		ApplicantMeta::SKILLS         => [
+		ApplicantMeta::SKILLS           => [
 			ApplicantMeta::SKILL       => FILTER_SANITIZE_STRING,
 			ApplicantMeta::PROFICIENCY => FILTER_SANITIZE_STRING,
 		],
@@ -65,14 +89,14 @@ final class Applicant extends CustomPostTypeEntity {
 			ApplicantMeta::END_DATE      => FILTER_SANITIZE_STRING,
 			ApplicantMeta::YEAR_DURATION => FILTER_SANITIZE_STRING,
 		],
-		ApplicantMeta::VOLUNTEER      => [
+		ApplicantMeta::VOLUNTEER        => [
 			// todo: start and end dates.
 			ApplicantMeta::ORGANIZATION => FILTER_SANITIZE_STRING,
 			ApplicantMeta::INDUSTRY     => FILTER_SANITIZE_STRING,
 			ApplicantMeta::POSITION     => FILTER_SANITIZE_STRING,
 		],
-		ApplicantMeta::NICKNAME       => FILTER_SANITIZE_STRING,
-		ApplicantMeta::VIEWED         => FILTER_SANITIZE_NUMBER_INT,
+		ApplicantMeta::NICKNAME         => FILTER_SANITIZE_STRING,
+		ApplicantMeta::VIEWED           => FILTER_SANITIZE_NUMBER_INT,
 		ApplicantMeta::ADDRESS        => [
 			ApplicantMeta::LINE_1  => FILTER_SANITIZE_STRING,
 			ApplicantMeta::LINE_2  => FILTER_SANITIZE_STRING,
@@ -81,6 +105,14 @@ final class Applicant extends CustomPostTypeEntity {
 			ApplicantMeta::COUNTRY => FILTER_SANITIZE_STRING,
 			ApplicantMeta::ZIP     => FILTER_SANITIZE_NUMBER_INT,
 		],
+		ApplicantMeta::INTERVIEW        => [
+			ApplicantMeta::DATE     => FILTER_SANITIZE_STRING,
+			ApplicantMeta::TIME     => FILTER_SANITIZE_STRING,
+			ApplicantMeta::LOCATION => FILTER_SANITIZE_STRING,
+			ApplicantMeta::MESSAGE  => FILTER_SANITIZE_STRING,
+		],
+		ApplicantMeta::INTERVIEW_STATUS => FILTER_SANITIZE_STRING,
+		ApplicantMeta::GUID             => FILTER_SANITIZE_STRING,
 	];
 
 	/**
@@ -564,6 +596,187 @@ final class Applicant extends CustomPostTypeEntity {
 	}
 
 	/**
+	 * Get the interview details for the applicant.
+	 *
+	 * @since %VERSION%
+	 * @return array
+	 */
+	public function get_interview() {
+		return $this->interivew;
+	}
+
+	/**
+	 * Set the interview details for the applicant.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param array $interview The interview details for the applicant.
+	 */
+	public function set_interview( array $interview ) {
+		$this->interview = [];
+
+		// Passing an empty array will remove volunteer work.
+		if ( empty( $interview ) ) {
+			$this->changed_property( ApplicantMeta::INTERVIEW );
+			return;
+		}
+
+		$this->interview = $this->filter_and_sanitize( $interview, ApplicantMeta::INTERVIEW );
+		$this->changed_property( ApplicantMeta::INTERVIEW );
+	}
+
+	/**
+	 * Get an interview request status.
+	 *
+	 * @since %VERSION%
+	 * @return string
+	 */
+	public function get_interview_status() {
+		return $this->interview_status;
+	}
+
+	/**
+	 * Set the status of an interview request.
+	 *
+	 * @since %VERSION%
+	 *
+	 * Possible values:
+	 * - ''
+	 * - 'scheduled'
+	 * - 'confirmed'
+	 * - 'cancelled'
+	 *
+	 * @param string $interview_status Whether an interview has been scheduled for this applicant.
+	 */
+	public function set_interview_status( string $interview_status ) {
+		$this->interview_status = filter_var( $interview_status, self::SANITIZATION[ ApplicantMeta::INTERVIEW_STATUS ] );
+		$this->changed_property( ApplicantMeta::INTERVIEW_STATUS );
+	}
+
+	/**
+	 * Cancel an interview.
+	 *
+	 * @since %VERSION%
+	 */
+	public function cancel_interview() {
+
+		// Don't allow cancellation of an interview that isn't scheduled, is already confirmed, or is already cancelled.
+		if ( $this->get_interview_status() !== 'scheduled' ) {
+			return;
+		}
+
+		// Maybe add a message like 'The applicant has confirmed the interview'?
+
+		$this->set_interview_status( 'cancelled' );
+		$this->set_interview( [] );
+		$this->persist_properties();
+
+		// Send off canceled interview email to both the applicant and job managers.
+		( new InterviewCancellationToApplicantEmail( $this ) )->send();
+		( new InterviewCancellationFromApplicantEmail( $this ) )->send();
+	}
+
+	/**
+	 * Confirm an interview.
+	 *
+	 * @since %VERSION%
+	 */
+	public function confirm_interview() {
+		$this->set_interview_status( 'confirmed' );
+		$this->persist_properties();
+
+		// Unanonymize!
+
+		// Maybe add a message like 'The applicant has confirmed the interview'?
+
+		// Send off confirmed interview email to both the applicant and job managers.
+		( new InterviewConfirmationToApplicantEmail( $this ) )->send();
+		( new InterviewConfirmationFromApplicantEmail( $this ) )->send();
+	}
+
+	/**
+	 * Get the URL to the messaging page with the applicant's secret keys appended.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @return string $messaging_endpoint The URL to the messaging page with the applicant's secret keys appended.
+	 */
+	public function get_messaging_endpoint() {
+		return add_query_arg( [
+			'guid' => $this->get_guid(),
+			'post' => $this->get_id(),
+		], get_permalink( BaseRequiredPage::get_required_page_id( ApplicantMessagingPage::PAGE_SLUG ) ) );
+	}
+
+	/**
+	 * Get the endpoint that cancels a scheduled interview.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @return string $cancellation_endpoint The endpoint that cancels a scheduled interview.
+	 */
+	public function get_cancellation_endpoint() {
+		return add_query_arg( [
+			'cancel' => '1',
+		], $this->get_messaging_endpoint() );
+	}
+
+	/**
+	 * Get the endpoint that confirms a scheduled interview.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @return string $confirmation_endpoint The endpoint that confirms a scheduled interview.
+	 */
+	public function get_confirmation_endpoint() {
+		return add_query_arg( [
+			'confirm' => '1',
+		], $this->get_messaging_endpoint() );
+	}
+
+	/**
+	 * Create a unique hash/guid.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @return string $guid A unique hash/guid.
+	 */
+	public function create_guid() {
+
+		// wp_generate_uuid4() was added in WP4.7.
+		if ( function_exists( 'wp_generate_uuid4' ) ) {
+			return wp_generate_uuid4();
+		} else {
+			return uniqid( '', true );
+		}
+	}
+
+	/**
+	 * Set an applicant's guid.
+	 *
+	 * @todo throw an error if there is already a guid set for this applicant?
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param string $guid A guid.
+	 */
+	public function set_guid( $guid ) {
+		$this->guid = filter_var( $guid, self::SANITIZATION[ ApplicantMeta::GUID ] );
+		$this->changed_property( ApplicantMeta::GUID );
+	}
+
+	/**
+	 * Get the applicant's guid.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @return string $guid The applicant's guid.
+	 */
+	public function get_guid() {
+		return $this->guid;
+	}
+
+	/**
 	 * Persist the additional properties of the entity.
 	 *
 	 * @since %VERSION%
@@ -717,22 +930,25 @@ final class Applicant extends CustomPostTypeEntity {
 	 */
 	protected function get_lazy_properties() {
 		return [
-			ApplicantMeta::JOB            => 0,
-			ApplicantMeta::APPLICATION    => 0,
-			ApplicantMeta::EMAIL          => '',
-			ApplicantMeta::NAME           => '',
-			ApplicantMeta::COVER_LETTER   => '',
-			ApplicantMeta::SCHOOLING      => [],
-			ApplicantMeta::CERTIFICATIONS => [],
-			ApplicantMeta::SKILLS         => [],
-			ApplicantMeta::EXPERIENCE     => [],
-			ApplicantMeta::VOLUNTEER      => [],
-			ApplicantMeta::STATUS         => ApplicantStatus::DEFAULT_TERM_SLUG,
-			ApplicantMeta::NICKNAME       => (string) $this->post->ID,
-			ApplicantMeta::ANONYMIZED     => false,
-			ApplicantMeta::ANONYMIZER     => '',
-			ApplicantMeta::VIEWED         => 0,
-			ApplicantMeta::ADDRESS        => [],
+			ApplicantMeta::JOB              => 0,
+			ApplicantMeta::APPLICATION      => 0,
+			ApplicantMeta::EMAIL            => '',
+			ApplicantMeta::NAME             => '',
+			ApplicantMeta::COVER_LETTER     => '',
+			ApplicantMeta::SCHOOLING        => [],
+			ApplicantMeta::CERTIFICATIONS   => [],
+			ApplicantMeta::SKILLS           => [],
+			ApplicantMeta::EXPERIENCE       => [],
+			ApplicantMeta::VOLUNTEER        => [],
+			ApplicantMeta::STATUS           => ApplicantStatus::DEFAULT_TERM_SLUG,
+			ApplicantMeta::NICKNAME         => (string) $this->post->ID,
+      ApplicantMeta::ANONYMIZER       => '',
+			ApplicantMeta::ANONYMIZED       => false,
+			ApplicantMeta::VIEWED           => 0,
+      ApplicantMeta::ADDRESS          => [],
+			ApplicantMeta::INTERVIEW_STATUS => '',
+			ApplicantMeta::INTERVIEW        => [],
+			ApplicantMeta::GUID             => '',
 		];
 	}
 

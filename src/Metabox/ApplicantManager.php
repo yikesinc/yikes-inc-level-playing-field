@@ -242,10 +242,27 @@ final class ApplicantManager implements AssetsAware, Service {
 					?>
 				</ol>
 			</section>
-			<?php do_action( "lpf_{$this->get_post_type()}_after_volunteer_work", $applicant, $job ); ?>
-
+      <?php do_action( "lpf_{$this->get_post_type()}_after_volunteer_work", $applicant, $job ); ?>
 			<section id="misc"></section>
-			<?php do_action( "lpf_{$this->get_post_type()}_after_misc", $applicant, $job ); ?>
+      <?php do_action( "lpf_{$this->get_post_type()}_after_misc", $applicant, $job ); ?>
+			<section id="interview">
+				<h2>Interview Details</h2>
+				<?php if ( $applicant->get_interview_status() === 'scheduled' || $applicant->get_interview_status() === 'confirmed' ) { ?>
+					<?php // @todo: fetch interview data with $applicant->get_interview(). ?>
+					<?php $interview = maybe_unserialize( $applicant->__get( 'interview' ) ); ?>
+					<p><span class="label"><?php esc_html_e( 'Date:', 'yikes-level-playing-field' ); ?></span>
+					<?php echo esc_html( $interview['date'] ); ?></p>
+					<p><span class="label"><?php esc_html_e( 'Time:', 'yikes-level-playing-field' ); ?></span>
+						<?php echo esc_html( $interview['time'] ); ?></p>
+					<p><span class="label"><?php esc_html_e( 'Location:', 'yikes-level-playing-field' ); ?></span>
+						<?php echo esc_html( $interview['location'] ); ?></p>
+					<p><span class="label"><?php esc_html_e( 'Message:', 'yikes-level-playing-field' ); ?></span>
+						<?php echo esc_html( $interview['message'] ); ?></p>
+				<?php } else { ?>
+					<p><span class="label">An interview has not been scheduled yet.</span>	
+				<?php } ?>
+			</section>
+      <?php do_action( "lpf_{$this->get_post_type()}_after_interview", $applicant, $job ); ?>
 		</article>
 		<?php
 	}

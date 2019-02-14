@@ -1,0 +1,52 @@
+<?php
+/**
+ * YIKES Inc. Level Playing Field Plugin.
+ *
+ * @package   Yikes\LevelPlayingField
+ * @author    Kevin Utz / Jeremy Pry
+ * @license   GPL2
+ */
+
+namespace Yikes\LevelPlayingField\Email;
+
+use Yikes\LevelPlayingField\Service;
+use Yikes\LevelPlayingField\Applicant;
+
+/**
+ * Class InterviewCancellationToApplicantEmail.
+ *
+ * @since   %VERSION%
+ *
+ * @package Yikes\LevelPlayingField
+ * @author  Kevin Utz / Jeremy Pry
+ */
+class InterviewCancellationToApplicantEmail extends FromApplicantEmail {
+
+	const EMAIL_TYPE = 'interview-cancellation';
+
+	/**
+	 * Get the email subject.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @return string The subject of the email.
+	 */
+	protected function subject() {
+		return __( 'You declined your interview request.', 'yikes-level-playing-field' );
+	}
+
+	/**
+	 * Get the email message.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @return string The email's message.
+	 */
+	protected function message() {
+		$message  = $this->subject();
+		$message .= '<br>';
+		$message .= __( 'Maybe some further instructions that your information is still anonymous and that you can message the company to re-schedule.', 'yikes-level-playing-field' );
+		$message .= $this->get_messaging_link();
+		return $message;
+	}
+}

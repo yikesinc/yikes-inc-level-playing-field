@@ -229,10 +229,11 @@ abstract class BaseMetabox implements Renderable, Service, AssetsAware {
 	 *
 	 * @since %VERSION%
 	 *
+	 * @param WP_Post      $post The post object.
 	 * @param array|string $atts Attributes as passed to the metabox. The rendered content needs to be echoed.
 	 */
-	public function process_metabox( $atts ) {
-		$atts                = $this->process_attributes( $atts );
+	public function process_metabox( $post, $atts ) {
+		$atts                = $this->process_attributes( $post, $atts );
 		$atts['metabox_id']  = $this->get_id();
 		$atts['nonce_field'] = $this->render_nonce();
 
@@ -246,12 +247,13 @@ abstract class BaseMetabox implements Renderable, Service, AssetsAware {
 	 *
 	 * @since %VERSION%
 	 *
+	 * @param WP_Post      $post The post object.
 	 * @param array|string $atts Raw metabox attributes passed into the
 	 *                           metabox function.
 	 *
 	 * @return array Processed metabox attributes.
 	 */
-	abstract protected function process_attributes( $atts );
+	abstract protected function process_attributes( $post, $atts );
 
 	/**
 	 * Render the nonce.
