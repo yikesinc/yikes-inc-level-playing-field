@@ -10,6 +10,7 @@
 namespace Yikes\LevelPlayingField;
 
 use Yikes\LevelPlayingField\AdminPage\ExportApplicantsPage;
+use Yikes\LevelPlayingField\AdminPage\OptionsPage;
 use Yikes\LevelPlayingField\Assets\AdminStyles;
 use Yikes\LevelPlayingField\CustomPostType\ApplicantManager;
 use Yikes\LevelPlayingField\CustomPostType\ApplicationManager;
@@ -33,6 +34,7 @@ use Yikes\LevelPlayingField\Taxonomy\JobCategory;
 use Yikes\LevelPlayingField\Taxonomy\JobStatus;
 use Yikes\LevelPlayingField\TemplateController\SingleApplicationsTemplateController as SingleApplications;
 use Yikes\LevelPlayingField\TemplateController\SingleJobsTemplateController as SingleJobs;
+use Yikes\LevelPlayingField\Options\OptionsManager;
 use Yikes\LevelPlayingField\Widget\Dashboard\JobApplicants;
 
 /**
@@ -107,8 +109,12 @@ final class PluginFactory {
 			Job::class                  => 1,
 			Application::class          => 1,
 
+			// Options.
+			OptionsManager::class       => 1,
+
 			// Admin Pages.
 			ExportApplicantsPage::class => 1,
+			OptionsPage::class          => 1,
 			AdminStyles::class          => 1,
 
 			// Carbon Fields.
