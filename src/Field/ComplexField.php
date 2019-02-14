@@ -28,6 +28,14 @@ abstract class ComplexField extends BaseField {
 	protected $class_base = 'complexfield';
 
 	/**
+	 * Array of error messages.
+	 *
+	 * @since %VERSION%
+	 * @var string[]
+	 */
+	protected $error_messages = [];
+
+	/**
 	 * Array of sub-fields.
 	 *
 	 * @since %VERSION%
@@ -209,17 +217,27 @@ abstract class ComplexField extends BaseField {
 	 * @throws InvalidField When the field submission is invalid.
 	 */
 	public function set_submission( $data ) {
+		// Validate the value as a whole.
 		try {
 			$this->raw_value = $data;
 			$this->validate_raw_value();
-
-			foreach ( $this->sub_fields as $name => $field ) {
-				$field->set_submission( isset( $data[ $name ] ) ? $data[ $name ] : '' );
-			}
 		} catch ( InvalidField $e ) {
-			$this->error_message = $e->getMessage();
+			$this->error_messages[] = $e->getMessage();
 			throw $e;
 		}
+
+		// Validate each individual field.
+		$values = [];
+		foreach ( $this->sub_fields as $name => $field ) {
+			try {
+				$values[] = $field->set_submission( isset( $data[ $name ] ) ? $data[ $name ] : '' );
+			} catch ( InvalidField $e ) {
+				$this->error_messages[] = $e->getMessage();
+				// todo: Store the exceptions in a chain?
+			}
+		}
+
+		$this->value = $values;
 	}
 
 	/**
@@ -233,7 +251,8 @@ abstract class ComplexField extends BaseField {
 	public function get_sanitized_value() {
 		$values = [];
 		foreach ( $this->sub_fields as $field ) {
-			$values[ $field->get_id() ] = $field->get_sanitized_value();
+			$id            = str_replace( [ '[', ']', $this->get_id() ], '', $field->get_id() );
+			$values[ $id ] = $field->get_sanitized_value();
 		}
 
 		if ( empty( $values ) ) {

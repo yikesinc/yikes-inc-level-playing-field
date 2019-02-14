@@ -1,0 +1,15 @@
+//--------------------------------------------------------------
+// Form Mixins
+//--------------------------------------------------------------
+
+////
+/// @group mixins
+////
+
+
+/// LPF Admin-side forms
+
+@mixin lpf-form-smaller-font {
+	@include fontsize(14px);
+    font-weight: 400;
+}

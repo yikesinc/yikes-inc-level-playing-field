@@ -12,6 +12,8 @@ namespace Yikes\LevelPlayingField\AdminPage;
 use Yikes\LevelPlayingField\Service;
 use Yikes\LevelPlayingField\Roles\Capabilities;
 use Yikes\LevelPlayingField\CustomPostType\JobManager;
+use Yikes\LevelPlayingField\View\AdminView;
+use Yikes\LevelPlayingField\Exception\MustExtend;
 
 /**
  * Abstract class BaseAdminPage.
@@ -24,10 +26,11 @@ use Yikes\LevelPlayingField\CustomPostType\JobManager;
 abstract class BaseAdminPage implements Service {
 
 	const PARENT_SLUG = 'edit.php?post_type=' . JobManager::SLUG;
+	const PAGE_SLUG   = '';
 	const PRIORITY    = 10;
 
 	/**
-	 * Register the Metabox.
+	 * Register the Admin Page.
 	 *
 	 * @since %VERSION%
 	 */
@@ -81,17 +84,22 @@ abstract class BaseAdminPage implements Service {
 	 * @return string Capability required for this menu to be displayed to the user.
 	 */
 	protected function get_capability() {
-		return Capabilities::VIEW_ADMIN_PAGES;
+		return apply_filters( 'lpf_admin_page_capability', Capabilities::VIEW_ADMIN_PAGES, static::PAGE_SLUG );
 	}
 
 	/**
 	 * Get the slug name to refer to this menu by.
 	 *
 	 * @since %VERSION%
-	 *
+	 * @throws MustExtend When the default type has not been extended.
 	 * @return string The slug name to refer to this menu by.
 	 */
-	abstract protected function get_menu_slug();
+	protected function get_menu_slug() {
+		if ( self::PAGE_SLUG === static::PAGE_SLUG ) {
+			throw MustExtend::default_type( self::PAGE_SLUG );
+		}
+		return static::PAGE_SLUG;
+	}
 
 	/**
 	 * Get the function to be called to output the content for this page.
@@ -105,11 +113,13 @@ abstract class BaseAdminPage implements Service {
 	}
 
 	/**
-	 * This function will generate the admin page.
+	 * Display the admin page's HTML.
 	 *
 	 * @since %VERSION%
 	 */
-	abstract public function callback();
+	public function callback() {
+		echo ( new AdminView( static::VIEW_URI ) )->render( $this->get_context() );
+	}
 
 	/**
 	 * Get the priority for this admin page.
@@ -118,7 +128,29 @@ abstract class BaseAdminPage implements Service {
 	 *
 	 * @return int The priority.
 	 */
-	public function get_priority() {
+	protected function get_priority() {
 		return static::PRIORITY;
+	}
+
+	/**
+	 * Include the variables required for this admin page.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @return array $context The context.
+	 */
+	protected function get_context() {
+		return [];
+	}
+
+	/**
+	 * Get the screen base for an admin page.
+	 *
+	 * This is the same value as get_current_screen()['base'] or the $hook variable passed into the admin_enqueue_scripts filter.
+	 *
+	 * @return string The screen's base.
+	 */
+	protected function get_screen_base() {
+		return JobManager::SLUG . '_page_' . static::PAGE_SLUG;
 	}
 }

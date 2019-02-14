@@ -15,10 +15,11 @@ use Yikes\LevelPlayingField\Assets\AssetsAwareness;
 use Yikes\LevelPlayingField\Assets\ScriptAsset;
 use Yikes\LevelPlayingField\Assets\StyleAsset;
 use Yikes\LevelPlayingField\CustomPostType\ApplicantManager as ApplicantCPT;
-use Yikes\LevelPlayingField\Model\Applicant;
+use Yikes\LevelPlayingField\Exception\Exception;
+use Yikes\LevelPlayingField\Model\ApplicantMeta;
+use Yikes\LevelPlayingField\Model\ApplicantRepository;
 use Yikes\LevelPlayingField\Model\JobRepository;
 use Yikes\LevelPlayingField\Service;
-use Yikes\LevelPlayingField\Taxonomy\ApplicantStatus;
 
 /**
  * Class ApplicantManager
@@ -57,6 +58,10 @@ final class ApplicantManager implements AssetsAware, Service {
 		add_action( "add_meta_boxes_{$this->get_post_type()}", function() {
 			$this->meta_boxes();
 		} );
+
+		add_action( 'wp_ajax_save_nickname', function() {
+			$this->save_nickname();
+		} );
 	}
 
 	/**
@@ -72,91 +77,82 @@ final class ApplicantManager implements AssetsAware, Service {
 	}
 
 	/**
+	 * Save new nickname upon edit.
+	 *
+	 * @since %VERSION%
+	 */
+	private function save_nickname() {
+		// Handle nonce.
+		if ( ! check_ajax_referer( 'lpf_applicant_nonce', 'nonce', false ) ) {
+			wp_send_json_error();
+		}
+
+		$id       = isset( $_POST['id'] ) ? absint( $_POST['id'] ) : 0;
+		$nickname = isset( $_POST['nickname'] ) ? sanitize_text_field( $_POST['nickname'] ) : '';
+
+		try {
+			$applicant = ( new ApplicantRepository() )->find( $id );
+			$applicant->set_nickname( $nickname );
+			$applicant->persist();
+		} catch ( Exception $e ) {
+			wp_send_json_error( [
+				'code'    => get_class( $e ),
+				'message' => esc_js( $e->getMessage() ),
+			], 400 );
+		}
+
+		wp_send_json_success( [
+			'id'       => $id,
+			'nickname' => $applicant->get_nickname(),
+		] );
+	}
+
+	/**
 	 * Output the Applicant content.
 	 *
 	 * @since %VERSION%
 	 */
 	private function do_applicant_content() {
-		$applicant = new Applicant( get_post() );
-
-		// Trigger loading of applicant data.
-		$applicant->get_schooling();
-		$applicant->get_status();
-
-		// Placeholder data.
-		$applicant->nickname       = 'Jane Doe';
-		$applicant->schooling      = [
-			[
-				'degree' => 'Diploma',
-				'type'   => 'High School',
-				'major'  => 'n/a',
-			],
-			[
-				'degree' => 'B.S.',
-				'type'   => 'College',
-				'major'  => 'Accounting',
-			],
-		];
-		$applicant->certifications = [
-			[
-				'certification' => 'Something One',
-				'type'          => 'High School',
-				'status'        => 'Active',
-			],
-			[
-				'certification' => 'Something Two',
-				'type'          => 'College',
-				'status'        => 'Inactive',
-			],
-		];
-		$applicant->experience     = [
-			[
-				'position' => 'Regional Manager',
-				'industry' => 'Hospitality',
-				'dates'    => '3',
-			],
-			[
-				'position' => 'Assistant (to the) Regional Manager',
-				'industry' => 'Construction',
-				'dates'    => '1',
-			],
-		];
-
-		// Get job data.
-		$job_repo = new JobRepository();
-		$job      = $job_repo->find( $applicant->get_job_id() );
+		$applicant = ( new ApplicantRepository() )->find( get_the_ID() );
+		$job       = ( new JobRepository() )->find( $applicant->get_job_id() );
 		?>
-
 		<article id="single-applicant-view">
 			<section id="header">
-				<?php echo $applicant->get_avatar_img( 160 ); // XSS ok. ?>
+				<?php echo $applicant->get_avatar_img( 160 ); //phpcs:ignore WordPress.Security.EscapeOutput ?>
 				<h5>
 					<span class="label"><?php esc_html_e( 'Nickname:', 'yikes-level-playing-field' ); ?></span>
-					<?php echo esc_html( $applicant->get_nickname() ); ?>
+					<span id="editable-nick-name"><?php echo esc_html( $applicant->get_nickname() ); ?></span>
+					<span id="edit-nickname-buttons">
+						<button type="button" class="edit-nickname button button-small hide-if-no-js" aria-label="Edit nickname"><?php esc_html_e( 'Edit', 'yikes-level-playing-field' ); ?></button>
+					</span>
 				</h5>
 				<h5>
-					<span class="label">Job:</span>
+					<span class="label"><?php esc_html_e( 'Job:', 'yikes-level-playing-field' ); ?></span>
 					<?php echo esc_html( $job->get_title() ); ?>
 				</h5>
-				<?php
-				// @todo: this isn't the proper way to display the taxonomy box; change it.
-				$status = new ApplicantStatus();
-				$status->meta_box_cb( get_post() );
-				?>
 			</section>
+			<?php do_action( "lpf_{$this->get_post_type()}_after_header", $applicant, $job ); ?>
 			<section id="basic-info">
 				<h2><?php esc_html_e( 'Basic Info', 'yikes-level-playing-field' ); ?></h2>
-				<p class="location"><span class="label">Location:</span>
-					City,
-					State</p>
-				<p class="cover-letter">
-					<span class="label">Cover Letter:</span>
-					<a href="#">View Cover Letter</a>
+				<p class="location"><span class="label"><?php esc_html_e( 'Location:', 'yikes-level-playing-field' ); ?></span>
+					<?php
+					foreach ( $applicant->get_address() as $field ) {
+						echo esc_html( $field ), '<br>';
+					}
+					?>
 				</p>
+				<p class="cover-letter">
+					<span class="label"><?php esc_html_e( 'Cover Letter:', 'yikes-level-playing-field' ); ?></span>
+					<a href="#"><?php esc_html_e( 'View Cover Letter', 'yikes-level-playing-field' ); ?></a>
+				</p>
+				<?php
+				// @todo: Should HTML be allowed in the cover letter?
+				?>
 				<div class="cover-letter-content">
 					<?php echo esc_html( $applicant->get_cover_letter() ); ?>
 				</div>
 			</section>
+			<?php do_action( "lpf_{$this->get_post_type()}_after_basic_info", $applicant, $job ); ?>
 			<section id="education">
 				<h2><?php esc_html_e( 'Education', 'yikes-level-playing-field' ); ?></h2>
 				<h5><?php esc_html_e( 'Schooling', 'yikes-level-playing-field' ); ?></h5>
@@ -164,7 +160,7 @@ final class ApplicantManager implements AssetsAware, Service {
 					<?php
 					foreach ( $applicant->get_schooling() as $schooling ) {
 						printf(
-							'<li>Graduated with a [%s] from [%s] with a major in [%s]</li>',
+							'<li>Graduated with a %s from %s with a major in %s</li>',
 							esc_html( $schooling['degree'] ),
 							esc_html( $schooling['type'] ),
 							esc_html( $schooling['major'] )
@@ -177,8 +173,8 @@ final class ApplicantManager implements AssetsAware, Service {
 					<?php
 					foreach ( $applicant->get_certifications() as $certification ) {
 						printf(
-							'<li>Certified in [%s] from [%s]. Status: [%s]</li>',
-							esc_html( $certification['certification'] ),
+							'<li>Certified in %s from %s. Status: %s</li>',
+							esc_html( $certification['certification_type'] ),
 							esc_html( $certification['type'] ),
 							esc_html( $certification['status'] )
 						);
@@ -186,69 +182,69 @@ final class ApplicantManager implements AssetsAware, Service {
 					?>
 				</ol>
 			</section>
+			<?php do_action( "lpf_{$this->get_post_type()}_after_education", $applicant, $job ); ?>
 			<section id="skills">
 				<h2><?php esc_html_e( 'Skills', 'yikes-level-playing-field' ); ?></h2>
 				<table>
 					<tr>
-						<th>Skill</th>
-						<th>Proficiency</th>
+						<th><?php esc_html_e( 'Skill', 'yikes-level-playing-field' ); ?></th>
+						<th><?php esc_html_e( 'Proficiency', 'yikes-level-playing-field' ); ?></th>
 					</tr>
-					<tr>
-						<td>[ skill ]</td>
-						<td>[ proficiency ]</td>
-					</tr>
-					<tr>
-						<td>[ skill ]</td>
-						<td>[ proficiency ]</td>
-					</tr>
-					<tr>
-						<td>[ skill ]</td>
-						<td>[ proficiency ]</td>
-					</tr>
+					<?php
+					foreach ( $applicant->get_skills() as $skill ) {
+						printf(
+							'<tr><td>%s</td><td>%s</td></tr>',
+							esc_html( $skill['skill'] ),
+							esc_html( $skill['proficiency'] )
+						);
+					}
+					?>
 				</table>
 			</section>
+			<?php do_action( "lpf_{$this->get_post_type()}_after_skills", $applicant, $job ); ?>
 			<section id="languages">
 				<h2><?php esc_html_e( 'Languages', 'yikes-level-playing-field' ); ?></h2>
-				<h5><?php esc_html_e( 'Multingual', 'yikes-level-playing-field' ); ?></h5>
+				<h5><?php esc_html_e( 'Multilingual', 'yikes-level-playing-field' ); ?></h5>
 				<ol>
 					<li>[ fluency ] x languages</li>
 					<li>Fluent in 2 languages</li>
 					<li>Limited proficiency in 1 language</li>
 				</ol>
 			</section>
+			<?php do_action( "lpf_{$this->get_post_type()}_after_languages", $applicant, $job ); ?>
 			<section id="experience">
 				<h2><?php esc_html_e( 'Experience', 'yikes-level-playing-field' ); ?></h2>
 				<ol>
 					<?php
-					foreach ( $applicant->get_job_experience() as $experience ) {
+					foreach ( $applicant->get_experience() as $experience ) {
 						printf(
-							'<li>[ %s ] in [ %s ] for x years</li>',
-							esc_html( $experience['position'] ),
-							esc_html( $experience['industry'] ),
-							esc_html( $experience['dates'] )
+							'<li>%s in %s for %s</li>',
+							esc_html( $experience[ ApplicantMeta::POSITION ] ),
+							esc_html( $experience[ ApplicantMeta::INDUSTRY ] ),
+							esc_html( $experience[ ApplicantMeta::YEAR_DURATION ] )
 						);
 					}
 					?>
 				</ol>
 			</section>
+			<?php do_action( "lpf_{$this->get_post_type()}_after_experience", $applicant, $job ); ?>
 			<section id="volunteer-work">
 				<h2><?php esc_html_e( 'Volunteer Work', 'yikes-level-playing-field' ); ?></h2>
 				<ol>
-					<li>[ position ] in [ organization type ] for x years</li>
-					<li>[ position ] in [ organization type ] for x years</li>
+					<?php
+					foreach ( $applicant->get_volunteer() as $experience ) {
+						printf(
+							'<li>%s in %s for x years</li>',
+							esc_html( $experience['position'] ),
+							esc_html( $experience['industry'] )
+						);
+					}
+					?>
 				</ol>
 			</section>
-			<section id="misc">
-				<h2>Miscellaneous</h2>
-				<p><span class="label">Question:</span>
-					Lorem ipsum dolor sit amet, consectetur adipiscing elit?</p>
-				<p><span class="label">Answer:</span>
-					Vivamus nec ex volutpat, porta libero ut, malesuada lectus.</p>
-				<p><span class="label">Question:</span>
-					Lorem ipsum dolor sit amet, consectetur adipiscing elit?</p>
-				<p><span class="label">Answer:</span>
-					Vivamus nec ex volutpat, porta libero ut, malesuada lectus.</p>
-			</section>
+      <?php do_action( "lpf_{$this->get_post_type()}_after_volunteer_work", $applicant, $job ); ?>
+			<section id="misc"></section>
+      <?php do_action( "lpf_{$this->get_post_type()}_after_misc", $applicant, $job ); ?>
 			<section id="interview">
 				<h2>Interview Details</h2>
 				<?php if ( $applicant->get_interview_status() === 'scheduled' || $applicant->get_interview_status() === 'confirmed' ) { ?>
@@ -266,6 +262,7 @@ final class ApplicantManager implements AssetsAware, Service {
 					<p><span class="label">An interview has not been scheduled yet.</span>	
 				<?php } ?>
 			</section>
+      <?php do_action( "lpf_{$this->get_post_type()}_after_interview", $applicant, $job ); ?>
 		</article>
 		<?php
 	}
@@ -296,7 +293,12 @@ final class ApplicantManager implements AssetsAware, Service {
 	protected function get_assets() {
 		$applicant = new ScriptAsset( 'lpf-applicant-manager-js', 'assets/js/applicant-manager', [ 'jquery' ] );
 		$applicant->add_localization( 'applicantManager', [
-			'title' => _x( 'Applicants | Applicant ID', 'heading when viewing an applicant', 'yikes-level-playing-field' ),
+			'cancel' => _x( 'Cancel', 'undo action to edit nickname when viewing an applicant', 'yikes-level-playing-field' ),
+			'hide'   => _x( 'Hide Cover Letter', 'hide cover letter when viewing an applicant', 'yikes-level-playing-field' ),
+			'ok'     => _x( 'OK', 'confirm action to edit nickname when viewing an applicant', 'yikes-level-playing-field' ),
+			'nonce'  => wp_create_nonce( 'lpf_applicant_nonce' ),
+			'title'  => _x( 'Applicants | Applicant ID', 'heading when viewing an applicant', 'yikes-level-playing-field' ),
+			'view'   => _x( 'View Cover Letter', 'view cover letter when viewing an applicant', 'yikes-level-playing-field' ),
 		] );
 
 		return [

@@ -29,6 +29,7 @@ class ExportApplicantsPage extends BaseAdminPage implements AssetsAware {
 	const POST_TYPE = JobManager::SLUG;
 	const PAGE_SLUG = 'lpf-export-applicants';
 	const PRIORITY  = 15;
+	const VIEW_URI  = 'views/applicant-export';
 
 	// Define the JavaScript file.
 	const JS_HANDLE       = 'lpf-export-page-admin-script';
@@ -49,8 +50,8 @@ class ExportApplicantsPage extends BaseAdminPage implements AssetsAware {
 
 		add_filter( 'admin_enqueue_scripts', function( $hook ) {
 
-			// This filter should only run on our export page.
-			if ( 'jobs_page_lpf-export-applicants' !== $hook ) {
+			// Only enqueue on the export page.
+			if ( $this->get_screen_base() !== $hook ) {
 				return;
 			}
 
@@ -91,37 +92,5 @@ class ExportApplicantsPage extends BaseAdminPage implements AssetsAware {
 	 */
 	protected function get_menu_title() {
 		return __( 'Export', 'yikes-level-playing-field' );
-	}
-
-	/**
-	 * Get the slug name to refer to this menu by.
-	 *
-	 * @since %VERSION%
-	 *
-	 * @return string The slug name to refer to this menu by.
-	 */
-	protected function get_menu_slug() {
-		return static::PAGE_SLUG;
-	}
-
-	/**
-	 * This function will generate the admin page.
-	 *
-	 * @since %VERSION%
-	 */
-	public function callback() {
-		$view = new AdminView( 'views/applicant-export' );
-		$view->render();
-	}
-
-	/**
-	 * Get the priority for this admin page.
-	 *
-	 * @since %VERSION%
-	 *
-	 * @return int The priority.
-	 */
-	public function get_priority() {
-		return static::PRIORITY;
 	}
 }

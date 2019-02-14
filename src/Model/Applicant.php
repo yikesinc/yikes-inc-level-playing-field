@@ -10,12 +10,18 @@
 namespace Yikes\LevelPlayingField\Model;
 
 use WP_Term;
+use Yikes\LevelPlayingField\Anonymizer\AnonymizerInterface;
 use Yikes\LevelPlayingField\Exception\EmptyArray;
+use Yikes\LevelPlayingField\Exception\FailedToUnanonymize;
+use Yikes\LevelPlayingField\Exception\InvalidApplicantValue;
+use Yikes\LevelPlayingField\Exception\InvalidClass;
 use Yikes\LevelPlayingField\Exception\InvalidKey;
+use Yikes\LevelPlayingField\Exception\InvalidMethod;
 use Yikes\LevelPlayingField\Field\Certifications;
 use Yikes\LevelPlayingField\Field\Experience;
 use Yikes\LevelPlayingField\Field\Schooling;
 use Yikes\LevelPlayingField\Field\Volunteer;
+use Yikes\LevelPlayingField\Roles\Capabilities;
 use Yikes\LevelPlayingField\Taxonomy\ApplicantStatus;
 use Yikes\LevelPlayingField\RequiredPages\ApplicantMessagingPage;
 use Yikes\LevelPlayingField\RequiredPages\BaseRequiredPage;
@@ -66,28 +72,39 @@ final class Applicant extends CustomPostTypeEntity {
 		],
 		ApplicantMeta::CERTIFICATIONS   => [
 			ApplicantMeta::INSTITUTION => FILTER_SANITIZE_STRING,
-			ApplicantMeta::YEAR        => FILTER_SANITIZE_NUMBER_INT,
 			ApplicantMeta::TYPE        => FILTER_SANITIZE_STRING,
+			ApplicantMeta::CERT_TYPE   => FILTER_SANITIZE_STRING,
+			ApplicantMeta::YEAR        => FILTER_SANITIZE_NUMBER_INT,
 			ApplicantMeta::STATUS      => FILTER_SANITIZE_STRING,
 		],
 		ApplicantMeta::SKILLS           => [
 			ApplicantMeta::SKILL       => FILTER_SANITIZE_STRING,
 			ApplicantMeta::PROFICIENCY => FILTER_SANITIZE_STRING,
 		],
-		ApplicantMeta::EXPERIENCE       => [
-			// todo: start and end dates.
-			ApplicantMeta::ORGANIZATION => FILTER_SANITIZE_STRING,
-			ApplicantMeta::INDUSTRY     => FILTER_SANITIZE_STRING,
-			ApplicantMeta::POSITION     => FILTER_SANITIZE_NUMBER_INT,
+		ApplicantMeta::EXPERIENCE     => [
+			ApplicantMeta::ORGANIZATION  => FILTER_SANITIZE_STRING,
+			ApplicantMeta::INDUSTRY      => FILTER_SANITIZE_STRING,
+			ApplicantMeta::POSITION      => FILTER_SANITIZE_STRING,
+			ApplicantMeta::START_DATE    => FILTER_SANITIZE_STRING,
+			ApplicantMeta::END_DATE      => FILTER_SANITIZE_STRING,
+			ApplicantMeta::YEAR_DURATION => FILTER_SANITIZE_STRING,
 		],
 		ApplicantMeta::VOLUNTEER        => [
 			// todo: start and end dates.
 			ApplicantMeta::ORGANIZATION => FILTER_SANITIZE_STRING,
 			ApplicantMeta::INDUSTRY     => FILTER_SANITIZE_STRING,
-			ApplicantMeta::POSITION     => FILTER_SANITIZE_NUMBER_INT,
+			ApplicantMeta::POSITION     => FILTER_SANITIZE_STRING,
 		],
 		ApplicantMeta::NICKNAME         => FILTER_SANITIZE_STRING,
 		ApplicantMeta::VIEWED           => FILTER_SANITIZE_NUMBER_INT,
+		ApplicantMeta::ADDRESS        => [
+			ApplicantMeta::LINE_1  => FILTER_SANITIZE_STRING,
+			ApplicantMeta::LINE_2  => FILTER_SANITIZE_STRING,
+			ApplicantMeta::CITY    => FILTER_SANITIZE_STRING,
+			ApplicantMeta::STATE   => FILTER_SANITIZE_STRING,
+			ApplicantMeta::COUNTRY => FILTER_SANITIZE_STRING,
+			ApplicantMeta::ZIP     => FILTER_SANITIZE_NUMBER_INT,
+		],
 		ApplicantMeta::INTERVIEW        => [
 			ApplicantMeta::DATE     => FILTER_SANITIZE_STRING,
 			ApplicantMeta::TIME     => FILTER_SANITIZE_STRING,
@@ -97,6 +114,14 @@ final class Applicant extends CustomPostTypeEntity {
 		ApplicantMeta::INTERVIEW_STATUS => FILTER_SANITIZE_STRING,
 		ApplicantMeta::GUID             => FILTER_SANITIZE_STRING,
 	];
+
+	/**
+	 * The anonymizer class used for anonymization.
+	 *
+	 * @since %VERSION%
+	 * @var string
+	 */
+	private $anonymizer = '';
 
 	/**
 	 * Array of changed properties.
@@ -113,7 +138,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @return string
 	 */
 	public function get_status() {
-		return $this->status;
+		return $this->{ApplicantMeta::STATUS};
 	}
 
 	/**
@@ -124,8 +149,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @param string $status The status.
 	 */
 	public function set_status( $status ) {
-		$this->status = filter_var( $status, self::SANITIZATION[ ApplicantMeta::STATUS ] );
-		$this->changed_property( ApplicantMeta::STATUS );
+		$this->set_property( ApplicantMeta::STATUS, $status );
 	}
 
 	/**
@@ -135,7 +159,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @return string
 	 */
 	public function get_email() {
-		return $this->email;
+		return $this->{ApplicantMeta::EMAIL};
 	}
 
 	/**
@@ -146,8 +170,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @param string $email The applicant's email address.
 	 */
 	public function set_email( $email ) {
-		$this->email = filter_var( $email, self::SANITIZATION[ ApplicantMeta::EMAIL ] );
-		$this->changed_property( ApplicantMeta::EMAIL );
+		$this->set_property( ApplicantMeta::EMAIL, $email );
 	}
 
 	/**
@@ -157,7 +180,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @return int
 	 */
 	public function get_job_id() {
-		return (int) $this->job;
+		return (int) $this->{ApplicantMeta::JOB};
 	}
 
 	/**
@@ -168,8 +191,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @param int $job_id The job ID.
 	 */
 	public function set_job_id( $job_id ) {
-		$this->job = filter_var( $job_id, self::SANITIZATION[ ApplicantMeta::JOB ] );
-		$this->changed_property( ApplicantMeta::JOB );
+		$this->set_property( ApplicantMeta::JOB, $job_id );
 	}
 
 	/**
@@ -179,7 +201,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @return string The applicant name.
 	 */
 	public function get_name() {
-		return $this->name;
+		return $this->{ApplicantMeta::NAME};
 	}
 
 	/**
@@ -190,8 +212,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @param string $name The applicant name.
 	 */
 	public function set_name( $name ) {
-		$this->name = filter_var( $name, self::SANITIZATION[ ApplicantMeta::NAME ] );
-		$this->changed_property( ApplicantMeta::NAME );
+		$this->set_property( ApplicantMeta::NAME, $name );
 	}
 
 	/**
@@ -201,7 +222,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @return int
 	 */
 	public function get_application_id() {
-		return $this->application;
+		return (int) $this->{ApplicantMeta::APPLICATION};
 	}
 
 	/**
@@ -212,8 +233,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @param int $id The application ID.
 	 */
 	public function set_application_id( $id ) {
-		$this->application = filter_var( $id, self::SANITIZATION[ ApplicantMeta::APPLICATION ] );
-		$this->changed_property( ApplicantMeta::APPLICATION );
+		$this->set_property( ApplicantMeta::APPLICATION, $id );
 	}
 
 	/**
@@ -226,8 +246,12 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @return string The avatar image tag, or an empty string.
 	 */
 	public function get_avatar_img( $size = 32 ) {
+		/*
+		 * Use different arguments depending on whether the applicant is anonymized.
+		 * Non-anonymized applicants are allowed to show their regular avatars.
+		 */
 		$avatar = get_avatar( $this->get_email(), $size, 'identicon', '', [
-			'force_default' => true,
+			'force_default' => $this->is_anonymized(),
 			'force_display' => true,
 		] );
 
@@ -241,7 +265,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @return string
 	 */
 	public function get_cover_letter() {
-		return $this->cover_letter;
+		return $this->{ApplicantMeta::COVER_LETTER};
 	}
 
 	/**
@@ -252,8 +276,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @param string $cover_letter The cover letter text.
 	 */
 	public function set_cover_letter( $cover_letter ) {
-		$this->cover_letter = filter_var( $cover_letter, self::SANITIZATION[ ApplicantMeta::COVER_LETTER ] );
-		$this->changed_property( ApplicantMeta::COVER_LETTER );
+		$this->set_property( ApplicantMeta::COVER_LETTER, $cover_letter );
 	}
 
 	/**
@@ -264,7 +287,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @return array
 	 */
 	public function get_schooling() {
-		return $this->schooling;
+		return $this->{ApplicantMeta::SCHOOLING};
 	}
 
 	/**
@@ -275,7 +298,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @param array $schooling Array of schooling data.
 	 */
 	public function add_schooling( array $schooling ) {
-		$this->schooling[] = $this->filter_and_sanitize( $schooling, ApplicantMeta::SCHOOLING );
+		$this->{ApplicantMeta::SCHOOLING}[] = $this->filter_and_sanitize( $schooling, ApplicantMeta::SCHOOLING );
 		$this->changed_property( ApplicantMeta::SCHOOLING );
 	}
 
@@ -288,7 +311,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 */
 	public function set_schooling( array $schooling ) {
 		// Reset current schooling to empty array.
-		$this->schooling = [];
+		$this->{ApplicantMeta::SCHOOLING} = [];
 
 		// Passing an empty array is a way to remove schooling.
 		if ( empty( $schooling ) ) {
@@ -310,7 +333,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @return array
 	 */
 	public function get_certifications() {
-		return $this->certifications;
+		return $this->{ApplicantMeta::CERTIFICATIONS};
 	}
 
 	/**
@@ -321,7 +344,10 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @param array $certification The certification data.
 	 */
 	public function add_certification( array $certification ) {
-		$this->certifications[] = $this->filter_and_sanitize( $certification, ApplicantMeta::CERTIFICATIONS );
+		$this->{ApplicantMeta::CERTIFICATIONS}[] = $this->filter_and_sanitize(
+			$certification,
+			ApplicantMeta::CERTIFICATIONS
+		);
 		$this->changed_property( ApplicantMeta::CERTIFICATIONS );
 	}
 
@@ -333,7 +359,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @param array $certifications All certification data.
 	 */
 	public function set_certifications( array $certifications ) {
-		$this->certifications = [];
+		$this->{ApplicantMeta::CERTIFICATIONS} = [];
 
 		// Passing an empty array is a way to remove certifications.
 		if ( empty( $certifications ) ) {
@@ -353,7 +379,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @return array
 	 */
 	public function get_skills() {
-		return $this->skills;
+		return $this->{ApplicantMeta::SKILLS};
 	}
 
 	/**
@@ -364,7 +390,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @param array $skill The skill data.
 	 */
 	public function add_skill( array $skill ) {
-		$this->skills[] = $this->filter_and_sanitize( $skill, ApplicantMeta::SKILLS );
+		$this->{ApplicantMeta::SKILLS}[] = $this->filter_and_sanitize( $skill, ApplicantMeta::SKILLS );
 		$this->changed_property( ApplicantMeta::SKILLS );
 	}
 
@@ -376,7 +402,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @param array $skills The skills for the applicant.
 	 */
 	public function set_skills( array $skills ) {
-		$this->skills = [];
+		$this->{ApplicantMeta::SKILLS} = [];
 
 		// Passing an empty array is a way to remove skills.
 		if ( empty( $skills ) ) {
@@ -396,8 +422,8 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @since %VERSION%
 	 * @return array
 	 */
-	public function get_job_experience() {
-		return $this->experience;
+	public function get_experience() {
+		return $this->{ApplicantMeta::EXPERIENCE};
 	}
 
 	/**
@@ -408,7 +434,14 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @param array $experience The experience data.
 	 */
 	public function add_experience( array $experience ) {
-		$this->experience[] = $this->filter_and_sanitize( $experience, ApplicantMeta::EXPERIENCE );
+		// Calculate duration between start and end dates.
+		$start = date_create( $experience[ ApplicantMeta::START_DATE ] );
+		$end   = date_create( $experience[ ApplicantMeta::END_DATE ] );
+		$diff  = date_diff( $start, $end );
+
+		// Add calculated duration to experience and save.
+		$experience[ ApplicantMeta::YEAR_DURATION ] = $diff->format( '%y Year(s) %m Month(s) %d Days' );
+		$this->{ApplicantMeta::EXPERIENCE}[] = $this->filter_and_sanitize( $experience, ApplicantMeta::EXPERIENCE );
 		$this->changed_property( ApplicantMeta::EXPERIENCE );
 	}
 
@@ -420,7 +453,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @param array $experiences The experiences for the applicant.
 	 */
 	public function set_experience( array $experiences ) {
-		$this->experience = [];
+		$this->{ApplicantMeta::EXPERIENCE} = [];
 
 		// Passing an empty array is a way to remove experiences.
 		if ( empty( $experiences ) ) {
@@ -442,7 +475,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @return array
 	 */
 	public function get_volunteer() {
-		return $this->volunteer;
+		return $this->{ApplicantMeta::VOLUNTEER};
 	}
 
 	/**
@@ -453,7 +486,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @param array $volunteer Array of volunteer work.
 	 */
 	public function add_volunteer( array $volunteer ) {
-		$this->volunteer[] = $this->filter_and_sanitize( $volunteer, ApplicantMeta::VOLUNTEER );
+		$this->{ApplicantMeta::VOLUNTEER}[] = $this->filter_and_sanitize( $volunteer, ApplicantMeta::VOLUNTEER );
 		$this->changed_property( ApplicantMeta::VOLUNTEER );
 	}
 
@@ -465,7 +498,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @param array $volunteer The volunteer work for the applicant.
 	 */
 	public function set_volunteer( array $volunteer ) {
-		$this->volunteer = [];
+		$this->{ApplicantMeta::VOLUNTEER} = [];
 
 		// Passing an empty array will remove volunteer work.
 		if ( empty( $volunteer ) ) {
@@ -485,7 +518,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @return string
 	 */
 	public function get_nickname() {
-		return $this->nickname;
+		return $this->{ApplicantMeta::NICKNAME};
 	}
 
 	/**
@@ -496,18 +529,49 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @param string $nickname The applicant nickname.
 	 */
 	public function set_nickname( $nickname ) {
-		$this->nickname = filter_var( $nickname, self::SANITIZATION[ ApplicantMeta::NICKNAME ] );
-		$this->changed_property( ApplicantMeta::NICKNAME );
+		$this->set_property( ApplicantMeta::NICKNAME, $nickname );
+	}
+
+	/**
+	 * Get the address of the applicant.
+	 *
+	 * When the applicant is anonymized, only the City and State will be returned.
+	 *
+	 * @since %VERSION%
+	 * @return array The address data.
+	 */
+	public function get_address() {
+		return $this->is_anonymized()
+			? array_intersect_key(
+				$this->{ApplicantMeta::ADDRESS},
+				[
+					ApplicantMeta::CITY  => 1,
+					ApplicantMeta::STATE => 1,
+				]
+			)
+			: $this->{ApplicantMeta::ADDRESS};
+	}
+
+	/**
+	 * Set the address of the Applicant.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param array $address The array of address data.
+	 */
+	public function set_address( $address ) {
+		$this->{ApplicantMeta::ADDRESS} = $this->filter_and_sanitize( $address, ApplicantMeta::ADDRESS );
+		$this->changed_property( ApplicantMeta::ADDRESS );
 	}
 
 	/**
 	 * Whether this applicant's data is currently anonymized.
 	 *
 	 * @since %VERSION%
-	 * @return mixed
+	 * @return bool
 	 */
 	public function is_anonymized() {
-		return $this->anonymized;
+		return (bool) $this->{ApplicantMeta::ANONYMIZED};
 	}
 
 	/**
@@ -517,7 +581,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @return int
 	 */
 	public function viewed_by() {
-		return $this->viewed;
+		return (int) $this->{ApplicantMeta::VIEWED};
 	}
 
 	/**
@@ -528,8 +592,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @param int $id The user ID who viewed the applicant.
 	 */
 	public function set_viewed_by( $id ) {
-		$this->viewed = filter_var( $id, self::SANITIZATION[ ApplicantMeta::VIEWED ] );
-		$this->changed_property( ApplicantMeta::VIEWED );
+		$this->set_property( ApplicantMeta::VIEWED, $id );
 	}
 
 	/**
@@ -720,7 +783,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 */
 	public function persist_properties() {
 		// Always make sure we have a status set.
-		if ( empty( $this->status ) ) {
+		if ( empty( $this->{ApplicantMeta::STATUS} ) ) {
 			$this->set_status( ApplicantStatus::DEFAULT_TERM_SLUG );
 		}
 
@@ -745,6 +808,120 @@ final class Applicant extends CustomPostTypeEntity {
 	}
 
 	/**
+	 * Anonymize this applicant's data.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param AnonymizerInterface $anonymizer The anonymizer object.
+	 */
+	public function anonymize( AnonymizerInterface $anonymizer ) {
+		// Don't anonymize multiple times.
+		if ( $this->is_anonymized() ) {
+			return;
+		}
+
+		// Walk through the object properties, anonymizing them.
+		$properties = array_diff_key( get_object_vars( $this ), $this->get_excluded_properties() );
+		array_walk_recursive( $properties, $this->get_anonymizer_callback( $anonymizer, 'anonymize' ) );
+
+		// Manually set anonymizer properties.
+		$properties[ ApplicantMeta::ANONYMIZED ] = true;
+		$properties[ ApplicantMeta::ANONYMIZER ] = get_class( $anonymizer );
+
+		// Copy the changed properties back.
+		$this->update_properties( $properties );
+	}
+
+	/**
+	 * Get the callback for anonymizing.
+	 *
+	 * The Closure that is returned by this method is expected to be compatible with array_walk_recursive().
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param AnonymizerInterface $anonymizer The anonymizer object.
+	 * @param string              $method     The method to use from the anonymizer class.
+	 *
+	 * @return \Closure
+	 * @throws InvalidMethod When the method provided doesn't exist for the anonymizer object.
+	 */
+	private function get_anonymizer_callback( AnonymizerInterface $anonymizer, $method ) {
+		// Sanity check: make sure the method exists.
+		if ( ! method_exists( $anonymizer, $method ) ) {
+			throw InvalidMethod::from_method( $anonymizer, $method );
+		}
+
+		$defaults = $this->get_lazy_properties();
+		return function( &$value, $key ) use ( $anonymizer, $defaults, $method ) {
+			if ( ! array_key_exists( $key, ApplicantMeta::ANONYMOUS_FIELDS ) ) {
+				return;
+			}
+
+			if ( isset( $defaults[ $key ] ) && $value === $defaults[ $key ] ) {
+				return;
+			}
+
+			$value = $anonymizer->{$method}( $value );
+		};
+	}
+
+	/**
+	 * Unanonymize this Applicant's data.
+	 *
+	 * Role checking should be handled outside of this function.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param AnonymizerInterface $anonymizer The anonymizer object.
+	 *
+	 * @throws InvalidClass When the passed anonymizer object does not match the type used to anonymize the applicant.
+	 * @throws FailedToUnanonymize When the current user is not capable of unanonyming.
+	 */
+	public function unanonymize( AnonymizerInterface $anonymizer ) {
+		// Nothing to do if this isn't anonymized.
+		if ( ! $this->is_anonymized() ) {
+			return;
+		}
+
+		// Don't allow unanonymizing without the proper role.
+		if ( ! current_user_can( Capabilities::UNANONYMIZE, $this ) ) {
+			throw FailedToUnanonymize::not_capable();
+		}
+
+		// Ensure the unanonymizer class is the same that was used to anonymize.
+		if ( get_class( $anonymizer ) !== $this->anonymizer ) {
+			throw InvalidClass::mismatch( get_class( $anonymizer ), $this->anonymizer );
+		}
+
+		// Walk through the object properties, unanonymizing them.
+		$properties = array_diff_key( get_object_vars( $this ), $this->get_excluded_properties() );
+		array_walk_recursive( $properties, $this->get_anonymizer_callback( $anonymizer, 'reveal' ) );
+
+		// Set the anonymized property.
+		$properties[ ApplicantMeta::ANONYMIZED ] = false;
+		$properties[ ApplicantMeta::ANONYMIZER ] = '';
+
+		// Copy the changed properties back.
+		$this->update_properties( $properties );
+	}
+
+	/**
+	 * Copy changed properties back to the object.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param array $properties Properties changed by anonymization process.
+	 */
+	private function update_properties( $properties ) {
+		foreach ( $properties as $key => $value ) {
+			if ( $value !== $this->$key ) {
+				$this->$key = $value;
+				$this->changed_property( $key );
+			}
+		}
+	}
+
+	/**
 	 * Return the list of lazily-loaded properties and their default values.
 	 *
 	 * @since %VERSION%
@@ -765,8 +942,10 @@ final class Applicant extends CustomPostTypeEntity {
 			ApplicantMeta::VOLUNTEER        => [],
 			ApplicantMeta::STATUS           => ApplicantStatus::DEFAULT_TERM_SLUG,
 			ApplicantMeta::NICKNAME         => (string) $this->post->ID,
+      ApplicantMeta::ANONYMIZER       => '',
 			ApplicantMeta::ANONYMIZED       => false,
 			ApplicantMeta::VIEWED           => 0,
+      ApplicantMeta::ADDRESS          => [],
 			ApplicantMeta::INTERVIEW_STATUS => '',
 			ApplicantMeta::INTERVIEW        => [],
 			ApplicantMeta::GUID             => '',
@@ -805,7 +984,7 @@ final class Applicant extends CustomPostTypeEntity {
 
 			$prefixed_key = ApplicantMeta::META_PREFIXES[ $key ];
 			if ( array_key_exists( $prefixed_key, $meta ) ) {
-				$this->$key = $meta[ $prefixed_key ][0];
+				$this->$key = maybe_unserialize( $meta[ $prefixed_key ][0] );
 			} else {
 				$this->$key = $default;
 				$this->changed_property( $key );
@@ -822,12 +1001,12 @@ final class Applicant extends CustomPostTypeEntity {
 		/** @var WP_Term[] $terms */
 		$terms = wp_get_object_terms( $this->get_id(), ApplicantStatus::SLUG );
 		if ( empty( $terms ) || is_wp_error( $terms ) ) {
-			$this->status = $this->get_lazy_properties()[ ApplicantMeta::STATUS ];
+			$this->{ApplicantMeta::STATUS} = $this->get_lazy_properties()[ ApplicantMeta::STATUS ];
 			$this->changed_property( ApplicantMeta::STATUS );
 			return;
 		}
 
-		$this->status = $terms[0]->slug;
+		$this->{ApplicantMeta::STATUS} = $terms[0]->slug;
 	}
 
 	/**
@@ -862,12 +1041,36 @@ final class Applicant extends CustomPostTypeEntity {
 	}
 
 	/**
+	 * Set a property for this Applicant.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param string $property The property to set.
+	 * @param string $value    The value of that property.
+	 *
+	 * @throws InvalidApplicantValue When the value is not valid, or when there is no sanitization setting.
+	 */
+	private function set_property( $property, $value ) {
+		if ( ! array_key_exists( $property, self::SANITIZATION ) ) {
+			throw InvalidApplicantValue::no_sanitization( $property );
+		}
+
+		$filtered = filter_var( $value, self::SANITIZATION[ $property ] );
+		if ( false === $value ) {
+			throw InvalidApplicantValue::property_value( $property, $value );
+		}
+
+		$this->$property = $filtered;
+		$this->changed_property( $property );
+	}
+
+	/**
 	 * Persist the status of the applicant.
 	 *
 	 * @since %VERSION%
 	 */
 	private function persist_status() {
-		wp_set_object_terms( $this->post->ID, $this->status, ApplicantStatus::SLUG );
+		wp_set_object_terms( $this->post->ID, $this->{ApplicantMeta::STATUS}, ApplicantStatus::SLUG );
 	}
 
 	/**
@@ -879,5 +1082,26 @@ final class Applicant extends CustomPostTypeEntity {
 	 */
 	private function changed_property( $property ) {
 		$this->changes[ $property ] = true;
+	}
+
+	/**
+	 * Get properties to exclude from anonymizer.
+	 *
+	 * @since %VERSION%
+	 * @return array
+	 */
+	private function get_excluded_properties() {
+		static $properties = [];
+		if ( empty( $properties ) ) {
+			$properties = [
+				ApplicantMeta::ANONYMIZER => 1,
+				'changes'                 => 1,
+				'post'                    => 1,
+				'new'                     => 1,
+				'post_changed'            => 1,
+			];
+		}
+
+		return $properties;
 	}
 }

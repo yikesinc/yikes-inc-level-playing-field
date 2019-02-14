@@ -1,0 +1,40 @@
+@import "utilities/index";
+
+// Variables are in utilities/variables/forms
+
+.group.yks_mbox {
+
+	.yks-mbox-group {
+		margin-top: $lpf-margin-top;
+
+		.yks_mbox_description {
+			padding-bottom: $lpf-margin-bottom2;
+		}
+
+		&.education, &.experience, &.volunteer {
+			.yks_mbox_description {
+				padding-bottom: 0;
+			}
+		}
+	}
+
+	label {
+		font-size: $basefont;
+		font-weight: 600;
+	}
+
+	.yks-mbox-group-field {
+		@include fontsize(14px);
+		line-height: 1.5;
+
+		.lpf_details {
+			margin-top: 0;
+			padding-left: $lpf-ul-padding-left;
+
+			li {
+				margin-bottom: 0;
+			}
+		}
+	}
+
+}

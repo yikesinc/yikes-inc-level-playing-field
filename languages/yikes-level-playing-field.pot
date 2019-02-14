@@ -6,19 +6,19 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Basepath: ..\n"
+"Language: en_US\n"
 "X-Poedit-KeywordsList: __;_e;_ex:1,2c;_n:1,2;_n_noop:1,2;_nx:1,2,4c;_nx_noop:1,2,3c;_x:1,2c;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
-"X-Poedit-SearchPath-0: .\n"
-"X-Poedit-SearchPathExcluded-0: *.js\n"
-"X-Poedit-SourceCharset: UTF-8\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#. translators: %1$s is the required PHP version, %2$s is the current version
-#: yikes-level-playing-field.php:75
-msgid "Yikes, Inc. Level Playing Fields requires PHP version %1$s or above. Your site is using PHP version %2$s."
+#: src/AdminPage/ExportApplicantsPage.php:82
+msgid "Export Applicants"
 msgstr ""
 
-#: src/CustomPostType/ApplicantManager.php:34
+#: src/AdminPage/ExportApplicantsPage.php:93, src/ListTable/ApplicantManager.php:73
+msgid "Export"
+msgstr ""
+
+#: src/CustomPostType/ApplicantManager.php:34, src/Roles/Applicant.php:29
 msgid "Applicant"
 msgstr ""
 
@@ -199,7 +199,7 @@ msgstr ""
 msgid "New Application"
 msgstr ""
 
-#: src/CustomPostType/ApplicationManager.php:44
+#: src/CustomPostType/ApplicationManager.php:44, views/job-page-application.php:60
 msgid "Edit Application"
 msgstr ""
 
@@ -316,7 +316,7 @@ msgid "Job"
 msgstr ""
 
 #: src/CustomPostType/JobManager.php:39
-msgid "Job Manager"
+msgid "Level Playing Field"
 msgstr ""
 
 #: src/CustomPostType/JobManager.php:40
@@ -343,7 +343,7 @@ msgstr ""
 msgid "New Job"
 msgstr ""
 
-#: src/CustomPostType/JobManager.php:47
+#: src/CustomPostType/JobManager.php:47, views/job-page-application.php:70
 msgid "Edit Job"
 msgstr ""
 
@@ -448,6 +448,31 @@ msgid_plural "Jobs are limited to %d active jobs."
 msgstr[0] ""
 msgstr[1] ""
 
+#. translators: %s represents the class name
+#: src/Exception/InvalidField.php:33
+msgid "The field class \"%s\" is not recognized and cannot be used."
+msgstr ""
+
+#. translators: %s represents the field ID
+#: src/Exception/InvalidField.php:54
+msgid "The ID \"%s\" is invalid. The ID must be a simple string, or a single depth array"
+msgstr ""
+
+#. translators: %1$s is the field label, %2$s is the optional additional context
+#: src/Exception/InvalidField.php:74
+msgid "The field %1$s is required. %$2s"
+msgstr ""
+
+#. translators: %1$s is the field label, %2$s is the optional additional context
+#: src/Exception/InvalidField.php:95
+msgid "The value submitted for the field %1$s is invalid. %2$s"
+msgstr ""
+
+#. translators: %1$s: the post ID. %2$s is a post type
+#: src/Exception/InvalidPostID.php:35
+msgid "The post ID \"%1$s\" is not a valid %2$s."
+msgstr ""
+
 #. translators: %s refers to the default slug
 #: src/Exception/MustExtend.php:34
 msgid "The default slug \"%s\" must be extended in a subclass."
@@ -459,9 +484,13 @@ msgid "The default tag \"%s\" must be extended in a subclass."
 msgstr ""
 
 #. translators: %s refers to the default view
-#. translators: %s refers to the default type
-#: src/Exception/MustExtend.php:72, src/Exception/MustExtend.php:91
+#: src/Exception/MustExtend.php:72
 msgid "The default view \"%s\" must be extended in a subclass."
+msgstr ""
+
+#. translators: %s refers to the default type
+#: src/Exception/MustExtend.php:91
+msgid "The default type \"%s\" must be extended in a subclass."
 msgstr ""
 
 #. translators: %1$s is the post type, %2$d is the item limit
@@ -471,33 +500,301 @@ msgid_plural "%1$s do not support more than %2$d items."
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/ListTable/ApplicationManager.php:49
-msgctxt "column heading"
-msgid "Application Name"
+#: src/Field/Address.php:40
+msgid "Line 1"
 msgstr ""
 
-#: src/ListTable/ApplicationManager.php:50
-msgctxt "column heading"
-msgid "Jobs"
+#: src/Field/Address.php:43
+msgid "Line 2"
 msgstr ""
 
-#: src/ListTable/ApplicationManager.php:51
-msgctxt "column heading"
-msgid "Applicants"
+#: src/Field/Address.php:47
+msgid "City"
 msgstr ""
 
-#: src/ListTable/JobManager.php:62
+#: src/Field/Address.php:50
+msgid "State"
+msgstr ""
+
+#: src/Field/Address.php:53
+msgid "Country"
+msgstr ""
+
+#: src/Field/Address.php:56
+msgid "Postal Code"
+msgstr ""
+
+#: src/Field/Address.php:72
+msgid "Address: "
+msgstr ""
+
+#: src/Field/Certifications.php:40, src/Metabox/ApplicationManager.php:290
+msgid "Certifying Institution"
+msgstr ""
+
+#: src/Field/Certifications.php:43, src/Metabox/ApplicationManager.php:291
+msgid "Year Certified"
+msgstr ""
+
+#: src/Field/Certifications.php:47, src/Metabox/ApplicationManager.php:292
+msgid "Certification Type"
+msgstr ""
+
+#: src/Field/Certifications.php:50, src/Metabox/ApplicationManager.php:293
+msgid "Certification Status"
+msgstr ""
+
+#: src/Field/Certifications.php:65
+msgid "Certifications:"
+msgstr ""
+
+#: src/Field/Certifications.php:78
+msgctxt "for \"add new\" button"
+msgid "Certification"
+msgstr ""
+
+#: src/Field/Experience.php:40, src/Field/Volunteer.php:40, src/Metabox/ApplicationManager.php:310, src/Metabox/ApplicationManager.php:330
+msgid "Organization"
+msgstr ""
+
+#: src/Field/Experience.php:43, src/Metabox/ApplicationManager.php:311
+msgid "Industry"
+msgstr ""
+
+#: src/Field/Experience.php:46, src/Field/Volunteer.php:46
+msgid "Start Date"
+msgstr ""
+
+#: src/Field/Experience.php:50, src/Field/Volunteer.php:50
+msgid "End Date"
+msgstr ""
+
+#: src/Field/Experience.php:54, src/Field/Volunteer.php:54, src/Metabox/ApplicationManager.php:313, src/Metabox/ApplicationManager.php:333
+msgid "Position"
+msgstr ""
+
+#: src/Field/Experience.php:69
+msgid "Experience:"
+msgstr ""
+
+#: src/Field/Experience.php:82
+msgctxt "for \"add new\" button"
+msgid "Experience"
+msgstr ""
+
+#: src/Field/Hidden.php:81
+msgid "Hidden field values cannot be changed."
+msgstr ""
+
+#: src/Field/RepeatableField.php:121, src/Shortcode/Application.php:201
+msgctxt "button for adding section in application"
+msgid "Add New"
+msgstr ""
+
+#: src/Field/Schooling.php:40, src/Metabox/ApplicationManager.php:269
+msgid "Institution"
+msgstr ""
+
+#: src/Field/Schooling.php:43, src/Metabox/ApplicationManager.php:270
+msgid "Institution Type"
+msgstr ""
+
+#: src/Field/Schooling.php:46, src/Metabox/ApplicationManager.php:271
+msgid "Graduation Year"
+msgstr ""
+
+#: src/Field/Schooling.php:50, src/Metabox/ApplicationManager.php:272
+msgid "Major"
+msgstr ""
+
+#: src/Field/Schooling.php:53, src/Metabox/ApplicationManager.php:273
+msgid "Degree"
+msgstr ""
+
+#: src/Field/Schooling.php:68
+msgid "Schooling:"
+msgstr ""
+
+#: src/Field/Schooling.php:81
+msgctxt "for \"add new\" button"
+msgid "School"
+msgstr ""
+
+#: src/Field/Skills.php:35
+msgid "Skill"
+msgstr ""
+
+#: src/Field/Skills.php:38
+msgid "Proficiency"
+msgstr ""
+
+#: src/Field/Skills.php:53
+msgid "Skills:"
+msgstr ""
+
+#: src/Field/Skills.php:66
+msgctxt "for \"add new\" button"
+msgid "Skill"
+msgstr ""
+
+#: src/Field/Volunteer.php:43, src/Metabox/ApplicationManager.php:331
+msgid "Organization Type"
+msgstr ""
+
+#: src/Field/Volunteer.php:69
+msgid "Volunteer:"
+msgstr ""
+
+#: src/Field/Volunteer.php:80
+msgctxt "for \"add new\" button"
+msgid "Volunteer"
+msgstr ""
+
+#: src/ListTable/ApplicantManager.php:100
+msgctxt "column heading"
+msgid "ID"
+msgstr ""
+
+#: src/ListTable/ApplicantManager.php:101, src/ListTable/JobManager.php:51
 msgctxt "column heading"
 msgid "Job Title"
 msgstr ""
 
-#: src/ListTable/JobManager.php:65
+#: src/ListTable/ApplicantManager.php:102
+msgctxt "column heading"
+msgid "Avatar"
+msgstr ""
+
+#: src/ListTable/ApplicantManager.php:103
+msgctxt "column heading"
+msgid "Nick Name"
+msgstr ""
+
+#. translators: %s is the applicant ID
+#. translators: %s is the applicant ID
+#: src/ListTable/ApplicantManager.php:153, src/ListTable/ApplicantManager.php:188
+msgid "Edit Applicant &#8220;%s&#8221;"
+msgstr ""
+
+#: src/ListTable/ApplicantManager.php:167
+msgid "No job set for applicant."
+msgstr ""
+
+#: src/ListTable/ApplicantManager.php:189
+msgid "View"
+msgstr ""
+
+#: src/ListTable/ApplicantManager.php:239
+msgid "Filter Applicant Statuses"
+msgstr ""
+
+#: src/ListTable/ApplicationManager.php:48
+msgctxt "column heading"
+msgid "Application Name"
+msgstr ""
+
+#: src/ListTable/ApplicationManager.php:49
+msgctxt "column heading"
+msgid "Jobs"
+msgstr ""
+
+#: src/ListTable/ApplicationManager.php:50
+msgctxt "column heading"
+msgid "Applicants"
+msgstr ""
+
+#: src/ListTable/JobManager.php:54
 msgctxt "column heading"
 msgid "Applications"
 msgstr ""
 
-#: src/Metabox/ApplicationManager.php:70, src/Metabox/ApplicationManager.php:76, src/Metabox/ApplicationManager.php:85
+#: src/ListTable/JobManager.php:124
+msgid "Filter Job Categories"
+msgstr ""
+
+#: src/Metabox/ApplicantManager.php:109
+msgid "Nickname:"
+msgstr ""
+
+#: src/Metabox/ApplicantManager.php:112
+msgid "Edit"
+msgstr ""
+
+#: src/Metabox/ApplicantManager.php:116
+msgid "Job:"
+msgstr ""
+
+#: src/Metabox/ApplicantManager.php:122, src/Metabox/ApplicationManager.php:70, src/Metabox/ApplicationManager.php:76, src/Metabox/ApplicationManager.php:85
 msgid "Basic Info"
+msgstr ""
+
+#: src/Metabox/ApplicantManager.php:123, views/job-page-job.php:41
+msgid "Location:"
+msgstr ""
+
+#: src/Metabox/ApplicantManager.php:127
+msgid "Cover Letter:"
+msgstr ""
+
+#: src/Metabox/ApplicantManager.php:128
+msgid "View Cover Letter"
+msgstr ""
+
+#: src/Metabox/ApplicantManager.php:139, src/Metabox/ApplicationManager.php:131
+msgid "Education"
+msgstr ""
+
+#: src/Metabox/ApplicantManager.php:140, src/Metabox/ApplicationManager.php:136, src/Metabox/ApplicationManager.php:137
+msgid "Schooling"
+msgstr ""
+
+#: src/Metabox/ApplicantManager.php:153, src/Metabox/ApplicationManager.php:152, src/Metabox/ApplicationManager.php:153
+msgid "Certifications"
+msgstr ""
+
+#: src/Metabox/ApplicantManager.php:169, src/Metabox/ApplicationManager.php:170
+msgid "Skills"
+msgstr ""
+
+#: src/Metabox/ApplicantManager.php:185, src/Metabox/ApplicationManager.php:185
+msgid "Languages"
+msgstr ""
+
+#: src/Metabox/ApplicantManager.php:186
+msgid "Multilingual"
+msgstr ""
+
+#: src/Metabox/ApplicantManager.php:195, src/Metabox/ApplicationManager.php:200, src/Metabox/ApplicationManager.php:205, src/Metabox/ApplicationManager.php:206
+msgid "Experience"
+msgstr ""
+
+#: src/Metabox/ApplicantManager.php:211, src/Metabox/ApplicationManager.php:223, src/Metabox/ApplicationManager.php:228, src/Metabox/ApplicationManager.php:229
+msgid "Volunteer Work"
+msgstr ""
+
+#: src/Metabox/ApplicantManager.php:258
+msgctxt "undo action to edit nickname when viewing an applicant"
+msgid "Cancel"
+msgstr ""
+
+#: src/Metabox/ApplicantManager.php:259
+msgctxt "hide cover letter when viewing an applicant"
+msgid "Hide Cover Letter"
+msgstr ""
+
+#: src/Metabox/ApplicantManager.php:260
+msgctxt "confirm action to edit nickname when viewing an applicant"
+msgid "OK"
+msgstr ""
+
+#: src/Metabox/ApplicantManager.php:262
+msgctxt "heading when viewing an applicant"
+msgid "Applicants | Applicant ID"
+msgstr ""
+
+#: src/Metabox/ApplicantManager.php:263
+msgctxt "view cover letter when viewing an applicant"
+msgid "View Cover Letter"
 msgstr ""
 
 #: src/Metabox/ApplicationManager.php:81
@@ -516,7 +813,7 @@ msgstr ""
 msgid "Phone Number"
 msgstr ""
 
-#: src/Metabox/ApplicationManager.php:113, src/Metabox/ApplicationManager.php:114, src/Metabox/JobManager.php:128, src/Metabox/JobManager.php:138
+#: src/Metabox/ApplicationManager.php:113, src/Metabox/ApplicationManager.php:114, src/Metabox/JobManager.php:181
 msgid "Address"
 msgstr ""
 
@@ -524,156 +821,101 @@ msgstr ""
 msgid "Cover Letter"
 msgstr ""
 
-#: src/Metabox/ApplicationManager.php:131
-msgid "Education"
-msgstr ""
-
-#: src/Metabox/ApplicationManager.php:136, src/Metabox/ApplicationManager.php:137
-msgid "Schooling"
-msgstr ""
-
-#: src/Metabox/ApplicationManager.php:152, src/Metabox/ApplicationManager.php:153
-msgid "Certifications"
-msgstr ""
-
-#: src/Metabox/ApplicationManager.php:170
-msgid "Skills"
-msgstr ""
-
 #: src/Metabox/ApplicationManager.php:175, src/Metabox/ApplicationManager.php:176
 msgid "Skill and Proficiency"
-msgstr ""
-
-#: src/Metabox/ApplicationManager.php:185
-msgid "Languages"
 msgstr ""
 
 #: src/Metabox/ApplicationManager.php:190, src/Metabox/ApplicationManager.php:191
 msgid "Language and Proficiency"
 msgstr ""
 
-#: src/Metabox/ApplicationManager.php:200, src/Metabox/ApplicationManager.php:205, src/Metabox/ApplicationManager.php:206
-msgid "Experience"
-msgstr ""
-
-#: src/Metabox/ApplicationManager.php:223, src/Metabox/ApplicationManager.php:228, src/Metabox/ApplicationManager.php:229
-msgid "Volunteer Work"
-msgstr ""
-
-#: src/Metabox/ApplicationManager.php:269
-msgid "Institution"
-msgstr ""
-
-#: src/Metabox/ApplicationManager.php:270
-msgid "Institution Type"
-msgstr ""
-
-#: src/Metabox/ApplicationManager.php:271
-msgid "Graduation Year"
-msgstr ""
-
-#: src/Metabox/ApplicationManager.php:272
-msgid "Major"
-msgstr ""
-
-#: src/Metabox/ApplicationManager.php:273
-msgid "Degree"
-msgstr ""
-
-#: src/Metabox/ApplicationManager.php:290
-msgid "Certifying Institution"
-msgstr ""
-
-#: src/Metabox/ApplicationManager.php:291
-msgid "Year Certified"
-msgstr ""
-
-#: src/Metabox/ApplicationManager.php:292
-msgid "Certification Type"
-msgstr ""
-
-#: src/Metabox/ApplicationManager.php:293
-msgid "Certification Status"
-msgstr ""
-
-#: src/Metabox/ApplicationManager.php:310, src/Metabox/ApplicationManager.php:330
-msgid "Organization"
-msgstr ""
-
-#: src/Metabox/ApplicationManager.php:311
-msgid "Industry"
-msgstr ""
-
 #: src/Metabox/ApplicationManager.php:312, src/Metabox/ApplicationManager.php:332
 msgid "Dates"
 msgstr ""
 
-#: src/Metabox/ApplicationManager.php:313, src/Metabox/ApplicationManager.php:333
-msgid "Position"
+#: src/Metabox/JobManager.php:123
+msgid "Job Listing Information"
 msgstr ""
 
-#: src/Metabox/ApplicationManager.php:331
-msgid "Organization Type"
-msgstr ""
-
-#: src/Metabox/JobManager.php:71, src/Metabox/JobManager.php:77
+#: src/Metabox/JobManager.php:129
 msgid "General Info"
 msgstr ""
 
-#: src/Metabox/JobManager.php:82, src/Taxonomy/ApplicantStatus.php:150, src/Taxonomy/JobStatus.php:60
-msgid "Status"
+#: src/Metabox/JobManager.php:134
+msgid "Job Status"
 msgstr ""
 
-#: src/Metabox/JobManager.php:83
-msgid "The job status"
+#: src/Metabox/JobManager.php:135
+msgid "Is this job currently active or inactive"
 msgstr ""
 
-#: src/Metabox/JobManager.php:89
+#: src/Metabox/JobManager.php:141
 msgid "Job Description"
 msgstr ""
 
-#: src/Metabox/JobManager.php:90
+#: src/Metabox/JobManager.php:142
 msgid "General overview of the Job and its requirements."
 msgstr ""
 
-#: src/Metabox/JobManager.php:95
+#: src/Metabox/JobManager.php:147
 msgid "Job Type"
 msgstr ""
 
-#: src/Metabox/JobManager.php:96
+#: src/Metabox/JobManager.php:148
 msgid "The type of job being offered"
 msgstr ""
 
-#: src/Metabox/JobManager.php:101
+#: src/Metabox/JobManager.php:153
 msgid "Full Time"
 msgstr ""
 
-#: src/Metabox/JobManager.php:105
+#: src/Metabox/JobManager.php:157
 msgid "Part Time"
 msgstr ""
 
-#: src/Metabox/JobManager.php:109
+#: src/Metabox/JobManager.php:161
 msgid "Contract"
 msgstr ""
 
-#: src/Metabox/JobManager.php:113
+#: src/Metabox/JobManager.php:165
 msgid "Per Diem"
 msgstr ""
 
-#: src/Metabox/JobManager.php:117
+#: src/Metabox/JobManager.php:169
 msgid "Other"
 msgstr ""
 
-#: src/Metabox/JobManager.php:123
+#: src/Metabox/JobManager.php:175
 msgid "Location"
 msgstr ""
 
-#: src/Metabox/JobManager.php:132
+#: src/Metabox/JobManager.php:176
+msgid "Is this job at a location or can employees work remotely"
+msgstr ""
+
+#: src/Metabox/JobManager.php:185
 msgid "Remote"
 msgstr ""
 
-#: src/Metabox/JobManager.php:139
+#: src/Metabox/JobManager.php:191
+msgid "Location Address"
+msgstr ""
+
+#: src/Metabox/JobManager.php:192
 msgid "Address where the job is located"
+msgstr ""
+
+#: src/Metabox/JobManager.php:197
+msgid "Application Form"
+msgstr ""
+
+#: src/Metabox/JobManager.php:198
+msgid "Choose the application form to use for this job"
+msgstr ""
+
+#: src/Model/ApplicantRepository.php:220
+msgctxt "Default applicant nickname. Followed by a number"
+msgid "Applicant #"
 msgstr ""
 
 #: src/Roles/HiringManager.php:29
@@ -684,145 +926,220 @@ msgstr ""
 msgid "Human Resources"
 msgstr ""
 
-#: src/Taxonomy/ApplicantStatus.php:43
-msgid "Accept the applicant"
+#: src/Shortcode/Application.php:211
+msgid "Field cannot be empty."
 msgstr ""
 
-#: src/Taxonomy/ApplicantStatus.php:47
-msgid "Do not accept the applicant"
+#. translators: %TYPE% should not be translated. It is a placeholder for a field name.
+#: src/Shortcode/Application.php:213
+msgid "%TYPE% is invalid."
 msgstr ""
 
-#: src/Taxonomy/ApplicantStatus.php:51
-msgid "Maybe accept the applicant"
+#. translators: %s refers to the error message
+#. translators: %s refers to the error message
+#: src/Shortcode/Application.php:282, src/TemplateController/SingleApplicationsTemplateController.php:77
+msgid "There was an error displaying the form: %s"
 msgstr ""
 
-#: src/Taxonomy/ApplicantStatus.php:110
-msgctxt "select placeholder"
-msgid "------"
+#. translators: %s refers to the term that was attempted to be inserted.
+#: src/Taxonomy/ApplicantStatus.php:84
+msgid "The term \"%s\" is not a valid Applicant status."
 msgstr ""
 
-#: src/Taxonomy/ApplicantStatus.php:151, src/Taxonomy/JobStatus.php:61
+#: src/Taxonomy/ApplicantStatus.php:240, src/Taxonomy/JobStatus.php:61
+msgid "Status"
+msgstr ""
+
+#: src/Taxonomy/ApplicantStatus.php:241, src/Taxonomy/JobStatus.php:62
 msgctxt "taxonomy general name"
 msgid "Status"
 msgstr ""
 
-#: src/Taxonomy/ApplicantStatus.php:152, src/Taxonomy/JobStatus.php:62
+#: src/Taxonomy/ApplicantStatus.php:242, src/Taxonomy/JobStatus.php:63
 msgid "Search Statuses"
 msgstr ""
 
-#: src/Taxonomy/ApplicantStatus.php:153, src/Taxonomy/JobStatus.php:63
+#: src/Taxonomy/ApplicantStatus.php:243, src/Taxonomy/JobStatus.php:64
 msgid "Popular Statuses"
 msgstr ""
 
-#: src/Taxonomy/ApplicantStatus.php:154, src/Taxonomy/JobStatus.php:64
+#: src/Taxonomy/ApplicantStatus.php:244, src/Taxonomy/JobStatus.php:65
 msgid "All Statuses"
 msgstr ""
 
-#: src/Taxonomy/ApplicantStatus.php:155, src/Taxonomy/JobStatus.php:65
+#: src/Taxonomy/ApplicantStatus.php:245, src/Taxonomy/JobStatus.php:66
 msgid "Parent Status"
 msgstr ""
 
-#: src/Taxonomy/ApplicantStatus.php:156, src/Taxonomy/JobStatus.php:66
+#: src/Taxonomy/ApplicantStatus.php:246, src/Taxonomy/JobStatus.php:67
 msgid "Parent Status:"
 msgstr ""
 
-#: src/Taxonomy/ApplicantStatus.php:157, src/Taxonomy/JobStatus.php:67
+#: src/Taxonomy/ApplicantStatus.php:247, src/Taxonomy/JobStatus.php:68
 msgid "Edit Status"
 msgstr ""
 
-#: src/Taxonomy/ApplicantStatus.php:158, src/Taxonomy/JobStatus.php:68
+#: src/Taxonomy/ApplicantStatus.php:248, src/Taxonomy/JobStatus.php:69
 msgid "Update Status"
 msgstr ""
 
-#: src/Taxonomy/ApplicantStatus.php:159, src/Taxonomy/ApplicantStatus.php:160, src/Taxonomy/JobStatus.php:69, src/Taxonomy/JobStatus.php:70
+#: src/Taxonomy/ApplicantStatus.php:249, src/Taxonomy/ApplicantStatus.php:250, src/Taxonomy/JobStatus.php:70, src/Taxonomy/JobStatus.php:71
 msgid "New Status"
 msgstr ""
 
-#: src/Taxonomy/ApplicantStatus.php:161, src/Taxonomy/JobStatus.php:71
+#: src/Taxonomy/ApplicantStatus.php:251, src/Taxonomy/JobStatus.php:72
 msgid "Separate Statuses with commas"
 msgstr ""
 
-#: src/Taxonomy/ApplicantStatus.php:162, src/Taxonomy/JobStatus.php:72
+#: src/Taxonomy/ApplicantStatus.php:252, src/Taxonomy/JobStatus.php:73
 msgid "Add or remove Statuses"
 msgstr ""
 
-#: src/Taxonomy/ApplicantStatus.php:163, src/Taxonomy/JobStatus.php:73
+#: src/Taxonomy/ApplicantStatus.php:253, src/Taxonomy/JobStatus.php:74
 msgid "Choose from the most used Statuses"
 msgstr ""
 
-#: src/Taxonomy/ApplicantStatus.php:164, src/Taxonomy/JobStatus.php:74
+#: src/Taxonomy/ApplicantStatus.php:254, src/Taxonomy/JobStatus.php:75
 msgid "No Statuses found."
 msgstr ""
 
-#: src/Taxonomy/ApplicantStatus.php:165, src/Taxonomy/JobStatus.php:75
+#: src/Taxonomy/ApplicantStatus.php:255, src/Taxonomy/JobStatus.php:76
 msgid "Statuses"
 msgstr ""
 
-#: src/Taxonomy/JobCategory.php:47, src/Taxonomy/JobCategory.php:62
+#: src/Taxonomy/ApplicantStatus.php:282
+msgid "Acceptance is pending"
+msgstr ""
+
+#: src/Taxonomy/ApplicantStatus.php:286
+msgid "Accept the applicant"
+msgstr ""
+
+#: src/Taxonomy/ApplicantStatus.php:290
+msgid "Do not accept the applicant"
+msgstr ""
+
+#: src/Taxonomy/ApplicantStatus.php:294
+msgid "Maybe accept the applicant"
+msgstr ""
+
+#: src/Taxonomy/ApplicantStatus.php:310
+msgid "An error occurred: Failed to validate the nonce."
+msgstr ""
+
+#: src/Taxonomy/ApplicantStatus.php:320
+msgid "An error occurred: the term or post ID failed validation."
+msgstr ""
+
+#. translators: the placeholder is an error message returned by the WP_Error object
+#: src/Taxonomy/ApplicantStatus.php:330
+msgid "An error occurred: %s"
+msgstr ""
+
+#: src/Taxonomy/ApplicantStatus.php:335
+msgid "An error occurred: Failed to set post term."
+msgstr ""
+
+#: src/Taxonomy/ApplicantStatus.php:341
+msgid "Term successfully set."
+msgstr ""
+
+#: src/Taxonomy/JobCategory.php:48, src/Taxonomy/JobCategory.php:63
 msgid "Job Categories"
 msgstr ""
 
-#: src/Taxonomy/JobCategory.php:48
+#: src/Taxonomy/JobCategory.php:49
 msgctxt "taxonomy general name"
 msgid "Job Category"
 msgstr ""
 
-#: src/Taxonomy/JobCategory.php:49
+#: src/Taxonomy/JobCategory.php:50
 msgid "Search Job Categories"
 msgstr ""
 
-#: src/Taxonomy/JobCategory.php:50
+#: src/Taxonomy/JobCategory.php:51
 msgid "Popular Job Categories"
 msgstr ""
 
-#: src/Taxonomy/JobCategory.php:51
+#: src/Taxonomy/JobCategory.php:52
 msgid "All Job Categories"
 msgstr ""
 
-#: src/Taxonomy/JobCategory.php:52
+#: src/Taxonomy/JobCategory.php:53
 msgid "Parent Job Category"
 msgstr ""
 
-#: src/Taxonomy/JobCategory.php:53
+#: src/Taxonomy/JobCategory.php:54
 msgid "Parent Job Category:"
 msgstr ""
 
-#: src/Taxonomy/JobCategory.php:54
+#: src/Taxonomy/JobCategory.php:55
 msgid "Edit Job Category"
 msgstr ""
 
-#: src/Taxonomy/JobCategory.php:55
+#: src/Taxonomy/JobCategory.php:56
 msgid "Update Job Category"
 msgstr ""
 
-#: src/Taxonomy/JobCategory.php:56, src/Taxonomy/JobCategory.php:57
+#: src/Taxonomy/JobCategory.php:57, src/Taxonomy/JobCategory.php:58
 msgid "New Job Category"
 msgstr ""
 
-#: src/Taxonomy/JobCategory.php:58
+#: src/Taxonomy/JobCategory.php:59
 msgid "Separate Job Categories with commas"
 msgstr ""
 
-#: src/Taxonomy/JobCategory.php:59
+#: src/Taxonomy/JobCategory.php:60
 msgid "Add or remove Job Categories"
 msgstr ""
 
-#: src/Taxonomy/JobCategory.php:60
+#: src/Taxonomy/JobCategory.php:61
 msgid "Choose from the most used Job Categories"
 msgstr ""
 
-#: src/Taxonomy/JobCategory.php:61
+#: src/Taxonomy/JobCategory.php:62
 msgid "No Job Categories found."
 msgstr ""
 
-#: src/Taxonomy/JobCategory.php:63
-msgid "Filter Job Categories"
-msgstr ""
-
-#: src/Taxonomy/JobStatus.php:101
+#: src/Taxonomy/JobStatus.php:102
 msgid "Job is inactive"
 msgstr ""
 
-#: src/Taxonomy/JobStatus.php:105
+#: src/Taxonomy/JobStatus.php:106
 msgid "Job is active"
+msgstr ""
+
+#. translators: %s refers to the error message
+#: src/TemplateController/TemplateController.php:82
+msgid "There was an error displaying the template: %s"
+msgstr ""
+
+#: views/job-page-application-completed.php:14
+msgid "Congratulations! Your form has been successfully submitted!"
+msgstr ""
+
+#: views/job-page-application.php:39
+msgid "Your application has errors. Please correct the errors below before resubmitting."
+msgstr ""
+
+#: views/job-page-application.php:48
+msgid "Submit"
+msgstr ""
+
+#: views/job-page-job.php:36
+msgid "Type:"
+msgstr ""
+
+#: views/job-page-job.php:44
+msgctxt "Description of the job location"
+msgid "Remote"
+msgstr ""
+
+#: views/job-page.php:26
+msgid "link to single job"
+msgstr ""
+
+#. translators: %1$s is the required PHP version, %2$s is the current version
+#: yikes-level-playing-field.php:75
+msgid "Yikes, Inc. Level Playing Fields requires PHP version %1$s or above. Your site is using PHP version %2$s."
 msgstr ""
