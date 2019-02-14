@@ -9,6 +9,8 @@
 
 namespace Yikes\LevelPlayingField\Field;
 
+use Yikes\LevelPlayingField\Model\ApplicantMeta;
+
 /**
  * Class Skills
  *
@@ -31,10 +33,10 @@ class Skills extends RepeatableField {
 	 */
 	protected function get_default_fields() {
 		return apply_filters( 'lpf_field_skills_fields', [
-			'skill'       => [
+			ApplicantMeta::SKILL       => [
 				'label' => esc_html__( 'Skill', 'yikes-level-playing-field' ),
 			],
-			'proficiency' => [
+			ApplicantMeta::PROFICIENCY => [
 				'label' => esc_html__( 'Proficiency', 'yikes-level-playing-field' ),
 			],
 		] );

@@ -88,12 +88,16 @@ final class ApplicantStatus extends BaseTaxonomy implements AssetsAware {
 			}
 
 			return $term;
-
 		}, 10, 2 );
 
 		// AJAX handler for changing the post's term.
 		add_action( 'wp_ajax_lpf_add_post_term', function() {
 			$this->add_post_term();
+		});
+
+		// Render the applicant status metabox.
+		add_action( 'lpf_' . ApplicantManager::SLUG . '_after_header', function( $applicant ) {
+			$this->meta_box_cb( $applicant->get_post_object() );
 		});
 	}
 
@@ -167,22 +171,24 @@ final class ApplicantStatus extends BaseTaxonomy implements AssetsAware {
 		}
 		?>
 		<!-- Button group for selecting applicant status -->
-		<div class="tax-btn-group">
-			<?php
-			foreach ( $all_terms as $term ) {
-				$selected_bool = array_key_exists( $term->term_id, $post_terms ) ? $term->term_id : false;
-				?>
-				<button
-					type="button"
-					data-value="<?php echo esc_attr( $term->term_id ); ?>"
-					class="<?php echo false !== $selected_bool ? 'active' : ''; ?>"
-				>
-					<?php echo esc_html( $term->name ); ?>
-				</button>
+		<section id="applicant-status">
+			<div class="tax-btn-group">
 				<?php
-			}
-			?>
-		</div>
+				foreach ( $all_terms as $term ) {
+					$selected_bool = array_key_exists( $term->term_id, $post_terms ) ? $term->term_id : false;
+					?>
+					<button
+						type="button"
+						data-value="<?php echo esc_attr( $term->term_id ); ?>"
+						class="<?php echo false !== $selected_bool ? 'active' : ''; ?>"
+					>
+						<?php echo esc_html( $term->name ); ?>
+					</button>
+					<?php
+				}
+				?>
+			</div>
+		</section>
 		<?php
 	}
 

@@ -1,0 +1,24 @@
+//--------------------------------------------------------------
+// Form Components
+//--------------------------------------------------------------
+
+////
+/// @group components
+////
+
+
+/// LPF Admin-side forms
+
+.yks_mbox {
+	p.yks_mbox_description,
+	.yks_mbox_description_block {
+		color: $color-dkgrey;
+	}
+
+	span.yks_mbox_description {
+		color: inherit;
+		@include fontsize(14px);
+		font-style: normal;
+		font-weight: 600;
+	}
+}

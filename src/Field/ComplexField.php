@@ -251,7 +251,8 @@ abstract class ComplexField extends BaseField {
 	public function get_sanitized_value() {
 		$values = [];
 		foreach ( $this->sub_fields as $field ) {
-			$values[ $field->get_id() ] = $field->get_sanitized_value();
+			$id            = str_replace( [ '[', ']', $this->get_id() ], '', $field->get_id() );
+			$values[ $id ] = $field->get_sanitized_value();
 		}
 
 		if ( empty( $values ) ) {

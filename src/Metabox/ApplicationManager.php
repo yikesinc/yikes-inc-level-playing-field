@@ -13,6 +13,7 @@ use Yikes\LevelPlayingField\Assets\Asset;
 use Yikes\LevelPlayingField\Assets\AssetsAware;
 use Yikes\LevelPlayingField\Assets\AssetsAwareness;
 use Yikes\LevelPlayingField\Assets\ScriptAsset;
+use Yikes\LevelPlayingField\Assets\StyleAsset;
 use Yikes\LevelPlayingField\CustomPostType\ApplicationManager as ApplicationCPT;
 use Yikes\LevelPlayingField\Model\ApplicationMeta;
 
@@ -26,8 +27,10 @@ final class ApplicationManager extends AwesomeBaseMetabox implements AssetsAware
 
 	use AssetsAwareness;
 
-	const JS_HANDLE = 'lpf-application-manager-js';
-	const JS_URI    = 'assets/js/application-manager';
+	const CSS_HANDLE = 'lpf-admin-applications-css';
+	const CSS_URI    = 'assets/css/lpf-applications-admin';
+	const JS_HANDLE  = 'lpf-application-manager-js';
+	const JS_URI     = 'assets/js/application-manager';
 
 	/**
 	 * Register hooks.
@@ -78,11 +81,9 @@ final class ApplicationManager extends AwesomeBaseMetabox implements AssetsAware
 					'type'   => 'group',
 					'fields' => [
 						[
-							'desc' => __( 'Check the fields you want included on this Application Form', 'yikes-level-playing-field' ),
-							'type' => 'message',
-						],
-						[
-							'name' => __( 'Basic Info', 'yikes-level-playing-field' ),
+							'name' => __( 'Basic Information', 'yikes-level-playing-field' ),
+							'desc' => __( 'Check the basic information fields you want included on this Application Form.', 'yikes-level-playing-field' ),
+							'id'   => $this->prefix_field( 'info_message' ),
 							'type' => 'title',
 						],
 						[
@@ -133,6 +134,12 @@ final class ApplicationManager extends AwesomeBaseMetabox implements AssetsAware
 					'type'   => 'group',
 					'fields' => [
 						[
+							'name' => __( 'Educational Background', 'yikes-level-playing-field' ),
+							'desc' => __( 'Check the educational information you want included on this Application Form.', 'yikes-level-playing-field' ),
+							'id'   => $this->prefix_field( 'education_message' ),
+							'type' => 'title',
+						],
+						[
 							'name'       => __( 'Schooling', 'yikes-level-playing-field' ),
 							'desc'       => __( 'Schooling', 'yikes-level-playing-field' ),
 							'id'         => $this->prefix_field( 'schooling' ),
@@ -146,6 +153,7 @@ final class ApplicationManager extends AwesomeBaseMetabox implements AssetsAware
 						],
 						[
 							'desc' => $this->get_schooling_html(),
+							'id'   => $this->prefix_field( 'schooling_message' ),
 							'type' => 'message',
 						],
 						[
@@ -162,6 +170,7 @@ final class ApplicationManager extends AwesomeBaseMetabox implements AssetsAware
 						],
 						[
 							'desc' => $this->get_certification_html(),
+							'id'   => $this->prefix_field( 'certifications_message' ),
 							'type' => 'message',
 						],
 					],
@@ -171,6 +180,12 @@ final class ApplicationManager extends AwesomeBaseMetabox implements AssetsAware
 					'id'     => 'skills',
 					'type'   => 'group',
 					'fields' => [
+						[
+							'name' => __( 'Skills', 'yikes-level-playing-field' ),
+							'desc' => __( 'Check if you want Skills and Proficiency included on this Application Form.', 'yikes-level-playing-field' ),
+							'id'   => $this->prefix_field( 'skills_message' ),
+							'type' => 'title',
+						],
 						[
 							'name'      => __( 'Skill and Proficiency', 'yikes-level-playing-field' ),
 							'desc'      => __( 'Skill and Proficiency', 'yikes-level-playing-field' ),
@@ -187,6 +202,12 @@ final class ApplicationManager extends AwesomeBaseMetabox implements AssetsAware
 					'type'   => 'group',
 					'fields' => [
 						[
+							'name' => __( 'Languages', 'yikes-level-playing-field' ),
+							'desc' => __( 'Check if you want Languages and Proficiency included on this Application Form.', 'yikes-level-playing-field' ),
+							'id'   => $this->prefix_field( 'languages_message' ),
+							'type' => 'title',
+						],
+						[
 							'name'      => __( 'Language and Proficiency', 'yikes-level-playing-field' ),
 							'desc'      => __( 'Language and Proficiency', 'yikes-level-playing-field' ),
 							'id'        => $this->prefix_field( 'languages' ),
@@ -202,6 +223,12 @@ final class ApplicationManager extends AwesomeBaseMetabox implements AssetsAware
 					'type'   => 'group',
 					'fields' => [
 						[
+							'name' => __( 'Experience', 'yikes-level-playing-field' ),
+							'desc' => __( 'Check if you want Experience included on this Application Form.', 'yikes-level-playing-field' ),
+							'id'   => $this->prefix_field( 'experience_message' ),
+							'type' => 'title',
+						],
+						[
 							'name'       => __( 'Experience', 'yikes-level-playing-field' ),
 							'desc'       => __( 'Experience', 'yikes-level-playing-field' ),
 							'id'         => $this->prefix_field( 'experience' ),
@@ -215,6 +242,7 @@ final class ApplicationManager extends AwesomeBaseMetabox implements AssetsAware
 						],
 						[
 							'desc' => $this->get_experience_html(),
+							'id'   => $this->prefix_field( 'experience_message' ),
 							'type' => 'message',
 						],
 					],
@@ -224,6 +252,12 @@ final class ApplicationManager extends AwesomeBaseMetabox implements AssetsAware
 					'id'     => 'volunteer',
 					'type'   => 'group',
 					'fields' => [
+						[
+							'name' => __( 'Volunteer Work', 'yikes-level-playing-field' ),
+							'desc' => __( 'Check if you want Volunteer Work included on this Application Form.', 'yikes-level-playing-field' ),
+							'id'   => $this->prefix_field( 'volunteer_message' ),
+							'type' => 'title',
+						],
 						[
 							'name'       => __( 'Volunteer Work', 'yikes-level-playing-field' ),
 							'desc'       => __( 'Volunteer Work', 'yikes-level-playing-field' ),
@@ -238,6 +272,7 @@ final class ApplicationManager extends AwesomeBaseMetabox implements AssetsAware
 						],
 						[
 							'desc' => $this->get_volunteer_html(),
+							'id'   => $this->prefix_field( 'volunteer_message' ),
 							'type' => 'message',
 						],
 					],
@@ -288,6 +323,7 @@ final class ApplicationManager extends AwesomeBaseMetabox implements AssetsAware
 		?>
 		<ul class="lpf_details lpf_certification">
 			<li><?php esc_html_e( 'Certifying Institution', 'yikes-level-playing-field' ); ?></li>
+			<li><?php esc_html_e( 'Certifying Institution Type', 'yikes-level-playing-field' ); ?></li>
 			<li><?php esc_html_e( 'Year Certified', 'yikes-level-playing-field' ); ?></li>
 			<li><?php esc_html_e( 'Certification Type', 'yikes-level-playing-field' ); ?></li>
 			<li><?php esc_html_e( 'Certification Status', 'yikes-level-playing-field' ); ?></li>
@@ -345,6 +381,7 @@ final class ApplicationManager extends AwesomeBaseMetabox implements AssetsAware
 	 */
 	protected function get_assets() {
 		return [
+			new StyleAsset( self::CSS_HANDLE, self::CSS_URI ),
 			new ScriptAsset( self::JS_HANDLE, self::JS_URI ),
 		];
 	}

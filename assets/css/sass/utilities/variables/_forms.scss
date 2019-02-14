@@ -1,29 +1,18 @@
 //--------------------------------------------------------------
-// Global Form Variables
+// Form Variables
 //--------------------------------------------------------------
 
 ////
 /// @group variables
-/// @author WebDevStudios
 ////
 
-/// Button background.
-$color-button-background: $color-dove-gray;
 
-/// Button background on hover.
-$color-button-background-hover: $color-mineshaft;
+/// LPF Admin-side forms
 
-/// Button text.
-$color-button-text: $color-white;
+$lpf-padding-right: 0.6rem;
 
-/// Input border.
-$color-input-border: $color-silver;
+$lpf-ul-padding-left: 1.6rem;
 
-/// Input focused color.
-$color-input-focus-text: $color-cod-gray;
-
-/// Input text.
-$color-input-text: $color-dove-gray;
-
-/// Global input padding.
-$padding-input: rem(6);
+$lpf-margin-top: 1rem;
+$lpf-margin-bottom: 1rem;
+$lpf-margin-bottom2: 0.5rem;
