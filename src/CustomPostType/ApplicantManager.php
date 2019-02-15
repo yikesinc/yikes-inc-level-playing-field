@@ -101,31 +101,30 @@ final class ApplicantManager extends BaseCustomPostType {
 	 */
 	protected function get_messages() {
 		global $post;
-		$permalink = get_permalink( $post );
 
 		return [
 			0  => '', // Unused. Messages start at index 1.
-			/* translators: %s: permalink URL */
-			1  => sprintf( __( 'Applicant updated. <a target="_blank" href="%s">View Applicant</a>', 'yikes-level-playing-field' ), esc_url( $permalink ) ),
+			1  => __( 'Applicant updated.', 'yikes-level-playing-field' ),
 			2  => __( 'Custom field updated.', 'yikes-level-playing-field' ),
 			3  => __( 'Custom field deleted.', 'yikes-level-playing-field' ),
 			4  => __( 'Applicant updated.', 'yikes-level-playing-field' ),
-			/* translators: %s: date and time of the revision */
-			5  => isset( $_GET['revision'] ) ? sprintf( __( 'Applicant restored to revision from %s', 'yikes-level-playing-field' ), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
-			/* translators: %s: permalink URL */
-			6  => sprintf( __( 'Applicant published. <a href="%s">View Applicant</a>', 'yikes-level-playing-field' ), esc_url( $permalink ) ),
+			5  => isset( $_GET['revision'] )
+				? sprintf(
+					/* translators: %s: date and time of the revision */
+					__( 'Applicant restored to revision from %s', 'yikes-level-playing-field' ),
+					wp_post_revision_title( (int) $_GET['revision'], false )
+				)
+				: false,
+			6  => __( 'Applicant published.', 'yikes-level-playing-field' ),
 			7  => __( 'Applicant saved.', 'yikes-level-playing-field' ),
-			/* translators: %s: preview URL */
-			8  => sprintf( __( 'Applicant submitted. <a target="_blank" href="%s">Preview Applicant</a>', 'yikes-level-playing-field' ), esc_url( add_query_arg( 'preview', 'true', $permalink ) ) ),
+			8  => __( 'Applicant submitted.', 'yikes-level-playing-field' ),
 			9  => sprintf(
-				/* translators: %1$s: translated date. %2$s: permalink URL */
-				__( 'Applicant scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview Applicant</a>', 'yikes-level-playing-field' ),
+				/* translators: %1$s: translated date. */
+				__( 'Applicant scheduled for: <strong>%1$s</strong>.', 'yikes-level-playing-field' ),
 				/* translators: Publish box date format, see http://php.net/date */
-				date_i18n( __( 'M j, Y @ G:i', 'yikes-level-playing-field' ), strtotime( $post->post_date ) ),
-				esc_url( $permalink )
+				date_i18n( __( 'M j, Y @ G:i', 'yikes-level-playing-field' ), strtotime( $post->post_date ) )
 			),
-			/* translators: %s: preview URL */
-			10 => sprintf( __( 'Applicant draft updated. <a target="_blank" href="%s">Preview Applicant</a>', 'yikes-level-playing-field' ), esc_url( add_query_arg( 'preview', 'true', $permalink ) ) ),
+			10 => __( 'Applicant draft updated.', 'yikes-level-playing-field' ),
 		];
 	}
 }
