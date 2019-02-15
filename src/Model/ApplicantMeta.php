@@ -114,6 +114,7 @@ interface ApplicantMeta {
 		self::SCHOOLING      => Types::SCHOOLING,
 		self::CERTIFICATIONS => Types::CERTIFICATIONS,
 		self::SKILLS         => Types::SKILLS,
+		self::LANGUAGES      => Types::LANGUAGES,
 	];
 
 	// Meta prefixed fields.
@@ -131,10 +132,11 @@ interface ApplicantMeta {
 		self::NICKNAME         => self::META_PREFIX . self::NICKNAME,
 		self::ANONYMIZED       => self::META_PREFIX . self::ANONYMIZED,
 		self::VIEWED           => self::META_PREFIX . self::VIEWED,
-    self::ADDRESS          => self::META_PREFIX . self::ADDRESS,
+		self::ADDRESS          => self::META_PREFIX . self::ADDRESS,
 		self::ANONYMIZER       => self::META_PREFIX . self::ANONYMIZER,
 		self::INTERVIEW        => self::META_PREFIX . self::INTERVIEW,
 		self::INTERVIEW_STATUS => self::META_PREFIX . self::INTERVIEW_STATUS,
 		self::GUID             => self::META_PREFIX . self::GUID,
+		self::LANGUAGES        => self::META_PREFIX . self::LANGUAGES,
 	];
 }

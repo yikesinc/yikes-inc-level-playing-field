@@ -86,7 +86,7 @@ abstract class ComplexField extends BaseField {
 	 * @throws InvalidField When an invalid field class is provided through the filter.
 	 */
 	protected function generate_sub_fields() {
-		$classes        = array_merge( $this->classes, $this->get_classes() );
+		$classes        = $this->get_classes();
 		$default_fields = $this->get_default_fields();
 		$id_base        = $this->get_id_base();
 		$sub_fields     = [];
@@ -96,25 +96,29 @@ abstract class ComplexField extends BaseField {
 				'label'    => ucwords( str_replace( [ '_', '-' ], ' ', $field ) ),
 				'class'    => Types::TEXT,
 				'required' => true,
+				'callback' => null,
+				'options'  => [],
 			] );
 
-			// Instantiate the sub field.
-			$sub_field = new $settings['class'](
-				"{$id_base}[{$field}]",
-				$settings['label'],
-				$classes,
-				(bool) $settings['required']
-			);
-
-			// Ensure the class extends the Field interface.
-			if ( ! ( $sub_field instanceof Field ) ) {
-				throw InvalidField::from_field( $settings['class'] );
+			// Instantiate the sub field, using callback if available.
+			if ( isset( $settings['callback'] ) && is_callable( $settings['callback'] ) ) {
+				$sub_field = call_user_func_array( $settings['callback'], [
+					$id_base,
+					$field,
+					$classes,
+					$settings,
+				] );
+			} else {
+				$sub_field = new $settings['class'](
+					"{$id_base}[{$field}]",
+					$settings['label'],
+					$classes,
+					(bool) $settings['required']
+				);
 			}
 
-			// Assign the current object as the field parent.
+			$this->validate_sub_field( $sub_field, $settings['class'] );
 			$sub_field->set_parent( $this );
-
-			// Add to the array.
 			$sub_fields[ $field ] = $sub_field;
 		}
 
@@ -204,7 +208,7 @@ abstract class ComplexField extends BaseField {
 	 * @return array
 	 */
 	protected function get_classes() {
-		return [ "lpf-field-{$this->class_base}" ];
+		return array_merge( $this->classes, [ "lpf-field-{$this->class_base}" ] );
 	}
 
 	/**
@@ -295,4 +299,30 @@ abstract class ComplexField extends BaseField {
 	 * @since %VERSION%
 	 */
 	abstract protected function render_grouping_label();
+
+	/**
+	 * Validate that the object is an instance of the Field interface.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param object $sub_field  The sub-field object.
+	 * @param string $from_class The class used to instantiate the field.
+	 *
+	 * @throws InvalidField When the field is not of the correct type.
+	 */
+	protected function validate_sub_field( $sub_field, $from_class ) {
+		if ( ! ( $sub_field instanceof Field ) ) {
+			throw InvalidField::from_field( $from_class );
+		}
+	}
+
+	/**
+	 * Get the type for use with errors.
+	 *
+	 * @since %VERSION%
+	 * @return string
+	 */
+	protected function get_error_type() {
+		return $this->get_id();
+	}
 }
