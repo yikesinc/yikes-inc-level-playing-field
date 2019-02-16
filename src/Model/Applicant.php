@@ -9,6 +9,7 @@
 
 namespace Yikes\LevelPlayingField\Model;
 
+use DateInterval;
 use WP_Term;
 use Yikes\LevelPlayingField\Anonymizer\AnonymizerFactory;
 use Yikes\LevelPlayingField\Anonymizer\AnonymizerInterface;
@@ -445,7 +446,9 @@ final class Applicant extends CustomPostTypeEntity {
 		$diff  = date_diff( $start, $end );
 
 		// Add calculated duration to experience and save.
-		$experience[ ApplicantMeta::YEAR_DURATION ] = $diff->format( '%y Year(s) %m Month(s) %d Days' );
+		$experience[ ApplicantMeta::YEAR_DURATION ] = $diff instanceof DateInterval
+			? $diff->format( '%y Year(s) %m Month(s) %d Days' )
+			: '';
 		$this->{ApplicantMeta::EXPERIENCE}[]        = $this->filter_and_sanitize(
 			$experience,
 			ApplicantMeta::EXPERIENCE
