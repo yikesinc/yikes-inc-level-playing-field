@@ -41,7 +41,7 @@ $use_comma  = (bool) apply_filters( 'lpf_single_job_template_address_use_comma',
 			<span class="lpf-location"><?php esc_attr_e( 'Location:', 'yikes-level-playing-field' ); ?></span>
 			<?php
 			if ( $job->is_remote() ) {
-				esc_html_x( 'Remote', 'Description of the job location', 'yikes-level-playing-field' );
+				echo esc_html_x( 'Remote', 'Description of the job location', 'yikes-level-playing-field' );
 			} elseif ( ! empty( $job->get_address() ) ) {
 				$address   = $job->get_address();
 				$use_comma = $use_comma && ! empty( $address['city'] ) && ( ! empty( $address['state'] ) || ! empty( $address['province'] ) );
