@@ -10,6 +10,7 @@
 namespace Yikes\LevelPlayingField\Model;
 
 use WP_Term;
+use Yikes\LevelPlayingField\Anonymizer\AnonymizerFactory;
 use Yikes\LevelPlayingField\Anonymizer\AnonymizerInterface;
 use Yikes\LevelPlayingField\Email\InterviewCancellationFromApplicantEmail;
 use Yikes\LevelPlayingField\Email\InterviewCancellationToApplicantEmail;
@@ -81,7 +82,7 @@ final class Applicant extends CustomPostTypeEntity {
 			ApplicantMeta::SKILL       => FILTER_SANITIZE_STRING,
 			ApplicantMeta::PROFICIENCY => FILTER_SANITIZE_STRING,
 		],
-		ApplicantMeta::EXPERIENCE     => [
+		ApplicantMeta::EXPERIENCE       => [
 			ApplicantMeta::ORGANIZATION  => FILTER_SANITIZE_STRING,
 			ApplicantMeta::INDUSTRY      => FILTER_SANITIZE_STRING,
 			ApplicantMeta::POSITION      => FILTER_SANITIZE_STRING,
@@ -97,7 +98,7 @@ final class Applicant extends CustomPostTypeEntity {
 		],
 		ApplicantMeta::NICKNAME         => FILTER_SANITIZE_STRING,
 		ApplicantMeta::VIEWED           => FILTER_SANITIZE_NUMBER_INT,
-		ApplicantMeta::ADDRESS        => [
+		ApplicantMeta::ADDRESS          => [
 			ApplicantMeta::LINE_1  => FILTER_SANITIZE_STRING,
 			ApplicantMeta::LINE_2  => FILTER_SANITIZE_STRING,
 			ApplicantMeta::CITY    => FILTER_SANITIZE_STRING,
@@ -113,7 +114,7 @@ final class Applicant extends CustomPostTypeEntity {
 		],
 		ApplicantMeta::INTERVIEW_STATUS => FILTER_SANITIZE_STRING,
 		ApplicantMeta::GUID             => FILTER_SANITIZE_STRING,
-		ApplicantMeta::LANGUAGES      => [
+		ApplicantMeta::LANGUAGES        => [
 			ApplicantMeta::LANGUAGE    => FILTER_SANITIZE_STRING,
 			ApplicantMeta::PROFICIENCY => FILTER_SANITIZE_STRING,
 		],
@@ -445,7 +446,10 @@ final class Applicant extends CustomPostTypeEntity {
 
 		// Add calculated duration to experience and save.
 		$experience[ ApplicantMeta::YEAR_DURATION ] = $diff->format( '%y Year(s) %m Month(s) %d Days' );
-		$this->{ApplicantMeta::EXPERIENCE}[] = $this->filter_and_sanitize( $experience, ApplicantMeta::EXPERIENCE );
+		$this->{ApplicantMeta::EXPERIENCE}[]        = $this->filter_and_sanitize(
+			$experience,
+			ApplicantMeta::EXPERIENCE
+		);
 		$this->changed_property( ApplicantMeta::EXPERIENCE );
 	}
 
@@ -711,8 +715,7 @@ final class Applicant extends CustomPostTypeEntity {
 			return;
 		}
 
-		// Maybe add a message like 'The applicant has confirmed the interview'?
-
+		// todo: Maybe add a message like 'The applicant has canceled the interview'.
 		$this->set_interview_status( 'cancelled' );
 		$this->set_interview( [] );
 		$this->persist_properties();
@@ -729,12 +732,10 @@ final class Applicant extends CustomPostTypeEntity {
 	 */
 	public function confirm_interview() {
 		$this->set_interview_status( 'confirmed' );
+		// todo: Unanonymize!
 		$this->persist_properties();
 
-		// Unanonymize!
-
-		// Maybe add a message like 'The applicant has confirmed the interview'?
-
+		// todo: Maybe add a message like 'The applicant has confirmed the interview'?
 		// Send off confirmed interview email to both the applicant and job managers.
 		( new InterviewConfirmationToApplicantEmail( $this ) )->send();
 		( new InterviewConfirmationFromApplicantEmail( $this ) )->send();

@@ -18,9 +18,12 @@ use Yikes\LevelPlayingField\CustomPostType\LimitedJobManager;
 use Yikes\LevelPlayingField\ListTable\ApplicantManager as ApplicantListTable;
 use Yikes\LevelPlayingField\ListTable\ApplicationManager as ApplicationListTable;
 use Yikes\LevelPlayingField\ListTable\JobManager as JobListTable;
+use Yikes\LevelPlayingField\Messaging\ApplicantMessaging;
 use Yikes\LevelPlayingField\Metabox\ApplicantManager as ApplicantMetabox;
 use Yikes\LevelPlayingField\Metabox\ApplicationManager as ApplicationMetabox;
 use Yikes\LevelPlayingField\Metabox\JobManager;
+use Yikes\LevelPlayingField\Options\OptionsManager;
+use Yikes\LevelPlayingField\RequiredPages\ApplicantMessagingPage;
 use Yikes\LevelPlayingField\Roles\Administrator;
 use Yikes\LevelPlayingField\Roles\Applicant;
 use Yikes\LevelPlayingField\Roles\Editor;
@@ -32,12 +35,9 @@ use Yikes\LevelPlayingField\Shortcode\Job;
 use Yikes\LevelPlayingField\Taxonomy\ApplicantStatus;
 use Yikes\LevelPlayingField\Taxonomy\JobCategory;
 use Yikes\LevelPlayingField\Taxonomy\JobStatus;
+use Yikes\LevelPlayingField\TemplateController\ApplicantMessagingTemplateController as ApplicantMessageTemplate;
 use Yikes\LevelPlayingField\TemplateController\SingleApplicationsTemplateController as SingleApplications;
 use Yikes\LevelPlayingField\TemplateController\SingleJobsTemplateController as SingleJobs;
-use Yikes\LevelPlayingField\TemplateController\ApplicantMessagingTemplateController as ApplicantMessageTemplate;
-use Yikes\LevelPlayingField\Messaging\ApplicantMessaging;
-use Yikes\LevelPlayingField\RequiredPages\ApplicantMessagingPage;
-use Yikes\LevelPlayingField\Options\OptionsManager;
 use Yikes\LevelPlayingField\Widget\Dashboard\JobApplicants;
 
 /**
@@ -111,9 +111,9 @@ final class PluginFactory {
 			AllJobs::class                  => 1,
 			Job::class                      => 1,
 			Application::class              => 1,
-      
-      // Assets.
-      AdminStyles::class              => 1,
+
+			// Assets.
+			AdminStyles::class              => 1,
 
 			// Options.
 			OptionsManager::class           => 1,

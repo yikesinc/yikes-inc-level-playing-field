@@ -9,6 +9,8 @@
 
 namespace Yikes\LevelPlayingField\Messaging;
 
+use WP_Post;
+use Yikes\LevelPlayingField\Assets\Asset;
 use Yikes\LevelPlayingField\Assets\ScriptAsset;
 use Yikes\LevelPlayingField\Assets\StyleAsset;
 use Yikes\LevelPlayingField\CustomPostType\ApplicantManager;
@@ -269,8 +271,6 @@ class ApplicantMessaging extends Metabox\BaseMetabox {
 			], 403 );
 		}
 
-		// For security reasons, I think we should pass the GUID along with the post request and verify it.
-
 		// Sanitize our variables.
 		$comment = filter_var( $_POST['message'], FILTER_SANITIZE_STRING );
 		$post_id = filter_var( $_POST['post_id'], FILTER_SANITIZE_NUMBER_INT );
@@ -325,8 +325,6 @@ class ApplicantMessaging extends Metabox\BaseMetabox {
 				'reason' => __( 'An error occurred: Failed to validate the nonce.', 'yikes-level-playing-field' ),
 			], 403 );
 		}
-
-		// For security reasons, I think we should pass the GUID along with the post request and verify it.
 
 		$post_id    = filter_var( wp_unslash( $_POST['post_id'] ), FILTER_SANITIZE_NUMBER_INT );
 		$is_metabox = filter_var( filter_var( wp_unslash( $_POST['is_metabox'] ), FILTER_SANITIZE_NUMBER_INT ), FILTER_VALIDATE_INT ) === 1;
@@ -411,8 +409,6 @@ class ApplicantMessaging extends Metabox\BaseMetabox {
 				'reason' => __( 'An error occurred: Failed to validate the nonce.', 'yikes-level-playing-field' ),
 			], 403 );
 		}
-
-		// For security reasons, I think we should pass the GUID along with the post request and verify it.
 
 		// Sanitize our variables.
 		$comment  = filter_var( $_POST['message'], FILTER_SANITIZE_STRING );

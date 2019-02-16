@@ -118,7 +118,7 @@ abstract class BaseAdminPage implements Service {
 	 * @since %VERSION%
 	 */
 	public function callback() {
-		echo ( new AdminView( static::VIEW_URI ) )->render( $this->get_context() );
+		echo ( new AdminView( static::VIEW_URI ) )->render( $this->get_context() ); // phpcs:ignore WordPress.Security.EscapeOutput
 	}
 
 	/**

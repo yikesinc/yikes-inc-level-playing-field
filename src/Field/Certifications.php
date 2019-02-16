@@ -41,7 +41,7 @@ class Certifications extends RepeatableField {
 			ApplicantMeta::INSTITUTION => [
 				'label' => esc_html__( 'Certifying Institution', 'yikes-level-playing-field' ),
 			],
-			ApplicantMeta::TYPE   => [
+			ApplicantMeta::TYPE        => [
 				'label' => esc_html__( 'Certifying Institution Type', 'yikes-level-playing-field' ),
 			],
 			ApplicantMeta::YEAR        => [

@@ -19,7 +19,7 @@ $comments = $this->comments;
 <div class="messaging-container">
 	<?php
 	if ( false === $this->is_metabox ) {
-		echo $this->render_partial( $this->partials['interview_confirmation'] );
+		echo $this->render_partial( $this->partials['interview_confirmation'] ); // phpcs:ignore WordPress.Security.EscapeOutput
 	}
 	?>
 
@@ -72,7 +72,7 @@ $comments = $this->comments;
 	</div>
 	<?php
 	if ( true === $this->is_metabox ) {
-		echo $this->render_partial( $this->partials['interview_scheduler'] );
+		echo $this->render_partial( $this->partials['interview_scheduler'] ); //phpcs:ignore WordPress.Security.EscapeOutput
 	}
 	?>
 </div>

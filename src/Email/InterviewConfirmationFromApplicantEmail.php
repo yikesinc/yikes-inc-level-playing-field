@@ -9,9 +9,6 @@
 
 namespace Yikes\LevelPlayingField\Email;
 
-use Yikes\LevelPlayingField\Service;
-use Yikes\LevelPlayingField\Applicant;
-
 /**
  * Class InterviewConfirmationFromApplicantEmail.
  *
@@ -45,7 +42,7 @@ class InterviewConfirmationFromApplicantEmail extends FromApplicantEmail {
 	protected function message() {
 		$message  = $this->subject();
 		$message .= '<br>';
-		$message .=  __( 'Maybe some further notification that the applicant\'s personal information is now unanonymized.', 'yikes-level-playing-field' );
+		$message .= __( 'Maybe some further notification that the applicant\'s personal information is now unanonymized.', 'yikes-level-playing-field' );
 		$message .= $this->get_messaging_link();
 		return $message;
 	}

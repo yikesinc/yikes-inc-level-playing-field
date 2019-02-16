@@ -9,13 +9,14 @@
 
 namespace Yikes\LevelPlayingField\Metabox;
 
+use Closure;
+use WP_Post;
 use Yikes\LevelPlayingField\Assets\AssetsAware;
 use Yikes\LevelPlayingField\Assets\AssetsAwareness;
 use Yikes\LevelPlayingField\Renderable;
 use Yikes\LevelPlayingField\Service;
 use Yikes\LevelPlayingField\View\FormEscapedView;
 use Yikes\LevelPlayingField\View\TemplatedView;
-use Closure;
 
 /**
  * Abstract class BaseMetabox.
@@ -237,9 +238,7 @@ abstract class BaseMetabox implements Renderable, Service, AssetsAware {
 		$atts['metabox_id']  = $this->get_id();
 		$atts['nonce_field'] = $this->render_nonce();
 
-		/* @codingStandardsIgnoreStart */
-		echo $this->render( (array) $atts );
-		/* @codingStandardsIgnoreEnd */
+		echo $this->render( (array) $atts ); // phpcs:ignore WordPress.Security.EscapeOutput
 	}
 
 	/**

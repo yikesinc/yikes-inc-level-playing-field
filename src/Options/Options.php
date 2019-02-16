@@ -14,14 +14,7 @@ use Yikes\LevelPlayingField\Roles\HumanResources;
 use Yikes\LevelPlayingField\Exception\NoDefault;
 
 /**
- * Class Options
- *
- * @since   %VERSION%
- * @package Yikes\LevelPlayingField
- */
-
-/**
- * Class Applicant
+ * Class Options.
  *
  * @since   %VERSION%
  * @package Yikes\LevelPlayingField
@@ -97,6 +90,7 @@ final class Options {
 	 * @param string $option_name The name of the option, without the options prefix.
 	 *
 	 * @return mixed The option's value.
+	 * @throws NoDefault When a default option has not been set for the option.
 	 */
 	public function get_option( $option_name ) {
 		if ( ! isset( static::DEFAULTS[ $option_name ] ) ) {
@@ -122,6 +116,7 @@ final class Options {
 	 * @since %VERSION%
 	 *
 	 * @param string $option_name The option field name.
+	 * @return string The prefixed field.
 	 */
 	private function prefix_field( $option_name ) {
 		return OptionFields::OPTION_PREFIX . $option_name;
@@ -133,6 +128,7 @@ final class Options {
 	 * @since %VERSION%
 	 *
 	 * @param string $option_name The option field name.
+	 * @return mixed The default for the given option.
 	 */
 	private function get_default_value( $option_name ) {
 		return static::DEFAULTS[ $option_name ];
