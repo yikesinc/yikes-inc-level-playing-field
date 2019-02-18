@@ -84,18 +84,22 @@ final class Applicant extends CustomPostTypeEntity {
 			ApplicantMeta::PROFICIENCY => FILTER_SANITIZE_STRING,
 		],
 		ApplicantMeta::EXPERIENCE       => [
-			ApplicantMeta::ORGANIZATION  => FILTER_SANITIZE_STRING,
-			ApplicantMeta::INDUSTRY      => FILTER_SANITIZE_STRING,
-			ApplicantMeta::POSITION      => FILTER_SANITIZE_STRING,
-			ApplicantMeta::START_DATE    => FILTER_SANITIZE_STRING,
-			ApplicantMeta::END_DATE      => FILTER_SANITIZE_STRING,
-			ApplicantMeta::YEAR_DURATION => FILTER_SANITIZE_STRING,
+			ApplicantMeta::ORGANIZATION   => FILTER_SANITIZE_STRING,
+			ApplicantMeta::INDUSTRY       => FILTER_SANITIZE_STRING,
+			ApplicantMeta::POSITION       => FILTER_SANITIZE_STRING,
+			ApplicantMeta::START_DATE     => FILTER_SANITIZE_STRING,
+			ApplicantMeta::END_DATE       => FILTER_SANITIZE_STRING,
+			ApplicantMeta::TO_THE_PRESENT => FILTER_SANITIZE_NUMBER_INT,
+			ApplicantMeta::YEAR_DURATION  => FILTER_SANITIZE_STRING,
 		],
 		ApplicantMeta::VOLUNTEER        => [
-			// todo: start and end dates.
-			ApplicantMeta::ORGANIZATION => FILTER_SANITIZE_STRING,
-			ApplicantMeta::INDUSTRY     => FILTER_SANITIZE_STRING,
-			ApplicantMeta::POSITION     => FILTER_SANITIZE_STRING,
+			ApplicantMeta::ORGANIZATION   => FILTER_SANITIZE_STRING,
+			ApplicantMeta::INDUSTRY       => FILTER_SANITIZE_STRING,
+			ApplicantMeta::POSITION       => FILTER_SANITIZE_STRING,
+			ApplicantMeta::START_DATE     => FILTER_SANITIZE_STRING,
+			ApplicantMeta::END_DATE       => FILTER_SANITIZE_STRING,
+			ApplicantMeta::TO_THE_PRESENT => FILTER_SANITIZE_NUMBER_INT,
+			ApplicantMeta::YEAR_DURATION  => FILTER_SANITIZE_STRING,
 		],
 		ApplicantMeta::NICKNAME         => FILTER_SANITIZE_STRING,
 		ApplicantMeta::VIEWED           => FILTER_SANITIZE_NUMBER_INT,
@@ -444,15 +448,11 @@ final class Applicant extends CustomPostTypeEntity {
 		$start = date_create( $experience[ ApplicantMeta::START_DATE ] );
 		$end   = date_create( $experience[ ApplicantMeta::END_DATE ] );
 		$diff  = date_diff( $start, $end );
+		$still = ! empty( $experience[ ApplicantMeta::TO_THE_PRESENT ] ) ? __( '(actively working here)' ) : '';
 
 		// Add calculated duration to experience and save.
-		$experience[ ApplicantMeta::YEAR_DURATION ] = $diff instanceof DateInterval
-			? $diff->format( '%y Year(s) %m Month(s) %d Days' )
-			: '';
-		$this->{ApplicantMeta::EXPERIENCE}[]        = $this->filter_and_sanitize(
-			$experience,
-			ApplicantMeta::EXPERIENCE
-		);
+		$experience[ ApplicantMeta::YEAR_DURATION ] = $diff->format( "%y Year(s) %m Month(s) %d Days {$still}" );
+		$this->{ApplicantMeta::EXPERIENCE}[]        = $this->filter_and_sanitize( $experience, ApplicantMeta::EXPERIENCE );
 		$this->changed_property( ApplicantMeta::EXPERIENCE );
 	}
 
@@ -497,7 +497,15 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @param array $volunteer Array of volunteer work.
 	 */
 	public function add_volunteer( array $volunteer ) {
-		$this->{ApplicantMeta::VOLUNTEER}[] = $this->filter_and_sanitize( $volunteer, ApplicantMeta::VOLUNTEER );
+		// Calculate duration between start and end dates.
+		$start = date_create( $volunteer[ ApplicantMeta::START_DATE ] );
+		$end   = date_create( $volunteer[ ApplicantMeta::END_DATE ] );
+		$diff  = date_diff( $start, $end );
+		$still = ! empty( $volunteer[ ApplicantMeta::TO_THE_PRESENT ] ) ? __( '(actively volunteering here)' ) : '';
+
+		// Add calculated duration to volunteer experience and save.
+		$volunteer[ ApplicantMeta::YEAR_DURATION ] = $diff->format( "%y Year(s) %m Month(s) %d Days {$still}" );
+		$this->{ApplicantMeta::VOLUNTEER}[]        = $this->filter_and_sanitize( $volunteer, ApplicantMeta::VOLUNTEER );
 		$this->changed_property( ApplicantMeta::VOLUNTEER );
 	}
 

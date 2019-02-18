@@ -269,9 +269,10 @@ final class ApplicantManager implements AssetsAware, Service {
 					<?php
 					foreach ( $applicant->get_volunteer() as $experience ) {
 						printf(
-							'<li>%s in %s for x years</li>',
-							esc_html( $experience['position'] ),
-							esc_html( $experience['industry'] )
+							'<li>%s in %s for %s</li>',
+							esc_html( $experience[ ApplicantMeta::POSITION ] ),
+							esc_html( $experience[ ApplicantMeta::INDUSTRY ] ),
+							esc_html( $experience[ ApplicantMeta::YEAR_DURATION ] )
 						);
 					}
 					?>

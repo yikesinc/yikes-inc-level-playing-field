@@ -171,4 +171,26 @@ jQuery( document ).ready( function( $ ) {
 	// When 'Submit' button is clicked...
 	$submitBtn.on( 'click', submitValidation );
 
+	/**
+	 * Toggle the end date's required attr and visibility based on the to-the-present field being checked.
+	 *
+	 * @param {jQuery} field
+	 */
+	const toggleEndDate = ( event ) => {
+		const element = $( event.target );
+		const checked = event.target.checked;
+		const endDate = element.closest( '.lpf-fieldset' ).find( 'input[name$="[end_date]"]' );
+		const edLabel = endDate.closest( '.lpf-field-container' );
+
+		if ( checked ) {
+			edLabel.addClass( 'lpf-disabled' );	
+			endDate.prop( 'required', false );
+		} else {
+			edLabel.removeClass( 'lpf-disabled' );
+			endDate.prop( 'required', true );
+		}
+	};
+
+	// When a to-the-present checkbox is clicked.
+	$( 'body' ).on( 'click', 'input[type="checkbox"][name$="[to_the_present]"]', ( smt ) => toggleEndDate( smt ) );
 } );

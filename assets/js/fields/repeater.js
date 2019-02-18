@@ -72,7 +72,7 @@ jQuery( document ).ready( function() {
 				const match = id.match( regex );
 
 				// Remove any entered input.
-				item.value = item.placeholder ? item.placeholder : '';
+				item.value = repeater.getRepeatValue( item );
 
 				// Update input name/IDs with new number.
 				if ( match.length > 1 ) {
@@ -136,6 +136,13 @@ jQuery( document ).ready( function() {
 
 			// Now remove the fieldset.
 			fieldset.parentElement.removeChild( fieldset );
+		},
+
+		getRepeatValue( item ) {
+			if ( item.type === 'checkbox' ) {
+				return item.value;
+			}
+			return item.placeholder ? item.placeholder : '';
 		}
 	};
 
