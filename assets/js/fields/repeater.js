@@ -66,7 +66,7 @@ jQuery( document ).ready( function() {
 			fieldset.removeChild( fieldset.querySelector( `.${repeatButton}` ) );
 
 			// Update each input element.
-			newNode.querySelectorAll( 'input' ).forEach( function( item ) {
+			newNode.querySelectorAll( 'input, select' ).forEach( function( item ) {
 				const regex = new RegExp( /\[(\d+)]/ );
 				const id = item.getAttribute( 'id' );
 				const match = id.match( regex );
