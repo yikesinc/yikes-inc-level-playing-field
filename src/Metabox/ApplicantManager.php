@@ -87,8 +87,8 @@ final class ApplicantManager implements AssetsAware, Service {
 			wp_send_json_error();
 		}
 
-		$id       = isset( $_POST['id'] ) ? absint( $_POST['id'] ) : 0;
-		$nickname = isset( $_POST['nickname'] ) ? sanitize_text_field( $_POST['nickname'] ) : '';
+		$id       = isset( $_POST['id'] ) ? absint( wp_unslash( $_POST['id'] ) ) : 0;
+		$nickname = isset( $_POST['nickname'] ) ? sanitize_text_field( wp_unslash( $_POST['nickname'] ) ) : '';
 
 		try {
 			$applicant = ( new ApplicantRepository() )->find( $id );
