@@ -95,6 +95,10 @@ class Application extends CustomPostTypeEntity {
 				? (bool) $meta[ AMMeta::META_PREFIX . $key ][0]
 				: $default;
 		}
+
+		// Name and email fields are always active.
+		$this->{AMMeta::NAME}  = true;
+		$this->{AMMeta::EMAIL} = true;
 	}
 
 	/**
