@@ -38,27 +38,27 @@ class Experience extends RepeatableField {
 		 * @param array $fields Array of experience fields.
 		 */
 		return apply_filters( 'lpf_field_experience_fields', [
-			ApplicantMeta::ORGANIZATION   => [
+			ApplicantMeta::ORGANIZATION     => [
 				'label' => esc_html__( 'Organization', 'yikes-level-playing-field' ),
 			],
-			ApplicantMeta::INDUSTRY       => [
+			ApplicantMeta::INDUSTRY         => [
 				'label' => esc_html__( 'Industry', 'yikes-level-playing-field' ),
 			],
-			ApplicantMeta::START_DATE     => [
+			ApplicantMeta::START_DATE       => [
 				'label' => esc_html__( 'Start Date', 'yikes-level-playing-field' ),
 				'class' => Types::DATE,
 			],
-			ApplicantMeta::TO_THE_PRESENT => [
+			ApplicantMeta::PRESENT_POSITION => [
 				'label'    => esc_html__( 'Presently Working', 'yikes-level-playing-field' ),
 				'class'    => Types::CHECKBOX,
 				'required' => false,
 			],
-			ApplicantMeta::END_DATE       => [
+			ApplicantMeta::END_DATE         => [
 				'label'    => esc_html__( 'End Date', 'yikes-level-playing-field' ),
 				'class'    => Types::DATE,
 				'required' => false,
 			],
-			ApplicantMeta::POSITION       => [
+			ApplicantMeta::POSITION         => [
 				'label' => esc_html__( 'Position', 'yikes-level-playing-field' ),
 			],
 		] );

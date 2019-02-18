@@ -138,6 +138,11 @@ jQuery( document ).ready( function() {
 			fieldset.parentElement.removeChild( fieldset );
 		},
 
+		/**
+		 * Return the value for a duplicated field.
+		 * @param item HTML Field.
+		 * @return The default value for the duplicated field.
+		 */
 		getRepeatValue( item ) {
 			if ( item.type === 'checkbox' ) {
 				return item.value;

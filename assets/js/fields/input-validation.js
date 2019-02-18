@@ -174,7 +174,7 @@ jQuery( document ).ready( function( $ ) {
 	/**
 	 * Toggle the end date's required attr and visibility based on the to-the-present field being checked.
 	 *
-	 * @param {jQuery} field
+	 * @param event The click event that triggered this.
 	 */
 	const toggleEndDate = ( event ) => {
 		const element = $( event.target );
@@ -192,5 +192,5 @@ jQuery( document ).ready( function( $ ) {
 	};
 
 	// When a to-the-present checkbox is clicked.
-	$( 'body' ).on( 'click', 'input[type="checkbox"][name$="[to_the_present]"]', toggleEndDate );
+	$( 'body' ).on( 'click', 'input[type="checkbox"][name$="[present_position]"]', toggleEndDate );
 } );
