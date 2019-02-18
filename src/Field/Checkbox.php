@@ -21,8 +21,10 @@ class Checkbox extends BaseInput {
 	/**
 	 * The value for the field.
 	 *
+	 * Default checkbox values to 1.
+	 *
 	 * @since %VERSION%
-	 * @var $value Default checkbox values to 1.
+	 * @var int.
 	 */
 	protected $value = 1;
 }
