@@ -171,24 +171,31 @@ final class ApplicantStatus extends BaseTaxonomy implements AssetsAware {
 		}
 		?>
 		<!-- Button group for selecting applicant status -->
-		<section id="applicant-status">
-			<div class="tax-btn-group">
-				<?php
-				foreach ( $all_terms as $term ) {
-					$selected_bool = array_key_exists( $term->term_id, $post_terms ) ? $term->term_id : false;
-					?>
-					<button
-						type="button"
-						data-value="<?php echo esc_attr( $term->term_id ); ?>"
-						class="<?php echo false !== $selected_bool ? 'active' : ''; ?>"
-					>
-						<?php echo esc_html( $term->name ); ?>
-					</button>
+		<div id="applicant-status" class="postbox">						
+			<h2 class="hndle ui-sortable-handle">
+				<span>
+					<?php esc_html_e( 'Applicant Status', 'yikes-level-playing-field' ); ?>
+				</span>
+			</h2>
+			<div class="inside">
+				<div class="tax-btn-group">
 					<?php
-				}
-				?>
+					foreach ( $all_terms as $term ) {
+						$selected_bool = array_key_exists( $term->term_id, $post_terms ) ? $term->term_id : false;
+						?>
+						<button
+							type="button"
+							data-value="<?php echo esc_attr( $term->term_id ); ?>"
+							class="<?php echo false !== $selected_bool ? 'active' : ''; ?>"
+						>
+							<?php echo esc_html( $term->name ); ?>
+						</button>
+						<?php
+					}
+					?>
+				</div>
 			</div>
-		</section>
+		</div>
 		<?php
 	}
 
