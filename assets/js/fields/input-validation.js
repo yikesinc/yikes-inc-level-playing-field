@@ -192,5 +192,5 @@ jQuery( document ).ready( function( $ ) {
 	};
 
 	// When a to-the-present checkbox is clicked.
-	$( 'body' ).on( 'click', 'input[type="checkbox"][name$="[to_the_present]"]', ( smt ) => toggleEndDate( smt ) );
+	$( 'body' ).on( 'click', 'input[type="checkbox"][name$="[to_the_present]"]', toggleEndDate );
 } );
