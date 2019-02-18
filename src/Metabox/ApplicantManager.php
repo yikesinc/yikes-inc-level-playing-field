@@ -356,12 +356,11 @@ final class ApplicantManager implements AssetsAware, Service {
 						</div><!-- /postbox -->
 					</div><!-- /meta-box-sortables -->
 				</div><!-- /postbox-container-2 -->
-			</div><!-- /metabox-holder columns-2 -->
-			<!-- /post-body -->
+			</div><!-- /post-body metabox-holder columns-2 -->
 			<br class="clear">
 			</br>
 		</div><!-- /poststuff -->
-	<?php
+		<?php
 	}
 
 	/**
