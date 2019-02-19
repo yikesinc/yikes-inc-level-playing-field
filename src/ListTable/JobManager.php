@@ -13,6 +13,7 @@ use Yikes\LevelPlayingField\CustomPostType\JobManager as JobManagerCPT;
 use Yikes\LevelPlayingField\Model\ApplicantRepository;
 use Yikes\LevelPlayingField\Taxonomy\JobCategory;
 use Yikes\LevelPlayingField\Taxonomy\JobStatus;
+use Yikes\LevelPlayingField\Shortcode\Job;
 
 /**
  * Class JobManager
@@ -52,6 +53,7 @@ final class JobManager extends BasePostType {
 			"taxonomy-{$category_tax->name}" => $category_tax->label,
 			"taxonomy-{$status_tax->name}"   => $status_tax->label,
 			'applications'                   => _x( 'Applications', 'column heading', 'yikes-level-playing-field' ),
+			'shortcode'                      => _x( 'Shortcode', 'column heading', 'yikes-level-playing-field' ),
 			'date'                           => $original_columns['date'],
 		];
 
@@ -67,17 +69,20 @@ final class JobManager extends BasePostType {
 	 * @param int    $post_id     The post ID.
 	 */
 	public function column_content( $column_name, $post_id ) {
-		// Only need to handle the Applications column.
-		if ( 'applications' !== $column_name ) {
-			return;
-		}
+		switch ( $column_name ) {
+			case 'applications':
+				static $applicant_repo = null;
+				if ( null === $applicant_repo ) {
+					$applicant_repo = new ApplicantRepository();
+				}
 
-		static $applicant_repo = null;
-		if ( null === $applicant_repo ) {
-			$applicant_repo = new ApplicantRepository();
+				echo esc_html( $applicant_repo->get_applicant_count_for_job( $post_id ) );
+				break;
+			case 'shortcode':
+				$tag = Job::TAG;
+				echo sprintf( esc_html( "%1s[{$tag} id='{$post_id}']%2s" ), '<pre class="shortcode">', '</pre>' );
+				break;
 		}
-
-		echo esc_html( $applicant_repo->get_applicant_count_for_job( $post_id ) );
 	}
 
 	/**
