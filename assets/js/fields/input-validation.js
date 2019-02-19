@@ -140,7 +140,7 @@ jQuery( document ).ready( function( $ ) {
 						const char = {
 							0: '(',
 							3: ') ',
-							6: ' - '
+							6: ' '
 						};
 
 						for ( let i = 0; i < justDigits.length; i++ ) {

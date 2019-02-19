@@ -64,6 +64,7 @@ final class Applicant extends CustomPostTypeEntity {
 		ApplicantMeta::EMAIL            => FILTER_SANITIZE_EMAIL,
 		ApplicantMeta::NAME             => FILTER_SANITIZE_STRING,
 		ApplicantMeta::COVER_LETTER     => FILTER_SANITIZE_STRING,
+		ApplicantMeta::PHONE            => FILTER_SANITIZE_NUMBER_INT,
 		ApplicantMeta::STATUS           => FILTER_SANITIZE_STRING,
 		ApplicantMeta::SCHOOLING        => [
 			ApplicantMeta::INSTITUTION => FILTER_SANITIZE_STRING,
@@ -219,6 +220,27 @@ final class Applicant extends CustomPostTypeEntity {
 	 */
 	public function set_name( $name ) {
 		$this->set_property( ApplicantMeta::NAME, $name );
+	}
+
+	/**
+	 * Get the phone of the applicant.
+	 *
+	 * @since %VERSION%
+	 * @return int The applicant phone.
+	 */
+	public function get_phone() {
+		return $this->{ApplicantMeta::PHONE};
+	}
+
+	/**
+	 * Set the phone of the applicant.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param int $phone The applicant's phone.
+	 */
+	public function set_phone( $phone ) {
+		$this->set_property( ApplicantMeta::PHONE, $phone );
 	}
 
 	/**
@@ -984,6 +1006,7 @@ final class Applicant extends CustomPostTypeEntity {
 			ApplicantMeta::APPLICATION      => 0,
 			ApplicantMeta::EMAIL            => '',
 			ApplicantMeta::NAME             => '',
+			ApplicantMeta::PHONE            => '',
 			ApplicantMeta::COVER_LETTER     => '',
 			ApplicantMeta::SCHOOLING        => [],
 			ApplicantMeta::CERTIFICATIONS   => [],
