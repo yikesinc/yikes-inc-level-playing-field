@@ -106,7 +106,7 @@ interface ApplicantMeta {
 		self::EMAIL          => Types::EMAIL,
 		self::PHONE          => Types::PHONE,
 		self::ADDRESS        => Types::ADDRESS,
-		self::COVER_LETTER   => Types::TEXTAREA,
+		self::COVER_LETTER   => Types::WYSIWYG,
 		self::EDUCATION      => Types::SCHOOLING,
 		self::CERTIFICATION  => Types::CERTIFICATIONS,
 		self::EXPERIENCE     => Types::EXPERIENCE,

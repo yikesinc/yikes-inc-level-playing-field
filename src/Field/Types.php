@@ -36,4 +36,5 @@ interface Types {
 	const VOLUNTEER      = Volunteer::class;
 	const SKILLS         = Skills::class;
 	const LANGUAGES      = Languages::class;
+	const WYSIWYG        = WYSIWYG::class;
 }
