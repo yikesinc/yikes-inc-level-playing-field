@@ -91,7 +91,7 @@ class JobManager extends BaseCustomPostType {
 			],
 			'menu_icon'           => 'dashicons-feedback',
 			'rewrite'             => [
-				'slug' => _x( 'lpf-jobs', 'It might look weird but WordPress\' documentation states that rewrite slugs should be translatable.', 'yikes-level-playing-field' ),
+				'slug' => _x( 'lpf-jobs', 'The CPT\'s rewrite slug. Translatable as per WP\'s documentation.', 'yikes-level-playing-field' ),
 			],
 		];
 	}
