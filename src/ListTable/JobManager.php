@@ -80,7 +80,7 @@ final class JobManager extends BasePostType {
 				break;
 			case 'shortcode':
 				$tag = Job::TAG;
-				echo sprintf( esc_html( "%1s[{$tag} id='{$post_id}']%2s" ), '<pre class="shortcode">', '</pre>' );
+				echo sprintf( '<pre class="shortcode">[%1$s id="%2$s"]</pre>', esc_html( $tag ), esc_html( $post_id ) );
 				break;
 		}
 	}
