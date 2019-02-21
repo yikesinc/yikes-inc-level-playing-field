@@ -16,7 +16,8 @@ namespace Yikes\LevelPlayingField\Field;
  * @package Yikes\LevelPlayingField
  */
 class Phone extends BaseInput {
-	const TYPE = 'tel';
+	const TYPE         = 'tel';
+	const SANITIZATION = FILTER_SANITIZE_NUMBER_INT;
 
 	/**
 	 * Render any additional attributes.

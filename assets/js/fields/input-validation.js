@@ -98,16 +98,6 @@ jQuery( document ).ready( function( $ ) {
 	};
 
 	/**
-	 * Valid phone number field error checking.
-	 *
-	 * @param {jQuery} field
-	 */
-	const validPhone = ( field ) => {
-		const regex = new RegExp( '^(\\d{10})$' );
-		return regexTest( regex, field, 'Phone' );
-	};
-
-	/**
 	 * Core validation on submit function
 	 *
 	 * @param event
@@ -133,20 +123,6 @@ jQuery( document ).ready( function( $ ) {
 				if ( $this.attr( 'type' ) === 'tel' ) {
 					const justDigits = this.value.replace( /\D/g, '' );
 					$this.val( justDigits );
-
-					// If phone number is valid and there is no error returned...
-					if ( !validPhone( $this ) ) {
-						this.value = '';
-						const char = {
-							0: '(',
-							3: ') ',
-							6: ' - '
-						};
-
-						for ( let i = 0; i < justDigits.length; i++ ) {
-							this.value += (char[ i ] || '') + justDigits[ i ];
-						}
-					}
 				}
 
 				// If field is postal code/zip, call function to validate 5-digit zip
