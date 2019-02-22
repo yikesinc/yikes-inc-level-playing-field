@@ -77,26 +77,26 @@ jQuery( document ).ready( function( $ ) {
 
 			// Otherwise, trigger ajax and send new nickname to server.
 			$.ajax( {
-				url: window.ajaxurl,
-				type: 'post',
-				data: {
-					action: 'save_nickname',
-					nickname: newNickname,
-					id: applicantID,
-					nonce: i18n.nonce
-				},
-				beforeSend: function() {
-					nickname.children( 'input' ).prop( 'disabled', true );
-				},
-				always: function( response, textStatus ) {
+					url: window.ajaxurl,
+					type: 'post',
+					data: {
+						action: 'save_nickname',
+						nickname: newNickname,
+						id: applicantID,
+						nonce: i18n.nonce
+					},
+					beforeSend: function() {
+						nickname.children( 'input' ).prop( 'disabled', true );
+					}
+				} )
+				.always( function( response, textStatus ) {
 					nicknameBtns.html( oldNicknameBtns );
 					if ( 'success' === textStatus ) {
-						nickname.html( response.responseJSON.data.nickname );
+						nickname.html( response.data.nickname );
 					} else {
 						nickname.html( oldNickname );
 					}
-				}
-			} );
+				} );
 		},
 
 		/**
