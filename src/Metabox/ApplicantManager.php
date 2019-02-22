@@ -216,7 +216,10 @@ final class ApplicantManager implements AssetsAware, Service {
 							</h2>
 							<div class="inside">
 								<div class="yks_mbox">
-									<?php do_action( "lpf_{$this->get_post_type()}_after_basic_info", $applicant, $job ); ?>
+									<?php
+									do_action( "lpf_{$this->get_post_type()}_after_basic_info", $applicant, $job );
+									if ( ! empty( $applicant->get_schooling() ) || ! empty( $applicant->get_certifications() ) ) :
+										?>
 									<section id="education">
 										<h4 class="yks_mbox_title"><?php esc_html_e( 'Education', 'yikes-level-playing-field' ); ?></h4>
 										<div class="applicant-skills-container">
@@ -239,7 +242,7 @@ final class ApplicantManager implements AssetsAware, Service {
 												<?php
 											endif;
 											if ( ! empty( $applicant->get_certifications() ) ) :
-											?>
+												?>
 											<h5><?php esc_html_e( 'Certifications', 'yikes-level-playing-field' ); ?></h5>
 											<ol>
 												<?php
@@ -258,7 +261,11 @@ final class ApplicantManager implements AssetsAware, Service {
 											?>
 										</div>
 									</section>
-									<?php do_action( "lpf_{$this->get_post_type()}_after_education", $applicant, $job ); ?>
+										<?php
+									endif;
+									do_action( "lpf_{$this->get_post_type()}_after_education", $applicant, $job );
+									if ( ! empty( $applicant->get_skills() ) ) :
+										?>
 									<section id="skills">
 										<h4 class="yks_mbox_title"><?php esc_html_e( 'Skills', 'yikes-level-playing-field' ); ?></h4>
 										<div class="applicant-skills-container">
@@ -283,7 +290,11 @@ final class ApplicantManager implements AssetsAware, Service {
 											</table>
 										</div>
 									</section>
-									<?php do_action( "lpf_{$this->get_post_type()}_after_skills", $applicant, $job ); ?>
+										<?php
+									endif;
+									do_action( "lpf_{$this->get_post_type()}_after_skills", $applicant, $job );
+									if ( ! empty( $applicant->get_languages() ) ) :
+										?>
 									<section id="languages">
 										<?php
 										$languages       = $applicant->get_languages();
@@ -330,7 +341,11 @@ final class ApplicantManager implements AssetsAware, Service {
 											</p>
 										</div>
 									</section>
-									<?php do_action( "lpf_{$this->get_post_type()}_after_languages", $applicant, $job ); ?>
+										<?php
+									endif;
+									do_action( "lpf_{$this->get_post_type()}_after_languages", $applicant, $job );
+									if ( ! empty( $applicant->get_experience() ) ) :
+										?>
 									<section id="experience">
 										<h4 class="yks_mbox_title"><?php esc_html_e( 'Experience', 'yikes-level-playing-field' ); ?></h4>
 										<div class="applicant-skills-container">
@@ -348,7 +363,11 @@ final class ApplicantManager implements AssetsAware, Service {
 											</ol>
 										</div>
 									</section>
-									<?php do_action( "lpf_{$this->get_post_type()}_after_experience", $applicant, $job ); ?>
+										<?php
+									endif;
+									do_action( "lpf_{$this->get_post_type()}_after_experience", $applicant, $job );
+									if ( ! empty( $applicant->get_volunteer() ) ) :
+										?>
 									<section id="volunteer-work">
 										<h4 class="yks_mbox_title"><?php esc_html_e( 'Volunteer Work', 'yikes-level-playing-field' ); ?></h4>
 										<div class="applicant-skills-container">
@@ -365,7 +384,9 @@ final class ApplicantManager implements AssetsAware, Service {
 											</ol>
 										</div>
 									</section>
-									<?php do_action( "lpf_{$this->get_post_type()}_after_volunteer_work", $applicant, $job ); ?>
+										<?php
+									endif;
+									do_action( "lpf_{$this->get_post_type()}_after_volunteer_work", $applicant, $job ); ?>
 								</div><!-- /yks_mbox -->
 							</div><!-- /inside -->
 						</div><!-- /postbox -->
