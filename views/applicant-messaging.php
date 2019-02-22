@@ -28,7 +28,7 @@ $comments = $this->comments;
 
 	if ( empty( $comments ) ) {
 		?>
-		<p class="conversation-container-text"><?php esc_html_e( 'Send a message to this applicant.', 'yikes-level-playing-field' ); ?></p>
+		<p class="conversation-container-text"><?php esc_html_e( 'Start a conversation with this applicant.', 'yikes-level-playing-field' ); ?></p>
 		<?php
 	} else {
 
@@ -64,11 +64,14 @@ $comments = $this->comments;
 	</div>
 
 	<div class="new-applicant-message-container">
+		<h4 class="applicant-message-title">
+			<?php esc_html_e( 'Send a New Message', 'yikes-level-playing-field' ); ?>
+		</h4>
 		<textarea id="new-applicant-message" name="new-applicant-message"></textarea>
 	</div>
 
 	<div class="send-new-applicant-message-container">
-		<button type="button" id="send-new-applicant-message" class="button button-primary">Send Applicant a Message</button>
+		<button type="button" id="send-new-applicant-message" class="button button-primary">Send Your Message</button>
 	</div>
 	<?php
 	if ( true === $this->is_metabox ) {

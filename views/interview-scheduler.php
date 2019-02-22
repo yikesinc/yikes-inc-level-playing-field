@@ -18,11 +18,11 @@ $interview_help_text = ! $interview_closed ? '' : ( 'scheduled' === $interview_s
 <div id="interview-scheduler-container">
 	<div id="interview-scheduler-button-container">
 		<h4 class="interview-scheduler-title">
-			<?php esc_html_e( 'Interview Scheduler', 'yikes-level-playing-field' ); ?>
+			<?php esc_html_e( 'Schedule an Interview', 'yikes-level-playing-field' ); ?>
 		</h4>
 
 		<button type="button" id="interview-scheduler" class="button button-primary <?php echo esc_attr( $interview_class ); ?>" title="<?php echo esc_attr( $interview_help_text ); ?>">
-			<?php esc_html_e( 'Schedule an Interview ', 'yikes-level-playing-field' ); ?>
+			<?php esc_html_e( 'Interview Request ', 'yikes-level-playing-field' ); ?>
 			<span class="dashicons dashicons-arrow-down"></span>
 		</button>
 	</div>
@@ -40,11 +40,11 @@ $interview_help_text = ! $interview_closed ? '' : ( 'scheduled' === $interview_s
 			<input type="text" class="lpf-timepicker" id="interview-time" name="interview-time"/>
 		</label>
 
-		<label for="interview-location" class="block-label"><?php esc_html_e( 'Location', 'yikes-level-playing-field' ); ?>
+		<label for="interview-location" class="block-label"><?php esc_html_e( 'Location details', 'yikes-level-playing-field' ); ?>
 			<textarea type="text" id="interview-location" name="interview-location"></textarea>
 		</label>
 
-		<label for="interview-message" class="block-label"><?php esc_html_e( 'Message', 'yikes-level-playing-field' ); ?>
+		<label for="interview-message" class="block-label"><?php esc_html_e( 'Message to Applicant', 'yikes-level-playing-field' ); ?>
 			<textarea type="text" id="interview-message" name="interview-message"></textarea>
 		</label>
 	</div>

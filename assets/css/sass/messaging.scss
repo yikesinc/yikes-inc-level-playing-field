@@ -1,11 +1,16 @@
 @import "utilities/index";
 
 #applicant-messaging {
-	h2 {}	
+	h2 {}
+
+	h4 {
+		@include fontsize(16px);
+		margin: 1rem 0;
+	}
 }
 
 .new-applicant-message-container {
-	padding: 2rem 0 0 32px;
+	padding: 0 0 0 32px;
 	width: 92%;
 
 	&.cursor-disabled {
@@ -24,7 +29,8 @@
 }
 
 
-.send-new-applicant-message-container {
+.send-new-applicant-message-container,
+.conversation-container-text {
 	padding: 1rem 0 0 32px;
 }
 
@@ -73,7 +79,7 @@
 
 		.message-timestamp {
 			&:after {
-				content: "From You";
+				content: "From Employer";
 			}
 		}
 
@@ -106,18 +112,19 @@
 }
 
 
-
-
 #interview-scheduler-container {
 	padding: 2rem 0 2rem 32px;
 	width: 92%;
 
-	#interview-scheduler-button-container {
-		.interview-scheduler-title {
-			@include fontsize(16px);
-			margin: 1rem 0;
-		}
+	label {
+		margin: 0.4rem 0;
 
+		&.inline-label {
+			padding-right: 0.6rem;
+		}
+	}
+
+	#interview-scheduler-button-container {
 		#interview-scheduler {}
 	}
 
