@@ -1,61 +1,45 @@
 === Level Playing Field ===
-Contributors: (this should be a list of wordpress.org userid's)
+Contributors: yikesinc, JPry, metalandcoffee, yikesitskevin, liljimmi
 Donate link: http://example.com/
-Tags: comments, spam
+Tags: jobs, job listing, job management, job manager, applicant, anonymize, anonymization, applicant anonymization
 Requires at least: 4.4
-Tested up to: 4.8.2
+Tested up to: 5.1
 Stable tag: 0.1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Here is a short description of the plugin.  This should be no more than 150 characters.  No markup here.
+A WordPress plugin that anonymizes job applications to fight bias in employment and promote true merit-based hiring.
 
 == Description ==
 
-This is the long description.  No limit, and you can use Markdown (as well as in the following sections).
+Level Playing Field allows businesses and organizations to easily list jobs on a WordPress website and receive **anonymized** job applications with all identifiable applicant information hidden. Hiring managers can review applicants without proven unconscious bias factors. Employers can message potential candidates and schedule an interview anonymously. After an interview is scheduled and confirmed, the applicant’s information is revealed. This process gives people an opportunity to show their skills and strengths based on merit alone.
 
-For backwards compatibility, if this section is missing, the full length of the short description will be used, and
-Markdown parsed.
+Level Playing Field is a tool that can help all types of companies and organizations hire truly based on merit while providing more opportunities to people from diverse communities. 
 
-A few notes about the sections above:
+Upgrade to [Level Playing Field Pro](https://yikesplugins.com/plugin/#) for unlimited job listings and great enhanced features!
 
-*   "Contributors" is a comma separated list of wp.org/wp-plugins.org usernames
-*   "Tags" is a comma separated list of tags that apply to the plugin
-*   "Requires at least" is the lowest version that the plugin will work on
-*   "Tested up to" is the highest version that you've *successfully used to test the plugin*. Note that it might work on
-higher versions... this is just the highest one you've verified.
-*   Stable tag should indicate the Subversion "tag" of the latest stable version, or "trunk," if you use `/trunk/` for
-stable.
+**Features**
 
-    Note that the `readme.txt` of the stable tag is the one that is considered the defining one for the plugin, so
-if the `/trunk/readme.txt` file says that the stable tag is `4.3`, then it is `/tags/4.3/readme.txt` that'll be used
-for displaying information about the plugin.  In this situation, the only thing considered from the trunk `readme.txt`
-is the stable tag pointer.  Thus, if you develop in trunk, you can update the trunk `readme.txt` to reflect changes in
-your in-development version, without having that information incorrectly disclosed about the current stable version
-that lacks those changes -- as long as the trunk's `readme.txt` points to the correct stable tag.
-
-    If no stable tag is provided, it is assumed that trunk is stable, but you should specify "trunk" if that's where
-you put the stable version, in order to eliminate any doubt.
+* Create up to four job listings and easily add them to pages or posts with blocks or shortcodes.
+* Build job application forms that include basic applicant information, education, skills, languages, experience and volunteer work.
+* Review applicants' skills and qualifications with all personal information hidden via an admin dashboard.
+* Mark Applicants as yes / no / maybe for easy review.
+* Anonymously message applicants and schedule and interview via the Applicant admin.
+* View applicant personal information after an interview is scheduled and confirmed.
 
 == Installation ==
 
-This section describes how to install the plugin and get it working.
-
-e.g.
-
-1. Upload `plugin-name.php` to the `/wp-content/plugins/` directory
-1. Activate the plugin through the 'Plugins' menu in WordPress
-1. Place `<?php do_action('plugin_name_hook'); ?>` in your templates
+1. Download the plugin .zip file and make note of where on your computer you downloaded it to.
+2. In the WordPress admin (yourdomain.com/wp-admin) go to Plugins > Add New or click the "Add New" button on the main plugins screen.
+3. On the following screen, click the "Upload Plugin" button.
+4. Browse your computer to where you downloaded the plugin .zip file, select it and click the "Install Now" button.
+5. After the plugin has successfully installed, click "Activate Plugin" and enjoy!
 
 == Frequently Asked Questions ==
 
-= A question that someone might have =
+= Why anonymize job applications? =
 
 An answer to that question.
-
-= What about foo bar? =
-
-Answer to foo bar dilemma.
 
 == Screenshots ==
 
