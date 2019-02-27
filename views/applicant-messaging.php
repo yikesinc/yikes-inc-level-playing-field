@@ -28,7 +28,7 @@ $comments = $this->comments;
 
 	if ( empty( $comments ) ) {
 		?>
-		<strong><?php esc_html_e( 'Start the conversation.', 'yikes-level-playing-field' ); ?></strong>
+		<p class="conversation-container-text"><?php esc_html_e( 'Start a conversation with this applicant.', 'yikes-level-playing-field' ); ?></p>
 		<?php
 	} else {
 
@@ -53,8 +53,8 @@ $comments = $this->comments;
 			$classes = array_map( 'sanitize_html_class', $classes );
 			?>
 			<div class="<?php echo esc_attr( implode( ' ', $classes ) ); ?>">
-				<span class="message"><?php echo nl2br( wp_kses( $comment->get_content(), [ 'br' => [] ] ) ); ?></span>
-				<small class="message-timestamp"><?php echo esc_html( $comment->get_formatted_date() ); ?></small>
+				<div class="message"><?php echo nl2br( wp_kses( $comment->get_content(), [ 'br' => [] ] ) ); ?></div>
+				<div class="message-timestamp"><?php echo esc_html( $comment->get_formatted_date() ); ?></div>
 			</div>
 			<?php
 			$counter++;
@@ -64,11 +64,14 @@ $comments = $this->comments;
 	</div>
 
 	<div class="new-applicant-message-container">
+		<h4 class="applicant-message-title">
+			<?php esc_html_e( 'Send a New Message', 'yikes-level-playing-field' ); ?>
+		</h4>
 		<textarea id="new-applicant-message" name="new-applicant-message"></textarea>
 	</div>
 
 	<div class="send-new-applicant-message-container">
-		<button type="button" id="send-new-applicant-message" class="button button-primary">Send</button>
+		<button type="button" id="send-new-applicant-message" class="button button-primary">Send Your Message</button>
 	</div>
 	<?php
 	if ( true === $this->is_metabox ) {
