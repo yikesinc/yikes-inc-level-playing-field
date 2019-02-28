@@ -3,21 +3,13 @@
  * YIKES Inc. Level Playing Field Plugin.
  *
  * @package Yikes\LevelPlayingField
- * @author  Jeremy Pry
+ * @author  Kevin Utz
  * @license GPL2
- *
- * phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
  */
 
 namespace Yikes\LevelPlayingField;
 
-use Yikes\LevelPlayingField\Model\ApplicantMeta;
-
-$job       = $this->job;
-$applicant = $this->applicant;
-$post_type = $this->post_type;
 ?>
-
 <div id="poststuff" class="single-applicant-view">
 	<div class="metabox-holder columns-2" id="post-body">
 		<div class="postbox-container" id="postbox-container-1">

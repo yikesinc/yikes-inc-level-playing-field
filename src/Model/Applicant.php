@@ -688,7 +688,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @param array $interview The interview details for the applicant.
 	 */
 	public function set_interview( array $interview ) {
-		$this->interview = [];
+		$this->{ApplicantMeta::INTERVIEW} = [];
 
 		// Passing an empty array will remove volunteer work.
 		if ( empty( $interview ) ) {
@@ -696,7 +696,7 @@ final class Applicant extends CustomPostTypeEntity {
 			return;
 		}
 
-		$this->interview = $this->filter_and_sanitize( $interview, ApplicantMeta::INTERVIEW );
+		$this->{ApplicantMeta::INTERVIEW} = $this->filter_and_sanitize( $interview, ApplicantMeta::INTERVIEW );
 		$this->changed_property( ApplicantMeta::INTERVIEW );
 	}
 

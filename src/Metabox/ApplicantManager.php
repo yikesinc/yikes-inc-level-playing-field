@@ -9,6 +9,7 @@
 
 namespace Yikes\LevelPlayingField\Metabox;
 
+use WP_Post;
 use Yikes\LevelPlayingField\Assets\Asset;
 use Yikes\LevelPlayingField\Assets\AssetsAware;
 use Yikes\LevelPlayingField\Assets\AssetsAwareness;
@@ -34,7 +35,6 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 
 	// Base Metabox.
 	const BOX_ID    = 'view-applicant';
-	const BOX_TITLE = 'Applicant';
 	const VIEW      = 'views/applicant';
 	const PRIORITY  = 1;
 
@@ -61,8 +61,7 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 			$this->set_screen_columns();
 		} );
 
-		add_filter( 'admin_enqueue_scripts', function( $hook ) {
-
+		add_action( 'admin_enqueue_scripts', function() {
 			if ( ! $this->is_applicant_screen() ) {
 				return;
 			}
@@ -78,24 +77,24 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 			$this->save_nickname();
 		} );
 
-		add_action( 'lpf_applicant_screen_sidebar', function( $view ) {
+		add_action( 'lpf_applicant_screen_sidebar', function( \Yikes\LevelPlayingField\View\View $view ) {
 			echo $view->render_partial( static::APPLICANT_BASIC_INFO );
 		}, 20 );
 
-		add_action( 'lpf_applicant_screen_sidebar', function( $view ) {
+		add_action( 'lpf_applicant_screen_sidebar', function( \Yikes\LevelPlayingField\View\View $view ) {
 			echo $view->render_partial( static::APPLICANT_INTERVIEW_DETAILS );
 		}, 30 );
 
-		add_action( 'lpf_applicant_screen_section_one', function( $view ) {
+		add_action( 'lpf_applicant_screen_section_one', function( \Yikes\LevelPlayingField\View\View $view ) {
 			echo $view->render_partial( static::APPLICANT_DETAILS );
 		}, 10 );
 
-		add_action( 'lpf_applicant_screen_section_one', function( $view ) {
+		add_action( 'lpf_applicant_screen_section_one', function( \Yikes\LevelPlayingField\View\View $view ) {
 			echo $view->render_partial( static::APPLICANT_SKILLS_QUALIFICATIONS );
 		}, 20 );
 
-		add_action( 'lpf_applicant_screen_section_two', function( $view ) {
-			echo $view->render_partial( ApplicantMessaging::VIEW, ApplicantMessaging::get_context_data( $view->post->ID, $view->is_metabox ) );
+		add_action( 'lpf_applicant_screen_section_two', function( \Yikes\LevelPlayingField\View\View $view ) {
+			echo $view->render_partial( ApplicantMessaging::VIEW, ApplicantMessaging::get_context_data( $view->applicant->get_id(), true ) );
 		}, 10 );
 	}
 
@@ -129,7 +128,9 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 	 *
 	 * @param int $post_id ID of the post to persist.
 	 */
-	protected function persist( $post_id ) {}
+	protected function persist( $post_id ) {
+		// There's no data to save for Applicants, so intentionally do nothing.
+	}
 
 	/**
 	 * Get the title to use for the metabox.
@@ -139,7 +140,7 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 	 * @return string Title to use for the metabox.
 	 */
 	protected function get_title() {
-		return static::BOX_TITLE;
+		return __( 'Applicant', 'yikes-level-playing-field' );
 	}
 
 	/**
@@ -165,14 +166,11 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 	 * @return array Processed metabox attributes.
 	 */
 	protected function process_attributes( $post, $atts ) {
-		$applicant = ( new ApplicantRepository() )->find( get_the_ID() );
+		$applicant = ( new ApplicantRepository() )->find( $post->ID );
 		$job       = ( new JobRepository() )->find( $applicant->get_job_id() );
 		return [
-			'post'       => $post,
 			'applicant'  => $applicant,
 			'job'        => $job,
-			'post_type'  => $this->get_post_type(),
-			'is_metabox' => true,
 		];
 	}
 
@@ -228,7 +226,6 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 			'nickname' => $applicant->get_nickname(),
 		] );
 	}
-
 	
 	/**
 	 * Set the number of screen columns to 1.

@@ -3,16 +3,20 @@
  * YIKES Inc. Level Playing Field Plugin.
  *
  * @package Yikes\LevelPlayingField
- * @author  Jeremy Pry
+ * @author  Kevin Utz
  * @license GPL2
- *
- * phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
  */
 
 namespace Yikes\LevelPlayingField;
 
+use Yikes\LevelPlayingField\Model\Applicant;
+use Yikes\LevelPlayingField\Model\Job;
+
+/** @var Applicant $applicant */
 $applicant = $this->applicant;
-$job       = $this->job;
+
+/** @var Job $job */
+$job = $this->job;
 ?>
 <!-- Avatar, nicknme and associated job -->
 <div id="applicant-info" class="postbox">
