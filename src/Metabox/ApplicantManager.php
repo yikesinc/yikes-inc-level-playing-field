@@ -22,6 +22,7 @@ use Yikes\LevelPlayingField\Model\ApplicantRepository;
 use Yikes\LevelPlayingField\Model\JobRepository;
 use Yikes\LevelPlayingField\Service;
 use Yikes\LevelPlayingField\Messaging\ApplicantMessaging;
+use Yikes\LevelPlayingField\View\View;
 
 /**
  * Class ApplicantManager
@@ -77,23 +78,23 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 			$this->save_nickname();
 		} );
 
-		add_action( 'lpf_applicant_screen_sidebar', function( \Yikes\LevelPlayingField\View\View $view ) {
+		add_action( 'lpf_applicant_screen_sidebar', function( View $view ) {
 			echo $view->render_partial( static::APPLICANT_BASIC_INFO );
 		}, 20 );
 
-		add_action( 'lpf_applicant_screen_sidebar', function( \Yikes\LevelPlayingField\View\View $view ) {
+		add_action( 'lpf_applicant_screen_sidebar', function( View $view ) {
 			echo $view->render_partial( static::APPLICANT_INTERVIEW_DETAILS );
 		}, 30 );
 
-		add_action( 'lpf_applicant_screen_section_one', function( \Yikes\LevelPlayingField\View\View $view ) {
+		add_action( 'lpf_applicant_screen_section_one', function( View $view ) {
 			echo $view->render_partial( static::APPLICANT_DETAILS );
 		}, 10 );
 
-		add_action( 'lpf_applicant_screen_section_one', function( \Yikes\LevelPlayingField\View\View $view ) {
+		add_action( 'lpf_applicant_screen_section_one', function( View $view ) {
 			echo $view->render_partial( static::APPLICANT_SKILLS_QUALIFICATIONS );
 		}, 20 );
 
-		add_action( 'lpf_applicant_screen_section_two', function( \Yikes\LevelPlayingField\View\View $view ) {
+		add_action( 'lpf_applicant_screen_section_two', function( View $view ) {
 			echo $view->render_partial( ApplicantMessaging::VIEW, ApplicantMessaging::get_context_data( $view->applicant->get_id(), true ) );
 		}, 10 );
 	}
