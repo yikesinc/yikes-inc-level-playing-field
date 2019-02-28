@@ -677,7 +677,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @return array
 	 */
 	public function get_interview() {
-		return $this->interivew;
+		return $this->{ApplicantMeta::INTERVIEW};
 	}
 
 	/**
@@ -707,7 +707,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @return string
 	 */
 	public function get_interview_status() {
-		return $this->interview_status;
+		return $this->{ApplicantMeta::INTERVIEW_STATUS};
 	}
 
 	/**
@@ -724,7 +724,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @param string $interview_status Whether an interview has been scheduled for this applicant.
 	 */
 	public function set_interview_status( string $interview_status ) {
-		$this->interview_status = filter_var( $interview_status, self::SANITIZATION[ ApplicantMeta::INTERVIEW_STATUS ] );
+		$this->{ApplicantMeta::INTERVIEW_STATUS} = filter_var( $interview_status, self::SANITIZATION[ ApplicantMeta::INTERVIEW_STATUS ] );
 		$this->changed_property( ApplicantMeta::INTERVIEW_STATUS );
 	}
 
