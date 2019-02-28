@@ -13,18 +13,23 @@ use WP_Post;
 use Yikes\LevelPlayingField\Assets\Asset;
 use Yikes\LevelPlayingField\Assets\ScriptAsset;
 use Yikes\LevelPlayingField\Assets\StyleAsset;
+use Yikes\LevelPlayingField\Assets\AssetsAware;
+use Yikes\LevelPlayingField\Assets\AssetsAwareness;
+use Yikes\LevelPlayingField\Service;
+use Yikes\LevelPlayingField\Renderable;
 use Yikes\LevelPlayingField\CustomPostType\ApplicantManager;
 use Yikes\LevelPlayingField\Comment\ApplicantMessageRepository;
 use Yikes\LevelPlayingField\Comment\ApplicantMessage;
 use Yikes\LevelPlayingField\Email\ApplicantMessageToApplicantEmail;
 use Yikes\LevelPlayingField\Email\ApplicantMessageFromApplicantEmail;
 use Yikes\LevelPlayingField\Email\InterviewRequestToApplicantEmail;
-use Yikes\LevelPlayingField\Metabox;
 use Yikes\LevelPlayingField\RequiredPages\ApplicantMessagingPage;
 use Yikes\LevelPlayingField\RequiredPages\BaseRequiredPage;
 use Yikes\LevelPlayingField\Model\ApplicantMeta;
 use Yikes\LevelPlayingField\Model\Applicant;
 use Yikes\LevelPlayingField\Model\ApplicantRepository;
+use Yikes\LevelPlayingField\View\FormEscapedView;
+use Yikes\LevelPlayingField\View\TemplatedView;
 
 /**
  * Class ApplicantMessaging.
@@ -34,12 +39,11 @@ use Yikes\LevelPlayingField\Model\ApplicantRepository;
  * @package Yikes\LevelPlayingField
  * @author  Jeremy Pry
  */
-class ApplicantMessaging extends Metabox\BaseMetabox {
+class ApplicantMessaging implements Renderable, AssetsAware, Service {
 
-	const CONTEXT   = 'normal';
+	use AssetsAwareness;
+
 	const POST_TYPE = ApplicantManager::SLUG;
-	const BOX_ID    = 'applicant-messaging';
-	const BOX_TITLE = 'Messaging';
 	const VIEW      = 'views/applicant-messaging';
 
 	// Partials.
@@ -67,8 +71,7 @@ class ApplicantMessaging extends Metabox\BaseMetabox {
 	 * @since %VERSION%
 	 */
 	public function register() {
-		parent::register();
-
+		$this->register_assets();
 		add_filter( 'admin_enqueue_scripts', function( $hook ) {
 
 			// Ensure this is the edit page.
@@ -140,47 +143,31 @@ class ApplicantMessaging extends Metabox\BaseMetabox {
 	}
 
 	/**
-	 * Get the ID to use for the metabox.
+	 * Render the current Renderable.
 	 *
 	 * @since %VERSION%
 	 *
-	 * @return string ID to use for the metabox.
+	 * @param array $context Context in which to render.
+	 *
+	 * @return string Rendered HTML.
 	 */
-	protected function get_id() {
-		return static::BOX_ID;
-	}
+	public function render( array $context = [] ) {
+		try {
+			$this->enqueue_assets();
 
-	/**
-	 * Get the title to use for the metabox.
-	 *
-	 * @since %VERSION%
-	 *
-	 * @return string Title to use for the metabox.
-	 */
-	protected function get_title() {
-		return static::BOX_TITLE;
-	}
+			$view = new FormEscapedView(
+				new TemplatedView( $this->get_view_uri() )
+			);
 
-	/**
-	 * Get the screen on which to show the metabox.
-	 *
-	 * @since %VERSION%
-	 *
-	 * @return string|array|\WP_Screen Screen on which to show the metabox.
-	 */
-	protected function get_screen() {
-		return static::POST_TYPE;
-	}
-
-	/**
-	 * Get the context in which to show the metabox.
-	 *
-	 * @since %VERSION%
-	 *
-	 * @return string Context to use.
-	 */
-	protected function get_context() {
-		return static::CONTEXT_NORMAL;
+			return $view->render( $context );
+		} catch ( \Exception $exception ) {
+			// Don't let exceptions bubble up. Just render the exception message
+			// into the metabox.
+			return sprintf(
+				'<pre>%s</pre>',
+				$exception->getMessage()
+			);
+		}
 	}
 
 	/**
@@ -336,7 +323,7 @@ class ApplicantMessaging extends Metabox\BaseMetabox {
 		];
 
 		ob_start();
-		$this->process_metabox( get_post( $post_id ), $args );
+		echo $this->render( $this->process_attributes( get_post( $post_id ), $args ) );
 		$html = ob_get_clean();
 
 		wp_send_json_success( $html, 200 );
