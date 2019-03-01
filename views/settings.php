@@ -14,9 +14,9 @@ namespace Yikes\LevelPlayingField;
 use Yikes\LevelPlayingField\Settings\Fields\AdditionalEmailRecipients;
 use Yikes\LevelPlayingField\Settings\Fields\EmailRecipientRoles;
 use Yikes\LevelPlayingField\Settings\Fields\ApplicationSuccessMessage;
+use Yikes\LevelPlayingField\Settings\Fields\DisableFrontEndCSS;
 
 $settings = $this->settings;
-
 ?>
 <div id="lpf-settings">
 	<h2><?php esc_html_e( 'Settings', 'yikes-level-playing-field' ); ?></h2>
@@ -35,6 +35,13 @@ $settings = $this->settings;
 		<h3><?php esc_html_e( 'Application', 'yikes-level-playing-field' ); ?></h3>
 		<?php
 			( new ApplicationSuccessMessage() )->render( $settings->get_setting( ApplicationSuccessMessage::SLUG ) );
+		?>
+	</div>
+
+	<div class="lpf-settings lpf-settings-settings-container">
+		<h3><?php esc_html_e( 'Plugin', 'yikes-level-playing-field' ); ?></h3>
+		<?php
+			( new DisableFrontEndCSS() )->render( $settings->get_setting( DisableFrontEndCSS::SLUG ) );
 		?>
 	</div>
 

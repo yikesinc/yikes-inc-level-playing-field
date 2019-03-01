@@ -65,7 +65,7 @@
 			// Add the value to the array.
 			if ( 'object' === typeof settings[ name ] ) {
 				settings[ name ][ this.id ] = value;
-			} else if ( 'string' === typeof settings[ name ] ) {
+			} else {
 				settings[ name ] = value;
 			}
 		});

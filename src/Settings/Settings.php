@@ -28,12 +28,14 @@ final class Settings {
 		SettingsFields::ADDITIONAL_EMAIL_RECIPIENTS,
 		SettingsFields::EMAIL_RECIPIENT_ROLES,
 		SettingsFields::APPLICATION_SUCCESS_MESSAGE,
+		SettingsFields::DISABLE_FRONT_END_CSS,
 	];
 
 	const SANITIZATION = [
 		SettingsFields::ADDITIONAL_EMAIL_RECIPIENTS => FILTER_SANITIZE_STRING,
 		SettingsFields::EMAIL_RECIPIENT_ROLES       => FILTER_VALIDATE_BOOLEAN,
 		SettingsFields::APPLICATION_SUCCESS_MESSAGE => FILTER_SANITIZE_STRING,
+		SettingsFields::DISABLE_FRONT_END_CSS       => FILTER_VALIDATE_BOOLEAN,
 	];
 
 	const DEFAULTS = [
@@ -43,6 +45,7 @@ final class Settings {
 			HumanResources::SLUG => false,
 		],
 		SettingsFields::APPLICATION_SUCCESS_MESSAGE => 'Congratulations! Your form has been successfully submitted!',
+		SettingsFields::DISABLE_FRONT_END_CSS       => false,
 	];
 
 	/**

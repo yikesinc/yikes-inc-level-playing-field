@@ -38,10 +38,10 @@ final class EmailRecipientRoles extends BaseSettingsField {
 			?>
 			<label for="<?php echo esc_attr( $role::SLUG ); ?>">
 				<input type="checkbox"
-					   class="<?php echo esc_attr( $this->html_classes() ); ?>"
-					   id="<?php echo esc_attr( $role::SLUG ); ?>"
-					   name="<?php echo esc_attr( static::NAME ); ?>"
-					   value="<?php echo esc_attr( $role::SLUG ); ?>"
+					class="<?php echo esc_attr( $this->html_classes() ); ?>"
+					id="<?php echo esc_attr( $role::SLUG ); ?>"
+					name="<?php echo esc_attr( static::NAME ); ?>"
+					value="<?php echo esc_attr( $role::SLUG ); ?>"
 					<?php checked( isset( $this->get_value()[ $role::SLUG ] ) && true === $this->get_value()[ $role::SLUG ] ); ?>>
 				<?php echo esc_html( $role->get_title() ); ?>
 			</label>

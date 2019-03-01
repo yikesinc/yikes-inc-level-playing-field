@@ -108,7 +108,7 @@ abstract class BaseSettingsField implements Service {
 	 */
 	protected function help() {
 		?>
-		<p class="lpf-field-help"><?php esc_html( $this->help_text() ); ?></p>
+		<p class="lpf-field-help"><?php echo esc_html( $this->help_text() ); ?></p>
 		<?php
 	}
 

@@ -10,6 +10,8 @@
 namespace Yikes\LevelPlayingField\Assets;
 
 use Closure;
+use Yikes\LevelPlayingField\Settings\Settings;
+use Yikes\LevelPlayingField\Settings\SettingsFields;
 
 /**
  * Class StyleAsset.
@@ -99,7 +101,7 @@ final class StyleAsset extends BaseAsset {
 	 */
 	protected function get_register_closure() {
 		return function () {
-			if ( wp_script_is( $this->handle, 'registered' ) ) {
+			if ( wp_script_is( $this->handle, 'registered' ) || ( ! is_admin() && ( new Settings() )->get_setting( SettingsFields::DISABLE_FRONT_END_CSS ) ) ) {
 				return;
 			}
 
