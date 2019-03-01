@@ -27,11 +27,13 @@ final class Settings {
 	const FIELDS = [
 		SettingsFields::ADDITIONAL_EMAIL_RECIPIENTS,
 		SettingsFields::EMAIL_RECIPIENT_ROLES,
+		SettingsFields::APPLICATION_SUCCESS_MESSAGE,
 	];
 
 	const SANITIZATION = [
 		SettingsFields::ADDITIONAL_EMAIL_RECIPIENTS => FILTER_SANITIZE_STRING,
 		SettingsFields::EMAIL_RECIPIENT_ROLES       => FILTER_VALIDATE_BOOLEAN,
+		SettingsFields::APPLICATION_SUCCESS_MESSAGE => FILTER_SANITIZE_STRING,
 	];
 
 	const DEFAULTS = [
@@ -40,6 +42,7 @@ final class Settings {
 			HiringManager::SLUG  => false,
 			HumanResources::SLUG => false,
 		],
+		SettingsFields::APPLICATION_SUCCESS_MESSAGE => 'Congratulations! Your form has been successfully submitted!',
 	];
 
 	/**
@@ -73,7 +76,7 @@ final class Settings {
 	 */
 	public function save() {
 		foreach ( static::FIELDS as $field_name ) {
-			update_setting(
+			update_option(
 				$this->prefix_field( $field_name ),
 				is_array( $this->$field_name )
 					? filter_var_array( $this->$field_name, static::SANITIZATION[ $field_name ] )

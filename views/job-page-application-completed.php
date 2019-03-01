@@ -9,7 +9,10 @@
 
 namespace Yikes\LevelPlayingField;
 
+use Yikes\LevelPlayingField\Settings\Settings;
+use Yikes\LevelPlayingField\Settings\SettingsFields;
+
 printf(
 	'<p>%s</p>',
-	esc_html__( 'Congratulations! Your form has been successfully submitted!', 'yikes-level-playing-field' )
+	esc_html( ( new Settings() )->get_setting( SettingsFields::APPLICATION_SUCCESS_MESSAGE ) )
 );
