@@ -58,6 +58,19 @@ final class Application extends BaseShortcode {
 	private $view_uri = self::VIEW_URI;
 
 	/**
+	 * Register the Shortcode.
+	 *
+	 * @since %VERSION%
+	 */
+	public function register() {
+		parent::register();
+
+		add_action( 'lpf_do_applicant_shortcode', function( $atts ) {
+			echo $this->process_shortcode( $atts );
+		});
+	}
+
+	/**
 	 * Get the default array of attributes for the shortcode.
 	 *
 	 * @since %VERSION%

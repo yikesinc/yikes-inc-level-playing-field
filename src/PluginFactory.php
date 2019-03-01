@@ -24,6 +24,7 @@ use Yikes\LevelPlayingField\Metabox\ApplicationManager as ApplicationMetabox;
 use Yikes\LevelPlayingField\Metabox\JobManager;
 use Yikes\LevelPlayingField\Options\OptionsManager;
 use Yikes\LevelPlayingField\RequiredPages\ApplicantMessagingPage;
+use Yikes\LevelPlayingField\RequiredPages\ApplicationFormPage;
 use Yikes\LevelPlayingField\Roles\Administrator;
 use Yikes\LevelPlayingField\Roles\Applicant;
 use Yikes\LevelPlayingField\Roles\Editor;
@@ -137,6 +138,7 @@ final class PluginFactory {
 
 			// Required Pages.
 			ApplicantMessagingPage::class   => 1,
+			ApplicationFormPage::class      => 1,
 		] );
 	}
 }

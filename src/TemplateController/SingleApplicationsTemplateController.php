@@ -14,6 +14,7 @@ use Yikes\LevelPlayingField\Exception\InvalidPostID;
 use Yikes\LevelPlayingField\Model\ApplicationRepository;
 use Yikes\LevelPlayingField\View\FormEscapedView;
 use Yikes\LevelPlayingField\View\TemplatedView;
+use Yikes\LevelPlayingField\RequiredPages\ApplicationFormPage;
 
 /**
  * Class SingleApplicationsTemplateController.
@@ -28,7 +29,7 @@ use Yikes\LevelPlayingField\View\TemplatedView;
 class SingleApplicationsTemplateController extends TemplateController {
 
 	const PRIORITY = 10;
-	const VIEW_URI = 'views/job-page-application';
+	const VIEW_URI = 'views/job-page-application-shortcode';
 
 	/**
 	 * Check if the current request is for this class' object and supply the current post w/ content.
@@ -53,7 +54,7 @@ class SingleApplicationsTemplateController extends TemplateController {
 	 * @return bool True if the current request should use your template.
 	 */
 	protected function is_template_request() {
-		return is_single() && ApplicationManager::SLUG === get_query_var( 'post_type' );
+		return ( new ApplicationFormPage() )->get_page_id( ApplicationFormPage::PAGE_SLUG ) === get_queried_object_id();
 	}
 
 	/**
@@ -81,12 +82,13 @@ class SingleApplicationsTemplateController extends TemplateController {
 	}
 
 	/**
-	 * Get the data needed for this context, i.e. the $post/application ID.
+	 * Get the data needed for this context, i.e. the $post/job ID.
 	 *
-	 * @return int The application ID.
+	 * @return int The job ID.
 	 */
 	protected function get_context_data() {
-		return get_queried_object_id();
+		$job_id = isset( $_GET['job'] ) ? filter_var( wp_unslash( $_GET['job'] ), FILTER_SANITIZE_NUMBER_INT ) : 0;
+		return $job_id;
 	}
 
 	/**
@@ -100,10 +102,8 @@ class SingleApplicationsTemplateController extends TemplateController {
 	 * @throws InvalidPostID When the post ID cannot be found as an Application.
 	 */
 	protected function get_context( $id ) {
-		$applications_repository = new ApplicationRepository();
-
-		return apply_filters( 'lpf_single_application_template_data', [
-			'application' => $applications_repository->find( $id ),
-		] );
+		return [
+			'shortcode_args' => [ 'job_id' => $id ],
+		];
 	}
 }
