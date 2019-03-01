@@ -42,7 +42,20 @@ class Schooling extends RepeatableField {
 				'label' => esc_html__( 'Institution', 'yikes-level-playing-field' ),
 			],
 			ApplicantMeta::TYPE        => [
-				'label' => esc_html__( 'Institution Type', 'yikes-level-playing-field' ),
+				'label'    => esc_html__( 'Institution Type', 'yikes-level-playing-field' ),
+				'class'    => Types::SELECT,
+				'required' => false,
+			],
+			ApplicantMeta::TYPE        => [
+				'label'    => esc_html__( 'Institution Type', 'yikes-level-playing-field' ),
+				'callback' => $this->get_schooling_callback(),
+				'options'  => [
+					'high'   => esc_html__( 'High School', 'yikes-level-playing-field' ),
+					'2-year' => esc_html__( '2-Year College', 'yikes-level-playing-field' ),
+					'4-year' => esc_html__( '4-Year College', 'yikes-level-playing-field' ),
+					'trade'   => esc_html__( 'Trade/Technical/Vocational School', 'yikes-level-playing-field' ),
+					'grad'   => esc_html__( 'Graduate School', 'yikes-level-playing-field' ),
+				],
 			],
 			ApplicantMeta::YEAR        => [
 				'label' => esc_html__( 'Graduation Year', 'yikes-level-playing-field' ),
@@ -69,6 +82,29 @@ class Schooling extends RepeatableField {
 			'<legend class="lpf-field-schooling lpf-input-label">%s</legend>',
 			esc_html__( 'Schooling:', 'yikes-level-playing-field' )
 		);
+	}
+
+	/**
+	 * Get a callback for generating a new Schooling field.
+	 *
+	 * @since %VERSION%
+	 * @return \Closure
+	 */
+	private function get_schooling_callback() {
+		return function( $id_base, $field, $classes, $settings ) {
+			$options = [];
+			foreach ( $settings['options'] as $value => $label ) {
+				$options[] = new SelectOption( $label, $value );
+			}
+
+			return new Select(
+				"{$id_base}[{$field}]",
+				$settings['label'],
+				$classes,
+				(bool) $settings['required'],
+				$options
+			);
+		};
 	}
 
 	/**
