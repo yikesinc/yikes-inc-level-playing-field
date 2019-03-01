@@ -90,6 +90,9 @@ class JobManager extends BaseCustomPostType {
 				'create_posts'           => Capabilities::CREATE_JOBS,
 			],
 			'menu_icon'           => 'dashicons-feedback',
+			'rewrite'             => [
+				'slug' => _x( 'lpf-jobs', "The CPT's rewrite slug. Translatable as per WP's documentation.", 'yikes-level-playing-field' ),
+			],
 		];
 	}
 
