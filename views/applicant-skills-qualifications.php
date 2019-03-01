@@ -97,13 +97,15 @@ $applicant = $this->applicant;
 
 				// Build up language proficiency data.
 				$proficiency_labels = [
-					'fluent'       => __( 'Fluent', 'yikes-level-playing-field' ),
-					'professional' => __( 'Working Professional proficiency', 'yikes-level-playing-field' ),
-					'limited'      => __( 'Limited proficiency', 'yikes-level-playing-field' ),
-					'elementary'   => __( 'Elementary proficiency', 'yikes-level-playing-field' ),
+					'Basic Knowledge' => esc_html__( 'Basic Knowledge', 'yikes-level-playing-field' ),
+					'Novice'          => esc_html__( 'Novice', 'yikes-level-playing-field' ),
+					'Intermediate'    => esc_html__( 'Intermediate', 'yikes-level-playing-field' ),
+					'Advanced'        => esc_html__( 'Advanced', 'yikes-level-playing-field' ),
+					'Expert'          => esc_html__( 'Expert', 'yikes-level-playing-field' ),
 				];
 
 				$proficiency_counts = [];
+
 				foreach ( $languages as $language ) {
 					if ( ! array_key_exists( $language['proficiency'], $proficiency_counts ) ) {
 						$proficiency_counts[ $language['proficiency'] ] = 1;

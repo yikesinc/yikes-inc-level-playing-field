@@ -50,11 +50,11 @@ class Schooling extends RepeatableField {
 				'label'    => esc_html__( 'Institution Type', 'yikes-level-playing-field' ),
 				'callback' => $this->get_schooling_callback(),
 				'options'  => [
-					'high'   => esc_html__( 'High School', 'yikes-level-playing-field' ),
-					'2-year' => esc_html__( '2-Year College', 'yikes-level-playing-field' ),
-					'4-year' => esc_html__( '4-Year College', 'yikes-level-playing-field' ),
-					'trade'   => esc_html__( 'Trade/Technical/Vocational School', 'yikes-level-playing-field' ),
-					'grad'   => esc_html__( 'Graduate School', 'yikes-level-playing-field' ),
+					'High School'                       => esc_html__( 'High School', 'yikes-level-playing-field' ),
+					'2-Year College'                    => esc_html__( '2-Year College', 'yikes-level-playing-field' ),
+					'4-Year College'                    => esc_html__( '4-Year College', 'yikes-level-playing-field' ),
+					'Trade/Technical/Vocational School' => esc_html__( 'Trade/Technical/Vocational School', 'yikes-level-playing-field' ),
+					'Graduate School'                   => esc_html__( 'Graduate School', 'yikes-level-playing-field' ),
 				],
 			],
 			ApplicantMeta::YEAR        => [
