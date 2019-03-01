@@ -4,19 +4,19 @@
 	const notices = new class_lpf_notices();
 
 	// Perhaps we should throw some type of error here.
-	if ( typeof options_data === 'undefined' ) {
+	if ( typeof settings_data === 'undefined' ) {
 		return;
 	}
 
-	var options = JSON.parse( options_data.options );
+	var settings = JSON.parse( settings_data.settings );
 
-	$( '#lpf-options-save' ).click( function() {
+	$( '#lpf-settings-save' ).click( function() {
 
 		// Clear any notices.
 		notices.remove_notices();
 
-		// Save the options.
-		save( get_options() );
+		// Save the settings.
+		save( get_settings() );
 	});
 
 	/**
@@ -24,9 +24,9 @@
 	 */
 	function save( opts ) {
 		const data = {
-			nonce  : options_data.ajax.save_nonce,
-			action : options_data.ajax.save_action,
-			options: opts,
+			nonce  : settings_data.ajax.save_nonce,
+			action : settings_data.ajax.save_action,
+			settings: opts,
 		};
 
 		$.post( window.ajaxurl, data ).always( function( response, successText ) {
@@ -53,24 +53,24 @@
 	}
 
 	/**
-	 * Loop through each options field, get the value, and add to options array in the format
+	 * Loop through each settings field, get the value, and add to settings array in the format
 	 * Object: [ name ][ id ] = value;
 	 * String: [ name ]       = value;
 	 */
-	function get_options() {
-		$( '.options-field' ).each( function() {
+	function get_settings() {
+		$( '.settings-field' ).each( function() {
 			const value = get_value( this );
 			const name  = convert_dashes( this.name );
 
 			// Add the value to the array.
-			if ( 'object' === typeof options[ name ] ) {
-				options[ name ][ this.id ] = value;
-			} else if ( 'string' === typeof options[ name ] ) {
-				options[ name ] = value;
+			if ( 'object' === typeof settings[ name ] ) {
+				settings[ name ][ this.id ] = value;
+			} else if ( 'string' === typeof settings[ name ] ) {
+				settings[ name ] = value;
 			}
 		});
 
-		return options;
+		return settings;
 	}
 
 	/**

@@ -10,7 +10,7 @@
 namespace Yikes\LevelPlayingField;
 
 use Yikes\LevelPlayingField\AdminPage\ExportApplicantsPage;
-use Yikes\LevelPlayingField\AdminPage\OptionsPage;
+use Yikes\LevelPlayingField\AdminPage\SettingsPage;
 use Yikes\LevelPlayingField\Assets\AdminStyles;
 use Yikes\LevelPlayingField\CustomPostType\ApplicantManager;
 use Yikes\LevelPlayingField\CustomPostType\ApplicationManager;
@@ -22,8 +22,9 @@ use Yikes\LevelPlayingField\Messaging\ApplicantMessaging;
 use Yikes\LevelPlayingField\Metabox\ApplicantManager as ApplicantMetabox;
 use Yikes\LevelPlayingField\Metabox\ApplicationManager as ApplicationMetabox;
 use Yikes\LevelPlayingField\Metabox\JobManager;
-use Yikes\LevelPlayingField\Options\OptionsManager;
+use Yikes\LevelPlayingField\Settings\SettingsManager;
 use Yikes\LevelPlayingField\RequiredPages\ApplicantMessagingPage;
+use Yikes\LevelPlayingField\RequiredPages\ApplicationFormPage;
 use Yikes\LevelPlayingField\Roles\Administrator;
 use Yikes\LevelPlayingField\Roles\Applicant;
 use Yikes\LevelPlayingField\Roles\Editor;
@@ -115,12 +116,12 @@ final class PluginFactory {
 			// Assets.
 			AdminStyles::class              => 1,
 
-			// Options.
-			OptionsManager::class           => 1,
+			// Settings.
+			SettingsManager::class          => 1,
 
 			// Admin Pages.
 			ExportApplicantsPage::class     => 1,
-			OptionsPage::class              => 1,
+			SettingsPage::class             => 1,
 
 			// Carbon Fields.
 			FieldLoader::class              => 1,
@@ -137,6 +138,7 @@ final class PluginFactory {
 
 			// Required Pages.
 			ApplicantMessagingPage::class   => 1,
+			ApplicationFormPage::class      => 1,
 		] );
 	}
 }

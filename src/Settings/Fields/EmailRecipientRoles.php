@@ -7,9 +7,9 @@
  * @license GPL2
  */
 
-namespace Yikes\LevelPlayingField\Options\Fields;
+namespace Yikes\LevelPlayingField\Settings\Fields;
 
-use Yikes\LevelPlayingField\Options\OptionFields;
+use Yikes\LevelPlayingField\Settings\SettingsFields;
 use Yikes\LevelPlayingField\Roles\HiringManager;
 use Yikes\LevelPlayingField\Roles\HumanResources;
 
@@ -19,10 +19,10 @@ use Yikes\LevelPlayingField\Roles\HumanResources;
  * @since   %VERSION%
  * @package Yikes\LevelPlayingField
  */
-final class EmailRecipientRoles extends BaseOptionsField {
+final class EmailRecipientRoles extends BaseSettingsField {
 
 	const NAME = 'email-recipient-roles';
-	const SLUG = OptionFields::EMAIL_RECIPIENT_ROLES;
+	const SLUG = SettingsFields::EMAIL_RECIPIENT_ROLES;
 
 	/**
 	 * Render the field's HTML.
