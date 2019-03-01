@@ -9,9 +9,7 @@
 
 namespace Yikes\LevelPlayingField\Model;
 
-use DateInterval;
 use WP_Term;
-use Yikes\LevelPlayingField\Anonymizer\AnonymizerFactory;
 use Yikes\LevelPlayingField\Anonymizer\AnonymizerInterface;
 use Yikes\LevelPlayingField\Email\InterviewCancellationFromApplicantEmail;
 use Yikes\LevelPlayingField\Email\InterviewCancellationToApplicantEmail;
@@ -85,18 +83,22 @@ final class Applicant extends CustomPostTypeEntity {
 			ApplicantMeta::PROFICIENCY => FILTER_SANITIZE_STRING,
 		],
 		ApplicantMeta::EXPERIENCE       => [
-			ApplicantMeta::ORGANIZATION  => FILTER_SANITIZE_STRING,
-			ApplicantMeta::INDUSTRY      => FILTER_SANITIZE_STRING,
-			ApplicantMeta::POSITION      => FILTER_SANITIZE_STRING,
-			ApplicantMeta::START_DATE    => FILTER_SANITIZE_STRING,
-			ApplicantMeta::END_DATE      => FILTER_SANITIZE_STRING,
-			ApplicantMeta::YEAR_DURATION => FILTER_SANITIZE_STRING,
+			ApplicantMeta::ORGANIZATION     => FILTER_SANITIZE_STRING,
+			ApplicantMeta::INDUSTRY         => FILTER_SANITIZE_STRING,
+			ApplicantMeta::POSITION         => FILTER_SANITIZE_STRING,
+			ApplicantMeta::START_DATE       => FILTER_SANITIZE_STRING,
+			ApplicantMeta::END_DATE         => FILTER_SANITIZE_STRING,
+			ApplicantMeta::PRESENT_POSITION => FILTER_SANITIZE_NUMBER_INT,
+			ApplicantMeta::YEAR_DURATION    => FILTER_SANITIZE_STRING,
 		],
 		ApplicantMeta::VOLUNTEER        => [
-			// todo: start and end dates.
-			ApplicantMeta::ORGANIZATION => FILTER_SANITIZE_STRING,
-			ApplicantMeta::INDUSTRY     => FILTER_SANITIZE_STRING,
-			ApplicantMeta::POSITION     => FILTER_SANITIZE_STRING,
+			ApplicantMeta::ORGANIZATION     => FILTER_SANITIZE_STRING,
+			ApplicantMeta::INDUSTRY         => FILTER_SANITIZE_STRING,
+			ApplicantMeta::POSITION         => FILTER_SANITIZE_STRING,
+			ApplicantMeta::START_DATE       => FILTER_SANITIZE_STRING,
+			ApplicantMeta::END_DATE         => FILTER_SANITIZE_STRING,
+			ApplicantMeta::PRESENT_POSITION => FILTER_SANITIZE_NUMBER_INT,
+			ApplicantMeta::YEAR_DURATION    => FILTER_SANITIZE_STRING,
 		],
 		ApplicantMeta::NICKNAME         => FILTER_SANITIZE_STRING,
 		ApplicantMeta::VIEWED           => FILTER_SANITIZE_NUMBER_INT,
@@ -466,15 +468,13 @@ final class Applicant extends CustomPostTypeEntity {
 		$start = date_create( $experience[ ApplicantMeta::START_DATE ] );
 		$end   = date_create( $experience[ ApplicantMeta::END_DATE ] );
 		$diff  = date_diff( $start, $end );
+		$still = ! empty( $experience[ ApplicantMeta::PRESENT_POSITION ] ) ? __( '(actively working here)', 'yikes-level-playing-field' ) : '';
 
 		// Add calculated duration to experience and save.
 		$experience[ ApplicantMeta::YEAR_DURATION ] = $diff instanceof DateInterval
-			? $diff->format( '%y Year(s) %m Month(s) %d Days' )
+			? $diff->format( "%y Year(s) %m Month(s) %d Days {$still}" )
 			: '';
-		$this->{ApplicantMeta::EXPERIENCE}[]        = $this->filter_and_sanitize(
-			$experience,
-			ApplicantMeta::EXPERIENCE
-		);
+		$this->{ApplicantMeta::EXPERIENCE}[]        = $this->filter_and_sanitize( $experience, ApplicantMeta::EXPERIENCE );
 		$this->changed_property( ApplicantMeta::EXPERIENCE );
 	}
 
@@ -519,7 +519,17 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @param array $volunteer Array of volunteer work.
 	 */
 	public function add_volunteer( array $volunteer ) {
-		$this->{ApplicantMeta::VOLUNTEER}[] = $this->filter_and_sanitize( $volunteer, ApplicantMeta::VOLUNTEER );
+		// Calculate duration between start and end dates.
+		$start = date_create( $volunteer[ ApplicantMeta::START_DATE ] );
+		$end   = date_create( $volunteer[ ApplicantMeta::END_DATE ] );
+		$diff  = date_diff( $start, $end );
+		$still = ! empty( $volunteer[ ApplicantMeta::PRESENT_POSITION ] ) ? __( '(actively volunteering here)', 'yikes-level-playing-field' ) : '';
+
+		// Add calculated duration to volunteer experience and save.
+		$volunteer[ ApplicantMeta::YEAR_DURATION ] = $diff instanceof DateInterval
+			? $diff->format( "%y Year(s) %m Month(s) %d Days {$still}" )
+			: '';
+		$this->{ApplicantMeta::VOLUNTEER}[]        = $this->filter_and_sanitize( $volunteer, ApplicantMeta::VOLUNTEER );
 		$this->changed_property( ApplicantMeta::VOLUNTEER );
 	}
 
@@ -740,7 +750,8 @@ final class Applicant extends CustomPostTypeEntity {
 			return;
 		}
 
-		// todo: Maybe add a message like 'The applicant has canceled the interview'.
+		// Maybe add a message like 'The applicant has confirmed the interview'?
+
 		$this->set_interview_status( 'cancelled' );
 		$this->set_interview( [] );
 		$this->persist_properties();
@@ -757,10 +768,12 @@ final class Applicant extends CustomPostTypeEntity {
 	 */
 	public function confirm_interview() {
 		$this->set_interview_status( 'confirmed' );
-		// todo: Unanonymize!
 		$this->persist_properties();
 
-		// todo: Maybe add a message like 'The applicant has confirmed the interview'?
+		// Unanonymize!
+
+		// Maybe add a message like 'The applicant has confirmed the interview'?
+
 		// Send off confirmed interview email to both the applicant and job managers.
 		( new InterviewConfirmationToApplicantEmail( $this ) )->send();
 		( new InterviewConfirmationFromApplicantEmail( $this ) )->send();

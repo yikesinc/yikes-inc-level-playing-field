@@ -227,7 +227,7 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 			'nickname' => $applicant->get_nickname(),
 		] );
 	}
-	
+
 	/**
 	 * Set the number of screen columns to 1.
 	 *
