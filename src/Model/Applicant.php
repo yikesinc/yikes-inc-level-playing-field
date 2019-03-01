@@ -777,7 +777,7 @@ final class Applicant extends CustomPostTypeEntity {
 		return add_query_arg( [
 			'guid' => $this->get_guid(),
 			'post' => $this->get_id(),
-		], get_permalink( BaseRequiredPage::get_required_page_id( ApplicantMessagingPage::PAGE_SLUG ) ) );
+		], get_permalink( ( new ApplicantMessagingPage )->get_required_page_id( ApplicantMessagingPage::PAGE_SLUG ) ) );
 	}
 
 	/**
