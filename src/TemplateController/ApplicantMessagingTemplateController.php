@@ -76,7 +76,7 @@ class ApplicantMessagingTemplateController extends TemplateController {
 	protected function is_template_request() {
 		$applicant_id        = $this->get_applicant_post_id();
 		$applicant_id_exists = $applicant_id > 0;
-		$is_messaging_page   = BaseRequiredPage::get_required_page_id( ApplicantMessagingPage::PAGE_SLUG ) === get_queried_object_id();
+		$is_messaging_page   = ( new ApplicantMessagingPage() )->get_page_id( ApplicantMessagingPage::PAGE_SLUG ) === get_queried_object_id();
 		$is_allowed_to_view  = $this->verify_url_hash( $applicant_id ) || is_user_logged_in() && current_user_can( 'lpf_message_applicants' );
 		return $applicant_id_exists && $is_messaging_page && $is_allowed_to_view;
 	}
@@ -148,7 +148,7 @@ class ApplicantMessagingTemplateController extends TemplateController {
 	 * @return array Context to pass onto view.
 	 */
 	protected function get_context( $id ) {
-		$context               = ApplicantMessaging::get_context_data( $this->get_applicant_post_id(), false );
+		$context               = ( new ApplicantMessaging() )->get_context_data( $this->get_applicant_post_id(), false );
 		$context['is_cancel']  = $this->is_interview_cancellation();
 		$context['is_confirm'] = $this->is_interview_confirmation();
 		return $context;

@@ -96,9 +96,9 @@ final class ApplicantStatus extends BaseTaxonomy implements AssetsAware {
 		});
 
 		// Render the applicant status metabox.
-		add_action( 'lpf_' . ApplicantManager::SLUG . '_after_header', function( $applicant ) {
-			$this->meta_box_cb( $applicant->get_post_object() );
-		});
+		add_action( 'lpf_applicant_screen_sidebar', function( $view ) {
+			$this->meta_box_cb( $view->applicant->get_post_object() );
+		}, 10 );
 	}
 
 	/**

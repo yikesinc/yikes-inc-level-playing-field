@@ -51,7 +51,7 @@ abstract class BaseRequiredPage implements Registerable, Service {
 			throw MustExtend::default_type( self::PAGE_SLUG );
 		}
 
-		if ( $this::get_required_page_id( static::PAGE_SLUG ) ) {
+		if ( $this->get_page_id( static::PAGE_SLUG ) ) {
 			return;
 		}
 
@@ -96,11 +96,11 @@ abstract class BaseRequiredPage implements Registerable, Service {
 	 *
 	 * @param  array  $post_states The current post states for this page.
 	 * @param  object $post        The post object.
-	 * @return array  $post_states The modified post states for this post.
+	 * @return array  $post_states The modified post states for this page.
 	 */
 	public function required_pages_post_states( $post_states, $post ) {
 
-		if ( $this::get_required_page_id( static::PAGE_SLUG ) === $post->ID && $this->get_post_state() ) {
+		if ( $this->get_page_id( static::PAGE_SLUG ) === $post->ID && $this->get_post_state() ) {
 			$post_states[] = $this->get_post_state();
 		}
 
@@ -115,19 +115,21 @@ abstract class BaseRequiredPage implements Registerable, Service {
 	 * @param int $post_id The post ID.
 	 */
 	public function delete_option_on_page_delete( $post_id ) {
-		if ( $this::get_required_page_id( static::PAGE_SLUG ) === $post_id ) {
+		if ( $this->get_page_id( static::PAGE_SLUG ) === $post_id ) {
 			delete_option( static::PAGE_SLUG );
 		}
 	}
 
 	/**
-	 * Fetch our 'page_slug' -> $post_id option from the database.
+	 * Get a required page's ID from its slug.
 	 *
 	 * @since %VERSION%
 	 *
 	 * @param string $page_slug The page slug we use to designate our required pages.
+	 *
+	 * @return int $post_id The ID of the required page.
 	 */
-	public static function get_required_page_id( $page_slug ) {
+	public function get_page_id( $page_slug ) {
 		$post_id = get_option( filter_var( $page_slug, FILTER_SANITIZE_STRING ), 0 );
 		return empty( $post_id ) ? 0 : (int) $post_id;
 	}
