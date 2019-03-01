@@ -228,7 +228,7 @@ class ApplicantMessaging implements Renderable, AssetsAware, Service {
 	 *
 	 * @return array $context   The data needed for this metabox or template.
 	 */
-	public static function get_context_data( $applicant_id, $is_metabox = false ) {
+	public function get_context_data( $applicant_id, $is_metabox = false ) {
 
 		$repository = new ApplicantMessageRepository();
 		$comments   = $repository->find_all( $applicant_id );
@@ -244,6 +244,7 @@ class ApplicantMessaging implements Renderable, AssetsAware, Service {
 			],
 		];
 	}
+
 	/**
 	 * Create a new comment.
 	 *
@@ -362,7 +363,7 @@ class ApplicantMessaging implements Renderable, AssetsAware, Service {
 			if ( static::POST_TYPE === $screen->post_type ) {
 				return $clauses;
 			}
-		} elseif ( BaseRequiredPage::get_required_page_id( ApplicantMessagingPage::PAGE_SLUG ) === get_queried_object_id() ) {
+		} elseif ( ( new ApplicantMessagingPage() )->get_page_id( ApplicantMessagingPage::PAGE_SLUG ) === get_queried_object_id() ) {
 			return $clauses;
 		}
 
