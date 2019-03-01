@@ -363,7 +363,7 @@ class ApplicantMessaging implements Renderable, AssetsAware, Service {
 			if ( static::POST_TYPE === $screen->post_type ) {
 				return $clauses;
 			}
-		} elseif ( ( new ApplicantMessagingPage() )->get_required_page_id( ApplicantMessagingPage::PAGE_SLUG ) === get_queried_object_id() ) {
+		} elseif ( ( new ApplicantMessagingPage() )->get_page_id( ApplicantMessagingPage::PAGE_SLUG ) === get_queried_object_id() ) {
 			return $clauses;
 		}
 

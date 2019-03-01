@@ -76,7 +76,7 @@ class ApplicantMessagingTemplateController extends TemplateController {
 	protected function is_template_request() {
 		$applicant_id        = $this->get_applicant_post_id();
 		$applicant_id_exists = $applicant_id > 0;
-		$is_messaging_page   = ( new ApplicantMessagingPage() )->get_required_page_id( ApplicantMessagingPage::PAGE_SLUG ) === get_queried_object_id();
+		$is_messaging_page   = ( new ApplicantMessagingPage() )->get_page_id( ApplicantMessagingPage::PAGE_SLUG ) === get_queried_object_id();
 		$is_allowed_to_view  = $this->verify_url_hash( $applicant_id ) || is_user_logged_in() && current_user_can( 'lpf_message_applicants' );
 		return $applicant_id_exists && $is_messaging_page && $is_allowed_to_view;
 	}
