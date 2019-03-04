@@ -42,11 +42,11 @@ final class Languages extends RepeatableField {
 				'label'    => esc_html__( 'Proficiency', 'yikes-level-playing-field' ),
 				'callback' => $this->get_proficiency_callback(),
 				'options'  => [
-					'Basic Knowledge' => esc_html__( 'Basic Knowledge', 'yikes-level-playing-field' ),
-					'Novice'          => esc_html__( 'Novice', 'yikes-level-playing-field' ),
-					'Intermediate'    => esc_html__( 'Intermediate', 'yikes-level-playing-field' ),
-					'Advanced'        => esc_html__( 'Advanced', 'yikes-level-playing-field' ),
-					'Expert'          => esc_html__( 'Expert', 'yikes-level-playing-field' ),
+					__( 'Basic Knowledge', 'yikes-level-playing-field' ) => __( 'Basic Knowledge', 'yikes-level-playing-field' ),
+					__( 'Novice', 'yikes-level-playing-field' )          => __( 'Novice', 'yikes-level-playing-field' ),
+					__( 'Intermediate', 'yikes-level-playing-field' )    => __( 'Intermediate', 'yikes-level-playing-field' ),
+					__( 'Advanced', 'yikes-level-playing-field' )        => __( 'Advanced', 'yikes-level-playing-field' ),
+					__( 'Expert', 'yikes-level-playing-field' )          => __( 'Expert', 'yikes-level-playing-field' ),
 				],
 			],
 		] );
