@@ -10,4 +10,4 @@ node_modules/
 assets/css/*.css
 assets/js/*.min.js
 assets/js/applicant-status-button-groups.js
-assets/js/options.js
+assets/js/settings.js
