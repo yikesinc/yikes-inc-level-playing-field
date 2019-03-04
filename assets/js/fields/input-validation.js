@@ -49,23 +49,28 @@ jQuery( document ).ready( function( $ ) {
 	 */
 	const emptyRequired = ( field ) => {
 		// Trim whitespace.
-		const trimmedValue = $.trim( field.val() );
-		const errorClass = '.error-empty';
+		const trimmedValue = $.trim( getVal( field ) );
+		const errorClass   = '.error-empty';
+		const fieldLabel   = field.parents( 'label' );
 
 		// If empty...
 		if ( !trimmedValue ) {
-			if ( field.parent().find( errorClass ).length === 0 ) {
+			if ( fieldLabel.find( errorClass ).length === 0 ) {
 				field.before( `<span class="error-text error-empty">${i18n.errors.empty}</span>` );
-				field.parent().addClass( errorPrompt );
+				fieldLabel.addClass( errorPrompt );
 			}
 			isError = true;
 			return true;
 		} else {
-			field.parent().find( errorClass ).remove();
-			field.parent().removeClass( errorPrompt );
+			fieldLabel.find( errorClass ).remove();
+			fieldLabel.removeClass( errorPrompt );
 			return false;
 		}
 	};
+
+	const getVal = ( field ) => {
+		return ! field.hasClass( 'lpf-field-wysiwyg' ) ? field.val() : ( tinymce ? tinymce.get( field.attr( 'id' ) ).getContent() : '' );
+	}
 
 	/**
 	 * Valid email field error checking.
@@ -104,16 +109,18 @@ jQuery( document ).ready( function( $ ) {
 	 */
 	const submitValidation = ( event ) => {
 		const allFields = $( '.lpf-field-container .lpf-form-field, .lpf-field-container textarea' );
+
 		allFields.each( function() {
 			let isFieldEmpty;
 			let $this = $( this );
 
-			// If type is email, call function to validate email
-			if ( $this.attr( 'required' ) !== false && typeof $this.attr( 'required' ) !== typeof undefined ) {
+			// Don't let required fields be empty.
+			if ( $this.prop( 'required' ) === true || $this.hasClass( 'lpf-field-required' ) ) {
 				isFieldEmpty = emptyRequired( $this );
 			}
 
-			if ( !isFieldEmpty ) {
+			if ( ! isFieldEmpty ) {
+
 				// If field is email, call function to validate email
 				if ( $this.attr( 'type' ) === 'email' ) {
 					validEmail( $this );

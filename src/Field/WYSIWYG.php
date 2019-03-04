@@ -49,6 +49,10 @@ class WYSIWYG extends BaseField {
 	protected function get_editor_settings() {
 		$classes = array_merge( $this->classes, [ 'lpf-field-wysiwyg' ] );
 
+		if ( $this->is_required() ) {
+			array_push( $classes, 'lpf-field-required' );
+		}
+
 		$settings = array(
 			'media_buttons'    => false,
 			'wpautop'          => true,
@@ -70,6 +74,6 @@ class WYSIWYG extends BaseField {
 	 * @return string
 	 */
 	protected function get_error_type() {
-		return 'textarea';
+		return 'wysiwyg';
 	}
 }
