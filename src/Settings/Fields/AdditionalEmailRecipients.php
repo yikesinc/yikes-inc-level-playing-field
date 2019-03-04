@@ -7,9 +7,9 @@
  * @license GPL2
  */
 
-namespace Yikes\LevelPlayingField\Options\Fields;
+namespace Yikes\LevelPlayingField\Settings\Fields;
 
-use Yikes\LevelPlayingField\Options\OptionFields;
+use Yikes\LevelPlayingField\Settings\SettingsFields;
 
 /**
  * Class AdditionalEmailRecipients.
@@ -17,10 +17,10 @@ use Yikes\LevelPlayingField\Options\OptionFields;
  * @since   %VERSION%
  * @package Yikes\LevelPlayingField
  */
-final class AdditionalEmailRecipients extends BaseOptionsField {
+final class AdditionalEmailRecipients extends BaseSettingsField {
 
 	const NAME = 'additional-email-recipients';
-	const SLUG = OptionFields::ADDITIONAL_EMAIL_RECIPIENTS;
+	const SLUG = SettingsFields::ADDITIONAL_EMAIL_RECIPIENTS;
 
 	/**
 	 * Render the field's HTML.

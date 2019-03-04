@@ -7,19 +7,19 @@
  * @license GPL2
  */
 
-namespace Yikes\LevelPlayingField\Options;
+namespace Yikes\LevelPlayingField\Settings;
 
 use Yikes\LevelPlayingField\Service;
-use Yikes\LevelPlayingField\Options\Fields\AdditionalEmailRecipients;
-use Yikes\LevelPlayingField\Options\Fields\EmailRecipientRoles;
+use Yikes\LevelPlayingField\Settings\Fields\AdditionalEmailRecipients;
+use Yikes\LevelPlayingField\Settings\Fields\EmailRecipientRoles;
 
 /**
- * Class OptionsManager.
+ * Class SettingsManager.
  *
  * @since   %VERSION%
  * @package Yikes\LevelPlayingField
  */
-final class OptionsManager implements Service {
+final class SettingsManager implements Service {
 
 	const EMAILS_TRANSIENT_PREFIX = 'lpf_from_applicant_emails_';
 
@@ -29,7 +29,7 @@ final class OptionsManager implements Service {
 	 * @since %VERSION%
 	 */
 	public function register() {
-		add_action( 'wp_ajax_save_options', [ $this, 'save' ] );
+		add_action( 'wp_ajax_save_settings', [ $this, 'save' ] );
 
 		// Email transient busters.
 		add_action( 'set_user_role', [ $this, 'maybe_bust_email_transient' ], 10, 1 );
@@ -38,20 +38,20 @@ final class OptionsManager implements Service {
 	}
 
 	/**
-	 * Fetch all of the email addresses defined by the options AdditionalEmailRecipients and EmailRecipientRoles.
+	 * Fetch all of the email addresses defined by the settings AdditionalEmailRecipients and EmailRecipientRoles.
 	 *
 	 * @since %VERSION%
 	 * @return array $recipients An array of email recipients.
 	 */
 	public function fetch_from_applicant_email_recipients() {
 
-		$options = new Options();
+		$settings = new Settings();
 
 		// Fetch the CSV list of email addresses.
-		$recipients = explode( ',', $options->get_option( AdditionalEmailRecipients::SLUG ) );
+		$recipients = explode( ',', $settings->get_setting( AdditionalEmailRecipients::SLUG ) );
 
 		// Fetch the enabled roles for email addresses.
-		$email_recipient_roles = array_filter( $options->get_option( EmailRecipientRoles::SLUG ) );
+		$email_recipient_roles = array_filter( $settings->get_setting( EmailRecipientRoles::SLUG ) );
 
 		foreach ( $email_recipient_roles as $role => $enabled ) {
 			$recipients = array_merge( $recipients, $this->get_recipients_by_role( $role ) );
@@ -62,7 +62,7 @@ final class OptionsManager implements Service {
 	}
 
 	/**
-	 * Fetch all of the email addresses defined by the options AdditionalEmailRecipients and EmailRecipientRoles.
+	 * Fetch all of the email addresses defined by the settings AdditionalEmailRecipients and EmailRecipientRoles.
 	 *
 	 * @since %VERSION%
 	 *
@@ -107,7 +107,7 @@ final class OptionsManager implements Service {
 		$roles = get_userdata( $user_id )->roles;
 
 		// Fetch the enabled roles for email addresses.
-		$email_recipient_roles = array_filter( ( new Options() )->get_option( EmailRecipientRoles::SLUG ) );
+		$email_recipient_roles = array_filter( ( new Settings() )->get_setting( EmailRecipientRoles::SLUG ) );
 
 		foreach ( $email_recipient_roles as $role => $enabled ) {
 			if ( isset( array_flip( $roles )[ $role ] ) ) {
@@ -117,30 +117,30 @@ final class OptionsManager implements Service {
 	}
 
 	/**
-	 * AJAX handler to save our options.
+	 * AJAX handler to save our settings.
 	 *
 	 * @since %VERSION%
 	 */
 	public function save() {
 
 		// Handle nonce.
-		if ( ! isset( $_POST['nonce'] ) || ! check_ajax_referer( 'save_options', 'nonce', false ) ) {
+		if ( ! isset( $_POST['nonce'] ) || ! check_ajax_referer( 'save_settings', 'nonce', false ) ) {
 			wp_send_json_error( [
 				'reason' => __( 'An error occurred: Failed to validate the nonce.', 'yikes-level-playing-field' ),
 			], 400 );
 		}
 
-		// Fetch our current options.
-		$options = new Options();
+		// Fetch our current settings.
+		$settings = new Settings();
 
-		// Get the posted options.
-		$posted_options = wp_unslash( $_POST['options'] );
+		// Get the posted settings.
+		$posted_settings = wp_unslash( $_POST['settings'] );
 
-		foreach ( $posted_options as $key => $value ) {
-			$options->$key = $value;
+		foreach ( $posted_settings as $key => $value ) {
+			$settings->$key = $value;
 		}
 
-		$options->save();
+		$settings->save();
 
 		wp_send_json_success( [
 			'reason' => __( 'Success: Settings Saved.', 'yikes-level-playing-field' ),

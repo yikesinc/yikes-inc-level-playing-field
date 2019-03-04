@@ -7,19 +7,21 @@
  * @license GPL2
  */
 
-namespace Yikes\LevelPlayingField\Options;
+namespace Yikes\LevelPlayingField\Settings;
 
 /**
- * Interface OptionFields
+ * Interface SettingsFields
  *
  * @since   %VERSION%
  * @package Yikes\LevelPlayingField
  */
-interface OptionFields {
+interface SettingsFields {
 
-	const OPTION_PREFIX = 'lpf_options_';
+	const OPTION_PREFIX = 'lpf_settings_';
 
-	// Option fields.
+	// Setting fields.
 	const ADDITIONAL_EMAIL_RECIPIENTS = 'additional_email_recipients';
 	const EMAIL_RECIPIENT_ROLES       = 'email_recipient_roles';
+	const APPLICATION_SUCCESS_MESSAGE = 'application_success_message';
+	const DISABLE_FRONT_END_CSS       = 'disable_front_end_css';
 }
