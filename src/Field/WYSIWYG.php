@@ -20,9 +20,9 @@ class WYSIWYG extends BaseField {
 	/**
 	 * The filter for sanitizing.
 	 *
-	 * We need to allow HTML so use `FILTER_UNSAFE_RAW`.
+	 * We need to allow certain HTML tags so use `FILTER_CALLBACK` and supply our own sanitization function (in this case, wp_kses_post).
 	 */
-	const SANITIZE = FILTER_UNSAFE_RAW;
+	const SANITIZE = FILTER_CALLBACK;
 
 	/**
 	 * Render the field.
@@ -49,6 +49,10 @@ class WYSIWYG extends BaseField {
 	protected function get_editor_settings() {
 		$classes = array_merge( $this->classes, [ 'lpf-field-wysiwyg' ] );
 
+		if ( $this->is_required() ) {
+			array_push( $classes, 'lpf-field-required' );
+		}
+
 		$settings = array(
 			'media_buttons'    => false,
 			'wpautop'          => true,
@@ -70,6 +74,21 @@ class WYSIWYG extends BaseField {
 	 * @return string
 	 */
 	protected function get_error_type() {
-		return 'textarea';
+		return 'wysiwyg';
+	}
+
+	/**
+	 * Return options to use when sanitizing a submitted value.
+	 *
+	 * We're allowing the same HTML tags in a cover letter that are allowed in a post, ergo use wp_kses_post for sanitization.
+	 *
+	 * @link  http://php.net/manual/en/function.filter-var.php
+	 * @see   filter_var()
+	 * @since %VERSION%
+	 * @return null|callable|int|array Return null for no options, a callable, an int when using filter flags, or an
+	 *                                 array when using additional options for the filter.
+	 */
+	protected function get_filter_options() {
+		return [ 'options' => 'wp_kses_post' ];
 	}
 }
