@@ -10,11 +10,15 @@
 namespace Yikes\LevelPlayingField;
 
 use Yikes\LevelPlayingField\Model\Job;
+use Yikes\LevelPlayingField\RequiredPages\ApplicationFormPage;
 
 /** @var Job $job */
-$job        = $this->job;
-$show_title = (bool) apply_filters( 'lpf_single_job_template_show_title', true, $job );
-$use_comma  = (bool) apply_filters( 'lpf_single_job_template_address_use_comma', true, $job );
+$job          = $this->job;
+$show_title   = (bool) apply_filters( 'lpf_single_job_template_show_title', true, $job );
+$use_comma    = (bool) apply_filters( 'lpf_single_job_template_address_use_comma', true, $job );
+$show_app_btn = (bool) apply_filters( 'lpf_single_job_template_show_application_button', true, $job );
+$app_page_id  = (int) apply_filters( 'lpf_single_job_template_application_page_id', ( new ApplicationFormPage() )->get_page_id( ApplicationFormPage::PAGE_SLUG ), $job );
+$app_page_url = add_query_arg( array( 'job' => $job->get_id() ), get_permalink( $app_page_id ) );
 ?>
 
 <div class="job-page-job">
@@ -69,5 +73,9 @@ $use_comma  = (bool) apply_filters( 'lpf_single_job_template_address_use_comma',
 		</div>
 
 	</div>
-	<!-- todo: Output application form -->
+	<?php if ( $show_app_btn ) : ?>
+	<div class="job-page-application">
+		<a href="<?php echo esc_url( $app_page_url ); ?>"><button type="button" class="job-page-application-button"><?php echo esc_html( apply_filters( 'lpf_single_job_template_application_button_text', __( 'Apply', 'yikes-level-playing-field' ), $job ) ); ?></button></a>
+	</div>
+	<?php endif; ?>
 </div>

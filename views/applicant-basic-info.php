@@ -36,14 +36,10 @@ $applicant = $this->applicant;
 			<span class="label"><?php esc_html_e( 'Cover Letter:', 'yikes-level-playing-field' ); ?></span>
 			<a href="#"><?php esc_html_e( 'View Cover Letter', 'yikes-level-playing-field' ); ?></a>
 		</p>
-		<?php
-		// @todo: Should HTML be allowed in the cover letter?
-		?>
+		<?php // @todo: Decide which tags should be allowed/disallowed for the cover letter. ?>
 		<div class="cover-letter-content">
-			<?php echo esc_html( $applicant->get_cover_letter() ); ?>
+			<?php echo $applicant->get_cover_letter(); ?>
 		</div>
-			<?php
-		endif;
-			?>
+		<?php endif; ?>
 	</div><!-- /inside -->
 </div><!-- /postbox -->

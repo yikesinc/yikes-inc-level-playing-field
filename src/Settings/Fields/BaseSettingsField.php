@@ -7,9 +7,9 @@
  * @license GPL2
  */
 
-namespace Yikes\LevelPlayingField\Options\Fields;
+namespace Yikes\LevelPlayingField\Settings\Fields;
 
-use Yikes\LevelPlayingField\Options\Options;
+use Yikes\LevelPlayingField\Settings\Settings;
 use Yikes\LevelPlayingField\Service;
 
 /**
@@ -18,12 +18,12 @@ use Yikes\LevelPlayingField\Service;
  * @since   %VERSION%
  * @package Yikes\LevelPlayingField
  */
-abstract class BaseOptionsField implements Service {
+abstract class BaseSettingsField implements Service {
 
 	/**
-	 * The option's field's value.
+	 * The setting's field's value.
 	 *
-	 * @var mixed $value A value for an option field.
+	 * @var mixed $value A value for an setting field.
 	 */
 	public $value;
 
@@ -38,7 +38,7 @@ abstract class BaseOptionsField implements Service {
 	 * Render the field.
 	 *
 	 * @since %VERSION%
-	 * @param mixed $value Optionally pass the option field's value when rendering the field.
+	 * @param mixed $value Settingally pass the setting field's value when rendering the field.
 	 */
 	public function render( $value = false ) {
 
@@ -60,12 +60,12 @@ abstract class BaseOptionsField implements Service {
 	abstract protected function field();
 
 	/**
-	 * Get the value of the option. We shouldn't need to instantiate the Options class every time. We need to find a way to avoid that.
+	 * Get the value of the setting. We shouldn't need to instantiate the Settings class every time. We need to find a way to avoid that.
 	 *
 	 * @since %VERSION%
 	 */
 	protected function get_value() {
-		return $this->value ? $this->value : ( new Options() )->get_option( static::SLUG );
+		return $this->value ? $this->value : ( new Settings() )->get_setting( static::SLUG );
 	}
 
 	/**
@@ -108,17 +108,17 @@ abstract class BaseOptionsField implements Service {
 	 */
 	protected function help() {
 		?>
-		<p class="lpf-field-help"><?php esc_html( $this->help_text() ); ?></p>
+		<p class="lpf-field-help"><?php echo esc_html( $this->help_text() ); ?></p>
 		<?php
 	}
 
 	/**
-	 * Get the default class names, i.e. `options-field` and the field's ID.
+	 * Get the default class names, i.e. `settings-field` and the field's ID.
 	 *
 	 * @return string $class_names The classes, sanitized.
 	 */
 	protected function html_classes() {
 		// Sanitize class names, remove empties, join each with a space, and then remove the trailing space.
-		return rtrim( implode( ' ', array_filter( array_map( 'sanitize_html_class', [ 'options-field', static::NAME ] ) ) ) );
+		return rtrim( implode( ' ', array_filter( array_map( 'sanitize_html_class', [ 'settings-field', static::NAME ] ) ) ) );
 	}
 }

@@ -7,9 +7,9 @@
  * @license GPL2
  */
 
-namespace Yikes\LevelPlayingField\Options\Fields;
+namespace Yikes\LevelPlayingField\Settings\Fields;
 
-use Yikes\LevelPlayingField\Options\OptionFields;
+use Yikes\LevelPlayingField\Settings\SettingsFields;
 use Yikes\LevelPlayingField\Roles\HiringManager;
 use Yikes\LevelPlayingField\Roles\HumanResources;
 
@@ -19,10 +19,10 @@ use Yikes\LevelPlayingField\Roles\HumanResources;
  * @since   %VERSION%
  * @package Yikes\LevelPlayingField
  */
-final class EmailRecipientRoles extends BaseOptionsField {
+final class EmailRecipientRoles extends BaseSettingsField {
 
 	const NAME = 'email-recipient-roles';
-	const SLUG = OptionFields::EMAIL_RECIPIENT_ROLES;
+	const SLUG = SettingsFields::EMAIL_RECIPIENT_ROLES;
 
 	/**
 	 * Render the field's HTML.
@@ -38,10 +38,10 @@ final class EmailRecipientRoles extends BaseOptionsField {
 			?>
 			<label for="<?php echo esc_attr( $role::SLUG ); ?>">
 				<input type="checkbox"
-					   class="<?php echo esc_attr( $this->html_classes() ); ?>"
-					   id="<?php echo esc_attr( $role::SLUG ); ?>"
-					   name="<?php echo esc_attr( static::NAME ); ?>"
-					   value="<?php echo esc_attr( $role::SLUG ); ?>"
+					class="<?php echo esc_attr( $this->html_classes() ); ?>"
+					id="<?php echo esc_attr( $role::SLUG ); ?>"
+					name="<?php echo esc_attr( static::NAME ); ?>"
+					value="<?php echo esc_attr( $role::SLUG ); ?>"
 					<?php checked( isset( $this->get_value()[ $role::SLUG ] ) && true === $this->get_value()[ $role::SLUG ] ); ?>>
 				<?php echo esc_html( $role->get_title() ); ?>
 			</label>
