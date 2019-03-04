@@ -61,7 +61,7 @@ final class Applicant extends CustomPostTypeEntity {
 		ApplicantMeta::APPLICATION      => FILTER_SANITIZE_NUMBER_INT,
 		ApplicantMeta::EMAIL            => FILTER_SANITIZE_EMAIL,
 		ApplicantMeta::NAME             => FILTER_SANITIZE_STRING,
-		ApplicantMeta::COVER_LETTER     => FILTER_SANITIZE_STRING,
+		ApplicantMeta::COVER_LETTER     => FILTER_UNSAFE_RAW,
 		ApplicantMeta::PHONE            => FILTER_SANITIZE_NUMBER_INT,
 		ApplicantMeta::STATUS           => FILTER_SANITIZE_STRING,
 		ApplicantMeta::SCHOOLING        => [
