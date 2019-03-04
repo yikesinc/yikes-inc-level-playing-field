@@ -11,6 +11,8 @@ namespace Yikes\LevelPlayingField;
 
 use Yikes\LevelPlayingField\AdminPage\ExportApplicantsPage;
 use Yikes\LevelPlayingField\AdminPage\SettingsPage;
+use Yikes\LevelPlayingField\AdminPage\GoProPage;
+use Yikes\LevelPlayingField\AdminPage\SupportPage;
 use Yikes\LevelPlayingField\Assets\AdminStyles;
 use Yikes\LevelPlayingField\CustomPostType\ApplicantManager;
 use Yikes\LevelPlayingField\CustomPostType\ApplicationManager;
@@ -122,6 +124,8 @@ final class PluginFactory {
 			// Admin Pages.
 			ExportApplicantsPage::class     => 1,
 			SettingsPage::class             => 1,
+			GoProPage::class                => 1,
+			SupportPage::class              => 1,
 
 			// Carbon Fields.
 			FieldLoader::class              => 1,
