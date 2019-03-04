@@ -52,6 +52,6 @@ final class DisableFrontEndCSS extends BaseSettingsField {
 	 * @return string $help_text The help text for this field.
 	 */
 	protected function help_text() {
-		return __( "This will dequeue all of LPF's styles allowing your theme to control the styling of your forms.", 'yikes-level-playing-field' );
+		return __( "This will dequeue all of LPF's styles giving your theme full control over the styling of your forms.", 'yikes-level-playing-field' );
 	}
 }
