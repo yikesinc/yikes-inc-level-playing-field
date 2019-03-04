@@ -11,7 +11,6 @@ namespace Yikes\LevelPlayingField;
 
 use Yikes\LevelPlayingField\Model\ApplicantMeta;
 use Yikes\LevelPlayingField\Model\Applicant;
-use Yikes\LevelPlayingField\Field\Dropdowns;
 
 /** @var Applicant $applicant */
 $applicant = $this->applicant;
@@ -35,13 +34,12 @@ $applicant = $this->applicant;
 					<h5><?php esc_html_e( 'Schooling', 'yikes-level-playing-field' ); ?></h5>
 					<ol>
 						<?php
-						$type_selections = get_schooling_options();
-						print_r( $type_selections);
+						$type_selections = $applicant->get_schooling_options();
 						foreach ( $applicant->get_schooling() as $schooling ) {
 							printf(
 								'<li>Graduated with a %s from %s with a major in %s</li>',
 								esc_html( $schooling['degree'] ),
-								esc_html( $schooling['type'] ),
+								esc_html( $type_selections[ $schooling['type'] ] ),
 								esc_html( $schooling['major'] )
 							);
 						}

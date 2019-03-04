@@ -28,6 +28,7 @@ use Yikes\LevelPlayingField\Field\Volunteer;
 use Yikes\LevelPlayingField\RequiredPages\ApplicantMessagingPage;
 use Yikes\LevelPlayingField\Roles\Capabilities;
 use Yikes\LevelPlayingField\Taxonomy\ApplicantStatus;
+use Yikes\LevelPlayingField\Field\Dropdowns;
 
 /**
  * Class Applicant
@@ -54,6 +55,8 @@ use Yikes\LevelPlayingField\Taxonomy\ApplicantStatus;
  * @property string guid             A unique hash for the applicant.
  */
 final class Applicant extends CustomPostTypeEntity {
+
+	use Dropdowns;
 
 	const SANITIZATION = [
 		ApplicantMeta::JOB              => FILTER_SANITIZE_NUMBER_INT,
