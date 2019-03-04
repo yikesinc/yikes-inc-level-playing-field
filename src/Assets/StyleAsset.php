@@ -92,10 +92,10 @@ final class StyleAsset extends BaseAsset {
 	public function __construct(
 		$handle,
 		$source,
-		$dependencies = [],
-		$version = false,
+		$dependencies = self::DEPENDENCIES,
+		$version = self::VERSION,
 		$media = self::MEDIA_ALL,
-		$disableable = false
+		$disableable = self::DISABLEABLE
 	) {
 		$this->handle       = $handle;
 		$this->source       = $this->normalize_source( $source, static::DEFAULT_EXTENSION );
