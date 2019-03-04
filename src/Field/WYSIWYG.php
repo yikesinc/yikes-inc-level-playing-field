@@ -85,8 +85,7 @@ class WYSIWYG extends BaseField {
 	 * @link  http://php.net/manual/en/function.filter-var.php
 	 * @see   filter_var()
 	 * @since %VERSION%
-	 * @return null|callable|int|array Return null for no options, a callable, an int when using filter flags, or an
-	 *                                 array when using additional options for the filter.
+	 * @return array A sanitization callback function.
 	 */
 	protected function get_filter_options() {
 		return [ 'options' => 'wp_kses_post' ];
