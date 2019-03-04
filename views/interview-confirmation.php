@@ -3,10 +3,8 @@
  * YIKES Inc. Level Playing Field Plugin.
  *
  * @package Yikes\LevelPlayingField
- * @author  Jeremy Pry
+ * @author  Kevin Utz
  * @license GPL2
- *
- * phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
  */
 
 if ( true === $this->is_cancel ) {

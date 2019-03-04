@@ -10,22 +10,21 @@
 namespace Yikes\LevelPlayingField\Field;
 
 /**
- * Class Phone
+ * Class Checkbox
  *
  * @since   %VERSION%
  * @package Yikes\LevelPlayingField
  */
-class Phone extends BaseInput {
-	const TYPE         = 'tel';
-	const SANITIZATION = FILTER_SANITIZE_NUMBER_INT;
+class Checkbox extends BaseInput {
+	const TYPE = 'checkbox';
 
 	/**
-	 * Render any additional attributes.
+	 * The value for the field.
+	 *
+	 * Default checkbox values to 1.
 	 *
 	 * @since %VERSION%
+	 * @var int.
 	 */
-	protected function render_extra_attributes() {
-		parent::render_extra_attributes();
-		echo 'autocomplete="tel" ';
-	}
+	protected $value = 1;
 }

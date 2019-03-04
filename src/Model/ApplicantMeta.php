@@ -33,29 +33,30 @@ interface ApplicantMeta {
 	const VOLUNTEER  = 'volunteer';
 
 	// Basic fields.
-	const NAME          = 'name';
-	const EMAIL         = 'email';
-	const PHONE         = 'phone';
-	const ADDRESS       = 'address';
-	const COVER_LETTER  = 'cover_letter';
-	const INSTITUTION   = 'institution';
-	const ORGANIZATION  = 'organization';
-	const TYPE          = 'type';
-	const YEAR          = 'year';
-	const YEAR_DURATION = 'year_duration';
-	const MAJOR         = 'major';
-	const DEGREE        = 'degree';
-	const CERTIFICATION = 'certification';
-	const CERT_TYPE     = 'certification_type';
-	const STATUS        = 'status';
-	const SKILL         = 'skill';
-	const LANGUAGE      = 'language';
-	const PROFICIENCY   = 'proficiency';
-	const INDUSTRY      = 'industry';
-	const DATES         = 'dates';
-	const POSITION      = 'position';
-	const START_DATE    = 'start_date';
-	const END_DATE      = 'end_date';
+	const NAME             = 'name';
+	const EMAIL            = 'email';
+	const PHONE            = 'phone';
+	const ADDRESS          = 'address';
+	const COVER_LETTER     = 'cover_letter';
+	const INSTITUTION      = 'institution';
+	const ORGANIZATION     = 'organization';
+	const TYPE             = 'type';
+	const YEAR             = 'year';
+	const YEAR_DURATION    = 'year_duration';
+	const MAJOR            = 'major';
+	const DEGREE           = 'degree';
+	const CERTIFICATION    = 'certification';
+	const CERT_TYPE        = 'certification_type';
+	const STATUS           = 'status';
+	const SKILL            = 'skill';
+	const LANGUAGE         = 'language';
+	const PROFICIENCY      = 'proficiency';
+	const INDUSTRY         = 'industry';
+	const DATES            = 'dates';
+	const POSITION         = 'position';
+	const START_DATE       = 'start_date';
+	const END_DATE         = 'end_date';
+	const PRESENT_POSITION = 'present_position';
 
 	// Address Fields.
 	const LINE_1  = 'address-1';
@@ -123,6 +124,7 @@ interface ApplicantMeta {
 		self::APPLICATION      => MetaLinks::APPLICATION,
 		self::EMAIL            => self::META_PREFIX . self::EMAIL,
 		self::NAME             => self::META_PREFIX . self::NAME,
+		self::PHONE            => self::META_PREFIX . self::PHONE,
 		self::COVER_LETTER     => self::META_PREFIX . self::COVER_LETTER,
 		self::SCHOOLING        => self::META_PREFIX . self::SCHOOLING,
 		self::CERTIFICATIONS   => self::META_PREFIX . self::CERTIFICATIONS,

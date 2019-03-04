@@ -26,6 +26,7 @@ interface Types {
 	const NUMBER         = Number::class;
 	const PHONE          = Phone::class;
 	const DATE           = Date::class;
+	const CHECKBOX       = Checkbox::class;
 	const SELECT         = Select::class;
 	const ADDRESS        = Address::class;
 	const POSTAL_CODE    = PostalCode::class;

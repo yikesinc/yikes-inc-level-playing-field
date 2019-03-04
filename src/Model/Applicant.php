@@ -9,9 +9,7 @@
 
 namespace Yikes\LevelPlayingField\Model;
 
-use DateInterval;
 use WP_Term;
-use Yikes\LevelPlayingField\Anonymizer\AnonymizerFactory;
 use Yikes\LevelPlayingField\Anonymizer\AnonymizerInterface;
 use Yikes\LevelPlayingField\Email\InterviewCancellationFromApplicantEmail;
 use Yikes\LevelPlayingField\Email\InterviewCancellationToApplicantEmail;
@@ -64,6 +62,7 @@ final class Applicant extends CustomPostTypeEntity {
 		ApplicantMeta::EMAIL            => FILTER_SANITIZE_EMAIL,
 		ApplicantMeta::NAME             => FILTER_SANITIZE_STRING,
 		ApplicantMeta::COVER_LETTER     => FILTER_UNSAFE_RAW,
+		ApplicantMeta::PHONE            => FILTER_SANITIZE_NUMBER_INT,
 		ApplicantMeta::STATUS           => FILTER_SANITIZE_STRING,
 		ApplicantMeta::SCHOOLING        => [
 			ApplicantMeta::INSTITUTION => FILTER_SANITIZE_STRING,
@@ -84,18 +83,22 @@ final class Applicant extends CustomPostTypeEntity {
 			ApplicantMeta::PROFICIENCY => FILTER_SANITIZE_STRING,
 		],
 		ApplicantMeta::EXPERIENCE       => [
-			ApplicantMeta::ORGANIZATION  => FILTER_SANITIZE_STRING,
-			ApplicantMeta::INDUSTRY      => FILTER_SANITIZE_STRING,
-			ApplicantMeta::POSITION      => FILTER_SANITIZE_STRING,
-			ApplicantMeta::START_DATE    => FILTER_SANITIZE_STRING,
-			ApplicantMeta::END_DATE      => FILTER_SANITIZE_STRING,
-			ApplicantMeta::YEAR_DURATION => FILTER_SANITIZE_STRING,
+			ApplicantMeta::ORGANIZATION     => FILTER_SANITIZE_STRING,
+			ApplicantMeta::INDUSTRY         => FILTER_SANITIZE_STRING,
+			ApplicantMeta::POSITION         => FILTER_SANITIZE_STRING,
+			ApplicantMeta::START_DATE       => FILTER_SANITIZE_STRING,
+			ApplicantMeta::END_DATE         => FILTER_SANITIZE_STRING,
+			ApplicantMeta::PRESENT_POSITION => FILTER_SANITIZE_NUMBER_INT,
+			ApplicantMeta::YEAR_DURATION    => FILTER_SANITIZE_STRING,
 		],
 		ApplicantMeta::VOLUNTEER        => [
-			// todo: start and end dates.
-			ApplicantMeta::ORGANIZATION => FILTER_SANITIZE_STRING,
-			ApplicantMeta::INDUSTRY     => FILTER_SANITIZE_STRING,
-			ApplicantMeta::POSITION     => FILTER_SANITIZE_STRING,
+			ApplicantMeta::ORGANIZATION     => FILTER_SANITIZE_STRING,
+			ApplicantMeta::INDUSTRY         => FILTER_SANITIZE_STRING,
+			ApplicantMeta::POSITION         => FILTER_SANITIZE_STRING,
+			ApplicantMeta::START_DATE       => FILTER_SANITIZE_STRING,
+			ApplicantMeta::END_DATE         => FILTER_SANITIZE_STRING,
+			ApplicantMeta::PRESENT_POSITION => FILTER_SANITIZE_NUMBER_INT,
+			ApplicantMeta::YEAR_DURATION    => FILTER_SANITIZE_STRING,
 		],
 		ApplicantMeta::NICKNAME         => FILTER_SANITIZE_STRING,
 		ApplicantMeta::VIEWED           => FILTER_SANITIZE_NUMBER_INT,
@@ -219,6 +222,27 @@ final class Applicant extends CustomPostTypeEntity {
 	 */
 	public function set_name( $name ) {
 		$this->set_property( ApplicantMeta::NAME, $name );
+	}
+
+	/**
+	 * Get the phone of the applicant.
+	 *
+	 * @since %VERSION%
+	 * @return int The applicant phone.
+	 */
+	public function get_phone() {
+		return $this->{ApplicantMeta::PHONE};
+	}
+
+	/**
+	 * Set the phone of the applicant.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param int $phone The applicant's phone.
+	 */
+	public function set_phone( $phone ) {
+		$this->set_property( ApplicantMeta::PHONE, $phone );
 	}
 
 	/**
@@ -444,15 +468,13 @@ final class Applicant extends CustomPostTypeEntity {
 		$start = date_create( $experience[ ApplicantMeta::START_DATE ] );
 		$end   = date_create( $experience[ ApplicantMeta::END_DATE ] );
 		$diff  = date_diff( $start, $end );
+		$still = ! empty( $experience[ ApplicantMeta::PRESENT_POSITION ] ) ? __( '(actively working here)', 'yikes-level-playing-field' ) : '';
 
 		// Add calculated duration to experience and save.
 		$experience[ ApplicantMeta::YEAR_DURATION ] = $diff instanceof DateInterval
-			? $diff->format( '%y Year(s) %m Month(s) %d Days' )
+			? $diff->format( "%y Year(s) %m Month(s) %d Days {$still}" )
 			: '';
-		$this->{ApplicantMeta::EXPERIENCE}[]        = $this->filter_and_sanitize(
-			$experience,
-			ApplicantMeta::EXPERIENCE
-		);
+		$this->{ApplicantMeta::EXPERIENCE}[]        = $this->filter_and_sanitize( $experience, ApplicantMeta::EXPERIENCE );
 		$this->changed_property( ApplicantMeta::EXPERIENCE );
 	}
 
@@ -497,7 +519,17 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @param array $volunteer Array of volunteer work.
 	 */
 	public function add_volunteer( array $volunteer ) {
-		$this->{ApplicantMeta::VOLUNTEER}[] = $this->filter_and_sanitize( $volunteer, ApplicantMeta::VOLUNTEER );
+		// Calculate duration between start and end dates.
+		$start = date_create( $volunteer[ ApplicantMeta::START_DATE ] );
+		$end   = date_create( $volunteer[ ApplicantMeta::END_DATE ] );
+		$diff  = date_diff( $start, $end );
+		$still = ! empty( $volunteer[ ApplicantMeta::PRESENT_POSITION ] ) ? __( '(actively volunteering here)', 'yikes-level-playing-field' ) : '';
+
+		// Add calculated duration to volunteer experience and save.
+		$volunteer[ ApplicantMeta::YEAR_DURATION ] = $diff instanceof DateInterval
+			? $diff->format( "%y Year(s) %m Month(s) %d Days {$still}" )
+			: '';
+		$this->{ApplicantMeta::VOLUNTEER}[]        = $this->filter_and_sanitize( $volunteer, ApplicantMeta::VOLUNTEER );
 		$this->changed_property( ApplicantMeta::VOLUNTEER );
 	}
 
@@ -655,7 +687,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @return array
 	 */
 	public function get_interview() {
-		return $this->interivew;
+		return $this->{ApplicantMeta::INTERVIEW};
 	}
 
 	/**
@@ -666,7 +698,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @param array $interview The interview details for the applicant.
 	 */
 	public function set_interview( array $interview ) {
-		$this->interview = [];
+		$this->{ApplicantMeta::INTERVIEW} = [];
 
 		// Passing an empty array will remove volunteer work.
 		if ( empty( $interview ) ) {
@@ -674,7 +706,7 @@ final class Applicant extends CustomPostTypeEntity {
 			return;
 		}
 
-		$this->interview = $this->filter_and_sanitize( $interview, ApplicantMeta::INTERVIEW );
+		$this->{ApplicantMeta::INTERVIEW} = $this->filter_and_sanitize( $interview, ApplicantMeta::INTERVIEW );
 		$this->changed_property( ApplicantMeta::INTERVIEW );
 	}
 
@@ -685,7 +717,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @return string
 	 */
 	public function get_interview_status() {
-		return $this->interview_status;
+		return $this->{ApplicantMeta::INTERVIEW_STATUS};
 	}
 
 	/**
@@ -702,7 +734,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @param string $interview_status Whether an interview has been scheduled for this applicant.
 	 */
 	public function set_interview_status( string $interview_status ) {
-		$this->interview_status = filter_var( $interview_status, self::SANITIZATION[ ApplicantMeta::INTERVIEW_STATUS ] );
+		$this->{ApplicantMeta::INTERVIEW_STATUS} = filter_var( $interview_status, self::SANITIZATION[ ApplicantMeta::INTERVIEW_STATUS ] );
 		$this->changed_property( ApplicantMeta::INTERVIEW_STATUS );
 	}
 
@@ -718,7 +750,8 @@ final class Applicant extends CustomPostTypeEntity {
 			return;
 		}
 
-		// todo: Maybe add a message like 'The applicant has canceled the interview'.
+		// Maybe add a message like 'The applicant has confirmed the interview'?
+
 		$this->set_interview_status( 'cancelled' );
 		$this->set_interview( [] );
 		$this->persist_properties();
@@ -735,10 +768,12 @@ final class Applicant extends CustomPostTypeEntity {
 	 */
 	public function confirm_interview() {
 		$this->set_interview_status( 'confirmed' );
-		// todo: Unanonymize!
 		$this->persist_properties();
 
-		// todo: Maybe add a message like 'The applicant has confirmed the interview'?
+		// Unanonymize!
+
+		// Maybe add a message like 'The applicant has confirmed the interview'?
+
 		// Send off confirmed interview email to both the applicant and job managers.
 		( new InterviewConfirmationToApplicantEmail( $this ) )->send();
 		( new InterviewConfirmationFromApplicantEmail( $this ) )->send();
@@ -755,7 +790,7 @@ final class Applicant extends CustomPostTypeEntity {
 		return add_query_arg( [
 			'guid' => $this->get_guid(),
 			'post' => $this->get_id(),
-		], get_permalink( BaseRequiredPage::get_required_page_id( ApplicantMessagingPage::PAGE_SLUG ) ) );
+		], get_permalink( ( new ApplicantMessagingPage )->get_page_id( ApplicantMessagingPage::PAGE_SLUG ) ) );
 	}
 
 	/**
@@ -984,6 +1019,7 @@ final class Applicant extends CustomPostTypeEntity {
 			ApplicantMeta::APPLICATION      => 0,
 			ApplicantMeta::EMAIL            => '',
 			ApplicantMeta::NAME             => '',
+			ApplicantMeta::PHONE            => '',
 			ApplicantMeta::COVER_LETTER     => '',
 			ApplicantMeta::SCHOOLING        => [],
 			ApplicantMeta::CERTIFICATIONS   => [],

@@ -98,16 +98,6 @@ jQuery( document ).ready( function( $ ) {
 	};
 
 	/**
-	 * Valid phone number field error checking.
-	 *
-	 * @param {jQuery} field
-	 */
-	const validPhone = ( field ) => {
-		const regex = new RegExp( '^(\\d{10})$' );
-		return regexTest( regex, field, 'Phone' );
-	};
-
-	/**
 	 * Core validation on submit function
 	 *
 	 * @param event
@@ -133,20 +123,6 @@ jQuery( document ).ready( function( $ ) {
 				if ( $this.attr( 'type' ) === 'tel' ) {
 					const justDigits = this.value.replace( /\D/g, '' );
 					$this.val( justDigits );
-
-					// If phone number is valid and there is no error returned...
-					if ( !validPhone( $this ) ) {
-						this.value = '';
-						const char = {
-							0: '(',
-							3: ') ',
-							6: ' - '
-						};
-
-						for ( let i = 0; i < justDigits.length; i++ ) {
-							this.value += (char[ i ] || '') + justDigits[ i ];
-						}
-					}
 				}
 
 				// If field is postal code/zip, call function to validate 5-digit zip
@@ -171,4 +147,26 @@ jQuery( document ).ready( function( $ ) {
 	// When 'Submit' button is clicked...
 	$submitBtn.on( 'click', submitValidation );
 
+	/**
+	 * Toggle the end date's required attr and visibility based on the to-the-present field being checked.
+	 *
+	 * @param event The click event that triggered this.
+	 */
+	const toggleEndDate = ( event ) => {
+		const element = $( event.target );
+		const checked = event.target.checked;
+		const endDate = element.closest( '.lpf-fieldset' ).find( 'input[name$="[end_date]"]' );
+		const edLabel = endDate.closest( '.lpf-field-container' );
+
+		if ( checked ) {
+			edLabel.addClass( 'lpf-disabled' );	
+			endDate.prop( 'required', false );
+		} else {
+			edLabel.removeClass( 'lpf-disabled' );
+			endDate.prop( 'required', true );
+		}
+	};
+
+	// When a to-the-present checkbox is clicked.
+	$( 'body' ).on( 'click', 'input[type="checkbox"][name$="[present_position]"]', toggleEndDate );
 } );
