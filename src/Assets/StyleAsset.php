@@ -10,6 +10,7 @@
 namespace Yikes\LevelPlayingField\Assets;
 
 use Closure;
+use Yikes\LevelPlayingField\Plugin;
 use Yikes\LevelPlayingField\Settings\Settings;
 use Yikes\LevelPlayingField\Settings\SettingsFields;
 
@@ -27,7 +28,7 @@ final class StyleAsset extends BaseAsset {
 	const MEDIA_PRINT  = 'print';
 	const MEDIA_SCREEN = 'screen';
 	const DEPENDENCIES = [];
-	const VERSION      = false;
+	const VERSION      = Plugin::VERSION;
 	const DISABLEABLE  = false;
 
 	const DEFAULT_EXTENSION = 'css';
