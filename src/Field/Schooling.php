@@ -10,6 +10,7 @@
 namespace Yikes\LevelPlayingField\Field;
 
 use Yikes\LevelPlayingField\Model\ApplicantMeta;
+
 /**
  * Class Schooling
  *

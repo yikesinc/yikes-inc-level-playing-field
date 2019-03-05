@@ -97,14 +97,7 @@ $applicant = $this->applicant;
 				$is_multilingual = count( $languages ) > 1;
 
 				// Build up language proficiency data.
-				$proficiency_labels = [
-					'Basic Knowledge' => esc_html__( 'Basic Knowledge', 'yikes-level-playing-field' ),
-					'Novice'          => esc_html__( 'Novice', 'yikes-level-playing-field' ),
-					'Intermediate'    => esc_html__( 'Intermediate', 'yikes-level-playing-field' ),
-					'Advanced'        => esc_html__( 'Advanced', 'yikes-level-playing-field' ),
-					'Expert'          => esc_html__( 'Expert', 'yikes-level-playing-field' ),
-				];
-
+				$proficiency_labels = $applicant->get_language_options();
 				$proficiency_counts = [];
 
 				foreach ( $languages as $language ) {
