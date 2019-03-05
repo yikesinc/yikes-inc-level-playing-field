@@ -53,7 +53,7 @@ class WYSIWYG extends BaseField {
 			array_push( $classes, 'lpf-field-required' );
 		}
 
-		$settings = array(
+		$settings = [
 			'media_buttons'    => false,
 			'wpautop'          => true,
 			'textarea_name'    => $this->id,
@@ -62,7 +62,7 @@ class WYSIWYG extends BaseField {
 			'quicktags'        => false,
 			'teeny'            => true,
 			'drag_drop_upload' => false,
-		);
+		];
 
 		return apply_filters( 'lpf_application_wysiwyg_field_settings', $settings, $this->id );
 	}

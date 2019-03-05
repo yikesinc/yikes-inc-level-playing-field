@@ -18,7 +18,7 @@ $show_title   = (bool) apply_filters( 'lpf_single_job_template_show_title', true
 $use_comma    = (bool) apply_filters( 'lpf_single_job_template_address_use_comma', true, $job );
 $show_app_btn = (bool) apply_filters( 'lpf_single_job_template_show_application_button', true, $job );
 $app_page_id  = (int) apply_filters( 'lpf_single_job_template_application_page_id', ( new ApplicationFormPage() )->get_page_id( ApplicationFormPage::PAGE_SLUG ), $job );
-$app_page_url = add_query_arg( array( 'job' => $job->get_id() ), get_permalink( $app_page_id ) );
+$app_page_url = add_query_arg( [ 'job' => $job->get_id() ], get_permalink( $app_page_id ) );
 ?>
 
 <div class="job-page-job">

@@ -26,7 +26,6 @@ use Yikes\LevelPlayingField\Field\Experience;
 use Yikes\LevelPlayingField\Field\Schooling;
 use Yikes\LevelPlayingField\Field\Volunteer;
 use Yikes\LevelPlayingField\RequiredPages\ApplicantMessagingPage;
-use Yikes\LevelPlayingField\RequiredPages\BaseRequiredPage;
 use Yikes\LevelPlayingField\Roles\Capabilities;
 use Yikes\LevelPlayingField\Taxonomy\ApplicantStatus;
 
@@ -750,8 +749,7 @@ final class Applicant extends CustomPostTypeEntity {
 			return;
 		}
 
-		// Maybe add a message like 'The applicant has confirmed the interview'?
-
+		// todo: Maybe add a message like 'The applicant has confirmed the interview'?
 		$this->set_interview_status( 'cancelled' );
 		$this->set_interview( [] );
 		$this->persist_properties();
@@ -770,9 +768,10 @@ final class Applicant extends CustomPostTypeEntity {
 		$this->set_interview_status( 'confirmed' );
 		$this->persist_properties();
 
-		// Unanonymize!
-
-		// Maybe add a message like 'The applicant has confirmed the interview'?
+		/*
+		 * todo: Unanonymize!
+		 * todo: Maybe add a message like 'The applicant has confirmed the interview'?
+		 */
 
 		// Send off confirmed interview email to both the applicant and job managers.
 		( new InterviewConfirmationToApplicantEmail( $this ) )->send();
@@ -790,7 +789,7 @@ final class Applicant extends CustomPostTypeEntity {
 		return add_query_arg( [
 			'guid' => $this->get_guid(),
 			'post' => $this->get_id(),
-		], get_permalink( ( new ApplicantMessagingPage )->get_page_id( ApplicantMessagingPage::PAGE_SLUG ) ) );
+		], get_permalink( ( new ApplicantMessagingPage() )->get_page_id( ApplicantMessagingPage::PAGE_SLUG ) ) );
 	}
 
 	/**

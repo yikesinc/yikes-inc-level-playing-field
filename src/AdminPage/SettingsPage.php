@@ -74,12 +74,12 @@ class SettingsPage extends BaseAdminPage implements AssetsAware {
 		$script->add_localization(
 			'settings_data',
 			[
-				'ajax'    => [
+				'ajax'     => [
 					'save_nonce'  => wp_create_nonce( 'save_settings' ),
 					'save_action' => 'save_settings',
 				],
 				'settings' => wp_json_encode( new Settings( true ) ),
-				'strings' => [
+				'strings'  => [
 					'save_success' => __( 'Success: Settings Saved.', 'yikes-level-playing-field' ),
 					'save_error'   => __( 'Error: The settings could not be saved.', 'yikes-level-playing-field' ),
 				],
@@ -100,7 +100,7 @@ class SettingsPage extends BaseAdminPage implements AssetsAware {
 	 * @return string The text to be displayed in the title tags of the page when the menu is.
 	 */
 	protected function get_page_title() {
-		return __( 'Settings - Level Playing Field', 'yikes-level-playing-field' );
+		return __( 'Settings &ndash; Level Playing Field', 'yikes-level-playing-field' );
 	}
 
 	/**

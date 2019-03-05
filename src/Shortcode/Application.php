@@ -66,8 +66,8 @@ final class Application extends BaseShortcode {
 		parent::register();
 
 		add_action( 'lpf_do_applicant_shortcode', function( $atts ) {
-			echo $this->process_shortcode( $atts );
-		});
+			echo $this->process_shortcode( $atts ); // phpcs:ignore WordPress.Security.EscapeOutput
+		} );
 	}
 
 	/**
