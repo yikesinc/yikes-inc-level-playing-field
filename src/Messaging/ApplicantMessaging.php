@@ -324,7 +324,7 @@ class ApplicantMessaging implements Renderable, AssetsAware, Service {
 		];
 
 		ob_start();
-		echo $this->render( $this->process_attributes( get_post( $post_id ), $args ) );
+		echo $this->render( $this->process_attributes( get_post( $post_id ), $args ) ); // phpcs:ignore WordPress.Security.EscapeOutput
 		$html = ob_get_clean();
 
 		wp_send_json_success( $html, 200 );

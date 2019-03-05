@@ -17,11 +17,10 @@ use Yikes\LevelPlayingField\Assets\ScriptAsset;
 use Yikes\LevelPlayingField\Assets\StyleAsset;
 use Yikes\LevelPlayingField\CustomPostType\ApplicantManager as ApplicantCPT;
 use Yikes\LevelPlayingField\Exception\Exception;
-use Yikes\LevelPlayingField\Model\ApplicantMeta;
+use Yikes\LevelPlayingField\Messaging\ApplicantMessaging;
 use Yikes\LevelPlayingField\Model\ApplicantRepository;
 use Yikes\LevelPlayingField\Model\JobRepository;
 use Yikes\LevelPlayingField\Service;
-use Yikes\LevelPlayingField\Messaging\ApplicantMessaging;
 use Yikes\LevelPlayingField\View\View;
 
 /**
@@ -35,9 +34,9 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 	use AssetsAwareness;
 
 	// Base Metabox.
-	const BOX_ID    = 'view-applicant';
-	const VIEW      = 'views/applicant';
-	const PRIORITY  = 1;
+	const BOX_ID   = 'view-applicant';
+	const VIEW     = 'views/applicant';
+	const PRIORITY = 1;
 
 	// CSS.
 	const CSS_HANDLE = 'lpf-admin-applicant-css';
@@ -79,23 +78,24 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 		} );
 
 		add_action( 'lpf_applicant_screen_sidebar', function( View $view ) {
-			echo $view->render_partial( static::APPLICANT_BASIC_INFO );
+			echo $view->render_partial( static::APPLICANT_BASIC_INFO ); // phpcs:ignore WordPress.Security.EscapeOutput
 		}, 20 );
 
 		add_action( 'lpf_applicant_screen_sidebar', function( View $view ) {
-			echo $view->render_partial( static::APPLICANT_INTERVIEW_DETAILS );
+			echo $view->render_partial( static::APPLICANT_INTERVIEW_DETAILS ); // phpcs:ignore WordPress.Security.EscapeOutput
 		}, 30 );
 
 		add_action( 'lpf_applicant_screen_section_one', function( View $view ) {
-			echo $view->render_partial( static::APPLICANT_DETAILS );
+			echo $view->render_partial( static::APPLICANT_DETAILS ); // phpcs:ignore WordPress.Security.EscapeOutput
 		}, 10 );
 
 		add_action( 'lpf_applicant_screen_section_one', function( View $view ) {
-			echo $view->render_partial( static::APPLICANT_SKILLS_QUALIFICATIONS );
+			echo $view->render_partial( static::APPLICANT_SKILLS_QUALIFICATIONS ); // phpcs:ignore WordPress.Security.EscapeOutput
 		}, 20 );
 
 		add_action( 'lpf_applicant_screen_section_two', function( View $view ) {
-			echo $view->render_partial( ApplicantMessaging::VIEW, ( new ApplicantMessaging() )->get_context_data( $view->applicant->get_id(), true ) );
+			$context = ( new ApplicantMessaging() )->get_context_data( $view->applicant->get_id(), true );
+			echo $view->render_partial( ApplicantMessaging::VIEW, $context );  // phpcs:ignore WordPress.Security.EscapeOutput
 		}, 10 );
 	}
 
@@ -170,8 +170,8 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 		$applicant = ( new ApplicantRepository() )->find( $post->ID );
 		$job       = ( new JobRepository() )->find( $applicant->get_job_id() );
 		return [
-			'applicant'  => $applicant,
-			'job'        => $job,
+			'applicant' => $applicant,
+			'job'       => $job,
 		];
 	}
 
