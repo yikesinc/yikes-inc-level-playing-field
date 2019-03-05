@@ -9,6 +9,7 @@
 
 namespace Yikes\LevelPlayingField\Assets;
 
+use Yikes\LevelPlayingField\Plugin;
 use Closure;
 
 /**
@@ -25,6 +26,8 @@ final class ScriptAsset extends BaseAsset {
 	const ENQUEUE_FOOTER = true;
 
 	const DEFAULT_EXTENSION = 'js';
+
+	const VERSION = Plugin::VERSION;
 
 	/**
 	 * Source location of the asset.
@@ -88,7 +91,7 @@ final class ScriptAsset extends BaseAsset {
 		$handle,
 		$source,
 		$dependencies = [],
-		$version = false,
+		$version = self::VERSION,
 		$in_footer = self::ENQUEUE_HEADER
 	) {
 		$this->handle       = $handle;

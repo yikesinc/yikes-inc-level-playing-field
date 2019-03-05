@@ -26,6 +26,8 @@ use Yikes\LevelPlayingField\Exception\InvalidClass;
  */
 final class Plugin implements Registerable {
 
+	const VERSION = '1.0.0';
+
 	/**
 	 * Assets handler instance.
 	 *

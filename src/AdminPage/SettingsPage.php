@@ -14,30 +14,30 @@ use Yikes\LevelPlayingField\Assets\AssetsAware;
 use Yikes\LevelPlayingField\Assets\AssetsAwareness;
 use Yikes\LevelPlayingField\Assets\ScriptAsset;
 use Yikes\LevelPlayingField\Assets\StyleAsset;
-use Yikes\LevelPlayingField\Options\Options;
+use Yikes\LevelPlayingField\Settings\Settings;
 
 /**
- * Class OptionsPage
+ * Class SettingsPage
  *
  * @since   %VERSION%
  * @package Yikes\LevelPlayingField
  */
-class OptionsPage extends BaseAdminPage implements AssetsAware {
+class SettingsPage extends BaseAdminPage implements AssetsAware {
 
 	use AssetsAwareness;
 
-	const PAGE_SLUG    = 'lpf-options';
-	const PRIORITY     = 50;
-	const VIEW_URI     = 'views/options';
-	const OPTIONS_SLUG = 'lpf_options';
+	const PAGE_SLUG     = 'lpf-settings';
+	const PRIORITY      = 50;
+	const VIEW_URI      = 'views/settings';
+	const SETTINGS_SLUG = 'lpf_settings';
 
 	// Define the JavaScript file.
-	const JS_HANDLE       = 'lpf-options-script';
-	const JS_URI          = 'assets/js/options';
+	const JS_HANDLE       = 'lpf-settings-script';
+	const JS_URI          = 'assets/js/settings';
 	const JS_DEPENDENCIES = [ 'jquery' ];
 	const JS_VERSION      = false;
-	const CSS_HANDLE      = 'lpf-options-styles';
-	const CSS_URI         = 'assets/css/options';
+	const CSS_HANDLE      = 'lpf-settings-styles';
+	const CSS_URI         = 'assets/css/settings';
 
 	/**
 	 * Register hooks.
@@ -52,7 +52,7 @@ class OptionsPage extends BaseAdminPage implements AssetsAware {
 
 		add_filter( 'admin_enqueue_scripts', function( $hook ) {
 
-			// Only enqueue on the options page.
+			// Only enqueue on the settings page.
 			if ( $this->get_screen_base() !== $hook ) {
 				return;
 			}
@@ -72,14 +72,14 @@ class OptionsPage extends BaseAdminPage implements AssetsAware {
 
 		$script = new ScriptAsset( self::JS_HANDLE, self::JS_URI, self::JS_DEPENDENCIES, self::JS_VERSION, ScriptAsset::ENQUEUE_FOOTER );
 		$script->add_localization(
-			'options_data',
+			'settings_data',
 			[
-				'ajax'    => [
-					'save_nonce'  => wp_create_nonce( 'save_options' ),
-					'save_action' => 'save_options',
+				'ajax'     => [
+					'save_nonce'  => wp_create_nonce( 'save_settings' ),
+					'save_action' => 'save_settings',
 				],
-				'options' => wp_json_encode( new Options( true ) ),
-				'strings' => [
+				'settings' => wp_json_encode( new Settings( true ) ),
+				'strings'  => [
 					'save_success' => __( 'Success: Settings Saved.', 'yikes-level-playing-field' ),
 					'save_error'   => __( 'Error: The settings could not be saved.', 'yikes-level-playing-field' ),
 				],
@@ -100,7 +100,7 @@ class OptionsPage extends BaseAdminPage implements AssetsAware {
 	 * @return string The text to be displayed in the title tags of the page when the menu is.
 	 */
 	protected function get_page_title() {
-		return __( 'Options - Level Playing Field', 'yikes-level-playing-field' );
+		return __( 'Settings &ndash; Level Playing Field', 'yikes-level-playing-field' );
 	}
 
 	/**
@@ -111,7 +111,7 @@ class OptionsPage extends BaseAdminPage implements AssetsAware {
 	 * @return string The text to be used for the menu.
 	 */
 	protected function get_menu_title() {
-		return __( 'Options', 'yikes-level-playing-field' );
+		return __( 'Settings', 'yikes-level-playing-field' );
 	}
 
 	/**
@@ -123,7 +123,7 @@ class OptionsPage extends BaseAdminPage implements AssetsAware {
 	 */
 	protected function get_context() {
 		return [
-			'options' => new Options( true ),
+			'settings' => new Settings( true ),
 		];
 	}
 }
