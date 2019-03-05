@@ -18,7 +18,7 @@ use Yikes\LevelPlayingField\Model\ApplicantMeta;
  */
 class Schooling extends RepeatableField {
 
-	use Dropdowns;
+	use ApplicantMetaDropdowns;
 
 	/** @var string */
 	protected $class_base = 'schooling';
