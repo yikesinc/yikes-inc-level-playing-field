@@ -22,6 +22,8 @@ use Yikes\LevelPlayingField\ListTable\ApplicationManager as ApplicationListTable
 use Yikes\LevelPlayingField\ListTable\JobManager as JobListTable;
 use Yikes\LevelPlayingField\Messaging\ApplicantMessaging;
 use Yikes\LevelPlayingField\Metabox\ApplicantManager as ApplicantMetabox;
+use Yikes\LevelPlayingField\Metabox\ApplicantBasicInfo;
+use Yikes\LevelPlayingField\Metabox\ApplicantInterviewDetails;
 use Yikes\LevelPlayingField\Metabox\ApplicationManager as ApplicationMetabox;
 use Yikes\LevelPlayingField\Metabox\JobManager;
 use Yikes\LevelPlayingField\Settings\SettingsManager;
@@ -81,68 +83,70 @@ final class PluginFactory {
 	private static function get_service_container() {
 		return new Container( [
 			// CPTs.
-			LimitedJobManager::class        => 1,
-			ApplicationManager::class       => 1,
-			ApplicantManager::class         => 1,
+			LimitedJobManager::class         => 1,
+			ApplicationManager::class        => 1,
+			ApplicantManager::class          => 1,
 
 			// Taxonomies.
-			JobCategory::class              => 1,
-			JobStatus::class                => 1,
-			ApplicantStatus::class          => 1,
+			JobCategory::class               => 1,
+			JobStatus::class                 => 1,
+			ApplicantStatus::class           => 1,
 
 			// Metaboxes.
-			JobManager::class               => 1,
-			ApplicationMetabox::class       => 1,
-			ApplicantMetabox::class         => 1,
+			JobManager::class                => 1,
+			ApplicationMetabox::class        => 1,
+			ApplicantMetabox::class          => 1,
+			ApplicantBasicInfo::class        => 1,
+			ApplicantInterviewDetails::class => 1,
 
 			// Custom List Tables.
-			JobListTable::class             => 1,
-			ApplicationListTable::class     => 1,
-			ApplicantListTable::class       => 1,
+			JobListTable::class              => 1,
+			ApplicationListTable::class      => 1,
+			ApplicantListTable::class        => 1,
 
 			// User roles.
-			HiringManager::class            => 1,
-			HumanResources::class           => 1,
-			Applicant::class                => 1,
-			Administrator::class            => 1,
-			Editor::class                   => 1,
+			HiringManager::class             => 1,
+			HumanResources::class            => 1,
+			Applicant::class                 => 1,
+			Administrator::class             => 1,
+			Editor::class                    => 1,
 
 			// Widgets.
-			JobApplicants::class            => 1,
+			JobApplicants::class             => 1,
 
 			// Shortcodes.
-			AllJobs::class                  => 1,
-			Job::class                      => 1,
-			Application::class              => 1,
+			AllJobs::class                   => 1,
+			Job::class                       => 1,
+			Application::class               => 1,
 
 			// Assets.
-			AdminStyles::class              => 1,
+			AdminStyles::class               => 1,
 
 			// Settings.
-			SettingsManager::class          => 1,
+			SettingsManager::class           => 1,
 
 			// Admin Pages.
-			ExportApplicantsPage::class     => 1,
-			SettingsPage::class             => 1,
-			GoProPage::class                => 1,
-			SupportPage::class              => 1,
+			ExportApplicantsPage::class      => 1,
+			SettingsPage::class              => 1,
+			GoProPage::class                 => 1,
+			SupportPage::class               => 1,
 
 			// Carbon Fields.
-			FieldLoader::class              => 1,
+			FieldLoader::class               => 1,
 
 			// Template Overrides.
-			SingleJobs::class               => 1,
-			SingleApplications::class       => 1,
+			SingleJobs::class                => 1,
+			SingleApplications::class        => 1,
 
 			// Messaging.
-			ApplicantMessaging::class       => 1,
+			ApplicantMessaging::class        => 1,
 
 			// Messaging Template.
-			ApplicantMessageTemplate::class => 1,
+			ApplicantMessageTemplate::class  => 1,
 
 			// Required Pages.
-			ApplicantMessagingPage::class   => 1,
-			ApplicationFormPage::class      => 1,
+			ApplicantMessagingPage::class    => 1,
+			ApplicationFormPage::class       => 1,
 		] );
 	}
 }

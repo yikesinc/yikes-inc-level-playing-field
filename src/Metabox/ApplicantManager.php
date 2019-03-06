@@ -77,26 +77,18 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 			$this->save_nickname();
 		} );
 
-		add_action( 'lpf_applicant_screen_sidebar', function( View $view ) {
-			echo $view->render_partial( static::APPLICANT_BASIC_INFO ); // phpcs:ignore WordPress.Security.EscapeOutput
-		}, 20 );
-
-		add_action( 'lpf_applicant_screen_sidebar', function( View $view ) {
-			echo $view->render_partial( static::APPLICANT_INTERVIEW_DETAILS ); // phpcs:ignore WordPress.Security.EscapeOutput
-		}, 30 );
-
-		add_action( 'lpf_applicant_screen_section_one', function( View $view ) {
+		add_action( 'lpf_applicant_screen_metabox', function( View $view ) {
 			echo $view->render_partial( static::APPLICANT_DETAILS ); // phpcs:ignore WordPress.Security.EscapeOutput
 		}, 10 );
 
-		add_action( 'lpf_applicant_screen_section_one', function( View $view ) {
+		add_action( 'lpf_applicant_screen_metabox', function( View $view ) {
 			echo $view->render_partial( static::APPLICANT_SKILLS_QUALIFICATIONS ); // phpcs:ignore WordPress.Security.EscapeOutput
 		}, 20 );
 
-		add_action( 'lpf_applicant_screen_section_two', function( View $view ) {
+		add_action( 'lpf_applicant_screen_metabox', function( View $view ) {
 			$context = ( new ApplicantMessaging() )->get_context_data( $view->applicant->get_id(), true );
 			echo $view->render_partial( ApplicantMessaging::VIEW, $context );  // phpcs:ignore WordPress.Security.EscapeOutput
-		}, 10 );
+		}, 30 );
 	}
 
 	/**
@@ -156,6 +148,17 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 	}
 
 	/**
+	 * Get the context in which to show the metabox.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @return string Context to use.
+	 */
+	protected function get_context() {
+		return static::CONTEXT_NORMAL;
+	}
+
+	/**
 	 * Process the metabox attributes.
 	 *
 	 * @since %VERSION%
@@ -173,17 +176,6 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 			'applicant' => $applicant,
 			'job'       => $job,
 		];
-	}
-
-	/**
-	 * Get the View URI to use for rendering the metabox.
-	 *
-	 * @since %VERSION%
-	 *
-	 * @return string View URI.
-	 */
-	protected function get_view_uri() {
-		return static::VIEW;
 	}
 
 	/**
