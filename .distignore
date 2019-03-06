@@ -3,6 +3,7 @@
 .editorconfig
 .git
 .gitignore
+.github
 .gitlab-ci.yml
 .travis.yml
 .DS_Store
