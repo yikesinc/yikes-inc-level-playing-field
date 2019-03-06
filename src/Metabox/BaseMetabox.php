@@ -151,7 +151,9 @@ abstract class BaseMetabox implements Renderable, Service, AssetsAware {
 	 *
 	 * @return string ID to use for the metabox.
 	 */
-	abstract protected function get_id();
+	protected function get_id() {
+		return static::BOX_ID;
+	}
 
 	/**
 	 * Get the action of the nonce to use.
