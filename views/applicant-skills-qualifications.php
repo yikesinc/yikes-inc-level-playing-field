@@ -36,12 +36,19 @@ $applicant = $this->applicant;
 						<?php
 						$type_selections = $applicant->get_schooling_options();
 						foreach ( $applicant->get_schooling() as $schooling ) {
-							printf(
-								'<li>Graduated with a %s from %s with a major in %s</li>',
-								esc_html( $schooling['degree'] ),
-								esc_html( $type_selections[ $schooling['type'] ] ),
-								esc_html( $schooling['major'] )
-							);
+							if ( 'high_school' === $schooling['type'] ) {
+								printf(
+									'<li>%s</li>',
+									esc_html__( 'Graduated from High School or High School equivalent', 'yikes-level-playing-field' )
+								);
+							} else {
+								printf(
+									'<li>Graduated with a %s from %s with a major in %s</li>',
+									esc_html( $schooling['degree'] ),
+									esc_html( $type_selections[ $schooling['type'] ] ),
+									esc_html( $schooling['major'] )
+								);
+							}
 						}
 						?>
 					</ol>
