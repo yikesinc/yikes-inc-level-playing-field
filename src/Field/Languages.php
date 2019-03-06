@@ -10,6 +10,7 @@
 namespace Yikes\LevelPlayingField\Field;
 
 use Yikes\LevelPlayingField\Model\ApplicantMeta;
+use Yikes\LevelPlayingField\Model\ApplicantMetaDropdowns;
 
 /**
  * Class Languages
@@ -18,6 +19,8 @@ use Yikes\LevelPlayingField\Model\ApplicantMeta;
  * @package Yikes\LevelPlayingField
  */
 final class Languages extends RepeatableField {
+
+	use ApplicantMetaDropdowns;
 
 	/**
 	 * Get the array of default fields.
@@ -41,12 +44,7 @@ final class Languages extends RepeatableField {
 			ApplicantMeta::PROFICIENCY => [
 				'label'    => esc_html__( 'Proficiency', 'yikes-level-playing-field' ),
 				'callback' => $this->get_proficiency_callback(),
-				'options'  => [
-					'fluent'       => esc_html__( 'Fluent', 'yikes-level-playing-field' ),
-					'professional' => esc_html__( 'Working Professional', 'yikes-level-playing-field' ),
-					'limited'      => esc_html__( 'Limited', 'yikes-level-playing-field' ),
-					'elementary'   => esc_html__( 'Elementary', 'yikes-level-playing-field' ),
-				],
+				'options'  => $this->get_language_options(),
 			],
 		] );
 	}

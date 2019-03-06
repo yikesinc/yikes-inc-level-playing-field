@@ -55,6 +55,8 @@ use Yikes\LevelPlayingField\Taxonomy\ApplicantStatus;
  */
 final class Applicant extends CustomPostTypeEntity {
 
+	use ApplicantMetaDropdowns;
+
 	const SANITIZATION = [
 		ApplicantMeta::JOB              => FILTER_SANITIZE_NUMBER_INT,
 		ApplicantMeta::APPLICATION      => FILTER_SANITIZE_NUMBER_INT,
