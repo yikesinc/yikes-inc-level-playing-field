@@ -10,6 +10,7 @@
 namespace Yikes\LevelPlayingField\Field;
 
 use Yikes\LevelPlayingField\Model\ApplicantMeta;
+use Yikes\LevelPlayingField\Model\ApplicantMetaDropdowns;
 
 /**
  * Class Schooling
@@ -18,6 +19,8 @@ use Yikes\LevelPlayingField\Model\ApplicantMeta;
  * @package Yikes\LevelPlayingField
  */
 class Schooling extends RepeatableField {
+
+	use ApplicantMetaDropdowns;
 
 	/** @var string */
 	protected $class_base = 'schooling';
@@ -42,7 +45,9 @@ class Schooling extends RepeatableField {
 				'label' => esc_html__( 'Institution', 'yikes-level-playing-field' ),
 			],
 			ApplicantMeta::TYPE        => [
-				'label' => esc_html__( 'Institution Type', 'yikes-level-playing-field' ),
+				'label'    => esc_html__( 'Institution Type', 'yikes-level-playing-field' ),
+				'callback' => $this->get_schooling_callback(),
+				'options'  => $this->get_schooling_options(),
 			],
 			ApplicantMeta::YEAR        => [
 				'label' => esc_html__( 'Graduation Year', 'yikes-level-playing-field' ),
@@ -69,6 +74,29 @@ class Schooling extends RepeatableField {
 			'<legend class="lpf-field-schooling lpf-input-label">%s</legend>',
 			esc_html__( 'Schooling:', 'yikes-level-playing-field' )
 		);
+	}
+
+	/**
+	 * Get a callback for generating a new Schooling field.
+	 *
+	 * @since %VERSION%
+	 * @return \Closure
+	 */
+	private function get_schooling_callback() {
+		return function( $id_base, $field, $classes, $settings ) {
+			$options = [];
+			foreach ( $settings['options'] as $value => $label ) {
+				$options[] = new SelectOption( $label, $value );
+			}
+
+			return new Select(
+				"{$id_base}[{$field}]",
+				$settings['label'],
+				$classes,
+				(bool) $settings['required'],
+				$options
+			);
+		};
 	}
 
 	/**
