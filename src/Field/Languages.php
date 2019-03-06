@@ -10,6 +10,7 @@
 namespace Yikes\LevelPlayingField\Field;
 
 use Yikes\LevelPlayingField\Model\ApplicantMeta;
+use Yikes\LevelPlayingField\Model\ApplicantMetaDropdowns;
 
 /**
  * Class Languages

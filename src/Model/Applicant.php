@@ -28,7 +28,6 @@ use Yikes\LevelPlayingField\Field\Volunteer;
 use Yikes\LevelPlayingField\RequiredPages\ApplicantMessagingPage;
 use Yikes\LevelPlayingField\Roles\Capabilities;
 use Yikes\LevelPlayingField\Taxonomy\ApplicantStatus;
-use Yikes\LevelPlayingField\Field\ApplicantMetaDropdowns;
 
 /**
  * Class Applicant

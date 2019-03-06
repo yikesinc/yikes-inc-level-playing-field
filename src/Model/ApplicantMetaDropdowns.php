@@ -7,7 +7,7 @@
  * @license GPL2
  */
 
-namespace Yikes\LevelPlayingField\Field;
+namespace Yikes\LevelPlayingField\Model;
 
 /**
 * Trait ApplicantMetaDropdowns
