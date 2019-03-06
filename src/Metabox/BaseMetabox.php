@@ -37,6 +37,7 @@ abstract class BaseMetabox implements Renderable, Service, AssetsAware {
 	const PRIORITY_DEFAULT = 'default';
 	const PRIORITY_HIGH    = 'high';
 	const PRIORITY_LOW     = 'low';
+	const PRIORITY         = 10;
 
 	/**
 	 * Register the Metabox.
@@ -57,7 +58,7 @@ abstract class BaseMetabox implements Renderable, Service, AssetsAware {
 				$this->get_priority(),
 				$this->get_callback_args()
 			);
-		} );
+		}, static::PRIORITY );
 	}
 
 	/**
@@ -303,5 +304,7 @@ abstract class BaseMetabox implements Renderable, Service, AssetsAware {
 	 *
 	 * @return string View URI.
 	 */
-	abstract protected function get_view_uri();
+	protected function get_view_uri() {
+		return static::VIEW;
+	}
 }

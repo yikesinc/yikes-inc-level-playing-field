@@ -94,11 +94,6 @@ final class ApplicantStatus extends BaseTaxonomy implements AssetsAware {
 		add_action( 'wp_ajax_lpf_add_post_term', function() {
 			$this->add_post_term();
 		});
-
-		// Render the applicant status metabox.
-		add_action( 'lpf_applicant_screen_sidebar', function( $view ) {
-			$this->meta_box_cb( $view->applicant->get_post_object() );
-		}, 10 );
 	}
 
 	/**
@@ -171,29 +166,22 @@ final class ApplicantStatus extends BaseTaxonomy implements AssetsAware {
 		}
 		?>
 		<!-- Button group for selecting applicant status -->
-		<div id="applicant-status" class="postbox">						
-			<h2 class="hndle ui-sortable-handle">
-				<span>
-					<?php esc_html_e( 'Applicant Status', 'yikes-level-playing-field' ); ?>
-				</span>
-			</h2>
-			<div class="inside">
-				<div class="tax-btn-group">
-					<?php
-					foreach ( $all_terms as $term ) {
-						$selected_bool = array_key_exists( $term->term_id, $post_terms ) ? $term->term_id : false;
-						?>
-						<button
-							type="button"
-							data-value="<?php echo esc_attr( $term->term_id ); ?>"
-							class="<?php echo false !== $selected_bool ? 'active' : ''; ?>"
-						>
-							<?php echo esc_html( $term->name ); ?>
-						</button>
-						<?php
-					}
+		<div id="applicant-status">
+			<div class="tax-btn-group">
+				<?php
+				foreach ( $all_terms as $term ) {
+					$selected_bool = array_key_exists( $term->term_id, $post_terms ) ? $term->term_id : false;
 					?>
-				</div>
+					<button
+						type="button"
+						data-value="<?php echo esc_attr( $term->term_id ); ?>"
+						class="<?php echo false !== $selected_bool ? 'active' : ''; ?>"
+					>
+						<?php echo esc_html( $term->name ); ?>
+					</button>
+					<?php
+				}
+				?>
 			</div>
 		</div>
 		<?php
@@ -233,7 +221,7 @@ final class ApplicantStatus extends BaseTaxonomy implements AssetsAware {
 			'show_admin_column'  => true,
 			'show_in_quick_edit' => true,
 			'query_var'          => true,
-			'meta_box_cb'        => false,
+			'meta_box_cb'        => [ $this, 'meta_box_cb' ],
 			'rewrite'            => [
 				'slug' => 'status',
 			],
