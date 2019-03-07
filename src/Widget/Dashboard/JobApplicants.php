@@ -28,7 +28,9 @@ use Yikes\LevelPlayingField\Model\MetaLinks;
 class JobApplicants extends BaseWidget implements AssetsAware {
 
 	use AssetsAwareness;
-	const SLUG = 'yikes_lpf_applicant_widget';
+
+	const SLUG     = 'yikes_lpf_applicant_widget';
+	const VIEW_URI = 'views/job-applicants-widget';
 
 	// Define the CSS file.
 	const CSS_HANDLE = 'lpf-dashboard-widget-css';

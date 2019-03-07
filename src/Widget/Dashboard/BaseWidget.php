@@ -11,6 +11,8 @@ namespace Yikes\LevelPlayingField\Widget\Dashboard;
 
 use Yikes\LevelPlayingField\Exception\MustExtend;
 use Yikes\LevelPlayingField\Service;
+use Yikes\LevelPlayingField\View\PostEscapedView;
+use Yikes\LevelPlayingField\View\TemplatedView;
 
 /**
  * Abstract class BaseWidget.
@@ -22,7 +24,8 @@ use Yikes\LevelPlayingField\Service;
  */
 abstract class BaseWidget implements Service {
 
-	const SLUG = '_basewidget_';
+	const SLUG     = '_basewidget_';
+	const VIEW_URI = '_baseviewuri_';
 
 	/**
 	 * Register the WordPress hooks.
@@ -57,6 +60,22 @@ abstract class BaseWidget implements Service {
 			throw MustExtend::default_slug( self::SLUG );
 		}
 		return static::SLUG;
+	}
+
+	/**
+	 * Get the View URI to use for rendering the dashboard widget.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @return string View URI.
+	 * @throws MustExtend When the default view URI has not been extended.
+	 */
+	protected function get_view_uri() {
+		if ( self::VIEW_URI === static::VIEW_URI ) {
+			throw MustExtend::default_view( self::VIEW_URI );
+		}
+
+		return static::VIEW_URI;
 	}
 
 	/**
