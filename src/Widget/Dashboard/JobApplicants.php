@@ -9,9 +9,6 @@
 
 namespace Yikes\LevelPlayingField\Widget\Dashboard;
 
-use Yikes\LevelPlayingField\Assets\Asset;
-use Yikes\LevelPlayingField\Assets\AssetsAware;
-use Yikes\LevelPlayingField\Assets\AssetsAwareness;
 use Yikes\LevelPlayingField\Assets\StyleAsset;
 use Yikes\LevelPlayingField\Model\JobRepository;
 use Yikes\LevelPlayingField\Model\ApplicantRepository;
@@ -25,9 +22,7 @@ use Yikes\LevelPlayingField\Model\MetaLinks;
  * @package    Yikes\LevelPlayingField
  * @subpackage Widget
  */
-class JobApplicants extends BaseWidget implements AssetsAware {
-
-	use AssetsAwareness;
+class JobApplicants extends BaseWidget {
 
 	const SLUG     = 'yikes_lpf_applicant_widget';
 	const VIEW_URI = 'views/job-applicants-widget';
@@ -37,89 +32,47 @@ class JobApplicants extends BaseWidget implements AssetsAware {
 	const CSS_URI    = 'assets/css/lpf-dashboard-widget';
 
 	/**
+	 * Get the context to pass onto the view.
+	 *
+	 * Override to provide data to the view that is not part of the shortcode
+	 * attributes.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param array $atts Array of shortcode attributes.
+	 *
+	 * @return array Context to pass onto view.
+	 * @throws InvalidPostID When the post ID is not valid.
+	 */
+	protected function get_context() {
+		$job                = ( new JobRepository() )->find( $atts['job_id'] );
+		$application        = ( new ApplicationRepository() )->find( $job->get_application_id() );
+		$this->is_submitted = $this->is_submitting_application();
+
+		// Set up the classes we'll use for the form and the individual fields.
+		$base_classes  = [ 'lpf-application', sprintf( 'lpf-application-%s', $application->get_id() ) ];
+		$form_classes  = array_merge( [ 'lpf-form' ], $base_classes );
+		$field_classes = array_merge( [ 'lpf-form-field' ], $base_classes );
+
+		// Set up the form object.
+		$form = $this->get_application_form( $job->get_id(), $application, $field_classes );
+
+		return [
+			'application'      => $application,
+			'application_form' => $form,
+			'form_classes'     => $form_classes,
+			'job_id'           => $job->get_id(),
+			'submitted'        => $this->is_submitted,
+		];
+	}
+
+	/**
 	 * Get the title of the dashboard widget.
 	 *
 	 * @since %VERSION%
 	 */
 	public function get_title() {
 		return __( 'Applicants', 'yikes-level-playing-field' );
-	}
-
-	/**
-	 * Register the WordPress hooks.
-	 *
-	 * @since %VERSION%
-	 */
-	public function register() {
-		parent::register();
-		$this->register_assets();
-	}
-
-	/**
-	 * Output the widget content.
-	 *
-	 * @since %VERSION%
-	 */
-	public function render() {
-		$this->enqueue_assets();
-
-		// Get job data.
-		$job_repo       = new JobRepository();
-		$applicant_repo = new ApplicantRepository();
-		$all_jobs       = $job_repo->find_all();
-		$records        = [];
-
-		foreach ( $all_jobs as $job_id => $job ) {
-
-			$records[] = [
-				'job_name'         => $job->get_title(),
-				'job_link'         => get_the_permalink( $job_id ),
-				'new_applicants'   => $applicant_repo->get_new_applicant_count_for_job( $job_id ),
-				'new_link'         => add_query_arg( [
-					ApplicantMeta::VIEWED => 'none',
-					MetaLinks::JOB        => $job_id,
-					'post_type'           => ApplicantManager::SLUG,
-				], admin_url( 'edit.php' ) ),
-				'total_applicants' => $applicant_repo->get_applicant_count_for_job( $job_id ),
-				'total_link'       => add_query_arg( [
-					MetaLinks::JOB => $job_id,
-					'post_type'    => ApplicantManager::SLUG,
-				], admin_url( 'edit.php' ) ),
-			];
-		}
-
-		?>
-		<table>
-			<thead>
-				<tr>
-					<th><?php esc_html_e( 'Job Title', 'yikes-level-playing-field' ); ?></th>
-					<th><?php esc_html_e( 'New', 'yikes-level-playing-field' ); ?></th>
-					<th><?php esc_html_e( 'Total', 'yikes-level-playing-field' ); ?></th>
-				</tr>
-			</thead>
-			<tbody>
-			<?php
-			foreach ( $records as $record ) {
-				?>
-				<tr>
-					<td>
-						<a href="<?php echo esc_attr( $record['job_link'] ); ?>"><?php echo esc_html( $record['job_name'] ); ?></a>
-					</td>
-					<td>
-						<a href="<?php echo esc_attr( $record['new_link'] ); ?>"><?php echo esc_html( $record['new_applicants'] ); ?></a>
-					</td>
-					<td>
-						<a href="<?php echo esc_attr( $record['total_link'] ); ?>"><?php echo esc_html( $record['total_applicants'] ); ?></a>
-					</td>
-				</tr>
-				<?php
-			}
-			?>
-			</tbody>
-		</table>
-		<a href="<?php echo esc_url( admin_url( 'edit.php?post_type=jobs' ) ); ?>" class="button"><?php esc_html_e( 'View All Job Listings', 'yikes-level-playing-field' ); ?></a>
-		<a href="<?php echo esc_url( admin_url( 'edit.php?post_type=applicants' ) ); ?>" class="button"><?php esc_html_e( 'View All Applicants', 'yikes-level-playing-field' ); ?></a>
-		<?php
 	}
 
 	/**
