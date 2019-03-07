@@ -285,11 +285,7 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 	 * @return bool
 	 */
 	private function is_applicant_screen() {
-		if ( ! is_admin() || ! function_exists( 'get_current_screen' ) ) {
-			return false;
-		}
-
-		if ( get_current_screen()->base !== 'post' ) {
+		if ( ! is_admin() || ! function_exists( 'get_current_screen' || get_current_screen()->base !== 'post' ) ) {
 			return false;
 		}
 
