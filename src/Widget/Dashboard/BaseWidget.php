@@ -64,9 +64,9 @@ abstract class BaseWidget implements Renderable, AssetsAware, Service {
 	 * @return string Rendered HTML of the shortcode.
 	 */
 	public function process_widget() {
-		//$context = $this->get_context( $atts );
+		$context = $this->get_context();
 
-		return $this->render();
+		return $this->render( $context );
 	}
 
 	/**
@@ -107,7 +107,6 @@ abstract class BaseWidget implements Renderable, AssetsAware, Service {
 	 *
 	 * @param array $context Context in which to render.
 	 *
-	 * @return string Rendered HTML.
 	 */
 	public function render( array $context = [] ) {
 		try {
@@ -135,8 +134,6 @@ abstract class BaseWidget implements Renderable, AssetsAware, Service {
 	 * attributes.
 	 *
 	 * @since %VERSION%
-	 *
-	 * @param array $atts Array of shortcode attributes.
 	 *
 	 * @return array Context to pass onto view.
 	 */

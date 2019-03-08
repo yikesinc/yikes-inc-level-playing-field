@@ -8,6 +8,8 @@
  */
 
 namespace Yikes\LevelPlayingField;
+
+$tmp = '';
 ?>
 <table>
 	<thead>
