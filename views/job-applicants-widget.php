@@ -9,8 +9,6 @@
 
 namespace Yikes\LevelPlayingField;
 
-$records = $this->records;
-
 ?>
 <table>
 	<thead>
@@ -22,7 +20,7 @@ $records = $this->records;
 	</thead>
 	<tbody>
 	<?php
-	foreach ( $records as $record ) {
+	foreach ( $this->records as $record ) {
 		?>
 		<tr>
 			<td>
@@ -40,5 +38,5 @@ $records = $this->records;
 	?>
 	</tbody>
 </table>
-<a href="<?php echo esc_url( admin_url( 'edit.php?post_type=jobs' ) ); ?>" class="button"><?php esc_html_e( 'View All Job Listings', 'yikes-level-playing-field' ); ?></a>
-<a href="<?php echo esc_url( admin_url( 'edit.php?post_type=applicants' ) ); ?>" class="button"><?php esc_html_e( 'View All Applicants', 'yikes-level-playing-field' ); ?></a>
+<a href="<?php echo esc_url( $this->jobs_url ); ?>" class="button"><?php esc_html_e( 'View All Job Listings', 'yikes-level-playing-field' ); ?></a>
+<a href="<?php echo esc_url( $this->applicants_url ); ?>" class="button"><?php esc_html_e( 'View All Applicants', 'yikes-level-playing-field' ); ?></a>

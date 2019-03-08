@@ -14,6 +14,7 @@ use Yikes\LevelPlayingField\Model\JobRepository;
 use Yikes\LevelPlayingField\Model\ApplicantRepository;
 use Yikes\LevelPlayingField\Model\ApplicantMeta;
 use Yikes\LevelPlayingField\CustomPostType\ApplicantManager;
+use Yikes\LevelPlayingField\CustomPostType\JobManager;
 use Yikes\LevelPlayingField\Model\MetaLinks;
 
 /**
@@ -47,6 +48,8 @@ class JobApplicants extends BaseWidget {
 		$applicant_repo = new ApplicantRepository();
 		$all_jobs       = $job_repo->find_all();
 		$records        = [];
+		$jobs_url       = admin_url( 'edit.php?post_type=' . JobManager::SLUG );
+		$app_url        = admin_url( 'edit.php?post_type=' . ApplicantManager::SLUG );
 
 		foreach ( $all_jobs as $job_id => $job ) {
 			$records[] = [
@@ -67,7 +70,9 @@ class JobApplicants extends BaseWidget {
 		}
 
 		return [
-			'records' => $records,
+			'records'        => $records,
+			'jobs_url'       => $jobs_url,
+			'applicants_url' => $app_url,
 		];
 	}
 
