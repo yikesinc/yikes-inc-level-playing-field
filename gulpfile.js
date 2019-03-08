@@ -429,12 +429,11 @@ gulp.task( 'build', [ 'default' ], function() {
  * Process @import statements.
  */
 gulp.task( 'import', () => {
-
-  return gulp.src( paths.devscripts )
-  		.pipe( debug() )
-        .pipe( include() )
-        .pipe( gulp.dest( 'assets/js/' ) );
-});
+	return gulp.src( paths.devscripts )
+		.pipe( debug() )
+		.pipe( include() )
+		.pipe( gulp.dest( 'assets/js/' ) );
+} );
 
 /**
  * Create individual tasks.
@@ -448,4 +447,5 @@ gulp.task( 'sprites', [ 'spritesmith' ] );
 gulp.task( 'lint', [ 'sass:lint', 'js:lint' ] );
 gulp.task( 'docs', [ 'sassdoc' ] );
 // gulp.task( 'default', [ 'sprites', 'i18n', 'icons', 'styles', 'scripts', 'imagemin'] );
-gulp.task( 'default', [ 'i18n', 'styles', 'scripts' ] );
+gulp.task( 'assets', [ 'styles', 'scripts' ] );
+gulp.task( 'default', [ 'i18n', 'assets' ] );
