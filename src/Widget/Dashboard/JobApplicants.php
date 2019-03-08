@@ -34,8 +34,7 @@ class JobApplicants extends BaseWidget {
 	/**
 	 * Get the context to pass onto the view.
 	 *
-	 * Override to provide data to the view that is not part of the shortcode
-	 * attributes.
+	 * Override to provide data to the view.
 	 *
 	 * @since %VERSION%
 	 *
@@ -43,9 +42,32 @@ class JobApplicants extends BaseWidget {
 	 * @throws InvalidPostID When the post ID is not valid.
 	 */
 	protected function get_context() {
+
+		$job_repo       = new JobRepository();
+		$applicant_repo = new ApplicantRepository();
+		$all_jobs       = $job_repo->find_all();
+		$records        = [];
+
+		foreach ( $all_jobs as $job_id => $job ) {
+			$records[] = [
+				'job_name'         => $job->get_title(),
+				'job_link'         => get_the_permalink( $job_id ),
+				'new_applicants'   => $applicant_repo->get_new_applicant_count_for_job( $job_id ),
+				'new_link'         => add_query_arg( [
+					ApplicantMeta::VIEWED => 'none',
+					MetaLinks::JOB        => $job_id,
+					'post_type'           => ApplicantManager::SLUG,
+				], admin_url( 'edit.php' ) ),
+				'total_applicants' => $applicant_repo->get_applicant_count_for_job( $job_id ),
+				'total_link'       => add_query_arg( [
+					MetaLinks::JOB => $job_id,
+					'post_type'    => ApplicantManager::SLUG,
+				], admin_url( 'edit.php' ) ),
+			];
+		}
+
 		return [
-			'application'      => false,
-			'application_form' => false,
+			'records' => $records,
 		];
 	}
 

@@ -9,7 +9,8 @@
 
 namespace Yikes\LevelPlayingField;
 
-$tmp = '';
+$records = $this->records;
+
 ?>
 <table>
 	<thead>
