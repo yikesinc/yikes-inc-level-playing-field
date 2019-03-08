@@ -61,4 +61,13 @@ interface JobMeta {
 		self::KNOWLEDGE                   => self::META_PREFIX . self::KNOWLEDGE,
 		self::APPLICATION_SUCCESS_MESSAGE => self::META_PREFIX . self::APPLICATION_SUCCESS_MESSAGE,
 	];
+
+	// Fields to expose in REST API.
+	const REST_FIELDS = [
+		self::DESCRIPTION,
+		self::TYPE,
+		self::LOCATION,
+		self::ADDRESS,
+		self::APPLICATION,
+	];
 }

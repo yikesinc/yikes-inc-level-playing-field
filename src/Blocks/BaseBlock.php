@@ -24,7 +24,9 @@ abstract class BaseBlock implements Service, AssetsAware {
 
 	use AssetsAwareness;
 
-	const SLUG_BASE = 'ylpf/';
+	const BASE_SLUG  = 'ylpf/';
+	const BLOCK_PATH = 'assets/js/blocks/';
+	const BLOCK_FILE = '/index';
 
 	/**
 	 * Register the current Registerable.
@@ -59,7 +61,57 @@ abstract class BaseBlock implements Service, AssetsAware {
 	 * @since %VERSION%
 	 * @return string
 	 */
-	abstract protected function get_block_slug();
+	protected function get_block_slug() {
+		return static::BASE_SLUG . static::BLOCK_SLUG;
+	}
+
+	/**
+	 * Get the path for the main JS block file.
+	 *
+	 * @since %VERSION%
+	 * @return string
+	 */
+	protected function get_block_path() {
+		return static::BLOCK_PATH . static::BLOCK_SLUG . static::BLOCK_FILE;
+	}
+
+	/**
+	 * Get the block's category.
+	 *
+	 * @since %VERSION%
+	 * @return string
+	 */
+	protected function get_category() {
+		return static::CATEGORY;
+	}
+
+	/**
+	 * Get the block's title, i18n'ed.
+	 *
+	 * @since %VERSION%
+	 * @return string
+	 */
+	abstract protected function get_title();
+
+	/**
+	 * Get the attributes for a block.
+	 *
+	 * Note: if you don't set the default attributes on the server side, the defaults won't be available when rendering (i.e. in the `render_block()` function).
+	 *
+	 * @since %VERSION%
+	 * @return array
+	 */
+	protected function get_attributes() {
+		return [];
+	}
+
+	/**
+	 * Take the shortcode parameters from the Gutenberg block and render something.
+	 *
+	 * @param array  $attributes Block attributes.
+	 * @param string $content    Block content.
+	 */
+	abstract public function render_block( $attributes, $content );
 
 	/**
 	 * Get the arguments used when registering a block.
@@ -67,5 +119,13 @@ abstract class BaseBlock implements Service, AssetsAware {
 	 * @since %VERSION%
 	 * @return array
 	 */
-	abstract protected function get_block_args();
+	protected function get_block_args() {
+		return [
+			'editor_script'   => static::BLOCK_SLUG,
+			'category'        => $this->get_category(),
+			'title'           => $this->get_title(),
+			'attributes'      => $this->get_attributes(),
+			'render_callback' => [ $this, 'render_block' ],
+		];
+	}
 }

@@ -45,8 +45,9 @@ final class JobStatus extends BaseTaxonomy {
 			'show_ui'            => false,
 			'show_in_menu'       => false,
 			'show_admin_column'  => true,
-			'show_in_quick_edit' => true,
+			'show_in_quick_edit' => false,
 			'query_var'          => true,
+			'show_in_rest'       => false,
 			'meta_box_cb'        => [ $this, 'meta_box_cb' ],
 			'rewrite'            => [
 				'slug' => 'status',
@@ -75,7 +76,6 @@ final class JobStatus extends BaseTaxonomy {
 				'not_found'                  => __( 'No Statuses found.', 'yikes-level-playing-field' ),
 				'menu_name'                  => __( 'Statuses', 'yikes-level-playing-field' ),
 			],
-			'show_in_rest'       => false,
 		];
 	}
 

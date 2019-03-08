@@ -10,6 +10,8 @@
 namespace Yikes\LevelPlayingField;
 
 use Yikes\LevelPlayingField\AdminPage\ExportApplicantsPage;
+use Yikes\LevelPlayingField\Blocks\JobListing;
+use Yikes\LevelPlayingField\Blocks\JobListings;
 use Yikes\LevelPlayingField\AdminPage\SettingsPage;
 use Yikes\LevelPlayingField\AdminPage\GoProPage;
 use Yikes\LevelPlayingField\AdminPage\SupportPage;
@@ -85,6 +87,8 @@ final class PluginFactory {
 		return new Container( [
 			// Blocks.
 			JobDescription::class            => 1,
+			JobListing::class                => 1,
+			JobListings::class               => 1,
 
 			// CPTs.
 			LimitedJobManager::class         => 1,
@@ -92,8 +96,8 @@ final class PluginFactory {
 			ApplicantManager::class          => 1,
 
 			// Taxonomies.
-			JobCategory::class               => 1,
-			JobStatus::class                 => 1,
+			// JobCategory::class               => 1,
+			// JobStatus::class                 => 1,
 			ApplicantStatus::class           => 1,
 
 			// Metaboxes.

@@ -12,6 +12,7 @@
 namespace Yikes\LevelPlayingField;
 
 use Yikes\LevelPlayingField\Model\Job;
+use Yikes\LevelPlayingField\Shortcode\Job as JobShortcode;
 
 /**
  * These are the available jobs.
@@ -42,6 +43,14 @@ $jobs = $this->jobs;
 			</a>
 		</h4>
 		<?php
+
+		if ( $this->show_application_button ) :
+			?>
+			<div class="job-page-application">
+				<a href="<?php echo esc_url( $job->get_application_url() ); ?>"><button type="button" class="job-page-application-button"><?php echo esc_html( $this->button_text ); ?></button></a>
+			</div>
+			<?php
+		endif;
 	}
 
 	/**

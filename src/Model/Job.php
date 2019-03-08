@@ -10,6 +10,9 @@
 namespace Yikes\LevelPlayingField\Model;
 
 use Yikes\LevelPlayingField\Taxonomy\JobStatus;
+use Yikes\LevelPlayingField\Model\JobMeta;
+use Yikes\LevelPlayingField\RequiredPages\ApplicationFormPage;
+use Yikes\LevelPlayingField\Model\JobMetaDropdowns;
 
 /**
  * Class Job
@@ -25,6 +28,8 @@ use Yikes\LevelPlayingField\Taxonomy\JobStatus;
  * @property int    application The Job application ID.
  */
 final class Job extends CustomPostTypeEntity {
+
+	use JobMetaDropdowns;
 
 	/**
 	 * Get the job status.
@@ -64,7 +69,7 @@ final class Job extends CustomPostTypeEntity {
 	 * @return string
 	 */
 	public function get_description() {
-		return $this->description;
+		return $this->{JobMeta::DESCRIPTION};
 	}
 
 	/**
@@ -77,7 +82,19 @@ final class Job extends CustomPostTypeEntity {
 	 * @return string
 	 */
 	public function get_type() {
-		return $this->type;
+		$job_types = $this->get_job_type_options();
+		return isset( $job_types[ $this->{JobMeta::TYPE} ] ) ? $job_types[ $this->{JobMeta::TYPE} ] : '';
+	}
+
+	/**
+	 * Determine if the job is remote.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @return bool
+	 */
+	public function get_location() {
+		return $this->{JobMeta::LOCATION};
 	}
 
 	/**
@@ -88,7 +105,7 @@ final class Job extends CustomPostTypeEntity {
 	 * @return bool
 	 */
 	public function is_remote() {
-		return 'remote' === $this->location;
+		return 'remote' === $this->get_location();
 	}
 
 	/**
@@ -99,7 +116,7 @@ final class Job extends CustomPostTypeEntity {
 	 * @return array
 	 */
 	public function get_address() {
-		return $this->address;
+		return $this->{JobMeta::ADDRESS};
 	}
 
 	/**
@@ -109,8 +126,21 @@ final class Job extends CustomPostTypeEntity {
 	 *
 	 * @return int
 	 */
-	public function get_application_id() {
-		return (int) $this->application;
+	public function get_application() {
+		return (int) $this->{JobMeta::APPLICATION};
+	}
+
+	/**
+	 * Get the application URL to use when displaying this Job.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @return string
+	 */
+	public function get_application_url() {
+		$app_page_id  = (int) apply_filters( 'lpf_single_job_template_application_page_id', ( new ApplicationFormPage() )->get_page_id( ApplicationFormPage::PAGE_SLUG ), $this );
+		$app_page_url = add_query_arg( array( 'job' => $this->get_id() ), get_permalink( $app_page_id ) );
+		return $app_page_url;
 	}
 
 	/**

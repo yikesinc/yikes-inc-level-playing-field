@@ -10,6 +10,9 @@
 namespace Yikes\LevelPlayingField\CustomPostType;
 
 use Yikes\LevelPlayingField\Roles\Capabilities;
+use Yikes\LevelPlayingField\Model\JobMeta;
+use Yikes\LevelPlayingField\Model\JobRepository;
+use WP_REST_Server;
 
 /**
  * Job Manager CPT.
@@ -39,23 +42,28 @@ class JobManager extends BaseCustomPostType {
 			return __( 'Add Job Title', 'yikes-level-playing-field' );
 		}, 10, 2 );
 
-		// Modify the available block categories.
-		add_filter( 'block_categories', function( $categories, $post ) {
-			if ( $this->get_slug() !== $post->post_type ) {
-				return $categories;
-			}
+		add_action( 'rest_api_init', function( WP_REST_Server $server ) {
+			$callback = function( $object, $field_name ) {
+				static $repo = null;
+				if ( null === $repo ) {
+					$repo = new JobRepository();
+				}
 
-			return array_merge(
-				$categories,
-				[
+				return $repo->find( $object['id'] )->{"get_{$field_name}"}();
+			};
+
+			foreach ( JobMeta::REST_FIELDS as $field ) {
+				register_rest_field(
+					$this->get_slug(),
+					$field,
 					[
-						'slug'  => 'ylpf-job',
-						'title' => __( 'Job Attributes', 'yikes-level-playing-field' ),
-						'icon'  => 'wordpress',
-					],
-				]
-			);
-		}, 10, 2 );
+						'get_callback'    => $callback,
+						'update_callback' => null,
+						'schema'          => null,
+					]
+				);
+			}
+		} );
 	}
 
 	/**

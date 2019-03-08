@@ -30,9 +30,11 @@ final class AllJobs extends BaseJobs {
 	 * @since %VERSION%
 	 * @return array
 	 */
-	protected function get_default_atts() {
+	public function get_default_atts() {
 		return [
-			'limit' => 10,
+			'limit'                   => 10,
+			'show_application_button' => false,
+			'button_text'             => __( 'Apply', 'yikes-level-playing-field' ),
 		];
 	}
 

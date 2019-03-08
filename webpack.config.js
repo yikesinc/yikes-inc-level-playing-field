@@ -30,8 +30,10 @@ const extractConfig = {
 
 module.exports = {
 	entry: {
-		'job-description': './blocks/job-description/index.js',
-		'job-type': './blocks/job-type/index.js',
+		// 'job-description': './blocks/job-description/index.js',
+		// 'job-type': './blocks/job-type/index.js',
+		'job-listing': './blocks/job-listing/index.js',
+		'job-listings': './blocks/job-listings/index.js',
 	},
 	output: {
 		path: path.resolve( __dirname ),

@@ -52,10 +52,21 @@ final class Job extends BaseJobs {
 	 * @since %VERSION%
 	 * @return array
 	 */
-	protected function get_default_atts() {
-		return [
-			'id' => 0,
+	public function get_default_atts() {
+		$default_atts = [
+			'id'                      => 0,
+			'show_title'              => true,
+			'show_description'        => true,
+			'show_job_type'           => true,
+			'show_location'           => true,
+			'show_application_button' => true,
+			'job_type_text'           => __( 'Type:', 'yikes-level-playing-field' ),
+			'location_text'           => __( 'Location:', 'yikes-level-playing-field' ),
+			'button_text'             => __( 'Apply', 'yikes-level-playing-field' ),
+			'remote_location_text'    => _x( 'Remote', 'Description of the job location', 'yikes-level-playing-field' ),
 		];
+
+		return apply_filters( 'lpf_single_job_listing_default_attributes', $default_atts );
 	}
 
 	/**
