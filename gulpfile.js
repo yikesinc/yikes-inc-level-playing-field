@@ -10,6 +10,7 @@ const eslint      = require( 'gulp-eslint' );
 const gulp        = require( 'gulp' );
 const gutil       = require( 'gulp-util' );
 const imagemin    = require( 'gulp-imagemin' );
+const merge       = require( 'gulp-merge' );
 const minimist    = require( 'minimist' );
 const mqpacker    = require( 'css-mqpacker' );
 const neat        = require( 'bourbon-neat' ).includePaths;
@@ -58,10 +59,16 @@ const paths = {
 
 // Command line options
 const options = minimist( process.argv.slice( 2 ), {
-	string: [ 'version' ],
+	string: [ 'version', 'release', 'preid' ],
 	default: {
 		// A custom version value.
-		version: ''
+		version: '',
+
+		// This is the type of release to create when running the generic release task.
+		release: 'minor',
+
+		// For pre-releases, use this parameter. "beta", "rc", etc.
+		preid: undefined,
 	}
 } );
 
@@ -458,6 +465,60 @@ gulp.task( 'replace:version', () => {
 		.pipe( plumber( { 'errorHandler': handleErrors } ) )
 		.pipe( replace( '%VERSION%', version ) )
 		.pipe( gulp.dest( './' ) );
+} );
+
+
+/**
+ * Bump the version in various files.
+ *
+ * When updating the constant string in the main subscriptions file and
+ * template files, we need our regex to be similar to the one used by bump-regex.
+ * See https://github.com/stevelacy/bump-regex/blob/master/index.js#L29-L48.
+ *
+ * @param {string} type
+ * @param {string} identifier
+ * @returns {*}
+ */
+function bumpVersion( type, identifier = undefined ) {
+	const bump = require( 'gulp-bump' ), semver = require( 'semver' );
+
+	currentVersion = semver.inc( packageJSON.version, type, identifier );
+
+	const mainFile = gulp.src( [ './yikes-level-playing-field.php' ] )
+		.pipe( plumber( { 'errorHandler': outputErrors } ) )
+		.pipe( bump( { version: currentVersion } ) )
+		.pipe( gulp.dest( './' ) );
+
+	const pkg = gulp.src( [ './package.json' ] )
+		.pipe( plumber( { 'errorHandler': outputErrors } ) )
+		.pipe( bump( { version: currentVersion } ) )
+		.pipe( gulp.dest( './' ) );
+
+	return merge( mainFile, pkg );
+}
+
+/**
+ * Tasks for updating versions in preparation for a new release.
+ */
+gulp.task( 'release:patch', () => {
+	return merge( bumpVersion( 'patch' ), gulp.run( 'replace:version' ) );
+} );
+gulp.task( 'release:minor', () => {
+	return merge( bumpVersion( 'minor' ), gulp.run( 'replace:version' ) );
+} );
+gulp.task( 'release:major', () => {
+	return merge( bumpVersion( 'major' ), gulp.run( 'replace:version' ) );
+} );
+
+/**
+ * General release task. Use this when creating pre-release versions, making
+ * use of the --release and --preid CLI flags.
+ *
+ * --release refers to a SemVer release type. Use "preminor" or "premajor".
+ * --preid refers to the type of pre-release. Use "beta" or "rc".
+ */
+gulp.task( 'release', () => {
+	return merge( bumpVersion( options.release, options.preid ), gulp.run( 'replace:version' ) );
 } );
 
 /**
