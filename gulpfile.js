@@ -10,6 +10,7 @@ const eslint      = require( 'gulp-eslint' );
 const gulp        = require( 'gulp' );
 const gutil       = require( 'gulp-util' );
 const imagemin    = require( 'gulp-imagemin' );
+const minimist    = require( 'minimist' );
 const mqpacker    = require( 'css-mqpacker' );
 const neat        = require( 'bourbon-neat' ).includePaths;
 const notify      = require( 'gulp-notify' );
@@ -23,7 +24,6 @@ const spritesmith = require( 'gulp.spritesmith' );
 const svgmin      = require( 'gulp-svgmin' );
 const svgstore    = require( 'gulp-svgstore' );
 const uglify      = require( 'gulp-uglify' );
-const print       = require( 'gulp-print' );
 const debug       = require( 'gulp-debug' );
 const include     = require( 'gulp-include' );
 
@@ -56,8 +56,18 @@ const paths = {
 	]
 };
 
-// Load the package.json data
+// Command line options
+const options = minimist( process.argv.slice( 2 ), {
+	string: [ 'version' ],
+	default: {
+		// A custom version value.
+		version: ''
+	}
+} );
+
+// Load the package.json data. This will be cached per request.
 const packageJSON = require( './package.json' );
+let currentVersion = packageJSON.version;
 
 /**
  * Handle errors and alert the user.
@@ -419,7 +429,7 @@ gulp.task( 'build', [ 'default' ], function() {
 
 		// Pipe each file to the build directory and the Zip file
 		.pipe( gulp.dest( 'build' ) )
-		.pipe( zip( `${packageJSON.name}-${packageJSON.version}.zip` ) )
+		.pipe( zip( `${packageJSON.name}-${currentVersion}.zip` ) )
 
 		// Pipe the zip file to the build directory
 		.pipe( gulp.dest( 'build' ) );
@@ -433,6 +443,21 @@ gulp.task( 'import', () => {
 		.pipe( debug() )
 		.pipe( include() )
 		.pipe( gulp.dest( 'assets/js/' ) );
+} );
+
+/**
+ * Replace %VERSION% with the current version string.
+ *
+ * The version from package.json will be used, or the --version
+ * flag can be passed via CLI to explicitly set the version.
+ */
+gulp.task( 'replace:version', () => {
+	const replace = require( 'gulp-replace' );
+	const version = options.version || currentVersion;
+	return gulp.src( paths.php, { base: process.cwd() } )
+		.pipe( plumber( { 'errorHandler': handleErrors } ) )
+		.pipe( replace( '%VERSION%', version ) )
+		.pipe( gulp.dest( './' ) );
 } );
 
 /**
