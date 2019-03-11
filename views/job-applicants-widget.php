@@ -19,9 +19,7 @@ namespace Yikes\LevelPlayingField;
 		</tr>
 	</thead>
 	<tbody>
-	<?php
-	foreach ( $this->records as $record ) {
-		?>
+	<?php foreach ( $this->records as $record ) { ?>
 		<tr>
 			<td>
 				<a href="<?php echo esc_url( $record['job_link'] ); ?>"><?php echo esc_html( $record['job_name'] ); ?></a>

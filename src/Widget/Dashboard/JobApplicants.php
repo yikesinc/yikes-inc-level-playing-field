@@ -48,8 +48,11 @@ class JobApplicants extends BaseWidget {
 		$applicant_repo = new ApplicantRepository();
 		$all_jobs       = $job_repo->find_all();
 		$records        = [];
-		$jobs_url       = admin_url( 'edit.php?post_type=' . JobManager::SLUG );
-		$app_url        = admin_url( 'edit.php?post_type=' . ApplicantManager::SLUG );
+		$jobs_url       = add_query_arg( [ 'post_type' => JobManager::SLUG ], admin_url( 'edit.php' ) );
+		$app_url        = add_query_arg( [ 'post_type' => ApplicantManager::SLUG ], admin_url( 'edit.php' ) );
+
+
+
 
 		foreach ( $all_jobs as $job_id => $job ) {
 			$records[] = [
