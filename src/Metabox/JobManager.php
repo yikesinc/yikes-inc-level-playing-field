@@ -21,6 +21,7 @@ use Yikes\LevelPlayingField\Model\Job;
 use Yikes\LevelPlayingField\Model\MetaLinks;
 use Yikes\LevelPlayingField\Taxonomy\JobStatus;
 use Yikes\LevelPlayingField\Model\JobMetaDropdowns;
+use Yikes\LevelPlayingField\Blocks\JobListing;
 
 /**
  * Class JobManager
@@ -211,9 +212,19 @@ final class JobManager extends AwesomeBaseMetabox implements AssetsAware {
 	 * @return Asset[]
 	 */
 	protected function get_assets() {
+		$script = new ScriptAsset( self::JS_HANDLE, self::JS_URI, [ 'wp-blocks' ] );
+		$script->add_localization(
+			'lpf_job_manager_data',
+			[
+				'disallowed_blocks' => [
+					( new JobListing() )->get_block_slug(),
+				],
+			]
+		);
+
 		return [
 			new StyleAsset( self::CSS_HANDLE, self::CSS_URI ),
-			new ScriptAsset( self::JS_HANDLE, self::JS_URI ),
+			$script,
 		];
 	}
 }

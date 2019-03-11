@@ -63,7 +63,7 @@ class JobManager extends BaseCustomPostType {
 					]
 				);
 			}
-		} );
+		});
 	}
 
 	/**
@@ -138,10 +138,6 @@ class JobManager extends BaseCustomPostType {
 				'slug' => _x( 'lpf-jobs', "The CPT's rewrite slug. Translatable as per WP's documentation.", 'yikes-level-playing-field' ),
 			],
 			'show_in_rest'        => true,
-			'template'            => [
-				[ 'ylpf/job-description' ],
-			],
-			'template_lock'       => 'all',
 		];
 	}
 

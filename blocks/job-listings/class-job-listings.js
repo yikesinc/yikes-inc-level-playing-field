@@ -1,10 +1,10 @@
-// Import dependencies
+// Import dependencies.
 import apiFetch from '@wordpress/api-fetch';
 
-// Get functions / blocks / components
+// Get functions / blocks / components.
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
-const { RichText, InspectorControls, PlainText } = wp.editor;
+const { InspectorControls } = wp.editor;
 const { Spinner, TextControl, PanelBody, PanelRow, FormToggle, SelectControl } = wp.components;
 const { Component } = wp.element;
 

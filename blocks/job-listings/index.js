@@ -1,23 +1,25 @@
 import JobListings from './class-job-listings.js';
 
-// Get just the __() localization function from wp.i18n
+// Get just the __() localization function from wp.i18n.
 const { __ } = wp.i18n;
 
-// Get registerBlockType and other methods from wp.blocks
+// Get registerBlockType and other methods from wp.blocks.
 const { registerBlockType } = wp.blocks;
 
 const editJobListingBlock = function( props ) {
 
-  const onChangeJob = ( job_id ) => {
-    props.setAttributes( { job_id: job_id } );
-  };
-
+  /**
+   * Update a checkbox prop.
+   */
   const toggleFormControl = ( event, prop ) => {
     const properties = {};
     properties[ prop ] = !! event.target.checked
     props.setAttributes( properties );
   }
 
+  /**
+   * Update a prop when we have the value.
+   */
   const handleValueControl = ( value, prop ) => {
     const properties = {};
     properties[ prop ] = value;
@@ -45,6 +47,7 @@ const saveJobListingBlock = function( props ) {
   return null;
 }
 
+// Block settings.
 const settings = {
   title     : __( 'Job Listings' ),
   category  : 'widgets',
@@ -55,4 +58,5 @@ const settings = {
   save: saveJobListingBlock,
 }
 
-const EasyFormsBlock = registerBlockType( lpf_job_listings_data.block_name, settings );
+// Register our block.
+const jobListingsBlock = registerBlockType( lpf_job_listings_data.block_name, settings );

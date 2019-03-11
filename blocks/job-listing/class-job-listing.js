@@ -4,7 +4,7 @@ import apiFetch from '@wordpress/api-fetch';
 // Get functions / blocks / components
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
-const { RichText, InspectorControls, PlainText } = wp.editor;
+const { InspectorControls } = wp.editor;
 const { Spinner, TextControl, PanelBody, PanelRow, FormToggle, SelectControl } = wp.components;
 const { Component } = wp.element;
 
@@ -53,16 +53,25 @@ export default class JobListing extends Component {
     return jobsObject;
   }
 
+  /**
+   * Get WP edit URL for a job.
+   */
   getEditJobURL() {
     return `${ lpf_job_listing_data.edit_jobs_url }&post=${ this.state.job.id }`;
   }
 
+  /**
+   * Set the component's job when a job is selected from the dropdown.
+   */
   getJob() {
     let job = typeof event.target.value === 'undefined' || typeof this.state.jobs[ event.target.value ] === 'undefined' ? {} : this.state.jobs[ event.target.value ];
     this.setState( { job: job, jobID: event.target.value } );
     this.props.onChangeJob( event.target.value );
   }
 
+  /**
+   * The inspector controls HTML. This is Gutenberg's sidebar.
+   */
   inspectorControls() {
 
     const jobsDropdown =
@@ -182,7 +191,7 @@ export default class JobListing extends Component {
           id="lpf-job-type-text-control"
           label={ __( 'Job Type Text' ) }
           value={ this.props.jobTypeText }
-          onChange={ ( val ) => this.props.handleTextControl( val, 'job_type_text' ) }
+          onChange={ ( val ) => this.props.handleValueControl( val, 'job_type_text' ) }
         />
       </PanelRow>
     ) : '';
@@ -194,7 +203,7 @@ export default class JobListing extends Component {
           id="lpf-location-text-control"
           label={ __( 'Location Text' ) }
           value={ this.props.locationText }
-          onChange={ ( val ) => this.props.handleTextControl( val, 'location_text' ) }
+          onChange={ ( val ) => this.props.handleValueControl( val, 'location_text' ) }
         />
       </PanelRow>
     ) : '';
@@ -206,7 +215,7 @@ export default class JobListing extends Component {
           id="lpf-location-text-control"
           label={ __( 'Remote Location Text' ) }
           value={ this.props.remoteLocationText }
-          onChange={ ( val ) => this.props.handleTextControl( val, 'remote_location_text' ) }
+          onChange={ ( val ) => this.props.handleValueControl( val, 'remote_location_text' ) }
         />
       </PanelRow>
     ) : '';
@@ -218,7 +227,7 @@ export default class JobListing extends Component {
           id="lpf-button-text-control"
           label={ __( 'Button Text' ) }
           value={ this.props.buttonText }
-          onChange={ ( val ) => this.props.handleTextControl( val, 'button_text' ) }
+          onChange={ ( val ) => this.props.handleValueControl( val, 'button_text' ) }
         />
       </PanelRow>
     ) : '';
@@ -245,21 +254,26 @@ export default class JobListing extends Component {
     return inspector_controls;
   }
 
+  /**
+   * Render the jobs dropdown.
+   */
   jobsDropdown() {
     return Object.keys( this.state.jobs ).length > 0 ? 
-      <select 
+      <SelectControl
         value={ this.state.jobID } 
         onChange={ this.getJob } 
         className="lpf-jobs-dropdown"
-      >
-        <option key="lpf-select-job-id" value="">{ __( 'Select Job' ) }</option>
-        { Object.keys( this.state.jobs ).map( ( job_id ) => {
-          return <option key={ 'lpf-select-job-' + job_id } value={ job_id }>{ this.state.jobs[ job_id ].title.rendered }</option>
-        })}
-      </select> 
+        options={
+            { label: __( 'Select Job' ), value: '' },
+            Object.keys( this.state.jobs ).map( ( job_id ) => { return { value: job_id, label: this.state.jobs[ job_id ].title.rendered } })
+        }
+      />
     : '<em>No jobs found...</em>';
   }
 
+  /**
+   * Render the job listing.
+   */
   jobListing() {
     return (
       <div className="job-page-job">
@@ -270,10 +284,16 @@ export default class JobListing extends Component {
     );
   }
 
+  /**
+   * Render the job listing title.
+   */
   jobListingTitle() {
     return <h4 className="job-page-job-title">{ this.state.job.title.rendered }</h4>
   }
 
+  /**
+   * Render the job listing meta.
+   */
   jobListingMeta() {
     return (
       <div className="job-page-job-meta">
@@ -284,14 +304,25 @@ export default class JobListing extends Component {
     );
   }
 
+  /**
+   * Render the job description.
+   *
+   * @todo find a way of rendering a post's HTML without using `dangerouslySetInnerHTML.`
+   */
   jobDescription() {
-    return <div className="job-page-job-description"><p>{ this.state.job.description }</p></div>
+    return <div dangerouslySetInnerHTML={ { __html: this.state.job.content.rendered } } className="job-page-job-description"></div>
   }
 
+  /**
+   * Render the job type.
+   */
   jobType() {
-    return <div className="job-page-job-type">{ this.props.jobTypeText } { this.state.job.type }</div>
+    return <div className="job-page-job-type">{ this.props.jobTypeText } { this.state.job.job_type }</div>
   }
 
+  /**
+   * Render the job's location.
+   */
   jobLocation() {
     return (
       <div className="job-page-job-address">
@@ -301,10 +332,16 @@ export default class JobListing extends Component {
     );
   }
 
+  /**
+   * Render the remote location.
+   */
   remoteLocation() {
     return <span className="lpf-remote-location">{ this.props.remoteLocationText }</span>
   }
 
+  /**
+   * Render the job address.
+   */
   jobAddress() {
     return (
         <address className="lpf-address">
@@ -319,6 +356,9 @@ export default class JobListing extends Component {
     );
   }
 
+  /**
+   * Render the job listing app button.
+   */
   jobListingAppButton() {
     return (
       <div className="job-page-application">
@@ -327,6 +367,9 @@ export default class JobListing extends Component {
     );
   }
 
+  /**
+   * Render the loading spinner.
+   */
   loading() {
     return (
         <div className="loading">
@@ -336,6 +379,9 @@ export default class JobListing extends Component {
     );
   }
 
+  /**
+   * Render!
+   */
   render() {
     return (
       <div className={ this.props.className }>

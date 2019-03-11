@@ -9,6 +9,7 @@ jQuery( document ).ready( function( $ ) {
 		 */
 		init: function() {
 			$( "input[name='job_cpt_meta_location']" ).on( 'change', this.address_div ).change();
+			this.deregisterBlocks();
 		},
 
 		/**
@@ -30,6 +31,17 @@ jQuery( document ).ready( function( $ ) {
 				default:
 					$address_div.hide();
 					break;
+			}
+		},
+
+		/**
+		 * Deregister gutenberg blocks.
+		 */
+		deregisterBlocks: function() {
+			if ( typeof lpf_job_manager_data !== 'undefined' && lpf_job_manager_data.disallowed_blocks && typeof wp.blocks !== 'undefined' && typeof wp.blocks.unregisterBlockType === 'function' ) {
+				for ( const counter in lpf_job_manager_data.disallowed_blocks ) {
+					wp.blocks.unregisterBlockType( lpf_job_manager_data.disallowed_blocks[ counter ] );
+				}
 			}
 		}
 	};

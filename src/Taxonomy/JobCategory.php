@@ -30,7 +30,7 @@ final class JobCategory extends BaseTaxonomy {
 	 */
 	protected function get_arguments() {
 		return [
-			'hierarchical'          => false,
+			'hierarchical'          => true,
 			'public'                => true,
 			'show_in_nav_menus'     => true,
 			'show_ui'               => true,
@@ -38,7 +38,6 @@ final class JobCategory extends BaseTaxonomy {
 			'show_in_quick_edit'    => true,
 			'query_var'             => true,
 			'show_in_rest'          => true,
-			'rewrite'               => array( 'slug' => self::SLUG ),
 			'update_count_callback' => '_update_post_term_count',
 			'capabilities'          => [
 				'manage_terms' => Capabilities::EDIT_JOBS,

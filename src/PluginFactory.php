@@ -96,8 +96,8 @@ final class PluginFactory {
 			ApplicantManager::class          => 1,
 
 			// Taxonomies.
-			// JobCategory::class               => 1,
-			// JobStatus::class                 => 1,
+			JobCategory::class               => 1,
+			JobStatus::class                 => 1,
 			ApplicantStatus::class           => 1,
 
 			// Metaboxes.

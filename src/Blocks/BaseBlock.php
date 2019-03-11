@@ -61,7 +61,7 @@ abstract class BaseBlock implements Service, AssetsAware {
 	 * @since %VERSION%
 	 * @return string
 	 */
-	protected function get_block_slug() {
+	public function get_block_slug() {
 		return static::BASE_SLUG . static::BLOCK_SLUG;
 	}
 

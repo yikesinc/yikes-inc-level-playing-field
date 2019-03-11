@@ -62,17 +62,6 @@ final class Job extends CustomPostTypeEntity {
 	}
 
 	/**
-	 * Get the job description.
-	 *
-	 * @since %VERSION%
-	 *
-	 * @return string
-	 */
-	public function get_description() {
-		return $this->{JobMeta::DESCRIPTION};
-	}
-
-	/**
 	 * Get the type of the job.
 	 *
 	 * Possible values are full time, part time, contract, per diem, and other.
@@ -81,7 +70,7 @@ final class Job extends CustomPostTypeEntity {
 	 *
 	 * @return string
 	 */
-	public function get_type() {
+	public function get_job_type() {
 		$job_types = $this->get_job_type_options();
 		return isset( $job_types[ $this->{JobMeta::TYPE} ] ) ? $job_types[ $this->{JobMeta::TYPE} ] : '';
 	}
@@ -183,7 +172,6 @@ final class Job extends CustomPostTypeEntity {
 	 */
 	protected function get_lazy_properties() {
 		return [
-			JobMeta::DESCRIPTION                 => '',
 			JobMeta::TYPE                        => '',
 			JobMeta::LOCATION                    => '',
 			JobMeta::ADDRESS                     => [

@@ -24,15 +24,15 @@ $use_comma = (bool) apply_filters( 'lpf_single_job_template_address_use_comma', 
 
 	<div class="job-page-job-meta">
 
-		<?php if ( $this->show_description && ! empty( $job->get_description() ) ) : ?>
+		<?php if ( $this->show_description && ! empty( $job->get_content() ) ) : ?>
 			<div class="job-page-job-description">
-				<?php echo wp_kses_post( wpautop( $job->get_description() ) ); ?>
+				<?php echo wp_kses_post( $job->get_content() ); ?>
 			</div>
 		<?php endif; ?>
 
-		<?php if ( $this->show_job_type && ! empty( $job->get_type() ) ) : ?>
+		<?php if ( $this->show_job_type && ! empty( $job->get_job_type() ) ) : ?>
 			<div class="job-page-job-type">
-				<?php echo esc_html( $this->job_type_text ); ?> <?php echo esc_html( $job->get_type() ); ?>
+				<?php echo esc_html( $this->job_type_text ); ?> <?php echo esc_html( $job->get_job_type() ); ?>
 			</div>
 		<?php endif; ?>
 
