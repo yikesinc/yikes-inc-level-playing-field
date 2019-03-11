@@ -16,7 +16,6 @@ use Yikes\LevelPlayingField\AdminPage\SettingsPage;
 use Yikes\LevelPlayingField\AdminPage\GoProPage;
 use Yikes\LevelPlayingField\AdminPage\SupportPage;
 use Yikes\LevelPlayingField\Assets\AdminStyles;
-use Yikes\LevelPlayingField\Blocks\JobDescription;
 use Yikes\LevelPlayingField\CustomPostType\ApplicantManager;
 use Yikes\LevelPlayingField\CustomPostType\ApplicationManager;
 use Yikes\LevelPlayingField\CustomPostType\LimitedJobManager;
@@ -86,7 +85,6 @@ final class PluginFactory {
 	private static function get_service_container() {
 		return new Container( [
 			// Blocks.
-			JobDescription::class            => 1,
 			JobListing::class                => 1,
 			JobListings::class               => 1,
 
