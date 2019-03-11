@@ -24,13 +24,13 @@ namespace Yikes\LevelPlayingField;
 		?>
 		<tr>
 			<td>
-				<a href="<?php echo esc_attr( $record['job_link'] ); ?>"><?php echo esc_html( $record['job_name'] ); ?></a>
+				<a href="<?php echo esc_url( $record['job_link'] ); ?>"><?php echo esc_html( $record['job_name'] ); ?></a>
 			</td>
 			<td>
-				<a href="<?php echo esc_attr( $record['new_link'] ); ?>"><?php echo esc_html( $record['new_applicants'] ); ?></a>
+				<a href="<?php echo esc_url( $record['new_link'] ); ?>"><?php echo esc_html( $record['new_applicants'] ); ?></a>
 			</td>
 			<td>
-				<a href="<?php echo esc_attr( $record['total_link'] ); ?>"><?php echo esc_html( $record['total_applicants'] ); ?></a>
+				<a href="<?php echo esc_url( $record['total_link'] ); ?>"><?php echo esc_html( $record['total_applicants'] ); ?></a>
 			</td>
 		</tr>
 		<?php

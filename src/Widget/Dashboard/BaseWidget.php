@@ -64,9 +64,7 @@ abstract class BaseWidget implements Renderable, AssetsAware, Service {
 	 * @return string Rendered HTML of the shortcode.
 	 */
 	public function process_widget() {
-		$context = $this->get_context();
-
-		return $this->render( $context );
+		return $this->render( $this->get_context() );
 	}
 
 	/**
@@ -116,7 +114,7 @@ abstract class BaseWidget implements Renderable, AssetsAware, Service {
 			echo $view->render( $context );
 		} catch ( \Exception $exception ) {
 			// Don't let exceptions bubble up. Just render an empty widget instead.
-			echo '';
+			return;
 		}
 	}
 
