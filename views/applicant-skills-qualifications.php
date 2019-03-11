@@ -84,11 +84,13 @@ $applicant = $this->applicant;
 						</thead>
 						<tbody>
 							<?php
+							$proficiency_labels = $applicant->get_skills_options();
+
 							foreach ( $applicant->get_skills() as $skill ) {
 								printf(
 									'<tr><td>%s</td><td>%s</td></tr>',
 									esc_html( $skill['skill'] ),
-									esc_html( $skill['proficiency'] )
+									esc_html( $proficiency_labels[ $skill['proficiency'] ] )
 								);
 							}
 							?>
