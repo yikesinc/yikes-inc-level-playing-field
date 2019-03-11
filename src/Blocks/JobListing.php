@@ -3,7 +3,7 @@
  * YIKES Inc. Level Playing Field Plugin.
  *
  * @package Yikes\LevelPlayingField
- * @author  Jeremy Pry
+ * @author  Kevin Utz
  * @license GPL2
  */
 
@@ -53,7 +53,6 @@ final class JobListing extends BaseBlock {
 				'jobs_slug'     => JobManager::SLUG,
 				'edit_jobs_url' => add_query_arg( [ 'action' => 'edit' ], admin_url( 'post.php' ) ),
 				'attributes'    => $this->get_block_args()['attributes'],
-				'disallowed_post_types' => [ JobManager::SLUG ],
 			]
 		);
 

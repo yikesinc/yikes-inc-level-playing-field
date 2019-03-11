@@ -3,7 +3,7 @@
  * YIKES Inc. Level Playing Field Plugin.
  *
  * @package Yikes\LevelPlayingField
- * @author  Jeremy Pry
+ * @author  Jeremy Pry / Kevin Utz
  * @license GPL2
  */
 

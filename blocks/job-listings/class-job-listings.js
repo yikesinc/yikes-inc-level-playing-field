@@ -41,6 +41,9 @@ export default class JobListing extends Component {
     return jobsObject;
   }
 
+  /**
+   * Create the limit options for the dropdown.
+   */
   limitLoop() {
     const options = [];
     for ( let ii = 1; ii <= 15; ii++ ) {
@@ -50,6 +53,9 @@ export default class JobListing extends Component {
     return options;
   }
 
+  /**
+   * The inspector controls HTML. This is Gutenberg's sidebar.
+   */
   inspectorControls() {
 
     const limit =
@@ -108,6 +114,9 @@ export default class JobListing extends Component {
     return inspector_controls;
   }
 
+  /**
+   * Render the jobs.
+   */
   jobs() {
     let counter = 1;
     return Object.keys( this.state.jobs ).length > 0 ? 
@@ -127,6 +136,11 @@ export default class JobListing extends Component {
     : '<em>No jobs found...</em>';
   }
 
+  /**
+   * Render the job's title.
+   *
+   * @param object job The job object.
+   */
   jobHeader( job ) {
     return (
       <h4 key={ `job-listings-title-${ job.id }` }  className="job-page-job-title">
@@ -135,6 +149,11 @@ export default class JobListing extends Component {
     );
   }
 
+  /**
+   * Render the job's application button.
+   *
+   * @param object job The job object.
+   */
   jobListingAppButton( job ) {
     return (
       <div key={ `job-listings-app-${ job.id }` } className="job-page-application">
@@ -145,6 +164,9 @@ export default class JobListing extends Component {
     );
   }
 
+  /**
+   * Render the loading spinner.
+   */
   loading() {
     return (
         <div className="loading">
@@ -154,6 +176,9 @@ export default class JobListing extends Component {
     );
   }
 
+  /**
+   * Render!
+   */
   render() {
     return (
       <div className={ this.props.className }>

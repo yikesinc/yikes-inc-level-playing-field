@@ -3,7 +3,7 @@
  * YIKES Inc. Level Playing Field Plugin.
  *
  * @package Yikes\LevelPlayingField
- * @author  Ebonie Butler
+ * @author  Kevin Utz
  * @license GPL2
  */
 

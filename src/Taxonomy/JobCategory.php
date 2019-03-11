@@ -38,7 +38,6 @@ final class JobCategory extends BaseTaxonomy {
 			'show_in_quick_edit'    => true,
 			'query_var'             => true,
 			'show_in_rest'          => true,
-			'update_count_callback' => '_update_post_term_count',
 			'capabilities'          => [
 				'manage_terms' => Capabilities::EDIT_JOBS,
 				'edit_terms'   => Capabilities::EDIT_JOBS,
