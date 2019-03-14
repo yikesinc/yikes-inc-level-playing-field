@@ -611,16 +611,6 @@ final class Applicant extends CustomPostTypeEntity {
 	}
 
 	/**
-	 * Whether this applicant's data is currently anonymized.
-	 *
-	 * @since %VERSION%
-	 * @return bool
-	 */
-	public function is_anonymized() {
-		return (bool) $this->{ApplicantMeta::ANONYMIZED};
-	}
-
-	/**
 	 * Get the user ID who viewed the applicant.
 	 *
 	 * @since %VERSION%
@@ -909,7 +899,17 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @return bool $anonymized True if the applicant is anonymized.
 	 */
 	public function get_anonymized() {
-		return $this->{ApplicantMeta::ANONYMIZED};
+		return (bool) $this->{ApplicantMeta::ANONYMIZED};
+	}
+
+	/**
+	 * Whether this applicant's data is currently anonymized.
+	 *
+	 * @since %VERSION%
+	 * @return bool
+	 */
+	public function is_anonymized() {
+		return $this->get_anonymized();
 	}
 
 	/**
