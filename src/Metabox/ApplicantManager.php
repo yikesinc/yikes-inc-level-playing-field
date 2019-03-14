@@ -57,10 +57,6 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 		parent::register();
 		$this->register_assets();
 
-		add_action( 'in_admin_header', function() {
-			$this->set_screen_columns();
-		} );
-
 		add_action( 'admin_enqueue_scripts', function() {
 			if ( ! $this->is_applicant_screen() ) {
 				return;
@@ -217,22 +213,6 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 		wp_send_json_success( [
 			'id'       => $id,
 			'nickname' => $applicant->get_nickname(),
-		] );
-	}
-
-	/**
-	 * Set the number of screen columns to 1.
-	 *
-	 * @since %VERSION%
-	 */
-	private function set_screen_columns() {
-		if ( ! $this->is_applicant_screen() ) {
-			return;
-		}
-
-		add_screen_option( 'layout_columns', [
-			'default' => 1,
-			'max'     => 1,
 		] );
 	}
 

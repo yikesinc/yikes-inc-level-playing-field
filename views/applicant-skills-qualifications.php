@@ -16,17 +16,17 @@ use Yikes\LevelPlayingField\Model\Applicant;
 $applicant = $this->applicant;
 ?>
 <!-- Applicant Skills and Qualifications -->
-<div class="applicant-skills-qualifications">
-	<h2><?php esc_html_e( 'Skills and Qualifications', 'yikes-level-playing-field' ); ?></h2>
+<div id="applicant-skills-qualifications">
+	<h2 class="yks_mbox_title"><?php esc_html_e( 'Skills and Qualifications', 'yikes-level-playing-field' ); ?></h2>
 	<?php if ( ! empty( $applicant->get_schooling() ) || ! empty( $applicant->get_certifications() ) ) : ?>
 	<section id="education">
-		<h4 class="yks_mbox_title"><?php esc_html_e( 'Education', 'yikes-level-playing-field' ); ?></h4>
+		<h4 class="yks_mbox_subtitle"><?php esc_html_e( 'Education', 'yikes-level-playing-field' ); ?></h4>
 		<div class="applicant-skills-container">
 			<?php
 			if ( ! empty( $applicant->get_schooling() ) ) :
 				?>
 			<h5><?php esc_html_e( 'Schooling', 'yikes-level-playing-field' ); ?></h5>
-			<ol>
+			<ol class="applicant-skills-schooling">
 				<?php
 				$type_selections = $applicant->get_schooling_options();
 				foreach ( $applicant->get_schooling() as $schooling ) {
@@ -49,7 +49,7 @@ $applicant = $this->applicant;
 			<?php endif; ?>
 			<?php if ( ! empty( $applicant->get_certifications() ) ) : ?>
 			<h5><?php esc_html_e( 'Certifications', 'yikes-level-playing-field' ); ?></h5>
-			<ol>
+			<ol class="applicant-skills-certifications">
 				<?php
 				foreach ( $applicant->get_certifications() as $certification ) {
 					printf(
@@ -67,7 +67,7 @@ $applicant = $this->applicant;
 	<?php endif; ?>
 	<?php if ( ! empty( $applicant->get_skills() ) ) : ?>
 	<section id="skills">
-		<h4 class="yks_mbox_title"><?php esc_html_e( 'Skills', 'yikes-level-playing-field' ); ?></h4>
+		<h4 class="yks_mbox_subtitle"><?php esc_html_e( 'Skills', 'yikes-level-playing-field' ); ?></h4>
 		<div class="applicant-skills-container">
 			<table class="wp-list-table widefat fixed striped users">
 				<thead>
@@ -114,7 +114,7 @@ $applicant = $this->applicant;
 		$needs_comma = count( $proficiency_counts ) - 1;
 
 		?>
-		<h4 class="yks_mbox_title"><?php esc_html_e( 'Languages', 'yikes-level-playing-field' ); ?></h4>
+		<h4 class="yks_mbox_subtitle"><?php esc_html_e( 'Languages', 'yikes-level-playing-field' ); ?></h4>
 		<div class="applicant-skills-container">
 			<p>
 				<?php
@@ -136,7 +136,7 @@ $applicant = $this->applicant;
 	<?php endif; ?>
 	<?php if ( ! empty( $applicant->get_experience() ) ) : ?>
 	<section id="experience">
-		<h4 class="yks_mbox_title"><?php esc_html_e( 'Experience', 'yikes-level-playing-field' ); ?></h4>
+		<h4 class="yks_mbox_subtitle"><?php esc_html_e( 'Experience', 'yikes-level-playing-field' ); ?></h4>
 		<div class="applicant-skills-container">
 			<ol>
 				<?php
@@ -155,7 +155,7 @@ $applicant = $this->applicant;
 	<?php endif; ?>
 	<?php if ( ! empty( $applicant->get_volunteer() ) ) : ?>
 	<section id="volunteer-work">
-		<h4 class="yks_mbox_title"><?php esc_html_e( 'Volunteer Work', 'yikes-level-playing-field' ); ?></h4>
+		<h4 class="yks_mbox_subtitle"><?php esc_html_e( 'Volunteer Work', 'yikes-level-playing-field' ); ?></h4>
 		<div class="applicant-skills-container">
 			<ol>
 				<?php
@@ -172,4 +172,4 @@ $applicant = $this->applicant;
 		</div>
 	</section>
 	<?php endif; ?>
-</div><!-- /postbox -->
+</div><!-- /applicant-skills-qualification -->
