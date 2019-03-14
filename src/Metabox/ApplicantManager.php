@@ -18,8 +18,10 @@ use Yikes\LevelPlayingField\Assets\StyleAsset;
 use Yikes\LevelPlayingField\CustomPostType\ApplicantManager as ApplicantCPT;
 use Yikes\LevelPlayingField\Exception\Exception;
 use Yikes\LevelPlayingField\Messaging\ApplicantMessaging;
+use Yikes\LevelPlayingField\Model\Applicant;
 use Yikes\LevelPlayingField\Model\ApplicantRepository;
 use Yikes\LevelPlayingField\Model\JobRepository;
+use Yikes\LevelPlayingField\Model\ApplicantMeta;
 use Yikes\LevelPlayingField\Service;
 use Yikes\LevelPlayingField\View\View;
 
@@ -156,6 +158,18 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 	}
 
 	/**
+	 * Get the priority within the context where the boxes should show.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param Applicant $applicant The applicant object.
+	 */
+	protected function update_viewed_by( $applicant ) {
+		$applicant->set_viewed_by( get_current_user_id() );
+		$applicant->persist();
+	}
+
+	/**
 	 * Process the metabox attributes.
 	 *
 	 * @since %VERSION%
@@ -169,6 +183,7 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 	protected function process_attributes( $post, $atts ) {
 		$applicant = ( new ApplicantRepository() )->find( $post->ID );
 		$job       = ( new JobRepository() )->find( $applicant->get_job_id() );
+		$this->update_viewed_by( $applicant );
 		return [
 			'applicant' => $applicant,
 			'job'       => $job,
