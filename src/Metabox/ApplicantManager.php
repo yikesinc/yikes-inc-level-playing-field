@@ -21,7 +21,6 @@ use Yikes\LevelPlayingField\Messaging\ApplicantMessaging;
 use Yikes\LevelPlayingField\Model\Applicant;
 use Yikes\LevelPlayingField\Model\ApplicantRepository;
 use Yikes\LevelPlayingField\Model\JobRepository;
-use Yikes\LevelPlayingField\Model\ApplicantMeta;
 use Yikes\LevelPlayingField\Service;
 use Yikes\LevelPlayingField\View\View;
 
