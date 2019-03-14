@@ -123,6 +123,8 @@ final class Applicant extends CustomPostTypeEntity {
 			ApplicantMeta::LANGUAGE    => FILTER_SANITIZE_STRING,
 			ApplicantMeta::PROFICIENCY => FILTER_SANITIZE_STRING,
 		],
+		ApplicantMeta::ANONYMIZER       => FILTER_SANITIZE_STRING,
+		ApplicantMeta::ANONYMIZED       => FILTER_VALIDATE_BOOLEAN,
 	];
 
 	/**
@@ -847,7 +849,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @param string $guid A guid.
 	 */
 	public function set_guid( $guid ) {
-		$this->guid = filter_var( $guid, self::SANITIZATION[ ApplicantMeta::GUID ] );
+		$this->{ApplicantMeta::GUID} = filter_var( $guid, self::SANITIZATION[ ApplicantMeta::GUID ] );
 		$this->changed_property( ApplicantMeta::GUID );
 	}
 
@@ -859,7 +861,55 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @return string $guid The applicant's guid.
 	 */
 	public function get_guid() {
-		return $this->guid;
+		return $this->{ApplicantMeta::GUID};
+	}
+
+	/**
+	 * Set the anonymizer class used for this applicant's anonymization.
+	 *
+	 * Note: we need to use addslashes to escape namespace backslashes as WordPress will stripslashes when updating the DB.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param string $anonymizer The class name used for anonymization.
+	 */
+	public function set_anonymizer( $anonymizer ) {
+		$this->{ApplicantMeta::ANONYMIZER} = addslashes( filter_var( $anonymizer, self::SANITIZATION[ ApplicantMeta::ANONYMIZER ] ) );
+		$this->changed_property( ApplicantMeta::ANONYMIZER );
+	}
+
+	/**
+	 * Get the anonymizer class used for this applicant's anonymization.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @return string $anonymizer The class name used for anonymization.
+	 */
+	public function get_anonymizer() {
+		return $this->{ApplicantMeta::ANONYMIZER};
+	}
+
+	/**
+	 * Set the anonymized property.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param bool $anonymized True to set this applicant as anonymized.
+	 */
+	public function set_anonymized( $anonymized ) {
+		$this->{ApplicantMeta::ANONYMIZED} = filter_var( $anonymized, self::SANITIZATION[ ApplicantMeta::ANONYMIZED ] );
+		$this->changed_property( ApplicantMeta::ANONYMIZED );
+	}
+
+	/**
+	 * Get the anonymized property.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @return bool $anonymized True if the applicant is anonymized.
+	 */
+	public function get_anonymized() {
+		return $this->{ApplicantMeta::ANONYMIZED};
 	}
 
 	/**
@@ -910,9 +960,9 @@ final class Applicant extends CustomPostTypeEntity {
 		$properties = array_diff_key( get_object_vars( $this ), $this->get_excluded_properties() );
 		array_walk_recursive( $properties, $this->get_anonymizer_callback( $anonymizer, 'anonymize' ) );
 
-		// Manually set anonymizer properties.
-		$properties[ ApplicantMeta::ANONYMIZED ] = true;
-		$properties[ ApplicantMeta::ANONYMIZER ] = get_class( $anonymizer );
+		// Set anonymizer properties.
+		$this->set_anonymized( true );
+		$this->set_anonymizer( get_class( $anonymizer ) );
 
 		// Copy the changed properties back.
 		$this->update_properties( $properties );
@@ -975,17 +1025,17 @@ final class Applicant extends CustomPostTypeEntity {
 		}
 
 		// Ensure the unanonymizer class is the same that was used to anonymize.
-		if ( get_class( $anonymizer ) !== $this->anonymizer ) {
-			throw InvalidClass::mismatch( get_class( $anonymizer ), $this->anonymizer );
+		if ( get_class( $anonymizer ) !== $this->get_anonymizer() ) {
+			throw InvalidClass::mismatch( get_class( $anonymizer ), $this->get_anonymizer() );
 		}
 
 		// Walk through the object properties, unanonymizing them.
 		$properties = array_diff_key( get_object_vars( $this ), $this->get_excluded_properties() );
 		array_walk_recursive( $properties, $this->get_anonymizer_callback( $anonymizer, 'reveal' ) );
 
-		// Set the anonymized property.
-		$properties[ ApplicantMeta::ANONYMIZED ] = false;
-		$properties[ ApplicantMeta::ANONYMIZER ] = '';
+		// Set the anonymizer properties.
+		$this->set_anonymized( false );
+		$this->set_anonymizer( '' );
 
 		// Copy the changed properties back.
 		$this->update_properties( $properties );
