@@ -164,8 +164,10 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 	 * @param Applicant $applicant The applicant object.
 	 */
 	protected function update_viewed_by( $applicant ) {
-		$applicant->set_viewed_by( get_current_user_id() );
-		$applicant->persist();
+		if ( $applicant->viewed_by() === 0 ) {
+			$applicant->set_viewed_by( get_current_user_id() );
+			$applicant->persist();
+		}
 	}
 
 	/**
