@@ -203,6 +203,12 @@ final class JobManager extends AwesomeBaseMetabox implements AssetsAware {
 							'type' => 'address',
 						],
 						[
+							'name' => __( 'Application Success Message', 'yikes-level-playing-field' ),
+							'desc' => __( "The message displayed after the job's application is submitted.", 'yikes-level-playing-field' ),
+							'id'   => $this->prefix_field( JobMeta::APPLICATION_SUCCESS_MESSAGE ),
+							'type' => 'textarea',
+						],
+						[
 							'name'      => __( 'Application Form', 'yikes-level-playing-field' ),
 							'desc'      => __( 'Choose the application form to use for this job', 'yikes-level-playing-field' ),
 							'id'        => MetaLinks::APPLICATION,
