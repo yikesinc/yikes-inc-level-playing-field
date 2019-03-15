@@ -152,6 +152,6 @@ jQuery( function ( $ ) {
 	}
 
 	function refresh_message_board_response( response ) {
-		$( '.messaging-container' ).html( response.data );
+		$( '#applicant-messaging' ).html( response.data );
 	}
 });

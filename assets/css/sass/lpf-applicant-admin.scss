@@ -30,17 +30,17 @@
       }
     }
 
-    .yks_mbox_title, .yks_mbox_subtitle, h5 {
+    .lpf_mbox_title, .lpf_mbox_subtitle, h5 {
       font-weight: 600;
     }
 
-    .yks_mbox_title {
+    .lpf_mbox_title {
       @include fontsize(20px);
       margin: 1rem;
       padding: 0;
     }
 
-    .yks_mbox_subtitle {
+    .lpf_mbox_subtitle {
       @include fontsize(18px);
       padding-left: 1rem;
     }

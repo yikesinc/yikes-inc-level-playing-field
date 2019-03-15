@@ -15,7 +15,7 @@ $comments = $this->comments;
 ?>
 <!-- Applicant Messaging -->
 <div id="applicant-messaging">
-	<h2 class="yks_mbox_title"><?php esc_html_e( 'Applicant Messaging', 'yikes-level-playing-field' ); ?></h2>
+	<h2 class="lpf_mbox_title"><?php esc_html_e( 'Applicant Messaging', 'yikes-level-playing-field' ); ?></h2>
 	<div class="messaging-container">
 		<?php
 		if ( false === $this->is_metabox ) {

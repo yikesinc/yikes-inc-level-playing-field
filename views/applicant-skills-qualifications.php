@@ -17,10 +17,10 @@ $applicant = $this->applicant;
 ?>
 <!-- Applicant Skills and Qualifications -->
 <div id="applicant-skills-qualifications">
-	<h2 class="yks_mbox_title"><?php esc_html_e( 'Skills and Qualifications', 'yikes-level-playing-field' ); ?></h2>
+	<h2 class="lpf_mbox_title"><?php esc_html_e( 'Skills and Qualifications', 'yikes-level-playing-field' ); ?></h2>
 	<?php if ( ! empty( $applicant->get_schooling() ) || ! empty( $applicant->get_certifications() ) ) : ?>
 	<section id="education">
-		<h4 class="yks_mbox_subtitle"><?php esc_html_e( 'Education', 'yikes-level-playing-field' ); ?></h4>
+		<h4 class="lpf_mbox_subtitle"><?php esc_html_e( 'Education', 'yikes-level-playing-field' ); ?></h4>
 		<div class="applicant-skills-container">
 			<?php
 			if ( ! empty( $applicant->get_schooling() ) ) :
@@ -67,7 +67,7 @@ $applicant = $this->applicant;
 	<?php endif; ?>
 	<?php if ( ! empty( $applicant->get_skills() ) ) : ?>
 	<section id="skills">
-		<h4 class="yks_mbox_subtitle"><?php esc_html_e( 'Skills', 'yikes-level-playing-field' ); ?></h4>
+		<h4 class="lpf_mbox_subtitle"><?php esc_html_e( 'Skills', 'yikes-level-playing-field' ); ?></h4>
 		<div class="applicant-skills-container">
 			<table class="wp-list-table widefat fixed striped users">
 				<thead>
@@ -114,7 +114,7 @@ $applicant = $this->applicant;
 		$needs_comma = count( $proficiency_counts ) - 1;
 
 		?>
-		<h4 class="yks_mbox_subtitle"><?php esc_html_e( 'Languages', 'yikes-level-playing-field' ); ?></h4>
+		<h4 class="lpf_mbox_subtitle"><?php esc_html_e( 'Languages', 'yikes-level-playing-field' ); ?></h4>
 		<div class="applicant-skills-container">
 			<p>
 				<?php
@@ -136,7 +136,7 @@ $applicant = $this->applicant;
 	<?php endif; ?>
 	<?php if ( ! empty( $applicant->get_experience() ) ) : ?>
 	<section id="experience">
-		<h4 class="yks_mbox_subtitle"><?php esc_html_e( 'Experience', 'yikes-level-playing-field' ); ?></h4>
+		<h4 class="lpf_mbox_subtitle"><?php esc_html_e( 'Experience', 'yikes-level-playing-field' ); ?></h4>
 		<div class="applicant-skills-container">
 			<ol>
 				<?php
@@ -155,7 +155,7 @@ $applicant = $this->applicant;
 	<?php endif; ?>
 	<?php if ( ! empty( $applicant->get_volunteer() ) ) : ?>
 	<section id="volunteer-work">
-		<h4 class="yks_mbox_subtitle"><?php esc_html_e( 'Volunteer Work', 'yikes-level-playing-field' ); ?></h4>
+		<h4 class="lpf_mbox_subtitle"><?php esc_html_e( 'Volunteer Work', 'yikes-level-playing-field' ); ?></h4>
 		<div class="applicant-skills-container">
 			<ol>
 				<?php
