@@ -30,21 +30,6 @@ jQuery( function ( $ ) {
 			send_message( message, post_id );
 		});
 
-		$( 'body' ).on( 'click', '#conversation-show-all', function() {
-
-			const additional_messages = $( '.conversation-container .hidden' );
-			const headline            = $( '#conversation-show-all' );
-
-			// Fade the messages in/out, change the title
-			if ( additional_messages.is( ':visible' ) ) {
-				additional_messages.fadeOut();
-				headline.fadeOut( 'fast', function() { headline.text( messaging_data.strings.show_additional_messages ).fadeIn() });
-			} else {
-				additional_messages.fadeIn();
-				headline.fadeOut( 'fast', function() { headline.text( messaging_data.strings.hide_additional_messages ).fadeIn() });
-			}
-		});
-
 		// Admin side functions.
 		if ( $( '#interview-scheduler' ).length > 0 ) {
 
@@ -152,6 +137,6 @@ jQuery( function ( $ ) {
 	}
 
 	function refresh_message_board_response( response ) {
-		$( '.messaging-container' ).html( response.data );
+		$( '#applicant-messaging' ).html( response.data );
 	}
 });

@@ -1,19 +1,23 @@
 @import "utilities/index";
 
 /* Single View */
-.single-applicant-view {
+.post-type-applicants {
 
-  section {
-    h5 {
-      @include fontsize(16px);
-      font-weight: 600;
-    }
+  #post-body-content {
+    display: none;
+  }
+}
 
-    .yks_mbox_title {
-      @include fontsize(20px);
-    }
+#view-applicant {
 
-    &#header {
+  h2.hndle {
+    display: none;
+  }
+
+  .inside {
+
+    #applicant-info {
+      border-bottom: 2px solid $wp-silvergray;
 
       .avatar {
         float: left;
@@ -26,16 +30,43 @@
       }
     }
 
-    .applicant-skills-container {
-      padding: 0 0 1rem 1rem;
+    .lpf_mbox_title, .lpf_mbox_subtitle, h5 {
+      font-weight: 600;
+    }
 
-      p {
-        @include fontsize(16px);
+    .lpf_mbox_title {
+      @include fontsize(20px);
+      margin: 1rem;
+      padding: 0;
+    }
+
+    .lpf_mbox_subtitle {
+      @include fontsize(18px);
+      padding-left: 1rem;
+    }
+
+    h5 {
+      @include fontsize(16px);
+      margin-bottom: 0.6rem;
+    }
+
+    .applicant-skills-container {
+      padding: 0.5rem 0 1.6rem 2rem;
+
+      ol, ul {
+        margin: 0;
+        padding-left: 1rem;
       }
 
       th {
         @include fontsize(14px);
         text-align: left;
+      }
+    }
+
+    #education .applicant-skills-container {
+      h5:nth-of-type(2) {
+        margin-top: 1rem;
       }
     }
   }

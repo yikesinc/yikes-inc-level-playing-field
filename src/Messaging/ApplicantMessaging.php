@@ -125,10 +125,6 @@ class ApplicantMessaging implements Renderable, AssetsAware, Service {
 					'refresh_nonce'   => wp_create_nonce( 'refresh_conversation' ),
 					'interview_nonce' => wp_create_nonce( 'send_interview_request' ),
 				],
-				'strings'    => [
-					'show_additional_messages' => __( 'Show All Messages', 'yikes-level-playing-field' ),
-					'hide_additional_messages' => __( 'Hide Additional Messages', 'yikes-level-playing-field' ),
-				],
 				'is_metabox' => is_admin(),
 			]
 		);

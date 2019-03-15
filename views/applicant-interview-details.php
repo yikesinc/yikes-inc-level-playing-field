@@ -14,6 +14,8 @@ use Yikes\LevelPlayingField\Model\Applicant;
 /** @var Applicant $applicant */
 $applicant = $this->applicant;
 ?>
+
+<!-- Interview details sidebar -->
 <div id="interview" class="postbox">
 	<h2 class="hndle ui-sortable-handle">
 		<span>

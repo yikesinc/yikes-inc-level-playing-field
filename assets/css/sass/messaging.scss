@@ -1,7 +1,7 @@
 @import "utilities/index";
 
 #applicant-messaging {
-	h2 {}
+	border-top: 2px solid $wp-silvergray;
 
 	h4 {
 		@include fontsize(16px);
@@ -9,9 +9,12 @@
 	}
 }
 
+.messaging-container {
+	padding: 0 0 0 1rem;
+}
+
 .new-applicant-message-container {
-	padding: 0 0 0 32px;
-	width: 92%;
+	padding-bottom: 0.4rem;
 
 	&.cursor-disabled {
 		cursor: not-allowed;
@@ -31,10 +34,12 @@
 
 .send-new-applicant-message-container,
 .conversation-container-text {
-	padding: 1rem 0 0 32px;
 }
 
 .conversation-container {
+	max-height: 500px;
+	overflow-x: hidden;
+	overflow-y: scroll;
 
 	.lpf-message.hidden {
 		display: none;
@@ -47,7 +52,8 @@
 			display: inline-block;
 			border-radius: 5px;
 			padding: 0.6rem 1rem;
-			width: 90%;
+			max-width: 84%;
+			width: auto;
 		}
 
 		.message-timestamp {
@@ -104,17 +110,11 @@
 			color: $wp-green;
 		}
 	}
-
-	#conversation-show-all {
-		text-align: center;
-		cursor: pointer;   
-	}
 }
 
 
 #interview-scheduler-container {
-	padding: 2rem 0 2rem 32px;
-	width: 92%;
+	padding: 1.6rem 0;
 
 	label {
 		margin: 0.4rem 0;

@@ -8,7 +8,7 @@
         "babel-preset-latest": "^6",
         "bourbon": "^4.3",
         "bourbon-neat": "^1.9",
-        "browser-sync": "^2",
+        "browser-sync": "^2.26.3",
         "css-mqpacker": "^6",
         "del": "^3",
         "eslint": "^4",
@@ -44,10 +44,12 @@
         "gulp-wp-pot": "^2",
         "gulp-zip": "^4",
         "gulp.spritesmith": "^6",
-        "sassdoc": "^2"
+        "sassdoc": "^2.5.1"
     },
     "resolutions": {
         "natives": "1.1.3"
     },
-    "dependencies": {}
+    "dependencies": {
+        "isobject": "^3.0.1"
+    }
 }
