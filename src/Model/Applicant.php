@@ -759,12 +759,19 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @since %VERSION%
 	 */
 	public function confirm_interview() {
+		// todo: find out why the confirm interview template is being rendered three times.
+		if ( $this->get_interview_status() === 'confirmed' ) {
+			return;
+		}
+
 		$this->set_interview_status( 'confirmed' );
+		$this->load_lazy_property( ApplicantMeta::ANONYMIZER );
+		$anonymizer = $this->get_anonymizer();
+		$this->unanonymize( new $anonymizer() );
 		$this->persist_properties();
 
 		/*
-		 * todo: Unanonymize!
-		 * todo: Maybe add a message like 'The applicant has confirmed the interview'?
+		 * todo: Maybe add a message to the messaging container like 'The applicant has confirmed the interview'?
 		 */
 
 		// Send off confirmed interview email to both the applicant and job managers.
@@ -1019,10 +1026,18 @@ final class Applicant extends CustomPostTypeEntity {
 			return;
 		}
 
+		/**
+		 * Commenting out role check until review of issue #140 or answers to #145.
+		 */
+
 		// Don't allow unanonymizing without the proper role.
-		if ( ! current_user_can( Capabilities::UNANONYMIZE, $this ) ) {
+		/* if ( ! current_user_can( Capabilities::UNANONYMIZE, $this ) ) {
 			throw FailedToUnanonymize::not_capable();
-		}
+		} */
+
+		/**
+		 * Todo: do we need this? we're passing in `$this->get_anonymizer()` when we unanonymize so this conditional can't return true.
+		 */
 
 		// Ensure the unanonymizer class is the same that was used to anonymize.
 		if ( get_class( $anonymizer ) !== $this->get_anonymizer() ) {
@@ -1101,7 +1116,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 *
 	 * @param string $property Name of the property to load.
 	 */
-	protected function load_lazy_property( $property ) {
+	protected function load_lazy_property( $property = '' ) {
 		if ( ApplicantMeta::STATUS === $property ) {
 			$this->load_status();
 			return;
@@ -1233,6 +1248,7 @@ final class Applicant extends CustomPostTypeEntity {
 		if ( empty( $properties ) ) {
 			$properties = [
 				ApplicantMeta::ANONYMIZER => 1,
+				ApplicantMeta::ANONYMIZED => 1,
 				'changes'                 => 1,
 				'post'                    => 1,
 				'new'                     => 1,
