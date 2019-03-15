@@ -37,6 +37,9 @@
 }
 
 .conversation-container {
+	max-height: 500px;
+	overflow-x: hidden;
+	overflow-y: scroll;
 
 	.lpf-message.hidden {
 		display: none;
@@ -106,11 +109,6 @@
 		&:before {
 			color: $wp-green;
 		}
-	}
-
-	#conversation-show-all {
-		text-align: center;
-		cursor: pointer;   
 	}
 }
 
