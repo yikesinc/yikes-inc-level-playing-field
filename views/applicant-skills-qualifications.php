@@ -22,9 +22,7 @@ $applicant = $this->applicant;
 	<section id="education">
 		<h4 class="lpf_mbox_subtitle"><?php esc_html_e( 'Education', 'yikes-level-playing-field' ); ?></h4>
 		<div class="applicant-skills-container">
-			<?php
-			if ( ! empty( $applicant->get_schooling() ) ) :
-				?>
+		<?php if ( ! empty( $applicant->get_schooling() ) ) : ?>
 			<h5><?php esc_html_e( 'Schooling', 'yikes-level-playing-field' ); ?></h5>
 			<ol class="applicant-skills-schooling">
 				<?php
@@ -46,10 +44,11 @@ $applicant = $this->applicant;
 				}
 				?>
 			</ol>
-			<?php endif; ?>
-			<?php if ( ! empty( $applicant->get_certifications() ) ) : ?>
+		<?php endif; ?>
+
+		<?php if ( ! empty( $applicant->get_certifications() ) ) : ?>
 			<h5><?php esc_html_e( 'Certifications', 'yikes-level-playing-field' ); ?></h5>
-			<ol class="applicant-skills-certifications">
+			<ol>
 				<?php
 				foreach ( $applicant->get_certifications() as $certification ) {
 					printf(
@@ -65,6 +64,7 @@ $applicant = $this->applicant;
 		</div>
 	</section>
 	<?php endif; ?>
+
 	<?php if ( ! empty( $applicant->get_skills() ) ) : ?>
 	<section id="skills">
 		<h4 class="lpf_mbox_subtitle"><?php esc_html_e( 'Skills', 'yikes-level-playing-field' ); ?></h4>
@@ -91,6 +91,7 @@ $applicant = $this->applicant;
 		</div>
 	</section>
 	<?php endif; ?>
+
 	<?php if ( ! empty( $applicant->get_languages() ) ) : ?>
 	<section id="languages">
 		<?php
@@ -134,6 +135,7 @@ $applicant = $this->applicant;
 		</div>
 	</section>
 	<?php endif; ?>
+
 	<?php if ( ! empty( $applicant->get_experience() ) ) : ?>
 	<section id="experience">
 		<h4 class="lpf_mbox_subtitle"><?php esc_html_e( 'Experience', 'yikes-level-playing-field' ); ?></h4>
@@ -153,6 +155,7 @@ $applicant = $this->applicant;
 		</div>
 	</section>
 	<?php endif; ?>
+
 	<?php if ( ! empty( $applicant->get_volunteer() ) ) : ?>
 	<section id="volunteer-work">
 		<h4 class="lpf_mbox_subtitle"><?php esc_html_e( 'Volunteer Work', 'yikes-level-playing-field' ); ?></h4>

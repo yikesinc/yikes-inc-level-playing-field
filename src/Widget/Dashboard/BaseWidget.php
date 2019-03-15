@@ -9,8 +9,13 @@
 
 namespace Yikes\LevelPlayingField\Widget\Dashboard;
 
+use Yikes\LevelPlayingField\Assets\AssetsAware;
+use Yikes\LevelPlayingField\Assets\AssetsAwareness;
 use Yikes\LevelPlayingField\Exception\MustExtend;
+use Yikes\LevelPlayingField\Renderable;
 use Yikes\LevelPlayingField\Service;
+use Yikes\LevelPlayingField\View\PostEscapedView;
+use Yikes\LevelPlayingField\View\TemplatedView;
 
 /**
  * Abstract class BaseWidget.
@@ -20,9 +25,12 @@ use Yikes\LevelPlayingField\Service;
  * @package Yikes\LevelPlayingField
  * @author  Ebonie Butler
  */
-abstract class BaseWidget implements Service {
+abstract class BaseWidget implements Renderable, AssetsAware, Service {
 
-	const SLUG = '_basewidget_';
+	use AssetsAwareness;
+
+	const SLUG     = '_basewidget_';
+	const VIEW_URI = '_baseviewuri_';
 
 	/**
 	 * Register the WordPress hooks.
@@ -30,6 +38,8 @@ abstract class BaseWidget implements Service {
 	 * @since %VERSION%
 	 */
 	public function register() {
+		$this->register_assets();
+
 		add_action( 'wp_dashboard_setup', [ $this, 'add_dashboard_widget' ] );
 	}
 
@@ -40,8 +50,21 @@ abstract class BaseWidget implements Service {
 		wp_add_dashboard_widget(
 			$this->get_slug(),
 			$this->get_title(),
-			[ $this, 'render' ]
+			[ $this, 'process_widget' ]
 		);
+	}
+
+	/**
+	 * Process the shortcode attributes and prepare rendering.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param array|string $atts Attributes as passed to the shortcode.
+	 *
+	 * @return string Rendered HTML of the shortcode.
+	 */
+	public function process_widget() {
+		return $this->render( $this->get_context() );
 	}
 
 	/**
@@ -60,6 +83,42 @@ abstract class BaseWidget implements Service {
 	}
 
 	/**
+	 * Get the View URI to use for rendering the dashboard widget.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @return string View URI.
+	 * @throws MustExtend When the default view URI has not been extended.
+	 */
+	protected function get_view_uri() {
+		if ( self::VIEW_URI === static::VIEW_URI ) {
+			throw MustExtend::default_view( self::VIEW_URI );
+		}
+
+		return static::VIEW_URI;
+	}
+
+	/**
+	 * Render the current Renderable.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param array $context Context in which to render.
+	 *
+	 */
+	public function render( array $context = [] ) {
+		try {
+			$this->enqueue_assets();
+			$view = new PostEscapedView( new TemplatedView( $this->get_view_uri() ) );
+
+			echo $view->render( $context );
+		} catch ( \Exception $exception ) {
+			// Don't let exceptions bubble up. Just render an empty widget instead.
+			return;
+		}
+	}
+
+	/**
 	 * Get the title of the dashboard widget.
 	 *
 	 * @since %VERSION%
@@ -67,9 +126,16 @@ abstract class BaseWidget implements Service {
 	abstract public function get_title();
 
 	/**
-	 * Render widget to dashboard.
+	 * Get the context to pass onto the view.
+	 *
+	 * Override to provide data to the view that is not part of the shortcode
+	 * attributes.
 	 *
 	 * @since %VERSION%
+	 *
+	 * @return array Context to pass onto view.
 	 */
-	abstract public function render();
+	protected function get_context() {
+		return [];
+	}
 }
