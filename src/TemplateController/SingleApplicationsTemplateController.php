@@ -54,7 +54,7 @@ class SingleApplicationsTemplateController extends TemplateController {
 	 * @return bool True if the current request should use your template.
 	 */
 	protected function is_template_request() {
-		return ( new ApplicationFormPage() )->get_page_id( ApplicationFormPage::PAGE_SLUG ) === get_queried_object_id();
+		return in_the_loop() && ( new ApplicationFormPage() )->get_page_id( ApplicationFormPage::PAGE_SLUG ) === get_queried_object_id();
 	}
 
 	/**
