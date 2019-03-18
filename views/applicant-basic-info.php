@@ -14,6 +14,7 @@ use Yikes\LevelPlayingField\Model\Applicant;
 /** @var Applicant $applicant */
 $applicant = $this->applicant;
 ?>
+<!-- Basic info and cover letter sidebar -->
 <div id="basic-info" class="postbox">
 	<h2 class="hndle ui-sortable-handle">
 		<span>

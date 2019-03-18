@@ -18,9 +18,8 @@ $applicant = $this->applicant;
 /** @var Job $job */
 $job = $this->job;
 ?>
-<!-- Avatar, nicknme and associated job -->
-<div id="applicant-info" class="postbox">
-	<div class="inside">
+	<!-- Avatar, nicknme and associated job -->
+	<div id="applicant-info">
 		<section id="header">
 			<?php echo $applicant->get_avatar_img( 120 ); //phpcs:ignore WordPress.Security.EscapeOutput ?>
 			<h5>
@@ -34,8 +33,7 @@ $job = $this->job;
 				<span class="label"><?php esc_html_e( 'Job:', 'yikes-level-playing-field' ); ?></span>
 				<?php echo esc_html( $job->get_title() ); ?>
 			</h5>
-		</section><!-- /header -->
-	</div><!-- /inside -->							
-	<br class="clear">
-	</br>
-</div><!-- /postbox -->
+		</section><!-- /header -->				
+		<br class="clear">
+		</br>
+	</div><!-- /applicant-info -->

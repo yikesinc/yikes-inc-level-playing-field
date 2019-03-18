@@ -51,7 +51,7 @@ class SingleJobsTemplateController extends TemplateController {
 	 * @return bool True if the current request should use your template.
 	 */
 	protected function is_template_request() {
-		return is_single() && JobManager::SLUG === get_query_var( 'post_type' );
+		return in_the_loop() && is_single() && JobManager::SLUG === get_query_var( 'post_type' );
 	}
 
 	/**
