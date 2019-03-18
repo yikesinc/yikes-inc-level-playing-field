@@ -757,9 +757,10 @@ final class Applicant extends CustomPostTypeEntity {
 	 * Confirm an interview.
 	 *
 	 * @since %VERSION%
+	 *
+	 * @throws InvalidClass When the anonymizer class saved to this applicant can't be found.
 	 */
 	public function confirm_interview() {
-		// todo: find out why the confirm interview template is being rendered three times.
 		if ( $this->get_interview_status() === 'confirmed' ) {
 			return;
 		}
@@ -767,6 +768,12 @@ final class Applicant extends CustomPostTypeEntity {
 		$this->set_interview_status( 'confirmed' );
 		$this->load_lazy_property( ApplicantMeta::ANONYMIZER );
 		$anonymizer = $this->get_anonymizer();
+
+		// Ensure the anonymizer class exists.
+		if ( ! class_exists( $anonymizer ) ) {
+			throw InvalidClass::not_found( $anonymizer );
+		}
+
 		$this->unanonymize( new $anonymizer() );
 		$this->persist_properties();
 
@@ -870,7 +877,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 *
 	 * @param string $anonymizer The class name used for anonymization.
 	 */
-	public function set_anonymizer( $anonymizer ) {
+	private function set_anonymizer( $anonymizer ) {
 		$this->{ApplicantMeta::ANONYMIZER} = addslashes( filter_var( $anonymizer, self::SANITIZATION[ ApplicantMeta::ANONYMIZER ] ) );
 		$this->changed_property( ApplicantMeta::ANONYMIZER );
 	}
@@ -893,20 +900,9 @@ final class Applicant extends CustomPostTypeEntity {
 	 *
 	 * @param bool $anonymized True to set this applicant as anonymized.
 	 */
-	public function set_anonymized( $anonymized ) {
+	private function set_anonymized( $anonymized ) {
 		$this->{ApplicantMeta::ANONYMIZED} = filter_var( $anonymized, self::SANITIZATION[ ApplicantMeta::ANONYMIZED ] );
 		$this->changed_property( ApplicantMeta::ANONYMIZED );
-	}
-
-	/**
-	 * Get the anonymized property.
-	 *
-	 * @since %VERSION%
-	 *
-	 * @return bool $anonymized True if the applicant is anonymized.
-	 */
-	public function get_anonymized() {
-		return (bool) $this->{ApplicantMeta::ANONYMIZED};
 	}
 
 	/**
@@ -916,7 +912,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @return bool
 	 */
 	public function is_anonymized() {
-		return $this->get_anonymized();
+		return (bool) $this->{ApplicantMeta::ANONYMIZED};
 	}
 
 	/**
