@@ -1108,9 +1108,11 @@ final class Applicant extends CustomPostTypeEntity {
 	 * object's state, otherwise the load procedure might be triggered multiple
 	 * times.
 	 *
+	 * Due to the way WordPress handles post meta, loading a single property will load all of the post's meta properties.
+	 *
 	 * @since %VERSION%
 	 *
-	 * @param string $property Name of the property to load.
+	 * @param string $property Name of the property to load. Default to an empty string because passing in a property name is not required.
 	 */
 	protected function load_lazy_property( $property = '' ) {
 		if ( ApplicantMeta::STATUS === $property ) {
