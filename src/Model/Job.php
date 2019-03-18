@@ -114,6 +114,17 @@ final class Job extends CustomPostTypeEntity {
 	}
 
 	/**
+	 * Get the success message to use when an application using this Job is submitted.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @return string
+	 */
+	public function get_application_success_message() {
+		return $this->{JobMeta::APPLICATION_SUCCESS_MESSAGE};
+	}
+
+	/**
 	 * Persist the additional properties of the entity.
 	 *
 	 * @since %VERSION%
@@ -142,10 +153,10 @@ final class Job extends CustomPostTypeEntity {
 	 */
 	protected function get_lazy_properties() {
 		return [
-			JobMeta::DESCRIPTION => '',
-			JobMeta::TYPE        => '',
-			JobMeta::LOCATION    => '',
-			JobMeta::ADDRESS     => [
+			JobMeta::DESCRIPTION                 => '',
+			JobMeta::TYPE                        => '',
+			JobMeta::LOCATION                    => '',
+			JobMeta::ADDRESS                     => [
 				'address-1' => '',
 				'address-2' => '',
 				'city'      => '',
@@ -154,7 +165,8 @@ final class Job extends CustomPostTypeEntity {
 				'country'   => '',
 				'zip'       => '',
 			],
-			JobMeta::APPLICATION => 0,
+			JobMeta::APPLICATION                 => 0,
+			JobMeta::APPLICATION_SUCCESS_MESSAGE => '',
 		];
 	}
 
