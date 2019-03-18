@@ -111,6 +111,7 @@ final class Job extends CustomPostTypeEntity {
 	 */
 	public function get_application_id() {
 		return (int) $this->application;
+	}
 
 	/**
 	 * Get the success message to use when an application using this Job is submitted.
