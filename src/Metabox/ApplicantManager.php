@@ -98,6 +98,12 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 			$context = ( new ApplicantMessaging() )->get_context_data( $view->applicant->get_id(), true );
 			echo $view->render_partial( ApplicantMessaging::VIEW, $context );  // phpcs:ignore WordPress.Security.EscapeOutput
 		}, 10 );
+
+		add_action( 'lpf_applicant_screen_rendered', function() {
+			global $post;
+			$applicant = ( new ApplicantRepository() )->find( $post->ID );
+			$this->update_viewed_by( $applicant );
+		}, 10 );
 	}
 
 	/**
@@ -164,7 +170,7 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 	 * @param Applicant $applicant The applicant object.
 	 */
 	protected function update_viewed_by( $applicant ) {
-		if ( $applicant->viewed_by() === 0 ) {
+		if ( $applicant->get_viewed_by() === 0 ) {
 			$applicant->set_viewed_by( get_current_user_id() );
 			$applicant->persist();
 		}
@@ -184,7 +190,7 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 	protected function process_attributes( $post, $atts ) {
 		$applicant = ( new ApplicantRepository() )->find( $post->ID );
 		$job       = ( new JobRepository() )->find( $applicant->get_job_id() );
-		$this->update_viewed_by( $applicant );
+
 		return [
 			'applicant' => $applicant,
 			'job'       => $job,

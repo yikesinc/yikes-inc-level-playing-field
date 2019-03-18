@@ -187,9 +187,9 @@ final class ApplicantManager extends BasePostType implements AssetsAware {
 				break;
 
 			case 'viewed':
-				$viewed_by = $applicants[ $post_id ]->viewed_by() === 0
+				$viewed_by = $applicants[ $post_id ]->get_viewed_by() === 0
 					? _x( 'No one', 'No one has viewed applicant submission', 'yikes-level-playing-field' )
-					: get_user_meta( $applicants[ $post_id ]->viewed_by(), 'nickname', true );
+					: get_user_meta( $applicants[ $post_id ]->get_viewed_by(), 'nickname', true );
 				echo esc_html( $viewed_by );
 				break;
 
