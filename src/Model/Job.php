@@ -153,6 +153,7 @@ final class Job extends CustomPostTypeEntity {
 	 */
 	protected function get_lazy_properties() {
 		return [
+			JobMeta::DESCRIPTION                 => '',
 			JobMeta::TYPE                        => '',
 			JobMeta::LOCATION                    => '',
 			JobMeta::ADDRESS                     => [

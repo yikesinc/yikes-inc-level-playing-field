@@ -22,6 +22,7 @@ interface JobMeta {
 	const FORM_FIELD_PREFIX = 'job_cpt_';
 
 	// General fields.
+	const DESCRIPTION                 = 'description';
 	const TYPE                        = 'job_type';
 	const LOCATION                    = 'location';
 	const ADDRESS                     = 'address';
@@ -46,6 +47,7 @@ interface JobMeta {
 
 	// Meta prefixed fields.
 	const META_PREFIXES = [
+		self::DESCRIPTION                 => self::META_PREFIX . self::DESCRIPTION,
 		self::TYPE                        => self::META_PREFIX . self::TYPE,
 		self::LOCATION                    => self::META_PREFIX . self::LOCATION,
 		self::ADDRESS                     => self::META_PREFIX . self::ADDRESS,
