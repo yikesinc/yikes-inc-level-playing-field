@@ -59,5 +59,4 @@ interface JobMeta {
 		self::KNOWLEDGE                   => self::META_PREFIX . self::KNOWLEDGE,
 		self::APPLICATION_SUCCESS_MESSAGE => self::META_PREFIX . self::APPLICATION_SUCCESS_MESSAGE,
 	];
-	];
 }
