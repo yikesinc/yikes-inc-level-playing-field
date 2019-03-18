@@ -624,7 +624,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @since %VERSION%
 	 * @return int
 	 */
-	public function viewed_by() {
+	public function get_viewed_by() {
 		return (int) $this->{ApplicantMeta::VIEWED};
 	}
 

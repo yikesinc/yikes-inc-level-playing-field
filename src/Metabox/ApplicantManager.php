@@ -18,6 +18,7 @@ use Yikes\LevelPlayingField\Assets\StyleAsset;
 use Yikes\LevelPlayingField\CustomPostType\ApplicantManager as ApplicantCPT;
 use Yikes\LevelPlayingField\Exception\Exception;
 use Yikes\LevelPlayingField\Messaging\ApplicantMessaging;
+use Yikes\LevelPlayingField\Model\Applicant;
 use Yikes\LevelPlayingField\Model\ApplicantRepository;
 use Yikes\LevelPlayingField\Model\JobRepository;
 use Yikes\LevelPlayingField\Service;
@@ -85,6 +86,10 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 			$context = ( new ApplicantMessaging() )->get_context_data( $view->applicant->get_id(), true );
 			echo $view->render_partial( ApplicantMessaging::VIEW, $context );  // phpcs:ignore WordPress.Security.EscapeOutput
 		}, 30 );
+
+		add_action( 'lpf_applicant_screen_rendered', function( View $view ) {
+			$this->update_viewed_by( $view->applicant );
+		}, 10 );
 	}
 
 	/**
@@ -143,7 +148,7 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 		return static::PRIORITY_HIGH;
 	}
 
-	/**
+  /**
 	 * Get the context in which to show the metabox.
 	 *
 	 * @since %VERSION%
@@ -153,7 +158,21 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 	protected function get_context() {
 		return static::CONTEXT_NORMAL;
 	}
-
+  
+	/**
+	 * Set the "Viewed_By" property of applicant objeect.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param Applicant $applicant The applicant object.
+	 */
+	protected function update_viewed_by( $applicant ) {
+		if ( $applicant->get_viewed_by() === 0 ) {
+			$applicant->set_viewed_by( get_current_user_id() );
+			$applicant->persist();
+		}
+  }
+  
 	/**
 	 * Process the metabox attributes.
 	 *
@@ -168,6 +187,7 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 	protected function process_attributes( $post, $atts ) {
 		$applicant = ( new ApplicantRepository() )->find( $post->ID );
 		$job       = ( new JobRepository() )->find( $applicant->get_job_id() );
+
 		return [
 			'applicant' => $applicant,
 			'job'       => $job,

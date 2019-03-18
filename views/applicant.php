@@ -21,3 +21,12 @@ use Yikes\LevelPlayingField\View\View;
  * @param View $view The current view object.
  */
 do_action( 'lpf_applicant_screen_metabox', $this );
+
+/**
+ * Trigger applicant post-processing.
+ *
+ * @hooked Update Viewed By - 10
+ *
+ * @param View $view The current view object.
+ */
+do_action( 'lpf_applicant_screen_rendered', $this );
