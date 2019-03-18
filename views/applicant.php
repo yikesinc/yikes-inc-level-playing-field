@@ -60,3 +60,13 @@ use Yikes\LevelPlayingField\View\View;
 	</div><!-- /post-body metabox-holder columns-2 -->
 	<br class="clear">
 </div><!-- /poststuff -->
+<?php
+	/**
+	 * Trigger applicant post-processing.
+	 *
+	 * @hooked Update Viewed By - 10
+	 *
+	 * @param View $view The current view object.
+	 */
+	do_action( 'lpf_applicant_screen_rendered', $this );
+?>

@@ -99,10 +99,8 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 			echo $view->render_partial( ApplicantMessaging::VIEW, $context );  // phpcs:ignore WordPress.Security.EscapeOutput
 		}, 10 );
 
-		add_action( 'lpf_applicant_screen_rendered', function() {
-			global $post;
-			$applicant = ( new ApplicantRepository() )->find( $post->ID );
-			$this->update_viewed_by( $applicant );
+		add_action( 'lpf_applicant_screen_rendered', function( View $view ) {
+			$this->update_viewed_by( $view->applicant );
 		}, 10 );
 	}
 
