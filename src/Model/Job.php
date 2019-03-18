@@ -122,7 +122,6 @@ final class Job extends CustomPostTypeEntity {
 	public function get_application_success_message() {
 		return $this->{JobMeta::APPLICATION_SUCCESS_MESSAGE};
 	}
-	}
 
 	/**
 	 * Persist the additional properties of the entity.
