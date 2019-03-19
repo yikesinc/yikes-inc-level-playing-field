@@ -44,13 +44,16 @@ $jobs = $this->jobs;
 		</h4>
 		<?php
 
-		if ( $this->show_application_button ) :
+		if ( $this->show_application_button && ! empty( $job->get_application() ) ) :
 			?>
 			<div class="job-page-application">
 				<a href="<?php echo esc_url( $job->get_application_url() ); ?>"><button type="button" class="job-page-application-button"><?php echo esc_html( $this->button_text ); ?></button></a>
 			</div>
 			<?php
 		endif;
+		// $shortcode_atts        = ( new JobShortcode() )->get_default_atts();
+		// $shortcode_atts['job'] = $job;
+		// echo $this->render_partial( JobShortcode::VIEW_URI, $shortcode_atts );
 	}
 
 	/**

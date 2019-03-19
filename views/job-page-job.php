@@ -72,7 +72,7 @@ $use_comma = (bool) apply_filters( 'lpf_single_job_template_address_use_comma', 
 		<?php endif; ?>
 
 	</div>
-	<?php if ( $this->show_application_button ) : ?>
+	<?php if ( $this->show_application_button && ! empty( $job->get_application() ) ) : ?>
 	<div class="job-page-application">
 		<a href="<?php echo esc_url( $job->get_application_url() ); ?>"><button type="button" class="job-page-application-button"><?php echo esc_html( $this->button_text ); ?></button></a>
 	</div>

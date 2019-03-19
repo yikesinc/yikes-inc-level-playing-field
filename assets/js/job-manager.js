@@ -1,7 +1,7 @@
 jQuery( document ).ready( function( $ ) {
 	'use strict';
 
-	const $address_div = $( '#job_cpt_meta_address_address-1' ).closest( '.yks-mbox-group-field' );
+	const $address_div = $( '#job_cpt_meta_address_address-1' ).parents( 'tr' );
 	const job_manager_actions = {
 
 		/**
@@ -25,11 +25,11 @@ jQuery( document ).ready( function( $ ) {
 
 			switch ( e.currentTarget.value ) {
 				case 'address':
-					$address_div.show();
+					$address_div.fadeIn();
 					break;
 
 				default:
-					$address_div.hide();
+					$address_div.fadeOut();
 					break;
 			}
 		},
