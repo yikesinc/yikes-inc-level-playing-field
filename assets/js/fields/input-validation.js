@@ -146,7 +146,7 @@ jQuery( document ).ready( function( $ ) {
 			event.preventDefault();
 			// Scroll to first field with error.
 			$('html, body').animate({
-    			scrollTop: ($('.lpf-field-container .error-text').first().parents('.lpf-field-container').offset().top)
+    			scrollTop: $('.lpf-field-container .error-text').first().parents('.lpf-field-container').offset().top
 			},200);
 
 		}
