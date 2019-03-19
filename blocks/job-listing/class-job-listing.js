@@ -263,12 +263,15 @@ export default class JobListing extends Component {
         value={ this.state.jobID } 
         onChange={ this.getJob } 
         className="lpf-jobs-dropdown"
-        options={
-            { label: __( 'Select Job' ), value: '' },
-            Object.keys( this.state.jobs ).map( ( job_id ) => { return { value: job_id, label: this.state.jobs[ job_id ].title.rendered } })
-        }
+        options={ this.jobsDropdownOptions() }
       />
     : '<em>No jobs found...</em>';
+  }
+
+  jobsDropdownOptions() {
+    const dropdownOptions = Object.keys( this.state.jobs ).map( ( job_id ) => { return { value: job_id, label: this.state.jobs[ job_id ].title.rendered } });
+    dropdownOptions.unshift( { label: __( 'Select Job' ), value: '0' } );
+    return dropdownOptions;
   }
 
   /**
