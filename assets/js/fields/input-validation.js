@@ -33,11 +33,9 @@ jQuery( document ).ready( function( $ ) {
 			}
 			field.parent().addClass( errorPrompt );
 			isError = true;
-			return true;
 		} else {
 			field.parent().find( `.${errorClass}` ).remove();
 			field.parent().removeClass( errorPrompt );
-			return false;
 		}
 	};
 
@@ -146,6 +144,11 @@ jQuery( document ).ready( function( $ ) {
 
 		if ( isError ) {
 			event.preventDefault();
+			// Scroll to first field with error.
+			$('html, body').animate({
+    			scrollTop: ($('.lpf-field-container .error-text').first().parents('.lpf-field-container').offset().top)
+			},200);
+
 		}
 
 		isError = false;
