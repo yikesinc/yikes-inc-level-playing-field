@@ -26,7 +26,7 @@ $use_comma = (bool) apply_filters( 'lpf_single_job_template_address_use_comma', 
 
 		<?php if ( $this->show_description && ! empty( $job->get_content() ) ) : ?>
 			<div class="job-page-job-description">
-				<?php echo wp_kses_post( $job->get_content() ); ?>
+				<?php echo wp_kses_post( apply_filters( 'lpf_the_content', $job->get_content() ) ); ?>
 			</div>
 		<?php endif; ?>
 

@@ -12,6 +12,7 @@ namespace Yikes\LevelPlayingField;
 use Yikes\LevelPlayingField\AdminPage\ExportApplicantsPage;
 use Yikes\LevelPlayingField\Blocks\JobListing;
 use Yikes\LevelPlayingField\Blocks\JobListings;
+use Yikes\LevelPlayingField\Filters\Filters;
 use Yikes\LevelPlayingField\AdminPage\SettingsPage;
 use Yikes\LevelPlayingField\AdminPage\GoProPage;
 use Yikes\LevelPlayingField\AdminPage\SupportPage;
@@ -84,6 +85,9 @@ final class PluginFactory {
 	 */
 	private static function get_service_container() {
 		return new Container( [
+			// Filters.
+			Filters::class                   => 1,
+
 			// Blocks.
 			JobListing::class                => 1,
 			JobListings::class               => 1,
