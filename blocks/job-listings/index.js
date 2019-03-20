@@ -35,6 +35,8 @@ const editJobListingBlock = function( props ) {
       limit={ props.attributes.limit }
       showApplicationButton={ props.attributes.show_application_button }
       buttonText={ props.attributes.button_text }
+      order={ props.attributes.order }
+      orderby={ props.attributes.orderby }
     />
   );
 

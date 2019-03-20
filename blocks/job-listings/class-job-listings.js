@@ -15,32 +15,42 @@ export default class JobListing extends Component {
       jobs      : {},
       jobsLoaded: false
     }
-    
-    this.jobsEndpoint = `/wp/v2/${lpf_job_listing_data.jobs_slug}`;
+
+    this.baseJobsEndpoint = `/wp/v2/${lpf_job_listing_data.jobs_slug}`;
+    this.setJobsEndpoint( this.props.order, this.props.orderby, this.props.limit );
   }
 
   /**
    * Run our API calls after the component has mounted. You can't use setState before a component is mounted.
    */
   componentDidMount() {
-
-    // Fetch all jobs.
-    wp.apiFetch( { path: this.jobsEndpoint } ).then( jobs => {
-      this.setState( { jobs: this.convertJobs( jobs ), jobsLoaded: true } );
-    });
+    this.fetchAllJobs();
   }
 
   /**
-   * Convert an array of jobs to an object of jobs with the structure { job_id: job_object };
+   * Get the WP REST API endpoint for the jobs CPT.
    */
-  convertJobs( jobs ) {
-    const jobsObject = {};
-    for ( const ii in jobs ) {
-      jobsObject[ jobs[ii].id ] = jobs[ii];
-    }
-    return jobsObject;
+  getJobsEndpoint() {
+    return this.jobsEndpoint;
   }
 
+  /**
+   * Set the WP REST API endpoint for the jobs CPT.
+   */
+  setJobsEndpoint( order, orderby, limit ) {
+    this.jobsEndpoint = `${this.baseJobsEndpoint}/?order=${order}&orderby=${orderby}&per_page=${limit}`
+  }
+
+  /**
+   * Fetch all jobs.
+   */
+  fetchAllJobs() {
+    this.setState( { jobsLoaded: false } );
+
+    wp.apiFetch( { path: this.getJobsEndpoint() } ).then( jobs => {
+      this.setState( { jobs: jobs, jobsLoaded: true } );
+    });
+  }
   /**
    * Create the limit options for the dropdown.
    */
@@ -61,11 +71,53 @@ export default class JobListing extends Component {
     const limit =
     (
       <PanelRow>
+        <label
+          htmlFor="job-listings-sidebar-limit"
+          className="blocks-base-control__label"
+        >
+          { __( 'Limit' ) }
+        </label>
         <SelectControl
-            label="Limit"
-            value={ this.props.limit }
-            options={ this.limitLoop() }
-            onChange={ ( val ) => { this.props.handleValueControl( val, 'limit' ) } }
+          id="job-listings-sidebar-limit"
+          value={ this.props.limit }
+          options={ this.limitLoop() }
+          onChange={ ( val ) => { this.props.handleValueControl( val, 'limit' ); this.setJobsEndpoint( this.props.order, this.props.orderby, val ); this.fetchAllJobs(); } }
+        />
+      </PanelRow>
+    );
+
+    const orderby =
+    (
+      <PanelRow>
+        <label
+          htmlFor="job-listings-sidebar-orderby"
+          className="blocks-base-control__label"
+        >
+          { __( 'Order By' ) }
+        </label>
+        <SelectControl
+          id="job-listings-sidebar-orderby"
+          value={ this.props.orderby }
+          options={ [ { label: __( 'Title' ), value: 'title' }, { 'label': __( 'Date' ), value: 'date' } ] }
+          onChange={ ( val ) => { this.props.handleValueControl( val, 'orderby' ); this.setJobsEndpoint( this.props.order, val, this.props.limit ); this.fetchAllJobs(); } }
+        />
+      </PanelRow>
+    );
+
+    const order =
+    (
+      <PanelRow>
+        <label
+          htmlFor="job-listings-sidebar-order"
+          className="blocks-base-control__label"
+        >
+          { __( 'Order' ) }
+        </label>
+        <SelectControl
+          id="job-listings-sidebar-order"
+          value={ this.props.order }
+          options={ [ { label: __( 'Ascending' ), value: 'asc' }, { 'label': __( 'Descending' ), value: 'desc' } ] }
+          onChange={ ( val ) => { this.props.handleValueControl( val, 'order' ); this.setJobsEndpoint( val, this.props.orderby, this.props.limit ); this.fetchAllJobs(); } }
         />
       </PanelRow>
     );
@@ -105,6 +157,8 @@ export default class JobListing extends Component {
 
       <PanelBody title={ __( 'Settings' ) } >
         {limit}
+        {orderby}
+        {order}
         {showApplicationButton}
         {editButtonText}
       </PanelBody>
@@ -118,22 +172,17 @@ export default class JobListing extends Component {
    * Render the jobs.
    */
   jobs() {
-    let counter = 1;
     return Object.keys( this.state.jobs ).length > 0 ? 
-      Object.keys( this.state.jobs ).map( ( job_id ) => {
-        if ( counter > this.props.limit ) {
-          return;
-        }
-        counter++;
+      Object.keys( this.state.jobs ).map( ( job_index ) => {
 
-        const job = this.state.jobs[ job_id ];
+        const job = this.state.jobs[ job_index ];
 
-        return (
-          [this.jobHeader( job ),
-          this.props.showApplicationButton ? this.jobListingAppButton( job ) : '']
-        );
+        return ([
+          this.jobHeader( job ),
+          this.props.showApplicationButton ? this.jobListingAppButton( job ) : ''
+        ]);
       })
-    : '<em>No jobs found...</em>';
+    : `<em>${ __( 'No jobs found...' ) }</em>`;
   }
 
   /**

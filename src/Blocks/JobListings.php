@@ -96,6 +96,14 @@ final class JobListings extends BaseBlock {
 				'type'    => 'string',
 				'default' => $shortcode_atts['button_text'],
 			],
+			'orderby'                  => [
+				'type'    => 'string',
+				'default' => $shortcode_atts['orderby'],
+			],
+			'order'                    => [
+				'type'    => 'string',
+				'default' => $shortcode_atts['order'],
+			],
 		];
 	}
 
@@ -113,8 +121,10 @@ final class JobListings extends BaseBlock {
 
 		// We want to run the shortcode directly but we need to return the plaintext shortcode or Gutenberg will autop() the shortcode content.
 		return sprintf(
-			'[' . JobsShortcode::TAG . ' limit="%s" show_application_button="%s" button_text="%s"]',
+			'[' . JobsShortcode::TAG . ' limit="%s" order="%s" orderby="%s" show_application_button="%s" button_text="%s"]',
 			$attributes['limit'],
+			$attributes['order'],
+			$attributes['orderby'],
 			$attributes['show_application_button'],
 			$attributes['button_text']
 		);
