@@ -37,6 +37,7 @@ final class AllJobs extends BaseJobs {
 			'button_text'             => __( 'Apply', 'yikes-level-playing-field' ),
 			'order'                   => 'asc',
 			'orderby'                 => 'title',
+			'exclude'                 => [],
 		];
 	}
 
@@ -56,7 +57,7 @@ final class AllJobs extends BaseJobs {
 		$jobs_repository = new JobRepository();
 
 		return [
-			'jobs' => $jobs_repository->find_active( $atts['limit'], $atts['orderby'], $atts['order'] ),
+			'jobs' => $jobs_repository->find_active( $atts['limit'], $atts['orderby'], $atts['order'], $atts['exclude'] ),
 		];
 	}
 }

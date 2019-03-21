@@ -22,7 +22,7 @@ use Yikes\LevelPlayingField\Shortcode\Job as JobShortcode;
  *
  * @var Job[] $jobs
  */
-$jobs = $this->jobs;
+$jobs = apply_filters( 'lpf_job_listings', $this->jobs );
 ?>
 
 <div class="job-page">
@@ -51,9 +51,6 @@ $jobs = $this->jobs;
 			</div>
 			<?php
 		endif;
-		// $shortcode_atts        = ( new JobShortcode() )->get_default_atts();
-		// $shortcode_atts['job'] = $job;
-		// echo $this->render_partial( JobShortcode::VIEW_URI, $shortcode_atts );
 	}
 
 	/**

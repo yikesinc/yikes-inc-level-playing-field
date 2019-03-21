@@ -37,6 +37,7 @@ const editJobListingBlock = function( props ) {
       buttonText={ props.attributes.button_text }
       order={ props.attributes.order }
       orderby={ props.attributes.orderby }
+      exclude={ props.attributes.exclude }      
     />
   );
 

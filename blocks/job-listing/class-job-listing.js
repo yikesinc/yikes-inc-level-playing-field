@@ -282,7 +282,7 @@ export default class JobListing extends Component {
       <div className="job-page-job">
         { this.props.showTitle ? this.jobListingTitle() : '' }
         { this.jobListingMeta() }
-        { this.props.showApplicationButton ? this.jobListingAppButton() : '' }
+        { this.props.showApplicationButton && this.state.job.applicant ? this.jobListingAppButton() : '' }
       </div>
     );
   }

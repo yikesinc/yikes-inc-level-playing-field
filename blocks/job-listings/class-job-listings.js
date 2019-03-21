@@ -12,8 +12,10 @@ export default class JobListing extends Component {
   constructor( props ) {
     super( ...arguments );
     this.state = {
-      jobs      : {},
-      jobsLoaded: false
+      jobs       : {},
+      jobsLoaded : false,
+      show_toggle: props.exclude.length > 0,
+      exclude    : props.exclude
     }
 
     this.baseJobsEndpoint = `/wp/v2/${lpf_job_listing_data.jobs_slug}`;
@@ -122,17 +124,37 @@ export default class JobListing extends Component {
       </PanelRow>
     );
 
+    const exclude =
+    (
+      <PanelRow>
+        <label
+          htmlFor="job-listings-sidebar-exclude"
+          className="blocks-base-control__label"
+        >
+          { __( 'Exclude Jobs' ) }
+        </label>
+        <FormToggle
+          id="job-listings-sidebar-exclude"
+          label={ __( 'Exclude Jobs' ) }
+          checked={ !! this.state.show_toggle }
+          onChange={ ( e ) => this.handleStateExcludeControl( e ) }
+        />
+      </PanelRow>
+    );
+
+    const excludeListings = this.state.show_toggle ? this.renderExcludeListingsFormControl() : '';
+
     const showApplicationButton =
     (
       <PanelRow>
         <label
-          htmlFor="lpf-show-application-button-form-toggle"
+          htmlFor="job-listings-sidebar-show-app-btn"
           className="blocks-base-control__label"
         >
           { __( 'Show Application Button' ) }
         </label>
         <FormToggle
-          id="lpf-show-application-button-form-toggle"
+          id="job-listings-sidebar-show-app-btn"
           label={ __( 'Show Application Button' ) }
           checked={ !! this.props.showApplicationButton }
           onChange={ ( e ) => this.props.toggleFormControl( e, 'show_application_button' ) }
@@ -159,6 +181,8 @@ export default class JobListing extends Component {
         {limit}
         {orderby}
         {order}
+        {exclude}
+        {excludeListings}
         {showApplicationButton}
         {editButtonText}
       </PanelBody>
@@ -166,6 +190,61 @@ export default class JobListing extends Component {
     </InspectorControls>
 
     return inspector_controls;
+  }
+
+  /**
+   * Render the jobs' exclude sidebar control.
+   */
+  renderExcludeListingsFormControl() {
+    return (
+      Object.keys( this.state.jobs ).map( ( job_index ) => {
+        const job = this.state.jobs[ job_index ];
+        return ([
+          <PanelRow key={`job-listings-sidebar-exclude-row-${job.id}`}>
+            <label
+              htmlFor={`job-listings-sidebar-exclude-${job.id}`}
+              key={`job-listings-sidebar-exclude-label-${job.id}`}
+              className="blocks-base-control__label"
+            >
+              { job.title.rendered }
+            </label>
+            <FormToggle
+              id={`job-listings-sidebar-exclude-${job.id}`}
+              key={`job-listings-sidebar-exclude-toggle-${job.id}`}
+              label={ job.title.rendered }
+              checked={ ! this.state.exclude.includes( job.id ) }
+              value={ job.id }
+              onChange={ ( e ) => this.handleStateExcludeJobControl( e ) }
+            />
+          </PanelRow>
+        ]);
+      })
+    );
+  }
+
+  handleStateExcludeControl( e ) {
+    this.setState( { show_toggle: e.target.checked } );
+
+    if ( ! e.target.checked ) {
+      this.setState( { 'exclude': [] } );
+      this.props.handleValueControl( [], 'exclude' )
+    }
+  }
+
+  handleStateExcludeJobControl( e ) {
+
+    let excludeProp = this.state.exclude;
+
+    if ( ! event.target.checked ) {
+      excludeProp.push( parseInt( event.target.value ) );
+    } else {
+      excludeProp = excludeProp.filter( function( value, index ) {
+        return parseInt( value ) !== parseInt( event.target.value );
+      });
+    }
+
+    this.setState( { 'exclude': excludeProp } );
+    this.props.handleValueControl( excludeProp, 'exclude' );
   }
 
   /**
@@ -177,10 +256,12 @@ export default class JobListing extends Component {
 
         const job = this.state.jobs[ job_index ];
 
-        return ([
-          this.jobHeader( job ),
-          this.props.showApplicationButton ? this.jobListingAppButton( job ) : ''
-        ]);
+        if ( ! this.state.exclude.includes( job.id ) ) {
+          return ([
+            this.jobHeader( job ),
+            this.props.showApplicationButton && job.application ? this.jobListingAppButton( job ) : ''
+          ]);
+        }
       })
     : `<em>${ __( 'No jobs found...' ) }</em>`;
   }
