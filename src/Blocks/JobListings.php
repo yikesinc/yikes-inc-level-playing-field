@@ -13,6 +13,7 @@ use Yikes\LevelPlayingField\Assets\Asset;
 use Yikes\LevelPlayingField\Assets\ScriptAsset;
 use Yikes\LevelPlayingField\PluginFactory;
 use Yikes\LevelPlayingField\CustomPostType\JobManager;
+use Yikes\LevelPlayingField\Taxonomy\JobCategory;
 use Yikes\LevelPlayingField\Shortcode\AllJobs as JobsShortcode;
 
 /**
@@ -49,10 +50,11 @@ final class JobListings extends BaseBlock {
 		$block_script->add_localization(
 			'lpf_job_listings_data',
 			[
-				'block_name'    => $this->get_block_slug(),
-				'jobs_slug'     => JobManager::SLUG,
-				'edit_jobs_url' => add_query_arg( [ 'action' => 'edit' ], admin_url( 'post.php' ) ),
-				'attributes'    => $this->get_block_args()['attributes'],
+				'block_name'          => $this->get_block_slug(),
+				'jobs_slug'           => JobManager::SLUG,
+				'edit_jobs_url'       => add_query_arg( [ 'action' => 'edit' ], admin_url( 'post.php' ) ),
+				'attributes'          => $this->get_block_args()['attributes'],
+				'job_categories_slug' => JobCategory::SLUG,
 			]
 		);
 
@@ -108,6 +110,10 @@ final class JobListings extends BaseBlock {
 				'type'    => 'object',
 				'default' => $shortcode_atts['exclude'],
 			],
+			'cat_exclude_ids'          => [
+				'type'    => 'object',
+				'default' => $shortcode_atts['cat_exclude_ids'],
+			],
 		];
 	}
 
@@ -125,11 +131,12 @@ final class JobListings extends BaseBlock {
 
 		// We want to run the shortcode directly but we need to return the plaintext shortcode or Gutenberg will autop() the shortcode content.
 		return sprintf(
-			'[' . JobsShortcode::TAG . ' limit="%s" order="%s" orderby="%s" exclude="%s" show_application_button="%s" button_text="%s"]',
+			'[' . JobsShortcode::TAG . ' limit="%s" order="%s" orderby="%s" exclude="%s" cat_exclude_ids="%s" show_application_button="%s" button_text="%s"]',
 			$attributes['limit'],
 			$attributes['order'],
 			$attributes['orderby'],
 			implode( ',', $attributes['exclude'] ),
+			implode( ',', $attributes['cat_exclude_ids'] ),
 			$attributes['show_application_button'],
 			$attributes['button_text']
 		);

@@ -52,7 +52,17 @@ module.exports = {
 				use: blocksCSSPlugin.extract( extractConfig )
 			}, {
 				test: /editor\.s?css$/,
-				use: editBlocksCSSPlugin.extract( extractConfig )
+				use: [
+					{
+						loader: "style-loader" // creates style nodes from JS strings
+					},
+					{
+						loader: "css-loader" // translates CSS into CommonJS
+					},
+					{
+						loader: "sass-loader" // compiles Sass to CSS
+					}
+				]
 			}
 		]
 	},

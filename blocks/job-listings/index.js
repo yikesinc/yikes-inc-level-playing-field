@@ -1,4 +1,5 @@
 import JobListings from './class-job-listings.js';
+import './editor.scss'
 
 // Get just the __() localization function from wp.i18n.
 const { __ } = wp.i18n;
@@ -37,7 +38,8 @@ const editJobListingBlock = function( props ) {
       buttonText={ props.attributes.button_text }
       order={ props.attributes.order }
       orderby={ props.attributes.orderby }
-      exclude={ props.attributes.exclude }      
+      exclude={ props.attributes.exclude }
+      cat_exclude_ids={ props.attributes.cat_exclude_ids }
     />
   );
 

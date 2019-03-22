@@ -1,5 +1,5 @@
 import JobListing from './class-job-listing.js';
-import './style.scss'
+import './editor.scss'
 
 // Get just the __() localization function from wp.i18n.
 const { __ } = wp.i18n;

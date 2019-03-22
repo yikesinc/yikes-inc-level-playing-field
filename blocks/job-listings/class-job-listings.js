@@ -12,13 +12,17 @@ export default class JobListing extends Component {
   constructor( props ) {
     super( ...arguments );
     this.state = {
-      jobs       : {},
-      jobsLoaded : false,
-      show_toggle: props.exclude.length > 0,
-      exclude    : props.exclude
+      jobs                   : {},
+      jobsLoaded             : false,
+      jobCategories          : {},
+      show_exclude_toggle    : props.exclude.length > 0,
+      exclude                : props.exclude,
+      show_exclude_cat_toggle: props.cat_exclude_ids.length > 0,
+      catExclude             : props.cat_exclude_ids
     }
 
-    this.baseJobsEndpoint = `/wp/v2/${lpf_job_listing_data.jobs_slug}`;
+    this.jobsCategoryEndpoint = `/wp/v2/${lpf_job_listings_data.job_categories_slug}`;
+    this.baseJobsEndpoint     = `/wp/v2/${lpf_job_listings_data.jobs_slug}`;
     this.setJobsEndpoint( this.props.order, this.props.orderby, this.props.limit );
   }
 
@@ -27,6 +31,7 @@ export default class JobListing extends Component {
    */
   componentDidMount() {
     this.fetchAllJobs();
+    this.fetchAllCategories();
   }
 
   /**
@@ -53,6 +58,17 @@ export default class JobListing extends Component {
       this.setState( { jobs: jobs, jobsLoaded: true } );
     });
   }
+
+  /**
+   * Fetch all job categories.
+   */
+  fetchAllCategories() {
+    wp.apiFetch( { path: this.jobsCategoryEndpoint } ).then( cats => {
+      this.setState( { jobCategories: cats } );
+      console.log( this.state.jobCategories );
+    });
+  }
+
   /**
    * Create the limit options for the dropdown.
    */
@@ -136,13 +152,33 @@ export default class JobListing extends Component {
         <FormToggle
           id="job-listings-sidebar-exclude"
           label={ __( 'Exclude Jobs' ) }
-          checked={ !! this.state.show_toggle }
+          checked={ !! this.state.show_exclude_toggle }
           onChange={ ( e ) => this.handleStateExcludeControl( e ) }
         />
       </PanelRow>
     );
 
-    const excludeListings = this.state.show_toggle ? this.renderExcludeListingsFormControl() : '';
+    const excludeListings = this.state.show_exclude_toggle ? this.renderExcludeListingsFormControl() : '';
+
+    const excludeByCategory =
+    (
+      <PanelRow>
+        <label
+          htmlFor="job-listings-sidebar-exclude-category"
+          className="blocks-base-control__label"
+        >
+          { __( 'Exclude Categories' ) }
+        </label>
+        <FormToggle
+          id="job-listings-sidebar-exclude-category"
+          label={ __( 'Exclude Categories' ) }
+          checked={ !! this.state.show_exclude_cat_toggle }
+          onChange={ ( e ) => this.handleStateExcludeCatControl( e ) }
+        />
+      </PanelRow>
+    );
+
+    const excludeCategories = this.state.show_exclude_cat_toggle ? this.renderExcludeCategoriesFormControl() : '';
 
     const showApplicationButton =
     (
@@ -183,6 +219,8 @@ export default class JobListing extends Component {
         {order}
         {exclude}
         {excludeListings}
+        {excludeByCategory}
+        {excludeCategories}
         {showApplicationButton}
         {editButtonText}
       </PanelBody>
@@ -200,7 +238,7 @@ export default class JobListing extends Component {
       Object.keys( this.state.jobs ).map( ( job_index ) => {
         const job = this.state.jobs[ job_index ];
         return ([
-          <PanelRow key={`job-listings-sidebar-exclude-row-${job.id}`}>
+          <PanelRow className="job-listings-exclude-subpanel" key={`job-listings-sidebar-exclude-row-${job.id}`}>
             <label
               htmlFor={`job-listings-sidebar-exclude-${job.id}`}
               key={`job-listings-sidebar-exclude-label-${job.id}`}
@@ -222,8 +260,11 @@ export default class JobListing extends Component {
     );
   }
 
+  /**
+   * Handle the exclude sidebar control.
+   */
   handleStateExcludeControl( e ) {
-    this.setState( { show_toggle: e.target.checked } );
+    this.setState( { show_exclude_toggle: e.target.checked } );
 
     if ( ! e.target.checked ) {
       this.setState( { 'exclude': [] } );
@@ -231,6 +272,9 @@ export default class JobListing extends Component {
     }
   }
 
+  /**
+   * Handle the individual jobs' exclude sidebar control.
+   */
   handleStateExcludeJobControl( e ) {
 
     let excludeProp = this.state.exclude;
@@ -248,15 +292,85 @@ export default class JobListing extends Component {
   }
 
   /**
+   * Render the categories' exclude sidebar control.
+   */
+  renderExcludeCategoriesFormControl() {
+    return (
+      Object.keys( this.state.jobCategories ).map( ( cat_index ) => {
+        const category = this.state.jobCategories[ cat_index ];
+        return ([
+          <PanelRow className="job-listings-exclude-subpanel" key={`job-category-sidebar-exclude-row-${category.id}`}>
+            <label
+              htmlFor={`job-category-sidebar-exclude-${category.id}`}
+              key={`job-category-sidebar-exclude-label-${category.id}`}
+              className="blocks-base-control__label"
+            >
+              { category.name }
+            </label>
+            <FormToggle
+              id={`job-category-sidebar-exclude-${category.id}`}
+              key={`job-category-sidebar-exclude-toggle-${category.id}`}
+              label={ category.name }
+              checked={ ! this.state.catExclude.includes( category.id ) }
+              value={ category.id }
+              onChange={ ( e ) => this.handleStateExcludeCategoryControl( e ) }
+            />
+          </PanelRow>
+        ]);
+      })
+    );
+  }
+
+  /**
+   * Handle the exclude categories (catExclude) sidebar control.
+   */
+  handleStateExcludeCatControl( e ) {
+    this.setState( { show_exclude_cat_toggle: e.target.checked } );
+
+    if ( ! e.target.checked ) {
+      this.setState( { 'catExclude': [] } );
+      this.props.handleValueControl( [], 'catExclude' )
+    }
+  }
+
+  /**
+   * Handle the individual categories' exclude sidebar control.
+   */
+  handleStateExcludeCategoryControl( e ) {
+
+    let excludeProp = this.state.catExclude;
+
+    if ( ! event.target.checked ) {
+      excludeProp.push( parseInt( event.target.value ) );
+    } else {
+      excludeProp = excludeProp.filter( function( value, index ) {
+        return parseInt( value ) !== parseInt( event.target.value );
+      });
+    }
+
+    this.setState( { 'catExclude': excludeProp } );
+    this.props.handleValueControl( excludeProp, 'cat_exclude_ids' );
+  }
+
+  /**
+   * Check if the job has a category that we're excluding.
+   */
+  jobHasExcludedCategory( categories ) {
+    const intersect = categories.filter( value => this.state.catExclude.includes( value ) );
+    return intersect.length > 0;
+  }
+
+  /**
    * Render the jobs.
    */
   jobs() {
     return Object.keys( this.state.jobs ).length > 0 ? 
       Object.keys( this.state.jobs ).map( ( job_index ) => {
 
-        const job = this.state.jobs[ job_index ];
+        const job     = this.state.jobs[ job_index ];
+        const exclude = this.state.exclude.includes( job.id ) || this.jobHasExcludedCategory( job[ lpf_job_listings_data.job_categories_slug ] );
 
-        if ( ! this.state.exclude.includes( job.id ) ) {
+        if ( ! exclude ) {
           return ([
             this.jobHeader( job ),
             this.props.showApplicationButton && job.application ? this.jobListingAppButton( job ) : ''

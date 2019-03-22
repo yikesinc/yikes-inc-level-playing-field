@@ -38,6 +38,7 @@ final class AllJobs extends BaseJobs {
 			'order'                   => 'asc',
 			'orderby'                 => 'title',
 			'exclude'                 => [],
+			'cat_exclude_ids'         => [],
 		];
 	}
 
@@ -57,7 +58,7 @@ final class AllJobs extends BaseJobs {
 		$jobs_repository = new JobRepository();
 
 		return [
-			'jobs' => $jobs_repository->find_active( $atts['limit'], $atts['orderby'], $atts['order'], $atts['exclude'] ),
+			'jobs' => $jobs_repository->find_active( $atts['limit'], $atts['orderby'], $atts['order'], $atts['exclude'], $atts['cat_exclude_ids'] ),
 		];
 	}
 }
