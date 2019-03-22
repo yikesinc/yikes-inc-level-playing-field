@@ -65,7 +65,6 @@ export default class JobListing extends Component {
   fetchAllCategories() {
     wp.apiFetch( { path: this.jobsCategoryEndpoint } ).then( cats => {
       this.setState( { jobCategories: cats } );
-      console.log( this.state.jobCategories );
     });
   }
 
