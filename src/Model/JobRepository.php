@@ -185,7 +185,7 @@ final class JobRepository extends CustomPostTypeRepository {
 	 */
 	private function get_job_category_exclude_tax_query( $ids = [] ) {
 		if ( empty( $ids ) ) {
-			return [];
+			return;
 		}
 
 		return [
