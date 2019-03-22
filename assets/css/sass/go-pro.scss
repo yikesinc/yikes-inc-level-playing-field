@@ -1,0 +1,22 @@
+@import "utilities/mixins/font-size-calculation";
+
+.gopro-page-list {
+	list-style-type: none;
+
+	& > li {
+		@include fontsize(16px);
+		font-weight: 600;
+		margin-bottom: 0.6rem;
+
+		& > ul li {
+			@include fontsize(14px);
+			margin-top: 0.4rem;
+			padding-left: 25px;
+
+			& > ul li {
+				@include fontsize(14px);
+				font-weight: 500;
+			}
+		}
+	}
+}

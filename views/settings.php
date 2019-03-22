@@ -18,8 +18,10 @@ use Yikes\LevelPlayingField\Settings\Fields\DisableFrontEndCSS;
 
 $settings = $this->settings;
 ?>
-<div id="lpf-settings">
-	<h2><?php esc_html_e( 'Settings', 'yikes-level-playing-field' ); ?></h2>
+<div id="lpf-settings" class="wrap lpf-page settings-page">
+	<h1 class="wp-heading-inline">
+		<?php esc_html_e( 'Level Playing Field | Settings', 'yikes-level-playing-field' ); ?>
+	</h1>
 
 	<div id="notice-container"></div>
 

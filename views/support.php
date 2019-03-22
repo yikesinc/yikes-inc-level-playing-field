@@ -11,4 +11,10 @@ namespace Yikes\LevelPlayingField;
 
 ?>
 
-<p>support!</p>
+<div class="wrap lpf-page support-page">
+
+	<h1 class="wp-heading-inline">
+		<?php esc_html_e( 'Level Playing Field | Support', 'yikes-level-playing-field' ); ?>
+	</h1>
+
+</div>
