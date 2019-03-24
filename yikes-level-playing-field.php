@@ -60,21 +60,47 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Note that this file needs to be compatible with PHP 5.2 at a minimum.
  */
 if ( version_compare( '5.6.0', PHP_VERSION, '>' ) ) {
-	add_action( 'admin_notices', 'lpf_admin_notices' );
+	add_action( 'admin_notices', 'lpf_php_version_notice' );
 
 	/**
 	 * Display admin notice for incompatible PHP version.
 	 *
 	 * @since %VERSION%
 	 */
-	function lpf_admin_notices() {
+	function lpf_php_version_notice() {
 		printf(
 			'<div class="error"><p>%s</p></div>',
 			sprintf(
 				/* translators: %1$s is the required PHP version, %2$s is the current version */
-				esc_html__( 'Yikes, Inc. Level Playing Fields requires PHP version %1$s or above. Your site is using PHP version %2$s.', 'yikes-level-playing-field' ),
+				esc_html__( 'Yikes, Inc. Level Playing Field requires PHP version %1$s or above. Your site is using PHP version %2$s.', 'yikes-level-playing-field' ),
 				'5.6.0',
 				esc_html( PHP_VERSION )
+			)
+		);
+	}
+
+	return;
+}
+
+/*
+ * Require WordPress 4.8+. Checking here allows for graceful failure.
+ */
+if ( version_compare( '4.8', $GLOBALS['wp_version'], '>' ) ) {
+	add_action( 'admin_notices', 'lpf_wp_version_notice' );
+
+	/**
+	 * Display admin notice for incompatible WP version.
+	 *
+	 * @since %VERSION%
+	 */
+	function lpf_wp_version_notice() {
+		printf(
+			'<div class="error"><p>%s</p></div>',
+			sprintf(
+				/* translators: %1$s is the required WP version, %2$s is the current version */
+				esc_html__( 'Yikes, Inc. Level Playing Field requires WordPress version %1$s or above. Your site us using WordPress version %2$s.', 'yikes-level-playing-field' ),
+				'4.8',
+				esc_html( $GLOBALS['wp_version'] )
 			)
 		);
 	}
