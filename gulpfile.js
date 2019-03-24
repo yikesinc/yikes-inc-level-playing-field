@@ -458,55 +458,56 @@ gulp.task( 'import', () => {
  * The version from package.json will be used, or the --version
  * flag can be passed via CLI to explicitly set the version.
  */
-gulp.task( 'replace:version', () => {
+function replaceVersion() {
 	const replace = require( 'gulp-replace' );
 	const version = options.version || currentVersion;
 	return gulp.src( paths.php, { base: process.cwd() } )
 		.pipe( plumber( { 'errorHandler': handleErrors } ) )
 		.pipe( replace( '%VERSION%', version ) )
 		.pipe( gulp.dest( './' ) );
-} );
+}
 
+/**
+ * Task for replacing the version in all PHP files.
+ */
+gulp.task( 'replace:version', () => {
+	return replaceVersion();
+} );
 
 /**
  * Bump the version in various files.
  *
- * When updating the constant string in the main subscriptions file and
- * template files, we need our regex to be similar to the one used by bump-regex.
- * See https://github.com/stevelacy/bump-regex/blob/master/index.js#L29-L48.
- *
- * @param {string} type
- * @param {string} identifier
  * @returns {*}
  */
-function bumpVersion( type, identifier = undefined ) {
-	const bump = require( 'gulp-bump' ), semver = require( 'semver' );
+function bumpVersion() {
+	const bump = require( 'gulp-bump' );
 
-	currentVersion = semver.inc( packageJSON.version, type, identifier );
-
-	const mainFile = gulp.src( [ './yikes-level-playing-field.php' ] )
+	return gulp.src( [ './yikes-level-playing-field.php', './package.json' ] )
 		.pipe( plumber( { 'errorHandler': outputErrors } ) )
 		.pipe( bump( { version: currentVersion } ) )
 		.pipe( gulp.dest( './' ) );
-
-	const pkg = gulp.src( [ './package.json' ] )
-		.pipe( plumber( { 'errorHandler': outputErrors } ) )
-		.pipe( bump( { version: currentVersion } ) )
-		.pipe( gulp.dest( './' ) );
-
-	return merge( mainFile, pkg );
 }
 
 /**
  * Tasks for updating versions in preparation for a new release.
  */
 gulp.task( 'release:patch', () => {
-	return merge( bumpVersion( 'patch' ), gulp.run( 'replace:version' ) );
+	throw new Error('This task is not yet ready for use.');
+	const semver = require( 'semver' );
+	currentVersion = semver.inc( packageJSON.version, 'patch' );
+
+	return merge( replaceVersion(), bumpVersion() );
 } );
 gulp.task( 'release:minor', () => {
-	return merge( bumpVersion( 'minor' ), gulp.run( 'replace:version' ) );
+	throw new Error( 'This task is not yet ready for use.' );
+	const semver = require( 'semver' );
+	currentVersion = semver.inc( packageJSON.version, 'minor' );
+	bumpVersion();
+
+	return replaceVersion();
 } );
 gulp.task( 'release:major', () => {
+	throw new Error( 'This task is not yet ready for use.' );
 	return merge( bumpVersion( 'major' ), gulp.run( 'replace:version' ) );
 } );
 
@@ -518,6 +519,7 @@ gulp.task( 'release:major', () => {
  * --preid refers to the type of pre-release. Use "beta" or "rc".
  */
 gulp.task( 'release', () => {
+	throw new Error( 'This task is not yet ready for use.' );
 	return merge( bumpVersion( options.release, options.preid ), gulp.run( 'replace:version' ) );
 } );
 
