@@ -123,6 +123,8 @@ final class Applicant extends CustomPostTypeEntity {
 			ApplicantMeta::LANGUAGE    => FILTER_SANITIZE_STRING,
 			ApplicantMeta::PROFICIENCY => FILTER_SANITIZE_STRING,
 		],
+		ApplicantMeta::ANONYMIZER       => FILTER_SANITIZE_STRING,
+		ApplicantMeta::ANONYMIZED       => FILTER_VALIDATE_BOOLEAN,
 	];
 
 	/**
@@ -609,16 +611,6 @@ final class Applicant extends CustomPostTypeEntity {
 	}
 
 	/**
-	 * Whether this applicant's data is currently anonymized.
-	 *
-	 * @since %VERSION%
-	 * @return bool
-	 */
-	public function is_anonymized() {
-		return (bool) $this->{ApplicantMeta::ANONYMIZED};
-	}
-
-	/**
 	 * Get the user ID who viewed the applicant.
 	 *
 	 * @since %VERSION%
@@ -765,14 +757,28 @@ final class Applicant extends CustomPostTypeEntity {
 	 * Confirm an interview.
 	 *
 	 * @since %VERSION%
+	 *
+	 * @throws InvalidClass When the anonymizer class saved to this applicant can't be found.
 	 */
 	public function confirm_interview() {
+		if ( $this->get_interview_status() === 'confirmed' ) {
+			return;
+		}
+
 		$this->set_interview_status( 'confirmed' );
+		$this->load_lazy_property( ApplicantMeta::ANONYMIZER );
+		$anonymizer = $this->get_anonymizer();
+
+		// Ensure the anonymizer class exists.
+		if ( ! class_exists( $anonymizer ) ) {
+			throw InvalidClass::not_found( $anonymizer );
+		}
+
+		$this->unanonymize( new $anonymizer() );
 		$this->persist_properties();
 
 		/*
-		 * todo: Unanonymize!
-		 * todo: Maybe add a message like 'The applicant has confirmed the interview'?
+		 * todo: Maybe add a message to the messaging container like 'The applicant has confirmed the interview'?
 		 */
 
 		// Send off confirmed interview email to both the applicant and job managers.
@@ -847,7 +853,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @param string $guid A guid.
 	 */
 	public function set_guid( $guid ) {
-		$this->guid = filter_var( $guid, self::SANITIZATION[ ApplicantMeta::GUID ] );
+		$this->{ApplicantMeta::GUID} = filter_var( $guid, self::SANITIZATION[ ApplicantMeta::GUID ] );
 		$this->changed_property( ApplicantMeta::GUID );
 	}
 
@@ -859,7 +865,54 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @return string $guid The applicant's guid.
 	 */
 	public function get_guid() {
-		return $this->guid;
+		return $this->{ApplicantMeta::GUID};
+	}
+
+	/**
+	 * Set the anonymizer class used for this applicant's anonymization.
+	 *
+	 * Note: we need to use addslashes to escape namespace backslashes as WordPress will stripslashes when updating the DB.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param string $anonymizer The class name used for anonymization.
+	 */
+	private function set_anonymizer( $anonymizer ) {
+		$this->{ApplicantMeta::ANONYMIZER} = addslashes( filter_var( $anonymizer, self::SANITIZATION[ ApplicantMeta::ANONYMIZER ] ) );
+		$this->changed_property( ApplicantMeta::ANONYMIZER );
+	}
+
+	/**
+	 * Get the anonymizer class used for this applicant's anonymization.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @return string $anonymizer The class name used for anonymization.
+	 */
+	public function get_anonymizer() {
+		return $this->{ApplicantMeta::ANONYMIZER};
+	}
+
+	/**
+	 * Set the anonymized property.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param bool $anonymized True to set this applicant as anonymized.
+	 */
+	private function set_anonymized( $anonymized ) {
+		$this->{ApplicantMeta::ANONYMIZED} = filter_var( $anonymized, self::SANITIZATION[ ApplicantMeta::ANONYMIZED ] );
+		$this->changed_property( ApplicantMeta::ANONYMIZED );
+	}
+
+	/**
+	 * Whether this applicant's data is currently anonymized.
+	 *
+	 * @since %VERSION%
+	 * @return bool
+	 */
+	public function is_anonymized() {
+		return (bool) $this->{ApplicantMeta::ANONYMIZED};
 	}
 
 	/**
@@ -910,9 +963,9 @@ final class Applicant extends CustomPostTypeEntity {
 		$properties = array_diff_key( get_object_vars( $this ), $this->get_excluded_properties() );
 		array_walk_recursive( $properties, $this->get_anonymizer_callback( $anonymizer, 'anonymize' ) );
 
-		// Manually set anonymizer properties.
-		$properties[ ApplicantMeta::ANONYMIZED ] = true;
-		$properties[ ApplicantMeta::ANONYMIZER ] = get_class( $anonymizer );
+		// Set anonymizer properties.
+		$this->set_anonymized( true );
+		$this->set_anonymizer( get_class( $anonymizer ) );
 
 		// Copy the changed properties back.
 		$this->update_properties( $properties );
@@ -969,23 +1022,13 @@ final class Applicant extends CustomPostTypeEntity {
 			return;
 		}
 
-		// Don't allow unanonymizing without the proper role.
-		if ( ! current_user_can( Capabilities::UNANONYMIZE, $this ) ) {
-			throw FailedToUnanonymize::not_capable();
-		}
-
-		// Ensure the unanonymizer class is the same that was used to anonymize.
-		if ( get_class( $anonymizer ) !== $this->anonymizer ) {
-			throw InvalidClass::mismatch( get_class( $anonymizer ), $this->anonymizer );
-		}
-
 		// Walk through the object properties, unanonymizing them.
 		$properties = array_diff_key( get_object_vars( $this ), $this->get_excluded_properties() );
 		array_walk_recursive( $properties, $this->get_anonymizer_callback( $anonymizer, 'reveal' ) );
 
-		// Set the anonymized property.
-		$properties[ ApplicantMeta::ANONYMIZED ] = false;
-		$properties[ ApplicantMeta::ANONYMIZER ] = '';
+		// Set the anonymizer properties.
+		$this->set_anonymized( false );
+		$this->set_anonymizer( '' );
 
 		// Copy the changed properties back.
 		$this->update_properties( $properties );
@@ -1047,11 +1090,13 @@ final class Applicant extends CustomPostTypeEntity {
 	 * object's state, otherwise the load procedure might be triggered multiple
 	 * times.
 	 *
+	 * Due to the way WordPress handles post meta, loading a single property will load all of the post's meta properties.
+	 *
 	 * @since %VERSION%
 	 *
-	 * @param string $property Name of the property to load.
+	 * @param string $property Name of the property to load. Default to an empty string because passing in a property name is not required.
 	 */
-	protected function load_lazy_property( $property ) {
+	protected function load_lazy_property( $property = '' ) {
 		if ( ApplicantMeta::STATUS === $property ) {
 			$this->load_status();
 			return;
@@ -1183,6 +1228,7 @@ final class Applicant extends CustomPostTypeEntity {
 		if ( empty( $properties ) ) {
 			$properties = [
 				ApplicantMeta::ANONYMIZER => 1,
+				ApplicantMeta::ANONYMIZED => 1,
 				'changes'                 => 1,
 				'post'                    => 1,
 				'new'                     => 1,

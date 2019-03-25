@@ -22,7 +22,7 @@ if ( true === $this->is_cancel ) {
 $interview_status = $this->applicant->get_interview_status();
 
 if ( ! $this->is_cancel && ( 'confirmed' === $interview_status || 'scheduled' === $interview_status ) ) {
-	$interview = maybe_unserialize( $this->applicant->__get( 'interview' ) );
+	$interview = $this->applicant->get_interview();
 
 	if ( ! $this->is_confirm ) {
 		if ( 'confirmed' === $interview_status ) {
