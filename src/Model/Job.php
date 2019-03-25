@@ -10,6 +10,7 @@
 namespace Yikes\LevelPlayingField\Model;
 
 use Yikes\LevelPlayingField\Taxonomy\JobStatus;
+use Yikes\LevelPlayingField\RequiredPages\ApplicationFormPage;
 
 /**
  * Class Job
@@ -25,6 +26,8 @@ use Yikes\LevelPlayingField\Taxonomy\JobStatus;
  * @property int    application The Job application ID.
  */
 final class Job extends CustomPostTypeEntity {
+
+	use JobMetaDropdowns;
 
 	/**
 	 * Get the job status.
@@ -57,17 +60,6 @@ final class Job extends CustomPostTypeEntity {
 	}
 
 	/**
-	 * Get the job description.
-	 *
-	 * @since %VERSION%
-	 *
-	 * @return string
-	 */
-	public function get_description() {
-		return $this->description;
-	}
-
-	/**
 	 * Get the type of the job.
 	 *
 	 * Possible values are full time, part time, contract, per diem, and other.
@@ -76,8 +68,22 @@ final class Job extends CustomPostTypeEntity {
 	 *
 	 * @return string
 	 */
-	public function get_type() {
-		return $this->type;
+	public function get_job_type() {
+		$job_types = $this->get_job_type_options();
+		return isset( $job_types[ $this->{JobMeta::TYPE} ] ) ? $job_types[ $this->{JobMeta::TYPE} ] : '';
+	}
+
+	/**
+	 * Get the job's location.
+	 *
+	 * Possible values are address and remote.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @return bool
+	 */
+	public function get_location() {
+		return $this->{JobMeta::LOCATION};
 	}
 
 	/**
@@ -88,7 +94,7 @@ final class Job extends CustomPostTypeEntity {
 	 * @return bool
 	 */
 	public function is_remote() {
-		return 'remote' === $this->location;
+		return 'remote' === $this->get_location();
 	}
 
 	/**
@@ -99,7 +105,7 @@ final class Job extends CustomPostTypeEntity {
 	 * @return array
 	 */
 	public function get_address() {
-		return $this->address;
+		return $this->{JobMeta::ADDRESS};
 	}
 
 	/**
@@ -109,8 +115,8 @@ final class Job extends CustomPostTypeEntity {
 	 *
 	 * @return int
 	 */
-	public function get_application_id() {
-		return (int) $this->application;
+	public function get_application() {
+		return (int) $this->{JobMeta::APPLICATION};
 	}
 
 	/**
@@ -122,6 +128,29 @@ final class Job extends CustomPostTypeEntity {
 	 */
 	public function get_application_success_message() {
 		return $this->{JobMeta::APPLICATION_SUCCESS_MESSAGE};
+	}
+
+	/**
+	 * Get the application URL to use when displaying this Job.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @return string
+	 */
+	public function get_application_url() {
+
+		/**
+		 * Filter the application page ID for the given Job.
+		 *
+		 * @since %VERSION%
+		 *
+		 * @param int $page_id The page ID of the plugin's application form page.
+		 * @param Job $job     The job class.
+		 *
+		 * @return int The page ID.
+		 */
+		$app_page_id = (int) apply_filters( 'lpf_single_job_application_page_id', ( new ApplicationFormPage() )->get_page_id( ApplicationFormPage::PAGE_SLUG ), $this );
+		return add_query_arg( [ 'job' => $this->get_id() ], get_permalink( $app_page_id ) );
 	}
 
 	/**
@@ -153,7 +182,6 @@ final class Job extends CustomPostTypeEntity {
 	 */
 	protected function get_lazy_properties() {
 		return [
-			JobMeta::DESCRIPTION                 => '',
 			JobMeta::TYPE                        => '',
 			JobMeta::LOCATION                    => '',
 			JobMeta::ADDRESS                     => [

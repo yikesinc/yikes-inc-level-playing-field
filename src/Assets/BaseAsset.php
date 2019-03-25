@@ -156,7 +156,7 @@ abstract class BaseAsset implements Asset {
 	 */
 	protected function check_for_minified_asset( $uri, $extension ) {
 		$debug        = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG;
-		$minified_uri = str_replace( $extension, "min.{$extension}", $uri );
+		$minified_uri = str_replace( ".$extension", ".min.{$extension}", $uri );
 
 		return ! $debug && is_readable( $minified_uri ) ? $minified_uri : $uri;
 	}

@@ -10,6 +10,9 @@
 namespace Yikes\LevelPlayingField\CustomPostType;
 
 use Yikes\LevelPlayingField\Roles\Capabilities;
+use Yikes\LevelPlayingField\Model\JobMeta;
+use Yikes\LevelPlayingField\Model\JobRepository;
+use WP_REST_Server;
 
 /**
  * Job Manager CPT.
@@ -21,6 +24,47 @@ class JobManager extends BaseCustomPostType {
 
 	const SLUG          = 'jobs';
 	const SINGULAR_SLUG = 'job';
+
+	/**
+	 * Register the WordPress hooks.
+	 *
+	 * @since %VERSION%
+	 */
+	public function register() {
+		parent::register();
+
+		// Modify the default title for the block editor.
+		add_filter( 'enter_title_here', function( $title, $post ) {
+			if ( $this->get_slug() !== $post->post_type ) {
+				return $title;
+			}
+
+			return __( 'Add Job Title', 'yikes-level-playing-field' );
+		}, 10, 2 );
+
+		add_action( 'rest_api_init', function( WP_REST_Server $server ) {
+			$callback = function( $object, $field_name ) {
+				static $repo = null;
+				if ( null === $repo ) {
+					$repo = new JobRepository();
+				}
+
+				return $repo->find( $object['id'] )->{"get_{$field_name}"}();
+			};
+
+			foreach ( JobMeta::REST_FIELDS as $field ) {
+				register_rest_field(
+					$this->get_slug(),
+					$field,
+					[
+						'get_callback'    => $callback,
+						'update_callback' => null,
+						'schema'          => null,
+					]
+				);
+			}
+		});
+	}
 
 	/**
 	 * Get the arguments that configure the custom post type.
@@ -60,7 +104,7 @@ class JobManager extends BaseCustomPostType {
 				'items_list_navigation' => __( 'Jobs list navigation', 'yikes-level-playing-field' ),
 				'filter_items_list'     => __( 'Filter Jobs list', 'yikes-level-playing-field' ),
 			],
-			'supports'            => [ 'title' ],
+			'supports'            => [ 'title', 'editor' ],
 			'hierarchical'        => false,
 			'public'              => true,
 			'show_ui'             => true,
@@ -93,6 +137,7 @@ class JobManager extends BaseCustomPostType {
 			'rewrite'             => [
 				'slug' => _x( 'lpf-jobs', "The CPT's rewrite slug. Translatable as per WP's documentation.", 'yikes-level-playing-field' ),
 			],
+			'show_in_rest'        => true,
 		];
 	}
 

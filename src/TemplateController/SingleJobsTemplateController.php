@@ -11,6 +11,7 @@ namespace Yikes\LevelPlayingField\TemplateController;
 
 use Yikes\LevelPlayingField\CustomPostType\JobManager;
 use Yikes\LevelPlayingField\Model\JobRepository;
+use Yikes\LevelPlayingField\Shortcode\Job as JobShortcode;
 
 /**
  * Class SingleJobsTemplateController.
@@ -73,11 +74,9 @@ class SingleJobsTemplateController extends TemplateController {
 	 * @return array Context to pass onto view.
 	 */
 	protected function get_context( $id ) {
-		$jobs_repository = new JobRepository();
-
-		return apply_filters( 'lpf_single_job_template_data', [
-			'job' => $jobs_repository->find( $id ),
-		] );
+		$shortcode_atts        = ( new JobShortcode() )->get_default_atts();
+		$shortcode_atts['job'] = ( new JobRepository() )->find( $id );
+		return $shortcode_atts;
 	}
 
 }

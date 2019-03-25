@@ -37,7 +37,7 @@ final class JobCategory extends BaseTaxonomy {
 			'show_admin_column'     => true,
 			'show_in_quick_edit'    => true,
 			'query_var'             => true,
-			'rewrite'               => true,
+			'show_in_rest'          => true,
 			'capabilities'          => [
 				'manage_terms' => Capabilities::EDIT_JOBS,
 				'edit_terms'   => Capabilities::EDIT_JOBS,
@@ -62,9 +62,6 @@ final class JobCategory extends BaseTaxonomy {
 				'not_found'                  => __( 'No Job Categories found.', 'yikes-level-playing-field' ),
 				'menu_name'                  => __( 'Job Categories', 'yikes-level-playing-field' ),
 			],
-			'show_in_rest'          => true,
-			'rest_base'             => self::SLUG,
-			'rest_controller_class' => 'WP_REST_Terms_Controller',
 		];
 	}
 
