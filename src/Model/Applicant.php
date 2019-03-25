@@ -1022,24 +1022,6 @@ final class Applicant extends CustomPostTypeEntity {
 			return;
 		}
 
-		/**
-		 * Commenting out role check until review of issue #140 or answers to #145.
-		 */
-
-		// Don't allow unanonymizing without the proper role.
-		/* if ( ! current_user_can( Capabilities::UNANONYMIZE, $this ) ) {
-			throw FailedToUnanonymize::not_capable();
-		} */
-
-		/**
-		 * Todo: do we need this? we're passing in `$this->get_anonymizer()` when we unanonymize so this conditional can't return true.
-		 */
-
-		// Ensure the unanonymizer class is the same that was used to anonymize.
-		if ( get_class( $anonymizer ) !== $this->get_anonymizer() ) {
-			throw InvalidClass::mismatch( get_class( $anonymizer ), $this->get_anonymizer() );
-		}
-
 		// Walk through the object properties, unanonymizing them.
 		$properties = array_diff_key( get_object_vars( $this ), $this->get_excluded_properties() );
 		array_walk_recursive( $properties, $this->get_anonymizer_callback( $anonymizer, 'reveal' ) );
