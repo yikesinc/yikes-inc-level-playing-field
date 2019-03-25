@@ -66,6 +66,15 @@ final class Job extends BaseJobs {
 			'remote_location_text'    => _x( 'Remote', 'Description of the job location', 'yikes-level-playing-field' ),
 		];
 
+		/**
+		 * Filter the default attributes for a job listing.
+		 *
+		 * @since %VERSION%
+		 *
+		 * @param array $default_atts Array of shortcode attributes.
+		 *
+		 * @return array The shortcode attributes, maybe filtered.
+		 */
 		return apply_filters( 'lpf_single_job_listing_default_attributes', $default_atts );
 	}
 

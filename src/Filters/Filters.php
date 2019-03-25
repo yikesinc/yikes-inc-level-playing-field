@@ -30,8 +30,8 @@ class Filters implements Service {
 	 */
 	public function register() {
 		add_filter( 'lpf_the_content', function( $content ) {
-			return $this->lpf_the_content( $content );
-		});
+			return $this->the_content( $content );
+		} );
 	}
 
 	/**
@@ -44,23 +44,18 @@ class Filters implements Service {
 	 *
 	 * @return string $content Content.
 	 */
-	protected function lpf_the_content( $content ) {
+	protected function the_content( $content ) {
 		$content = function_exists( 'do_blocks' ) ? do_blocks( $content ) : $content;
-		$content = function_exists( 'capital_P_dangit' ) ? capital_P_dangit( $content ) : $content;
-		$content = function_exists( 'wptexturize' ) ? wptexturize( $content ) : $content;
-		$content = function_exists( 'convert_smilies' ) ? convert_smilies( $content ) : $content;
-		$content = function_exists( 'wpautop' ) ? wpautop( $content ) : $content;
-		$content = function_exists( 'shortcode_unautop' ) ? shortcode_unautop( $content ) : $content;
-		$content = function_exists( 'prepend_attachment' ) ? prepend_attachment( $content ) : $content;
-		$content = function_exists( 'wp_make_content_images_responsive' ) ? wp_make_content_images_responsive( $content ) : $content;
-		$content = function_exists( 'do_shortcode' ) ? do_shortcode( $content ) : $content;
-
-		if ( class_exists( 'WP_Embed' ) ) {
-
-			// Deal with URLs.
-			$embed   = new \WP_Embed();
-			$content = method_exists( $embed, 'autoembed' ) ? $embed->autoembed( $content ) : $content;
-		}
+		$content = capital_P_dangit( $content );
+		$content = wptexturize( $content );
+		$content = convert_smilies( $content );
+		$content = wpautop( $content );
+		$content = shortcode_unautop( $content );
+		$content = prepend_attachment( $content );
+		$content = wp_make_content_images_responsive( $content );
+		$content = do_shortcode( $content );
+		$embed   = new \WP_Embed();
+		$content = $embed->autoembed( $content );
 
 		return $content;
 	}

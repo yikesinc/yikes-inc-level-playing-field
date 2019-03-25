@@ -1,9 +1,5 @@
-// Import dependencies
-import apiFetch from '@wordpress/api-fetch';
-
 // Get functions / blocks / components
 const { __ } = wp.i18n;
-const { registerBlockType } = wp.blocks;
 const { InspectorControls } = wp.editor;
 const { Spinner, TextControl, PanelBody, PanelRow, FormToggle, SelectControl } = wp.components;
 const { Component } = wp.element;
@@ -16,9 +12,9 @@ export default class JobListing extends Component {
       job       : this.props.job || {},
       jobID     : this.props.jobID ? this.props.jobID : 0,
       jobsLoaded: false
-    }
+    };
     
-    this.jobsEndpoint = `/wp/v2/${lpf_job_listing_data.jobs_slug}`;
+    this.jobsEndpoint = `wp/v2/${lpf_job_listing_data.jobs_slug}`;
 
     // Required for the onClick/onChange/etc. functions to have access to `this`.
     this.getJob = this.getJob.bind( this );
@@ -29,7 +25,7 @@ export default class JobListing extends Component {
    */
   componentDidMount() {
 
-    // Fetch the ID of the selected job.
+    // Fetch the selected job.
     if ( this.state.jobID && Object.keys( this.state.job ).length === 0 ) {
       wp.apiFetch( { path: `${ this.jobsEndpoint }/${ this.state.jobID }` } ).then( job => {
         this.setState( { job: job } );
@@ -81,7 +77,7 @@ export default class JobListing extends Component {
           htmlFor="jobs-sidebar-form-toggle"
           className="blocks-base-control__label"
         >
-          { __( 'Select Job' ) }
+          { __( 'Select Job', 'yikes-level-playing-field' ) }
         </label>
         {this.jobsDropdown()}
       </PanelRow>
@@ -90,7 +86,7 @@ export default class JobListing extends Component {
     const editJob = this.state.job ?
     (
       <PanelRow>
-        <a href={ this.getEditJobURL() }>{ __( 'Edit Job' ) }</a>
+        <a href={ this.getEditJobURL() }>{ __( 'Edit Job', 'yikes-level-playing-field' ) }</a>
       </PanelRow>
     ) : '';
 
@@ -101,11 +97,11 @@ export default class JobListing extends Component {
           htmlFor="lpf-show-title-form-toggle"
           className="blocks-base-control__label"
         >
-          { __( 'Show Title' ) }
+          { __( 'Show Title', 'yikes-level-playing-field' ) }
         </label>
         <FormToggle
           id="lpf-show-title-form-toggle"
-          label={ __( 'Show Title' ) }
+          label={ __( 'Show Title', 'yikes-level-playing-field' ) }
           checked={ !! this.props.showTitle }
           onChange={ ( e ) => this.props.toggleFormControl( e, 'show_title' ) }
         />
@@ -119,11 +115,11 @@ export default class JobListing extends Component {
           htmlFor="lpf-show-description-form-toggle"
           className="blocks-base-control__label"
         >
-          { __( 'Show Description' ) }
+          { __( 'Show Description', 'yikes-level-playing-field' ) }
         </label>
         <FormToggle
           id="lpf-show-description-form-toggle"
-          label={ __( 'Show Description' ) }
+          label={ __( 'Show Description', 'yikes-level-playing-field' ) }
           checked={ !! this.props.showDescription }
           onChange={ ( e ) => this.props.toggleFormControl( e, 'show_description' ) }
         />
@@ -137,11 +133,11 @@ export default class JobListing extends Component {
           htmlFor="lpf-show-type-form-toggle"
           className="blocks-base-control__label"
         >
-          { __( 'Show Job Type' ) }
+          { __( 'Show Job Type', 'yikes-level-playing-field' ) }
         </label>
         <FormToggle
           id="lpf-show-type-form-toggle"
-          label={ __( 'Show Type' ) }
+          label={ __( 'Show Job Type', 'yikes-level-playing-field' ) }
           checked={ !! this.props.showJobType }
           onChange={ ( e ) => this.props.toggleFormControl( e, 'show_job_type' ) }
         />
@@ -155,11 +151,11 @@ export default class JobListing extends Component {
           htmlFor="lpf-show-address-form-toggle"
           className="blocks-base-control__label"
         >
-          { __( 'Show Location' ) }
+          { __( 'Show Location', 'yikes-level-playing-field' ) }
         </label>
         <FormToggle
           id="lpf-show-address-form-toggle"
-          label={ __( 'Show Location' ) }
+          label={ __( 'Show Location', 'yikes-level-playing-field' ) }
           checked={ !! this.props.showLocation }
           onChange={ ( e ) => this.props.toggleFormControl( e, 'show_location' ) }
         />
@@ -173,11 +169,11 @@ export default class JobListing extends Component {
           htmlFor="lpf-show-application-button-form-toggle"
           className="blocks-base-control__label"
         >
-          { __( 'Show Application Button' ) }
+          { __( 'Show Application Button', 'yikes-level-playing-field' ) }
         </label>
         <FormToggle
           id="lpf-show-application-button-form-toggle"
-          label={ __( 'Show Application Button' ) }
+          label={ __( 'Show Application Button', 'yikes-level-playing-field' ) }
           checked={ !! this.props.showApplicationButton }
           onChange={ ( e ) => this.props.toggleFormControl( e, 'show_application_button' ) }
         />
@@ -189,7 +185,7 @@ export default class JobListing extends Component {
       <PanelRow>
         <TextControl
           id="lpf-job-type-text-control"
-          label={ __( 'Job Type Text' ) }
+          label={ __( 'Job Type Text', 'yikes-level-playing-field' ) }
           value={ this.props.jobTypeText }
           onChange={ ( val ) => this.props.handleValueControl( val, 'job_type_text' ) }
         />
@@ -201,7 +197,7 @@ export default class JobListing extends Component {
       <PanelRow>
         <TextControl
           id="lpf-location-text-control"
-          label={ __( 'Location Text' ) }
+          label={ __( 'Location Text', 'yikes-level-playing-field' ) }
           value={ this.props.locationText }
           onChange={ ( val ) => this.props.handleValueControl( val, 'location_text' ) }
         />
@@ -213,7 +209,7 @@ export default class JobListing extends Component {
       <PanelRow>
         <TextControl
           id="lpf-location-text-control"
-          label={ __( 'Remote Location Text' ) }
+          label={ __( 'Remote Location Text', 'yikes-level-playing-field' ) }
           value={ this.props.remoteLocationText }
           onChange={ ( val ) => this.props.handleValueControl( val, 'remote_location_text' ) }
         />
@@ -225,33 +221,30 @@ export default class JobListing extends Component {
       <PanelRow>
         <TextControl
           id="lpf-button-text-control"
-          label={ __( 'Button Text' ) }
+          label={ __( 'Button Text', 'yikes-level-playing-field' ) }
           value={ this.props.buttonText }
           onChange={ ( val ) => this.props.handleValueControl( val, 'button_text' ) }
         />
       </PanelRow>
     ) : '';
 
-    const inspector_controls = 
-     <InspectorControls>
-
-      <PanelBody title={ __( 'Settings' ) } >
-        {jobsDropdown}
-        {showTitle}
-        {showDescription}
-        {showJobType}
-        {showLocation}
-        {showApplicationButton}
-        {editJobTypeText}
-        {editLocationText}
-        {editRemoteLocationText}
-        {editButtonText}
-        {editJob}
-      </PanelBody>
-
-    </InspectorControls>
-
-    return inspector_controls;
+    return (
+      <InspectorControls>
+        <PanelBody title={ __( 'Settings', 'yikes-level-playing-field' ) } >
+          {jobsDropdown}
+          {showTitle}
+          {showDescription}
+          {showJobType}
+          {showLocation}
+          {showApplicationButton}
+          {editJobTypeText}
+          {editLocationText}
+          {editRemoteLocationText}
+          {editButtonText}
+          {editJob}
+        </PanelBody>
+      </InspectorControls>
+    );
   }
 
   /**
@@ -265,12 +258,12 @@ export default class JobListing extends Component {
         className="lpf-jobs-dropdown"
         options={ this.jobsDropdownOptions() }
       />
-    : '<em>No jobs found...</em>';
+    : `<em>${ __( 'No jobs found...', 'yikes-level-playing-field' ) }</em>`;
   }
 
   jobsDropdownOptions() {
     const dropdownOptions = Object.keys( this.state.jobs ).map( ( job_id ) => { return { value: job_id, label: this.state.jobs[ job_id ].title.rendered } });
-    dropdownOptions.unshift( { label: __( 'Select Job' ), value: '0' } );
+    dropdownOptions.unshift( { label: __( 'Select Job', 'yikes-level-playing-field' ), value: '0' } );
     return dropdownOptions;
   }
 
@@ -282,7 +275,7 @@ export default class JobListing extends Component {
       <div className="job-page-job">
         { this.props.showTitle ? this.jobListingTitle() : '' }
         { this.jobListingMeta() }
-        { this.props.showApplicationButton && this.state.job.applicant ? this.jobListingAppButton() : '' }
+        { this.props.showApplicationButton && this.state.job.application ? this.jobListingAppButton() : '' }
       </div>
     );
   }
@@ -376,7 +369,7 @@ export default class JobListing extends Component {
   loading() {
     return (
         <div className="loading">
-          <span>{ __( 'Loading...' ) }</span>
+          <span>{ __( 'Loading...', 'yikes-level-playing-field' ) }</span>
           <Spinner></Spinner>
         </div>
     );

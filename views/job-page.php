@@ -22,7 +22,18 @@ use Yikes\LevelPlayingField\Shortcode\Job as JobShortcode;
  *
  * @var Job[] $jobs
  */
-$jobs = apply_filters( 'lpf_job_listings', $this->jobs );
+$jobs = $this->jobs;
+
+/**
+ * Filter the jobs displayed in the job listings shortcode.
+ *
+ * @since %VERSION%
+ *
+ * @param array $jobs Array of Job objects.
+ *
+ * @return array Array of Job objects, maybe filtered.
+ */
+$jobs = apply_filters( 'lpf_job_listings_jobs', $this->jobs );
 ?>
 
 <div class="job-page">

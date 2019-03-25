@@ -10,7 +10,7 @@
 namespace Yikes\LevelPlayingField\Blocks;
 
 use Yikes\LevelPlayingField\Assets\Asset;
-use Yikes\LevelPlayingField\Assets\ScriptAsset;
+use Yikes\LevelPlayingField\Assets\BlockAsset;
 use Yikes\LevelPlayingField\PluginFactory;
 use Yikes\LevelPlayingField\CustomPostType\JobManager;
 use Yikes\LevelPlayingField\Shortcode\Job as JobShortcode;
@@ -34,7 +34,7 @@ final class JobListing extends BaseBlock {
 	 * @return Asset[]
 	 */
 	protected function get_assets() {
-		$block_script = new ScriptAsset(
+		$block_script = new BlockAsset(
 			static::BLOCK_SLUG,
 			$this->get_block_path(),
 			[
@@ -52,11 +52,10 @@ final class JobListing extends BaseBlock {
 				'block_name'    => $this->get_block_slug(),
 				'jobs_slug'     => JobManager::SLUG,
 				'edit_jobs_url' => add_query_arg( [ 'action' => 'edit' ], admin_url( 'post.php' ) ),
-				'attributes'    => $this->get_block_args()['attributes'],
+				'attributes'    => $this->get_attributes(),
 			]
 		);
 
-		// todo: add styles.
 		return [
 			$block_script,
 		];
@@ -132,26 +131,29 @@ final class JobListing extends BaseBlock {
 	 *
 	 * @param array  $attributes Block attributes.
 	 * @param string $content    Block content.
+	 *
+	 * @return string The rendered block content.
 	 */
 	public function render_block( $attributes, $content ) {
 
 		if ( empty( $attributes['job_id'] ) ) {
-			return;
+			return '';
 		}
 
 		// We want to run the shortcode directly but we need to return the plaintext shortcode or Gutenberg will autop() the shortcode content.
 		return sprintf(
-			'[' . JobShortcode::TAG . ' id="%s" show_title="%s" show_description="%s" show_job_type="%s" show_application_button="%s" show_location="%s" job_type_text="%s" location_text="%s" remote_location_text="%s" button_text="%s"]',
-			$attributes['job_id'],
-			$attributes['show_title'],
-			$attributes['show_description'],
-			$attributes['show_job_type'],
-			$attributes['show_application_button'],
-			$attributes['show_location'],
-			$attributes['job_type_text'],
-			$attributes['location_text'],
-			$attributes['remote_location_text'],
-			$attributes['button_text']
+			'[%s id="%s" show_title="%s" show_description="%s" show_job_type="%s" show_application_button="%s" show_location="%s" job_type_text="%s" location_text="%s" remote_location_text="%s" button_text="%s"]',
+			esc_attr( JobShortcode::TAG ),
+			esc_attr( $attributes['job_id'] ),
+			esc_attr( $attributes['show_title'] ),
+			esc_attr( $attributes['show_description'] ),
+			esc_attr( $attributes['show_job_type'] ),
+			esc_attr( $attributes['show_application_button'] ),
+			esc_attr( $attributes['show_location'] ),
+			esc_attr( $attributes['job_type_text'] ),
+			esc_attr( $attributes['location_text'] ),
+			esc_attr( $attributes['remote_location_text'] ),
+			esc_attr( $attributes['button_text'] )
 		);
 	}
 }

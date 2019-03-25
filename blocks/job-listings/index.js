@@ -14,9 +14,9 @@ const editJobListingBlock = function( props ) {
    */
   const toggleFormControl = ( event, prop ) => {
     const properties = {};
-    properties[ prop ] = !! event.target.checked
+    properties[ prop ] = !! event.target.checked;
     props.setAttributes( properties );
-  }
+  };
 
   /**
    * Update a prop when we have the value.
@@ -25,7 +25,7 @@ const editJobListingBlock = function( props ) {
     const properties = {};
     properties[ prop ] = value;
     props.setAttributes( properties );
-  }
+  };
 
   return (
     <JobListings
@@ -43,25 +43,25 @@ const editJobListingBlock = function( props ) {
     />
   );
 
-}
+};
 
 /**
  * Server side rendering means no need to save props.
  */
 const saveJobListingBlock = function( props ) {
   return null;
-}
+};
 
 // Block settings.
 const settings = {
-  title     : __( 'Job Listings' ),
+  title     : __( 'Job Listings', 'yikes-level-playing-field' ),
   category  : 'widgets',
   icon      : 'list-view',
   keywords  : [ 'yikes level playing field', 'job listings', 'jobs' ],
   attributes: lpf_job_listings_data.attributes,
   edit: editJobListingBlock,
   save: saveJobListingBlock,
-}
+};
 
 // Register our block.
 const jobListingsBlock = registerBlockType( lpf_job_listings_data.block_name, settings );

@@ -55,26 +55,35 @@ final class JobRepository extends CustomPostTypeRepository {
 	 *
 	 * @since %VERSION%
 	 *
-	 * @param int    $limit   The maximum number of jobs to retrieve.
-	 * @param string $orderby The field for ordering.
-	 * @param string $order   The order direction.
-	 * @param mixed  $exclude Either an array or a string. If passed in as a string, turn it into an array by exploding the string at each comma.
+	 * @param int    $limit           The maximum number of jobs to retrieve.
+	 * @param string $orderby         The field for ordering.
+	 * @param string $order           The order direction.
+	 * @param mixed  $exclude         Either an array or a string of post IDs to exclude. If passed in as a string, turn it into an array by exploding the string at each comma.
+	 * @param mixed  $cat_exclude_ids Either an array or a string of category IDs to exclude. If passed in as a string, turn it into an array by exploding the string at each comma.
 	 *
 	 * @return Job[]
 	 */
 	public function find_active( $limit = 10, $orderby = 'title', $order = 'ASC', $exclude = [], $cat_exclude_ids = [] ) {
-		$query = new \WP_Query( [
+		$args = [
 			'post_type'      => $this->get_post_type(),
 			'post_status'    => [ 'publish' ],
 			'posts_per_page' => $limit,
 			'orderby'        => $orderby,
 			'order'          => $order,
-			'post__not_in'   => is_array( $exclude ) ? $exclude : explode( ',', $exclude ),
 			'tax_query'      => [
 				$this->get_active_job_status_tax_query(),
-				$this->get_job_category_exclude_tax_query( $cat_exclude_ids ),
 			],
-		] );
+		];
+
+		if ( ! empty( $exclude ) ) {
+			$args['post__not_in'] = is_array( $exclude ) ? $exclude : explode( ',', $exclude );
+		}
+
+		if ( ! empty( $ids ) ) {
+			$args['tax_query'][] = $this->get_job_category_exclude_tax_query( $cat_exclude_ids );
+		}
+
+		$query = new \WP_Query( $args );
 
 		$jobs = [];
 		foreach ( $query->posts as $post ) {
@@ -184,10 +193,6 @@ final class JobRepository extends CustomPostTypeRepository {
 	 * @return array
 	 */
 	private function get_job_category_exclude_tax_query( $ids = [] ) {
-		if ( empty( $ids ) ) {
-			return;
-		}
-
 		return [
 			'taxonomy' => JobCategory::SLUG,
 			'field'    => 'term_id',

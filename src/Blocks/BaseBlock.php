@@ -13,6 +13,7 @@ use Yikes\LevelPlayingField\Assets\Asset;
 use Yikes\LevelPlayingField\Assets\AssetsAware;
 use Yikes\LevelPlayingField\Assets\AssetsAwareness;
 use Yikes\LevelPlayingField\Service;
+use Yikes\LevelPlayingField\Exception\MustExtend;
 
 /**
  * Class BaseBlock
@@ -27,6 +28,8 @@ abstract class BaseBlock implements Service, AssetsAware {
 	const BASE_SLUG  = 'ylpf/';
 	const BLOCK_PATH = 'assets/js/blocks/';
 	const BLOCK_FILE = '/index';
+	const BLOCK_SLUG = '__BLOCKSLUG__';
+	const CATEGORY   = 'widgets';
 
 	/**
 	 * Register the current Registerable.
@@ -60,8 +63,12 @@ abstract class BaseBlock implements Service, AssetsAware {
 	 *
 	 * @since %VERSION%
 	 * @return string
+	 * @throws MustExtend When the default slug has not been extended.
 	 */
 	public function get_block_slug() {
+		if ( static::BLOCK_SLUG === self::BLOCK_SLUG ) {
+			throw MustExtend::default_slug( self::BLOCK_SLUG );
+		}
 		return static::BASE_SLUG . static::BLOCK_SLUG;
 	}
 
@@ -110,6 +117,8 @@ abstract class BaseBlock implements Service, AssetsAware {
 	 *
 	 * @param array  $attributes Block attributes.
 	 * @param string $content    Block content.
+	 *
+	 * @return string The rendered block content.
 	 */
 	abstract public function render_block( $attributes, $content );
 

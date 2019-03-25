@@ -17,7 +17,6 @@ use Yikes\LevelPlayingField\Assets\StyleAsset;
 use Yikes\LevelPlayingField\CustomPostType\ApplicationManager;
 use Yikes\LevelPlayingField\CustomPostType\JobManager as JobManagerCPT;
 use Yikes\LevelPlayingField\Model\JobMeta;
-use Yikes\LevelPlayingField\Model\Job;
 use Yikes\LevelPlayingField\Model\MetaLinks;
 use Yikes\LevelPlayingField\Taxonomy\JobStatus;
 use Yikes\LevelPlayingField\Model\JobMetaDropdowns;
@@ -132,7 +131,6 @@ final class JobManager extends AwesomeBaseMetabox implements AssetsAware {
 				'name'  => $name,
 			];
 		}, array_keys( $job_types ), $job_types );
-
 		$job_boxes = [
 			'id'         => JobMeta::META_PREFIX . 'metabox',
 			'title'      => __( 'Job Listing Information', 'yikes-level-playing-field' ),

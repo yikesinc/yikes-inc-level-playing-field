@@ -10,9 +10,7 @@
 namespace Yikes\LevelPlayingField\Model;
 
 use Yikes\LevelPlayingField\Taxonomy\JobStatus;
-use Yikes\LevelPlayingField\Model\JobMeta;
 use Yikes\LevelPlayingField\RequiredPages\ApplicationFormPage;
-use Yikes\LevelPlayingField\Model\JobMetaDropdowns;
 
 /**
  * Class Job
@@ -76,7 +74,9 @@ final class Job extends CustomPostTypeEntity {
 	}
 
 	/**
-	 * Determine if the job is remote.
+	 * Get the job's location.
+	 *
+	 * Possible values are address and remote.
 	 *
 	 * @since %VERSION%
 	 *
@@ -120,19 +120,6 @@ final class Job extends CustomPostTypeEntity {
 	}
 
 	/**
-	 * Get the application URL to use when displaying this Job.
-	 *
-	 * @since %VERSION%
-	 *
-	 * @return string
-	 */
-	public function get_application_url() {
-		$app_page_id  = (int) apply_filters( 'lpf_single_job_template_application_page_id', ( new ApplicationFormPage() )->get_page_id( ApplicationFormPage::PAGE_SLUG ), $this );
-		$app_page_url = add_query_arg( array( 'job' => $this->get_id() ), get_permalink( $app_page_id ) );
-		return $app_page_url;
-	}
-
-	/**
 	 * Get the success message to use when an application using this Job is submitted.
 	 *
 	 * @since %VERSION%
@@ -141,6 +128,29 @@ final class Job extends CustomPostTypeEntity {
 	 */
 	public function get_application_success_message() {
 		return $this->{JobMeta::APPLICATION_SUCCESS_MESSAGE};
+	}
+
+	/**
+	 * Get the application URL to use when displaying this Job.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @return string
+	 */
+	public function get_application_url() {
+
+		/**
+		 * Filter the application page ID for the given Job.
+		 *
+		 * @since %VERSION%
+		 *
+		 * @param int $page_id The page ID of the plugin's application form page.
+		 * @param Job $job     The job class.
+		 *
+		 * @return int The page ID.
+		 */
+		$app_page_id = (int) apply_filters( 'lpf_single_job_application_page_id', ( new ApplicationFormPage() )->get_page_id( ApplicationFormPage::PAGE_SLUG ), $this );
+		return add_query_arg( [ 'job' => $this->get_id() ], get_permalink( $app_page_id ) );
 	}
 
 	/**

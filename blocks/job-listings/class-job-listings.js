@@ -1,9 +1,5 @@
-// Import dependencies.
-import apiFetch from '@wordpress/api-fetch';
-
 // Get functions / blocks / components.
 const { __ } = wp.i18n;
-const { registerBlockType } = wp.blocks;
 const { InspectorControls } = wp.editor;
 const { Spinner, TextControl, PanelBody, PanelRow, FormToggle, SelectControl } = wp.components;
 const { Component } = wp.element;
@@ -19,11 +15,11 @@ export default class JobListing extends Component {
       exclude                : props.exclude,
       show_exclude_cat_toggle: props.cat_exclude_ids.length > 0,
       catExclude             : props.cat_exclude_ids
-    }
+    };
 
     this.jobsCategoryEndpoint = `/wp/v2/${lpf_job_listings_data.job_categories_slug}`;
     this.baseJobsEndpoint     = `/wp/v2/${lpf_job_listings_data.jobs_slug}`;
-    this.setJobsEndpoint( this.props.order, this.props.orderby, this.props.limit );
+    this.setJobsEndpoint( this.props.order, this.props.orderby );
   }
 
   /**
@@ -44,8 +40,8 @@ export default class JobListing extends Component {
   /**
    * Set the WP REST API endpoint for the jobs CPT.
    */
-  setJobsEndpoint( order, orderby, limit ) {
-    this.jobsEndpoint = `${this.baseJobsEndpoint}/?order=${order}&orderby=${orderby}&per_page=${limit}`
+  setJobsEndpoint( order, orderby ) {
+    this.jobsEndpoint = `${this.baseJobsEndpoint}/?order=${order}&orderby=${orderby}`
   }
 
   /**
@@ -92,13 +88,13 @@ export default class JobListing extends Component {
           htmlFor="job-listings-sidebar-limit"
           className="blocks-base-control__label"
         >
-          { __( 'Limit' ) }
+          { __( 'Limit', 'yikes-level-playing-field' ) }
         </label>
         <SelectControl
           id="job-listings-sidebar-limit"
           value={ this.props.limit }
           options={ this.limitLoop() }
-          onChange={ ( val ) => { this.props.handleValueControl( val, 'limit' ); this.setJobsEndpoint( this.props.order, this.props.orderby, val ); this.fetchAllJobs(); } }
+          onChange={ ( val ) => { this.props.handleValueControl( val, 'limit' ); } }
         />
       </PanelRow>
     );
@@ -110,13 +106,13 @@ export default class JobListing extends Component {
           htmlFor="job-listings-sidebar-orderby"
           className="blocks-base-control__label"
         >
-          { __( 'Order By' ) }
+          { __( 'Order By', 'yikes-level-playing-field' ) }
         </label>
         <SelectControl
           id="job-listings-sidebar-orderby"
           value={ this.props.orderby }
-          options={ [ { label: __( 'Title' ), value: 'title' }, { 'label': __( 'Date' ), value: 'date' } ] }
-          onChange={ ( val ) => { this.props.handleValueControl( val, 'orderby' ); this.setJobsEndpoint( this.props.order, val, this.props.limit ); this.fetchAllJobs(); } }
+          options={ [ { label: __( 'Title', 'yikes-level-playing-field' ), value: 'title' }, { 'label': __( 'Date', 'yikes-level-playing-field' ), value: 'date' } ] }
+          onChange={ ( val ) => { this.props.handleValueControl( val, 'orderby' ); this.setJobsEndpoint( this.props.order, val ); this.fetchAllJobs(); } }
         />
       </PanelRow>
     );
@@ -128,13 +124,13 @@ export default class JobListing extends Component {
           htmlFor="job-listings-sidebar-order"
           className="blocks-base-control__label"
         >
-          { __( 'Order' ) }
+          { __( 'Order', 'yikes-level-playing-field' ) }
         </label>
         <SelectControl
           id="job-listings-sidebar-order"
           value={ this.props.order }
-          options={ [ { label: __( 'Ascending' ), value: 'asc' }, { 'label': __( 'Descending' ), value: 'desc' } ] }
-          onChange={ ( val ) => { this.props.handleValueControl( val, 'order' ); this.setJobsEndpoint( val, this.props.orderby, this.props.limit ); this.fetchAllJobs(); } }
+          options={ [ { label: __( 'Ascending', 'yikes-level-playing-field' ), value: 'asc' }, { 'label': __( 'Descending', 'yikes-level-playing-field' ), value: 'desc' } ] }
+          onChange={ ( val ) => { this.props.handleValueControl( val, 'order' ); this.setJobsEndpoint( val, this.props.orderby ); this.fetchAllJobs(); } }
         />
       </PanelRow>
     );
@@ -146,11 +142,11 @@ export default class JobListing extends Component {
           htmlFor="job-listings-sidebar-exclude"
           className="blocks-base-control__label"
         >
-          { __( 'Exclude Jobs' ) }
+          { __( 'Exclude Jobs', 'yikes-level-playing-field' ) }
         </label>
         <FormToggle
           id="job-listings-sidebar-exclude"
-          label={ __( 'Exclude Jobs' ) }
+          label={ __( 'Exclude Jobs', 'yikes-level-playing-field' ) }
           checked={ !! this.state.show_exclude_toggle }
           onChange={ ( e ) => this.handleStateExcludeControl( e ) }
         />
@@ -166,11 +162,11 @@ export default class JobListing extends Component {
           htmlFor="job-listings-sidebar-exclude-category"
           className="blocks-base-control__label"
         >
-          { __( 'Exclude Categories' ) }
+          { __( 'Exclude Categories', 'yikes-level-playing-field' ) }
         </label>
         <FormToggle
           id="job-listings-sidebar-exclude-category"
-          label={ __( 'Exclude Categories' ) }
+          label={ __( 'Exclude Categories', 'yikes-level-playing-field' ) }
           checked={ !! this.state.show_exclude_cat_toggle }
           onChange={ ( e ) => this.handleStateExcludeCatControl( e ) }
         />
@@ -186,11 +182,11 @@ export default class JobListing extends Component {
           htmlFor="job-listings-sidebar-show-app-btn"
           className="blocks-base-control__label"
         >
-          { __( 'Show Application Button' ) }
+          { __( 'Show Application Button', 'yikes-level-playing-field' ) }
         </label>
         <FormToggle
           id="job-listings-sidebar-show-app-btn"
-          label={ __( 'Show Application Button' ) }
+          label={ __( 'Show Application Button', 'yikes-level-playing-field' ) }
           checked={ !! this.props.showApplicationButton }
           onChange={ ( e ) => this.props.toggleFormControl( e, 'show_application_button' ) }
         />
@@ -202,31 +198,28 @@ export default class JobListing extends Component {
       <PanelRow>
         <TextControl
           id="lpf-button-text-control"
-          label={ __( 'Button Text' ) }
+          label={ __( 'Button Text', 'yikes-level-playing-field' ) }
           value={ this.props.buttonText }
           onChange={ ( val ) => this.props.handleValueControl( val, 'button_text' ) }
         />
       </PanelRow>
     ) : '';
 
-    const inspector_controls = 
-     <InspectorControls>
-
-      <PanelBody title={ __( 'Settings' ) } >
-        {limit}
-        {orderby}
-        {order}
-        {exclude}
-        {excludeListings}
-        {excludeByCategory}
-        {excludeCategories}
-        {showApplicationButton}
-        {editButtonText}
-      </PanelBody>
-
-    </InspectorControls>
-
-    return inspector_controls;
+    return (
+      <InspectorControls>
+        <PanelBody title={ __( 'Settings', 'yikes-level-playing-field' ) } >
+          {limit}
+          {orderby}
+          {order}
+          {exclude}
+          {excludeListings}
+          {excludeByCategory}
+          {excludeCategories}
+          {showApplicationButton}
+          {editButtonText}
+        </PanelBody>
+      </InspectorControls>
+    );
   }
 
   /**
@@ -363,20 +356,23 @@ export default class JobListing extends Component {
    * Render the jobs.
    */
   jobs() {
+    let counter = 1;
     return Object.keys( this.state.jobs ).length > 0 ? 
       Object.keys( this.state.jobs ).map( ( job_index ) => {
 
         const job     = this.state.jobs[ job_index ];
-        const exclude = this.state.exclude.includes( job.id ) || this.jobHasExcludedCategory( job[ lpf_job_listings_data.job_categories_slug ] );
+        const exclude = this.state.exclude.includes( job.id ) || this.jobHasExcludedCategory( job[ lpf_job_listings_data.job_categories_slug ] ) || counter > this.props.limit;
 
         if ( ! exclude ) {
+          counter++;
+
           return ([
             this.jobHeader( job ),
             this.props.showApplicationButton && job.application ? this.jobListingAppButton( job ) : ''
           ]);
         }
       })
-    : `<em>${ __( 'No jobs found...' ) }</em>`;
+    : `<em>${ __( 'No jobs found...', 'yikes-level-playing-field' ) }</em>`;
   }
 
   /**
@@ -413,7 +409,7 @@ export default class JobListing extends Component {
   loading() {
     return (
         <div className="loading">
-          <span>{ __( 'Loading...' ) }</span>
+          <span>{ __( 'Loading...', 'yikes-level-playing-field' ) }</span>
           <Spinner></Spinner>
         </div>
     );

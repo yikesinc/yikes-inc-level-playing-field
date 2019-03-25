@@ -10,7 +10,7 @@
 namespace Yikes\LevelPlayingField\Blocks;
 
 use Yikes\LevelPlayingField\Assets\Asset;
-use Yikes\LevelPlayingField\Assets\ScriptAsset;
+use Yikes\LevelPlayingField\Assets\BlockAsset;
 use Yikes\LevelPlayingField\PluginFactory;
 use Yikes\LevelPlayingField\CustomPostType\JobManager;
 use Yikes\LevelPlayingField\Taxonomy\JobCategory;
@@ -35,7 +35,7 @@ final class JobListings extends BaseBlock {
 	 * @return Asset[]
 	 */
 	protected function get_assets() {
-		$block_script = new ScriptAsset(
+		$block_script = new BlockAsset(
 			static::BLOCK_SLUG,
 			$this->get_block_path(),
 			[
@@ -53,7 +53,7 @@ final class JobListings extends BaseBlock {
 				'block_name'          => $this->get_block_slug(),
 				'jobs_slug'           => JobManager::SLUG,
 				'edit_jobs_url'       => add_query_arg( [ 'action' => 'edit' ], admin_url( 'post.php' ) ),
-				'attributes'          => $this->get_block_args()['attributes'],
+				'attributes'          => $this->get_attributes(),
 				'job_categories_slug' => JobCategory::SLUG,
 			]
 		);
@@ -98,19 +98,19 @@ final class JobListings extends BaseBlock {
 				'type'    => 'string',
 				'default' => $shortcode_atts['button_text'],
 			],
-			'orderby'                  => [
+			'orderby'                 => [
 				'type'    => 'string',
 				'default' => $shortcode_atts['orderby'],
 			],
-			'order'                    => [
+			'order'                   => [
 				'type'    => 'string',
 				'default' => $shortcode_atts['order'],
 			],
-			'exclude'                  => [
+			'exclude'                 => [
 				'type'    => 'object',
 				'default' => $shortcode_atts['exclude'],
 			],
-			'cat_exclude_ids'          => [
+			'cat_exclude_ids'         => [
 				'type'    => 'object',
 				'default' => $shortcode_atts['cat_exclude_ids'],
 			],
@@ -122,23 +122,26 @@ final class JobListings extends BaseBlock {
 	 *
 	 * @param array  $attributes Block attributes.
 	 * @param string $content    Block content.
+	 *
+	 * @return string The rendered block content.
 	 */
 	public function render_block( $attributes, $content ) {
 
 		if ( empty( $attributes['limit'] ) ) {
-			return;
+			return '';
 		}
 
 		// We want to run the shortcode directly but we need to return the plaintext shortcode or Gutenberg will autop() the shortcode content.
 		return sprintf(
-			'[' . JobsShortcode::TAG . ' limit="%s" order="%s" orderby="%s" exclude="%s" cat_exclude_ids="%s" show_application_button="%s" button_text="%s"]',
-			$attributes['limit'],
-			$attributes['order'],
-			$attributes['orderby'],
-			implode( ',', $attributes['exclude'] ),
-			implode( ',', $attributes['cat_exclude_ids'] ),
-			$attributes['show_application_button'],
-			$attributes['button_text']
+			'[%s limit="%s" order="%s" orderby="%s" exclude="%s" cat_exclude_ids="%s" show_application_button="%s" button_text="%s"]',
+			esc_attr( JobsShortcode::TAG ),
+			esc_attr( $attributes['limit'] ),
+			esc_attr( $attributes['order'] ),
+			esc_attr( $attributes['orderby'] ),
+			esc_attr( implode( ',', $attributes['exclude'] ) ),
+			esc_attr( implode( ',', $attributes['cat_exclude_ids'] ) ),
+			esc_attr( $attributes['show_application_button'] ),
+			esc_attr( $attributes['button_text'] )
 		);
 	}
 }
