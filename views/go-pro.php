@@ -13,7 +13,7 @@ namespace Yikes\LevelPlayingField;
 
 <div class="wrap lpf-page gopro-page">
 	<h1 class="wp-heading-inline">
-		<?php esc_html_e( 'Level Playing Field | Go Pro', 'yikes-level-playing-field' ); ?>
+		<?php esc_html_e( 'Level Playing Field Pro', 'yikes-level-playing-field' ); ?>
 	</h1>
 
 	<div class="lpf-page-content">

@@ -23,7 +23,7 @@ final class DisableFrontEndCSS extends BaseSettingsField {
 
 	const NAME  = 'disable-front-end-css';
 	const SLUG  = SettingsFields::DISABLE_FRONT_END_CSS;
-	const LABEL = 'Disable Front-End CSS';
+	const LABEL = 'Turn off CSS for front-end forms';
 
 	/**
 	 * Render the field's HTML.
@@ -45,13 +45,13 @@ final class DisableFrontEndCSS extends BaseSettingsField {
 	}
 
 	/**
-	 * Return the help text for this field, i18n'ed.
+	 * Return the description text for this field, i18n'ed.
 	 *
 	 * @since %VERSION%
 	 *
-	 * @return string $help_text The help text for this field.
+	 * @return string $description_text The help text for this field.
 	 */
-	protected function help_text() {
-		return __( "This will dequeue all of LPF's styles giving your theme full control over the styling of your forms.", 'yikes-level-playing-field' );
+	protected function description_text() {
+		return __( "Turn off plugin styles to give your theme full control over the styling of forms.", 'yikes-level-playing-field' );
 	}
 }

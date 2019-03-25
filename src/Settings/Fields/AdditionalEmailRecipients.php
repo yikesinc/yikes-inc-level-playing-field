@@ -47,18 +47,7 @@ final class AdditionalEmailRecipients extends BaseSettingsField {
 	 * @return string $description_text The description text for this field.
 	 */
 	protected function description_text() {
-		return __( 'These email addresses will receive notifications when an applicant sends a message.', 'yikes-level-playing-field' );
-	}
-
-	/**
-	 * Return the help text for this field, i18n'ed.
-	 *
-	 * @since %VERSION%
-	 *
-	 * @return string $help_text The help text for this field.
-	 */
-	protected function help_text() {
-		return __( 'Please separate email addresses with a comma.', 'yikes-level-playing-field' );
+		return __( 'Enter email addresses below for people you want to receive email notifications when an applicant sends a message. Separate multiple email addresses with commas.', 'yikes-level-playing-field' );
 	}
 
 	/**
