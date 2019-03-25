@@ -251,6 +251,9 @@ class ApplicantRepository extends CustomPostTypeRepository {
 			$applicant->get_id()
 		) );
 
+		// Add a GUID to the applicant. This helps keep our front end pages (e.g. messaging) covert.
+		$applicant->set_guid( $applicant->create_guid() );
+
 		// Save the changes.
 		$applicant->persist();
 
