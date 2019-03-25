@@ -30,10 +30,27 @@ final class AllJobs extends BaseJobs {
 	 * @since %VERSION%
 	 * @return array
 	 */
-	protected function get_default_atts() {
-		return [
-			'limit' => 10,
+	public function get_default_atts() {
+		$default_atts = [
+			'limit'                   => 10,
+			'show_application_button' => false,
+			'button_text'             => __( 'Apply', 'yikes-level-playing-field' ),
+			'order'                   => 'asc',
+			'orderby'                 => 'title',
+			'exclude'                 => [],
+			'cat_exclude_ids'         => [],
 		];
+
+		/**
+		 * Filter the default attributes for the job listings shortcode.
+		 *
+		 * @since %VERSION%
+		 *
+		 * @param array $default_atts Array of shortcode attributes.
+		 *
+		 * @return array The shortcode attributes, maybe filtered.
+		 */
+		return apply_filters( 'lpf_job_listings_default_attributes', $default_atts );
 	}
 
 	/**
@@ -52,7 +69,7 @@ final class AllJobs extends BaseJobs {
 		$jobs_repository = new JobRepository();
 
 		return [
-			'jobs' => $jobs_repository->find_active( $atts['limit'] ),
+			'jobs' => $jobs_repository->find_active( $atts['limit'], $atts['orderby'], $atts['order'], $atts['exclude'], $atts['cat_exclude_ids'] ),
 		];
 	}
 }

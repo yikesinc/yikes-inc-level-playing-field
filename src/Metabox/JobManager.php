@@ -19,6 +19,8 @@ use Yikes\LevelPlayingField\CustomPostType\JobManager as JobManagerCPT;
 use Yikes\LevelPlayingField\Model\JobMeta;
 use Yikes\LevelPlayingField\Model\MetaLinks;
 use Yikes\LevelPlayingField\Taxonomy\JobStatus;
+use Yikes\LevelPlayingField\Model\JobMetaDropdowns;
+use Yikes\LevelPlayingField\Blocks\JobListing;
 
 /**
  * Class JobManager
@@ -29,6 +31,7 @@ use Yikes\LevelPlayingField\Taxonomy\JobStatus;
 final class JobManager extends AwesomeBaseMetabox implements AssetsAware {
 
 	use AssetsAwareness;
+	use JobMetaDropdowns;
 
 	const CSS_HANDLE = 'lpf-admin-jobs-css';
 	const CSS_URI    = 'assets/css/lpf-jobs-admin';
@@ -121,103 +124,70 @@ final class JobManager extends AwesomeBaseMetabox implements AssetsAware {
 	 * @return array The filtered meta boxes.
 	 */
 	public function register_boxes( $meta_boxes ) {
+		$job_types = $this->get_job_type_options();
+		$job_types = array_map( function( $value, $name ) {
+			return [
+				'value' => $value,
+				'name'  => $name,
+			];
+		}, array_keys( $job_types ), $job_types );
 		$job_boxes = [
 			'id'         => JobMeta::META_PREFIX . 'metabox',
 			'title'      => __( 'Job Listing Information', 'yikes-level-playing-field' ),
 			'pages'      => [ JobManagerCPT::SLUG ],
-			'show_names' => true,
-			'group'      => true,
+			'show_names' => false,
+			'group'      => false,
+			'context'    => 'side',
 			'fields'     => [
 				[
-					'name'   => __( 'General Info', 'yikes-level-playing-field' ),
-					'id'     => 'general',
-					'type'   => 'group',
-					'fields' => [
+					'name'     => __( 'Job Status', 'yikes-level-playing-field' ),
+					'desc'     => __( 'Is this job currently active or inactive', 'yikes-level-playing-field' ),
+					'id'       => 'tax_input[' . JobStatus::SLUG . ']',
+					'type'     => 'taxonomy-select',
+					'taxonomy' => JobStatus::SLUG,
+				],
+				[
+					'name'    => __( 'Job Type', 'yikes-level-playing-field' ),
+					'desc'    => __( 'The type of job being offered', 'yikes-level-playing-field' ),
+					'id'      => $this->prefix_field( JobMeta::TYPE ),
+					'type'    => 'radio',
+					'options' => $job_types,
+				],
+				[
+					'name'    => __( 'Location', 'yikes-level-playing-field' ),
+					'desc'    => __( 'Is this job at a location or can employees work remotely', 'yikes-level-playing-field' ),
+					'id'      => $this->prefix_field( JobMeta::LOCATION ),
+					'type'    => 'radio-inline',
+					'options' => [
 						[
-							'name' => __( 'General Information', 'yikes-level-playing-field' ),
-							'desc' => __( 'Enter the details for this job listing.', 'yikes-level-playing-field' ),
-							'id'   => $this->prefix_field( 'general_message' ),
-							'type' => 'title',
+							'name'  => __( 'Address', 'yikes-level-playing-field' ),
+							'value' => 'address',
 						],
 						[
-							'name'     => __( 'Job Status', 'yikes-level-playing-field' ),
-							'desc'     => __( 'Is this job currently active or inactive', 'yikes-level-playing-field' ),
-							'id'       => 'tax_input[' . JobStatus::SLUG . ']',
-							'type'     => 'taxonomy-select',
-							'taxonomy' => JobStatus::SLUG,
-						],
-						[
-							'name' => __( 'Job Description', 'yikes-level-playing-field' ),
-							'desc' => __( 'General overview of the Job and its requirements.', 'yikes-level-playing-field' ),
-							'id'   => $this->prefix_field( JobMeta::DESCRIPTION ),
-							'type' => 'wysiwyg',
-						],
-						[
-							'name'    => __( 'Job Type', 'yikes-level-playing-field' ),
-							'desc'    => __( 'The type of job being offered', 'yikes-level-playing-field' ),
-							'id'      => $this->prefix_field( JobMeta::TYPE ),
-							'type'    => 'radio-inline',
-							'options' => [
-								[
-									'name'  => __( 'Full Time', 'yikes-level-playing-field' ),
-									'value' => 'full-time',
-								],
-								[
-									'name'  => __( 'Part Time', 'yikes-level-playing-field' ),
-									'value' => 'part-time',
-								],
-								[
-									'name'  => __( 'Contract', 'yikes-level-playing-field' ),
-									'value' => 'contract',
-								],
-								[
-									'name'  => __( 'Per Diem', 'yikes-level-playing-field' ),
-									'value' => 'per-diem',
-								],
-								[
-									'name'  => __( 'Other', 'yikes-level-playing-field' ),
-									'value' => 'other',
-								],
-							],
-						],
-						[
-							'name'    => __( 'Location', 'yikes-level-playing-field' ),
-							'desc'    => __( 'Is this job at a location or can employees work remotely', 'yikes-level-playing-field' ),
-							'id'      => $this->prefix_field( JobMeta::LOCATION ),
-							'type'    => 'radio-inline',
-							'options' => [
-								[
-									'name'  => __( 'Address', 'yikes-level-playing-field' ),
-									'value' => 'address',
-								],
-								[
-									'name'  => __( 'Remote', 'yikes-level-playing-field' ),
-									'value' => 'remote',
-								],
-							],
-						],
-						[
-							'name' => __( 'Location Address', 'yikes-level-playing-field' ),
-							'desc' => __( 'Address where the job is located', 'yikes-level-playing-field' ),
-							'id'   => $this->prefix_field( JobMeta::ADDRESS ),
-							'type' => 'address',
-						],
-						[
-							'name' => __( 'Application Success Message', 'yikes-level-playing-field' ),
-							'desc' => __( "The message displayed after the job's application is submitted.", 'yikes-level-playing-field' ),
-							'id'   => $this->prefix_field( JobMeta::APPLICATION_SUCCESS_MESSAGE ),
-							'type' => 'textarea',
-						],
-						[
-							'name'      => __( 'Application Form', 'yikes-level-playing-field' ),
-							'desc'      => __( 'Choose the application form to use for this job', 'yikes-level-playing-field' ),
-							'id'        => MetaLinks::APPLICATION,
-							'type'      => 'select-post-type',
-							'post-type' => ApplicationManager::SLUG,
+							'name'  => __( 'Remote', 'yikes-level-playing-field' ),
+							'value' => 'remote',
 						],
 					],
 				],
-				// Applicants here.
+				[
+					'name' => __( 'Location Address', 'yikes-level-playing-field' ),
+					'desc' => __( 'Address where the job is located', 'yikes-level-playing-field' ),
+					'id'   => $this->prefix_field( JobMeta::ADDRESS ),
+					'type' => 'address',
+				],
+				[
+					'name' => __( 'Application Success Message', 'yikes-level-playing-field' ),
+					'desc' => __( "The message displayed after the job's application is submitted.", 'yikes-level-playing-field' ),
+					'id'   => $this->prefix_field( JobMeta::APPLICATION_SUCCESS_MESSAGE ),
+					'type' => 'textarea',
+				],
+				[
+					'name'      => __( 'Application Form', 'yikes-level-playing-field' ),
+					'desc'      => __( 'Choose the application form to use for this job', 'yikes-level-playing-field' ),
+					'id'        => MetaLinks::APPLICATION,
+					'type'      => 'select-post-type',
+					'post-type' => ApplicationManager::SLUG,
+				],
 			],
 		];
 
@@ -240,9 +210,19 @@ final class JobManager extends AwesomeBaseMetabox implements AssetsAware {
 	 * @return Asset[]
 	 */
 	protected function get_assets() {
+		$script = new ScriptAsset( self::JS_HANDLE, self::JS_URI, [ 'wp-blocks' ] );
+		$script->add_localization(
+			'lpf_job_manager_data',
+			[
+				'disallowed_blocks' => [
+					( new JobListing() )->get_block_slug(),
+				],
+			]
+		);
+
 		return [
 			new StyleAsset( self::CSS_HANDLE, self::CSS_URI ),
-			new ScriptAsset( self::JS_HANDLE, self::JS_URI ),
+			$script,
 		];
 	}
 }

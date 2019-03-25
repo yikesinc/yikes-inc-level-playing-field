@@ -76,7 +76,7 @@ final class Application extends BaseShortcode {
 	 * @since %VERSION%
 	 * @return array
 	 */
-	protected function get_default_atts() {
+	public function get_default_atts() {
 		return [
 			'job_id' => 0,
 		];
@@ -97,7 +97,7 @@ final class Application extends BaseShortcode {
 	 */
 	protected function get_context( array $atts ) {
 		$job                = ( new JobRepository() )->find( $atts['job_id'] );
-		$application        = ( new ApplicationRepository() )->find( $job->get_application_id() );
+		$application        = ( new ApplicationRepository() )->find( $job->get_application() );
 		$this->is_submitted = $this->is_submitting_application();
 
 		// Set up the classes we'll use for the form and the individual fields.

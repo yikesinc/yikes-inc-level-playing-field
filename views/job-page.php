@@ -12,6 +12,7 @@
 namespace Yikes\LevelPlayingField;
 
 use Yikes\LevelPlayingField\Model\Job;
+use Yikes\LevelPlayingField\Shortcode\Job as JobShortcode;
 
 /**
  * These are the available jobs.
@@ -22,6 +23,17 @@ use Yikes\LevelPlayingField\Model\Job;
  * @var Job[] $jobs
  */
 $jobs = $this->jobs;
+
+/**
+ * Filter the jobs displayed in the job listings shortcode.
+ *
+ * @since %VERSION%
+ *
+ * @param array $jobs Array of Job objects.
+ *
+ * @return array Array of Job objects, maybe filtered.
+ */
+$jobs = apply_filters( 'lpf_job_listings_jobs', $this->jobs );
 ?>
 
 <div class="job-page">
@@ -42,6 +54,14 @@ $jobs = $this->jobs;
 			</a>
 		</h4>
 		<?php
+
+		if ( $this->show_application_button && ! empty( $job->get_application() ) ) :
+			?>
+			<div class="job-page-application">
+				<a href="<?php echo esc_url( $job->get_application_url() ); ?>"><button type="button" class="job-page-application-button"><?php echo esc_html( $this->button_text ); ?></button></a>
+			</div>
+			<?php
+		endif;
 	}
 
 	/**

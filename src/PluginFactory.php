@@ -10,23 +10,25 @@
 namespace Yikes\LevelPlayingField;
 
 use Yikes\LevelPlayingField\AdminPage\ExportApplicantsPage;
-use Yikes\LevelPlayingField\AdminPage\SettingsPage;
 use Yikes\LevelPlayingField\AdminPage\GoProPage;
+use Yikes\LevelPlayingField\AdminPage\SettingsPage;
 use Yikes\LevelPlayingField\AdminPage\SupportPage;
 use Yikes\LevelPlayingField\Assets\AdminStyles;
+use Yikes\LevelPlayingField\Blocks\JobListing;
+use Yikes\LevelPlayingField\Blocks\JobListings;
 use Yikes\LevelPlayingField\CustomPostType\ApplicantManager;
 use Yikes\LevelPlayingField\CustomPostType\ApplicationManager;
 use Yikes\LevelPlayingField\CustomPostType\LimitedJobManager;
+use Yikes\LevelPlayingField\Filters\Filters;
 use Yikes\LevelPlayingField\ListTable\ApplicantManager as ApplicantListTable;
 use Yikes\LevelPlayingField\ListTable\ApplicationManager as ApplicationListTable;
 use Yikes\LevelPlayingField\ListTable\JobManager as JobListTable;
 use Yikes\LevelPlayingField\Messaging\ApplicantMessaging;
-use Yikes\LevelPlayingField\Metabox\ApplicantManager as ApplicantMetabox;
 use Yikes\LevelPlayingField\Metabox\ApplicantBasicInfo;
 use Yikes\LevelPlayingField\Metabox\ApplicantInterviewDetails;
+use Yikes\LevelPlayingField\Metabox\ApplicantManager as ApplicantMetabox;
 use Yikes\LevelPlayingField\Metabox\ApplicationManager as ApplicationMetabox;
 use Yikes\LevelPlayingField\Metabox\JobManager;
-use Yikes\LevelPlayingField\Settings\SettingsManager;
 use Yikes\LevelPlayingField\RequiredPages\ApplicantMessagingPage;
 use Yikes\LevelPlayingField\RequiredPages\ApplicationFormPage;
 use Yikes\LevelPlayingField\Roles\Administrator;
@@ -34,6 +36,7 @@ use Yikes\LevelPlayingField\Roles\Applicant;
 use Yikes\LevelPlayingField\Roles\Editor;
 use Yikes\LevelPlayingField\Roles\HiringManager;
 use Yikes\LevelPlayingField\Roles\HumanResources;
+use Yikes\LevelPlayingField\Settings\SettingsManager;
 use Yikes\LevelPlayingField\Shortcode\AllJobs;
 use Yikes\LevelPlayingField\Shortcode\Application;
 use Yikes\LevelPlayingField\Shortcode\Job;
@@ -82,6 +85,13 @@ final class PluginFactory {
 	 */
 	private static function get_service_container() {
 		return new Container( [
+			// Filters.
+			Filters::class                   => 1,
+
+			// Blocks.
+			JobListing::class                => 1,
+			JobListings::class               => 1,
+
 			// CPTs.
 			LimitedJobManager::class         => 1,
 			ApplicationManager::class        => 1,

@@ -219,7 +219,7 @@ final class ApplicantStatus extends BaseTaxonomy implements AssetsAware {
 			'show_ui'            => true,
 			'show_in_menu'       => false,
 			'show_admin_column'  => true,
-			'show_in_quick_edit' => true,
+			'show_in_quick_edit' => false,
 			'query_var'          => true,
 			'meta_box_cb'        => [ $this, 'meta_box_cb' ],
 			'rewrite'            => [
