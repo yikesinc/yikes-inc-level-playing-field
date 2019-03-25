@@ -20,7 +20,7 @@ use Closure;
  * @package Yikes\LevelPlayingField\Assets
  * @author  Jeremy Pry
  */
-final class ScriptAsset extends BaseAsset {
+class ScriptAsset extends BaseAsset {
 
 	const ENQUEUE_HEADER = false;
 	const ENQUEUE_FOOTER = true;
