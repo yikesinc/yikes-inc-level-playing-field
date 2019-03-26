@@ -14,6 +14,10 @@ use Yikes\LevelPlayingField\Model\ApplicantRepository;
 use Yikes\LevelPlayingField\Taxonomy\JobCategory;
 use Yikes\LevelPlayingField\Taxonomy\JobStatus;
 use Yikes\LevelPlayingField\Shortcode\Job;
+use Yikes\LevelPlayingField\Assets\Asset;
+use Yikes\LevelPlayingField\Assets\StyleAsset;
+use Yikes\LevelPlayingField\Assets\AssetsAware;
+use Yikes\LevelPlayingField\Assets\AssetsAwareness;
 
 /**
  * Class JobManager
@@ -21,7 +25,12 @@ use Yikes\LevelPlayingField\Shortcode\Job;
  * @since   %VERSION%
  * @package Yikes\LevelPlayingField
  */
-final class JobManager extends BasePostType {
+final class JobManager extends BasePostType implements AssetsAware {
+
+	use AssetsAwareness;
+
+	const CSS_HANDLE = 'lpf-jobs-list-table-admin';
+	const CSS_URI    = '/assets/css/lpf-jobs-list-table-admin';
 
 	/**
 	 * Register the WordPress hooks.
@@ -30,9 +39,43 @@ final class JobManager extends BasePostType {
 	 */
 	public function register() {
 		parent::register();
+		$this->register_assets();
+		add_filter( 'admin_enqueue_scripts', function( $hook ) {
+
+			// Ensure this is the edit page.
+			if ( 'edit.php' !== $hook ) {
+				return;
+			}
+
+			// Ensure this is a real screen object.
+			$screen = get_current_screen();
+			if ( ! ( $screen instanceof \WP_Screen ) ) {
+				return;
+			}
+
+			// Ensure this is the edit screen for the correct post type.
+			if ( $this->get_post_type() !== $screen->post_type ) {
+				return;
+			}
+
+			$this->enqueue_assets();
+		} );
 
 		// Additional functionality for this object.
 		add_filter( 'disable_months_dropdown', [ $this, 'months_dropdown' ], 10, 2 );
+	}
+
+	/**
+	 * Get the array of known assets.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @return Asset[]
+	 */
+	protected function get_assets() {
+		return [
+			new StyleAsset( self::CSS_HANDLE, self::CSS_URI ),
+		];
 	}
 
 	/**
