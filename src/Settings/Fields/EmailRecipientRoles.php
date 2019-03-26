@@ -42,7 +42,8 @@ final class EmailRecipientRoles extends BaseSettingsField {
 					id="<?php echo esc_attr( $role::SLUG ); ?>"
 					name="<?php echo esc_attr( static::NAME ); ?>"
 					value="<?php echo esc_attr( $role::SLUG ); ?>"
-					<?php checked( isset( $this->get_value()[ $role::SLUG ] ) && true === $this->get_value()[ $role::SLUG ] ); ?>>
+					<?php checked( isset( $this->get_value()[ $role::SLUG ] ) && true === $this->get_value()[ $role::SLUG ] ); ?>
+				/>
 				<?php echo esc_html( $role->get_title() ); ?>
 			</label>
 			<?php
