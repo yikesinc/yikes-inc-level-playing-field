@@ -162,6 +162,27 @@ jQuery( document ).ready( function( $ ) {
 		}
 	};
 
+	/**
+	 * Show/hide degree & major fields if schooling type is high-school.
+	 *
+	 * @param event The click event that triggered this.
+	 */
+	const toggleSchoolingFields = ( event ) => {
+		const selected = $( event.target );
+		if ( selected.val() === 'high_school' ) {
+			selected.parents('.lpf-fieldset-schooling').find( 'input[id*="[major]"], input[id*="[degree]"]' ).each(function() {
+				$(this).val('N/A');
+				$(this).parent('.lpf-input-label').hide();
+			});
+		} else {
+			selected.parents('.lpf-fieldset-schooling').find( 'input[id*="[major]"], input[id*="[degree]"]' ).each(function() {
+				$(this).val('');
+				$(this).parent('.lpf-input-label').show();
+			});
+		}
+	};
+
+
 	// Globals.
 	let isError = false;
 	const $submitBtn = $( '.lpf-submit' );
@@ -174,19 +195,6 @@ jQuery( document ).ready( function( $ ) {
 			invalid: '%TYPE% is invalid.'
 		}
 	}, ( window.lpfInputValidation || {} ) );
-
-	const toggleSchoolingFields = ( event ) => {
-		console.log($( event.target ).val());
-		if ( $(this).val() === 'high_school' ) {
-			$(this).parents('.lpf-fieldset-schooling').find( 'input[id*="[major]"], input[id*="[degree]"]' ).each(function() {
-				$(this).parent('.lpf-input-label').hide();
-			});
-		} else {
-			$(this).parents('.lpf-fieldset-schooling').find( 'input[id*="[major]"], input[id*="[degree]"]' ).each(function() {
-				$(this).parent('.lpf-input-label').show();
-			});
-		}
-	};
 
 	/**
 	 * Initialization.
