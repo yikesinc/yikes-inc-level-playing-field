@@ -169,16 +169,11 @@ jQuery( document ).ready( function( $ ) {
 	 */
 	const toggleSchoolingFields = ( event ) => {
 		const selected = $( event.target );
+		const fields = selected.parents('.lpf-fieldset-schooling').find( 'input[id$="[major]"], input[id$="[degree]"]' );
 		if ( selected.val() === 'high_school' ) {
-			selected.parents('.lpf-fieldset-schooling').find( 'input[id*="[major]"], input[id*="[degree]"]' ).each(function() {
-				$(this).val('N/A');
-				$(this).parent('.lpf-input-label').hide();
-			});
+			fields.val('N/A').parent('.lpf-input-label').hide();
 		} else {
-			selected.parents('.lpf-fieldset-schooling').find( 'input[id*="[major]"], input[id*="[degree]"]' ).each(function() {
-				$(this).val('');
-				$(this).parent('.lpf-input-label').show();
-			});
+			fields.val('').parent('.lpf-input-label').show();
 		}
 	};
 
@@ -193,18 +188,16 @@ jQuery( document ).ready( function( $ ) {
 		// These are defaults in case the window object is missing.
 		// See src/Shortcode/Application.php for localized strings.
 		errors: {
-			empty: 'Field cannot be emptytrt.',
+			empty: 'Field cannot be empty.',
 			invalid: '%TYPE% is invalid.'
 		}
 	}, ( window.lpfInputValidation || {} ) );
 
 	// If schooling type field is 'High School'.
-	const schoolingFields = $( '.lpf-fieldset-schooling select[id*="[type]"]' );
+	const schoolingFields = $( '.lpf-fieldset-schooling select[id$="[type]"]' );
 	schoolingFields.each(function() {
 		if ( $(this).val() === 'high_school' ) {
-			$(this).parents('.lpf-fieldset-schooling').find( 'input[id*="[major]"], input[id*="[degree]"]' ).each(function() {
-				$(this).parent('.lpf-input-label').hide();
-			});
+			$(this).parents('.lpf-fieldset-schooling').find( 'input[id$="[major]"], input[id$="[degree]"]' ).val('N/A').hide();
 		}
 	});
 
@@ -212,7 +205,7 @@ jQuery( document ).ready( function( $ ) {
 	 * Event Listeners.
 	 */
 	 // When Schooling Institution type field is changed.
-	$( 'body' ).on( 'change', '.lpf-fieldset-schooling select[id*="[type]"]', toggleSchoolingFields );
+	$( 'body' ).on( 'change', '.lpf-fieldset-schooling select[id$="[type]"]', toggleSchoolingFields );
 
 	// When 'Submit' button is clicked.
 	$submitBtn.on( 'click', submitValidation );
