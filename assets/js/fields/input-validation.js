@@ -183,7 +183,9 @@ jQuery( document ).ready( function( $ ) {
 	};
 
 
-	// Globals.
+	/**
+	 * Initialization.
+	 */
 	let isError = false;
 	const $submitBtn = $( '.lpf-submit' );
 	const errorPrompt = 'error-prompt';
@@ -196,10 +198,6 @@ jQuery( document ).ready( function( $ ) {
 		}
 	}, ( window.lpfInputValidation || {} ) );
 
-	/**
-	 * Initialization.
-	 */
-
 	// If schooling type field is 'High School'.
 	const schoolingFields = $( '.lpf-fieldset-schooling select[id*="[type]"]' );
 	schoolingFields.each(function() {
@@ -210,9 +208,13 @@ jQuery( document ).ready( function( $ ) {
 		}
 	});
 
+	/**
+	 * Event Listeners.
+	 */
+	 // When Schooling Institution type field is changed.
 	$( 'body' ).on( 'change', '.lpf-fieldset-schooling select[id*="[type]"]', toggleSchoolingFields );
 
-	// When 'Submit' button is clicked...
+	// When 'Submit' button is clicked.
 	$submitBtn.on( 'click', submitValidation );
 
 	// When a to-the-present checkbox is clicked.
