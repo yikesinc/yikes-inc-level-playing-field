@@ -51,6 +51,8 @@ $settings = $this->settings;
 		?>
 	</div>
 
+	<hr>
+
 	<div class="lpf-settings lpf-settings-settings-container">
 		<div class="lpf-settings-save">
 			<button type="button" class="button button-primary lpf-button-primary" id="lpf-settings-save"><?php esc_html_e( 'Save Settings', 'yikes-level-playing-field' ); ?></button>
