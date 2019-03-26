@@ -35,6 +35,24 @@ $input-repeating-width: 85%;
     }
   }
 
+  .edit-post-sidebar & {
+    th, td {
+      display: block;
+      text-align: left;
+      width: 100%;
+    }
+
+    th {
+      border-bottom: 0;
+      padding-bottom: 0;
+      padding-top: 0.4rem;
+    }
+
+    td {
+      padding-top: 10px;
+    }
+  }
+
   p.yks_mbox_description, span.yks_mbox_description {
     color: $grey;
     font-style: italic;
