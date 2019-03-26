@@ -10,6 +10,8 @@ const eslint      = require( 'gulp-eslint' );
 const gulp        = require( 'gulp' );
 const gutil       = require( 'gulp-util' );
 const imagemin    = require( 'gulp-imagemin' );
+const merge       = require( 'gulp-merge' );
+const minimist    = require( 'minimist' );
 const mqpacker    = require( 'css-mqpacker' );
 const neat        = require( 'bourbon-neat' ).includePaths;
 const notify      = require( 'gulp-notify' );
@@ -23,7 +25,6 @@ const spritesmith = require( 'gulp.spritesmith' );
 const svgmin      = require( 'gulp-svgmin' );
 const svgstore    = require( 'gulp-svgstore' );
 const uglify      = require( 'gulp-uglify' );
-const print       = require( 'gulp-print' );
 const debug       = require( 'gulp-debug' );
 const include     = require( 'gulp-include' );
 
@@ -56,8 +57,24 @@ const paths = {
 	]
 };
 
-// Load the package.json data
+// Command line options
+const options = minimist( process.argv.slice( 2 ), {
+	string: [ 'version', 'release', 'preid' ],
+	default: {
+		// A custom version value.
+		version: '',
+
+		// This is the type of release to create when running the generic release task.
+		release: 'minor',
+
+		// For pre-releases, use this parameter. "beta", "rc", etc.
+		preid: undefined,
+	}
+} );
+
+// Load the package.json data. This will be cached per request.
 const packageJSON = require( './package.json' );
+let currentVersion = packageJSON.version;
 
 /**
  * Handle errors and alert the user.
@@ -419,7 +436,7 @@ gulp.task( 'build', [ 'default' ], function() {
 
 		// Pipe each file to the build directory and the Zip file
 		.pipe( gulp.dest( 'build' ) )
-		.pipe( zip( `${packageJSON.name}-${packageJSON.version}.zip` ) )
+		.pipe( zip( `${packageJSON.name}-${currentVersion}.zip` ) )
 
 		// Pipe the zip file to the build directory
 		.pipe( gulp.dest( 'build' ) );
@@ -433,6 +450,77 @@ gulp.task( 'import', () => {
 		.pipe( debug() )
 		.pipe( include() )
 		.pipe( gulp.dest( 'assets/js/' ) );
+} );
+
+/**
+ * Replace %VERSION% with the current version string.
+ *
+ * The version from package.json will be used, or the --version
+ * flag can be passed via CLI to explicitly set the version.
+ */
+function replaceVersion() {
+	const replace = require( 'gulp-replace' );
+	const version = options.version || currentVersion;
+	return gulp.src( paths.php, { base: process.cwd() } )
+		.pipe( plumber( { 'errorHandler': handleErrors } ) )
+		.pipe( replace( '%VERSION%', version ) )
+		.pipe( gulp.dest( './' ) );
+}
+
+/**
+ * Task for replacing the version in all PHP files.
+ */
+gulp.task( 'replace:version', () => {
+	return replaceVersion();
+} );
+
+/**
+ * Bump the version in various files.
+ *
+ * @returns {*}
+ */
+function bumpVersion() {
+	const bump = require( 'gulp-bump' );
+
+	return gulp.src( [ './yikes-level-playing-field.php', './package.json' ] )
+		.pipe( plumber( { 'errorHandler': outputErrors } ) )
+		.pipe( bump( { version: currentVersion } ) )
+		.pipe( gulp.dest( './' ) );
+}
+
+/**
+ * Tasks for updating versions in preparation for a new release.
+ */
+gulp.task( 'release:patch', () => {
+	throw new Error('This task is not yet ready for use.');
+	const semver = require( 'semver' );
+	currentVersion = semver.inc( packageJSON.version, 'patch' );
+
+	return merge( replaceVersion(), bumpVersion() );
+} );
+gulp.task( 'release:minor', () => {
+	throw new Error( 'This task is not yet ready for use.' );
+	const semver = require( 'semver' );
+	currentVersion = semver.inc( packageJSON.version, 'minor' );
+	bumpVersion();
+
+	return replaceVersion();
+} );
+gulp.task( 'release:major', () => {
+	throw new Error( 'This task is not yet ready for use.' );
+	return merge( bumpVersion( 'major' ), gulp.run( 'replace:version' ) );
+} );
+
+/**
+ * General release task. Use this when creating pre-release versions, making
+ * use of the --release and --preid CLI flags.
+ *
+ * --release refers to a SemVer release type. Use "preminor" or "premajor".
+ * --preid refers to the type of pre-release. Use "beta" or "rc".
+ */
+gulp.task( 'release', () => {
+	throw new Error( 'This task is not yet ready for use.' );
+	return merge( bumpVersion( options.release, options.preid ), gulp.run( 'replace:version' ) );
 } );
 
 /**
