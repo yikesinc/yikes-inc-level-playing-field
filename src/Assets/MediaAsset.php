@@ -43,7 +43,7 @@ final class MediaAsset {
 		$file_path = PluginFactory::create()->get_plugin_root() . self::IMG_ASSETS_DIR . $filename;
 
 		if ( ! file_exists( $file_path ) ) {
-			return IMG_NOT_FOUND;
+			return self::IMG_NOT_FOUND;
 		}
 		return $file_url;
 	}
