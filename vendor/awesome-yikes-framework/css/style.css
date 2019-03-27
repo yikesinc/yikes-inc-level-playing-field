@@ -32,7 +32,7 @@
     padding-bottom: 0;
     padding-top: 0.4rem; }
   .edit-post-sidebar .yks_mbox td, .edit-post-sidebar table.yks_mbox td, .edit-post-sidebar table.form-table td {
-    padding-top: 10px; }
+    padding: 8px 0; }
   .yks_mbox p.yks_mbox_description, .yks_mbox span.yks_mbox_description, table.yks_mbox p.yks_mbox_description, table.yks_mbox span.yks_mbox_description, table.form-table p.yks_mbox_description, table.form-table span.yks_mbox_description {
     color: #AAA;
     font-style: italic;
@@ -45,9 +45,9 @@
     margin-right: 8px;
     font-size: 12px;
     padding: 5px; }
-  .yks_mbox input[type=text], .yks_mbox textarea, table.yks_mbox input[type=text], table.yks_mbox textarea, table.form-table input[type=text], table.form-table textarea {
+  .yks_mbox input[type=text]:not(.regular-text, .small-text), .yks_mbox textarea, table.yks_mbox input[type=text]:not(.regular-text, .small-text), table.yks_mbox textarea, table.form-table input[type=text]:not(.regular-text, .small-text), table.form-table textarea {
     width: 100%; }
-    .yks_mbox input[type=text].yks_textarea_source, .yks_mbox textarea.yks_textarea_source, table.yks_mbox input[type=text].yks_textarea_source, table.yks_mbox textarea.yks_textarea_source, table.form-table input[type=text].yks_textarea_source, table.form-table textarea.yks_textarea_source {
+    .yks_mbox input[type=text]:not(.regular-text, .small-text).yks_textarea_source, .yks_mbox textarea.yks_textarea_source, table.yks_mbox input[type=text]:not(.regular-text, .small-text).yks_textarea_source, table.yks_mbox textarea.yks_textarea_source, table.form-table input[type=text]:not(.regular-text, .small-text).yks_textarea_source, table.form-table textarea.yks_textarea_source {
       font-family: Consolas, Monaco, monospace;
       line-height: 16px; }
   .yks_mbox input.yks_txt_medium, .yks_mbox input.yks_img_up, table.yks_mbox input.yks_txt_medium, table.yks_mbox input.yks_img_up, table.form-table input.yks_txt_medium, table.form-table input.yks_img_up {
