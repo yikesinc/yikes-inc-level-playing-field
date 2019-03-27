@@ -21,6 +21,7 @@ use Yikes\LevelPlayingField\Model\MetaLinks;
 use Yikes\LevelPlayingField\Taxonomy\JobStatus;
 use Yikes\LevelPlayingField\Model\JobMetaDropdowns;
 use Yikes\LevelPlayingField\Blocks\JobListing;
+use Yikes\LevelPlayingField\RequiredPages\ApplicationFormPage;
 
 /**
  * Class JobManager
@@ -185,8 +186,16 @@ final class JobManager extends AwesomeBaseMetabox implements AssetsAware {
 					'name'      => __( 'Application Form', 'yikes-level-playing-field' ),
 					'desc'      => __( 'Choose the application form to use for this job', 'yikes-level-playing-field' ),
 					'id'        => MetaLinks::APPLICATION,
-					'type'      => 'select-post-type',
+					'type'      => 'select-post-type-select2',
 					'post-type' => ApplicationManager::SLUG,
+				],
+				[
+					'name'      => __( 'Application Form Page', 'yikes-level-playing-field' ),
+					'desc'      => __( "Choose the page for this job's application form.", 'yikes-level-playing-field' ),
+					'id'        => $this->prefix_field( JobMeta::APPLICATION_PAGE ),
+					'type'      => 'select-post-type-select2',
+					'post-type' => 'page',
+					'std'       => ( new ApplicationFormPage() )->get_page_id( ApplicationFormPage::PAGE_SLUG ),
 				],
 			],
 		];

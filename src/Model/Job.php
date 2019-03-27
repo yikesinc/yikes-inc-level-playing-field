@@ -131,6 +131,28 @@ final class Job extends CustomPostTypeEntity {
 	}
 
 	/**
+	 * Get the page ID to use for this Job's application.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @return int
+	 */
+	public function get_application_page() {
+		return (int) $this->{JobMeta::APPLICATION_PAGE};
+	}
+
+	/**
+	 * Set the page ID to use for this Job's application.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param int $page_id A page ID.
+	 */
+	public function set_application_page( $page_id ) {
+		$this->{JobMeta::APPLICATION_PAGE} = (int) $page_id;
+	}
+
+	/**
 	 * Get the application URL to use when displaying this Job.
 	 *
 	 * @since %VERSION%
@@ -149,7 +171,7 @@ final class Job extends CustomPostTypeEntity {
 		 *
 		 * @return int The page ID.
 		 */
-		$app_page_id = (int) apply_filters( 'lpf_single_job_application_page_id', ( new ApplicationFormPage() )->get_page_id( ApplicationFormPage::PAGE_SLUG ), $this );
+		$app_page_id = (int) apply_filters( 'lpf_single_job_application_page_id', $this->get_application_page(), $this );
 		return add_query_arg( [ 'job' => $this->get_id() ], get_permalink( $app_page_id ) );
 	}
 
@@ -195,6 +217,7 @@ final class Job extends CustomPostTypeEntity {
 			],
 			JobMeta::APPLICATION                 => 0,
 			JobMeta::APPLICATION_SUCCESS_MESSAGE => '',
+			JobMeta::APPLICATION_PAGE            => ( new ApplicationFormPage() )->get_page_id( ApplicationFormPage::PAGE_SLUG ),
 		];
 	}
 
