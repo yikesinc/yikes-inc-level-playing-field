@@ -25,6 +25,7 @@ use Yikes\LevelPlayingField\PluginFactory;
 final class MediaAsset {
 
 	const IMG_ASSETS_DIR = '/assets/images/';
+	const IMG_NOT_FOUND  = '';
 
 	const BANNER = 'banner-1544x500-rtl.png';
 
@@ -35,15 +36,14 @@ final class MediaAsset {
 	 *
 	 * @return string $file_url
 	 */
-	public function get_image( string $filename = '' ) {
-		$file_url = plugins_url( self::IMG_ASSETS_DIR, dirname( __FILE__, 2 ) ) . $filename;
+	public function get_image( string $filename ) {
+		$file_url = PluginFactory::create()->get_plugin_url() . self::IMG_ASSETS_DIR . $filename;
 
 		// Build absolute path to file to confirm file exists.
 		$file_path = PluginFactory::create()->get_plugin_root() . self::IMG_ASSETS_DIR . $filename;
 
 		if ( ! file_exists( $file_path ) ) {
-			echo 'Image Not Found';
-			return;
+			return IMG_NOT_FOUND;
 		}
 		return $file_url;
 	}

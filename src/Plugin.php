@@ -140,6 +140,15 @@ final class Plugin implements Registerable {
 	}
 
 	/**
+	 * Get the url for the plugin.
+	 *
+	 * @since %VERSION%
+	 * @return string
+	 */
+	public function get_plugin_url() {
+		return plugins_url( '', dirname( __FILE__ ) );
+	}
+	/**
 	 * Instantiate a single service.
 	 *
 	 * @since %VERSION%
