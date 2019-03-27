@@ -20,7 +20,7 @@
   .yks_mbox th, table.yks_mbox th, table.form-table th {
     border-bottom: 1px solid #E9E9E9;
     text-align: right;
-    font-weight: bold; }
+    font-weight: 600; }
     .yks_mbox th label, table.yks_mbox th label, table.form-table th label {
       display: block; }
   .edit-post-sidebar .yks_mbox th, .edit-post-sidebar .yks_mbox td, .edit-post-sidebar table.yks_mbox th, .edit-post-sidebar table.yks_mbox td, .edit-post-sidebar table.form-table th, .edit-post-sidebar table.form-table td {
