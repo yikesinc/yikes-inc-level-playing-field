@@ -2,6 +2,9 @@
 /**
  * YIKES Inc. Level Playing Field Plugin.
  *
+ * All media assets should be defined as CONSTs in this class prior to usage.
+ * Sample usage: <img src="<?php echo ( new MediaAsset() )->get_image( MediaAsset::BANNER ); ?>">
+ *
  * @package   Yikes\LevelPlayingField
  * @author    Ebonie Butler
  * @license   GPL2
@@ -23,7 +26,7 @@ final class MediaAsset {
 
 	const IMG_ASSETS_DIR = '/assets/images/';
 
-	const MEDIA_ALL = 'all';
+	const BANNER = 'banner-1544x500-rtl.png';
 
 	/**
 	 * Get internal image URL.
@@ -39,7 +42,7 @@ final class MediaAsset {
 		$file_path = PluginFactory::create()->get_plugin_root() . self::IMG_ASSETS_DIR . $filename;
 
 		if ( ! file_exists( $file_path ) ) {
-			echo '<p><strong>Image Not Found</strong></p>';
+			echo 'Image Not Found';
 			return;
 		}
 		return $file_url;
