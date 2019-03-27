@@ -10,11 +10,6 @@
 namespace Yikes\LevelPlayingField\ListTable;
 
 use WP_Post;
-use Yikes\LevelPlayingField\AdminPage\ExportApplicantsPage;
-use Yikes\LevelPlayingField\Assets\Asset;
-use Yikes\LevelPlayingField\Assets\AssetsAware;
-use Yikes\LevelPlayingField\Assets\AssetsAwareness;
-use Yikes\LevelPlayingField\Assets\ScriptAsset;
 use Yikes\LevelPlayingField\CustomPostType\ApplicantManager as ApplicantManagerCPT;
 use Yikes\LevelPlayingField\Exception\InvalidPostID;
 use Yikes\LevelPlayingField\Model\Applicant;
@@ -33,16 +28,10 @@ use Yikes\LevelPlayingField\Taxonomy\ApplicantStatusDropdown;
  * @since   %VERSION%
  * @package Yikes\LevelPlayingField
  */
-final class ApplicantManager extends BasePostType implements AssetsAware {
+class ApplicantManager extends BasePostType {
 
-	use AssetsAwareness;
 	use JobDropdown;
 	use ApplicantStatusDropdown;
-
-	const JS_HANDLE       = 'lpf-applicants-admin-script';
-	const JS_URI          = 'assets/js/applicants-admin';
-	const JS_DEPENDENCIES = [ 'jquery' ];
-	const JS_VERSION      = false;
 
 	/**
 	 * Register hooks.
@@ -52,38 +41,9 @@ final class ApplicantManager extends BasePostType implements AssetsAware {
 	 */
 	public function register() {
 		parent::register();
-		$this->register_assets();
 
-		add_filter( 'admin_enqueue_scripts', $this->get_enqueue_function(), 10, 2 );
 		add_filter( 'post_date_column_status', $this->get_post_status_function(), 10, 2 );
 		add_filter( 'post_row_actions', $this->get_row_actions_function(), 10, 2 );
-	}
-
-	/**
-	 * Get the array of known assets.
-	 *
-	 * @since %VERSION%
-	 *
-	 * @return Asset[]
-	 */
-	private function get_assets() {
-		$script = new ScriptAsset( self::JS_HANDLE, self::JS_URI, self::JS_DEPENDENCIES, self::JS_VERSION, ScriptAsset::ENQUEUE_FOOTER );
-		$script->add_localization(
-			'applicant_admin',
-			[
-				'export_url' => add_query_arg( [
-					'page'      => ExportApplicantsPage::PAGE_SLUG,
-					'post_type' => ExportApplicantsPage::POST_TYPE,
-				] ),
-				'strings'    => [
-					'export_button_text' => __( 'Export', 'yikes-level-playing-field' ),
-				],
-			]
-		);
-
-		return [
-			$script,
-		];
 	}
 
 	/**
@@ -319,35 +279,6 @@ final class ApplicantManager extends BasePostType implements AssetsAware {
 	 */
 	protected function get_post_type() {
 		return ApplicantManagerCPT::SLUG;
-	}
-
-	/**
-	 * Get the function used to enqueue our assets.
-	 *
-	 * @since %VERSION%
-	 * @return \Closure
-	 */
-	private function get_enqueue_function() {
-		return function( $hook ) {
-
-			// This filter should only run on an edit page. Make sure get_current_screen() exists.
-			if ( 'edit.php' !== $hook || ! function_exists( 'get_current_screen' ) ) {
-				return;
-			}
-
-			// Ensure this is a real screen object.
-			$screen = get_current_screen();
-			if ( ! ( $screen instanceof \WP_Screen ) ) {
-				return;
-			}
-
-			// Ensure this is the edit screen for the correct post type.
-			if ( $this->get_post_type() !== $screen->post_type ) {
-				return;
-			}
-
-			$this->enqueue_assets();
-		};
 	}
 
 	/**
