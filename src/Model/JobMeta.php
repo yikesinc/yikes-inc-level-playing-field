@@ -27,6 +27,7 @@ interface JobMeta {
 	const ADDRESS                     = 'address';
 	const APPLICATION                 = 'application';
 	const APPLICATION_SUCCESS_MESSAGE = 'application_success_message';
+	const APPLICATION_PAGE            = 'application_page';
 
 	// Responsibilities.
 	const RESPONSIBILITIES = 'responsibilities';
@@ -58,6 +59,7 @@ interface JobMeta {
 		self::EXPERIENCE                  => self::META_PREFIX . self::EXPERIENCE,
 		self::KNOWLEDGE                   => self::META_PREFIX . self::KNOWLEDGE,
 		self::APPLICATION_SUCCESS_MESSAGE => self::META_PREFIX . self::APPLICATION_SUCCESS_MESSAGE,
+		self::APPLICATION_PAGE            => self::META_PREFIX . self::APPLICATION_PAGE,
 	];
 
 	// Fields to expose in REST API.
@@ -66,5 +68,6 @@ interface JobMeta {
 		self::LOCATION,
 		self::ADDRESS,
 		self::APPLICATION,
+		self::APPLICATION_PAGE,
 	];
 }
