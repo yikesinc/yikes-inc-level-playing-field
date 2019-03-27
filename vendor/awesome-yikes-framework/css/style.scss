@@ -50,6 +50,15 @@ $input-repeating-width: 85%;
 
     td {
       padding: 8px 0;
+
+      textarea {
+        width: 100%;
+      }
+
+      .meta-error {
+        display: block;
+        padding-top: 0.4rem;
+      }
     }
   }
 

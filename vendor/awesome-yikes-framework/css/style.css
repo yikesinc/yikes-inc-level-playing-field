@@ -33,6 +33,11 @@
     padding-top: 0.4rem; }
   .edit-post-sidebar .yks_mbox td, .edit-post-sidebar table.yks_mbox td, .edit-post-sidebar table.form-table td {
     padding: 8px 0; }
+    .edit-post-sidebar .yks_mbox td textarea, .edit-post-sidebar table.yks_mbox td textarea, .edit-post-sidebar table.form-table td textarea {
+      width: 100%; }
+    .edit-post-sidebar .yks_mbox td .meta-error, .edit-post-sidebar table.yks_mbox td .meta-error, .edit-post-sidebar table.form-table td .meta-error {
+      display: block;
+      padding-top: 0.4rem; }
   .yks_mbox p.yks_mbox_description, .yks_mbox span.yks_mbox_description, table.yks_mbox p.yks_mbox_description, table.yks_mbox span.yks_mbox_description, table.form-table p.yks_mbox_description, table.form-table span.yks_mbox_description {
     color: #AAA;
     font-style: italic;
