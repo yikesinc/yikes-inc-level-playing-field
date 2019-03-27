@@ -9,6 +9,8 @@
 
 namespace Yikes\LevelPlayingField;
 
+use Yikes\LevelPlayingField\Assets\MediaAsset;
+
 ?>
 
 <div class="wrap lpf-page gopro-page">
@@ -29,7 +31,9 @@ namespace Yikes\LevelPlayingField;
 			</a>
 		</h2>
 
-		level-playing-field-pro.png
+		<a href="https://yikesplugins.com/plugin/level-playing-field-pro/" target="_blank">
+			<img src="<?php echo esc_url( ( new MediaAsset() )->get_image( MediaAsset::PRO ) ); ?>" class="lpf-pro-img">
+		</a>
 
 		<h3>Level Playing Field Pro Features</h3>
 
