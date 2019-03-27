@@ -9,7 +9,6 @@
 
 namespace Yikes\LevelPlayingField;
 
-use Yikes\LevelPlayingField\AdminPage\ExportApplicantsPage;
 use Yikes\LevelPlayingField\AdminPage\GoProPage;
 use Yikes\LevelPlayingField\AdminPage\SettingsPage;
 use Yikes\LevelPlayingField\AdminPage\SupportPage;
@@ -136,7 +135,6 @@ final class PluginFactory {
 			SettingsManager::class           => 1,
 
 			// Admin Pages.
-			ExportApplicantsPage::class      => 1,
 			SettingsPage::class              => 1,
 			GoProPage::class                 => 1,
 			SupportPage::class               => 1,
