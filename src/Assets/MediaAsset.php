@@ -9,10 +9,7 @@
 
 namespace Yikes\LevelPlayingField\Assets;
 
-use Closure;
-use Yikes\LevelPlayingField\Plugin;
-use Yikes\LevelPlayingField\Settings\Settings;
-use Yikes\LevelPlayingField\Settings\SettingsFields;
+use Yikes\LevelPlayingField\PluginFactory;
 
 /**
  * Class MediaAsset.
@@ -20,138 +17,31 @@ use Yikes\LevelPlayingField\Settings\SettingsFields;
  * @since   %VERSION%
  *
  * @package Yikes\LevelPlayingField\Assets
- * @author  Jeremy Pry
+ * @author  Ebonie Butler
  */
-final class MediaAsset extends BaseAsset {
+final class MediaAsset {
 
-	const MEDIA_ALL    = 'all';
-	const MEDIA_PRINT  = 'print';
-	const MEDIA_SCREEN = 'screen';
-	const DEPENDENCIES = [];
-	const VERSION      = Plugin::VERSION;
-	const DISABLEABLE  = false;
+	const IMG_ASSETS_DIR = '/assets/images/';
 
-	const DEFAULT_EXTENSION = 'css';
+	const MEDIA_ALL = 'all';
 
 	/**
-	 * Source location of the asset.
+	 * Get internal image URL.
 	 *
-	 * @since %VERSION%
+	 * @param string $filename filename of image.
 	 *
-	 * @var string
+	 * @return string $file_url
 	 */
-	protected $source;
+	public function get_image( string $filename = '' ) {
+		$file_url = plugins_url( self::IMG_ASSETS_DIR, dirname( __FILE__, 2 ) ) . $filename;
 
-	/**
-	 * Dependencies of the asset.
-	 *
-	 * @since %VERSION%
-	 *
-	 * @var string[]
-	 */
-	protected $dependencies;
+		// Build absolute path to file to confirm file exists.
+		$file_path = PluginFactory::create()->get_plugin_root() . self::IMG_ASSETS_DIR . $filename;
 
-	/**
-	 * Version of the asset.
-	 *
-	 * @since %VERSION%
-	 *
-	 * @var string|bool|null
-	 */
-	protected $version;
-
-	/**
-	 * Media for which the asset is defined.
-	 *
-	 * @since %VERSION%
-	 *
-	 * @var string
-	 */
-	protected $media;
-
-	/**
-	 * Whether this asset can be disabled.
-	 *
-	 * @since %VERSION%
-	 *
-	 * @var string
-	 */
-	protected $disableable;
-
-	/**
-	 * Instantiate a MediaAsset object.
-	 *
-	 * @since %VERSION%
-	 *
-	 * @param string           $handle       Handle of the asset.
-	 * @param string           $source       Source location of the asset.
-	 * @param array            $dependencies Optional. Dependencies of the asset.
-	 * @param string|bool|null $version      Optional. Version of the asset.
-	 * @param string           $media        Media for which the asset is defined.
-	 * @param bool             $disableable  Whether this script can be disabled.
-	 */
-	public function __construct(
-		$handle,
-		$source,
-		$dependencies = self::DEPENDENCIES,
-		$version = self::VERSION,
-		$media = self::MEDIA_ALL,
-		$disableable = self::DISABLEABLE
-	) {
-		$this->handle       = $handle;
-		$this->source       = $this->normalize_source( $source, static::DEFAULT_EXTENSION );
-		$this->dependencies = (array) $dependencies;
-		$this->version      = $version;
-		$this->media        = $media;
-		$this->disableable  = $disableable;
-	}
-
-	/**
-	 * Get the enqueue closure to use.
-	 *
-	 * @since %VERSION%
-	 *
-	 * @return Closure
-	 */
-	protected function get_register_closure() {
-		return function () {
-			if ( wp_script_is( $this->handle, 'registered' ) || ( $this->disableable && ( new Settings() )->get_setting( SettingsFields::DISABLE_FRONT_END_CSS ) ) ) {
-				return;
-			}
-
-			wp_register_style(
-				$this->handle,
-				$this->source,
-				$this->dependencies,
-				$this->version,
-				$this->media
-			);
-		};
-	}
-
-	/**
-	 * Get the enqueue closure to use.
-	 *
-	 * @since %VERSION%
-	 *
-	 * @return Closure
-	 */
-	protected function get_enqueue_closure() {
-		return function () {
-			wp_enqueue_style( $this->handle );
-		};
-	}
-
-	/**
-	 * Get the dequeue closure to use.
-	 *
-	 * @since %VERSION%
-	 *
-	 * @return Closure
-	 */
-	protected function get_dequeue_closure() {
-		return function () {
-			wp_dequeue_style( $this->handle );
-		};
+		if ( ! file_exists( $file_path ) ) {
+			echo '<p><strong>Image Not Found</strong></p>';
+			return;
+		}
+		return $file_url;
 	}
 }
