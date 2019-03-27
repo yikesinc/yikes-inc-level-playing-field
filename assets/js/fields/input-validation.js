@@ -1,18 +1,6 @@
 // Application Form Validation.
 jQuery( document ).ready( function( $ ) {
 
-	let isError = false;
-	const $submitBtn = $( '.lpf-submit' );
-	const errorPrompt = 'error-prompt';
-	const i18n = $.extend( true, {
-		// These are defaults in case the window object is missing.
-		// See src/Shortcode/Application.php for localized strings.
-		errors: {
-			empty: 'Field cannot be empty.',
-			invalid: '%TYPE% is invalid.'
-		}
-	}, ( window.lpfInputValidation || {} ) );
-
 	/**
 	 * Test a field value against a regular expression.
 	 *
@@ -154,9 +142,6 @@ jQuery( document ).ready( function( $ ) {
 		isError = false;
 	};
 
-	// When 'Submit' button is clicked...
-	$submitBtn.on( 'click', submitValidation );
-
 	/**
 	 * Toggle the end date's required attr and visibility based on the to-the-present field being checked.
 	 *
@@ -176,6 +161,54 @@ jQuery( document ).ready( function( $ ) {
 			endDate.prop( 'required', true );
 		}
 	};
+
+	/**
+	 * Show/hide degree & major fields if schooling type is high-school.
+	 *
+	 * @param event The click event that triggered this.
+	 */
+	const toggleSchoolingFields = ( event ) => {
+		const selected = $( event.target );
+		const fields = selected.parents('.lpf-fieldset-schooling').find( 'input[id$="[major]"], input[id$="[degree]"]' );
+		if ( selected.val() === 'high_school' ) {
+			fields.val('N/A').parent('.lpf-input-label').hide();
+		} else {
+			fields.val('').parent('.lpf-input-label').show();
+		}
+	};
+
+
+	/**
+	 * Initialization.
+	 */
+	let isError = false;
+	const $submitBtn = $( '.lpf-submit' );
+	const errorPrompt = 'error-prompt';
+	const i18n = $.extend( true, {
+		// These are defaults in case the window object is missing.
+		// See src/Shortcode/Application.php for localized strings.
+		errors: {
+			empty: 'Field cannot be empty.',
+			invalid: '%TYPE% is invalid.'
+		}
+	}, ( window.lpfInputValidation || {} ) );
+
+	// If schooling type field is 'High School'.
+	const schoolingFields = $( '.lpf-fieldset-schooling select[id$="[type]"]' );
+	schoolingFields.each(function() {
+		if ( $(this).val() === 'high_school' ) {
+			$(this).parents('.lpf-fieldset-schooling').find( 'input[id$="[major]"], input[id$="[degree]"]' ).val('N/A').hide();
+		}
+	});
+
+	/**
+	 * Event Listeners.
+	 */
+	 // When Schooling Institution type field is changed.
+	$( 'body' ).on( 'change', '.lpf-fieldset-schooling select[id$="[type]"]', toggleSchoolingFields );
+
+	// When 'Submit' button is clicked.
+	$submitBtn.on( 'click', submitValidation );
 
 	// When a to-the-present checkbox is clicked.
 	$( 'body' ).on( 'click', 'input[type="checkbox"][name$="[present_position]"]', toggleEndDate );
