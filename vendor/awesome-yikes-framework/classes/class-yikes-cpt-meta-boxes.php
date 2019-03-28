@@ -402,45 +402,6 @@ class YIKES_CPT_Meta_Boxes {
 
 			elseif ( $field['type'] ) :
 				switch ( $field['type'] ) :
-					case 'file':
-						// Save field.
-						if ( ! empty( $new ) && $new !== $old ) {
-							update_post_meta( $post_id, $name, $new );
-						} elseif ( empty( $new ) ) {
-							delete_post_meta( $post_id, $name );
-						}
-
-						// Save attachment ID as it's own meta field entry.
-						$name       = $field['id'] . '_id';
-						$old        = get_post_meta( $post_id, $name, true );
-						$newfieldid = $field['type'] . '_id';
-						$new        = $this->yks_get_submit_meta( $post_id, $name, $newfieldid );
-
-						if ( ! empty( $new ) && $new !== $old ) {
-							update_post_meta( $post_id, $name, $new );
-						} elseif ( empty( $new ) && ! empty( $old ) ) {
-							delete_post_meta( $post_id, $name, $old );
-						}
-
-						break;
-
-					case 'text_group_slides':
-						foreach ( range( 1, $field['limit'] ) as $number ) {
-							$typerange = array( 'sort', 'one', 'two', 'three', 'four', 'four_id', 'five', 'six' );
-							foreach ( $typerange as $thetype ) {
-								$name       = $field['id'] . '_' . $thetype . '_' . $number . '';
-								$old        = get_post_meta( $post_id, $name, true );
-								$newfieldid = $field['type'] . '_id';
-								$new        = $this->yks_get_submit_meta( $post_id, $name, $newfieldid );
-								if ( ! empty( $new ) && $new !== $old ) {
-									update_post_meta( $post_id, $name, $new );
-								} elseif ( empty( $new ) && ! empty( $old ) ) {
-									delete_post_meta( $post_id, $name, $old );
-								}
-							}
-						}
-						break;
-
 					case 'group':
 						foreach ( $field['fields'] as $f ) {
 
