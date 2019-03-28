@@ -62,7 +62,9 @@ class SupportPage extends BaseAdminPage implements AssetsAware {
 	 * @return Asset[]
 	 */
 	protected function get_assets() {
-		return new StyleAsset( self::CSS_HANDLE, self::CSS_URI );
+		return [
+			new StyleAsset( self::CSS_HANDLE, self::CSS_URI ),
+		];
 	}
 
 	/**

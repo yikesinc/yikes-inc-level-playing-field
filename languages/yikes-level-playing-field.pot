@@ -50,7 +50,7 @@ msgstr ""
 msgid "Support"
 msgstr ""
 
-#: src/CustomPostType/ApplicantManager.php:34, src/Metabox/ApplicantManager.php:136, src/Roles/Applicant.php:29
+#: src/CustomPostType/ApplicantManager.php:34, src/Metabox/ApplicantManager.php:137, src/Roles/Applicant.php:29
 msgid "Applicant"
 msgstr ""
 
@@ -72,7 +72,7 @@ msgstr ""
 msgid "Parent Applicant:"
 msgstr ""
 
-#: src/CustomPostType/ApplicantManager.php:40, src/Widget/Dashboard/JobApplicants.php:43
+#: src/CustomPostType/ApplicantManager.php:40, src/Widget/Dashboard/JobApplicants.php:88
 msgid "Applicants"
 msgstr ""
 
@@ -688,7 +688,7 @@ msgstr ""
 msgid "Language"
 msgstr ""
 
-#: src/Field/Languages.php:45, src/Field/Skills.php:40, views/applicant-skills-qualifications.php:76
+#: src/Field/Languages.php:45, src/Field/Skills.php:43, views/applicant-skills-qualifications.php:76
 msgid "Proficiency"
 msgstr ""
 
@@ -739,15 +739,15 @@ msgstr ""
 msgid "The submitted value is not one of the allowed options."
 msgstr ""
 
-#: src/Field/Skills.php:37, views/applicant-skills-qualifications.php:75
+#: src/Field/Skills.php:40, views/applicant-skills-qualifications.php:75
 msgid "Skill"
 msgstr ""
 
-#: src/Field/Skills.php:55
+#: src/Field/Skills.php:60
 msgid "Skills:"
 msgstr ""
 
-#: src/Field/Skills.php:68
+#: src/Field/Skills.php:96
 msgctxt "for \"add new\" button"
 msgid "Skill"
 msgstr ""
@@ -846,45 +846,37 @@ msgstr ""
 msgid "Filter Job Categories"
 msgstr ""
 
-#: src/Messaging/ApplicantMessaging.php:129, views/applicant-messaging.php:41
-msgid "Show All Messages"
-msgstr ""
-
-#: src/Messaging/ApplicantMessaging.php:130
-msgid "Hide Additional Messages"
-msgstr ""
-
-#: src/Messaging/ApplicantMessaging.php:258, src/Messaging/ApplicantMessaging.php:313, src/Messaging/ApplicantMessaging.php:397, src/Settings/SettingsManager.php:129, src/Taxonomy/ApplicantStatus.php:305
+#: src/Messaging/ApplicantMessaging.php:254, src/Messaging/ApplicantMessaging.php:309, src/Messaging/ApplicantMessaging.php:393, src/Settings/SettingsManager.php:129, src/Taxonomy/ApplicantStatus.php:305
 msgid "An error occurred: Failed to validate the nonce."
 msgstr ""
 
-#: src/Messaging/ApplicantMessaging.php:269, src/Messaging/ApplicantMessaging.php:411
+#: src/Messaging/ApplicantMessaging.php:265, src/Messaging/ApplicantMessaging.php:407
 msgid "An error occurred: a required field is missing."
 msgstr ""
 
-#: src/Messaging/ApplicantMessaging.php:292
+#: src/Messaging/ApplicantMessaging.php:288
 msgid "The message was successfully sent."
 msgstr ""
 
-#: src/Messaging/ApplicantMessaging.php:299, src/Messaging/ApplicantMessaging.php:459
+#: src/Messaging/ApplicantMessaging.php:295, src/Messaging/ApplicantMessaging.php:455
 msgid "The comment could not be inserted."
 msgstr ""
 
 #. translators: %1$s is the date and %2$s is the time.
-#: src/Messaging/ApplicantMessaging.php:423
+#: src/Messaging/ApplicantMessaging.php:419
 msgid "You have been requested for an interview on %1$s at %2$s."
 msgstr ""
 
 #. translators: %1$s is the location.
-#: src/Messaging/ApplicantMessaging.php:426
+#: src/Messaging/ApplicantMessaging.php:422
 msgid "The interview location is: %1$s."
 msgstr ""
 
-#: src/Messaging/ApplicantMessaging.php:430
+#: src/Messaging/ApplicantMessaging.php:426
 msgid "A few statements on un-anonymization."
 msgstr ""
 
-#: src/Messaging/ApplicantMessaging.php:452
+#: src/Messaging/ApplicantMessaging.php:448
 msgid "The interview request was successfully sent."
 msgstr ""
 
@@ -892,7 +884,7 @@ msgstr ""
 msgid "Basic Info"
 msgstr ""
 
-#: src/Metabox/ApplicantInterviewDetails.php:49, views/applicant-interview-details.php:20
+#: src/Metabox/ApplicantInterviewDetails.php:49, views/applicant-interview-details.php:22
 msgid "Interview Details"
 msgstr ""
 
@@ -961,11 +953,11 @@ msgstr ""
 msgid "Check the educational information you want included on this Application Form."
 msgstr ""
 
-#: src/Metabox/ApplicationManager.php:151, src/Metabox/ApplicationManager.php:152, views/applicant-skills-qualifications.php:28
+#: src/Metabox/ApplicationManager.php:151, src/Metabox/ApplicationManager.php:152, views/applicant-skills-qualifications.php:26
 msgid "Schooling"
 msgstr ""
 
-#: src/Metabox/ApplicationManager.php:168, src/Metabox/ApplicationManager.php:169, views/applicant-skills-qualifications.php:51
+#: src/Metabox/ApplicationManager.php:168, src/Metabox/ApplicationManager.php:169, views/applicant-skills-qualifications.php:50
 msgid "Certifications"
 msgstr ""
 
@@ -981,7 +973,7 @@ msgstr ""
 msgid "Skill and Proficiency"
 msgstr ""
 
-#: src/Metabox/ApplicationManager.php:208, src/Metabox/ApplicationManager.php:213, views/applicant-skills-qualifications.php:117
+#: src/Metabox/ApplicationManager.php:208, src/Metabox/ApplicationManager.php:213, views/applicant-skills-qualifications.php:118
 msgid "Languages"
 msgstr ""
 
@@ -993,7 +985,7 @@ msgstr ""
 msgid "Language and Proficiency"
 msgstr ""
 
-#: src/Metabox/ApplicationManager.php:229, src/Metabox/ApplicationManager.php:234, src/Metabox/ApplicationManager.php:240, src/Metabox/ApplicationManager.php:241, views/applicant-skills-qualifications.php:139
+#: src/Metabox/ApplicationManager.php:229, src/Metabox/ApplicationManager.php:234, src/Metabox/ApplicationManager.php:240, src/Metabox/ApplicationManager.php:241, views/applicant-skills-qualifications.php:141
 msgid "Experience"
 msgstr ""
 
@@ -1001,7 +993,7 @@ msgstr ""
 msgid "Check if you want Experience included on this Application Form."
 msgstr ""
 
-#: src/Metabox/ApplicationManager.php:259, src/Metabox/ApplicationManager.php:264, src/Metabox/ApplicationManager.php:270, src/Metabox/ApplicationManager.php:271, views/applicant-skills-qualifications.php:158
+#: src/Metabox/ApplicationManager.php:259, src/Metabox/ApplicationManager.php:264, src/Metabox/ApplicationManager.php:270, src/Metabox/ApplicationManager.php:271, views/applicant-skills-qualifications.php:161
 msgid "Volunteer Work"
 msgstr ""
 
@@ -1098,10 +1090,18 @@ msgid "Address where the job is located"
 msgstr ""
 
 #: src/Metabox/JobManager.php:206
-msgid "Application Form"
+msgid "Application Success Message"
 msgstr ""
 
 #: src/Metabox/JobManager.php:207
+msgid "The message displayed after the job's application is submitted."
+msgstr ""
+
+#: src/Metabox/JobManager.php:212
+msgid "Application Form"
+msgstr ""
+
+#: src/Metabox/JobManager.php:213
 msgid "Choose the application form to use for this job"
 msgstr ""
 
@@ -1151,6 +1151,22 @@ msgstr ""
 
 #: src/Model/ApplicantMetaDropdowns.php:48
 msgid "Expert"
+msgstr ""
+
+#: src/Model/ApplicantMetaDropdowns.php:60
+msgid "Fluent"
+msgstr ""
+
+#: src/Model/ApplicantMetaDropdowns.php:61
+msgid "Professional"
+msgstr ""
+
+#: src/Model/ApplicantMetaDropdowns.php:62
+msgid "Limited"
+msgstr ""
+
+#: src/Model/ApplicantMetaDropdowns.php:63
+msgid "Elementary"
 msgstr ""
 
 #: src/Model/ApplicantRepository.php:250
@@ -1404,75 +1420,59 @@ msgstr ""
 msgid "There was an error displaying the template: %s"
 msgstr ""
 
-#: src/Widget/Dashboard/JobApplicants.php:93
-msgid "Job Title"
-msgstr ""
-
-#: src/Widget/Dashboard/JobApplicants.php:94
-msgid "New"
-msgstr ""
-
-#: src/Widget/Dashboard/JobApplicants.php:95
-msgid "Total"
-msgstr ""
-
-#: src/Widget/Dashboard/JobApplicants.php:118
-msgid "View All Job Listings"
-msgstr ""
-
-#: src/Widget/Dashboard/JobApplicants.php:119
-msgid "View All Applicants"
-msgstr ""
-
-#: views/applicant-basic-info.php:20
+#: views/applicant-basic-info.php:21
 msgid "Basic Applicant Information"
 msgstr ""
 
-#: views/applicant-basic-info.php:25, views/applicant-interview-details.php:30, views/interview-confirmation.php:48, views/job-page-job.php:45
+#: views/applicant-basic-info.php:26, views/applicant-interview-details.php:32, views/interview-confirmation.php:48, views/job-page-job.php:45
 msgid "Location:"
 msgstr ""
 
-#: views/applicant-basic-info.php:36
+#: views/applicant-basic-info.php:37
 msgid "Cover Letter:"
 msgstr ""
 
-#: views/applicant-basic-info.php:37
+#: views/applicant-basic-info.php:38
 msgid "View Cover Letter"
 msgstr ""
 
-#: views/applicant-details.php:27
+#: views/applicant-details.php:26
 msgid "Nickname:"
 msgstr ""
 
-#: views/applicant-details.php:30
+#: views/applicant-details.php:29
 msgid "Edit Nickname"
 msgstr ""
 
-#: views/applicant-details.php:34
+#: views/applicant-details.php:33
 msgid "Job:"
 msgstr ""
 
-#: views/applicant-interview-details.php:26, views/interview-confirmation.php:40
+#: views/applicant-interview-details.php:28, views/interview-confirmation.php:40
 msgid "Date:"
 msgstr ""
 
-#: views/applicant-interview-details.php:28, views/interview-confirmation.php:44
+#: views/applicant-interview-details.php:30, views/interview-confirmation.php:44
 msgid "Time:"
 msgstr ""
 
-#: views/applicant-interview-details.php:32, views/interview-confirmation.php:52
+#: views/applicant-interview-details.php:34, views/interview-confirmation.php:52
 msgid "Message:"
 msgstr ""
 
-#: views/applicant-interview-details.php:35
+#: views/applicant-interview-details.php:37
 msgid "An interview has not been scheduled yet"
 msgstr ""
 
-#: views/applicant-messaging.php:29
+#: views/applicant-messaging.php:18
+msgid "Applicant Messaging"
+msgstr ""
+
+#: views/applicant-messaging.php:31
 msgid "Start a conversation with this applicant."
 msgstr ""
 
-#: views/applicant-messaging.php:66
+#: views/applicant-messaging.php:53
 msgid "Send a New Message"
 msgstr ""
 
@@ -1480,16 +1480,16 @@ msgstr ""
 msgid "Skills and Qualifications"
 msgstr ""
 
-#: views/applicant-skills-qualifications.php:36
+#: views/applicant-skills-qualifications.php:34
 msgid "Graduated from High School or High School equivalent"
 msgstr ""
 
-#: views/applicant-skills-qualifications.php:121
+#: views/applicant-skills-qualifications.php:122
 msgid "Multilingual"
 msgstr ""
 
 #. translators: %d is the number of languages for the given fluency level
-#: views/applicant-skills-qualifications.php:126
+#: views/applicant-skills-qualifications.php:127
 msgid "in %d language"
 msgid_plural "in %d languages"
 msgstr[0] ""
@@ -1557,6 +1557,26 @@ msgstr ""
 
 #: views/interview-scheduler.php:51
 msgid "Send Interview Request"
+msgstr ""
+
+#: views/job-applicants-widget.php:16
+msgid "Job Title"
+msgstr ""
+
+#: views/job-applicants-widget.php:17
+msgid "New"
+msgstr ""
+
+#: views/job-applicants-widget.php:18
+msgid "Total"
+msgstr ""
+
+#: views/job-applicants-widget.php:39
+msgid "View All Job Listings"
+msgstr ""
+
+#: views/job-applicants-widget.php:40
+msgid "View All Applicants"
 msgstr ""
 
 #: views/job-page-application.php:39

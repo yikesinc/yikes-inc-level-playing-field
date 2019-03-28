@@ -1,0 +1,19 @@
+//--------------------------------------------------------------
+//   Font Sizes
+//-------------------------------------------------------------
+
+////
+/// @group mixins
+////
+
+$basefont: 16px;
+
+@function calculaterem($size) {
+  $remsize: $size / $basefont;
+  @return #{$remsize}rem;
+}
+
+@mixin fontsize($size) {
+  font-size: $size; // Fallback in px
+  font-size: calculaterem($size);
+}

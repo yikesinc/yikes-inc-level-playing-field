@@ -42,7 +42,8 @@ final class EmailRecipientRoles extends BaseSettingsField {
 					id="<?php echo esc_attr( $role::SLUG ); ?>"
 					name="<?php echo esc_attr( static::NAME ); ?>"
 					value="<?php echo esc_attr( $role::SLUG ); ?>"
-					<?php checked( isset( $this->get_value()[ $role::SLUG ] ) && true === $this->get_value()[ $role::SLUG ] ); ?>>
+					<?php checked( isset( $this->get_value()[ $role::SLUG ] ) && true === $this->get_value()[ $role::SLUG ] ); ?>
+				/>
 				<?php echo esc_html( $role->get_title() ); ?>
 			</label>
 			<?php
@@ -54,9 +55,9 @@ final class EmailRecipientRoles extends BaseSettingsField {
 	 *
 	 * @since %VERSION%
 	 *
-	 * @return string $help_text The help text for this field.
+	 * @return string $description_text The help text for this field.
 	 */
-	protected function help_text() {
-		return __( 'The email will be sent to all users with the selected role.', 'yikes-level-playing-field' );
+	protected function description_text() {
+		return __( 'Check off the user roles you want notification emails sent to. All users assigned to those roles will receive notifications.', 'yikes-level-playing-field' );
 	}
 }

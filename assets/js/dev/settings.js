@@ -4,11 +4,11 @@
 	const notices = new class_lpf_notices();
 
 	// Perhaps we should throw some type of error here.
-	if ( typeof settings_data === 'undefined' ) {
+	if ( typeof lpf_settings_data === 'undefined' ) {
 		return;
 	}
 
-	var settings = JSON.parse( settings_data.settings );
+	var settings = JSON.parse( lpf_settings_data.settings );
 
 	$( '#lpf-settings-save' ).click( function() {
 
@@ -24,8 +24,8 @@
 	 */
 	function save( opts ) {
 		const data = {
-			nonce  : settings_data.ajax.save_nonce,
-			action : settings_data.ajax.save_action,
+			nonce  : lpf_settings_data.ajax.save_nonce,
+			action : lpf_settings_data.ajax.save_action,
 			settings: opts,
 		};
 

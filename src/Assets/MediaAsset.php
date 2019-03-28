@@ -27,7 +27,7 @@ final class MediaAsset {
 	const IMG_ASSETS_DIR = '/assets/images/';
 	const IMG_NOT_FOUND  = '';
 
-	const BANNER = 'banner-1544x500-rtl.png';
+	const PRO = 'level-playing-field-pro.png';
 
 	/**
 	 * Get internal image URL.
