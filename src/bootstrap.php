@@ -15,13 +15,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Load and register the autoloader.
-require_once __DIR__ . '/Autoloader.php';
+require_once( __DIR__ . '/Autoloader.php' );
 $ylpf_autoloader = new Autoloader();
 $ylpf_autoloader->add_namespace( __NAMESPACE__, __DIR__ );
+$ylpf_autoloader->add_namespace( 'Carbon_Fields', dirname( __DIR__ ) . '/vendor/htmlburger/carbon-fields/core' );
 $ylpf_autoloader->register();
 
 // Load the Awesome Framework.
-require_once dirname( __DIR__ ) . '/vendor/awesome-yikes-framework/yks-mbox-framework.php';
+require_once( dirname( __DIR__ ) . '/vendor/awesome-yikes-framework/yks-mbox-framework.php' );
 
 // Kick it off.
 PluginFactory::create()->register();
