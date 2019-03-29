@@ -28,10 +28,37 @@ $input-repeating-width: 85%;
   th {
     border-bottom: 1px solid $lightgrey;
     text-align: right;
-    font-weight: bold;
+    font-weight: 600;
 
     label {
       display: block;
+    }
+  }
+
+  .edit-post-sidebar & {
+    th, td {
+      display: block;
+      text-align: left;
+      width: 100%;
+    }
+
+    th {
+      border-bottom: 0;
+      padding-bottom: 0;
+      padding-top: 0.4rem;
+    }
+
+    td {
+      padding: 8px 0;
+
+      textarea {
+        width: 100%;
+      }
+
+      .meta-error {
+        display: block;
+        padding-top: 0.4rem;
+      }
     }
   }
 
@@ -57,7 +84,7 @@ $input-repeating-width: 85%;
     padding: 5px;
   }
 
-  input[type=text], textarea {
+  input[type=text]:not(.regular-text, .small-text), textarea {
     width: $input-regular-width;
     &.yks_textarea_source {
       font-family: $code-font;
