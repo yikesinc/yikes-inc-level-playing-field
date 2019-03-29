@@ -22,6 +22,20 @@ $applicant = $this->applicant;
 		</span>
 	</h2>
 	<div class="inside">
+		<?php if ( ! $applicant->is_anonymized() && ! empty( $applicant->get_email() ) ) : ?>
+			<p class="email">
+				<span class="label"><?php esc_html_e( 'Email:', 'yikes-level-playing-field' ); ?></span>
+				<a href="mailto:<?php echo esc_attr( $applicant->get_email() ); ?>"><?php echo esc_html( $applicant->get_email() ); ?></a>
+			</p>
+		<?php endif; ?>
+
+		<?php if ( ! $applicant->is_anonymized() && ! empty( $applicant->get_phone() ) ) : ?>
+			<p class="email">
+				<span class="label"><?php esc_html_e( 'Phone:', 'yikes-level-playing-field' ); ?></span>
+				<a href="tel:<?php echo esc_attr( $applicant->get_phone() ); ?>"><?php echo esc_html( $applicant->get_phone() ); ?></a>
+			</p>
+		<?php endif; ?>
+
 		<p class="location">
 			<span class="label"><?php esc_html_e( 'Location:', 'yikes-level-playing-field' ); ?></span>
 			<?php

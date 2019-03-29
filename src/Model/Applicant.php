@@ -474,9 +474,7 @@ final class Applicant extends CustomPostTypeEntity {
 		$still = ! empty( $experience[ ApplicantMeta::PRESENT_POSITION ] ) ? __( '(actively working here)', 'yikes-level-playing-field' ) : '';
 
 		// Add calculated duration to experience and save.
-		$experience[ ApplicantMeta::YEAR_DURATION ] = $diff instanceof DateInterval
-			? $diff->format( "%y Year(s) %m Month(s) %d Days {$still}" )
-			: '';
+		$experience[ ApplicantMeta::YEAR_DURATION ] = $diff instanceof \DateInterval ? $diff->format( "%y Year(s) %m Month(s) %d Days {$still}" ) : '';
 		$this->{ApplicantMeta::EXPERIENCE}[]        = $this->filter_and_sanitize( $experience, ApplicantMeta::EXPERIENCE );
 		$this->changed_property( ApplicantMeta::EXPERIENCE );
 	}
@@ -529,9 +527,7 @@ final class Applicant extends CustomPostTypeEntity {
 		$still = ! empty( $volunteer[ ApplicantMeta::PRESENT_POSITION ] ) ? __( '(actively volunteering here)', 'yikes-level-playing-field' ) : '';
 
 		// Add calculated duration to volunteer experience and save.
-		$volunteer[ ApplicantMeta::YEAR_DURATION ] = $diff instanceof DateInterval
-			? $diff->format( "%y Year(s) %m Month(s) %d Days {$still}" )
-			: '';
+		$volunteer[ ApplicantMeta::YEAR_DURATION ] = $diff instanceof \DateInterval ? $diff->format( "%y Year(s) %m Month(s) %d Days {$still}" ) : '';
 		$this->{ApplicantMeta::VOLUNTEER}[]        = $this->filter_and_sanitize( $volunteer, ApplicantMeta::VOLUNTEER );
 		$this->changed_property( ApplicantMeta::VOLUNTEER );
 	}
