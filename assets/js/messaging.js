@@ -206,7 +206,7 @@ jQuery( function ( $ ) {
 	 * Scroll to the bottom of the messaging container.
 	 */
 	function scroll_to_bottom() {
-	 	const conversation_container = document.getElementById( 'lpf-conversation-container' );
+	 	const conversation_container = $( '.conversation-container' );
 	 	conversation_container.scrollTop = conversation_container.scrollHeight;
 	 }
 });
