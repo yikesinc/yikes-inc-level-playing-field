@@ -136,7 +136,7 @@ final class JobManager extends AwesomeBaseMetabox implements AssetsAware {
 			'id'         => JobMeta::META_PREFIX . 'metabox',
 			'title'      => __( 'Job Listing Information', 'yikes-level-playing-field' ),
 			'pages'      => [ JobManagerCPT::SLUG ],
-			'show_names' => false,
+			'show_names' => true,
 			'group'      => false,
 			'context'    => 'side',
 			'fields'     => [
