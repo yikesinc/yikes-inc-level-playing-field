@@ -29,17 +29,35 @@ $applicant = $this->applicant;
 				$type_selections = $applicant->get_schooling_options();
 				foreach ( $applicant->get_schooling() as $schooling ) {
 					if ( 'high_school' === $schooling['type'] ) {
-						printf(
-							'<li>%s</li>',
-							esc_html__( 'Graduated from High School or High School equivalent', 'yikes-level-playing-field' )
-						);
+						if ( $applicant->is_anonymized() ) {
+							printf(
+								'<li>%s</li>',
+								esc_html__( 'Graduated from High School or High School equivalent', 'yikes-level-playing-field' )
+							);
+						} else {
+							printf(
+								'<li>Graduated from %s (High School or High School equivalent) in %s</li>',
+								esc_html( $schooling[ ApplicantMeta::INSTITUTION ] ),
+								esc_html( $schooling[ ApplicantMeta::YEAR ] )
+							);
+						}
 					} else {
-						printf(
-							'<li>Graduated with a %s from %s with a major in %s</li>',
-							esc_html( $schooling['degree'] ),
-							esc_html( $type_selections[ $schooling['type'] ] ),
-							esc_html( $schooling['major'] )
-						);
+						if ( $applicant->is_anonymized() ) {
+							printf(
+								'<li>Graduated with a %s from %s with a major in %s</li>',
+								esc_html( $schooling[ ApplicantMeta::DEGREE ] ),
+								esc_html( $type_selections[ $schooling['type'] ] ),
+								esc_html( $schooling[ ApplicantMeta::MAJOR ] )
+							);
+						} else {
+							printf(
+								'<li>Graduated in %s with a %s from %s with a major in %s</li>',
+								esc_html( $schooling[ ApplicantMeta::YEAR ] ),
+								esc_html( $schooling[ ApplicantMeta::DEGREE ] ),
+								esc_html( $schooling[ ApplicantMeta::INSTITUTION ] ),
+								esc_html( $schooling[ ApplicantMeta::MAJOR ] )
+							);
+						}
 					}
 				}
 				?>
@@ -51,12 +69,22 @@ $applicant = $this->applicant;
 			<ol>
 				<?php
 				foreach ( $applicant->get_certifications() as $certification ) {
-					printf(
-						'<li>Certified in %s from %s. Status: %s</li>',
-						esc_html( $certification['certification_type'] ),
-						esc_html( $certification['type'] ),
-						esc_html( $certification['status'] )
-					);
+					if ( $applicant->is_anonymized() ) {
+						printf(
+							'<li>Certified in %s from %s. Status: %s</li>',
+							esc_html( $certification[ ApplicantMeta::CERT_TYPE ] ),
+							esc_html( $certification[ ApplicantMeta::TYPE ] ),
+							esc_html( $certification[ ApplicantMeta::STATUS ] )
+						);
+					} else {
+						printf(
+							'<li>Certified in %s from %s. Status: %s. Year: %s.</li>',
+							esc_html( $certification[ ApplicantMeta::CERT_TYPE ] ),
+							esc_html( $certification[ ApplicantMeta::INSTITUTION ] ),
+							esc_html( $certification[ ApplicantMeta::STATUS ] ),
+							esc_html( $certification[ ApplicantMeta::YEAR ] )
+						);
+					}
 				}
 				?>
 			</ol>
@@ -69,7 +97,7 @@ $applicant = $this->applicant;
 	<section id="skills">
 		<h4 class="lpf_mbox_subtitle"><?php esc_html_e( 'Skills', 'yikes-level-playing-field' ); ?></h4>
 		<div class="applicant-skills-container">
-			<table class="wp-list-table widefat fixed striped users">
+			<table class="wp-list-table widefat fixed striped">
 				<thead>
 					<tr>
 						<th><?php esc_html_e( 'Skill', 'yikes-level-playing-field' ); ?></th>
@@ -81,8 +109,8 @@ $applicant = $this->applicant;
 					foreach ( $applicant->get_skills() as $skill ) {
 						printf(
 							'<tr><td>%s</td><td>%s</td></tr>',
-							esc_html( $skill['skill'] ),
-							esc_html( $skill['proficiency'] )
+							esc_html( $skill[ ApplicantMeta::SKILL ] ),
+							esc_html( $skill[ ApplicantMeta::PROFICIENCY ] )
 						);
 					}
 					?>
@@ -94,44 +122,65 @@ $applicant = $this->applicant;
 
 	<?php if ( ! empty( $applicant->get_languages() ) ) : ?>
 	<section id="languages">
-		<?php
-		$languages       = $applicant->get_languages();
-		$is_multilingual = count( $languages ) > 1;
-
-		// Build up language proficiency data.
-		$proficiency_labels = $applicant->get_language_options();
-		$proficiency_counts = [];
-
-		foreach ( $languages as $language ) {
-			if ( ! array_key_exists( $language['proficiency'], $proficiency_counts ) ) {
-				$proficiency_counts[ $language['proficiency'] ] = 1;
-				continue;
-			}
-
-			$proficiency_counts[ $language['proficiency'] ]++;
-		}
-
-		// Set up a counter for when we need to output a comma.
-		$needs_comma = count( $proficiency_counts ) - 1;
-
-		?>
+		<?php $languages = $applicant->get_languages(); ?>
 		<h4 class="lpf_mbox_subtitle"><?php esc_html_e( 'Languages', 'yikes-level-playing-field' ); ?></h4>
-		<div class="applicant-skills-container">
-			<p>
+			<div class="applicant-skills-container">
+			<?php if ( $applicant->is_anonymized() ) : ?>
 				<?php
-				echo $is_multilingual ? esc_html__( 'Multilingual', 'yikes-level-playing-field' ) . ' &ndash; ' : '';
-				foreach ( $proficiency_counts as $proficiency => $count ) {
-					echo esc_html( $proficiency_labels[ $proficiency ] ), ' ';
-					echo esc_html( sprintf(
-						/* translators: %d is the number of languages for the given fluency level */
-						_n( 'in %d language', 'in %d languages', $count, 'yikes-level-playing-field' ),
-						$count
-					) );
-					echo $needs_comma ? ', ' : ' ';
-					$needs_comma--;
-				}
+					$is_multilingual = count( $languages ) > 1;
+
+					// Build up language proficiency data.
+					$proficiency_labels = $applicant->get_language_options();
+					$proficiency_counts = [];
+
+					foreach ( $languages as $language ) {
+						if ( ! array_key_exists( $language[ ApplicantMeta::PROFICIENCY ], $proficiency_counts ) ) {
+							$proficiency_counts[ $language[ ApplicantMeta::PROFICIENCY ] ] = 1;
+							continue;
+						}
+
+						$proficiency_counts[ $language[ ApplicantMeta::PROFICIENCY ] ]++;
+					}
+
+					// Set up a counter for when we need to output a comma.
+					$needs_comma = count( $proficiency_counts ) - 1;
 				?>
-			</p>
+					<p>
+						<?php
+						echo $is_multilingual ? esc_html__( 'Multilingual', 'yikes-level-playing-field' ) . ' &ndash; ' : '';
+						foreach ( $proficiency_counts as $proficiency => $count ) {
+							echo esc_html( $proficiency_labels[ $proficiency ] ), ' ';
+							echo esc_html( sprintf(
+								/* translators: %d is the number of languages for the given fluency level */
+								_n( 'in %d language', 'in %d languages', $count, 'yikes-level-playing-field' ),
+								$count
+							) );
+							echo $needs_comma ? ', ' : ' ';
+							$needs_comma--;
+						}
+						?>
+					</p>
+			<?php else : ?>
+				<table class="wp-list-table widefat fixed striped">
+					<thead>
+						<tr>
+							<th><?php esc_html_e( 'Language', 'yikes-level-playing-field' ); ?></th>
+							<th><?php esc_html_e( 'Proficiency', 'yikes-level-playing-field' ); ?></th>
+						</tr>
+					</thead>
+					<tbody>
+						<?php
+						foreach ( $languages as $language ) {
+							printf(
+								'<tr><td>%s</td><td>%s</td></tr>',
+								esc_html( $language[ ApplicantMeta::LANGUAGE ] ),
+								esc_html( $language[ ApplicantMeta::PROFICIENCY ] )
+							);
+						}
+						?>
+					</tbody>
+				</table>
+			<?php endif; ?>
 		</div>
 	</section>
 	<?php endif; ?>
@@ -143,12 +192,23 @@ $applicant = $this->applicant;
 			<ol>
 				<?php
 				foreach ( $applicant->get_experience() as $experience ) {
-					printf(
-						'<li>%s in %s for %s</li>',
-						esc_html( $experience[ ApplicantMeta::POSITION ] ),
-						esc_html( $experience[ ApplicantMeta::INDUSTRY ] ),
-						esc_html( $experience[ ApplicantMeta::YEAR_DURATION ] )
-					);
+					if ( $applicant->is_anonymized() ) {
+						printf(
+							'<li>%s in %s for %s</li>',
+							esc_html( $experience[ ApplicantMeta::POSITION ] ),
+							esc_html( $experience[ ApplicantMeta::INDUSTRY ] ),
+							esc_html( $experience[ ApplicantMeta::YEAR_DURATION ] )
+						);
+					} else {
+						printf(
+							'<li>%s in %s at %s from %s to %s</li>',
+							esc_html( $experience[ ApplicantMeta::POSITION ] ),
+							esc_html( $experience[ ApplicantMeta::INDUSTRY ] ),
+							esc_html( $experience[ ApplicantMeta::ORGANIZATION ] ),
+							esc_html( date( 'm/d/Y', strtotime( $experience[ ApplicantMeta::START_DATE ] ) ) ),
+							esc_html( ! empty( $experience[ ApplicantMeta::PRESENT_POSITION ] ) ? __( 'current', 'yikes-level-playing-field' ) : date( 'm/d/Y', strtotime( $experience[ ApplicantMeta::END_DATE ] ) ) )
+						);
+					}
 				}
 				?>
 			</ol>
@@ -163,12 +223,23 @@ $applicant = $this->applicant;
 			<ol>
 				<?php
 				foreach ( $applicant->get_volunteer() as $experience ) {
-					printf(
-						'<li>%s in %s for %s</li>',
-						esc_html( $experience[ ApplicantMeta::POSITION ] ),
-						esc_html( $experience[ ApplicantMeta::INDUSTRY ] ),
-						esc_html( $experience[ ApplicantMeta::YEAR_DURATION ] )
-					);
+					if ( $applicant->is_anonymized() ) {
+						printf(
+							'<li>%s in %s for %s</li>',
+							esc_html( $experience[ ApplicantMeta::POSITION ] ),
+							esc_html( $experience[ ApplicantMeta::INDUSTRY ] ),
+							esc_html( $experience[ ApplicantMeta::YEAR_DURATION ] )
+						);
+					} else {
+						printf(
+							'<li>%s in %s at %s from %s to %s</li>',
+							esc_html( $experience[ ApplicantMeta::POSITION ] ),
+							esc_html( $experience[ ApplicantMeta::INDUSTRY ] ),
+							esc_html( $experience[ ApplicantMeta::ORGANIZATION ] ),
+							esc_html( date( 'm/d/Y', strtotime( $experience[ ApplicantMeta::START_DATE ] ) ) ),
+							esc_html( ! empty( $experience[ ApplicantMeta::PRESENT_POSITION ] ) ? __( 'current', 'yikes-level-playing-field' ) : date( 'm/d/Y', strtotime( $experience[ ApplicantMeta::END_DATE ] ) ) )
+						);
+					}
 				}
 				?>
 			</ol>

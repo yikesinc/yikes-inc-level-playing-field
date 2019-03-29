@@ -41,7 +41,7 @@ final class ApplicantManager extends BaseCustomPostType {
 				'add_new_item'          => __( 'Add New Applicant', 'yikes-level-playing-field' ),
 				'add_new'               => __( 'Add New Applicant', 'yikes-level-playing-field' ),
 				'new_item'              => __( 'New Applicant', 'yikes-level-playing-field' ),
-				'edit_item'             => __( 'Edit Applicant', 'yikes-level-playing-field' ),
+				'edit_item'             => __( 'View Applicant', 'yikes-level-playing-field' ),
 				'update_item'           => __( 'Update Applicant', 'yikes-level-playing-field' ),
 				'view_item'             => __( 'View Applicant', 'yikes-level-playing-field' ),
 				'search_items'          => __( 'Search Applicant', 'yikes-level-playing-field' ),

@@ -49,7 +49,6 @@ const paths = {
 		'languages/*',
 		'src/**/*.php',
 		'vendor/awesome-yikes-framework/**',
-		'vendor/htmlburger/**',
 		'views/**/*.php',
 		'*.php',
 		'LICENSE.txt',
