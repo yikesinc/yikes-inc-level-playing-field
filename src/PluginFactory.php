@@ -139,9 +139,6 @@ final class PluginFactory {
 			GoProPage::class                 => 1,
 			SupportPage::class               => 1,
 
-			// Carbon Fields.
-			FieldLoader::class               => 1,
-
 			// Template Overrides.
 			SingleJobs::class                => 1,
 			SingleApplications::class        => 1,
