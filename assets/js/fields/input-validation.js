@@ -197,7 +197,7 @@ jQuery( document ).ready( function( $ ) {
 	const schoolingFields = $( '.lpf-fieldset-schooling select[id$="[type]"]' );
 	schoolingFields.each(function() {
 		if ( $(this).val() === 'high_school' ) {
-			$(this).parents('.lpf-fieldset-schooling').find( 'input[id$="[major]"], input[id$="[degree]"]' ).val('N/A').hide();
+			$(this).parents('.lpf-fieldset-schooling').find( 'input[id$="[major]"], input[id$="[degree]"]' ).val('N/A').parent('.lpf-input-label').hide();
 		}
 	});
 
