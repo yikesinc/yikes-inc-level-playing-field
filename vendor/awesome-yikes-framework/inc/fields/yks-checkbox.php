@@ -1,16 +1,13 @@
 <?php
-/**** Single Checkbox ****/
-
 /**
+ * Single Checkbox.
  *
- * A single checkbox with a label wrapped around it
+ * A single checkbox with a label wrapped around it.
  *
  * This field is setup to use 'repeating', but I'm not sure of a real world case for repeating => true
- * Because checkboxes won't save a value if their not checked off, so repeating would only save X amount of checked checkboxes
+ * because checkboxes won't save a value if their not checked off, so repeating would only save X amount of checked checkboxes.
  *
- * Important:
- * To properly use this field remember to set a value of 1
- * eg:
+ * To properly use this field remember to set a value of 1, e.g.
  * array(
  *    'name'      => 'Sample Checkbox Field',
  *    'desc'      => 'This is a sample checkbox field.',
@@ -19,6 +16,8 @@
  *    'type'      => 'checkbox',
  *    'repeating' => false,
  * )
+ *
+ * @package YIKES Awesome Framework
  */
 
 // Setup our defaults.
@@ -36,7 +35,7 @@ $field_attributes = isset( $field['attributes'] ) ? (array) $field['attributes']
 if ( true === $field_repeating ) {
 
 	// Enqueue our JS file for repeating fields.
-	wp_enqueue_script( 'yks-checkbox', YKS_MBOX_URL . 'js/fields/min/yks-checkbox.min.js', [ 'jquery' ] );
+	wp_enqueue_script( 'yks-checkbox', YKS_MBOX_URL . 'js/fields/min/yks-checkbox.min.js', array( 'jquery' ), YIKES_Awesome_Framework_Version, true );
 
 	// Container for repeating fields.
 	$field_html .= sprintf( '<ul class="yks_checkbox_container" id="container_%s">', esc_attr( $field_id ) );
@@ -47,17 +46,17 @@ if ( true === $field_repeating ) {
 		$field_counter++;
 
 		// We hide the delete button for the first field.
-		$style = ( 1 === $field_counter ) ? 'style="display: none;"' : '';
+		$style = 1 === $field_counter ? 'display: none;' : '';
 
-		// <li>, input field, delete button
+		// <li>, input field, delete button.
 		$field_html .= '<li class="yks_checkbox_field ui-state-default">';
 		$field_html .= '<span data-code="f156" class="dashicons dashicons-sort" ></span>';
 
-		$checked = ( (string) $value === (string) $field_value ) ? 'checked="checked"' : '';
+		$checked = (string) $value === (string) $field_value ? 'checked="checked"' : '';
 
-		$field_html .= '<input type="checkbox" class="yks_checkbox" name="' . esc_attr( $field_id ) . '[' . $field_counter . ']" id="' . esc_attr( $field_id ) . '_' . $field_counter . '" value="' . esc_attr( $field_value ) . '"' . $checked . '/>';
+		$field_html .= '<input type="checkbox" class="yks_checkbox" name="' . esc_attr( $field_id ) . '[' . esc_attr( $field_counter ) . ']" id="' . esc_attr( $field_id ) . '_' . esc_attr( $field_counter ) . '" value="' . esc_attr( $field_value ) . '"' . esc_attr( $checked ) . '/>';
 
-		$field_html .= '<span class="yks_checkbox_delete dashicons dashicons-dismiss" ' . $style . '></span>';
+		$field_html .= '<span class="yks_checkbox_delete dashicons dashicons-dismiss" style="' . esc_attr( $style ) . '"></span>';
 		$field_html .= '</li>';
 	}
 
@@ -66,7 +65,7 @@ if ( true === $field_repeating ) {
 
 	// Add field button.
 	$field_html .= '<div class="yks_checkbox_add_container">';
-	$field_html .= '<span class="yks_checkbox_add button button-primary" data-field-count="' . esc_attr( $field_counter ) . '">' . $repeat_btn_text . '</span>';
+	$field_html .= '<span class="yks_checkbox_add button button-primary" data-field-count="' . esc_attr( $field_counter ) . '">' . esc_html( $repeat_btn_text ) . '</span>';
 	$field_html .= '</div>';
 } else {
 
@@ -101,17 +100,17 @@ if ( true === $field_repeating ) {
 	$field_html .= ' />';
 }
 
-// Field description
+// Field description.
 if ( $desc_type === 'inline' ) {
 
-	// If desc_type is inline, use a span
-	$field_html .= '<span class="yks_mbox_description yks_mbox_description_inline">' . $field_desc . '</span>';
+	// If desc_type is inline, use a span.
+	$field_html .= '<span class="yks_mbox_description yks_mbox_description_inline">' . esc_html( $field_desc ) . '</span>';
 } elseif ( $desc_type === 'block' ) {
 
-	// If desc_type is block, use a p
-	$field_html .= '<p class="yks_mbox_description yks_mbox_description_block">' . $field_desc . '</p>';
+	// If desc_type is block, use a p.
+	$field_html .= '<p class="yks_mbox_description yks_mbox_description_block">' . esc_html( $field_desc ) . '</p>';
 }
 
-// Display our field on the page
-echo $field_html;
+// Display our field on the page.
+echo $field_html; // phpcs:ignore WordPress.Security.EscapeOutput
 return;
