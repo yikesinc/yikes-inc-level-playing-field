@@ -1,3 +1,18 @@
-#notice-container .lpf-notice.lpf-admin-notice {
-    margin-left: 0px;
+@import "utilities/mixins/font-size-calculation";
+
+.settings-page {
+
+	#notice-container .lpf-notice.lpf-admin-notice {
+	    margin-left: 0px;
+	}
+
+	hr {
+		margin: 1.6rem 0;
+	}
+
+	.lpf-settings-settings-container {
+		label:not(:last-of-type) {
+			padding-right: 1rem;
+		}
+	}
 }

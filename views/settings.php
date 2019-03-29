@@ -18,32 +18,40 @@ use Yikes\LevelPlayingField\Settings\Fields\DisableFrontEndCSS;
 
 $settings = $this->settings;
 ?>
-<div id="lpf-settings">
-	<h2><?php esc_html_e( 'Settings', 'yikes-level-playing-field' ); ?></h2>
+<div id="lpf-settings" class="wrap lpf-page settings-page">
+	<h1 class="wp-heading-inline">
+		<?php esc_html_e( 'Level Playing Field Settings', 'yikes-level-playing-field' ); ?>
+	</h1>
 
 	<div id="notice-container"></div>
 
 	<div class="lpf-settings lpf-settings-settings-container">
-		<h3><?php esc_html_e( 'Email', 'yikes-level-playing-field' ); ?></h3>
+		<h2><span class="dashicons dashicons-email"></span> <?php esc_html_e( 'Email Settings', 'yikes-level-playing-field' ); ?></h2>
 		<?php
 			( new AdditionalEmailRecipients() )->render( $settings->get_setting( AdditionalEmailRecipients::SLUG ) );
 			( new EmailRecipientRoles() )->render( $settings->get_setting( EmailRecipientRoles::SLUG ) );
 		?>
 	</div>
 
+	<hr>
+
 	<div class="lpf-settings lpf-settings-settings-container">
-		<h3><?php esc_html_e( 'Application', 'yikes-level-playing-field' ); ?></h3>
+		<h2><span class="dashicons dashicons-feedback"></span> <?php esc_html_e( 'Application Settings', 'yikes-level-playing-field' ); ?></h2>
 		<?php
 			( new ApplicationSuccessMessage() )->render( $settings->get_setting( ApplicationSuccessMessage::SLUG ) );
 		?>
 	</div>
 
+	<hr>
+
 	<div class="lpf-settings lpf-settings-settings-container">
-		<h3><?php esc_html_e( 'Plugin', 'yikes-level-playing-field' ); ?></h3>
+		<h2><span class="dashicons dashicons-art"></span> <?php esc_html_e( 'Appearance Settings', 'yikes-level-playing-field' ); ?></h2>
 		<?php
 			( new DisableFrontEndCSS() )->render( $settings->get_setting( DisableFrontEndCSS::SLUG ) );
 		?>
 	</div>
+
+	<hr>
 
 	<div class="lpf-settings lpf-settings-settings-container">
 		<div class="lpf-settings-save">

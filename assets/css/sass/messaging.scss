@@ -39,7 +39,10 @@
 .conversation-container {
 	max-height: 500px;
 	overflow-x: hidden;
-	overflow-y: scroll;
+
+	&.conversation-container.has-conversation {
+		overflow-y: scroll;	
+	}
 
 	.lpf-message.hidden {
 		display: none;

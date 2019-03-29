@@ -6,18 +6,6 @@
 /// @group mixins
 ////
 
-$basefont: 16px;
-
-@function calculaterem($size) {
-  $remsize: $size / $basefont;
-  @return #{$remsize}rem;
-}
-
-@mixin fontsize($size) {
-  font-size: $size; // Fallback in px
-  font-size: calculaterem($size);
-}
-
 h1, h2, h3, h4, h5, h6, p {
 	margin: 0;
 }

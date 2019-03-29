@@ -23,7 +23,7 @@ $comments = $this->comments;
 		}
 		?>
 
-		<div class="conversation-container">
+		<div class="conversation-container <?php echo count( $comments ) > 0 ? 'has-conversation' : ''; ?>">
 		<?php
 
 		if ( empty( $comments ) ) {

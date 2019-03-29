@@ -12,6 +12,8 @@ namespace Yikes\LevelPlayingField\Settings;
 use Yikes\LevelPlayingField\Roles\HiringManager;
 use Yikes\LevelPlayingField\Roles\HumanResources;
 use Yikes\LevelPlayingField\Exception\NoDefault;
+use Yikes\LevelPlayingField\Shortcode\Application;
+use Yikes\LevelPlayingField\Shortcode\BaseJobs;
 
 /**
  * Class Settings.
@@ -45,7 +47,10 @@ final class Settings {
 			HumanResources::SLUG => false,
 		],
 		SettingsFields::APPLICATION_SUCCESS_MESSAGE => 'Congratulations! Your form has been successfully submitted!',
-		SettingsFields::DISABLE_FRONT_END_CSS       => false,
+		SettingsFields::DISABLE_FRONT_END_CSS       => [
+			Application::CSS_HANDLE => false,
+			BaseJobs::CSS_HANDLE    => false,
+		],
 	];
 
 	/**
