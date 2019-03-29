@@ -19,6 +19,7 @@ interface ApplicationMeta {
 
 	const META_PREFIX       = 'application_cpt_meta_';
 	const FORM_FIELD_PREFIX = 'application_cpt_';
+	const REQUIRED_SUFFIX   = '_required';
 
 	// Basic Info fields.
 	const NAME         = 'name';
