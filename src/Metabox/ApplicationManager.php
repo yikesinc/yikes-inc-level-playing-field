@@ -126,14 +126,14 @@ final class ApplicationManager extends AwesomeBaseMetabox implements AssetsAware
 							'value'     => 1,
 							'desc_type' => 'inline',
 						],
-						[
-							'name'      => __( 'Cover Letter', 'yikes-level-playing-field' ),
-							'desc'      => __( 'Cover Letter', 'yikes-level-playing-field' ),
-							'id'        => $this->prefix_field( 'cover_letter' ),
-							'type'      => 'checkbox',
-							'value'     => 1,
-							'desc_type' => 'inline',
-						],
+						// [
+						// 	'name'      => __( 'Cover Letter', 'yikes-level-playing-field' ),
+						// 	'desc'      => __( 'Cover Letter', 'yikes-level-playing-field' ),
+						// 	'id'        => $this->prefix_field( 'cover_letter' ),
+						// 	'type'      => 'checkbox',
+						// 	'value'     => 1,
+						// 	'desc_type' => 'inline',
+						// ],
 					],
 				],
 				[
