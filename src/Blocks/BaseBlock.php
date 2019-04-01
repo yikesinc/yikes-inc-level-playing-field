@@ -39,10 +39,6 @@ abstract class BaseBlock implements Service, AssetsAware {
 	 * @since %VERSION%
 	 */
 	public function register() {
-		if ( ! $this->is_new_editor_enabled() ) {
-			return;
-		}
-
 		$this->register_assets();
 
 		// Register the block type.
