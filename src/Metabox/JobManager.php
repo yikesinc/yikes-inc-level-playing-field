@@ -9,6 +9,7 @@
 
 namespace Yikes\LevelPlayingField\Metabox;
 
+use Yikes\LevelPlayingField\PluginFactory;
 use Yikes\LevelPlayingField\Assets\Asset;
 use Yikes\LevelPlayingField\Assets\AssetsAware;
 use Yikes\LevelPlayingField\Assets\AssetsAwareness;
@@ -138,7 +139,7 @@ final class JobManager extends AwesomeBaseMetabox implements AssetsAware {
 			'pages'      => [ JobManagerCPT::SLUG ],
 			'show_names' => true,
 			'group'      => false,
-			'context'    => 'side',
+			'context'    => $this->get_metabox_content(),
 			'fields'     => [
 				[
 					'name'     => __( 'Job Status', 'yikes-level-playing-field' ),
@@ -209,6 +210,19 @@ final class JobManager extends AwesomeBaseMetabox implements AssetsAware {
 		$meta_boxes[] = $job_boxes;
 
 		return $meta_boxes;
+	}
+
+	/**
+	 * Get the context for the job manager metabox.
+	 *
+	 * If the new editor is enabled, show the metabox in the side. Otherwise show it in the normal table.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @return string
+	 */
+	private function get_metabox_content() {
+		return PluginFactory::create()->is_new_editor_enabled() ? 'side' : 'normal';
 	}
 
 	/**

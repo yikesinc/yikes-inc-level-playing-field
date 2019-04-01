@@ -9,6 +9,7 @@
 
 namespace Yikes\LevelPlayingField\Blocks;
 
+use Yikes\LevelPlayingField\PluginFactory;
 use Yikes\LevelPlayingField\Assets\Asset;
 use Yikes\LevelPlayingField\Assets\AssetsAware;
 use Yikes\LevelPlayingField\Assets\AssetsAwareness;
@@ -37,7 +38,7 @@ abstract class BaseBlock implements Service, AssetsAware {
 	 * @since %VERSION%
 	 */
 	public function register() {
-		if ( ! function_exists( 'register_block_type' ) ) {
+		if ( ! PluginFactory::create()->is_new_editor_enabled() ) {
 			return;
 		}
 

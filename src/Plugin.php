@@ -148,6 +148,20 @@ final class Plugin implements Registerable {
 	public function get_plugin_url() {
 		return plugins_url( '', dirname( __FILE__ ) );
 	}
+
+	/**
+	 * Is the new editor is enabled?
+	 *
+	 * Check if the register_block_type function exists to see if the new editor is available. Then check if the classic editor plugin is enabled to see if the editor is being disabled.
+	 *
+	 * @since %VERSION%
+	 * @return bool
+	 */
+	public function is_new_editor_enabled() {
+		include_once ABSPATH . 'wp-admin/includes/plugin.php';
+		return function_exists( 'register_block_type' ) && ! is_plugin_active( 'classic-editor/classic-editor.php' );
+	}
+
 	/**
 	 * Instantiate a single service.
 	 *
