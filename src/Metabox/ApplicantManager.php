@@ -148,7 +148,7 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 		return static::PRIORITY_HIGH;
 	}
 
-  /**
+	/**
 	 * Get the context in which to show the metabox.
 	 *
 	 * @since %VERSION%
@@ -158,7 +158,7 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 	protected function get_context() {
 		return static::CONTEXT_NORMAL;
 	}
-  
+
 	/**
 	 * Set the "Viewed_By" property of applicant objeect.
 	 *
@@ -171,8 +171,8 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 			$applicant->set_viewed_by( get_current_user_id() );
 			$applicant->persist();
 		}
-  }
-  
+	}
+
 	/**
 	 * Process the metabox attributes.
 	 *
