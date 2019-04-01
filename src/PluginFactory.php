@@ -9,6 +9,7 @@
 
 namespace Yikes\LevelPlayingField;
 
+use Yikes\LevelPlayingField\PluginHelpers;
 use Yikes\LevelPlayingField\AdminPage\GoProPage;
 use Yikes\LevelPlayingField\AdminPage\SettingsPage;
 use Yikes\LevelPlayingField\AdminPage\SupportPage;
@@ -57,6 +58,8 @@ use Yikes\LevelPlayingField\Widget\Dashboard\JobApplicants;
  */
 final class PluginFactory {
 
+	use PluginHelpers;
+
 	/**
 	 * Create and return an instance of the plugin.
 	 *
@@ -66,11 +69,11 @@ final class PluginFactory {
 	 *
 	 * @return Plugin The plugin instance.
 	 */
-	public static function create() {
+	public function create() {
 		static $plugin = null;
 
 		if ( null === $plugin ) {
-			$plugin = new Plugin( self::get_service_container() );
+			$plugin = new Plugin( $this->get_service_container() );
 		}
 
 		return $plugin;
@@ -82,76 +85,81 @@ final class PluginFactory {
 	 * @since %VERSION%
 	 * @return Container
 	 */
-	private static function get_service_container() {
-		return new Container( [
-			// Filters.
-			Filters::class                   => 1,
+	private function get_service_container() {
 
-			// Blocks.
-			JobListing::class                => 1,
-			JobListings::class               => 1,
+		$services = new Container();
 
-			// CPTs.
-			LimitedJobManager::class         => 1,
-			ApplicationManager::class        => 1,
-			ApplicantManager::class          => 1,
+		// Filters.
+		$services->add_service( Filters::class );
 
-			// Taxonomies.
-			JobCategory::class               => 1,
-			JobStatus::class                 => 1,
-			ApplicantStatus::class           => 1,
+		// Blocks.
+		if ( $this->is_new_editor_enabled() ) {
+			$services->add_service( JobListing::class );
+			$services->add_service( JobListings::class );
+		}
 
-			// Metaboxes.
-			JobManager::class                => 1,
-			ApplicationMetabox::class        => 1,
-			ApplicantMetabox::class          => 1,
-			ApplicantBasicInfo::class        => 1,
-			ApplicantInterviewDetails::class => 1,
+		// CPTs.
+		$services->add_service( LimitedJobManager::class );
+		$services->add_service( ApplicationManager::class );
+		$services->add_service( ApplicantManager::class );
 
-			// Custom List Tables.
-			JobListTable::class              => 1,
-			ApplicationListTable::class      => 1,
-			ApplicantListTable::class        => 1,
+		// Taxonomies.
+		$services->add_service( JobCategory::class );
+		$services->add_service( JobStatus::class );
+		$services->add_service( ApplicantStatus::class );
 
-			// User roles.
-			HiringManager::class             => 1,
-			HumanResources::class            => 1,
-			Applicant::class                 => 1,
-			Administrator::class             => 1,
-			Editor::class                    => 1,
+		// Metaboxes.
+		$services->add_service( JobManager::class );
+		$services->add_service( ApplicationMetabox::class );
+		$services->add_service( ApplicantMetabox::class );
+		$services->add_service( ApplicantBasicInfo::class );
+		$services->add_service( ApplicantInterviewDetails::class );
 
-			// Widgets.
-			JobApplicants::class             => 1,
+		// Custom list tables.
+		$services->add_service( JobListTable::class );
+		$services->add_service( ApplicationListTable::class );
+		$services->add_service( ApplicantListTable::class );
 
-			// Shortcodes.
-			AllJobs::class                   => 1,
-			Job::class                       => 1,
-			Application::class               => 1,
+		// User roles.
+		$services->add_service( HiringManager::class );
+		$services->add_service( HumanResources::class );
+		$services->add_service( Applicant::class );
+		$services->add_service( Administrator::class );
+		$services->add_service( Editor::class );
 
-			// Assets.
-			AdminStyles::class               => 1,
+		// Widgets.
+		$services->add_service( JobApplicants::class );
 
-			// Settings.
-			SettingsManager::class           => 1,
+		// Shortcodes.
+		$services->add_service( AllJobs::class );
+		$services->add_service( Job::class );
+		$services->add_service( Application::class );
 
-			// Admin Pages.
-			SettingsPage::class              => 1,
-			GoProPage::class                 => 1,
-			SupportPage::class               => 1,
+		// Assets.
+		$services->add_service( AdminStyles::class );
 
-			// Template Overrides.
-			SingleJobs::class                => 1,
-			SingleApplications::class        => 1,
+		// Settings.
+		$services->add_service( SettingsManager::class );
 
-			// Messaging.
-			ApplicantMessaging::class        => 1,
+		// Admin pages.
+		$services->add_service( SettingsPage::class );
+		$services->add_service( GoProPage::class );
+		$services->add_service( SupportPage::class );
 
-			// Messaging Template.
-			ApplicantMessageTemplate::class  => 1,
+		// Template overrides.
+		$services->add_service( SingleJobs::class );
+		$services->add_service( SingleApplications::class );
 
-			// Required Pages.
-			ApplicantMessagingPage::class    => 1,
-			ApplicationFormPage::class       => 1,
-		] );
+		// Messaging.
+		$services->add_service( ApplicantMessaging::class );
+
+		// Messaging template.
+		$services->add_service( ApplicantMessageTemplate::class );
+
+		// Required pages.
+		$services->add_service( ApplicantMessagingPage::class );
+		$services->add_service( ApplicationFormPage::class );
+
+		return $services;
 	}
 }

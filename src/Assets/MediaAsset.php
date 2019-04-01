@@ -12,7 +12,7 @@
 
 namespace Yikes\LevelPlayingField\Assets;
 
-use Yikes\LevelPlayingField\PluginFactory;
+use Yikes\LevelPlayingField\PluginHelpers;
 
 /**
  * Class MediaAsset.
@@ -23,6 +23,8 @@ use Yikes\LevelPlayingField\PluginFactory;
  * @author  Ebonie Butler
  */
 final class MediaAsset {
+
+	use PluginHelpers;
 
 	const IMG_ASSETS_DIR = '/assets/images/';
 	const IMG_NOT_FOUND  = '';
@@ -37,10 +39,10 @@ final class MediaAsset {
 	 * @return string $file_url
 	 */
 	public function get_image( string $filename ) {
-		$file_url = PluginFactory::create()->get_plugin_url() . self::IMG_ASSETS_DIR . $filename;
+		$file_url = $this->get_plugin_url() . self::IMG_ASSETS_DIR . $filename;
 
 		// Build absolute path to file to confirm file exists.
-		$file_path = PluginFactory::create()->get_plugin_root() . self::IMG_ASSETS_DIR . $filename;
+		$file_path = $this->get_plugin_root() . self::IMG_ASSETS_DIR . $filename;
 
 		if ( ! file_exists( $file_path ) ) {
 			return self::IMG_NOT_FOUND;
