@@ -119,6 +119,14 @@ final class ApplicationManager extends AwesomeBaseMetabox implements AssetsAware
 							'desc_type' => 'inline',
 						],
 						[
+							'name'      => __( 'Required?', 'yikes-level-playing-field' ),
+							'desc'      => __( 'Required?', 'yikes-level-playing-field' ),
+							'id'        => $this->prefix_field( ApplicationMeta::PHONE . ApplicationMeta::REQUIRED_SUFFIX ),
+							'type'      => 'toggle',
+							'value'     => 1,
+							'desc_type' => 'inline',
+						],
+						[
 							'name'      => __( 'Address', 'yikes-level-playing-field' ),
 							'desc'      => __( 'Address', 'yikes-level-playing-field' ),
 							'id'        => $this->prefix_field( ApplicationMeta::ADDRESS ),
