@@ -61,17 +61,17 @@ foreach ( $field_attributes as $key => $value ) {
 $field_html .= ' />';
 
 
-// Field description
-if ( $desc_type === 'inline' ) {
+// Field description.
+if ( 'inline' === $desc_type ) {
 
-	// If desc_type is inline, use a span
+	// If desc_type is inline, use a span.
 	$field_html .= '<span class="yks_mbox_description yks_mbox_description_inline">' . $field_desc . '</span>';
-} elseif ( $desc_type === 'block' ) {
+} elseif ( 'block' === $desc_type ) {
 
-	// If desc_type is block, use a p
+	// If desc_type is block, use a p.
 	$field_html .= '<p class="yks_mbox_description yks_mbox_description_block">' . $field_desc . '</p>';
 }
 
-// Display our field on the page
-echo $field_html;
+// Display our field on the page.
+echo $field_html; // phpcs:ignore WordPress.Security.EscapeOutput
 return;
