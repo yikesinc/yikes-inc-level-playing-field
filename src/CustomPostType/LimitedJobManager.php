@@ -157,7 +157,7 @@ final class LimitedJobManager extends JobManager {
 
 		$message = sprintf(
 			/* translators: %d is the number of active jobs */
-			_n( 'Jobs are limited to %d active job.', 'Jobs are limited to %d active jobs.', $this->limit, 'yikes-level-playing-field' ),
+			_n( 'You are limited to %d active job.', 'You are limited to %d active jobs.', $this->limit, 'yikes-level-playing-field' ),
 			number_format_i18n( $this->limit )
 		);
 		?>
