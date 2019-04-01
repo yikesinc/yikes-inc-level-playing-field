@@ -139,7 +139,7 @@ final class JobManager extends AwesomeBaseMetabox implements AssetsAware {
 			'pages'      => [ JobManagerCPT::SLUG ],
 			'show_names' => true,
 			'group'      => false,
-			'context'    => $this->get_metabox_content(),
+			'context'    => $this->get_metabox_context(),
 			'fields'     => [
 				[
 					'name'     => __( 'Job Status', 'yikes-level-playing-field' ),
@@ -221,7 +221,7 @@ final class JobManager extends AwesomeBaseMetabox implements AssetsAware {
 	 *
 	 * @return string
 	 */
-	private function get_metabox_content() {
+	private function get_metabox_context() {
 		return PluginFactory::create()->is_new_editor_enabled() ? 'side' : 'normal';
 	}
 
