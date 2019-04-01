@@ -46,26 +46,16 @@ final class Plugin implements Registerable {
 	protected $container;
 
 	/**
-	 * The root plugin directory.
-	 *
-	 * @since %VERSION%
-	 * @var string
-	 */
-	protected $plugin_root;
-
-	/**
 	 * Instantiate a Plugin object.
 	 *
 	 * @since %VERSION%
 	 *
 	 * @param Container     $container      The container object.
 	 * @param AssetsHandler $assets_handler Optional. Instance of the assets handler to use.
-	 * @param string        $plugin_root    The root directory of the plugin.
 	 */
-	public function __construct( Container $container, AssetsHandler $assets_handler = null, $plugin_root = '' ) {
+	public function __construct( Container $container, AssetsHandler $assets_handler = null ) {
 		$this->container      = $container;
 		$this->assets_handler = $assets_handler ?: new AssetsHandler();
-		$this->plugin_root    = $plugin_root ?: dirname( __DIR__ );
 	}
 
 	/**
@@ -127,39 +117,6 @@ final class Plugin implements Registerable {
 	 */
 	public function get_assets_handler() {
 		return $this->assets_handler;
-	}
-
-	/**
-	 * Get the root directory for the plugin.
-	 *
-	 * @since %VERSION%
-	 * @return string
-	 */
-	public function get_plugin_root() {
-		return $this->plugin_root;
-	}
-
-	/**
-	 * Get the url for the plugin.
-	 *
-	 * @since %VERSION%
-	 * @return string
-	 */
-	public function get_plugin_url() {
-		return plugins_url( '', dirname( __FILE__ ) );
-	}
-
-	/**
-	 * Is the new editor is enabled?
-	 *
-	 * Check if the register_block_type function exists to see if the new editor is available. Then check if the classic editor plugin is enabled to see if the editor is being disabled.
-	 *
-	 * @since %VERSION%
-	 * @return bool
-	 */
-	public function is_new_editor_enabled() {
-		include_once ABSPATH . 'wp-admin/includes/plugin.php';
-		return function_exists( 'register_block_type' ) && ! is_plugin_active( 'classic-editor/classic-editor.php' );
 	}
 
 	/**
