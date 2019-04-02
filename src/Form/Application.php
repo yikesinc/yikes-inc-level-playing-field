@@ -158,10 +158,36 @@ final class Application {
 
 		// Add all of the active fields.
 		foreach ( $this->application->get_active_fields() as $field ) {
+			//echo '<pre>'; var_dump($field); echo '</pre>';
 			$field_name     = ApplicationMeta::FORM_FIELD_PREFIX . $field;
 			$field_label    = ucwords( str_replace( [ '-', '_' ], ' ', $field ) );
 			$type           = isset( Meta::FIELD_MAP[ $field ] ) ? Meta::FIELD_MAP[ $field ] : Types::TEXT;
-			$this->fields[] = new $type( $field_name, $field_label, $this->field_classes );
+			// @todo: Create function to check if active field is set to be a required (non-empty) field.
+			echo '<pre>'; var_dump( $field ); echo '</pre>';
+			echo '<pre>'; var_dump( $this->is_field_required( $field ) ); echo '</pre>';
+			$this->fields[] = new $type( $field_name, $field_label, $this->field_classes, $this->is_field_required( $field ) );
+		}
+	}
+
+	/**
+	 * Check if field input is required for given field.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param string $field_name The name of the field.
+	 *
+	 * @return bool
+	 */
+	private function is_field_required( $field_name ) {
+
+		if ( $field_name === ApplicationMeta::NAME || $field_name === ApplicationMeta::EMAIL ) {
+			return true;
+		}
+		$required = get_post_meta( $this->application->get_id(), ApplicationMeta::META_PREFIX . $field_name . ApplicationMeta::REQUIRED_SUFFIX, true );
+		if ( empty( $required ) ) {
+			return false;
+		} else {
+			return true;
 		}
 	}
 
