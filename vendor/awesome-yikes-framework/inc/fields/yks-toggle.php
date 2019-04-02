@@ -20,36 +20,31 @@
  */
 
 // Setup our defaults.
-$field_values     = ! is_array( $meta ) ? [ $meta ] : $meta;
-$field_html       = '';
-$field_counter    = 0;
-$field_value      = isset( $field['value'] ) ? $field['value'] : 1;
-$field_repeating  = isset( $field['repeating'] ) && true === $field['repeating'];
-$field_id         = isset( $field['id'] ) ? $field['id'] : '';
-$field_desc       = isset( $field['desc'] ) ? $field['desc'] : '';
-$desc_type        = isset( $field['desc_type'] ) ? $field['desc_type'] : 'block';
-$field_attributes = isset( $field['attributes'] ) ? (array) $field['attributes'] : [];
+$field_values = ! is_array( $meta ) ? [ $meta ] : $meta;
+$field_html   = '';
+$field_value  = isset( $field['value'] ) ? $field['value'] : 1;
+$field_id     = isset( $field['id'] ) ? $field['id'] : '';
+$field_desc   = isset( $field['desc'] ) ? $field['desc'] : '';
+$desc_type    = isset( $field['desc_type'] ) ? $field['desc_type'] : 'block';
 
 // Get the field value.
 $value = isset( $field_values[0] ) ? $field_values[0] : '';
 
 // Set up field attributes.
-$field_attributes = array_merge( $field_attributes, [
+$field_attributes = [
 	'id'    => $field_id,
+	'class' => [ 'yks_toggle', 'switch-input' ],
 	'name'  => $field_id,
 	'value' => $field_value,
 	'type'  => 'checkbox',
-] );
-
-$field_attributes['class'] = isset( $field_attributes['class'] ) ? $field_attributes['class'] : [];
+];
 
 if ( checked( $value, $field_value, false ) ) {
 	$field_attributes['checked'] = 'checked';
 }
 
-$field_attributes['class'] = array_unique( array_merge( $field_attributes['class'], [ 'yks_checkbox' ] ) );
-
 // Build the HTML.
+$field_html .= '<label class="switch">';
 $field_html .= '<input ';
 foreach ( $field_attributes as $key => $value ) {
 	if ( 'class' === $key ) {
@@ -59,6 +54,9 @@ foreach ( $field_attributes as $key => $value ) {
 	}
 }
 $field_html .= ' />';
+$field_html .= '<span class="switch-label" data-on="On" data-off="Off"></span>';
+$field_html .= '<span class="switch-handle"></span>';
+$field_html .= '</label>';
 
 
 // Field description.
