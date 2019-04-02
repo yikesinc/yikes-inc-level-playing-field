@@ -70,7 +70,7 @@ final class ApplicationManager extends AwesomeBaseMetabox implements AssetsAware
 	public function register_boxes( $meta_boxes ) {
 		$application_boxes = [
 			'id'         => $this->prefix_field( 'metabox' ),
-			'title'      => __( 'Basic Info', 'yikes-level-playing-field' ),
+			'title'      => __( 'Application Form Fields', 'yikes-level-playing-field' ),
 			'pages'      => [ ApplicationCPT::SLUG ],
 			'show_names' => false,
 			'group'      => true,
