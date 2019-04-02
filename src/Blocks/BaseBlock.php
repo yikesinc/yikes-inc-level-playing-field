@@ -9,7 +9,6 @@
 
 namespace Yikes\LevelPlayingField\Blocks;
 
-use Yikes\LevelPlayingField\PluginHelpers;
 use Yikes\LevelPlayingField\Assets\Asset;
 use Yikes\LevelPlayingField\Assets\AssetsAware;
 use Yikes\LevelPlayingField\Assets\AssetsAwareness;
@@ -25,7 +24,6 @@ use Yikes\LevelPlayingField\Exception\MustExtend;
 abstract class BaseBlock implements Service, AssetsAware {
 
 	use AssetsAwareness;
-	use PluginHelpers;
 
 	const BASE_SLUG  = 'ylpf/';
 	const BLOCK_PATH = 'assets/js/blocks/';
