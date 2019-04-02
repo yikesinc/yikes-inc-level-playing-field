@@ -24,4 +24,4 @@ $ylpf_autoloader->register();
 require_once dirname( __DIR__ ) . '/vendor/awesome-yikes-framework/yks-mbox-framework.php';
 
 // Kick it off.
-( new PluginFactory )->create()->register();
+( new PluginFactory() )->create()->register();
