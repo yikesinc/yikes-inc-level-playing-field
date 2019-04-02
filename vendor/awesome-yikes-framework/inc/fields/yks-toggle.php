@@ -25,7 +25,6 @@ $field_html   = '';
 $field_value  = isset( $field['value'] ) ? $field['value'] : 1;
 $field_id     = isset( $field['id'] ) ? $field['id'] : '';
 $field_desc   = isset( $field['desc'] ) ? $field['desc'] : '';
-$desc_type    = isset( $field['desc_type'] ) ? $field['desc_type'] : 'block';
 
 // Get the field value.
 $value = isset( $field_values[0] ) ? $field_values[0] : '';
@@ -60,15 +59,7 @@ $field_html .= '</label>';
 
 
 // Field description.
-if ( 'inline' === $desc_type ) {
-
-	// If desc_type is inline, use a span.
-	$field_html .= '<span class="yks_mbox_description yks_mbox_description_inline">' . $field_desc . '</span>';
-} elseif ( 'block' === $desc_type ) {
-
-	// If desc_type is block, use a p.
-	$field_html .= '<p class="yks_mbox_description yks_mbox_description_block">' . $field_desc . '</p>';
-}
+$field_html .= '<p class="yks_mbox_description">' . $field_desc . '</p>';
 
 // Display our field on the page.
 echo $field_html; // phpcs:ignore WordPress.Security.EscapeOutput
