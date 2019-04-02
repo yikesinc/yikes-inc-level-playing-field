@@ -176,7 +176,7 @@
     position: absolute;
     top: 0;
     left: 0;
-    opacity: 0; }
+    opacity: 0 !important; }
   .yks_mbox .switch-label, table.yks_mbox .switch-label, table.form-table .switch-label {
     position: relative;
     display: block;

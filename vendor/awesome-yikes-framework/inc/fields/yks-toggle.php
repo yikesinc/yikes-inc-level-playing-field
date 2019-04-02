@@ -20,23 +20,30 @@
  */
 
 // Setup our defaults.
-$field_values = ! is_array( $meta ) ? [ $meta ] : $meta;
-$field_html   = '';
-$field_value  = isset( $field['value'] ) ? $field['value'] : 1;
-$field_id     = isset( $field['id'] ) ? $field['id'] : '';
-$field_desc   = isset( $field['desc'] ) ? $field['desc'] : '';
+$field_values     = ! is_array( $meta ) ? [ $meta ] : $meta;
+$field_html       = '';
+$field_value      = isset( $field['value'] ) ? $field['value'] : 1;
+$field_id         = isset( $field['id'] ) ? $field['id'] : '';
+$field_desc       = isset( $field['desc'] ) ? $field['desc'] : '';
+$field_attributes = isset( $field['attributes'] ) ? (array) $field['attributes'] : [];
 
 // Get the field value.
 $value = isset( $field_values[0] ) ? $field_values[0] : '';
 
 // Set up field attributes.
-$field_attributes = [
-	'id'    => $field_id,
-	'class' => [ 'yks_toggle', 'switch-input' ],
-	'name'  => $field_id,
-	'value' => $field_value,
-	'type'  => 'checkbox',
-];
+$field_attributes = array_merge(
+	$field_attributes,
+	[
+		'id'    => $field_id,
+		'name'  => $field_id,
+		'value' => $field_value,
+		'type'  => 'checkbox',
+	]
+);
+
+$field_attributes['class'] = isset( $field_attributes['class'] ) ? $field_attributes['class'] : [];
+
+$field_attributes['class'] = array_unique( array_merge( $field_attributes['class'], [ 'yks_toggle', 'switch-input' ] ) );
 
 if ( checked( $value, $field_value, false ) ) {
 	$field_attributes['checked'] = 'checked';

@@ -87,8 +87,8 @@ final class ApplicationManager extends AwesomeBaseMetabox implements AssetsAware
 							'type' => 'title',
 						],
 						[
-							'name'       => __( 'Name (required)', 'yikes-level-playing-field' ),
-							'desc'       => __( 'Name (required)', 'yikes-level-playing-field' ),
+							'name'       => __( 'Name', 'yikes-level-playing-field' ),
+							'desc'       => __( 'Name', 'yikes-level-playing-field' ),
 							'id'         => $this->prefix_field( ApplicationMeta::NAME ),
 							'type'       => 'checkbox',
 							'value'      => 1,
@@ -99,12 +99,36 @@ final class ApplicationManager extends AwesomeBaseMetabox implements AssetsAware
 							],
 						],
 						[
-							'name'       => __( 'Email Address (required)', 'yikes-level-playing-field' ),
-							'desc'       => __( 'Email Address (required)', 'yikes-level-playing-field' ),
+							'name'      => __( 'Required?', 'yikes-level-playing-field' ),
+							'desc'      => __( 'Required?', 'yikes-level-playing-field' ),
+							'id'        => $this->prefix_field( ApplicationMeta::NAME . ApplicationMeta::REQUIRED_SUFFIX ),
+							'type'      => 'toggle',
+							'value'     => 1,
+							'desc_type' => 'inline',
+							'attributes' => [
+								'checked'  => 'checked',
+								'disabled' => 'disabled',
+							],
+						],
+						[
+							'name'       => __( 'Email Address', 'yikes-level-playing-field' ),
+							'desc'       => __( 'Email Address', 'yikes-level-playing-field' ),
 							'id'         => $this->prefix_field( ApplicationMeta::EMAIL ),
 							'type'       => 'checkbox',
 							'value'      => 1,
 							'desc_type'  => 'inline',
+							'attributes' => [
+								'checked'  => 'checked',
+								'disabled' => 'disabled',
+							],
+						],
+						[
+							'name'      => __( 'Required?', 'yikes-level-playing-field' ),
+							'desc'      => __( 'Required?', 'yikes-level-playing-field' ),
+							'id'        => $this->prefix_field( ApplicationMeta::EMAIL . ApplicationMeta::REQUIRED_SUFFIX ),
+							'type'      => 'toggle',
+							'value'     => 1,
+							'desc_type' => 'inline',
 							'attributes' => [
 								'checked'  => 'checked',
 								'disabled' => 'disabled',
@@ -124,7 +148,6 @@ final class ApplicationManager extends AwesomeBaseMetabox implements AssetsAware
 							'id'        => $this->prefix_field( ApplicationMeta::PHONE . ApplicationMeta::REQUIRED_SUFFIX ),
 							'type'      => 'toggle',
 							'value'     => 1,
-							'desc_type' => 'inline',
 						],
 						[
 							'name'      => __( 'Address', 'yikes-level-playing-field' ),
@@ -140,7 +163,6 @@ final class ApplicationManager extends AwesomeBaseMetabox implements AssetsAware
 							'id'        => $this->prefix_field( ApplicationMeta::ADDRESS . ApplicationMeta::REQUIRED_SUFFIX ),
 							'type'      => 'toggle',
 							'value'     => 1,
-							'desc_type' => 'inline',
 						],
 						// [
 						// 	'name'      => __( 'Cover Letter', 'yikes-level-playing-field' ),
