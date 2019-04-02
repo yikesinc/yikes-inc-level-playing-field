@@ -198,6 +198,13 @@ final class ApplicationManager extends AwesomeBaseMetabox implements AssetsAware
 							],
 						],
 						[
+							'name'      => __( 'Required?', 'yikes-level-playing-field' ),
+							'desc'      => __( 'Required?', 'yikes-level-playing-field' ),
+							'id'        => $this->prefix_field( ApplicationMeta::SCHOOLING . ApplicationMeta::REQUIRED_SUFFIX ),
+							'type'      => 'toggle',
+							'value'     => 1,
+						],
+						[
 							'desc' => $this->get_schooling_html(),
 							'id'   => $this->prefix_field( ApplicationMeta::SCHOOLING . '_message' ),
 							'type' => 'message',
@@ -213,6 +220,13 @@ final class ApplicationManager extends AwesomeBaseMetabox implements AssetsAware
 								'class'        => [ 'yks_extra_info' ],
 								'data-section' => 'lpf_certification',
 							],
+						],
+						[
+							'name'      => __( 'Required?', 'yikes-level-playing-field' ),
+							'desc'      => __( 'Required?', 'yikes-level-playing-field' ),
+							'id'        => $this->prefix_field( ApplicationMeta::CERTIFICATIONS . ApplicationMeta::REQUIRED_SUFFIX ),
+							'type'      => 'toggle',
+							'value'     => 1,
 						],
 						[
 							'desc' => $this->get_certification_html(),
@@ -240,6 +254,13 @@ final class ApplicationManager extends AwesomeBaseMetabox implements AssetsAware
 							'value'     => 1,
 							'desc_type' => 'inline',
 						],
+						[
+							'name'      => __( 'Required?', 'yikes-level-playing-field' ),
+							'desc'      => __( 'Required?', 'yikes-level-playing-field' ),
+							'id'        => $this->prefix_field( ApplicationMeta::SKILLS . ApplicationMeta::REQUIRED_SUFFIX ),
+							'type'      => 'toggle',
+							'value'     => 1,
+						],
 					],
 				],
 				[
@@ -260,6 +281,13 @@ final class ApplicationManager extends AwesomeBaseMetabox implements AssetsAware
 							'type'      => 'checkbox',
 							'value'     => 1,
 							'desc_type' => 'inline',
+						],
+						[
+							'name'      => __( 'Required?', 'yikes-level-playing-field' ),
+							'desc'      => __( 'Required?', 'yikes-level-playing-field' ),
+							'id'        => $this->prefix_field( ApplicationMeta::LANGUAGES . ApplicationMeta::REQUIRED_SUFFIX ),
+							'type'      => 'toggle',
+							'value'     => 1,
 						],
 					],
 				],
@@ -285,6 +313,13 @@ final class ApplicationManager extends AwesomeBaseMetabox implements AssetsAware
 								'class'        => [ 'yks_extra_info' ],
 								'data-section' => 'lpf_experience',
 							],
+						],
+						[
+							'name'      => __( 'Required?', 'yikes-level-playing-field' ),
+							'desc'      => __( 'Required?', 'yikes-level-playing-field' ),
+							'id'        => $this->prefix_field( ApplicationMeta::EXPERIENCE . ApplicationMeta::REQUIRED_SUFFIX ),
+							'type'      => 'toggle',
+							'value'     => 1,
 						],
 						[
 							'desc' => $this->get_experience_html(),
@@ -315,6 +350,13 @@ final class ApplicationManager extends AwesomeBaseMetabox implements AssetsAware
 								'class'        => [ 'yks_extra_info' ],
 								'data-section' => 'lpf_volunteer',
 							],
+						],
+						[
+							'name'      => __( 'Required?', 'yikes-level-playing-field' ),
+							'desc'      => __( 'Required?', 'yikes-level-playing-field' ),
+							'id'        => $this->prefix_field( ApplicationMeta::VOLUNTEER . ApplicationMeta::REQUIRED_SUFFIX ),
+							'type'      => 'toggle',
+							'value'     => 1,
 						],
 						[
 							'desc' => $this->get_volunteer_html(),

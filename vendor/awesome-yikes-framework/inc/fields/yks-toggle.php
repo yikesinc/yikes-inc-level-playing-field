@@ -43,14 +43,14 @@ $field_attributes = array_merge(
 
 $field_attributes['class'] = isset( $field_attributes['class'] ) ? $field_attributes['class'] : [];
 
-$field_attributes['class'] = array_unique( array_merge( $field_attributes['class'], [ 'yks_toggle', 'switch-input' ] ) );
+$field_attributes['class'] = array_unique( array_merge( $field_attributes['class'], [ 'yks_toggle-input' ] ) );
 
 if ( checked( $value, $field_value, false ) ) {
 	$field_attributes['checked'] = 'checked';
 }
 
 // Build the HTML.
-$field_html .= '<label class="switch">';
+$field_html .= '<label class="yks_toggle">';
 $field_html .= '<input ';
 foreach ( $field_attributes as $key => $value ) {
 	if ( 'class' === $key ) {
@@ -61,8 +61,8 @@ foreach ( $field_attributes as $key => $value ) {
 }
 $field_html .= ' />';
 
-$field_html .= '<span class="switch-label" data-on="Required" data-off="Not Required"></span>';
-$field_html .= '<span class="switch-handle"></span>';
+$field_html .= '<span class="yks_toggle-label" data-on="Required" data-off="Not Required"></span>';
+$field_html .= '<span class="yks_toggle-handle"></span>';
 $field_html .= '</label>';
 
 // Display our field on the page.
