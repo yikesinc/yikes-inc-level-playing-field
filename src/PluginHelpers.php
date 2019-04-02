@@ -48,6 +48,15 @@ trait PluginHelpers {
 	 * @return bool
 	 */
 	public function is_new_editor_enabled() {
+		/**
+		 * Filter whether the new editor is enabled.
+		 *
+		 * There are situations where the new editor is disabled even though our check returns true. This filter allows you to turn on/off our new editor functionality.
+		 *
+		 * @param bool $is_enabled.
+		 *
+		 * @return bool True if the new editor is enabled.
+		 */
 		return apply_filters( 'lpf_is_new_editor_enabled', function_exists( 'register_block_type' ) && ! class_exists( 'Classic_Editor' ) );
 	}
 }

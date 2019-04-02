@@ -223,6 +223,15 @@ final class JobManager extends AwesomeBaseMetabox implements AssetsAware {
 	 * @return string
 	 */
 	private function get_metabox_context() {
+		/**
+		 * Filter the context of the job's metabox.
+		 *
+		 * @see add_meta_box() for available contexts.
+		 *
+		 * @param string $context.
+		 *
+		 * @return string The metabox context.
+		 */
 		return apply_filters( 'lpf_job_metabox_context', $this->is_new_editor_enabled() ? 'side' : 'normal' );
 	}
 
