@@ -124,7 +124,6 @@ final class ApplicationManager extends AwesomeBaseMetabox implements AssetsAware
 							'id'        => $this->prefix_field( ApplicationMeta::PHONE . ApplicationMeta::REQUIRED_SUFFIX ),
 							'type'      => 'toggle',
 							'value'     => 1,
-							'desc_type' => 'inline',
 						],
 						[
 							'name'      => __( 'Address', 'yikes-level-playing-field' ),

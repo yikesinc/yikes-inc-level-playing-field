@@ -53,13 +53,9 @@ foreach ( $field_attributes as $key => $value ) {
 	}
 }
 $field_html .= ' />';
-$field_html .= '<span class="switch-label" data-on="On" data-off="Off"></span>';
+$field_html .= '<span class="switch-label" data-on="Required" data-off="Not Required"></span>';
 $field_html .= '<span class="switch-handle"></span>';
 $field_html .= '</label>';
-
-
-// Field description.
-$field_html .= '<p class="yks_mbox_description">' . $field_desc . '</p>';
 
 // Display our field on the page.
 echo $field_html; // phpcs:ignore WordPress.Security.EscapeOutput
