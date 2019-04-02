@@ -11,7 +11,7 @@ namespace Yikes\LevelPlayingField\Blocks;
 
 use Yikes\LevelPlayingField\Assets\Asset;
 use Yikes\LevelPlayingField\Assets\BlockAsset;
-use Yikes\LevelPlayingField\PluginFactory;
+use Yikes\LevelPlayingField\PluginHelpers;
 use Yikes\LevelPlayingField\CustomPostType\JobManager;
 use Yikes\LevelPlayingField\Taxonomy\JobCategory;
 use Yikes\LevelPlayingField\Shortcode\AllJobs as JobsShortcode;
@@ -23,6 +23,8 @@ use Yikes\LevelPlayingField\Shortcode\AllJobs as JobsShortcode;
  * @package Yikes\LevelPlayingField
  */
 final class JobListings extends BaseBlock {
+
+	use PluginHelpers;
 
 	const BLOCK_SLUG = 'job-listings';
 	const CATEGORY   = 'widgets';
@@ -44,7 +46,7 @@ final class JobListings extends BaseBlock {
 				'wp-element',
 				'wp-editor',
 			],
-			filemtime( PluginFactory::create()->get_plugin_root() . '/blocks/job-listings/index.js' )
+			filemtime( $this->get_plugin_root() . '/blocks/job-listings/index.js' )
 		);
 
 		$block_script->add_localization(
