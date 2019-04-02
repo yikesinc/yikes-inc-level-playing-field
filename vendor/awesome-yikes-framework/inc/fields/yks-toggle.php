@@ -53,6 +53,7 @@ foreach ( $field_attributes as $key => $value ) {
 	}
 }
 $field_html .= ' />';
+
 $field_html .= '<span class="switch-label" data-on="Required" data-off="Not Required"></span>';
 $field_html .= '<span class="switch-handle"></span>';
 $field_html .= '</label>';
