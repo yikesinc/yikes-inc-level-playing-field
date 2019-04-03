@@ -133,7 +133,7 @@ class JobManager extends BaseCustomPostType {
 				'edit_published_posts'   => Capabilities::EDIT_PUBLISHED_JOBS,
 				'create_posts'           => Capabilities::CREATE_JOBS,
 			],
-			'menu_icon'           => 'data:image/svg+xml;base64,' . base64_encode( '<svg width="20" height="20" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path fill="black" d="M1591 1448q56 89 21.5 152.5t-140.5 63.5h-1152q-106 0-140.5-63.5t21.5-152.5l503-793v-399h-64q-26 0-45-19t-19-45 19-45 45-19h512q26 0 45 19t19 45-19 45-45 19h-64v399zm-779-725l-272 429h712l-272-429-20-31v-436h-128v436z"/></svg>' ),
+			'menu_icon'           => 'data:image/svg+xml;base64,' . base64_encode( '<svg width="20" height="20" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path fill="black" d=M16,13.14a4.76,4.76,0,0,0-1.63-3.66A11.24,11.24,0,0,1,17.28,11a13,13,0,0,1,2.16,2l.19.22-.19.22a13,13,0,0,1-2.16,1.95A10.8,10.8,0,0,1,14.1,17,4.72,4.72,0,0,0,16,13.14ZM6.73,15.37a14.12,14.12,0,0,1-2.16-1.95l-.18-.22L4.57,13a14.12,14.12,0,0,1,2.16-2A11.37,11.37,0,0,1,9.54,9.52,4.8,4.8,0,0,0,8,13.14,4.72,4.72,0,0,0,9.78,17a11.17,11.17,0,0,1-3-1.59Zm2.78-2.23A2.53,2.53,0,0,1,12,10.55a2.53,2.53,0,0,1,2.46,2.59A2.53,2.53,0,0,1,12,15.74a2.53,2.53,0,0,1-2.46-2.6Zm3.59.77v-.52H10.91v.52Zm0-1V12.4H10.91v.52Zm6.48-1c-2.51-2.38-5.15-3.54-7.87-3.45a11.56,11.56,0,0,0-7.28,3.44.25.25,0,0,1-.37-.33A11.84,11.84,0,0,1,11.69,8c2.86-.1,5.62,1.1,8.23,3.59a.24.24,0,0,1-.17.42.23.23,0,0,1-.17-.07Z"/></svg>' ),
 			'rewrite'             => [
 				'slug' => _x( 'lpf-jobs', "The CPT's rewrite slug. Translatable as per WP's documentation.", 'yikes-level-playing-field' ),
 			],
