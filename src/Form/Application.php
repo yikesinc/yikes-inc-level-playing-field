@@ -158,13 +158,9 @@ final class Application {
 
 		// Add all of the active fields.
 		foreach ( $this->application->get_active_fields() as $field ) {
-			//echo '<pre>'; var_dump($field); echo '</pre>';
 			$field_name     = ApplicationMeta::FORM_FIELD_PREFIX . $field;
 			$field_label    = ucwords( str_replace( [ '-', '_' ], ' ', $field ) );
 			$type           = isset( Meta::FIELD_MAP[ $field ] ) ? Meta::FIELD_MAP[ $field ] : Types::TEXT;
-			// @todo: Create function to check if active field is set to be a required (non-empty) field.
-			echo '<pre>'; var_dump( $field ); echo '</pre>';
-			echo '<pre>'; var_dump( $this->is_field_required( $field ) ); echo '</pre>';
 			$this->fields[] = new $type( $field_name, $field_label, $this->field_classes, $this->is_field_required( $field ) );
 		}
 	}
