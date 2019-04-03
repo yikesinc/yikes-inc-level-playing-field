@@ -1,6 +1,8 @@
 jQuery( document ).ready( function( $ ) {
 	'use strict';
 
+	const postboxHandles = $( '.postbox .hndle' );
+	const metaboxSortables = $( '.meta-box-sortables' );
 	const $address_div = $( '#job_cpt_meta_address_address-1' ).parents( 'tr' );
 	const job_manager_actions = {
 
@@ -8,6 +10,7 @@ jQuery( document ).ready( function( $ ) {
 		 * Initialize Job Manager actions.
 		 */
 		init: function() {
+			this.disableMetaboxSorting();
 			$( "input[name='job_cpt_meta_location']" ).on( 'change', this.address_div ).change();
 			this.deregisterBlocks();
 		},
@@ -35,12 +38,30 @@ jQuery( document ).ready( function( $ ) {
 		},
 
 		/**
+		 * Don't allow metaboxes to be sortable.
+		 */
+		disableMetaboxSorting: function() {
+			if ( ! lpf_job_manager_data.mbox_sort ) {
+				metaboxSortables.sortable({ disabled: true });
+				postboxHandles.css( 'cursor', 'pointer' );
+			}
+		},
+
+		/**
 		 * Deregister gutenberg blocks.
 		 */
 		deregisterBlocks: function() {
 			if ( typeof lpf_job_manager_data !== 'undefined' && lpf_job_manager_data.disallowed_blocks && typeof wp.blocks !== 'undefined' && typeof wp.blocks.unregisterBlockType === 'function' ) {
 				for ( const counter in lpf_job_manager_data.disallowed_blocks ) {
-					wp.blocks.unregisterBlockType( lpf_job_manager_data.disallowed_blocks[ counter ] );
+
+					// Check if a disallowed block is registered.
+					const block_slugs  = wp.blocks.getBlockTypes().map( block => block.name );
+					const block_exists = block_slugs.filter( name => name === lpf_job_manager_data.disallowed_blocks[ counter ] );
+
+					// Unregister it.
+					if ( block_exists.length > 0 ) {
+						wp.blocks.unregisterBlockType( lpf_job_manager_data.disallowed_blocks[ counter ] );
+					}
 				}
 			}
 		}

@@ -250,6 +250,7 @@ final class JobManager extends AwesomeBaseMetabox implements AssetsAware {
 				'disallowed_blocks' => [
 					( new JobListing() )->get_block_slug(),
 				],
+				'mbox_sort'         => apply_filters( 'lpf_jobs_admin_enable_mbox_sorting', false ),
 			]
 		);
 
