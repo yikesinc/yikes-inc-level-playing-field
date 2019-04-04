@@ -1,0 +1,59 @@
+//--------------------------------------------------------------
+// Promotional Banners
+//--------------------------------------------------------------
+
+////
+/// @group components
+////
+
+
+#banner1, #banner2 {
+	
+	.handlediv {
+		display: none;
+	}
+
+	.hndle {
+		background-color: $wp-medblue;
+		color: $color-white;
+		text-align: center;
+	}
+
+	.banners-inner {
+		text-align: center;
+
+		.banners-star-container {
+			padding: 0.6rem 0 1.6rem;
+
+			a, a:visited {
+				text-decoration: none;
+			}
+
+			.dashicons {
+				color: $wp-yellow;
+				font-size: 1.4rem;
+			}
+		}
+
+		.banners-tweet-button {
+			margin: 0.6rem 0;
+		}
+
+		.banners-pro-container {
+			.lpf-pro-img {
+				display: block;
+				margin: 1rem 0;
+				width: 100%;
+			}
+
+			.banners-pro-list {
+				padding-left: 0.6rem;
+				text-align: left;
+			}
+
+			.button {
+				margin: 1rem 0 0.6rem;
+			}
+		}
+	}
+}
