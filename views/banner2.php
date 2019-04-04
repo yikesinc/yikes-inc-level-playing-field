@@ -9,26 +9,40 @@
 
 namespace Yikes\LevelPlayingField;
 
+use Yikes\LevelPlayingField\Assets\MediaAsset;
+
 ?>
 
 <!-- Banners -->
 <div class="banners-inner">
-	<p>
-		<?php esc_html_e( 'Leave a review!', 'yikes-level-playing-field' ); ?>
-	</p>
-	<div class="banners-star-container">
-		<a href="https://wordpress.org/support/plugin/level-playing-field/reviews/?rate=5#new-post" target="_blank">
-			<span class="dashicons dashicons-star-filled"></span><span class="dashicons dashicons-star-filled"></span><span class="dashicons dashicons-star-filled"></span><span class="dashicons dashicons-star-filled"></span><span class="dashicons dashicons-star-filled"></span>
-		</a>
-	</div>
+	<div class="banners-pro-container">
 
-	<div class="banners-tweet-container">
+		<a href="https://yikesplugins.com/plugin/level-playing-field-pro/" target="_blank">
+			<img src="<?php echo esc_url( ( new MediaAsset() )->get_image( MediaAsset::PROH ) ); ?>" class="lpf-pro-img" alt="Level Playing Field Pro">
+		</a>
+
 		<p>
-			<?php esc_html_e( 'Tweet about Level Playing Field', 'yikes-level-playing-field' ); ?>
+			<?php esc_html_e( 'Upgrade to Level Playing Field Pro for great additional features including:', 'yikes-level-playing-field' ); ?>
 		</p>
+
+		<ul class="banners-pro-list">
+			<li>
+				<span class="dashicons dashicons-star-filled"></span> <?php esc_html_e( 'Unlimited Job Listings.', 'yikes-level-playing-field' ); ?>
+			</li>
+			<li>
+				<span class="dashicons dashicons-star-filled"></span> <?php esc_html_e( 'More Detailed Job Listings.', 'yikes-level-playing-field' ); ?>
+			</li>
+			<li>
+				<span class="dashicons dashicons-star-filled"></span> <?php esc_html_e( 'Custom Application Form Questions.', 'yikes-level-playing-field' ); ?>
+			</li>
+			<li>
+				<span class="dashicons dashicons-star-filled"></span> <?php esc_html_e( 'Applicant export.', 'yikes-level-playing-field' ); ?>
+			</li>
+		</ul>
+
 		<p>
-			<a class="button button-primary banners-tweet-button" href="https://twitter.com/intent/tweet?text=I use Level Playing Field by @yikesinc to receive anonymized job applications to fight bias in hiring and employment. #WordPress &url=https://wordpress.org/plugins/level-playing-field/" target="_blank" data-size="large">
-				<?php esc_html_e( 'Tweet', 'yikes-level-playing-field' ); ?>			
+			<a class="button button-primary" href="https://yikesplugins.com/plugin/level-playing-field-pro/" target="_blank">
+				<?php esc_html_e( 'Upgrade to Pro', 'yikes-level-playing-field' ); ?>
 			</a>
 		</p>
 	</div>

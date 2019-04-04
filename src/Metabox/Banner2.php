@@ -45,7 +45,7 @@ class Banner2 extends BaseMetabox {
 	 * @return string Title to use for the metabox.
 	 */
 	protected function get_title() {
-		return __( 'A metabox needs a title.', 'yikes-level-playing-field' );
+		return __( 'Level Playing Field Pro', 'yikes-level-playing-field' );
 	}
 
 	/**

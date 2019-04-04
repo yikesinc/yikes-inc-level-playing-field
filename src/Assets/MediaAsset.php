@@ -29,7 +29,8 @@ final class MediaAsset {
 	const IMG_ASSETS_DIR = '/assets/images/';
 	const IMG_NOT_FOUND  = '';
 
-	const PRO = 'level-playing-field-pro.png';
+	const PRO  = 'level-playing-field-pro.png';
+	const PROH = 'level-playing-field-pro-h.png';
 
 	/**
 	 * Get internal image URL.
