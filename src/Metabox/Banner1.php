@@ -14,16 +14,16 @@ use Yikes\LevelPlayingField\CustomPostType\ApplicationManager as ApplicationCPT;
 use Yikes\LevelPlayingField\View\View;
 
 /**
- * Class Banners
+ * Class Banner1
  *
  * @since   %VERSION%
  * @package Yikes\LevelPlayingField
  */
-class Banners extends BaseMetabox {
+class Banner1 extends BaseMetabox {
 
 	// Base Metabox.
-	const BOX_ID   = 'banners';
-	const VIEW     = 'views/banners';
+	const BOX_ID   = 'banner1';
+	const VIEW     = 'views/banner1';
 	const PRIORITY = 30;
 
 	/**
