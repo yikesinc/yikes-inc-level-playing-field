@@ -29,6 +29,7 @@ use Yikes\LevelPlayingField\Metabox\ApplicantInterviewDetails;
 use Yikes\LevelPlayingField\Metabox\ApplicantManager as ApplicantMetabox;
 use Yikes\LevelPlayingField\Metabox\ApplicationManager as ApplicationMetabox;
 use Yikes\LevelPlayingField\Metabox\JobManager;
+use Yikes\LevelPlayingField\Metabox\Banners;
 use Yikes\LevelPlayingField\RequiredPages\ApplicantMessagingPage;
 use Yikes\LevelPlayingField\RequiredPages\ApplicationFormPage;
 use Yikes\LevelPlayingField\Roles\Administrator;
@@ -114,6 +115,7 @@ final class PluginFactory {
 		$services->add_service( ApplicantMetabox::class );
 		$services->add_service( ApplicantBasicInfo::class );
 		$services->add_service( ApplicantInterviewDetails::class );
+		$services->add_service( Banners::class );
 
 		// Custom list tables.
 		$services->add_service( JobListTable::class );
