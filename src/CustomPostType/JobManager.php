@@ -133,7 +133,7 @@ class JobManager extends BaseCustomPostType {
 				'edit_published_posts'   => Capabilities::EDIT_PUBLISHED_JOBS,
 				'create_posts'           => Capabilities::CREATE_JOBS,
 			],
-			'menu_icon'           => 'dashicons-feedback',
+			'menu_icon'           => 'data:image/svg+xml;base64,' . base64_encode( '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17.63 13.23"><path d="M3.78,14.35a10.46,10.46,0,0,1,6.51-4.63A5.1,5.1,0,0,0,7.78,15.8a4.54,4.54,0,0,0,3,3.2,10.32,10.32,0,0,1-7-4.65Zm9.36,4.55a5.08,5.08,0,0,0,2.68-6.17,4.67,4.67,0,0,0-2.47-3,10.83,10.83,0,0,1,6.5,4.62,10.57,10.57,0,0,1-7,4.64l.28-.09ZM9.09,14.56a2.66,2.66,0,1,1,3,2.34,2.68,2.68,0,0,1-3-2.34Zm4,.76V14.5H10.36v.82Zm0-1.33v-.83H10.36V14ZM3.23,10.77a.83.83,0,0,1,0-1.17c5.24-5,11.64-5.15,17.12,0a.83.83,0,0,1,0,1.17.82.82,0,0,1-1.17,0C14.41,6.26,9,6.36,4.39,10.79a.81.81,0,0,1-1.16,0Z" transform="translate(-3 -5.77)" style="fill-rule:evenodd"/></svg>' ),
 			'rewrite'             => [
 				'slug' => _x( 'lpf-jobs', "The CPT's rewrite slug. Translatable as per WP's documentation.", 'yikes-level-playing-field' ),
 			],
