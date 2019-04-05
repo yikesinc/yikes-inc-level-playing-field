@@ -36,4 +36,7 @@ interface ApplicationMeta {
 	const LANGUAGES      = 'languages';
 	const EXPERIENCE     = 'experience';
 	const VOLUNTEER      = 'volunteer';
+
+	// Required field.
+	const REQUIRED = 'required';
 }

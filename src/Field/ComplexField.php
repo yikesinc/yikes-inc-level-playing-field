@@ -95,7 +95,7 @@ abstract class ComplexField extends BaseField {
 			$settings = wp_parse_args( $settings, [
 				'label'    => ucwords( str_replace( [ '_', '-' ], ' ', $field ) ),
 				'class'    => Types::TEXT,
-				'required' => true,
+				'required' => $this->required,
 				'callback' => null,
 				'options'  => [],
 			] );
