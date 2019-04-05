@@ -7,7 +7,7 @@
  * @wordpress-plugin
  *
  * Plugin Name:  Level Playing Field
- * Plugin URI:   http://www.yikesinc.com
+ * Plugin URI:   http://www.yikesplugins.com
  * Description:  A WordPress plugin to anonymize job applications to fight bias in hiring and employment.
  * Author:       YIKES, Inc.
  * Author URI:   http://www.yikesinc.com
