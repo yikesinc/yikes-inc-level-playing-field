@@ -58,6 +58,16 @@ final class ApplicationManager extends AwesomeBaseMetabox implements AssetsAware
 	}
 
 	/**
+	 * Get the prefix for use with meta fields.
+	 *
+	 * @since %VERSION%
+	 * @return string
+	 */
+	public function get_required_suffix() {
+		return ApplicationMeta::REQUIRED_SUFFIX;
+	}
+
+	/**
 	 * Register meta boxes.
 	 *
 	 * @since  %VERSION%
@@ -100,7 +110,7 @@ final class ApplicationManager extends AwesomeBaseMetabox implements AssetsAware
 						[
 							'name'       => __( 'Required?', 'yikes-level-playing-field' ),
 							'desc'       => __( 'Required?', 'yikes-level-playing-field' ),
-							'id'         => $this->prefix_field( ApplicationMeta::NAME . ApplicationMeta::REQUIRED_SUFFIX ),
+							'id'         => $this->suffix_required_field( $this->prefix_field( ApplicationMeta::NAME ) ),
 							'type'       => 'toggle',
 							'value'      => 1,
 							'desc_type'  => 'inline',
@@ -124,7 +134,7 @@ final class ApplicationManager extends AwesomeBaseMetabox implements AssetsAware
 						[
 							'name'       => __( 'Required?', 'yikes-level-playing-field' ),
 							'desc'       => __( 'Required?', 'yikes-level-playing-field' ),
-							'id'         => $this->prefix_field( ApplicationMeta::EMAIL . ApplicationMeta::REQUIRED_SUFFIX ),
+							'id'         => $this->suffix_required_field( $this->prefix_field( ApplicationMeta::EMAIL ) ),
 							'type'       => 'toggle',
 							'value'      => 1,
 							'desc_type'  => 'inline',
@@ -144,7 +154,7 @@ final class ApplicationManager extends AwesomeBaseMetabox implements AssetsAware
 						[
 							'name'  => __( 'Required?', 'yikes-level-playing-field' ),
 							'desc'  => __( 'Required?', 'yikes-level-playing-field' ),
-							'id'    => $this->prefix_field( ApplicationMeta::PHONE . ApplicationMeta::REQUIRED_SUFFIX ),
+							'id'    => $this->suffix_required_field( $this->prefix_field( ApplicationMeta::PHONE ) ),
 							'type'  => 'toggle',
 							'value' => 1,
 						],
@@ -159,7 +169,7 @@ final class ApplicationManager extends AwesomeBaseMetabox implements AssetsAware
 						[
 							'name'  => __( 'Required?', 'yikes-level-playing-field' ),
 							'desc'  => __( 'Required?', 'yikes-level-playing-field' ),
-							'id'    => $this->prefix_field( ApplicationMeta::ADDRESS . ApplicationMeta::REQUIRED_SUFFIX ),
+							'id'    => $this->suffix_required_field( $this->prefix_field( ApplicationMeta::ADDRESS ) ),
 							'type'  => 'toggle',
 							'value' => 1,
 						],
@@ -190,7 +200,7 @@ final class ApplicationManager extends AwesomeBaseMetabox implements AssetsAware
 						[
 							'name'  => __( 'Required?', 'yikes-level-playing-field' ),
 							'desc'  => __( 'Required?', 'yikes-level-playing-field' ),
-							'id'    => $this->prefix_field( ApplicationMeta::SCHOOLING . ApplicationMeta::REQUIRED_SUFFIX ),
+							'id'    => $this->suffix_required_field( $this->prefix_field( ApplicationMeta::SCHOOLING ) ),
 							'type'  => 'toggle',
 							'value' => 1,
 						],
@@ -213,7 +223,7 @@ final class ApplicationManager extends AwesomeBaseMetabox implements AssetsAware
 						[
 							'name'  => __( 'Required?', 'yikes-level-playing-field' ),
 							'desc'  => __( 'Required?', 'yikes-level-playing-field' ),
-							'id'    => $this->prefix_field( ApplicationMeta::CERTIFICATIONS . ApplicationMeta::REQUIRED_SUFFIX ),
+							'id'    => $this->suffix_required_field( $this->prefix_field( ApplicationMeta::CERTIFICATIONS ) ),
 							'type'  => 'toggle',
 							'value' => 1,
 						],
@@ -244,7 +254,7 @@ final class ApplicationManager extends AwesomeBaseMetabox implements AssetsAware
 						[
 							'name'  => __( 'Required?', 'yikes-level-playing-field' ),
 							'desc'  => __( 'Required?', 'yikes-level-playing-field' ),
-							'id'    => $this->prefix_field( ApplicationMeta::SKILLS . ApplicationMeta::REQUIRED_SUFFIX ),
+							'id'    => $this->suffix_required_field( $this->prefix_field( ApplicationMeta::SKILLS ) ),
 							'type'  => 'toggle',
 							'value' => 1,
 						],
@@ -271,7 +281,7 @@ final class ApplicationManager extends AwesomeBaseMetabox implements AssetsAware
 						[
 							'name'  => __( 'Required?', 'yikes-level-playing-field' ),
 							'desc'  => __( 'Required?', 'yikes-level-playing-field' ),
-							'id'    => $this->prefix_field( ApplicationMeta::LANGUAGES . ApplicationMeta::REQUIRED_SUFFIX ),
+							'id'    => $this->suffix_required_field( $this->prefix_field( ApplicationMeta::LANGUAGES ) ),
 							'type'  => 'toggle',
 							'value' => 1,
 						],
@@ -302,7 +312,7 @@ final class ApplicationManager extends AwesomeBaseMetabox implements AssetsAware
 						[
 							'name'  => __( 'Required?', 'yikes-level-playing-field' ),
 							'desc'  => __( 'Required?', 'yikes-level-playing-field' ),
-							'id'    => $this->prefix_field( ApplicationMeta::EXPERIENCE . ApplicationMeta::REQUIRED_SUFFIX ),
+							'id'    => $this->suffix_required_field( $this->prefix_field( ApplicationMeta::EXPERIENCE ) ),
 							'type'  => 'toggle',
 							'value' => 1,
 						],
@@ -337,7 +347,7 @@ final class ApplicationManager extends AwesomeBaseMetabox implements AssetsAware
 						[
 							'name'  => __( 'Required?', 'yikes-level-playing-field' ),
 							'desc'  => __( 'Required?', 'yikes-level-playing-field' ),
-							'id'    => $this->prefix_field( ApplicationMeta::VOLUNTEER . ApplicationMeta::REQUIRED_SUFFIX ),
+							'id'    => $this->suffix_required_field( $this->prefix_field( ApplicationMeta::VOLUNTEER ) ),
 							'type'  => 'toggle',
 							'value' => 1,
 						],
