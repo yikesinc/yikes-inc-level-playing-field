@@ -161,29 +161,7 @@ final class Application {
 			$field_name     = ApplicationMeta::FORM_FIELD_PREFIX . $field;
 			$field_label    = ucwords( str_replace( [ '-', '_' ], ' ', $field ) );
 			$type           = isset( Meta::FIELD_MAP[ $field ] ) ? Meta::FIELD_MAP[ $field ] : Types::TEXT;
-			$this->fields[] = new $type( $field_name, $field_label, $this->field_classes, $this->is_field_required( $field ) );
-		}
-	}
-
-	/**
-	 * Check if field input is required for given field.
-	 *
-	 * @since %VERSION%
-	 *
-	 * @param string $field_name The name of the field.
-	 *
-	 * @return bool
-	 */
-	private function is_field_required( $field_name ) {
-
-		if ( $field_name === ApplicationMeta::NAME || $field_name === ApplicationMeta::EMAIL ) {
-			return true;
-		}
-		$required = get_post_meta( $this->application->get_id(), ApplicationMeta::META_PREFIX . $field_name . ApplicationMeta::REQUIRED_SUFFIX, true );
-		if ( empty( $required ) ) {
-			return false;
-		} else {
-			return true;
+			$this->fields[] = new $type( $field_name, $field_label, $this->field_classes, $this->application->is_required( $field ) );
 		}
 	}
 

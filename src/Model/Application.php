@@ -80,6 +80,16 @@ class Application extends CustomPostTypeEntity {
 	}
 
 	/**
+	 * Check if field is required for this application.
+	 *
+	 * @since %VERSION%
+	 * @return bool
+	 */
+	public function is_required( $field ) {
+		return in_array( $field, $this->{AMMeta::REQUIRED} );
+	}
+
+	/**
 	 * Load all lazily-loaded properties.
 	 *
 	 * After this process, the loaded property should be set within the
@@ -90,15 +100,26 @@ class Application extends CustomPostTypeEntity {
 	 */
 	protected function load_lazy_properties() {
 		$meta = get_post_meta( $this->get_id() );
+
+		// Initialize required fields property.
+		$this->{AMMeta::REQUIRED} = [];
+		
 		foreach ( $this->get_lazy_properties() as $key => $default ) {
 			$this->$key = array_key_exists( AMMeta::META_PREFIX . $key, $meta )
 				? (bool) $meta[ AMMeta::META_PREFIX . $key ][0]
 				: $default;
+
+			// If required flag for current field exists.
+			if ( array_key_exists( AMMeta::META_PREFIX . $key . AMMeta::REQUIRED_SUFFIX, $meta ) ) {
+				$this->{AMMeta::REQUIRED}[] = $key;
+			}
 		}
 
-		// Name and email fields are always active.
+		// Name and email fields are always active and required.
 		$this->{AMMeta::NAME}  = true;
 		$this->{AMMeta::EMAIL} = true;
+		$this->{AMMeta::REQUIRED}[] = AMMeta::NAME;
+		$this->{AMMeta::REQUIRED}[] = AMMeta::EMAIL;
 	}
 
 	/**
