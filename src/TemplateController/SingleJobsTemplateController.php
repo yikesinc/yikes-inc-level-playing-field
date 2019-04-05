@@ -9,6 +9,7 @@
 
 namespace Yikes\LevelPlayingField\TemplateController;
 
+use Yikes\LevelPlayingField\Assets\StyleAsset;
 use Yikes\LevelPlayingField\CustomPostType\JobManager;
 use Yikes\LevelPlayingField\Model\JobRepository;
 use Yikes\LevelPlayingField\Shortcode\Job as JobShortcode;
@@ -27,6 +28,19 @@ class SingleJobsTemplateController extends TemplateController {
 
 	const PRIORITY = 10;
 	const VIEW_URI = 'views/job-page-job';
+
+	/**
+	 * Get the array of known assets.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @return Asset[]
+	 */
+	protected function get_assets() {
+		return [
+			new StyleAsset( JobShortcode::CSS_HANDLE, JobShortcode::CSS_URI ),
+		];
+	}
 
 	/**
 	 * Check if the current request is for this class' object and supply the current post w/ content.
@@ -78,5 +92,4 @@ class SingleJobsTemplateController extends TemplateController {
 		$shortcode_atts['job'] = ( new JobRepository() )->find( $id );
 		return $shortcode_atts;
 	}
-
 }

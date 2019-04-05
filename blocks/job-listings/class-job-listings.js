@@ -382,7 +382,7 @@ export default class JobListing extends Component {
    */
   jobHeader( job ) {
     return (
-      <h4 key={ `job-listings-title-${ job.id }` }  className="job-page-job-title">
+      <h4 key={ `job-listings-title-${ job.id }` }  className="lpf-jobs-list-job-title">
         <a key={ `job-listings-link-${ job.id }` } href={ job.link }>{ job.title.rendered }</a>
       </h4>
     );
@@ -395,9 +395,9 @@ export default class JobListing extends Component {
    */
   jobListingAppButton( job ) {
     return (
-      <div key={ `job-listings-app-${ job.id }` } className="job-page-application">
+      <div key={ `job-listings-app-${ job.id }` } className="lpf-jobs-list-application-link">
         <a key={ `job-listings-app-link-${ job.id }` } href="">
-          <button key={ `job-listings-app-button-${ job.id }` } type="button" className="job-page-application-button">{ this.props.buttonText }</button>
+          <button key={ `job-listings-app-button-${ job.id }` } type="button" className="lpf-jobs-list-application-button">{ this.props.buttonText }</button>
         </a>
       </div>
     );
