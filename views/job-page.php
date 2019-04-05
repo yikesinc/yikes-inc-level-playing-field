@@ -67,6 +67,10 @@ $jobs = apply_filters( 'lpf_job_listings_jobs', $this->jobs );
 			</div>
 			<?php
 		endif;
+		?>
+
+		</li>
+		<?php
 	}
 
 	/**
