@@ -38,5 +38,5 @@ interface ApplicationMeta {
 	const VOLUNTEER      = 'volunteer';
 
 	// Required field.
-	const REQUIRED       = 'required';
+	const REQUIRED = 'required';
 }

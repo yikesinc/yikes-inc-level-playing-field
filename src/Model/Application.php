@@ -82,11 +82,12 @@ class Application extends CustomPostTypeEntity {
 	/**
 	 * Check if field is required for this application.
 	 *
+	 * @param string $field field name.
 	 * @since %VERSION%
 	 * @return bool
 	 */
 	public function is_required( $field ) {
-		return in_array( $field, $this->{AMMeta::REQUIRED} );
+		return in_array( $field, $this->{AMMeta::REQUIRED}, true );
 	}
 
 	/**
@@ -103,7 +104,7 @@ class Application extends CustomPostTypeEntity {
 
 		// Initialize required fields property.
 		$this->{AMMeta::REQUIRED} = [];
-		
+
 		foreach ( $this->get_lazy_properties() as $key => $default ) {
 			$this->$key = array_key_exists( AMMeta::META_PREFIX . $key, $meta )
 				? (bool) $meta[ AMMeta::META_PREFIX . $key ][0]
@@ -116,8 +117,8 @@ class Application extends CustomPostTypeEntity {
 		}
 
 		// Name and email fields are always active and required.
-		$this->{AMMeta::NAME}  = true;
-		$this->{AMMeta::EMAIL} = true;
+		$this->{AMMeta::NAME}       = true;
+		$this->{AMMeta::EMAIL}      = true;
 		$this->{AMMeta::REQUIRED}[] = AMMeta::NAME;
 		$this->{AMMeta::REQUIRED}[] = AMMeta::EMAIL;
 	}
