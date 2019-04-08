@@ -9,12 +9,14 @@
 
 namespace Yikes\LevelPlayingField\TemplateController;
 
+use Yikes\LevelPlayingField\Assets\StyleAsset;
 use Yikes\LevelPlayingField\CustomPostType\ApplicationManager;
 use Yikes\LevelPlayingField\Exception\InvalidPostID;
 use Yikes\LevelPlayingField\Model\ApplicationRepository;
 use Yikes\LevelPlayingField\View\FormEscapedView;
 use Yikes\LevelPlayingField\View\TemplatedView;
 use Yikes\LevelPlayingField\RequiredPages\ApplicationFormPage;
+use Yikes\LevelPlayingField\Shortcode\Application as ApplicationShortcode;
 
 /**
  * Class SingleApplicationsTemplateController.
@@ -30,6 +32,19 @@ class SingleApplicationsTemplateController extends TemplateController {
 
 	const PRIORITY = 10;
 	const VIEW_URI = 'views/job-page-application-shortcode';
+
+	/**
+	 * Get the array of known assets.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @return Asset[]
+	 */
+	protected function get_assets() {
+		return [
+			new StyleAsset( ApplicationShortcode::CSS_HANDLE, ApplicationShortcode::CSS_URI ),
+		];
+	}
 
 	/**
 	 * Check if the current request is for this class' object and supply the current post w/ content.
