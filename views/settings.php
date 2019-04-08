@@ -12,9 +12,11 @@
 namespace Yikes\LevelPlayingField;
 
 use Yikes\LevelPlayingField\Settings\Fields\AdditionalEmailRecipients;
-use Yikes\LevelPlayingField\Settings\Fields\EmailRecipientRoles;
 use Yikes\LevelPlayingField\Settings\Fields\ApplicationSuccessMessage;
 use Yikes\LevelPlayingField\Settings\Fields\DisableFrontEndCSS;
+use Yikes\LevelPlayingField\Settings\Fields\EmailRecipientRoles;
+use Yikes\LevelPlayingField\Settings\Settings;
+use Yikes\LevelPlayingField\View\View;
 
 $settings = $this->settings;
 ?>
@@ -52,6 +54,16 @@ $settings = $this->settings;
 	</div>
 
 	<hr>
+
+	<?php
+	/**
+	 * Triggered after the built-in settings.
+	 *
+	 * @param Settings $settings The settings object.
+	 * @param View     $view     The current view object.
+	 */
+	do_action( 'lpf_settings_page', $settings, $this );
+	?>
 
 	<div class="lpf-settings lpf-settings-settings-container">
 		<div class="lpf-settings-save">
