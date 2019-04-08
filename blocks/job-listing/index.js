@@ -51,6 +51,8 @@ const editJobListingBlock = function( props ) {
       remoteLocationText={ props.attributes.remote_location_text }
       showApplicationButton={ props.attributes.show_application_button }
       buttonText={ props.attributes.button_text }
+      descriptionText={ props.attributes.description_text }
+      detailsText={ props.attributes.details_text }
     />
   );
 };

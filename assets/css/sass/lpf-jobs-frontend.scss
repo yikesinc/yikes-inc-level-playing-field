@@ -1,1 +1,45 @@
-@import "utilities/index";
+@import "utilities/mixins/font-size-calculation";
+
+/* Job lists */
+
+.lpf-jobs-list {
+	list-style-type: none;
+	margin: 1rem 0;
+	padding: 0;
+
+	li {
+		margin-bottom: 2rem;
+
+		.jobs-list-application-link {}
+	}
+}
+
+
+/* Single Job listing */
+
+.lpf-job-listing {
+
+	.lpf-job-listing-type {
+		margin-bottom: 1rem;
+	}
+
+	.lpf-job-listing-meta-label {
+		font-weight: 600;
+	}
+
+	.lpf-job-listing-location-header {
+		font-weight: 600;
+	}
+
+	.lpf-job-listing-location-address {
+		margin-bottom: 0;
+
+		.lpf-city-state-comma {
+			margin-left: -4px;
+		}
+	}
+
+	.lpf-job-listing-button-container {
+		margin-top: 2rem;
+	}
+}

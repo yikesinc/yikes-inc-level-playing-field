@@ -36,8 +36,7 @@ $jobs = $this->jobs;
 $jobs = apply_filters( 'lpf_job_listings_jobs', $this->jobs );
 ?>
 
-<div class="job-page">
-
+<ul class="lpf-jobs-list">
 	<?php
 	/**
 	 * Fires before displaying all of the Jobs for Level Playing Field.
@@ -48,20 +47,30 @@ $jobs = apply_filters( 'lpf_job_listings_jobs', $this->jobs );
 
 	foreach ( $jobs as $job ) {
 		?>
-		<h4 class="job-page-job-title">
-			<a href="<?php echo esc_url( get_permalink( $job->get_id() ) ); ?>">
-				<?php echo esc_html( $job->get_title() ); ?>
-			</a>
-		</h4>
+
+		<li class="lpf-jobs-list-item">
+			<h4 class="lpf-jobs-list-job-title">
+				<a href="<?php echo esc_url( get_permalink( $job->get_id() ) ); ?>">
+					<?php echo esc_html( $job->get_title() ); ?>
+				</a>
+			</h4>
 		<?php
 
 		if ( $this->show_application_button && ! empty( $job->get_application() ) ) :
 			?>
-			<div class="job-page-application">
-				<a href="<?php echo esc_url( $job->get_application_url() ); ?>"><button type="button" class="job-page-application-button"><?php echo esc_html( $this->button_text ); ?></button></a>
+			<div class="lpf-jobs-list-application-link">
+				<a href="<?php echo esc_url( $job->get_application_url() ); ?>">
+					<button type="button" class="lpf-jobs-list-application-button">
+						<?php echo esc_html( $this->button_text ); ?>
+					</button>
+				</a>
 			</div>
 			<?php
 		endif;
+		?>
+
+		</li>
+		<?php
 	}
 
 	/**
@@ -71,4 +80,4 @@ $jobs = apply_filters( 'lpf_job_listings_jobs', $this->jobs );
 	 */
 	do_action( 'lpf_jobs_after', $jobs );
 	?>
-</div>
+</ul>
