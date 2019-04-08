@@ -32,7 +32,7 @@ $use_comma = (bool) apply_filters( 'lpf_single_job_template_address_use_comma', 
 
 	<div class="lpf-job-listing-meta-container">
 
-		<?php if ( $this->show_job_type && ! empty( $job->get_job_type() ) && $this->show_location ) : ?>
+		<?php if ( $this->show_job_type && ! empty( $job->get_job_type() ) || $this->show_location ) : ?>
 			<h4 class="lpf-job-listing-meta-header"><?php echo esc_html( $this->details_text ); ?></h4>
 		<?php endif; ?>
 
