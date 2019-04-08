@@ -87,7 +87,7 @@ class Application extends CustomPostTypeEntity {
 	 * @return bool
 	 */
 	public function is_required( $field ) {
-		return in_array( $field, $this->{AMMeta::REQUIRED}, true );
+		return $this->{AMMeta::REQUIRED}[ $field . AMMeta::REQUIRED_SUFFIX ];
 	}
 
 	/**
@@ -111,16 +111,14 @@ class Application extends CustomPostTypeEntity {
 				: $default;
 
 			// If required flag for current field exists.
-			if ( array_key_exists( AMMeta::META_PREFIX . $key . AMMeta::REQUIRED_SUFFIX, $meta ) ) {
-				$this->{AMMeta::REQUIRED}[] = $key;
-			}
+			$this->{AMMeta::REQUIRED}[ $key . AMMeta::REQUIRED_SUFFIX ] = array_key_exists( AMMeta::META_PREFIX . $key . AMMeta::REQUIRED_SUFFIX, $meta );
 		}
 
 		// Name and email fields are always active and required.
-		$this->{AMMeta::NAME}       = true;
-		$this->{AMMeta::EMAIL}      = true;
-		$this->{AMMeta::REQUIRED}[] = AMMeta::NAME;
-		$this->{AMMeta::REQUIRED}[] = AMMeta::EMAIL;
+		$this->{AMMeta::NAME}  = true;
+		$this->{AMMeta::EMAIL} = true;
+		$this->{AMMeta::REQUIRED}[ AMMeta::NAME . AMMeta::REQUIRED_SUFFIX ]  = true;
+		$this->{AMMeta::REQUIRED}[ AMMeta::EMAIL . AMMeta::REQUIRED_SUFFIX ] = true;
 	}
 
 	/**

@@ -62,8 +62,12 @@ abstract class AwesomeBaseMetabox implements Service {
 	 * Get the required suffix for use with meta fields.
 	 *
 	 * @since %VERSION%
+	 *
+	 * @return string The field name with suffix.
 	 */
-	public function get_required_suffix() {}
+	public function get_required_suffix() {
+		return '';
+	}
 
 	/**
 	 * Get the prefix for use with meta fields.
