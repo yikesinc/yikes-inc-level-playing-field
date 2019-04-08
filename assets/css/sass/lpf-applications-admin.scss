@@ -13,12 +13,34 @@
 		}
 
 		&.education, &.experience, &.volunteer {
-			.yks_mbox_description {
+			.yks_mbox_description_inline, .yks-mbox-message .yks_mbox_description {
 				padding-bottom: 0;
 			}
 		}
 	}
 
+
+	/* Grid-ifying the required toggles */
+
+	.yks-mbox-group {
+		display: grid;
+		grid-template-columns: auto auto;
+		justify-content: start;
+
+		.yks-mbox-title {
+			grid-column: 1 / span 2;
+			max-width: 600px;
+		}
+
+		.yks-mbox-checkbox {
+			grid-column: 1
+		}
+		.yks-mbox-toggle {
+			grid-column: 2;
+		}
+	
+	}
+	
 	label {
 		font-size: $basefont;
 		font-weight: 600;

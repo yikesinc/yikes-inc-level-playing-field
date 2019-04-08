@@ -97,7 +97,7 @@ jQuery( document ).ready( function( $ ) {
 		const allFields = $( '.lpf-field-container .lpf-form-field, .lpf-field-container textarea' );
 
 		allFields.each( function() {
-			let isFieldEmpty;
+			let isFieldEmpty = true;
 			let $this = $( this );
 
 			// Don't let required fields be empty.
@@ -112,7 +112,7 @@ jQuery( document ).ready( function( $ ) {
 					validEmail( $this );
 				}
 
-				// If field is phone number, call function to validate phone number
+				// If field is phone number, parse special characters from input (numbers only).
 				if ( $this.attr( 'type' ) === 'tel' ) {
 					const justDigits = this.value.replace( /\D/g, '' );
 					$this.val( justDigits );

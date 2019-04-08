@@ -275,7 +275,7 @@ class YIKES_CPT_Meta_Boxes {
 		if ( $field['type'] === 'group' ) {
 
 			foreach ( $field['fields'] as $field ) {
-				echo '<div class="yks-mbox-group-field">';
+				echo '<div class="yks-mbox-group-field yks-mbox-' . $field['type'] . '">';
 				$this->generate_fields( $field );
 				echo '</div>';
 			}

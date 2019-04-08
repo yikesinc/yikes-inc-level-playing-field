@@ -161,7 +161,7 @@ final class Application {
 			$field_name     = ApplicationMeta::FORM_FIELD_PREFIX . $field;
 			$field_label    = ucwords( str_replace( [ '-', '_' ], ' ', $field ) );
 			$type           = isset( Meta::FIELD_MAP[ $field ] ) ? Meta::FIELD_MAP[ $field ] : Types::TEXT;
-			$this->fields[] = new $type( $field_name, $field_label, $this->field_classes );
+			$this->fields[] = new $type( $field_name, $field_label, $this->field_classes, $this->application->is_required( $field ) );
 		}
 	}
 
