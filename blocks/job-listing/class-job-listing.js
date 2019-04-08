@@ -180,6 +180,29 @@ export default class JobListing extends Component {
       </PanelRow>
     ) : '';
 
+    const editDescriptionText = this.props.showDescription ?
+    (
+      <PanelRow>
+        <TextControl
+          id="lpf-description-text-control"
+          label={ __( 'Description Text', 'yikes-level-playing-field' ) }
+          value={ this.props.descriptionText }
+          onChange={ ( val ) => this.props.handleValueControl( val, 'description_text' ) }
+        />
+      </PanelRow>
+    ) : '';
+
+    const editDetailsText = this.props.showJobType || this.props.showLocation ?
+      <PanelRow>
+        <TextControl
+          id="lpf-details-text-control"
+          label={ __( 'Details Text', 'yikes-level-playing-field' ) }
+          value={ this.props.detailsText }
+          onChange={ ( val ) => this.props.handleValueControl( val, 'details_text' ) }
+        />
+      </PanelRow>
+    : '';
+
     const editJobTypeText = this.props.showJobType ?
     (
       <PanelRow>
@@ -237,6 +260,8 @@ export default class JobListing extends Component {
           {showJobType}
           {showLocation}
           {showApplicationButton}
+          {editDescriptionText}
+          {editDetailsText}
           {editJobTypeText}
           {editLocationText}
           {editRemoteLocationText}
@@ -274,6 +299,7 @@ export default class JobListing extends Component {
     return (
       <div className="lpf-job-listing">
         { this.props.showTitle ? this.jobListingTitle() : '' }
+        { this.props.showDescription ? this.jobDescription() : '' }
         { this.jobListingMeta() }
         { this.props.showApplicationButton && this.state.job.application ? this.jobListingAppButton() : '' }
       </div>
@@ -284,20 +310,7 @@ export default class JobListing extends Component {
    * Render the job listing title.
    */
   jobListingTitle() {
-    return <h3 class="lpf-job-listing-title">{ this.state.job.title.rendered }</h3>
-  }
-
-  /**
-   * Render the job listing meta.
-   */
-  jobListingMeta() {
-    return (
-      <div className="lpf-job-listing-meta-container">
-        { this.props.showDescription ? this.jobDescription() : '' }
-        { this.props.showJobType ? this.jobType() : '' }
-        { this.props.showLocation ? this.jobLocation() : '' }
-      </div>
-    );
+    return <h3 className="lpf-job-listing-title">{ this.state.job.title.rendered }</h3>
   }
 
   /**
@@ -306,17 +319,44 @@ export default class JobListing extends Component {
    * @todo find a way of rendering a post's HTML without using `dangerouslySetInnerHTML.`
    */
   jobDescription() {
-    return <div dangerouslySetInnerHTML={ { __html: this.state.job.content.rendered } } className="lpf-job-listing-description"></div>
+    return (
+      <div className="lpf-job-listing-description-container">
+        <h4 key="lpf-job-listing-description-header" className="lpf-job-listing-description-header">{ this.props.descriptionText }</h4>
+        <div key="lpf-job-listing-description" className="lpf-job-listing-description" dangerouslySetInnerHTML={ { __html: this.state.job.content.rendered } }></div>
+      </div>
+    );
+  }
+
+  /**
+   * Render the job listing meta.
+   */
+  jobListingMeta() {
+    return (
+      <div className="lpf-job-listing-meta-container">
+        { this.props.showJobType && this.props.showLocation ? this.jobMetaHeading() : '' }
+        { this.props.showJobType ? this.jobType() : '' }
+        { this.props.showLocation ? this.jobLocation() : '' }
+      </div>
+    );
+  }
+
+  /**
+   * Render the job listing meta title.
+   */
+  jobMetaHeading() {
+    return <h4 className="lpf-job-listing-meta-header">{ this.props.detailsText }</h4>
   }
 
   /**
    * Render the job type.
    */
   jobType() {
-    return <div className="lpf-job-listing-type">
-      <span className="lpf-job-listing-meta-label lpf-job-listing-type-label">{ this.props.jobTypeText }</span> 
-      <span className="lpf-job-listing-meta-content lpf-job-listing-type">{ this.state.job.job_type }</span>
-    </div>
+    return (
+      <div className="lpf-job-listing-type">
+        <span key="lpf-job-listing-meta-label" className="lpf-job-listing-meta-label lpf-job-listing-type-label">{ this.props.jobTypeText + ' ' }</span>
+        <span key="lpf-job-listing-meta-content" className="lpf-job-listing-meta-content lpf-job-listing-type">{ this.state.job.job_type }</span>
+      </div>
+    );
   }
 
   /**
@@ -325,7 +365,7 @@ export default class JobListing extends Component {
   jobLocation() {
     return (
       <div className="lpf-job-listing-location-container">
-        <span className="lpf-job-listing-meta-label lpf-job-listing-location-label">{ this.props.locationText }</span>
+        <span className="lpf-job-listing-meta-label lpf-job-listing-location-label">{ this.props.locationText + ' ' }</span> 
         { this.state.job.location === 'remote' ? this.remoteLocation() : this.jobAddress() }
       </div>
     );
