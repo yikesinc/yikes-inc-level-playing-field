@@ -333,7 +333,7 @@ export default class JobListing extends Component {
   jobListingMeta() {
     return (
       <div className="lpf-job-listing-meta-container">
-        { this.props.showJobType && this.props.showLocation ? this.jobMetaHeading() : '' }
+        { this.props.showJobType || this.props.showLocation ? this.jobMetaHeading() : '' }
         { this.props.showJobType ? this.jobType() : '' }
         { this.props.showLocation ? this.jobLocation() : '' }
       </div>
