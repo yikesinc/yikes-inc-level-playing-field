@@ -125,6 +125,14 @@ final class JobListing extends BaseBlock {
 				'type'    => 'string',
 				'default' => $shortcode_atts['button_text'],
 			],
+			'description_text'        => [
+				'type'    => 'string',
+				'default' => $shortcode_atts['description_text'],
+			],
+			'details_text'            => [
+				'type'    => 'string',
+				'default' => $shortcode_atts['details_text'],
+			],
 		];
 	}
 
@@ -144,7 +152,7 @@ final class JobListing extends BaseBlock {
 
 		// We want to run the shortcode directly but we need to return the plaintext shortcode or Gutenberg will autop() the shortcode content.
 		return sprintf(
-			'[%s id="%s" show_title="%s" show_description="%s" show_job_type="%s" show_application_button="%s" show_location="%s" job_type_text="%s" location_text="%s" remote_location_text="%s" button_text="%s"]',
+			'[%s id="%s" show_title="%s" show_description="%s" show_job_type="%s" show_application_button="%s" show_location="%s" description_text="%s" details_text="%s" job_type_text="%s" location_text="%s" remote_location_text="%s" button_text="%s"]',
 			esc_attr( JobShortcode::TAG ),
 			esc_attr( $attributes['job_id'] ),
 			esc_attr( $attributes['show_title'] ),
@@ -152,6 +160,8 @@ final class JobListing extends BaseBlock {
 			esc_attr( $attributes['show_job_type'] ),
 			esc_attr( $attributes['show_application_button'] ),
 			esc_attr( $attributes['show_location'] ),
+			esc_attr( $attributes['description_text'] ),
+			esc_attr( $attributes['details_text'] ),
 			esc_attr( $attributes['job_type_text'] ),
 			esc_attr( $attributes['location_text'] ),
 			esc_attr( $attributes['remote_location_text'] ),

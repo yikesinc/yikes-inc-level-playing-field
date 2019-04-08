@@ -353,11 +353,22 @@ export default class JobListing extends Component {
   }
 
   /**
-   * Render the jobs.
+   * Render the jobs list.
    */
   jobs() {
+    return Object.keys( this.state.jobs ).length > 0 ? (
+      <ul className="lpf-jobs-list">
+        { this.jobListing() }
+      </ul>
+    ) : `<em>${ __( 'No jobs found...', 'yikes-level-playing-field' ) }</em>`;
+  }
+
+  /**
+   * Render each job.
+   */
+  jobListing() {
     let counter = 1;
-    return Object.keys( this.state.jobs ).length > 0 ? 
+    return (
       Object.keys( this.state.jobs ).map( ( job_index ) => {
 
         const job     = this.state.jobs[ job_index ];
@@ -366,13 +377,15 @@ export default class JobListing extends Component {
         if ( ! exclude ) {
           counter++;
 
-          return ([
-            this.jobHeader( job ),
-            this.props.showApplicationButton && job.application ? this.jobListingAppButton( job ) : ''
-          ]);
+          return (
+            <li key={ `lpf-jobs-list-item-${ job.id }` } className="lpf-jobs-list-item">
+              { this.jobHeader( job ) }
+              { this.props.showApplicationButton && job.application ? this.jobListingAppButton( job ) : '' }
+            </li>
+          );
         }
       })
-    : `<em>${ __( 'No jobs found...', 'yikes-level-playing-field' ) }</em>`;
+    );
   }
 
   /**
@@ -382,7 +395,7 @@ export default class JobListing extends Component {
    */
   jobHeader( job ) {
     return (
-      <h4 key={ `job-listings-title-${ job.id }` }  className="lpf-jobs-list-job-title">
+      <h4 key={ `job-listings-title-${ job.id }` }>
         <a key={ `job-listings-link-${ job.id }` } href={ job.link }>{ job.title.rendered }</a>
       </h4>
     );
