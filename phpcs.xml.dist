@@ -63,6 +63,7 @@
 			<property name="prefixes" type="array" value="lpf,ylpf"/>
 		</properties>
 		<exclude-pattern type="relative">/views/*</exclude-pattern>
+		<exclude-pattern type="relative">/vendor/awesome-yikes-framework/*</exclude-pattern>
 	</rule>
 
 	<!-- Check all PHP files in directory tree by default. -->

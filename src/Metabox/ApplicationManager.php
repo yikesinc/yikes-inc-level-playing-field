@@ -58,6 +58,16 @@ final class ApplicationManager extends AwesomeBaseMetabox implements AssetsAware
 	}
 
 	/**
+	 * Get the prefix for use with meta fields.
+	 *
+	 * @since %VERSION%
+	 * @return string
+	 */
+	public function get_required_suffix() {
+		return ApplicationMeta::REQUIRED_SUFFIX;
+	}
+
+	/**
 	 * Register meta boxes.
 	 *
 	 * @since  %VERSION%
@@ -70,7 +80,7 @@ final class ApplicationManager extends AwesomeBaseMetabox implements AssetsAware
 	public function register_boxes( $meta_boxes ) {
 		$application_boxes = [
 			'id'         => $this->prefix_field( 'metabox' ),
-			'title'      => __( 'Basic Info', 'yikes-level-playing-field' ),
+			'title'      => __( 'Application Form Fields', 'yikes-level-playing-field' ),
 			'pages'      => [ ApplicationCPT::SLUG ],
 			'show_names' => false,
 			'group'      => true,
@@ -82,14 +92,14 @@ final class ApplicationManager extends AwesomeBaseMetabox implements AssetsAware
 					'fields' => [
 						[
 							'name' => __( 'Basic Information', 'yikes-level-playing-field' ),
-							'desc' => __( 'Check the basic information fields you want included on this Application Form.', 'yikes-level-playing-field' ),
+							'desc' => __( 'Check the basic information fields you want included on this Application Form. Name and Email are required by default. Turn on "Required" for fields that must be filled in by the applicant.', 'yikes-level-playing-field' ),
 							'id'   => $this->prefix_field( 'info_message' ),
 							'type' => 'title',
 						],
 						[
-							'name'       => __( 'Name (required)', 'yikes-level-playing-field' ),
-							'desc'       => __( 'Name (required)', 'yikes-level-playing-field' ),
-							'id'         => $this->prefix_field( 'name' ),
+							'name'       => __( 'Name', 'yikes-level-playing-field' ),
+							'desc'       => __( 'Name', 'yikes-level-playing-field' ),
+							'id'         => $this->prefix_field( ApplicationMeta::NAME ),
 							'type'       => 'checkbox',
 							'value'      => 1,
 							'desc_type'  => 'inline',
@@ -99,10 +109,34 @@ final class ApplicationManager extends AwesomeBaseMetabox implements AssetsAware
 							],
 						],
 						[
-							'name'       => __( 'Email Address (required)', 'yikes-level-playing-field' ),
-							'desc'       => __( 'Email Address (required)', 'yikes-level-playing-field' ),
-							'id'         => $this->prefix_field( 'email' ),
+							'name'       => __( 'Required?', 'yikes-level-playing-field' ),
+							'desc'       => __( 'Required?', 'yikes-level-playing-field' ),
+							'id'         => $this->suffix_required_field( $this->prefix_field( ApplicationMeta::NAME ) ),
+							'type'       => 'toggle',
+							'value'      => 1,
+							'desc_type'  => 'inline',
+							'attributes' => [
+								'checked'  => 'checked',
+								'disabled' => 'disabled',
+							],
+						],
+						[
+							'name'       => __( 'Email Address', 'yikes-level-playing-field' ),
+							'desc'       => __( 'Email Address', 'yikes-level-playing-field' ),
+							'id'         => $this->prefix_field( ApplicationMeta::EMAIL ),
 							'type'       => 'checkbox',
+							'value'      => 1,
+							'desc_type'  => 'inline',
+							'attributes' => [
+								'checked'  => 'checked',
+								'disabled' => 'disabled',
+							],
+						],
+						[
+							'name'       => __( 'Required?', 'yikes-level-playing-field' ),
+							'desc'       => __( 'Required?', 'yikes-level-playing-field' ),
+							'id'         => $this->suffix_required_field( $this->prefix_field( ApplicationMeta::EMAIL ) ),
+							'type'       => 'toggle',
 							'value'      => 1,
 							'desc_type'  => 'inline',
 							'attributes' => [
@@ -113,44 +147,50 @@ final class ApplicationManager extends AwesomeBaseMetabox implements AssetsAware
 						[
 							'name'      => __( 'Phone Number', 'yikes-level-playing-field' ),
 							'desc'      => __( 'Phone Number', 'yikes-level-playing-field' ),
-							'id'        => $this->prefix_field( 'phone' ),
+							'id'        => $this->prefix_field( ApplicationMeta::PHONE ),
 							'type'      => 'checkbox',
 							'value'     => 1,
 							'desc_type' => 'inline',
+						],
+						[
+							'name'  => __( 'Required?', 'yikes-level-playing-field' ),
+							'desc'  => __( 'Required?', 'yikes-level-playing-field' ),
+							'id'    => $this->suffix_required_field( $this->prefix_field( ApplicationMeta::PHONE ) ),
+							'type'  => 'toggle',
+							'value' => 1,
 						],
 						[
 							'name'      => __( 'Address', 'yikes-level-playing-field' ),
 							'desc'      => __( 'Address', 'yikes-level-playing-field' ),
-							'id'        => $this->prefix_field( 'address' ),
+							'id'        => $this->prefix_field( ApplicationMeta::ADDRESS ),
 							'type'      => 'checkbox',
 							'value'     => 1,
 							'desc_type' => 'inline',
 						],
-						// [
-						// 	'name'      => __( 'Cover Letter', 'yikes-level-playing-field' ),
-						// 	'desc'      => __( 'Cover Letter', 'yikes-level-playing-field' ),
-						// 	'id'        => $this->prefix_field( 'cover_letter' ),
-						// 	'type'      => 'checkbox',
-						// 	'value'     => 1,
-						// 	'desc_type' => 'inline',
-						// ],
+						[
+							'name'  => __( 'Required?', 'yikes-level-playing-field' ),
+							'desc'  => __( 'Required?', 'yikes-level-playing-field' ),
+							'id'    => $this->suffix_required_field( $this->prefix_field( ApplicationMeta::ADDRESS ) ),
+							'type'  => 'toggle',
+							'value' => 1,
+						],
 					],
 				],
 				[
 					'name'   => __( 'Education', 'yikes-level-playing-field' ),
-					'id'     => 'education',
+					'id'     => ApplicationMeta::EDUCATION,
 					'type'   => 'group',
 					'fields' => [
 						[
 							'name' => __( 'Educational Background', 'yikes-level-playing-field' ),
-							'desc' => __( 'Check the educational information you want included on this Application Form.', 'yikes-level-playing-field' ),
-							'id'   => $this->prefix_field( 'education_message' ),
+							'desc' => __( 'Check the educational information you want included on this Application Form. Turn on "Required" for fields that must be filled in by the applicant.', 'yikes-level-playing-field' ),
+							'id'   => $this->prefix_field( ApplicationMeta::EDUCATION . '_message' ),
 							'type' => 'title',
 						],
 						[
 							'name'       => __( 'Schooling', 'yikes-level-playing-field' ),
 							'desc'       => __( 'Schooling', 'yikes-level-playing-field' ),
-							'id'         => $this->prefix_field( 'schooling' ),
+							'id'         => $this->prefix_field( ApplicationMeta::SCHOOLING ),
 							'type'       => 'checkbox',
 							'value'      => 1,
 							'desc_type'  => 'inline',
@@ -160,14 +200,21 @@ final class ApplicationManager extends AwesomeBaseMetabox implements AssetsAware
 							],
 						],
 						[
+							'name'  => __( 'Required?', 'yikes-level-playing-field' ),
+							'desc'  => __( 'Required?', 'yikes-level-playing-field' ),
+							'id'    => $this->suffix_required_field( $this->prefix_field( ApplicationMeta::SCHOOLING ) ),
+							'type'  => 'toggle',
+							'value' => 1,
+						],
+						[
 							'desc' => $this->get_schooling_html(),
-							'id'   => $this->prefix_field( 'schooling_message' ),
+							'id'   => $this->prefix_field( ApplicationMeta::SCHOOLING . '_message' ),
 							'type' => 'message',
 						],
 						[
 							'name'       => __( 'Certifications', 'yikes-level-playing-field' ),
 							'desc'       => __( 'Certifications', 'yikes-level-playing-field' ),
-							'id'         => $this->prefix_field( 'certifications' ),
+							'id'         => $this->prefix_field( ApplicationMeta::CERTIFICATIONS ),
 							'type'       => 'checkbox',
 							'value'      => 1,
 							'desc_type'  => 'inline',
@@ -177,69 +224,90 @@ final class ApplicationManager extends AwesomeBaseMetabox implements AssetsAware
 							],
 						],
 						[
+							'name'  => __( 'Required?', 'yikes-level-playing-field' ),
+							'desc'  => __( 'Required?', 'yikes-level-playing-field' ),
+							'id'    => $this->suffix_required_field( $this->prefix_field( ApplicationMeta::CERTIFICATIONS ) ),
+							'type'  => 'toggle',
+							'value' => 1,
+						],
+						[
 							'desc' => $this->get_certification_html(),
-							'id'   => $this->prefix_field( 'certifications_message' ),
+							'id'   => $this->prefix_field( ApplicationMeta::CERTIFICATIONS . '_message' ),
 							'type' => 'message',
 						],
 					],
 				],
 				[
 					'name'   => __( 'Skills', 'yikes-level-playing-field' ),
-					'id'     => 'skills',
+					'id'     => ApplicationMeta::SKILLS,
 					'type'   => 'group',
 					'fields' => [
 						[
 							'name' => __( 'Skills', 'yikes-level-playing-field' ),
-							'desc' => __( 'Check if you want Skills and Proficiency included on this Application Form.', 'yikes-level-playing-field' ),
-							'id'   => $this->prefix_field( 'skills_message' ),
+							'desc' => __( 'Check if you want Skills and Proficiency included on this Application Form. Turn on "Required" for fields that must be filled in by the applicant.', 'yikes-level-playing-field' ),
+							'id'   => $this->prefix_field( ApplicationMeta::SKILLS . '_message' ),
 							'type' => 'title',
 						],
 						[
 							'name'      => __( 'Skill and Proficiency', 'yikes-level-playing-field' ),
 							'desc'      => __( 'Skill and Proficiency', 'yikes-level-playing-field' ),
-							'id'        => $this->prefix_field( 'skills' ),
+							'id'        => $this->prefix_field( ApplicationMeta::SKILLS ),
 							'type'      => 'checkbox',
 							'value'     => 1,
 							'desc_type' => 'inline',
+						],
+						[
+							'name'  => __( 'Required?', 'yikes-level-playing-field' ),
+							'desc'  => __( 'Required?', 'yikes-level-playing-field' ),
+							'id'    => $this->suffix_required_field( $this->prefix_field( ApplicationMeta::SKILLS ) ),
+							'type'  => 'toggle',
+							'value' => 1,
 						],
 					],
 				],
 				[
 					'name'   => __( 'Languages', 'yikes-level-playing-field' ),
-					'id'     => 'languages',
+					'id'     => ApplicationMeta::LANGUAGES,
 					'type'   => 'group',
 					'fields' => [
 						[
 							'name' => __( 'Languages', 'yikes-level-playing-field' ),
-							'desc' => __( 'Check if you want Languages and Proficiency included on this Application Form.', 'yikes-level-playing-field' ),
-							'id'   => $this->prefix_field( 'languages_message' ),
+							'desc' => __( 'Check if you want Languages and Proficiency included on this Application Form. Turn on "Required" for fields that must be filled in by the applicant.', 'yikes-level-playing-field' ),
+							'id'   => $this->prefix_field( ApplicationMeta::LANGUAGES . '_message' ),
 							'type' => 'title',
 						],
 						[
 							'name'      => __( 'Language and Proficiency', 'yikes-level-playing-field' ),
 							'desc'      => __( 'Language and Proficiency', 'yikes-level-playing-field' ),
-							'id'        => $this->prefix_field( 'languages' ),
+							'id'        => $this->prefix_field( ApplicationMeta::LANGUAGES ),
 							'type'      => 'checkbox',
 							'value'     => 1,
 							'desc_type' => 'inline',
+						],
+						[
+							'name'  => __( 'Required?', 'yikes-level-playing-field' ),
+							'desc'  => __( 'Required?', 'yikes-level-playing-field' ),
+							'id'    => $this->suffix_required_field( $this->prefix_field( ApplicationMeta::LANGUAGES ) ),
+							'type'  => 'toggle',
+							'value' => 1,
 						],
 					],
 				],
 				[
 					'name'   => __( 'Experience', 'yikes-level-playing-field' ),
-					'id'     => 'experience',
+					'id'     => ApplicationMeta::EXPERIENCE,
 					'type'   => 'group',
 					'fields' => [
 						[
 							'name' => __( 'Experience', 'yikes-level-playing-field' ),
-							'desc' => __( 'Check if you want Experience included on this Application Form.', 'yikes-level-playing-field' ),
-							'id'   => $this->prefix_field( 'experience_message' ),
+							'desc' => __( 'Check if you want Experience included on this Application Form. Turn on "Required" for fields that must be filled in by the applicant.', 'yikes-level-playing-field' ),
+							'id'   => $this->prefix_field( ApplicationMeta::EXPERIENCE . '_message' ),
 							'type' => 'title',
 						],
 						[
 							'name'       => __( 'Experience', 'yikes-level-playing-field' ),
 							'desc'       => __( 'Experience', 'yikes-level-playing-field' ),
-							'id'         => $this->prefix_field( 'experience' ),
+							'id'         => $this->prefix_field( ApplicationMeta::EXPERIENCE ),
 							'type'       => 'checkbox',
 							'value'      => 1,
 							'desc_type'  => 'inline',
@@ -249,27 +317,34 @@ final class ApplicationManager extends AwesomeBaseMetabox implements AssetsAware
 							],
 						],
 						[
+							'name'  => __( 'Required?', 'yikes-level-playing-field' ),
+							'desc'  => __( 'Required?', 'yikes-level-playing-field' ),
+							'id'    => $this->suffix_required_field( $this->prefix_field( ApplicationMeta::EXPERIENCE ) ),
+							'type'  => 'toggle',
+							'value' => 1,
+						],
+						[
 							'desc' => $this->get_experience_html(),
-							'id'   => $this->prefix_field( 'experience_message' ),
+							'id'   => $this->prefix_field( ApplicationMeta::EXPERIENCE . '_message' ),
 							'type' => 'message',
 						],
 					],
 				],
 				[
 					'name'   => __( 'Volunteer Work', 'yikes-level-playing-field' ),
-					'id'     => 'volunteer',
+					'id'     => ApplicationMeta::VOLUNTEER,
 					'type'   => 'group',
 					'fields' => [
 						[
 							'name' => __( 'Volunteer Work', 'yikes-level-playing-field' ),
-							'desc' => __( 'Check if you want Volunteer Work included on this Application Form.', 'yikes-level-playing-field' ),
-							'id'   => $this->prefix_field( 'volunteer_message' ),
+							'desc' => __( 'Check if you want Volunteer Work included on this Application Form. Turn on "Required" for fields that must be filled in by the applicant.', 'yikes-level-playing-field' ),
+							'id'   => $this->prefix_field( ApplicationMeta::VOLUNTEER . '_message' ),
 							'type' => 'title',
 						],
 						[
 							'name'       => __( 'Volunteer Work', 'yikes-level-playing-field' ),
 							'desc'       => __( 'Volunteer Work', 'yikes-level-playing-field' ),
-							'id'         => $this->prefix_field( 'volunteer' ),
+							'id'         => $this->prefix_field( ApplicationMeta::VOLUNTEER ),
 							'type'       => 'checkbox',
 							'value'      => 1,
 							'desc_type'  => 'inline',
@@ -279,8 +354,15 @@ final class ApplicationManager extends AwesomeBaseMetabox implements AssetsAware
 							],
 						],
 						[
+							'name'  => __( 'Required?', 'yikes-level-playing-field' ),
+							'desc'  => __( 'Required?', 'yikes-level-playing-field' ),
+							'id'    => $this->suffix_required_field( $this->prefix_field( ApplicationMeta::VOLUNTEER ) ),
+							'type'  => 'toggle',
+							'value' => 1,
+						],
+						[
 							'desc' => $this->get_volunteer_html(),
-							'id'   => $this->prefix_field( 'volunteer_message' ),
+							'id'   => $this->prefix_field( ApplicationMeta::VOLUNTEER . '_message' ),
 							'type' => 'message',
 						],
 					],
