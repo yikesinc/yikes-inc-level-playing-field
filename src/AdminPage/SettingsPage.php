@@ -72,7 +72,7 @@ class SettingsPage extends BaseAdminPage implements AssetsAware {
 
 		$script = new ScriptAsset( self::JS_HANDLE, self::JS_URI, self::JS_DEPENDENCIES, self::JS_VERSION, ScriptAsset::ENQUEUE_FOOTER );
 		$script->add_localization(
-			'settings_data',
+			'lpf_settings_data',
 			[
 				'ajax'     => [
 					'save_nonce'  => wp_create_nonce( 'save_settings' ),
