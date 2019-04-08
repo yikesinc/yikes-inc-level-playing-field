@@ -57,17 +57,17 @@ class Select extends BaseField {
 		$has_error = ! empty( $this->error_message );
 		?>
 		<div class="lpf-field-container">
-			<label class="lpf-select-label <?php echo $has_error ? 'error-prompt' : ''; ?>">
+			<label class="lpf-select-label <?php echo $has_error ? 'error-prompt' : ''; ?>" for="<?php echo esc_attr( $this->id ); ?>">
 				<?php $this->render_label(); ?>
-				<?php $this->render_error_message(); ?>
-				<select id="<?php echo esc_attr( $this->id ); ?>"
-						class="<?php echo esc_attr( join( ' ', $classes ) ); ?>"
-						name="<?php echo esc_attr( $this->id ); ?>"
-						<?php $this->render_extra_attributes(); ?>
-				>
-					<?php $this->render_options(); ?>
-				</select>
 			</label>
+			<?php $this->render_error_message(); ?>
+			<select id="<?php echo esc_attr( $this->id ); ?>"
+					class="<?php echo esc_attr( join( ' ', $classes ) ); ?>"
+					name="<?php echo esc_attr( $this->id ); ?>"
+					<?php $this->render_extra_attributes(); ?>
+			>
+				<?php $this->render_options(); ?>
+			</select>
 		</div>
 		<?php
 	}

@@ -1,4 +1,5 @@
-@import "utilities/index";
+@import "utilities/mixins/font-size-calculation";
+@import "utilities/variables/colors";
 
 @mixin error_color($color) {
 	background: $color;
@@ -16,6 +17,8 @@
 .lpf-form {
 
 	.lpf-field-container {
+		padding-bottom: 0.4rem;
+
 		&.lpf-disabled {
 			opacity: .5;
 			cursor: not-allowed;
@@ -24,6 +27,43 @@
 				pointer-events: none;
 			}
 		}
+	}
+
+	legend.lpf-input-label {
+		font-weight: 600;
+		margin-top: 2rem;
+	}
+
+	.lpf-input-label:not(legend),
+	.lpf-select-label {
+		display: inline-block;
+		padding-right: 4px;
+		text-align: right;
+		width: 170px;
+
+		&.lpf-input-label-checkbox {
+			font-size: 0.875rem;
+			margin-left: 174px;
+			text-align: left;
+			width: auto;
+		}
+	}
+
+	.lpf-form-field {
+		display: inline-block;
+		width: auto;
+	}
+
+	.lpf-repeat-button {
+		font-size: 0.875rem;
+		margin-left: 174px;
+	}
+
+	.lpf-delete-button {
+		font-size: 0.875rem;
+		padding: 0.875rem;
+		position: absolute;
+		margin-top: 4px;
 	}
 
 	.lpf-input-label {
@@ -60,5 +100,9 @@
 				}
 			}
 		}
+	}
+
+	.lpf-submit {
+		margin: 2rem 0 0 174px;
 	}
 }

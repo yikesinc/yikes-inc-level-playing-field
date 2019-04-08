@@ -87,6 +87,6 @@ class Experience extends RepeatableField {
 	 * @return string
 	 */
 	protected function get_add_new_label() {
-		return esc_html_x( 'Experience', 'for "add new" button', 'yikes-level-playing-field' );
+		return esc_html_x( 'Job Position', 'for "add new" button', 'yikes-level-playing-field' );
 	}
 }
