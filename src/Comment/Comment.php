@@ -17,7 +17,7 @@ namespace Yikes\LevelPlayingField\Comment;
  */
 abstract class Comment {
 
-	const APPROVED     = 1;
+	const APPROVED     = 0;
 	const PARENT       = 0;
 	const AUTHOR_URL   = '';
 	const AUTHOR_EMAIL = '';
