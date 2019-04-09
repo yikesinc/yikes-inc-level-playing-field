@@ -85,8 +85,8 @@ class Schooling extends RepeatableField {
 	 */
 	protected function render_repeatable_field_label() {
 		printf(
-			'<p class="lpf-field-schooling lpf-fieldset-label">%1$s <span class="lpf-fieldset-number">%2$s</span></p>',
-			esc_html__( 'Schooling', 'yikes-level-playing-field' ),
+			'<div class="lpf-field-schooling lpf-fieldset-label">%1$s <span class="lpf-fieldset-number">%2$s</span></div>',
+			esc_html__( 'School', 'yikes-level-playing-field' ),
 			esc_html__( '1', 'yikes-level-playing-field' )
 		);
 	}

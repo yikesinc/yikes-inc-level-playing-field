@@ -87,7 +87,7 @@ class Volunteer extends RepeatableField {
 	 */
 	protected function render_repeatable_field_label() {
 		printf(
-			'<p class="lpf-field-volunteer lpf-fieldset-label">%1$s <span class="lpf-fieldset-number">%2$s</span></p>',
+			'<div class="lpf-field-volunteer lpf-fieldset-label">%1$s <span class="lpf-fieldset-number">%2$s</span></div>',
 			esc_html__( 'Volunteer', 'yikes-level-playing-field' ),
 			esc_html__( '1', 'yikes-level-playing-field' )
 		);

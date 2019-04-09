@@ -70,8 +70,8 @@ class Skills extends RepeatableField {
 	 */
 	protected function render_repeatable_field_label() {
 		printf(
-			'<p class="lpf-field-skills lpf-fieldset-label">%1$s <span class="lpf-fieldset-number">%2$s</span></p>',
-			esc_html__( 'Skills', 'yikes-level-playing-field' ),
+			'<div class="lpf-field-skills lpf-fieldset-label">%1$s <span class="lpf-fieldset-number">%2$s</span></div>',
+			esc_html__( 'Skill', 'yikes-level-playing-field' ),
 			esc_html__( '1', 'yikes-level-playing-field' )
 		);
 	}

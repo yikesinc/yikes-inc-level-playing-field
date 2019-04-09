@@ -45,7 +45,7 @@ $form_classes = $this->form_classes
 >
 	<?php $form->render(); ?>
 	<button class="lpf-submit" type="submit" name="lpf_submit">
-		<?php esc_html_e( 'Submit', 'yikes-level-playing-field' ); ?>
+		<?php esc_html_e( 'Submit Application', 'yikes-level-playing-field' ); ?>
 	</button>
 </form>
 
