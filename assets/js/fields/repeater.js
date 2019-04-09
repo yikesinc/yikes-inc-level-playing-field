@@ -137,7 +137,7 @@ jQuery( document ).ready( function() {
 			repeater.hookDeletButton( button );
 
 			// Add the button to the beginning of the fieldContainer element.
-			fieldContainer.insertBefore( button, fieldContainer.querySelector( '.lpf-field-container' ) );
+			fieldContainer.insertBefore( button, fieldContainer.querySelector( '.lpf-fieldset-label' ) );
 		},
 
 		/**
