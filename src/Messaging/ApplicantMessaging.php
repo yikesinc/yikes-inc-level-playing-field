@@ -234,7 +234,7 @@ class ApplicantMessaging implements Renderable, AssetsAware, Service {
 			'comments'   => $comments,
 			'is_metabox' => $is_metabox,
 			'is_cancel'  => false,
-            'is_confirm' => false,
+			'is_confirm' => false,
 			'partials'   => [
 				'interview_scheduler'    => static::INTERVIEW_SCHEDULER_PARTIAL,
 				'interview_confirmation' => static::INTERVIEW_CONFIRMATION_PARTIAL,
