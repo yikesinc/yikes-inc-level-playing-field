@@ -1,18 +1,6 @@
 @import "utilities/mixins/font-size-calculation";
 @import "utilities/variables/colors";
 
-@mixin error_color($color) {
-	background: $color;
-
-	&::after {
-		border-bottom-color: $color;
-	}
-
-	& + .lpf-form-field {
-		border-color: $color;
-	}
-}
-
 // Form
 .lpf-form {
 
@@ -82,40 +70,14 @@
 		padding-bottom: 0.6rem;
 	}
 
-	.lpf-input-label {
-
-		&.error-prompt {
-			position: relative;
-
-			.lpf-form-field, textarea {
-				border: 1px solid $color-red;
-			}
-
-			.error-text {
-				font-size: 14px;
-				display: inline-block;
-				position: absolute;
-				left: 100%;
-				background: $trans-red;
-				padding: 5px;
-				z-index: 2;
-				color: $color-white;
-				border-radius: 0.25em;
-				white-space: nowrap;
-
-				&.error-email {
-					@include error_color($trans-purple);
-				}
-
-				&.error-zip {
-					@include error_color($trans-blue);
-				}
-
-				&.error-year {
-					@include error_color($trans-green);
-				}
-			}
-		}
+	.error-text {
+		background-color: lighten( $trans-red, 30% );
+		color: darken( $wp-red, 10% );
+		display: inline-block;
+		font-size: 0.875rem;
+		margin-left: 0.6rem;
+		padding: 0.4rem;
+		white-space: nowrap;
 	}
 
 	.lpf-submit {

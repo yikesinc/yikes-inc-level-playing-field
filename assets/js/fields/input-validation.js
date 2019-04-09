@@ -42,7 +42,7 @@ jQuery( document ).ready( function( $ ) {
 		// If empty...
 		if ( !trimmedValue ) {
 			if ( fieldLabel.find( errorClass ).length === 0 ) {
-				field.before( `<span class="error-text error-empty">${i18n.errors.empty}</span>` );
+				field.after( `<span class="error-text error-empty">${i18n.errors.empty}</span>` );
 				fieldLabel.addClass( errorPrompt );
 			}
 			isError = true;
@@ -188,7 +188,7 @@ jQuery( document ).ready( function( $ ) {
 		// These are defaults in case the window object is missing.
 		// See src/Shortcode/Application.php for localized strings.
 		errors: {
-			empty: 'Field cannot be empty.',
+			empty: 'This field is required.',
 			invalid: '%TYPE% is invalid.'
 		}
 	}, ( window.lpfInputValidation || {} ) );

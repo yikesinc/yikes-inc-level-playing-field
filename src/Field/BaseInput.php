@@ -56,7 +56,6 @@ class BaseInput extends BaseField {
 			<label class="lpf-input-label lpf-input-label-<?php echo esc_attr( $type ); ?><?php echo $has_error ? 'error-prompt' : ''; ?>" for="<?php echo esc_attr( $this->id ); ?>">
 				<?php $this->render_label(); ?>
 			</label>
-			<?php $this->render_error_message(); ?>
 			<input type="<?php echo esc_attr( $type ); ?>"
 				class="<?php echo esc_attr( join( ' ', $classes ) ); ?>"
 				name="<?php echo esc_attr( $this->id ); ?>"
@@ -64,6 +63,7 @@ class BaseInput extends BaseField {
 				value="<?php echo esc_attr( $this->value ); ?>"
 				<?php $this->render_extra_attributes(); ?>
 			/>
+			<?php $this->render_error_message(); ?>
 		</div>
 		<?php
 	}
