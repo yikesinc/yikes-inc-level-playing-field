@@ -105,7 +105,7 @@ abstract class RepeatableField extends ComplexField {
 		printf(
 			'<div class="lpf-fieldset-container" class="%s" data-add-new-label="%s">',
 			esc_attr( join( ' ', $classes ) ),
-			esc_attr( $this->get_add_new_label() )	
+			esc_attr( $this->get_add_new_label() )
 		);
 	}
 
