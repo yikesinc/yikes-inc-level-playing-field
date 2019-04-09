@@ -5,7 +5,9 @@ jQuery( document ).ready( function() {
 	const repeatButton = 'lpf-repeat-button',
 		deleteButton = 'lpf-delete-button',
 		i18n = window.lpfRepeater || {},
-		repeatFieldsets = document.querySelectorAll( '.lpf-fieldset-repeatable' );
+		repeatFieldsets = document.querySelectorAll( '.lpf-fieldset-repeatable' ),
+		repeatableFieldContainer = 'lpf-fieldset-container',
+		repeatableFieldNumber = 'lpf-fieldset-number';
 
 	// Main object to work with.
 	const repeater = {
@@ -19,7 +21,7 @@ jQuery( document ).ready( function() {
 		},
 
 		/**
-		 * Add repeater buttons to each fieldset section.
+		 * Add repeater buttons to each fieldContainer section.
 		 */
 		addRepeaterButtons: function() {
 			repeatFieldsets.forEach( this.addRepeaterButton );
@@ -30,7 +32,7 @@ jQuery( document ).ready( function() {
 		},
 
 		/**
-		 * Add a repeater button to an individual fieldset section.
+		 * Add a repeater button to an individual fieldContainer section.
 		 *
 		 * @param {HTMLSelectElement} item
 		 */
@@ -50,7 +52,7 @@ jQuery( document ).ready( function() {
 			button.innerText = i18n.addNew + ' ' + item.dataset.addNewLabel;
 			button.addEventListener( 'click', repeater.repeatSection );
 
-			// Add the button to the fieldset element.
+			// Add the button to the fieldContainer element.
 			item.appendChild( button );
 		},
 
@@ -58,18 +60,20 @@ jQuery( document ).ready( function() {
 		 * Clone the given section.
 		 */
 		repeatSection: function() {
-			const fieldset = this.closest( 'fieldset' ),
-				newNode = fieldset.cloneNode( true ),
-				button = newNode.querySelector( `.${deleteButton}` );
+			const fieldContainer = this.closest( `.${repeatableFieldContainer}` ),
+				newNode = fieldContainer.cloneNode( true ),
+				button = newNode.querySelector( `.${deleteButton}` ),
+				number = parseInt( fieldContainer.querySelector( `.${repeatableFieldNumber}` ).textContent ) + 1,
+				counterElement = newNode.querySelector( `.${repeatableFieldNumber}` ),
+				replaceRegex = new RegExp( /\[(\d+)]/ );
 
 			// Remove the repeat button from the parent.
-			fieldset.removeChild( fieldset.querySelector( `.${repeatButton}` ) );
+			fieldContainer.removeChild( fieldContainer.querySelector( `.${repeatButton}` ) );
 
 			// Update each input element.
 			newNode.querySelectorAll( 'input, select' ).forEach( function( item ) {
-				const regex = new RegExp( /\[(\d+)]/ );
-				const id = item.getAttribute( 'id' );
-				const match = id.match( regex );
+				const id    = item.getAttribute( 'id' );
+				const match = id.match( replaceRegex );
 
 				// Remove any entered input.
 				item.value = repeater.getRepeatValue( item );
@@ -80,8 +84,23 @@ jQuery( document ).ready( function() {
 					const newId = isNaN( parsed ) ? 0 : parsed + 1;
 
 					// ID and Name should be the same, so update them both.
-					item.setAttribute( 'id', id.replace( regex, `[${newId}]` ) );
-					item.setAttribute( 'name', id.replace( regex, `[${newId}]` ) );
+					item.setAttribute( 'id', id.replace( replaceRegex, `[${newId}]` ) );
+					item.setAttribute( 'name', id.replace( replaceRegex, `[${newId}]` ) );
+				}
+			} );
+
+			// Update each label.
+			newNode.querySelectorAll( 'label' ).forEach( function( item ) {
+				const labelFor = item.getAttribute( 'for' );
+				const match    = labelFor.match( replaceRegex );
+
+				// Update label's for attribute with new number.
+				if ( match.length > 1 ) {
+					const parsed = parseInt( match[ 1 ] );
+					const newId = isNaN( parsed ) ? 0 : parsed + 1;
+
+					// ID and Name should be the same, so update them both.
+					item.setAttribute( 'for', labelFor.replace( replaceRegex, `[${newId}]` ) );
 				}
 			} );
 
@@ -97,15 +116,18 @@ jQuery( document ).ready( function() {
 				repeater.hookDeletButton( button )
 			}
 
+			// Update the field number.
+			counterElement.textContent = number;
+
 			// Insert the new section.
-			fieldset.parentElement.insertBefore( newNode, fieldset.nextElementSibling );
+			fieldContainer.parentElement.insertBefore( newNode, fieldContainer.nextElementSibling );
 		},
 
 		/**
 		 * Add a button to delete a section.
-		 * @param {HTMLSelectElement} fieldset
+		 * @param {HTMLSelectElement} fieldContainer
 		 */
-		addDeleteButton: function( fieldset ) {
+		addDeleteButton: function( fieldContainer ) {
 			const button = document.createElement( 'button' );
 
 			// Set up the necessary properties for the button.
@@ -114,28 +136,42 @@ jQuery( document ).ready( function() {
 			button.innerText = 'X';
 			repeater.hookDeletButton( button );
 
-			// Add the button to the beginning of the fieldset element.
-			fieldset.insertBefore( button, fieldset.querySelector( '.lpf-field-container' ) );
+			// Add the button to the beginning of the fieldContainer element.
+			fieldContainer.insertBefore( button, fieldContainer.querySelector( '.lpf-field-container' ) );
 		},
 
 		/**
 		 * Delete the given section.
 		 */
-		deleteSection() {
-			const fieldset = this.closest( 'fieldset' ),
-				button = fieldset.previousElementSibling.querySelector( repeatButton ),
-				next = fieldset.nextElementSibling;
+		deleteSection: function() {
+			const fieldContainer = this.closest( `.${repeatableFieldContainer}` ),
+				button = fieldContainer.previousElementSibling.querySelector( repeatButton ),
+				next = fieldContainer.nextElementSibling;
 
 			/*
 			 * Add the repeat button to the previous fieldset. But don't add if there's
 			 * at least one element after the current one.
 			 */
 			if ( null === button && null === next ) {
-				repeater.addRepeaterButton( fieldset.previousElementSibling );
+				repeater.addRepeaterButton( fieldContainer.previousElementSibling );
 			}
 
-			// Now remove the fieldset.
-			fieldset.parentElement.removeChild( fieldset );
+			const fieldset = fieldContainer.parentElement;
+
+			// Now remove the fieldContainer.
+			fieldset.removeChild( fieldContainer );
+
+			// Update the counters.
+			repeater.updateLabelCounters( fieldset );
+		},
+
+		/**
+		 * Loop through a set of fields and update the incremental label, e.g. Schooling 1.
+		 */
+		updateLabelCounters: function( fieldset ) {
+			fieldset.querySelectorAll( `.${repeatableFieldNumber}` ).forEach( function( item, index ) {
+				item.textContent = index + 1;
+			} );
 		},
 
 		/**
@@ -143,7 +179,7 @@ jQuery( document ).ready( function() {
 		 * @param item HTML Field.
 		 * @return The default value for the duplicated field.
 		 */
-		getRepeatValue( item ) {
+		getRepeatValue: function( item ) {
 			if ( item.type === 'checkbox' ) {
 				return item.value;
 			}

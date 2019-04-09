@@ -79,6 +79,21 @@ class Experience extends RepeatableField {
 	}
 
 	/**
+	 * Render the label for the repeatable fields.
+	 *
+	 * This should echo the label directly.
+	 *
+	 * @since %VERSION%
+	 */
+	protected function render_repeatable_field_label() {
+		printf(
+			'<p class="lpf-field-experience lpf-fieldset-label">%1$s <span class="lpf-fieldset-number">%2$s</span></p>',
+			esc_html__( 'Experience', 'yikes-level-playing-field' ),
+			esc_html__( '1', 'yikes-level-playing-field' )
+		);
+	}
+
+	/**
 	 * Get the label to use when rendering the "Add New" button.
 	 *
 	 * Only needs to be overridden when the field is repeatable.

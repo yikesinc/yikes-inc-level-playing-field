@@ -169,7 +169,7 @@ jQuery( document ).ready( function( $ ) {
 	 */
 	const toggleSchoolingFields = ( event ) => {
 		const selected = $( event.target );
-		const fields = selected.parents('.lpf-fieldset-schooling').find( 'input[id$="[major]"], input[id$="[degree]"]' );
+		const fields = selected.parents( '.lpf-fieldset-container' ).find( 'input[id$="[major]"], input[id$="[degree]"]' );
 		if ( selected.val() === 'high_school' ) {
 			fields.val('N/A').parent('.lpf-input-label').hide();
 		} else {
