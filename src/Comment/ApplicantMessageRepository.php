@@ -71,15 +71,13 @@ class ApplicantMessageRepository {
 	 *
 	 * @since %VERSION%
 	 *
-	 * @param  int $post_id The post ID.
-	 *
 	 * @return ApplicantMessage[]
 	 */
 	public function find_new_messages_from_applicant() {
 		$args = [
 			'status' => 'hold',
 			'type'   => ApplicantMessage::TYPE,
-			'fields'  => 'ids',
+			'fields' => 'ids',
 		];
 
 		$query    = new \WP_Comment_Query( $args );
@@ -87,8 +85,7 @@ class ApplicantMessageRepository {
 		foreach ( $query->comments as $comment ) {
 			$comments[ $comment ] = new ApplicantMessage( $comment );
 		}
-		echo '<pre>'; var_dump($comments); echo '</pre>';
-		exit;
+
 		return $comments;
 	}
 }

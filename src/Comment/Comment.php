@@ -17,7 +17,6 @@ namespace Yikes\LevelPlayingField\Comment;
  */
 abstract class Comment {
 
-	const APPROVED     = 0;
 	const PARENT       = 0;
 	const AUTHOR_URL   = '';
 	const AUTHOR_EMAIL = '';
@@ -33,6 +32,15 @@ abstract class Comment {
 	 * @var   WP_Comment
 	 */
 	public $comment;
+
+	/**
+	 * Comment approval status.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @var   int
+	 */
+	public $approved = 0;
 
 	/**
 	 * Set the $comment object for this class.
@@ -246,7 +254,7 @@ abstract class Comment {
 	 * @return int
 	 */
 	protected function approved() {
-		return static::APPROVED;
+		return $this->approved;
 	}
 
 	/**
@@ -323,7 +331,7 @@ abstract class Comment {
 	 * @return int
 	 */
 	protected function user_id() {
-		return wp_get_current_user();
+		return wp_get_current_user()->ID;
 	}
 
 	/**

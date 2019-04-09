@@ -233,6 +233,8 @@ class ApplicantMessaging implements Renderable, AssetsAware, Service {
 			'applicant'  => $applicant,
 			'comments'   => $comments,
 			'is_metabox' => $is_metabox,
+			'is_cancel'  => false,
+            'is_confirm' => false,
 			'partials'   => [
 				'interview_scheduler'    => static::INTERVIEW_SCHEDULER_PARTIAL,
 				'interview_confirmation' => static::INTERVIEW_CONFIRMATION_PARTIAL,
@@ -267,9 +269,10 @@ class ApplicantMessaging implements Renderable, AssetsAware, Service {
 			], 400 );
 		}
 
-		$message_class = new ApplicantMessage();
-		$author        = is_user_logged_in() ? ApplicantMessage::ADMIN_AUTHOR : ApplicantMessage::APPLICANT_AUTHOR;
-		$new_message   = $message_class->create_comment( $post_id, $comment, $author );
+		$message_class           = new ApplicantMessage();
+		$author                  = is_user_logged_in() ? ApplicantMessage::ADMIN_AUTHOR : ApplicantMessage::APPLICANT_AUTHOR;
+		$message_class->approved = is_user_logged_in() ? 1 : $message_class->approved;
+		$new_message             = $message_class->create_comment( $post_id, $comment, $author );
 
 		if ( $new_message ) {
 

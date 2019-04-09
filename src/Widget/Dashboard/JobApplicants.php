@@ -52,10 +52,8 @@ class JobApplicants extends BaseWidget {
 		$records        = [];
 		$jobs_url       = add_query_arg( [ 'post_type' => JobManager::SLUG ], admin_url( 'edit.php' ) );
 		$app_url        = add_query_arg( [ 'post_type' => ApplicantManager::SLUG ], admin_url( 'edit.php' ) );
+		$new_msgs       = $msg_repo->find_new_messages_from_applicant();
 
-		$msgs_count = $msg_repo->find_new_messages_from_applicant();
-		echo '<pre>'; var_dump($msgs_count); echo '</pre>';
-		exit;
 
 		foreach ( $all_jobs as $job_id => $job ) {
 			$records[] = [
@@ -77,6 +75,7 @@ class JobApplicants extends BaseWidget {
 
 		return [
 			'records'        => $records,
+			'msg_count'      => count( $new_msgs ),
 			'jobs_url'       => $jobs_url,
 			'applicants_url' => $app_url,
 		];
