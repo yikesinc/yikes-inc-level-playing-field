@@ -97,10 +97,9 @@ class ApplicantMessaging implements Renderable, AssetsAware, Service {
 		add_action( 'wp_ajax_nopriv_send_message', [ $this, 'send_message' ] );
 		add_action( 'wp_ajax_refresh_conversation', [ $this, 'refresh_conversation' ] );
 		add_action( 'wp_ajax_nopriv_refresh_conversation', [ $this, 'refresh_conversation' ] );
-		add_filter( 'comments_clauses', [ $this, 'exclude_applicant_messages' ], 10, 1 );
-		add_filter( 'comment_feed_where', [ $this, 'exclude_applicant_messages_from_feed_where' ], 10 );
 		add_action( 'admin_menu', [ $this, 'remove_default_comments_meta_boxes' ], 1 );
 		add_action( 'wp_ajax_send_interview_request', [ $this, 'send_interview_request' ] );
+		add_action( 'pre_get_comments', [ $this, 'exclude_applicant_messages' ] );
 	}
 
 	/**
@@ -327,45 +326,21 @@ class ApplicantMessaging implements Renderable, AssetsAware, Service {
 	}
 
 	/**
-	 * Exclude Applicant Messages from queries and RSS.
+	 * Exclude comments of type 'applicant_message' from comment queries.
 	 *
-	 * @param  string $where The WHERE clause of the query.
-	 * @return string
+	 * @since %VERSION%
+	 *
+	 * @param \WP_Comment_Query $query Current instance of WP_Comment_Query (passed by reference).
 	 */
-	public static function exclude_applicant_messages_from_feed_where( $where ) {
-		$type = ApplicantMessage::TYPE;
-		return $where . ( $where ? ' AND ' : '' ) . " comment_type != '{$type}' ";
-	}
-
-	/**
-	 * Exclude Applicant Messages from queries and RSS.
-	 *
-	 * @param  array $clauses A compacted array of comment query clauses.
-	 *
-	 * @return array
-	 */
-	public static function exclude_applicant_messages( $clauses ) {
-
-		// Check if we're on the admin.
-		if ( is_admin() ) {
-
-			// Ensure this is a real screen object.
-			$screen = get_current_screen();
-			if ( ! ( $screen instanceof \WP_Screen ) ) {
-				return $clauses;
-			}
-
-			// If we're looking at our the post type, do not hide the comments.
-			if ( static::POST_TYPE === $screen->post_type ) {
-				return $clauses;
-			}
-		} elseif ( ( new ApplicantMessagingPage() )->get_page_id( ApplicantMessagingPage::PAGE_SLUG ) === get_queried_object_id() ) {
-			return $clauses;
+	public function exclude_applicant_messages( \WP_Comment_Query $query ) {
+		$vars = &$query->query_vars;
+		if (
+			empty( $vars['type'] ) ||
+			( ! empty( $vars['type__in'] ) && ! in_array( ApplicantMessage::TYPE, (array) $vars['type__in'], true ) )
+		) {
+			$vars['type__not_in']   = (array) $vars['type__not_in'];
+			$vars['type__not_in'][] = ApplicantMessage::TYPE;
 		}
-
-		$type              = ApplicantMessage::TYPE;
-		$clauses['where'] .= ( $clauses['where'] ? ' AND ' : '' ) . " comment_type != '{$type}' ";
-		return $clauses;
 	}
 
 	/**

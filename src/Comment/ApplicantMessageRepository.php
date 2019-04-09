@@ -76,23 +76,19 @@ class ApplicantMessageRepository {
 	 * @return ApplicantMessage[]
 	 */
 	public function find_new_messages_from_applicant() {
-		$tmp = remove_filter( 'comments_clauses', [ new ApplicantMessaging(), 'exclude_applicant_messages' ], 10 );
-		$tmp = remove_filter( 'comment_feed_where', [ new ApplicantMessaging(), 'exclude_applicant_messages_from_feed_where' ], 10 );
-
 		$args = [
 			'status' => 'hold',
 			'type'   => ApplicantMessage::TYPE,
-			//'count'  => true,
+			'fields'  => 'ids',
 		];
-		$query    = new \WP_Comment_Query( $args );
 
-		echo '<pre>'; var_dump($query); echo '</pre>';
-		exit;
+		$query    = new \WP_Comment_Query( $args );
 		$comments = [];
 		foreach ( $query->comments as $comment ) {
 			$comments[ $comment ] = new ApplicantMessage( $comment );
 		}
-
+		echo '<pre>'; var_dump($comments); echo '</pre>';
+		exit;
 		return $comments;
 	}
 }
