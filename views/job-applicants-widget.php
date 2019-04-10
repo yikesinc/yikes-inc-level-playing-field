@@ -11,7 +11,7 @@ namespace Yikes\LevelPlayingField;
 
 ?>
 <h2>
-	<a href="#"><?php echo esc_html( $this->msg_count ); ?> new messages</a>
+	<a href="<?php echo esc_url( $this->applicants_url ); ?>"><?php echo esc_html( $this->msg_count ); ?> new messages</a>
 </h2>
 <table>
 	<thead>
