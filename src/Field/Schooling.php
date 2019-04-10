@@ -77,6 +77,21 @@ class Schooling extends RepeatableField {
 	}
 
 	/**
+	 * Render the label for the repeatable fields.
+	 *
+	 * This should echo the label directly.
+	 *
+	 * @since %VERSION%
+	 */
+	protected function render_repeatable_field_label() {
+		printf(
+			'<div class="lpf-field-schooling lpf-fieldset-label">%1$s <span class="lpf-fieldset-number">%2$s</span></div>',
+			esc_html__( 'School', 'yikes-level-playing-field' ),
+			esc_html__( '1', 'yikes-level-playing-field' )
+		);
+	}
+
+	/**
 	 * Get a callback for generating a new Schooling field.
 	 *
 	 * @since %VERSION%

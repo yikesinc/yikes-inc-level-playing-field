@@ -79,12 +79,27 @@ class Volunteer extends RepeatableField {
 	}
 
 	/**
+	 * Render the label for the repeatable fields.
+	 *
+	 * This should echo the label directly.
+	 *
+	 * @since %VERSION%
+	 */
+	protected function render_repeatable_field_label() {
+		printf(
+			'<div class="lpf-field-volunteer lpf-fieldset-label">%1$s <span class="lpf-fieldset-number">%2$s</span></div>',
+			esc_html__( 'Volunteer', 'yikes-level-playing-field' ),
+			esc_html__( '1', 'yikes-level-playing-field' )
+		);
+	}
+
+	/**
 	 * Get the label to use when rendering the "Add New" button.
 	 *
 	 * @since %VERSION%
 	 * @return string
 	 */
 	protected function get_add_new_label() {
-		return esc_html_x( 'Volunteer', 'for "add new" button', 'yikes-level-playing-field' );
+		return esc_html_x( 'Volunteer Position', 'for "add new" button', 'yikes-level-playing-field' );
 	}
 }

@@ -383,15 +383,6 @@ abstract class BaseField implements Field {
 	}
 
 	/**
-	 * Render the label for the field.
-	 *
-	 * @since %VERSION%
-	 */
-	protected function render_label() {
-		echo esc_html( $this->label );
-	}
-
-	/**
 	 * Render the error message for the field.
 	 *
 	 * @since %VERSION%
@@ -406,6 +397,15 @@ abstract class BaseField implements Field {
 			esc_attr( $this->get_error_type() ),
 			esc_html( $this->error_message )
 		);
+	}
+
+	/**
+	 * Render the label for the field.
+	 *
+	 * @since %VERSION%
+	 */
+	protected function render_label() {
+		echo esc_html( $this->label );
 	}
 
 	/**
