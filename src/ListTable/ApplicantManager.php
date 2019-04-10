@@ -154,7 +154,7 @@ class ApplicantManager extends BasePostType {
 				break;
 
 			case 'new_messages':
-				echo esc_html( count( $msg_repo->find_new_messages_from_applicant( $post_id ) ) );
+				echo esc_html( count( $msg_repo->find_new_applicant_messages( $post_id ) ) );
 				break;
 
 			case 'viewed':
