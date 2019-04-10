@@ -1,6 +1,9 @@
 // Application Form Validation.
 jQuery( document ).ready( function( $ ) {
 
+	const labelErrorClass = 'lpf-input-label-error';
+	const inputErrorClass = 'lpf-form-field-error';
+
 	/**
 	 * Test a field value against a regular expression.
 	 *
@@ -15,15 +18,14 @@ jQuery( document ).ready( function( $ ) {
 		const errorClass = `error-${type.toLowerCase()}`;
 
 		if ( !isValid ) {
-			if ( field.parent().find( '.' + errorClass ).length === 0 ) {
+			if ( field.siblings( '.' + errorClass ).length === 0 ) {
 				let message = i18n.errors.invalid.replace( '%TYPE%', type );
-				field.before( `<span class="error-text ${errorClass}">${message}</span>` );
+				field.after( `<span class="error-text ${errorClass}">${message}</span>` );
 			}
-			field.parent().addClass( errorPrompt );
+			field.addClass( inputErrorClass ).siblings( 'label' ).addClass( labelErrorClass ).addClass( errorPrompt );
 			isError = true;
 		} else {
-			field.parent().find( `.${errorClass}` ).remove();
-			field.parent().removeClass( errorPrompt );
+			field.removeClass( inputErrorClass ).siblings( 'label' ).removeClass( labelErrorClass ).siblings( `.${errorClass}` ).remove();
 		}
 	};
 
@@ -37,19 +39,20 @@ jQuery( document ).ready( function( $ ) {
 		// Trim whitespace.
 		const trimmedValue = $.trim( getVal( field ) );
 		const errorClass   = '.error-empty';
-		const fieldLabel   = field.parents( 'label' );
+		const fieldLabel   = field.siblings( 'label' );
 
 		// If empty...
 		if ( !trimmedValue ) {
-			if ( fieldLabel.find( errorClass ).length === 0 ) {
-				field.after( `<span class="error-text error-empty">${i18n.errors.empty}</span>` );
-				fieldLabel.addClass( errorPrompt );
+			if ( fieldLabel.siblings( errorClass ).length === 0 ) {
+				field.addClass( inputErrorClass ).after( `<span class="error-text error-empty">${i18n.errors.empty}</span>` );
+				fieldLabel.addClass( errorPrompt ).addClass( labelErrorClass );
 			}
 			isError = true;
 			return true;
 		} else {
-			fieldLabel.find( errorClass ).remove();
-			fieldLabel.removeClass( errorPrompt );
+			field.removeClass( inputErrorClass );
+			fieldLabel.siblings( errorClass ).remove();
+			fieldLabel.removeClass( errorPrompt ).removeClass( labelErrorClass );
 			return false;
 		}
 	};
