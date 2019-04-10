@@ -67,13 +67,39 @@ class ApplicantMessageRepository {
 	}
 
 	/**
+	 * Find all the unread comments from applicant.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param  int $post_id The post ID.
+	 *
+	 * @return ApplicantMessage[]
+	 */
+	public function find_new_messages_from_applicant( $post_id ) {
+		$args = [
+			'post_id' => $post_id,
+			'status'  => 'hold',
+			'type'    => ApplicantMessage::TYPE,
+			'fields'  => 'ids',
+		];
+
+		$query    = new \WP_Comment_Query( $args );
+		$comments = [];
+		foreach ( $query->comments as $comment ) {
+			$comments[ $comment ] = new ApplicantMessage( $comment );
+		}
+
+		return $comments;
+	}
+
+	/**
 	 * Find all the unread comments.
 	 *
 	 * @since %VERSION%
 	 *
 	 * @return ApplicantMessage[]
 	 */
-	public function find_new_messages_from_applicant() {
+	public function find_all_new_messages() {
 		$args = [
 			'status' => 'hold',
 			'type'   => ApplicantMessage::TYPE,

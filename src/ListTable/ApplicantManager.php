@@ -21,6 +21,7 @@ use Yikes\LevelPlayingField\Model\MetaLinks;
 use Yikes\LevelPlayingField\Roles\Capabilities;
 use Yikes\LevelPlayingField\Taxonomy\ApplicantStatus;
 use Yikes\LevelPlayingField\Taxonomy\ApplicantStatusDropdown;
+use Yikes\LevelPlayingField\Comment\ApplicantMessageRepository;
 
 /**
  * Class ApplicantManager
@@ -68,6 +69,7 @@ class ApplicantManager extends BasePostType {
 				'avatar'                       => _x( 'Avatar', 'column heading', 'yikes-level-playing-field' ),
 				'nickname'                     => _x( 'Nick Name', 'column heading', 'yikes-level-playing-field' ),
 				"taxonomy-{$status_tax->name}" => $status_tax->label,
+				'new_messages'                 => _x( 'New Messages', 'column heading', 'yikes-level-playing-field' ),
 				'date'                         => $original_columns['date'],
 				'viewed'                       => _x( 'Viewed by', 'column heading', 'yikes-level-playing-field' ),
 			];
@@ -91,10 +93,12 @@ class ApplicantManager extends BasePostType {
 	 * @param int    $post_id     The post ID.
 	 */
 	public function column_content( $column_name, $post_id ) {
+
 		/** @var Applicant[] $applicants */
 		static $applicants     = [];
 		static $applicant_repo = null;
 		static $job_repo       = null;
+		static $msg_repo       = null;
 		static $job_titles     = [];
 
 		// Set up the two repositories only once.
@@ -103,6 +107,9 @@ class ApplicantManager extends BasePostType {
 		}
 		if ( null === $applicant_repo ) {
 			$applicant_repo = new ApplicantRepository();
+		}
+		if ( null === $msg_repo ) {
+			$msg_repo = new ApplicantMessageRepository();
 		}
 
 		// Cache the applicant object for subsequent columns.
@@ -144,6 +151,10 @@ class ApplicantManager extends BasePostType {
 
 			case 'nickname':
 				echo esc_html( $applicants[ $post_id ]->get_nickname() );
+				break;
+
+			case 'new_messages':
+				echo esc_html( count( $msg_repo->find_new_messages_from_applicant( $post_id ) ) );
 				break;
 
 			case 'viewed':

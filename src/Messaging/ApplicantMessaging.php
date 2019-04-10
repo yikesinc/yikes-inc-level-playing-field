@@ -269,10 +269,14 @@ class ApplicantMessaging implements Renderable, AssetsAware, Service {
 			], 400 );
 		}
 
-		$message_class           = new ApplicantMessage();
-		$author                  = is_user_logged_in() ? ApplicantMessage::ADMIN_AUTHOR : ApplicantMessage::APPLICANT_AUTHOR;
-		$message_class->approved = is_user_logged_in() ? 1 : $message_class->approved;
-		$new_message             = $message_class->create_comment( $post_id, $comment, $author );
+		$message_class = new ApplicantMessage();
+		$author        = ApplicantMessage::APPLICANT_AUTHOR;
+		if ( is_user_logged_in() ) {
+			$author                  = ApplicantMessage::ADMIN_AUTHOR;
+			$message_class->approved = 1;
+		}
+
+		$new_message = $message_class->create_comment( $post_id, $comment, $author );
 
 		if ( $new_message ) {
 
