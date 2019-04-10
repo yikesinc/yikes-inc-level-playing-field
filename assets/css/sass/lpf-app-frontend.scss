@@ -70,17 +70,38 @@
 		padding-bottom: 0.6rem;
 	}
 
+	.lpf-submit {
+		margin: 2rem 0 0 174px;
+	}
+
+	/* Error styles */
+
+	.lpf-input-label-error {
+		color: darken( $wp-red, 10% );
+	}
+
+	.lpf-form-field-error {
+		border: 1px solid darken( $wp-red, 10% );
+	}
+
 	.error-text {
 		background-color: lighten( $trans-red, 30% );
 		color: darken( $wp-red, 10% );
 		display: inline-block;
 		font-size: 0.875rem;
-		margin-left: 0.6rem;
+		margin: 0 0 0 0.6rem;
 		padding: 0.4rem;
 		white-space: nowrap;
 	}
+}
 
-	.lpf-submit {
-		margin: 2rem 0 0 174px;
+
+/* Responsive */
+
+// Extra small devices (portrait phones, less than 500px)
+@media (max-width: 500px) {
+
+	.lpf-form .error-text {
+		margin: 4px 0 8px 180px;
 	}
 }
