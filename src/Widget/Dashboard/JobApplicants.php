@@ -16,6 +16,7 @@ use Yikes\LevelPlayingField\Model\ApplicantMeta;
 use Yikes\LevelPlayingField\CustomPostType\ApplicantManager;
 use Yikes\LevelPlayingField\CustomPostType\JobManager;
 use Yikes\LevelPlayingField\Model\MetaLinks;
+use Yikes\LevelPlayingField\Comment\ApplicantMessageRepository;
 
 /**
  * Job Applicants Dashboard Widget.
@@ -46,13 +47,12 @@ class JobApplicants extends BaseWidget {
 
 		$job_repo       = new JobRepository();
 		$applicant_repo = new ApplicantRepository();
+		$msg_repo       = new ApplicantMessageRepository();
 		$all_jobs       = $job_repo->find_all();
 		$records        = [];
 		$jobs_url       = add_query_arg( [ 'post_type' => JobManager::SLUG ], admin_url( 'edit.php' ) );
 		$app_url        = add_query_arg( [ 'post_type' => ApplicantManager::SLUG ], admin_url( 'edit.php' ) );
-
-
-
+		$new_msgs       = $msg_repo->find_new_applicant_messages();
 
 		foreach ( $all_jobs as $job_id => $job ) {
 			$records[] = [
@@ -74,6 +74,7 @@ class JobApplicants extends BaseWidget {
 
 		return [
 			'records'        => $records,
+			'msg_count'      => count( $new_msgs ),
 			'jobs_url'       => $jobs_url,
 			'applicants_url' => $app_url,
 		];

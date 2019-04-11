@@ -323,7 +323,7 @@ abstract class Comment {
 	 * @return int
 	 */
 	protected function user_id() {
-		return wp_get_current_user();
+		return wp_get_current_user()->ID;
 	}
 
 	/**
@@ -331,25 +331,19 @@ abstract class Comment {
 	 *
 	 * @since  %VERSION%
 	 *
-	 * @param int    $post_id The post ID this comment is attached to.
-	 * @param string $content The content for this comment.
-	 * @param string $author  The author of this comment.
+	 * @param array $comment_data The array of comment data to override the defaults.
 	 *
 	 * @return bool
 	 */
-	public function create_comment( $post_id, $content, $author ) {
+	public function create_comment( $comment_data ) {
 
-		if ( empty( $post_id ) || empty( $content ) || empty( $author ) ) {
+		// Make sure our required fields are present.
+		if ( empty( $comment_data['comment_post_ID'] ) || empty( $comment_data['comment_content'] ) || empty( $comment_data['comment_author'] ) ) {
 			return false;
 		}
 
-		$comment_data = [
-			'comment_post_ID' => $post_id,
-			'comment_content' => $content,
-			'comment_author'  => $author,
-		];
-		$comment      = array_merge( $this->new_comment(), $comment_data );
-		$comment_id   = wp_insert_comment( $comment );
+		$comment    = array_merge( $this->new_comment(), $comment_data );
+		$comment_id = wp_insert_comment( $comment );
 
 		if ( false !== $comment_id ) {
 			$this->set_comment( $comment_id );
