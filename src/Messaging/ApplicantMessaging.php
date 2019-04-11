@@ -356,6 +356,9 @@ class ApplicantMessaging implements Renderable, AssetsAware, Service {
 	/**
 	 * Exclude applicant messages from comments list table counts.
 	 *
+	 * @see get_comment_count()
+	 * @see wp_count_comments
+	 *
 	 * @param mixed $comment_counts An array or object of comment counts by comment status.
 	 * @param int   $post_id        A post ID if we're calculating counts for an individual post.
 	 *
@@ -382,6 +385,57 @@ class ApplicantMessaging implements Renderable, AssetsAware, Service {
 		// WooCommerce, for example, turns the comment counts into an object. We should work with an array and convert it back to an object.
 		$comment_counts = (array) $comment_counts;
 
+		// These are the keys WordPress expects for the comment statuses.
+		$comment_stati = array(
+			'0'              => 'moderated',
+			'1'              => 'approved',
+			'spam'           => 'spam',
+			'trash'          => 'trash',
+			'post-trashed'   => 'post-trashed',
+			'all'            => 'all',
+			'total_comments' => 'total_comments',
+		);
+
+		// If nothing else has filtered the comment counts, we need to default them.
+		if ( empty( $comment_counts ) ) {
+
+			// Default comment counts to 0.
+			$comment_counts = array_map(
+				function( $val ) {
+					return 0;
+				},
+				array_flip( $comment_stati )
+			);
+
+			$count = $wpdb->get_results(
+				"SELECT comment_approved, COUNT(*) AS num_comments
+				FROM {$wpdb->comments}
+				GROUP BY comment_approved",
+				ARRAY_A
+			);
+
+			if ( empty( $count ) ) {
+				return $comment_counts;
+			}
+
+			// WordPress also stores a total count as "all" and "total_comments".
+			$total = 0;
+
+			// Go through each comment status as subtract our comment numbers from the total.
+			foreach ( $count as $row ) {
+				$comment_approved = $comment_stati[ $row['comment_approved'] ];
+				$comment_count    = $row['num_comments'];
+				$total           += $row['num_comments'];
+
+				// Subtract the count from the total.
+				$comment_counts[ $comment_approved ] = (int) $comment_count;
+			}
+
+			// Add the total.
+			$comment_counts['all']            = $total;
+			$comment_counts['total_comments'] = $total;
+		}
+
 		// Get the count of applicant message comments per comment status.
 		$count = $wpdb->get_results(
 			$wpdb->prepare(
@@ -398,32 +452,31 @@ class ApplicantMessaging implements Renderable, AssetsAware, Service {
 			return $comment_counts;
 		}
 
-		// These are the keys WordPress expects for the comment statuses.
-		$approved = array(
-			'0'            => 'moderated',
-			'1'            => 'approved',
-			'spam'         => 'spam',
-			'trash'        => 'trash',
-			'post-trashed' => 'post-trashed',
-		);
-
 		// WordPress also stores a total count as "all" and "total_comments".
 		$total = 0;
 
 		// Go through each comment status as subtract our comment numbers from the total.
 		foreach ( $count as $row ) {
-			$comment_approved = $approved[ $row['comment_approved'] ];
+			$comment_approved = $comment_stati[ $row['comment_approved'] ];
 			$comment_count    = $row['num_comments'];
 			$total           += $row['num_comments'];
 
-			if ( isset( $comment_counts[ $comment_approved ] ) ) {
-				$comment_counts[ $comment_approved ] -= (int) $comment_count;
-			}
+			// Subtract the count from the total.
+			$comment_counts[ $comment_approved ] -= (int) $comment_count;
 		}
 
 		// Subtract our total number of comments from the total.
 		$comment_counts['all']            -= $total;
 		$comment_counts['total_comments'] -= $total;
+
+		/**
+		 * Allow other plugins to filter/exclude our logic completely.
+		 *
+		 * @param array $comment_counts the array of comment counts by comment status.
+		 *
+		 * @return array $comment_counts the array of comment counts by comment status.
+		 */
+		$comment_counts = apply_filters( 'lpf_count_comments', $comment_counts );
 
 		return (object) $comment_counts;
 	}
