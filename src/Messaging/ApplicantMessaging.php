@@ -100,6 +100,7 @@ class ApplicantMessaging implements Renderable, AssetsAware, Service {
 		add_action( 'admin_menu', [ $this, 'remove_default_comments_meta_boxes' ], 1 );
 		add_action( 'wp_ajax_send_interview_request', [ $this, 'send_interview_request' ] );
 		add_action( 'pre_get_comments', [ $this, 'exclude_applicant_messages' ] );
+		add_filter( 'wp_count_comments', [ $this, 'exclude_applicant_messages_from_counts' ], 99, 2 );
 	}
 
 	/**
@@ -350,6 +351,81 @@ class ApplicantMessaging implements Renderable, AssetsAware, Service {
 			$vars['type__not_in']   = (array) $vars['type__not_in'];
 			$vars['type__not_in'][] = ApplicantMessage::TYPE;
 		}
+	}
+
+	/**
+	 * Exclude applicant messages from comments list table counts.
+	 *
+	 * @param mixed $comment_counts An array or object of comment counts by comment status.
+	 * @param int   $post_id        A post ID if we're calculating counts for an individual post.
+	 *
+	 * @return object $comment_counts An object of comment counts by comment status in the following format.
+	 *  array(
+	 *   ["moderated"]      => 0,
+	 *   ["approved"]       => 1,
+	 *   ["total_comments"] => 1,
+	 *   ["all"]            => 1,
+	 *   ["spam"]           => 0,
+	 *   ["trash"]          => 0,
+	 *   ["post-trashed"]   => 0,
+	 * )
+	 */
+	public function exclude_applicant_messages_from_counts( $comment_counts, $post_id ) {
+		global $wpdb;
+
+		// Don't change counts for single posts.
+		if ( ! empty( $post_id ) ) {
+			return $comment_counts;
+		}
+
+		// WordPress expects the comments returned as an object but passes them in as an array.
+		// WooCommerce, for example, turns the comment counts into an object. We should work with an array and convert it back to an object.
+		$comment_counts = (array) $comment_counts;
+
+		// Get the count of applicant message comments per comment status.
+		$count = $wpdb->get_results(
+			$wpdb->prepare(
+				"SELECT comment_approved, COUNT(*) AS num_comments
+				FROM {$wpdb->comments}
+				WHERE comment_type = %s
+				GROUP BY comment_approved",
+				ApplicantMessage::TYPE
+			),
+			ARRAY_A
+		);
+
+		if ( empty( $count ) ) {
+			return $comment_counts;
+		}
+
+		// These are the keys WordPress expects for the comment statuses.
+		$approved = array(
+			'0'            => 'moderated',
+			'1'            => 'approved',
+			'spam'         => 'spam',
+			'trash'        => 'trash',
+			'post-trashed' => 'post-trashed',
+		);
+
+		// WordPress also stores a total count as "all" and "total_comments".
+		$total = 0;
+
+		// Go through each comment status as subtract our comment numbers from the total.
+		foreach ( $count as $row ) {
+			$comment_approved = $approved[ $row['comment_approved'] ];
+			$comment_count    = $row['num_comments'];
+			$total           += $row['num_comments'];
+
+			if ( isset( $comment_counts[ $comment_approved ] ) ) {
+				$comment_counts[ $comment_approved ] -= (int) $comment_count;
+			}
+		}
+
+		// Subtract our total number of comments from the total.
+		$comment_counts['all']            -= $total;
+		$comment_counts['total_comments'] -= $total;
+
+		return (object) $comment_counts;
 	}
 
 	/**
