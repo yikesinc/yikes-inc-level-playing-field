@@ -396,44 +396,11 @@ class ApplicantMessaging implements Renderable, AssetsAware, Service {
 			'total_comments' => 'total_comments',
 		);
 
-		// If nothing else has filtered the comment counts, we need to default them.
+		// If nothing else has filtered the comment counts, use WordPress' function to get the default counts.
 		if ( empty( $comment_counts ) ) {
-
-			// Default comment counts to 0.
-			$comment_counts = array_map(
-				function( $val ) {
-					return 0;
-				},
-				array_flip( $comment_stati )
-			);
-
-			$count = $wpdb->get_results(
-				"SELECT comment_approved, COUNT(*) AS num_comments
-				FROM {$wpdb->comments}
-				GROUP BY comment_approved",
-				ARRAY_A
-			);
-
-			if ( empty( $count ) ) {
-				return $comment_counts;
-			}
-
-			// WordPress also stores a total count as "all" and "total_comments".
-			$total = 0;
-
-			// Go through each comment status as subtract our comment numbers from the total.
-			foreach ( $count as $row ) {
-				$comment_approved = $comment_stati[ $row['comment_approved'] ];
-				$comment_count    = $row['num_comments'];
-				$total           += $row['num_comments'];
-
-				// Subtract the count from the total.
-				$comment_counts[ $comment_approved ] = (int) $comment_count;
-			}
-
-			// Add the total.
-			$comment_counts['all']            = $total;
-			$comment_counts['total_comments'] = $total;
+			$comment_counts              = get_comment_count();
+			$comment_counts['moderated'] = $comment_counts['awaiting_moderation'];
+			unset( $comment_counts['awaiting_moderation'] );
 		}
 
 		// Get the count of applicant message comments per comment status.
