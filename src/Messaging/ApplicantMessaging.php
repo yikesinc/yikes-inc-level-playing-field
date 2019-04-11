@@ -270,13 +270,15 @@ class ApplicantMessaging implements Renderable, AssetsAware, Service {
 		}
 
 		$message_class = new ApplicantMessage();
-		$author        = ApplicantMessage::APPLICANT_AUTHOR;
-		if ( is_user_logged_in() ) {
-			$author                  = ApplicantMessage::ADMIN_AUTHOR;
-			$message_class->approved = 1;
-		}
 
-		$new_message = $message_class->create_comment( $post_id, $comment, $author );
+		$comment_data = [
+			'comment_author'   => is_user_logged_in() ? ApplicantMessage::ADMIN_AUTHOR : ApplicantMessage::APPLICANT_AUTHOR,
+			'comment_approved' => is_user_logged_in() ? 1 : 0,
+			'comment_post_ID'  => $post_id,
+			'comment_content'  => $message,
+		];
+
+		$new_message = $message_class->create_comment( $comment_data );
 
 		if ( $new_message ) {
 
@@ -409,7 +411,13 @@ class ApplicantMessaging implements Renderable, AssetsAware, Service {
 		$message .= '<br>';
 
 		$message_class = new ApplicantMessage();
-		$new_message   = $message_class->create_comment( $post_id, $message, ApplicantMessage::ADMIN_AUTHOR );
+		$comment_data  = [
+			'comment_author'   => ApplicantMessage::ADMIN_AUTHOR,
+			'comment_approved' => 1,
+			'comment_post_ID'  => $post_id,
+			'comment_content'  => $message,
+		];
+		$new_message   = $message_class->create_comment( $comment_data );
 
 		if ( $new_message ) {
 
