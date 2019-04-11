@@ -419,16 +419,15 @@ class ApplicantMessaging implements Renderable, AssetsAware, Service {
 			return $comment_counts;
 		}
 
-		// WordPress also stores a total count as "all" and "total_comments".
+		// WordPress also stores a total count as "all" and "total_comments" so default a total # of applicant comments here.
 		$total = 0;
 
-		// Go through each comment status as subtract our comment numbers from the total.
+		// Go through each comment status and subtract our comment numbers from the total.
 		foreach ( $count as $row ) {
 			$comment_approved = $comment_stati[ $row['comment_approved'] ];
 			$comment_count    = $row['num_comments'];
 			$total           += $row['num_comments'];
 
-			// Subtract the count from the total.
 			$comment_counts[ $comment_approved ] -= (int) $comment_count;
 		}
 
@@ -439,9 +438,9 @@ class ApplicantMessaging implements Renderable, AssetsAware, Service {
 		/**
 		 * Allow other plugins to filter/exclude our logic completely.
 		 *
-		 * @param array $comment_counts the array of comment counts by comment status.
+		 * @param array $comment_counts The array of comment counts by comment status.
 		 *
-		 * @return array $comment_counts the array of comment counts by comment status.
+		 * @return array $comment_counts The array of comment counts by comment status.
 		 */
 		$comment_counts = apply_filters( 'lpf_count_comments', $comment_counts );
 
