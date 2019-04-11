@@ -35,15 +35,6 @@ abstract class Comment {
 	public $comment;
 
 	/**
-	 * Comment approval status.
-	 *
-	 * @since %VERSION%
-	 *
-	 * @var   int
-	 */
-	public $approved = 0;
-
-	/**
 	 * Set the $comment object for this class.
 	 *
 	 * @since %VERSION%
