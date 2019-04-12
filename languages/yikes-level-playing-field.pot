@@ -42,11 +42,11 @@ msgstr ""
 msgid "Support"
 msgstr ""
 
-#: src/Blocks/JobListing.php:73
+#: src/Blocks/JobListing.php:72
 msgid "Job Listing"
 msgstr ""
 
-#: src/Blocks/JobListings.php:76
+#: src/Blocks/JobListings.php:75
 msgid "Job Listings"
 msgstr ""
 
