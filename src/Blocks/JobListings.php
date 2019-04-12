@@ -45,8 +45,7 @@ final class JobListings extends BaseBlock {
 				'wp-i18n',
 				'wp-element',
 				'wp-editor',
-			],
-			filemtime( $this->get_plugin_root() . '/blocks/job-listings/index.js' )
+			]
 		);
 
 		$block_script->add_localization(
