@@ -10,7 +10,6 @@
 namespace Yikes\LevelPlayingField\Settings\Fields;
 
 use Yikes\LevelPlayingField\Settings\Settings;
-use Yikes\LevelPlayingField\Service;
 
 /**
  * Class AdditionalEmailRecipients.
@@ -18,7 +17,7 @@ use Yikes\LevelPlayingField\Service;
  * @since   %VERSION%
  * @package Yikes\LevelPlayingField
  */
-abstract class BaseSettingsField implements Service {
+abstract class BaseSettingsField {
 
 	/**
 	 * The setting's field's value.
@@ -26,13 +25,6 @@ abstract class BaseSettingsField implements Service {
 	 * @var mixed $value A value for an setting field.
 	 */
 	public $value;
-
-	/**
-	 * Register...we shouldn't need to do this...I don't know how else to make this class globally available without implementing it as a service.
-	 *
-	 * @since %VERSION%
-	 */
-	public function register() {}
 
 	/**
 	 * Render the field.
