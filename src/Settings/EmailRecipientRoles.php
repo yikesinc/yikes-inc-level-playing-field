@@ -1,0 +1,58 @@
+<?php
+/**
+ * YIKES Inc. Level Playing Field Plugin.
+ *
+ * @package Yikes\LevelPlayingField
+ * @author  Jeremy Pry
+ * @license GPL2
+ */
+
+namespace Yikes\LevelPlayingField\Settings;
+
+use Yikes\LevelPlayingField\Roles\HiringManager;
+use Yikes\LevelPlayingField\Roles\HumanResources;
+
+/**
+ * Class EmailRecipientRoles
+ *
+ * @since   %VERSION%
+ * @package Yikes\LevelPlayingField
+ */
+class EmailRecipientRoles extends BaseSetting {
+
+	const SLUG = SettingsFields::EMAIL_RECIPIENT_ROLES;
+
+	/**
+	 * Get the default value for the setting.
+	 *
+	 * @since %VERSION%
+	 * @return array
+	 */
+	protected function get_default() {
+		return [
+			HiringManager::SLUG  => false,
+			HumanResources::SLUG => false,
+		];
+	}
+
+	/**
+	 * Sanitize the setting value.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param mixed $value The value to sanitize.
+	 *
+	 * @return mixed The sanitized value.
+	 */
+	protected function sanitize( $value ) {
+		if ( ! is_array( $value ) ) {
+			return $this->get();
+		}
+
+		foreach ( $value as &$item ) {
+			$item = boolval( $item );
+		}
+
+		return $value;
+	}
+}
