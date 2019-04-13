@@ -121,4 +121,20 @@ abstract class BaseSettingsField implements Service {
 		// Sanitize class names, remove empties, join each with a space, and then remove the trailing space.
 		return rtrim( implode( ' ', array_filter( array_map( 'sanitize_html_class', [ 'settings-field', static::NAME ] ) ) ) );
 	}
+
+	/**
+	 * Maybe display a paragraph of text with a given class.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param string $class HTML class for the text.
+	 * @param string $text  The text to display.
+	 */
+	protected function maybe_display_text( $class, $text ) {
+		if ( empty( $text ) ) {
+			return;
+		}
+
+		printf( '<p class="%1$s">%2$s</p>', esc_attr( $class ), esc_html( $text ) );
+	}
 }
