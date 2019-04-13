@@ -75,7 +75,7 @@ abstract class BaseSettingsField implements Service {
 	 *
 	 * @return string $description_text The description text for this field.
 	 */
-	protected function description_text() {
+	protected function get_description_text() {
 		return '';
 	}
 
@@ -85,9 +85,7 @@ abstract class BaseSettingsField implements Service {
 	 * @since %VERSION%
 	 */
 	protected function description() {
-		?>
-		<p class="lpf-field-description"><?php echo esc_html( $this->description_text() ); ?></p>
-		<?php
+		$this->maybe_display_text( 'lpf-field-description', $this->get_description_text() );
 	}
 
 	/**
@@ -97,7 +95,7 @@ abstract class BaseSettingsField implements Service {
 	 *
 	 * @return string $help_text The help text for this field.
 	 */
-	protected function help_text() {
+	protected function get_help_text() {
 		return '';
 	}
 
@@ -107,9 +105,7 @@ abstract class BaseSettingsField implements Service {
 	 * @since %VERSION%
 	 */
 	protected function help() {
-		?>
-		<p class="lpf-field-help"><?php echo esc_html( $this->help_text() ); ?></p>
-		<?php
+		$this->maybe_display_text( 'lpf-field-help', $this->get_help_text() );
 	}
 
 	/**
