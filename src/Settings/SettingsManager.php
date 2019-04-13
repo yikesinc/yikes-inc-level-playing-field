@@ -10,8 +10,6 @@
 namespace Yikes\LevelPlayingField\Settings;
 
 use Yikes\LevelPlayingField\Service;
-use Yikes\LevelPlayingField\Settings\Fields\AdditionalEmailRecipients;
-use Yikes\LevelPlayingField\Settings\Fields\EmailRecipientRoles;
 
 /**
  * Class SettingsManager.
@@ -44,16 +42,13 @@ final class SettingsManager implements Service {
 	 * @return array $recipients An array of email recipients.
 	 */
 	public function fetch_from_applicant_email_recipients() {
-
-		$settings = new Settings();
-
 		// Fetch the CSV list of email addresses.
-		$recipients = explode( ',', $settings->get_setting( AdditionalEmailRecipients::SLUG ) );
+		$recipients = explode( ',', ( new AdditionalEmailRecipients() )->get() );
 
 		// Fetch the enabled roles for email addresses.
-		$email_recipient_roles = array_filter( $settings->get_setting( EmailRecipientRoles::SLUG ) );
+		$recipient_roles = array_filter( ( new EmailRecipientRoles() )->get() );
 
-		foreach ( $email_recipient_roles as $role => $enabled ) {
+		foreach ( $recipient_roles as $role => $enabled ) {
 			$recipients = array_merge( $recipients, $this->get_recipients_by_role( $role ) );
 		}
 
@@ -69,7 +64,7 @@ final class SettingsManager implements Service {
 	 * @param  string $role       The role we're fetching emails for.
 	 * @return array  $recipients An array of email recipients.
 	 */
-	public function get_recipients_by_role( $role ) {
+	private function get_recipients_by_role( $role ) {
 		$email_addresses = get_transient( static::EMAILS_TRANSIENT_PREFIX . $role );
 		if ( false !== $email_addresses ) {
 			return $email_addresses;
