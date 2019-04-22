@@ -164,15 +164,21 @@ final class JobManager extends BasePostType implements AssetsAware {
 			'name'            => JobCategory::SLUG,
 			'taxonomy'        => JobCategory::SLUG,
 			'value_field'     => 'slug',
+			'hide_if_empty'   => true,
+			'echo'            => false,
 		];
 
-		printf(
-			'<label class="screen-reader-text" for="%1$s">%2$s</label>',
-			esc_attr( JobCategory::SLUG ),
-			esc_html__( 'Filter Job Categories', 'yikes-level-playing-field' )
-		);
+		$category_dropdown = wp_dropdown_categories( $dropdown_options );
 
-		wp_dropdown_categories( $dropdown_options );
+		if ( ! empty( $category_dropdown ) ) {
+			printf(
+				'<label class="screen-reader-text" for="%1$s">%2$s</label>',
+				esc_attr( JobCategory::SLUG ),
+				esc_html__( 'Filter Job Categories', 'yikes-level-playing-field' )
+			);
+
+			echo $category_dropdown; // phpcs:ignore WordPress.Security.EscapeOutput
+		}
 	}
 
 	/**
