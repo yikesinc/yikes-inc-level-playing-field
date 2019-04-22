@@ -378,7 +378,7 @@ class ApplicantMessaging implements Renderable, AssetsAware, Service {
 
 		// Don't change counts for single posts.
 		if ( ! empty( $post_id ) ) {
-			return $comment_counts;
+			return (object) $comment_counts;
 		}
 
 		// WordPress expects the comments returned as an object but passes them in as an array.
@@ -398,7 +398,9 @@ class ApplicantMessaging implements Renderable, AssetsAware, Service {
 
 		// If nothing else has filtered the comment counts, use WordPress' function to get the default counts.
 		if ( empty( $comment_counts ) ) {
-			$comment_counts              = get_comment_count();
+			$comment_counts = get_comment_count();
+
+			// WP backwards compatibility.
 			$comment_counts['moderated'] = $comment_counts['awaiting_moderation'];
 			unset( $comment_counts['awaiting_moderation'] );
 		}
@@ -416,7 +418,7 @@ class ApplicantMessaging implements Renderable, AssetsAware, Service {
 		);
 
 		if ( empty( $count ) ) {
-			return $comment_counts;
+			return (object) $comment_counts;
 		}
 
 		// WordPress also stores a total count as "all" and "total_comments" so default a total # of applicant comments here.
