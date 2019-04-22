@@ -207,6 +207,6 @@ jQuery( function ( $ ) {
 	 */
 	function scroll_to_bottom() {
 	 	const conversation_container = $( '.conversation-container' );
-	 	conversation_container.scrollTop = conversation_container.scrollHeight;
+		conversation_container.animate({ scrollTop: conversation_container.prop( 'scrollHeight' ) - conversation_container.height() }, 1 );
 	 }
 });
