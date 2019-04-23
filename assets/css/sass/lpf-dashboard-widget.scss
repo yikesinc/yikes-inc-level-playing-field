@@ -1,17 +1,48 @@
+@import "utilities/mixins/font-size-calculation";
+@import "utilities/variables/colors";
+
 #yikes_lpf_applicant_widget {
+
+  .yikes_lpf_applicant_widget-notifications {
+    text-align: left;
+
+    li {
+      display: inline-block;
+      vertical-align: middle;
+
+      &.yikes_lpf_applicant_widget-notifications-icon {
+        .dashicons {
+          background-color: $wp-green;
+          border-radius: 47%;
+          color: $color-white;
+          padding: 0.4rem;
+        }
+      }
+
+      &.yikes_lpf_applicant_widget-notifications-message {
+        @include fontsize(16px);
+        padding-left: 0.4rem;
+      }
+    }
+  }
+
   .inside {
     text-align: right;
+
     table {
       width: 100%;
       text-align: center;
       margin-bottom: 1rem;
       border-spacing: 0;
+
       thead tr th {
-        border-bottom: 1px solid #dee2e6;
+        border-bottom: 1px solid $wp-lightsilvergray;
       }
+
       thead tr th:first-child, tbody tr td:first-child {
         text-align: left;
       }
+
       th, td {
         padding: .5rem;
       }
