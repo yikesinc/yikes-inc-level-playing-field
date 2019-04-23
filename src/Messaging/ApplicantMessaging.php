@@ -264,7 +264,7 @@ class ApplicantMessaging implements Renderable, AssetsAware, Service {
 		// Confirm we have our variables.
 		if ( empty( $comment ) || empty( $post_id ) ) {
 			wp_send_json_error( [
-				'reason'  => __( 'An error occurred: a required field is missing.', 'yikes-level-playing-field' ),
+				'reason'  => __( 'Please review: a required field is missing.', 'yikes-level-playing-field' ),
 				'comment' => $comment,
 				'post_id' => $post_id,
 			], 400 );
@@ -294,7 +294,7 @@ class ApplicantMessaging implements Renderable, AssetsAware, Service {
 			}
 
 			wp_send_json_success( [
-				'reason'  => __( 'The message was successfully sent.', 'yikes-level-playing-field' ),
+				'reason'  => __( 'The message was sent successfully.', 'yikes-level-playing-field' ),
 				'post_id' => $post_id,
 				'email'   => $email,
 			], 200 );
@@ -485,7 +485,7 @@ class ApplicantMessaging implements Renderable, AssetsAware, Service {
 		// Confirm we have our variables.
 		if ( empty( $comment ) || empty( $date ) || empty( $time ) || empty( $location ) || empty( $post_id ) ) {
 			wp_send_json_error( [
-				'reason'   => __( 'An error occurred: a required field is missing.', 'yikes-level-playing-field' ),
+				'reason'   => __( 'Please review: a required field is missing.', 'yikes-level-playing-field' ),
 				'comment'  => $comment,
 				'date'     => $date,
 				'time'     => $time,
@@ -497,10 +497,10 @@ class ApplicantMessaging implements Renderable, AssetsAware, Service {
 		$applicant = new Applicant( get_post( $post_id ) );
 
 		/* translators: %1$s is the date and %2$s is the time. */
-		$message  = sprintf( __( 'You have been requested for an interview on %1$s at %2$s.', 'yikes-level-playing-field' ), $date, $time );
+		$message  = sprintf( __( 'You have received an interview reqquest for: %1$s at %2$s.', 'yikes-level-playing-field' ), $date, $time );
 		$message .= '<br>';
 		/* translators: %1$s is the location. */
-		$message .= sprintf( __( 'The interview location is: %1$s.', 'yikes-level-playing-field' ), '<br>' . $location );
+		$message .= sprintf( __( 'The interview will take place at: %1$s.', 'yikes-level-playing-field' ), '<br>' . $location );
 		$message .= '<br>';
 		$message .= $comment;
 		$message .= '<br>';
@@ -532,7 +532,7 @@ class ApplicantMessaging implements Renderable, AssetsAware, Service {
 			$applicant->persist_properties();
 
 			wp_send_json_success( [
-				'reason'  => __( 'The interview request was successfully sent.', 'yikes-level-playing-field' ),
+				'reason'  => __( 'The interview request was sent successfully.', 'yikes-level-playing-field' ),
 				'email'   => $email,
 				'post_id' => $post_id,
 			], 200 );
