@@ -50,13 +50,16 @@ abstract class RepeatableField extends ComplexField {
 		$last = count( $this->sub_fields ) - 1;
 		foreach ( $this->sub_fields as $group => $fields ) {
 			$this->render_open_fieldset();
+			$this->render_grouping_label();
+
+			$this->render_open_field_container();
 
 			// First field group doesn't get a delete button.
 			if ( $group > 0 ) {
 				$this->render_delete_button();
 			}
 
-			$this->render_grouping_label();
+			$this->render_repeatable_field_label();
 			$this->render_sub_fields( $group );
 
 			// Only render the repeater button for the last fieldset.
@@ -64,6 +67,7 @@ abstract class RepeatableField extends ComplexField {
 				$this->render_repeater_button();
 			}
 
+			$this->render_close_field_container();
 			$this->render_close_fieldset();
 		}
 	}
@@ -81,7 +85,25 @@ abstract class RepeatableField extends ComplexField {
 		];
 
 		printf(
-			'<fieldset class="%s" data-add-new-label="%s">',
+			'<fieldset class="%s">',
+			esc_attr( join( ' ', $classes ) )
+		);
+	}
+
+	/**
+	 * Render the opening of a field container div tag.
+	 *
+	 * @since %VERSION%
+	 */
+	protected function render_open_field_container() {
+		$classes = [
+			'lpf-fieldset-container',
+			"lpf-fieldset-{$this->class_base}-container",
+			'lpf-fieldset-repeatable-container',
+		];
+
+		printf(
+			'<div class="lpf-fieldset-container" class="%s" data-add-new-label="%s">',
 			esc_attr( join( ' ', $classes ) ),
 			esc_attr( $this->get_add_new_label() )
 		);
@@ -93,7 +115,7 @@ abstract class RepeatableField extends ComplexField {
 	 * @since %VERSION%
 	 */
 	protected function render_delete_button() {
-		print( '<button type="button" class="lpf-delete-button">X</button>' );
+		print( '<button type="button" class="lpf-delete-button">x</button>' );
 	}
 
 	/**
@@ -111,6 +133,15 @@ abstract class RepeatableField extends ComplexField {
 	}
 
 	/**
+	 * Render the closing field container div tag.
+	 *
+	 * @since %VERSION%
+	 */
+	protected function render_close_field_container() {
+		echo '</div>';
+	}
+
+	/**
 	 * Render the repeater button.
 	 *
 	 * @since %VERSION%
@@ -118,7 +149,7 @@ abstract class RepeatableField extends ComplexField {
 	protected function render_repeater_button() {
 		printf(
 			'<button type="button" class="lpf-repeat-button">%1$s %2$s</button>',
-			esc_html_x( 'Add New', 'button for adding section in application', 'yikes-level-playing-field' ),
+			esc_html_x( 'Add Another', 'button for adding section in application', 'yikes-level-playing-field' ),
 			esc_html( $this->get_add_new_label() )
 		);
 	}
@@ -134,6 +165,15 @@ abstract class RepeatableField extends ComplexField {
 	protected function get_add_new_label() {
 		return '';
 	}
+
+	/**
+	 * Render the label for repeatable fields.
+	 *
+	 * This should echo the label directly.
+	 *
+	 * @since %VERSION%
+	 */
+	abstract protected function render_repeatable_field_label();
 
 	/**
 	 * Set the data submitted to the field.

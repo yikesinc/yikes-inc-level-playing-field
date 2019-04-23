@@ -57,7 +57,7 @@ final class DisableFrontEndCSS extends BaseSettingsField {
 	 *
 	 * @return string $description_text The description text for this field.
 	 */
-	protected function description_text() {
-		return __( "Turn off plugin styles to give your theme full control over the way forms and job listings look on your site.", 'yikes-level-playing-field' );
+	protected function get_description_text() {
+		return __( 'Turn off plugin styles to give your theme full control over the way forms and job listings look on your site.', 'yikes-level-playing-field' );
 	}
 }

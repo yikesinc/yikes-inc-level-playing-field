@@ -16,6 +16,7 @@ use Yikes\LevelPlayingField\Assets\AssetsAwareness;
 use Yikes\LevelPlayingField\Assets\ScriptAsset;
 use Yikes\LevelPlayingField\Assets\StyleAsset;
 use Yikes\LevelPlayingField\CustomPostType\ApplicantManager as ApplicantCPT;
+use Yikes\LevelPlayingField\Comment\ApplicantMessageRepository;
 use Yikes\LevelPlayingField\Exception\Exception;
 use Yikes\LevelPlayingField\Messaging\ApplicantMessaging;
 use Yikes\LevelPlayingField\Model\Applicant;
@@ -89,6 +90,10 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 
 		add_action( 'lpf_applicant_screen_rendered', function( View $view ) {
 			$this->update_viewed_by( $view->applicant );
+		}, 10 );
+
+		add_action( 'lpf_applicant_screen_rendered', function( View $view ) {
+			$this->mark_messages_read( $view->applicant );
 		}, 10 );
 	}
 
@@ -170,6 +175,23 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 		if ( $applicant->get_viewed_by() === 0 ) {
 			$applicant->set_viewed_by( get_current_user_id() );
 			$applicant->persist();
+		}
+	}
+
+	/**
+	 * Set messages sent by applicant to read/approved.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param Applicant $applicant The applicant object.
+	 */
+	protected function mark_messages_read( $applicant ) {
+		$msgs = ( new ApplicantMessageRepository() )->find_all( $applicant->get_id() );
+
+		if ( ! empty( $msgs ) ) {
+			foreach ( $msgs as $key => $msg ) {
+				wp_set_comment_status( $key, 1 );
+			}
 		}
 	}
 

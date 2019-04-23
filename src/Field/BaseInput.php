@@ -53,17 +53,17 @@ class BaseInput extends BaseField {
 		$has_error = ! empty( $this->error_message );
 		?>
 		<div class="lpf-field-container">
-			<label class="lpf-input-label <?php echo $has_error ? 'error-prompt' : ''; ?>">
+			<label class="lpf-input-label lpf-input-label-<?php echo esc_attr( $type ); ?><?php echo $has_error ? 'error-prompt' : ''; ?>" for="<?php echo esc_attr( $this->id ); ?>">
 				<?php $this->render_label(); ?>
-				<?php $this->render_error_message(); ?>
-				<input type="<?php echo esc_attr( $type ); ?>"
-					   class="<?php echo esc_attr( join( ' ', $classes ) ); ?>"
-					   name="<?php echo esc_attr( $this->id ); ?>"
-					   id="<?php echo esc_attr( $this->id ); ?>"
-					   value="<?php echo esc_attr( $this->value ); ?>"
-					<?php $this->render_extra_attributes(); ?>
-				/>
 			</label>
+			<input type="<?php echo esc_attr( $type ); ?>"
+				class="<?php echo esc_attr( join( ' ', $classes ) ); ?>"
+				name="<?php echo esc_attr( $this->id ); ?>"
+				id="<?php echo esc_attr( $this->id ); ?>"
+				value="<?php echo esc_attr( $this->value ); ?>"
+				<?php $this->render_extra_attributes(); ?>
+			/>
+			<?php $this->render_error_message(); ?>
 		</div>
 		<?php
 	}

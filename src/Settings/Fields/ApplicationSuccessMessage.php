@@ -46,7 +46,7 @@ final class ApplicationSuccessMessage extends BaseSettingsField {
 	 *
 	 * @return string $description_text The description text for this field.
 	 */
-	protected function description_text() {
+	protected function get_description_text() {
 		return __( 'Customize the message shown to applicants after they have successfully submitted an application by entering your own text below.', 'yikes-level-playing-field' );
 	}
 

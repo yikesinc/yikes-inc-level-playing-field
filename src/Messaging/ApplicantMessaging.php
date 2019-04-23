@@ -97,10 +97,10 @@ class ApplicantMessaging implements Renderable, AssetsAware, Service {
 		add_action( 'wp_ajax_nopriv_send_message', [ $this, 'send_message' ] );
 		add_action( 'wp_ajax_refresh_conversation', [ $this, 'refresh_conversation' ] );
 		add_action( 'wp_ajax_nopriv_refresh_conversation', [ $this, 'refresh_conversation' ] );
-		add_filter( 'comments_clauses', [ $this, 'exclude_applicant_messages' ], 10, 1 );
-		add_filter( 'comment_feed_where', [ $this, 'exclude_applicant_messages_from_feed_where' ], 10 );
 		add_action( 'admin_menu', [ $this, 'remove_default_comments_meta_boxes' ], 1 );
 		add_action( 'wp_ajax_send_interview_request', [ $this, 'send_interview_request' ] );
+		add_action( 'pre_get_comments', [ $this, 'exclude_applicant_messages' ] );
+		add_filter( 'wp_count_comments', [ $this, 'exclude_applicant_messages_from_counts' ], 99, 2 );
 	}
 
 	/**
@@ -234,6 +234,8 @@ class ApplicantMessaging implements Renderable, AssetsAware, Service {
 			'applicant'  => $applicant,
 			'comments'   => $comments,
 			'is_metabox' => $is_metabox,
+			'is_cancel'  => false,
+			'is_confirm' => false,
 			'partials'   => [
 				'interview_scheduler'    => static::INTERVIEW_SCHEDULER_PARTIAL,
 				'interview_confirmation' => static::INTERVIEW_CONFIRMATION_PARTIAL,
@@ -269,8 +271,15 @@ class ApplicantMessaging implements Renderable, AssetsAware, Service {
 		}
 
 		$message_class = new ApplicantMessage();
-		$author        = is_user_logged_in() ? ApplicantMessage::ADMIN_AUTHOR : ApplicantMessage::APPLICANT_AUTHOR;
-		$new_message   = $message_class->create_comment( $post_id, $comment, $author );
+
+		$comment_data = [
+			'comment_author'   => is_user_logged_in() ? ApplicantMessage::ADMIN_AUTHOR : ApplicantMessage::APPLICANT_AUTHOR,
+			'comment_approved' => is_user_logged_in() ? 1 : 0,
+			'comment_post_ID'  => $post_id,
+			'comment_content'  => $comment,
+		];
+
+		$new_message = $message_class->create_comment( $comment_data );
 
 		if ( $new_message ) {
 
@@ -327,45 +336,117 @@ class ApplicantMessaging implements Renderable, AssetsAware, Service {
 	}
 
 	/**
-	 * Exclude Applicant Messages from queries and RSS.
+	 * Exclude comments of type 'applicant_message' from comment queries.
 	 *
-	 * @param  string $where The WHERE clause of the query.
-	 * @return string
+	 * @since %VERSION%
+	 *
+	 * @param \WP_Comment_Query $query Current instance of WP_Comment_Query (passed by reference).
 	 */
-	public static function exclude_applicant_messages_from_feed_where( $where ) {
-		$type = ApplicantMessage::TYPE;
-		return $where . ( $where ? ' AND ' : '' ) . " comment_type != '{$type}' ";
+	public function exclude_applicant_messages( \WP_Comment_Query $query ) {
+		$vars = &$query->query_vars;
+		if (
+			empty( $vars['type'] ) ||
+			( ! empty( $vars['type__in'] ) && ! in_array( ApplicantMessage::TYPE, (array) $vars['type__in'], true ) )
+		) {
+			$vars['type__not_in']   = (array) $vars['type__not_in'];
+			$vars['type__not_in'][] = ApplicantMessage::TYPE;
+		}
 	}
 
 	/**
-	 * Exclude Applicant Messages from queries and RSS.
+	 * Exclude applicant messages from comments list table counts.
 	 *
-	 * @param  array $clauses A compacted array of comment query clauses.
+	 * @see get_comment_count()
+	 * @see wp_count_comments
 	 *
-	 * @return array
+	 * @param mixed $comment_counts An array or object of comment counts by comment status.
+	 * @param int   $post_id        A post ID if we're calculating counts for an individual post.
+	 *
+	 * @return object $comment_counts An object of comment counts by comment status in the following format.
+	 *  array(
+	 *   ["moderated"]      => 0,
+	 *   ["approved"]       => 1,
+	 *   ["total_comments"] => 1,
+	 *   ["all"]            => 1,
+	 *   ["spam"]           => 0,
+	 *   ["trash"]          => 0,
+	 *   ["post-trashed"]   => 0,
+	 * )
 	 */
-	public static function exclude_applicant_messages( $clauses ) {
+	public function exclude_applicant_messages_from_counts( $comment_counts, $post_id ) {
+		global $wpdb;
 
-		// Check if we're on the admin.
-		if ( is_admin() ) {
-
-			// Ensure this is a real screen object.
-			$screen = get_current_screen();
-			if ( ! ( $screen instanceof \WP_Screen ) ) {
-				return $clauses;
-			}
-
-			// If we're looking at our the post type, do not hide the comments.
-			if ( static::POST_TYPE === $screen->post_type ) {
-				return $clauses;
-			}
-		} elseif ( ( new ApplicantMessagingPage() )->get_page_id( ApplicantMessagingPage::PAGE_SLUG ) === get_queried_object_id() ) {
-			return $clauses;
+		// Don't change counts for single posts.
+		if ( ! empty( $post_id ) ) {
+			return (object) $comment_counts;
 		}
 
-		$type              = ApplicantMessage::TYPE;
-		$clauses['where'] .= ( $clauses['where'] ? ' AND ' : '' ) . " comment_type != '{$type}' ";
-		return $clauses;
+		// WordPress expects the comments returned as an object but passes them in as an array.
+		// WooCommerce, for example, turns the comment counts into an object. We should work with an array and convert it back to an object.
+		$comment_counts = (array) $comment_counts;
+
+		// These are the keys WordPress expects for the comment statuses.
+		$comment_stati = array(
+			'0'              => 'moderated',
+			'1'              => 'approved',
+			'spam'           => 'spam',
+			'trash'          => 'trash',
+			'post-trashed'   => 'post-trashed',
+			'all'            => 'all',
+			'total_comments' => 'total_comments',
+		);
+
+		// If nothing else has filtered the comment counts, use WordPress' function to get the default counts.
+		if ( empty( $comment_counts ) ) {
+			$comment_counts = get_comment_count();
+
+			// WP backwards compatibility.
+			$comment_counts['moderated'] = $comment_counts['awaiting_moderation'];
+			unset( $comment_counts['awaiting_moderation'] );
+		}
+
+		// Get the count of applicant message comments per comment status.
+		$count = $wpdb->get_results(
+			$wpdb->prepare(
+				"SELECT comment_approved, COUNT(*) AS num_comments
+				FROM {$wpdb->comments}
+				WHERE comment_type = %s
+				GROUP BY comment_approved",
+				ApplicantMessage::TYPE
+			),
+			ARRAY_A
+		);
+
+		if ( empty( $count ) ) {
+			return (object) $comment_counts;
+		}
+
+		// WordPress also stores a total count as "all" and "total_comments" so default a total # of applicant comments here.
+		$total = 0;
+
+		// Go through each comment status and subtract our comment numbers from the total.
+		foreach ( $count as $row ) {
+			$comment_approved = $comment_stati[ $row['comment_approved'] ];
+			$comment_count    = $row['num_comments'];
+			$total           += $row['num_comments'];
+
+			$comment_counts[ $comment_approved ] -= (int) $comment_count;
+		}
+
+		// Subtract our total number of comments from the total.
+		$comment_counts['all']            -= $total;
+		$comment_counts['total_comments'] -= $total;
+
+		/**
+		 * Allow other plugins to filter/exclude our logic completely.
+		 *
+		 * @param array $comment_counts The array of comment counts by comment status.
+		 *
+		 * @return array $comment_counts The array of comment counts by comment status.
+		 */
+		$comment_counts = apply_filters( 'lpf_count_comments', $comment_counts );
+
+		return (object) $comment_counts;
 	}
 
 	/**
@@ -427,7 +508,13 @@ class ApplicantMessaging implements Renderable, AssetsAware, Service {
 		$message .= '<br>';
 
 		$message_class = new ApplicantMessage();
-		$new_message   = $message_class->create_comment( $post_id, $message, ApplicantMessage::ADMIN_AUTHOR );
+		$comment_data  = [
+			'comment_author'   => ApplicantMessage::ADMIN_AUTHOR,
+			'comment_approved' => 1,
+			'comment_post_ID'  => $post_id,
+			'comment_content'  => $message,
+		];
+		$new_message   = $message_class->create_comment( $comment_data );
 
 		if ( $new_message ) {
 

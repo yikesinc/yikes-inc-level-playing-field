@@ -11,7 +11,7 @@ namespace Yikes\LevelPlayingField\Comment;
 
 use Yikes\LevelPlayingField\Exception\InvalidCommentID;
 use Yikes\LevelPlayingField\Comment\ApplicantMessage;
-
+use Yikes\LevelPlayingField\Messaging\ApplicantMessaging;
 /**
  * Class ApplicantMessageRepository
  *
@@ -56,6 +56,37 @@ class ApplicantMessageRepository {
 			'orderby' => 'comment_date',
 			'order'   => 'ASC',
 		];
+
+		$query    = new \WP_Comment_Query( $args );
+		$comments = [];
+		foreach ( $query->comments as $comment ) {
+			$comments[ $comment ] = new ApplicantMessage( $comment );
+		}
+
+		return $comments;
+	}
+
+	/**
+	 * Find all the unread comments from applicants.
+	 * Comments with status of hold is an unread
+	 * applicant message.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param  int $post_id The post ID.
+	 *
+	 * @return ApplicantMessage[]
+	 */
+	public function find_new_applicant_messages( $post_id = '' ) {
+		$args = [
+			'status' => 'hold',
+			'type'   => ApplicantMessage::TYPE,
+			'fields' => 'ids',
+		];
+
+		if ( ! empty( $post_id ) ) {
+			$args['post_id'] = $post_id;
+		}
 
 		$query    = new \WP_Comment_Query( $args );
 		$comments = [];

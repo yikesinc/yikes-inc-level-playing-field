@@ -10,7 +10,7 @@
 namespace Yikes\LevelPlayingField;
 
 /**
- * These variables are included here for easy visiblity, but they
+ * These variables are included here for easy visibility, but they
  * can also be used as $this->var_name directly.
  */
 
@@ -40,12 +40,12 @@ $form_classes = $this->form_classes
 	</div>
 <?php endif; ?>
 <form method="POST"
-	  id="<?php echo esc_attr( $application->get_id() ); ?>"
-	  class="<?php echo esc_attr( join( ' ', $form_classes ) ); ?>"
+	id="<?php echo esc_attr( $application->get_id() ); ?>"
+	class="<?php echo esc_attr( join( ' ', $form_classes ) ); ?>"
 >
 	<?php $form->render(); ?>
 	<button class="lpf-submit" type="submit" name="lpf_submit">
-		<?php esc_html_e( 'Submit', 'yikes-level-playing-field' ); ?>
+		<?php esc_html_e( 'Submit Application', 'yikes-level-playing-field' ); ?>
 	</button>
 </form>
 

@@ -10,7 +10,6 @@
 namespace Yikes\LevelPlayingField\Settings\Fields;
 
 use Yikes\LevelPlayingField\Settings\Settings;
-use Yikes\LevelPlayingField\Service;
 
 /**
  * Class AdditionalEmailRecipients.
@@ -18,7 +17,7 @@ use Yikes\LevelPlayingField\Service;
  * @since   %VERSION%
  * @package Yikes\LevelPlayingField
  */
-abstract class BaseSettingsField implements Service {
+abstract class BaseSettingsField {
 
 	/**
 	 * The setting's field's value.
@@ -26,13 +25,6 @@ abstract class BaseSettingsField implements Service {
 	 * @var mixed $value A value for an setting field.
 	 */
 	public $value;
-
-	/**
-	 * Register...we shouldn't need to do this...I don't know how else to make this class globally available without implementing it as a service.
-	 *
-	 * @since %VERSION%
-	 */
-	public function register() {}
 
 	/**
 	 * Render the field.
@@ -75,7 +67,7 @@ abstract class BaseSettingsField implements Service {
 	 *
 	 * @return string $description_text The description text for this field.
 	 */
-	protected function description_text() {
+	protected function get_description_text() {
 		return '';
 	}
 
@@ -85,9 +77,7 @@ abstract class BaseSettingsField implements Service {
 	 * @since %VERSION%
 	 */
 	protected function description() {
-		?>
-		<p class="lpf-field-description"><?php echo esc_html( $this->description_text() ); ?></p>
-		<?php
+		$this->maybe_display_text( 'lpf-field-description', $this->get_description_text() );
 	}
 
 	/**
@@ -97,7 +87,7 @@ abstract class BaseSettingsField implements Service {
 	 *
 	 * @return string $help_text The help text for this field.
 	 */
-	protected function help_text() {
+	protected function get_help_text() {
 		return '';
 	}
 
@@ -107,9 +97,7 @@ abstract class BaseSettingsField implements Service {
 	 * @since %VERSION%
 	 */
 	protected function help() {
-		?>
-		<p class="lpf-field-help"><?php echo esc_html( $this->help_text() ); ?></p>
-		<?php
+		$this->maybe_display_text( 'lpf-field-help', $this->get_help_text() );
 	}
 
 	/**
@@ -120,5 +108,21 @@ abstract class BaseSettingsField implements Service {
 	protected function html_classes() {
 		// Sanitize class names, remove empties, join each with a space, and then remove the trailing space.
 		return rtrim( implode( ' ', array_filter( array_map( 'sanitize_html_class', [ 'settings-field', static::NAME ] ) ) ) );
+	}
+
+	/**
+	 * Maybe display a paragraph of text with a given class.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param string $class HTML class for the text.
+	 * @param string $text  The text to display.
+	 */
+	protected function maybe_display_text( $class, $text ) {
+		if ( empty( $text ) ) {
+			return;
+		}
+
+		printf( '<p class="%1$s">%2$s</p>', esc_attr( $class ), esc_html( $text ) );
 	}
 }

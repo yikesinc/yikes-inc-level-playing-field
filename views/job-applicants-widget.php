@@ -10,6 +10,9 @@
 namespace Yikes\LevelPlayingField;
 
 ?>
+<h2>
+	<a href="<?php echo esc_url( $this->applicants_url ); ?>"><?php echo esc_html( $this->msg_count ); ?> new messages</a>
+</h2>
 <table>
 	<thead>
 		<tr>
@@ -19,7 +22,9 @@ namespace Yikes\LevelPlayingField;
 		</tr>
 	</thead>
 	<tbody>
-	<?php foreach ( $this->records as $record ) { ?>
+	<?php
+	foreach ( $this->records as $record ) {
+		?>
 		<tr>
 			<td>
 				<a href="<?php echo esc_url( $record['job_link'] ); ?>"><?php echo esc_html( $record['job_name'] ); ?></a>

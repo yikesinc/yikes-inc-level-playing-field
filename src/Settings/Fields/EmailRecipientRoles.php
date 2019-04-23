@@ -57,7 +57,7 @@ final class EmailRecipientRoles extends BaseSettingsField {
 	 *
 	 * @return string $description_text The help text for this field.
 	 */
-	protected function description_text() {
+	protected function get_description_text() {
 		return __( 'Check off the user roles you want notification emails sent to. All users assigned to those roles will receive notifications.', 'yikes-level-playing-field' );
 	}
 }

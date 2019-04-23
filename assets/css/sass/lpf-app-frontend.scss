@@ -1,21 +1,12 @@
-@import "utilities/index";
-
-@mixin error_color($color) {
-	background: $color;
-
-	&::after {
-		border-bottom-color: $color;
-	}
-
-	& + .lpf-form-field {
-		border-color: $color;
-	}
-}
+@import "utilities/mixins/font-size-calculation";
+@import "utilities/variables/colors";
 
 // Form
 .lpf-form {
 
 	.lpf-field-container {
+		padding-bottom: 0.4rem;
+
 		&.lpf-disabled {
 			opacity: .5;
 			cursor: not-allowed;
@@ -26,39 +17,91 @@
 		}
 	}
 
-	.lpf-input-label {
+	legend.lpf-input-label {
+		font-weight: 600;
+		margin-top: 2rem;
+	}
 
-		&.error-prompt {
-			position: relative;
+	.lpf-input-label:not(legend),
+	.lpf-select-label {
+		display: inline-block;
+		padding-right: 4px;
+		text-align: right;
+		width: 170px;
 
-			.lpf-form-field, textarea {
-				border: 1px solid $color-red;
-			}
-
-			.error-text {
-				font-size: 14px;
-				display: inline-block;
-				position: absolute;
-				left: 100%;
-				background: $trans-red;
-				padding: 5px;
-				z-index: 2;
-				color: $color-white;
-				border-radius: 0.25em;
-				white-space: nowrap;
-
-				&.error-email {
-					@include error_color($trans-purple);
-				}
-
-				&.error-zip {
-					@include error_color($trans-blue);
-				}
-
-				&.error-year {
-					@include error_color($trans-green);
-				}
-			}
+		&.lpf-input-label-checkbox {
+			font-size: 0.875rem;
+			margin-left: 174px;
+			text-align: left;
+			width: auto;
 		}
+	}
+
+	.lpf-form-field {
+		display: inline-block;
+		width: auto;
+	}
+
+	.lpf-fieldset-container {
+		padding-bottom: 2rem;
+
+		&:last-oftype {
+			padding-bottom: 0;
+		}
+	}
+
+	.lpf-repeat-button {
+		font-size: 0.875rem;
+		margin-left: 174px;
+	}
+
+	.lpf-delete-button {
+		position: absolute;
+	}
+
+	.lpf-delete-button {
+		font-size: 0.875rem;
+		padding: 0.875rem;
+	}
+
+	.lpf-fieldset-label {
+		font-weight: 600;
+		margin-left: 74px;
+		padding-bottom: 0.6rem;
+	}
+
+	.lpf-submit {
+		margin: 2rem 0 0 174px;
+	}
+
+	/* Error styles */
+
+	.lpf-input-label-error {
+		color: darken( $wp-red, 10% );
+	}
+
+	.lpf-form-field-error {
+		border: 1px solid darken( $wp-red, 10% );
+	}
+
+	.error-text {
+		background-color: lighten( $trans-red, 30% );
+		color: darken( $wp-red, 10% );
+		display: inline-block;
+		font-size: 0.875rem;
+		margin: 0 0 0 0.6rem;
+		padding: 0.4rem;
+		white-space: nowrap;
+	}
+}
+
+
+/* Responsive */
+
+// Extra small devices (portrait phones, less than 500px)
+@media (max-width: 500px) {
+
+	.lpf-form .error-text {
+		margin: 4px 0 8px 180px;
 	}
 }

@@ -221,7 +221,7 @@ final class Application extends BaseShortcode {
 		);
 		$input_validation->add_localization( 'lpfInputValidation', [
 			'errors' => [
-				'empty'   => __( 'Field cannot be empty.', 'yikes-level-playing-field' ),
+				'empty'   => __( 'This field is required.', 'yikes-level-playing-field' ),
 				/* translators: %TYPE% should not be translated. It is a placeholder for a field name. */
 				'invalid' => __( '%TYPE% is invalid.', 'yikes-level-playing-field' ),
 			],

@@ -42,15 +42,15 @@ msgstr ""
 msgid "Support"
 msgstr ""
 
-#: src/Blocks/JobListing.php:73
+#: src/Blocks/JobListing.php:72
 msgid "Job Listing"
 msgstr ""
 
-#: src/Blocks/JobListings.php:76
+#: src/Blocks/JobListings.php:75
 msgid "Job Listings"
 msgstr ""
 
-#: src/CustomPostType/ApplicantManager.php:34, src/Metabox/ApplicantManager.php:137, src/Roles/Applicant.php:29
+#: src/CustomPostType/ApplicantManager.php:34, src/Metabox/ApplicantManager.php:142, src/Roles/Applicant.php:29
 msgid "Applicant"
 msgstr ""
 
@@ -72,7 +72,7 @@ msgstr ""
 msgid "Parent Applicant:"
 msgstr ""
 
-#: src/CustomPostType/ApplicantManager.php:40, src/Widget/Dashboard/JobApplicants.php:88
+#: src/CustomPostType/ApplicantManager.php:40, src/Widget/Dashboard/JobApplicants.php:89
 msgid "Applicants"
 msgstr ""
 
@@ -618,40 +618,48 @@ msgstr ""
 msgid "Address: "
 msgstr ""
 
-#: src/Field/Certifications.php:42, src/Metabox/ApplicationManager.php:333
-msgid "Certifying Institution"
+#: src/Field/Certifications.php:42, src/Field/Schooling.php:45, src/Metabox/ApplicationManager.php:394
+msgid "Institution"
 msgstr ""
 
-#: src/Field/Certifications.php:45, src/Metabox/ApplicationManager.php:334
-msgid "Certifying Institution Type"
+#: src/Field/Certifications.php:45, src/Field/Schooling.php:48, src/Metabox/ApplicationManager.php:395
+msgid "Institution Type"
 msgstr ""
 
-#: src/Field/Certifications.php:48, src/Metabox/ApplicationManager.php:335
+#: src/Field/Certifications.php:48, src/Metabox/ApplicationManager.php:417
 msgid "Year Certified"
 msgstr ""
 
-#: src/Field/Certifications.php:52, src/Metabox/ApplicationManager.php:336
+#: src/Field/Certifications.php:52, src/Metabox/ApplicationManager.php:418
 msgid "Certification Type"
 msgstr ""
 
-#: src/Field/Certifications.php:55, src/Metabox/ApplicationManager.php:337
-msgid "Certification Status"
+#: src/Field/Certifications.php:55, src/Taxonomy/ApplicantStatus.php:235, src/Taxonomy/JobStatus.php:62
+msgid "Status"
 msgstr ""
 
 #: src/Field/Certifications.php:70
 msgid "Certifications:"
 msgstr ""
 
-#: src/Field/Certifications.php:83
+#: src/Field/Certifications.php:84
+msgid "Certification"
+msgstr ""
+
+#: src/Field/Certifications.php:85, src/Field/Experience.php:92, src/Field/Languages.php:77, src/Field/Schooling.php:90, src/Field/Skills.php:75, src/Field/Volunteer.php:92
+msgid "1"
+msgstr ""
+
+#: src/Field/Certifications.php:98
 msgctxt "for \"add new\" button"
 msgid "Certification"
 msgstr ""
 
-#: src/Field/Experience.php:42, src/Field/Volunteer.php:42, src/Metabox/ApplicationManager.php:354, src/Metabox/ApplicationManager.php:374
+#: src/Field/Experience.php:42, src/Field/Volunteer.php:42, src/Metabox/ApplicationManager.php:436, src/Metabox/ApplicationManager.php:456
 msgid "Organization"
 msgstr ""
 
-#: src/Field/Experience.php:45, src/Field/Volunteer.php:45, src/Metabox/ApplicationManager.php:355
+#: src/Field/Experience.php:45, src/Field/Volunteer.php:45, src/Metabox/ApplicationManager.php:437
 msgid "Industry"
 msgstr ""
 
@@ -667,7 +675,7 @@ msgstr ""
 msgid "End Date"
 msgstr ""
 
-#: src/Field/Experience.php:62, src/Field/Volunteer.php:62, src/Metabox/ApplicationManager.php:357, src/Metabox/ApplicationManager.php:377
+#: src/Field/Experience.php:62, src/Field/Volunteer.php:62, src/Metabox/ApplicationManager.php:439, src/Metabox/ApplicationManager.php:459
 msgid "Position"
 msgstr ""
 
@@ -675,16 +683,20 @@ msgstr ""
 msgid "Experience:"
 msgstr ""
 
-#: src/Field/Experience.php:90
-msgctxt "for \"add new\" button"
+#: src/Field/Experience.php:91, src/Metabox/ApplicationManager.php:297, src/Metabox/ApplicationManager.php:302, src/Metabox/ApplicationManager.php:308, src/Metabox/ApplicationManager.php:309, views/applicant-skills-qualifications.php:190, views/go-pro.php:63
 msgid "Experience"
+msgstr ""
+
+#: src/Field/Experience.php:105
+msgctxt "for \"add new\" button"
+msgid "Job Position"
 msgstr ""
 
 #: src/Field/Hidden.php:81
 msgid "Hidden field values cannot be changed."
 msgstr ""
 
-#: src/Field/Languages.php:42, views/applicant-skills-qualifications.php:167
+#: src/Field/Languages.php:42, src/Field/Languages.php:76, views/applicant-skills-qualifications.php:167
 msgid "Language"
 msgstr ""
 
@@ -696,33 +708,25 @@ msgstr ""
 msgid "Language and Proficiency:"
 msgstr ""
 
-#: src/Field/Languages.php:98
+#: src/Field/Languages.php:113
 msgctxt "for \"add new\" button"
 msgid "Language"
 msgstr ""
 
-#: src/Field/RepeatableField.php:121, src/Shortcode/Application.php:214
+#: src/Field/RepeatableField.php:152
 msgctxt "button for adding section in application"
-msgid "Add New"
+msgid "Add Another"
 msgstr ""
 
-#: src/Field/Schooling.php:45, src/Metabox/ApplicationManager.php:312
-msgid "Institution"
-msgstr ""
-
-#: src/Field/Schooling.php:48, src/Metabox/ApplicationManager.php:313
-msgid "Institution Type"
-msgstr ""
-
-#: src/Field/Schooling.php:53, src/Metabox/ApplicationManager.php:314
+#: src/Field/Schooling.php:53, src/Metabox/ApplicationManager.php:396
 msgid "Graduation Year"
 msgstr ""
 
-#: src/Field/Schooling.php:57, src/Metabox/ApplicationManager.php:315
+#: src/Field/Schooling.php:57, src/Metabox/ApplicationManager.php:397
 msgid "Major"
 msgstr ""
 
-#: src/Field/Schooling.php:60, src/Metabox/ApplicationManager.php:316
+#: src/Field/Schooling.php:60, src/Metabox/ApplicationManager.php:398
 msgid "Degree"
 msgstr ""
 
@@ -730,7 +734,11 @@ msgstr ""
 msgid "Schooling:"
 msgstr ""
 
-#: src/Field/Schooling.php:111
+#: src/Field/Schooling.php:89
+msgid "School"
+msgstr ""
+
+#: src/Field/Schooling.php:126
 msgctxt "for \"add new\" button"
 msgid "School"
 msgstr ""
@@ -739,7 +747,7 @@ msgstr ""
 msgid "The submitted value is not one of the allowed options."
 msgstr ""
 
-#: src/Field/Skills.php:40, views/applicant-skills-qualifications.php:103
+#: src/Field/Skills.php:40, src/Field/Skills.php:74, views/applicant-skills-qualifications.php:103
 msgid "Skill"
 msgstr ""
 
@@ -747,7 +755,7 @@ msgstr ""
 msgid "Skills:"
 msgstr ""
 
-#: src/Field/Skills.php:96
+#: src/Field/Skills.php:111
 msgctxt "for \"add new\" button"
 msgid "Skill"
 msgstr ""
@@ -760,60 +768,69 @@ msgstr ""
 msgid "Volunteer:"
 msgstr ""
 
-#: src/Field/Volunteer.php:88
-msgctxt "for \"add new\" button"
+#: src/Field/Volunteer.php:91
 msgid "Volunteer"
 msgstr ""
 
-#: src/ListTable/ApplicantManager.php:66
+#: src/Field/Volunteer.php:103
+msgctxt "for \"add new\" button"
+msgid "Volunteer Position"
+msgstr ""
+
+#: src/ListTable/ApplicantManager.php:67
 msgctxt "column heading"
 msgid "ID"
 msgstr ""
 
-#: src/ListTable/ApplicantManager.php:67, src/ListTable/JobManager.php:95
+#: src/ListTable/ApplicantManager.php:68, src/ListTable/JobManager.php:95
 msgctxt "column heading"
 msgid "Job Title"
 msgstr ""
 
-#: src/ListTable/ApplicantManager.php:68
+#: src/ListTable/ApplicantManager.php:69
 msgctxt "column heading"
 msgid "Avatar"
 msgstr ""
 
-#: src/ListTable/ApplicantManager.php:69
+#: src/ListTable/ApplicantManager.php:70
 msgctxt "column heading"
 msgid "Nick Name"
 msgstr ""
 
 #: src/ListTable/ApplicantManager.php:72
 msgctxt "column heading"
+msgid "New Messages"
+msgstr ""
+
+#: src/ListTable/ApplicantManager.php:74
+msgctxt "column heading"
 msgid "Viewed by"
 msgstr ""
 
 #. translators: %s is the applicant ID
 #. translators: %s is the applicant ID
-#: src/ListTable/ApplicantManager.php:120, src/ListTable/ApplicantManager.php:162
+#: src/ListTable/ApplicantManager.php:127, src/ListTable/ApplicantManager.php:173
 msgid "Edit Applicant &#8220;%s&#8221;"
 msgstr ""
 
-#: src/ListTable/ApplicantManager.php:134
+#: src/ListTable/ApplicantManager.php:141
 msgid "No job set for applicant."
 msgstr ""
 
-#: src/ListTable/ApplicantManager.php:151
+#: src/ListTable/ApplicantManager.php:162
 msgctxt "No one has viewed applicant submission"
 msgid "No one"
 msgstr ""
 
-#: src/ListTable/ApplicantManager.php:163
+#: src/ListTable/ApplicantManager.php:174
 msgid "View"
 msgstr ""
 
-#: src/ListTable/ApplicantManager.php:207
+#: src/ListTable/ApplicantManager.php:218
 msgid "All Viewed"
 msgstr ""
 
-#: src/ListTable/ApplicantManager.php:208
+#: src/ListTable/ApplicantManager.php:219
 msgid "No One Viewed"
 msgstr ""
 
@@ -842,45 +859,45 @@ msgctxt "column heading"
 msgid "Shortcode"
 msgstr ""
 
-#: src/ListTable/JobManager.php:172
+#: src/ListTable/JobManager.php:177
 msgid "Filter Job Categories"
 msgstr ""
 
-#: src/Messaging/ApplicantMessaging.php:254, src/Messaging/ApplicantMessaging.php:309, src/Messaging/ApplicantMessaging.php:393, src/Settings/SettingsManager.php:129, src/Taxonomy/ApplicantStatus.php:305
+#: src/Messaging/ApplicantMessaging.php:256, src/Messaging/ApplicantMessaging.php:318, src/Messaging/ApplicantMessaging.php:474, src/Settings/SettingsManager.php:129, src/Taxonomy/ApplicantStatus.php:305
 msgid "An error occurred: Failed to validate the nonce."
 msgstr ""
 
-#: src/Messaging/ApplicantMessaging.php:265, src/Messaging/ApplicantMessaging.php:407
+#: src/Messaging/ApplicantMessaging.php:267, src/Messaging/ApplicantMessaging.php:488
 msgid "An error occurred: a required field is missing."
 msgstr ""
 
-#: src/Messaging/ApplicantMessaging.php:288
+#: src/Messaging/ApplicantMessaging.php:297
 msgid "The message was successfully sent."
 msgstr ""
 
-#: src/Messaging/ApplicantMessaging.php:295, src/Messaging/ApplicantMessaging.php:455
+#: src/Messaging/ApplicantMessaging.php:304, src/Messaging/ApplicantMessaging.php:542
 msgid "The comment could not be inserted."
 msgstr ""
 
 #. translators: %1$s is the date and %2$s is the time.
-#: src/Messaging/ApplicantMessaging.php:419
+#: src/Messaging/ApplicantMessaging.php:500
 msgid "You have been requested for an interview on %1$s at %2$s."
 msgstr ""
 
 #. translators: %1$s is the location.
-#: src/Messaging/ApplicantMessaging.php:422
+#: src/Messaging/ApplicantMessaging.php:503
 msgid "The interview location is: %1$s."
 msgstr ""
 
-#: src/Messaging/ApplicantMessaging.php:426
+#: src/Messaging/ApplicantMessaging.php:507
 msgid "A few statements on un-anonymization."
 msgstr ""
 
-#: src/Messaging/ApplicantMessaging.php:448
+#: src/Messaging/ApplicantMessaging.php:535
 msgid "The interview request was successfully sent."
 msgstr ""
 
-#: src/Metabox/ApplicantBasicInfo.php:49, src/Metabox/ApplicationManager.php:73, src/Metabox/ApplicationManager.php:79
+#: src/Metabox/ApplicantBasicInfo.php:49, src/Metabox/ApplicationManager.php:89
 msgid "Basic Info"
 msgstr ""
 
@@ -888,121 +905,145 @@ msgstr ""
 msgid "Interview Details"
 msgstr ""
 
-#: src/Metabox/ApplicantManager.php:249
+#: src/Metabox/ApplicantManager.php:271
 msgctxt "undo action to edit nickname when viewing an applicant"
 msgid "Cancel"
 msgstr ""
 
-#: src/Metabox/ApplicantManager.php:250
+#: src/Metabox/ApplicantManager.php:272
 msgctxt "hide cover letter when viewing an applicant"
 msgid "Hide Cover Letter"
 msgstr ""
 
-#: src/Metabox/ApplicantManager.php:251
+#: src/Metabox/ApplicantManager.php:273
 msgctxt "confirm action to edit nickname when viewing an applicant"
 msgid "OK"
 msgstr ""
 
-#: src/Metabox/ApplicantManager.php:253
+#: src/Metabox/ApplicantManager.php:275
 msgctxt "heading when viewing an applicant"
 msgid "Applicants | Applicant ID"
 msgstr ""
 
-#: src/Metabox/ApplicantManager.php:254
+#: src/Metabox/ApplicantManager.php:276
 msgctxt "view cover letter when viewing an applicant"
 msgid "View Cover Letter"
 msgstr ""
 
-#: src/Metabox/ApplicationManager.php:84
+#: src/Metabox/ApplicationManager.php:83
+msgid "Application Form Fields"
+msgstr ""
+
+#: src/Metabox/ApplicationManager.php:94
 msgid "Basic Information"
 msgstr ""
 
-#: src/Metabox/ApplicationManager.php:85
-msgid "Check the basic information fields you want included on this Application Form."
+#: src/Metabox/ApplicationManager.php:95
+msgid "Check the basic information fields you want included on this Application Form. Name and Email are required by default. Turn on \"Required\" for fields that must be filled in by the applicant."
 msgstr ""
 
-#: src/Metabox/ApplicationManager.php:90, src/Metabox/ApplicationManager.php:91
-msgid "Name (required)"
+#: src/Metabox/ApplicationManager.php:100, src/Metabox/ApplicationManager.php:101, views/go-pro.php:76
+msgid "Name"
 msgstr ""
 
-#: src/Metabox/ApplicationManager.php:102, src/Metabox/ApplicationManager.php:103
-msgid "Email Address (required)"
+#: src/Metabox/ApplicationManager.php:112, src/Metabox/ApplicationManager.php:113, src/Metabox/ApplicationManager.php:136, src/Metabox/ApplicationManager.php:137, src/Metabox/ApplicationManager.php:156, src/Metabox/ApplicationManager.php:157, src/Metabox/ApplicationManager.php:171, src/Metabox/ApplicationManager.php:172, src/Metabox/ApplicationManager.php:203, src/Metabox/ApplicationManager.php:204, src/Metabox/ApplicationManager.php:227, src/Metabox/ApplicationManager.php:228, src/Metabox/ApplicationManager.php:260, src/Metabox/ApplicationManager.php:261, src/Metabox/ApplicationManager.php:288, src/Metabox/ApplicationManager.php:289, src/Metabox/ApplicationManager.php:320, src/Metabox/ApplicationManager.php:321, src/Metabox/ApplicationManager.php:357, src/Metabox/ApplicationManager.php:358
+msgid "Required?"
 msgstr ""
 
-#: src/Metabox/ApplicationManager.php:114, src/Metabox/ApplicationManager.php:115
+#: src/Metabox/ApplicationManager.php:124, src/Metabox/ApplicationManager.php:125
+msgid "Email Address"
+msgstr ""
+
+#: src/Metabox/ApplicationManager.php:148, src/Metabox/ApplicationManager.php:149
 msgid "Phone Number"
 msgstr ""
 
-#: src/Metabox/ApplicationManager.php:122, src/Metabox/ApplicationManager.php:123, src/Metabox/JobManager.php:166
+#: src/Metabox/ApplicationManager.php:163, src/Metabox/ApplicationManager.php:164, src/Metabox/JobManager.php:166
 msgid "Address"
 msgstr ""
 
-#: src/Metabox/ApplicationManager.php:140, views/applicant-skills-qualifications.php:23, views/go-pro.php:62
+#: src/Metabox/ApplicationManager.php:180, views/applicant-skills-qualifications.php:23, views/go-pro.php:62
 msgid "Education"
 msgstr ""
 
-#: src/Metabox/ApplicationManager.php:145
+#: src/Metabox/ApplicationManager.php:185
 msgid "Educational Background"
 msgstr ""
 
-#: src/Metabox/ApplicationManager.php:146
-msgid "Check the educational information you want included on this Application Form."
+#: src/Metabox/ApplicationManager.php:186
+msgid "Check the educational information you want included on this Application Form. Turn on \"Required\" for fields that must be filled in by the applicant."
 msgstr ""
 
-#: src/Metabox/ApplicationManager.php:151, src/Metabox/ApplicationManager.php:152, views/applicant-skills-qualifications.php:26
+#: src/Metabox/ApplicationManager.php:191, src/Metabox/ApplicationManager.php:192, views/applicant-skills-qualifications.php:26
 msgid "Schooling"
 msgstr ""
 
-#: src/Metabox/ApplicationManager.php:168, src/Metabox/ApplicationManager.php:169, views/applicant-skills-qualifications.php:68
+#: src/Metabox/ApplicationManager.php:215, src/Metabox/ApplicationManager.php:216, views/applicant-skills-qualifications.php:68
 msgid "Certifications"
 msgstr ""
 
-#: src/Metabox/ApplicationManager.php:187, src/Metabox/ApplicationManager.php:192, views/applicant-skills-qualifications.php:98
+#: src/Metabox/ApplicationManager.php:241, src/Metabox/ApplicationManager.php:246, views/applicant-skills-qualifications.php:98
 msgid "Skills"
 msgstr ""
 
-#: src/Metabox/ApplicationManager.php:193
-msgid "Check if you want Skills and Proficiency included on this Application Form."
+#: src/Metabox/ApplicationManager.php:247
+msgid "Check if you want Skills and Proficiency included on this Application Form. Turn on \"Required\" for fields that must be filled in by the applicant."
 msgstr ""
 
-#: src/Metabox/ApplicationManager.php:198, src/Metabox/ApplicationManager.php:199
+#: src/Metabox/ApplicationManager.php:252, src/Metabox/ApplicationManager.php:253
 msgid "Skill and Proficiency"
 msgstr ""
 
-#: src/Metabox/ApplicationManager.php:208, src/Metabox/ApplicationManager.php:213, views/applicant-skills-qualifications.php:126
+#: src/Metabox/ApplicationManager.php:269, src/Metabox/ApplicationManager.php:274, views/applicant-skills-qualifications.php:126
 msgid "Languages"
 msgstr ""
 
-#: src/Metabox/ApplicationManager.php:214
-msgid "Check if you want Languages and Proficiency included on this Application Form."
+#: src/Metabox/ApplicationManager.php:275
+msgid "Check if you want Languages and Proficiency included on this Application Form. Turn on \"Required\" for fields that must be filled in by the applicant."
 msgstr ""
 
-#: src/Metabox/ApplicationManager.php:219, src/Metabox/ApplicationManager.php:220
+#: src/Metabox/ApplicationManager.php:280, src/Metabox/ApplicationManager.php:281
 msgid "Language and Proficiency"
 msgstr ""
 
-#: src/Metabox/ApplicationManager.php:229, src/Metabox/ApplicationManager.php:234, src/Metabox/ApplicationManager.php:240, src/Metabox/ApplicationManager.php:241, views/applicant-skills-qualifications.php:190, views/go-pro.php:63
-msgid "Experience"
+#: src/Metabox/ApplicationManager.php:303
+msgid "Check if you want Experience included on this Application Form. Turn on \"Required\" for fields that must be filled in by the applicant."
 msgstr ""
 
-#: src/Metabox/ApplicationManager.php:235
-msgid "Check if you want Experience included on this Application Form."
-msgstr ""
-
-#: src/Metabox/ApplicationManager.php:259, src/Metabox/ApplicationManager.php:264, src/Metabox/ApplicationManager.php:270, src/Metabox/ApplicationManager.php:271, views/applicant-skills-qualifications.php:221
+#: src/Metabox/ApplicationManager.php:334, src/Metabox/ApplicationManager.php:339, src/Metabox/ApplicationManager.php:345, src/Metabox/ApplicationManager.php:346, views/applicant-skills-qualifications.php:221
 msgid "Volunteer Work"
 msgstr ""
 
-#: src/Metabox/ApplicationManager.php:265
-msgid "Check if you want Volunteer Work included on this Application Form."
+#: src/Metabox/ApplicationManager.php:340
+msgid "Check if you want Volunteer Work included on this Application Form. Turn on \"Required\" for fields that must be filled in by the applicant."
 msgstr ""
 
-#: src/Metabox/ApplicationManager.php:356, src/Metabox/ApplicationManager.php:376
+#: src/Metabox/ApplicationManager.php:415
+msgid "Certifying Institution"
+msgstr ""
+
+#: src/Metabox/ApplicationManager.php:416
+msgid "Certifying Institution Type"
+msgstr ""
+
+#: src/Metabox/ApplicationManager.php:419
+msgid "Certification Status"
+msgstr ""
+
+#: src/Metabox/ApplicationManager.php:438, src/Metabox/ApplicationManager.php:458
 msgid "Dates"
 msgstr ""
 
-#: src/Metabox/ApplicationManager.php:375
+#: src/Metabox/ApplicationManager.php:457
 msgid "Organization Type"
+msgstr ""
+
+#: src/Metabox/Banner1.php:48
+msgid "Support Merit-Based Hiring"
+msgstr ""
+
+#: src/Metabox/Banner2.php:48, views/go-pro.php:18
+msgid "Level Playing Field Pro"
 msgstr ""
 
 #: src/Metabox/JobManager.php:139
@@ -1224,12 +1265,17 @@ msgstr ""
 msgid "Check off the user roles you want notification emails sent to. All users assigned to those roles will receive notifications."
 msgstr ""
 
-#: src/Shortcode/AllJobs.php:37, src/Shortcode/Job.php:65
+#: src/Shortcode/AllJobs.php:37, src/Shortcode/Job.php:67
 msgid "Apply"
 msgstr ""
 
+#: src/Shortcode/Application.php:214
+msgctxt "button for adding section in application"
+msgid "Add New"
+msgstr ""
+
 #: src/Shortcode/Application.php:224
-msgid "Field cannot be empty."
+msgid "This field is required."
 msgstr ""
 
 #. translators: %TYPE% should not be translated. It is a placeholder for a field name.
@@ -1239,30 +1285,34 @@ msgstr ""
 
 #. translators: %s refers to the error message
 #. translators: %s refers to the error message
-#: src/Shortcode/Application.php:295, src/TemplateController/SingleApplicationsTemplateController.php:78
+#: src/Shortcode/Application.php:295, src/TemplateController/SingleApplicationsTemplateController.php:93
 msgid "There was an error displaying the form: %s"
 msgstr ""
 
-#: src/Shortcode/Job.php:63
-msgid "Type:"
+#: src/Shortcode/Job.php:63, views/go-pro.php:77
+msgid "Description"
 msgstr ""
 
-#: src/Shortcode/Job.php:64, views/applicant-basic-info.php:40, views/applicant-interview-details.php:32, views/interview-confirmation.php:48
+#: src/Shortcode/Job.php:64
+msgid "Job Details"
+msgstr ""
+
+#: src/Shortcode/Job.php:65
+msgid "Job Type:"
+msgstr ""
+
+#: src/Shortcode/Job.php:66, views/applicant-basic-info.php:40, views/applicant-interview-details.php:32, views/interview-confirmation.php:48
 msgid "Location:"
 msgstr ""
 
-#: src/Shortcode/Job.php:66
+#: src/Shortcode/Job.php:68
 msgctxt "Description of the job location"
-msgid "Remote"
+msgid "Remote - employees work from their location of choice. "
 msgstr ""
 
 #. translators: %s refers to the term that was attempted to be inserted.
 #: src/Taxonomy/ApplicantStatus.php:84
 msgid "The term \"%s\" is not a valid Applicant status."
-msgstr ""
-
-#: src/Taxonomy/ApplicantStatus.php:235, src/Taxonomy/JobStatus.php:62
-msgid "Status"
 msgstr ""
 
 #: src/Taxonomy/ApplicantStatus.php:236, src/Taxonomy/JobStatus.php:63
@@ -1516,20 +1566,44 @@ msgstr[1] ""
 msgid "current"
 msgstr ""
 
-#: views/go-pro.php:18
-msgid "Level Playing Field Pro"
+#: views/banner1.php:17
+msgid "Leave a review!"
 msgstr ""
 
-#: views/go-pro.php:24
+#: views/banner1.php:27
+msgid "Tweet about Level Playing Field"
+msgstr ""
+
+#: views/banner1.php:31
+msgid "Tweet"
+msgstr ""
+
+#: views/banner2.php:25
+msgid "Upgrade to Level Playing Field Pro for great additional features including:"
+msgstr ""
+
+#: views/banner2.php:30, views/go-pro.php:42
+msgid "Unlimited Job Listings."
+msgstr ""
+
+#: views/banner2.php:33
+msgid "More Detailed Job Listings."
+msgstr ""
+
+#: views/banner2.php:36
+msgid "Custom Application Form Questions."
+msgstr ""
+
+#: views/banner2.php:39
+msgid "Applicant export."
+msgstr ""
+
+#: views/banner2.php:45, views/go-pro.php:24
 msgid "Upgrade to Pro"
 msgstr ""
 
 #: views/go-pro.php:30
 msgid "Upgrade to Level Playing Field Pro for unlimited job listings and enhanced features."
-msgstr ""
-
-#: views/go-pro.php:42
-msgid "Unlimited Job Listings."
 msgstr ""
 
 #: views/go-pro.php:46
@@ -1562,14 +1636,6 @@ msgstr ""
 
 #: views/go-pro.php:74
 msgid "Company/Organization Details"
-msgstr ""
-
-#: views/go-pro.php:76
-msgid "Name"
-msgstr ""
-
-#: views/go-pro.php:77
-msgid "Description"
 msgstr ""
 
 #: views/go-pro.php:78
@@ -1660,23 +1726,23 @@ msgstr ""
 msgid "Send Interview Request"
 msgstr ""
 
-#: views/job-applicants-widget.php:16
+#: views/job-applicants-widget.php:19
 msgid "Job Title"
 msgstr ""
 
-#: views/job-applicants-widget.php:17
+#: views/job-applicants-widget.php:20
 msgid "New"
 msgstr ""
 
-#: views/job-applicants-widget.php:18
+#: views/job-applicants-widget.php:21
 msgid "Total"
 msgstr ""
 
-#: views/job-applicants-widget.php:39
+#: views/job-applicants-widget.php:44
 msgid "View All Job Listings"
 msgstr ""
 
-#: views/job-applicants-widget.php:40
+#: views/job-applicants-widget.php:45
 msgid "View All Applicants"
 msgstr ""
 
@@ -1685,30 +1751,30 @@ msgid "Your application has errors. Please correct the errors below before resub
 msgstr ""
 
 #: views/job-page-application.php:48
-msgid "Submit"
+msgid "Submit Application"
 msgstr ""
 
 #: views/job-page-application.php:60
 msgid "Edit Application"
 msgstr ""
 
-#: views/settings.php:23
+#: views/settings.php:25
 msgid "Level Playing Field Settings"
 msgstr ""
 
-#: views/settings.php:29
+#: views/settings.php:31
 msgid "Email Settings"
 msgstr ""
 
-#: views/settings.php:39
+#: views/settings.php:41
 msgid "Application Settings"
 msgstr ""
 
-#: views/settings.php:48
+#: views/settings.php:50
 msgid "Appearance Settings"
 msgstr ""
 
-#: views/settings.php:58
+#: views/settings.php:70
 msgid "Save Settings"
 msgstr ""
 
