@@ -10,6 +10,7 @@
 namespace Yikes\LevelPlayingField\Assets;
 
 use Closure;
+use Yikes\LevelPlayingField\PluginHelpers;
 
 /**
  * Abstract class BaseAsset.
@@ -20,6 +21,8 @@ use Closure;
  * @author  Jeremy Pry
  */
 abstract class BaseAsset implements Asset {
+
+	use PluginHelpers;
 
 	const REGISTER_PRIORITY = 1;
 	const ENQUEUE_PRIORITY  = 10;
@@ -137,10 +140,11 @@ abstract class BaseAsset implements Asset {
 	 * @return string Normalized source URI.
 	 */
 	protected function normalize_source( $uri, $extension ) {
-		$uri = $this->check_extension( $uri, $extension );
-		$uri = plugins_url( $uri, dirname( __FILE__, 2 ) );
+		$uri  = $this->check_extension( $uri, $extension );
+		$path = trailingslashit( $this->get_plugin_root() ) . $uri;
+		$uri  = plugins_url( $uri, dirname( __FILE__, 2 ) );
 
-		return $this->check_for_minified_asset( $uri, $extension );
+		return $this->check_for_minified_asset( $uri, $path, $extension );
 	}
 
 	/**
@@ -150,15 +154,17 @@ abstract class BaseAsset implements Asset {
 	 * @since %VERSION%
 	 *
 	 * @param string $uri       Source URI.
+	 * @param string $path      Source path.
 	 * @param string $extension Default extension to use.
 	 *
 	 * @return string URI of the asset to use.
 	 */
-	protected function check_for_minified_asset( $uri, $extension ) {
-		$debug        = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG;
-		$minified_uri = str_replace( ".$extension", ".min.{$extension}", $uri );
+	protected function check_for_minified_asset( $uri, $path, $extension ) {
+		$debug         = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG;
+		$minified_uri  = str_replace( ".$extension", ".min.{$extension}", $uri );
+		$minified_path = str_replace( ".$extension", ".min.{$extension}", $path );
 
-		return ! $debug && is_readable( $minified_uri ) ? $minified_uri : $uri;
+		return ! $debug && is_readable( $minified_path ) ? $minified_uri : $uri;
 	}
 
 	/**
