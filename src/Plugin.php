@@ -76,7 +76,9 @@ final class Plugin implements Registerable {
 	 * Run activation logic.
 	 */
 	public function activate() {
-		flush_rewrite_rules( false );
+		$this->register_services();
+		$this->register_assets_handler();
+		flush_rewrite_rules( true );
 	}
 
 	/**
