@@ -11,19 +11,19 @@
  * @since 0.1
  **/
 
-if ( ! class_exists( 'YIKES_Awesome_Framework_100', false ) ) {
+if ( ! class_exists( 'YIKES_Awesome_Framework_101', false ) ) {
 
 	/**
 	 * Class YIKES_Awesome_Framework_100.
 	 */
-	class YIKES_Awesome_Framework_100 {
+	class YIKES_Awesome_Framework_101 {
 
 		/**
 		 * Current version number
 		 *
 		 * @var   string
 		 */
-		const VERSION = '1.0.0';
+		const VERSION = '1.0.1';
 
 		/**
 		 * Current version hook priority.
@@ -31,7 +31,7 @@ if ( ! class_exists( 'YIKES_Awesome_Framework_100', false ) ) {
 		 *
 		 * @var   int
 		 */
-		const PRIORITY = 9998;
+		const PRIORITY = 9997;
 
 		/**
 		 * Constructor. Define hooks.
@@ -175,5 +175,5 @@ if ( ! class_exists( 'YIKES_Awesome_Framework_100', false ) ) {
 			wp_enqueue_style( 'yks-mbox-styles', YKS_MBOX_URL . 'css/style.min.css', $style_dependencies, self::VERSION, 'all' );
 		}
 	}
-	new YIKES_Awesome_Framework_100();
+	new YIKES_Awesome_Framework_101();
 }
