@@ -46,6 +46,7 @@ const paths = {
 		'assets/css/*.css',
 		'assets/js/*.js',
 		'assets/images/**',
+		'assets/vendor/**',
 		'languages/*',
 		'src/**/*.php',
 		'vendor/awesome-yikes-framework/**',

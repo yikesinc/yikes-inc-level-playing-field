@@ -71,7 +71,7 @@
 			}
 		}
 
-		&:before {
+		&.message-metabox:before {
 			content: "\f125";
 			display: inline-block;
 			font-family: dashicons;

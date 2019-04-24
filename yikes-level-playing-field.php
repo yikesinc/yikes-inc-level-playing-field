@@ -109,4 +109,4 @@ if ( version_compare( '4.8', $GLOBALS['wp_version'], '>' ) ) {
 }
 
 // Bootstrap the plugin.
-require_once( dirname( __FILE__ ) . '/src/bootstrap.php' );
+require_once dirname( __FILE__ ) . '/src/bootstrap.php';
