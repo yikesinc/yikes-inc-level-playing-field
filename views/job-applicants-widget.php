@@ -10,9 +10,14 @@
 namespace Yikes\LevelPlayingField;
 
 ?>
-<h2>
-	<a href="<?php echo esc_url( $this->applicants_url ); ?>"><?php echo esc_html( $this->msg_count ); ?> new messages</a>
-</h2>
+<ul class="yikes_lpf_applicant_widget-notifications">
+	<li class="yikes_lpf_applicant_widget-notifications-icon">
+		<span class="dashicons dashicons-email"></span>
+	</li>
+	<li class="yikes_lpf_applicant_widget-notifications-message">
+		<a href="<?php echo esc_url( $this->applicants_url ); ?>"><?php echo esc_html( $this->msg_count ); ?> New Messages</a>
+	</li>
+</ul>
 <table>
 	<thead>
 		<tr>

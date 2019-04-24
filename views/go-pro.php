@@ -90,6 +90,13 @@ use Yikes\LevelPlayingField\Assets\MediaAsset;
 					<li><span class="dashicons dashicons-arrow-right"></span><?php esc_html_e( 'Ability to export applicants to CSV File', 'yikes-level-playing-field' ); ?></li>
 				</ul>
 			</li>
+			<li>
+				<span class="dashicons dashicons-star-filled"></span> <?php esc_html_e( 'Premium Support.', 'yikes-level-playing-field' ); ?>
+
+				<ul>
+					<li><span class="dashicons dashicons-arrow-right"></span><?php esc_html_e( 'Prioritized one-on-one support', 'yikes-level-playing-field' ); ?></li>
+				</ul>
+			</li>
 		</ul>
 
 	</div>
