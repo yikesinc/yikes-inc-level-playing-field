@@ -9,6 +9,7 @@
 
 namespace Yikes\LevelPlayingField;
 
+use Yikes\LevelPlayingField\PluginHelpers;
 use Yikes\LevelPlayingField\Assets\AssetsAware;
 use Yikes\LevelPlayingField\Assets\AssetsHandler;
 use Yikes\LevelPlayingField\Exception\InvalidClass;
@@ -25,6 +26,8 @@ use Yikes\LevelPlayingField\Exception\InvalidClass;
  * @author  Jeremy Pry
  */
 final class Plugin implements Registerable {
+
+	use PluginHelpers;
 
 	const VERSION = '1.0.0';
 
@@ -66,6 +69,14 @@ final class Plugin implements Registerable {
 	public function register() {
 		add_action( 'plugins_loaded', [ $this, 'register_services' ], 20 );
 		add_action( 'init', [ $this, 'register_assets_handler' ] );
+		register_activation_hook( $this->get_plugin_file(), [ $this, 'activate' ] );
+	}
+
+	/**
+	 * Run activation logic.
+	 */
+	public function activate() {
+		flush_rewrite_rules( false );
 	}
 
 	/**
