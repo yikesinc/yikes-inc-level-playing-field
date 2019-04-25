@@ -47,7 +47,7 @@ final class ApplicationSuccessMessage extends BaseSettingsField {
 	 * @return string $description_text The description text for this field.
 	 */
 	protected function get_description_text() {
-		return __( 'Customize the message shown to applicants after they have successfully submitted an application by entering your own text below.', 'yikes-level-playing-field' );
+		return __( 'Customize the message shown to applicants after they have submitted an application by entering your own text below.', 'yikes-level-playing-field' );
 	}
 
 	/**
@@ -58,6 +58,6 @@ final class ApplicationSuccessMessage extends BaseSettingsField {
 	 * @return string $placeholder_text The placeholder text for this field.
 	 */
 	protected function placeholder_text() {
-		return __( 'Congratulations! Your form has been successfully submitted!', 'yikes-level-playing-field' );
+		return __( 'Thank you. Your application form has been successfully submitted.', 'yikes-level-playing-field' );
 	}
 }
