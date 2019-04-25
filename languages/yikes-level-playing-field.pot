@@ -868,11 +868,11 @@ msgid "An error occurred: Failed to validate the nonce."
 msgstr ""
 
 #: src/Messaging/ApplicantMessaging.php:267, src/Messaging/ApplicantMessaging.php:488
-msgid "An error occurred: a required field is missing."
+msgid "Please review: a required field is missing."
 msgstr ""
 
 #: src/Messaging/ApplicantMessaging.php:297
-msgid "The message was successfully sent."
+msgid "The message was sent successfully."
 msgstr ""
 
 #: src/Messaging/ApplicantMessaging.php:304, src/Messaging/ApplicantMessaging.php:542
@@ -881,12 +881,12 @@ msgstr ""
 
 #. translators: %1$s is the date and %2$s is the time.
 #: src/Messaging/ApplicantMessaging.php:500
-msgid "You have been requested for an interview on %1$s at %2$s."
+msgid "You have received an interview reqquest for: %1$s at %2$s."
 msgstr ""
 
 #. translators: %1$s is the location.
 #: src/Messaging/ApplicantMessaging.php:503
-msgid "The interview location is: %1$s."
+msgid "The interview will take place at: %1$s."
 msgstr ""
 
 #: src/Messaging/ApplicantMessaging.php:507
@@ -894,7 +894,7 @@ msgid "A few statements on un-anonymization."
 msgstr ""
 
 #: src/Messaging/ApplicantMessaging.php:535
-msgid "The interview request was successfully sent."
+msgid "The interview request was sent successfully."
 msgstr ""
 
 #: src/Metabox/ApplicantBasicInfo.php:49, src/Metabox/ApplicationManager.php:89
@@ -1539,7 +1539,7 @@ msgstr ""
 msgid "Start a conversation with this applicant."
 msgstr ""
 
-#: views/applicant-messaging.php:53
+#: views/applicant-messaging.php:54
 msgid "Send a New Message"
 msgstr ""
 
@@ -1662,6 +1662,14 @@ msgstr ""
 msgid "Ability to export applicants to CSV File"
 msgstr ""
 
+#: views/go-pro.php:94
+msgid "Premium Support."
+msgstr ""
+
+#: views/go-pro.php:97
+msgid "Prioritized one-on-one support"
+msgstr ""
+
 #: views/interview-confirmation.php:13
 msgid "Your interview request has been canceled"
 msgstr ""
@@ -1726,23 +1734,23 @@ msgstr ""
 msgid "Send Interview Request"
 msgstr ""
 
-#: views/job-applicants-widget.php:19
+#: views/job-applicants-widget.php:24
 msgid "Job Title"
 msgstr ""
 
-#: views/job-applicants-widget.php:20
+#: views/job-applicants-widget.php:25
 msgid "New"
 msgstr ""
 
-#: views/job-applicants-widget.php:21
+#: views/job-applicants-widget.php:26
 msgid "Total"
 msgstr ""
 
-#: views/job-applicants-widget.php:44
+#: views/job-applicants-widget.php:49
 msgid "View All Job Listings"
 msgstr ""
 
-#: views/job-applicants-widget.php:45
+#: views/job-applicants-widget.php:50
 msgid "View All Applicants"
 msgstr ""
 
