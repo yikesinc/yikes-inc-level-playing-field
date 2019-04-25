@@ -35,6 +35,7 @@ $comments = $this->comments;
 			foreach ( $comments as $comment ) {
 
 				$classes   = [ 'lpf-message' ];
+				$classes[] = $this->is_metabox ? 'message-metabox' : 'message-page-template';
 				$classes[] = $comment->get_author() === ApplicantMessage::ADMIN_AUTHOR ? 'message-to-applicant' : 'message-from-applicant';
 				$classes   = array_map( 'sanitize_html_class', $classes );
 				?>

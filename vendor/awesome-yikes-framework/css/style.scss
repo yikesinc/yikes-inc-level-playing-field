@@ -89,7 +89,8 @@ $input-repeating-width: 85%;
       }
 
       .select2-container {
-        width: 100% !important;
+        max-width: 234px !important;
+        overflow: hidden;
       }
 
       .meta-error {
