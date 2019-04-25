@@ -44,18 +44,20 @@ const paths = {
 	'devscripts': 'assets/js/dev/*.js',
 	'build': [
 		'assets/css/*.css',
-		'assets/js/*.js',
+		'assets/js/**/*.js',
 		'assets/images/**',
 		'assets/vendor/**',
-		'languages/*',
-		'src/**/*.php',
-		'vendor/awesome-yikes-framework/**',
-		'views/**/*.php',
-		'*.php',
-		'LICENSE.txt',
-		'readme.*'
+        'languages/*',
+        'src/**/*.php',
+        'vendor/awesome-yikes-framework/**',
+        'views/**/*.php',
+        '*.php',
+        'LICENSE.txt',
+        'readme.*',
+        '!assets/js/dev/*.js'
 	]
 };
+
 
 // Command line options
 const options = minimist( process.argv.slice( 2 ), {
