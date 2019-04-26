@@ -10,6 +10,7 @@
 namespace Yikes\LevelPlayingField\Settings\Fields;
 
 use Yikes\LevelPlayingField\Settings\Settings;
+use Yikes\LevelPlayingField\Exception\MustExtend;
 
 /**
  * Class AdditionalEmailRecipients.
@@ -18,6 +19,8 @@ use Yikes\LevelPlayingField\Settings\Settings;
  * @package Yikes\LevelPlayingField
  */
 abstract class BaseSettingsField {
+
+	const NAME = '_base_settings_field';
 
 	/**
 	 * The setting's field's value.
@@ -50,6 +53,20 @@ abstract class BaseSettingsField {
 	 * @since %VERSION%
 	 */
 	abstract protected function field();
+
+	/**
+	 * Get the name constant for the class.
+	 *
+	 * @since %VERSION%
+	 * @throws MustExtend When the NAME constant has not been extended.
+	 */
+	protected function get_name() {
+		if ( self::NAME === static::NAME ) {
+			throw MustExtend::default_name( self::NAME );
+		}
+
+		return static::NAME;
+	}
 
 	/**
 	 * Get the value of the setting. We shouldn't need to instantiate the Settings class every time. We need to find a way to avoid that.
@@ -107,7 +124,7 @@ abstract class BaseSettingsField {
 	 */
 	protected function html_classes() {
 		// Sanitize class names, remove empties, join each with a space, and then remove the trailing space.
-		return rtrim( implode( ' ', array_filter( array_map( 'sanitize_html_class', [ 'settings-field', static::NAME ] ) ) ) );
+		return implode( ' ', array_filter( array_map( 'sanitize_html_class', [ 'settings-field', $this->get_name() ] ) ) );
 	}
 
 	/**

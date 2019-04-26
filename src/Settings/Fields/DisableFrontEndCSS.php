@@ -40,7 +40,7 @@ final class DisableFrontEndCSS extends BaseSettingsField {
 				<input type="checkbox"
 					class="<?php echo esc_attr( $this->html_classes() ); ?>"
 					id="<?php echo esc_attr( $file_handle ); ?>"
-					name="<?php echo esc_attr( static::NAME ); ?>"
+					name="<?php echo esc_attr( $this->get_name() ); ?>"
 					value="<?php echo esc_attr( $file_handle ); ?>"
 					<?php checked( isset( $this->get_value()[ $file_handle ] ) && true === $this->get_value()[ $file_handle ] ); ?>
 				/>

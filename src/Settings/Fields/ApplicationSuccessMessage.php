@@ -32,8 +32,8 @@ final class ApplicationSuccessMessage extends BaseSettingsField {
 		<textarea cols="80"
 			rows="4"
 			class="<?php echo esc_attr( $this->html_classes() ); ?>"
-			id="<?php echo esc_attr( static::NAME ); ?>"
-			name="<?php echo esc_attr( static::NAME ); ?>"
+			id="<?php echo esc_attr( $this->get_name() ); ?>"
+			name="<?php echo esc_attr( $this->get_name() ); ?>"
 			placeholder="<?php echo esc_attr( $this->placeholder_text() ); ?>"
 		><?php echo esc_html( $this->get_value() ); ?></textarea>
 		<?php
