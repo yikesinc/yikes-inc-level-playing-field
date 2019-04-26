@@ -875,25 +875,29 @@ msgstr ""
 msgid "The message was sent successfully."
 msgstr ""
 
-#: src/Messaging/ApplicantMessaging.php:304, src/Messaging/ApplicantMessaging.php:542
+#: src/Messaging/ApplicantMessaging.php:304, src/Messaging/ApplicantMessaging.php:541
 msgid "The comment could not be inserted."
 msgstr ""
 
 #. translators: %1$s is the date and %2$s is the time.
 #: src/Messaging/ApplicantMessaging.php:500
-msgid "You have received an interview reqquest for: %1$s at %2$s."
+msgid "You have received a request for an interview on %1$s at %2$s."
 msgstr ""
 
 #. translators: %1$s is the location.
+#: src/Messaging/ApplicantMessaging.php:502
+msgid "Interview location: %1$s."
+msgstr ""
+
 #: src/Messaging/ApplicantMessaging.php:503
-msgid "The interview will take place at: %1$s."
+msgid "Message from employer"
 msgstr ""
 
-#: src/Messaging/ApplicantMessaging.php:507
-msgid "A few statements on un-anonymization."
+#: src/Messaging/ApplicantMessaging.php:506
+msgid "Please click Confirm Interview to accept this date and time or Decline Interview to reschedule."
 msgstr ""
 
-#: src/Messaging/ApplicantMessaging.php:535
+#: src/Messaging/ApplicantMessaging.php:534
 msgid "The interview request was sent successfully."
 msgstr ""
 
@@ -1301,7 +1305,7 @@ msgstr ""
 msgid "Job Type:"
 msgstr ""
 
-#: src/Shortcode/Job.php:66, views/applicant-basic-info.php:40, views/applicant-interview-details.php:32, views/interview-confirmation.php:48
+#: src/Shortcode/Job.php:66, views/applicant-basic-info.php:40, views/applicant-interview-details.php:32, views/interview-confirmation.php:51
 msgid "Location:"
 msgstr ""
 
@@ -1515,15 +1519,15 @@ msgstr ""
 msgid "Job:"
 msgstr ""
 
-#: views/applicant-interview-details.php:28, views/interview-confirmation.php:40
+#: views/applicant-interview-details.php:28, views/interview-confirmation.php:43
 msgid "Date:"
 msgstr ""
 
-#: views/applicant-interview-details.php:30, views/interview-confirmation.php:44
+#: views/applicant-interview-details.php:30, views/interview-confirmation.php:47
 msgid "Time:"
 msgstr ""
 
-#: views/applicant-interview-details.php:34, views/interview-confirmation.php:52
+#: views/applicant-interview-details.php:34, views/interview-confirmation.php:55
 msgid "Message:"
 msgstr ""
 
@@ -1531,15 +1535,15 @@ msgstr ""
 msgid "An interview has not been scheduled yet"
 msgstr ""
 
-#: views/applicant-messaging.php:18
+#: views/applicant-messaging.php:23
 msgid "Applicant Messaging"
 msgstr ""
 
-#: views/applicant-messaging.php:31
+#: views/applicant-messaging.php:38
 msgid "Start a conversation with this applicant."
 msgstr ""
 
-#: views/applicant-messaging.php:54
+#: views/applicant-messaging.php:70
 msgid "Send a New Message"
 msgstr ""
 
@@ -1678,19 +1682,19 @@ msgstr ""
 msgid "Your interview request has been confirmed"
 msgstr ""
 
-#: views/interview-confirmation.php:30
+#: views/interview-confirmation.php:33
 msgid "You have a confirmed interview."
 msgstr ""
 
-#: views/interview-confirmation.php:34
+#: views/interview-confirmation.php:37
 msgid "You have a pending interview request"
 msgstr ""
 
-#: views/interview-confirmation.php:59
+#: views/interview-confirmation.php:63
 msgid "Confirm Interview"
 msgstr ""
 
-#: views/interview-confirmation.php:60
+#: views/interview-confirmation.php:66
 msgid "Decline Interview"
 msgstr ""
 
