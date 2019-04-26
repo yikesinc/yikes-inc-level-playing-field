@@ -9,6 +9,7 @@
 
 namespace Yikes\LevelPlayingField\Taxonomy;
 
+use Yikes\LevelPlayingField\Activateable;
 use Yikes\LevelPlayingField\Exception\MustExtend;
 use Yikes\LevelPlayingField\Service;
 
@@ -20,7 +21,7 @@ use Yikes\LevelPlayingField\Service;
  * @package Yikes\LevelPlayingField
  * @author  Jeremy Pry
  */
-abstract class BaseTaxonomy implements Service {
+abstract class BaseTaxonomy implements Activateable, Service {
 
 	const SLUG               = '_basetax_';
 	const SHOW_IN_QUICK_EDIT = true;
@@ -32,6 +33,15 @@ abstract class BaseTaxonomy implements Service {
 	 */
 	public function register() {
 		add_action( 'init', [ $this, 'register_taxonomy' ] );
+	}
+
+	/**
+	 * Activate the service.
+	 *
+	 * @since %VERSION%
+	 */
+	public function activate() {
+		$this->register_taxonomy();
 	}
 
 	/**

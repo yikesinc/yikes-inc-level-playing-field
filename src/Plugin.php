@@ -49,6 +49,14 @@ final class Plugin implements Registerable {
 	protected $container;
 
 	/**
+	 * Array of registered services.
+	 *
+	 * @since %VERSION%
+	 * @var Service[]
+	 */
+	private $services = [];
+
+	/**
 	 * Instantiate a Plugin object.
 	 *
 	 * @since %VERSION%
@@ -77,8 +85,13 @@ final class Plugin implements Registerable {
 	 */
 	public function activate() {
 		$this->register_services();
-		$this->register_assets_handler();
-		flush_rewrite_rules( true );
+		foreach ( $this->services as $service ) {
+			if ( $service instanceof Activateable ) {
+				$service->activate();
+			}
+		}
+
+		flush_rewrite_rules();
 	}
 
 	/**
@@ -92,6 +105,7 @@ final class Plugin implements Registerable {
 		array_walk( $services, function( Service $service ) {
 			$service->register();
 		} );
+		$this->services = $services;
 	}
 
 	/**
