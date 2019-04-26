@@ -9,8 +9,8 @@
 
 namespace Yikes\LevelPlayingField\Settings\Fields;
 
-use Yikes\LevelPlayingField\Settings\Settings;
 use Yikes\LevelPlayingField\Exception\MustExtend;
+use Yikes\LevelPlayingField\Settings\Setting;
 
 /**
  * Class AdditionalEmailRecipients.
@@ -23,6 +23,14 @@ abstract class BaseSettingsField {
 	const NAME = '_base_settings_field';
 
 	/**
+	 * The setting instance.
+	 *
+	 * @since %VERSION%
+	 * @var Setting
+	 */
+	protected $setting;
+
+	/**
 	 * The setting's field's value.
 	 *
 	 * @var mixed $value A value for an setting field.
@@ -30,18 +38,20 @@ abstract class BaseSettingsField {
 	public $value;
 
 	/**
+	 * BaseSettingsField constructor.
+	 *
+	 * @param Setting $setting The setting object for storage.
+	 */
+	public function __construct( Setting $setting ) {
+		$this->setting = $setting;
+	}
+
+	/**
 	 * Render the field.
 	 *
 	 * @since %VERSION%
-	 * @param mixed $value Settingally pass the setting field's value when rendering the field.
 	 */
-	public function render( $value = false ) {
-
-		// If we have the value already, store it. Otherwise we'll fetch it when we need it.
-		if ( false !== $value ) {
-			$this->value = $value;
-		}
-
+	public function render() {
 		$this->description();
 		$this->field();
 		$this->help();
@@ -74,7 +84,7 @@ abstract class BaseSettingsField {
 	 * @since %VERSION%
 	 */
 	protected function get_value() {
-		return $this->value ? $this->value : ( new Settings() )->get_setting( static::SLUG );
+		return $this->setting->get();
 	}
 
 	/**

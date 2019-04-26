@@ -11,6 +11,10 @@
 
 namespace Yikes\LevelPlayingField;
 
+use Yikes\LevelPlayingField\Settings\AdditionalEmailRecipients as AERSetting;
+use Yikes\LevelPlayingField\Settings\ApplicationSuccessMessage as ASMSetting;
+use Yikes\LevelPlayingField\Settings\DisableFrontEndCss as DFECSetting;
+use Yikes\LevelPlayingField\Settings\EmailRecipientRoles as ERRSetting;
 use Yikes\LevelPlayingField\Settings\Fields\AdditionalEmailRecipients;
 use Yikes\LevelPlayingField\Settings\Fields\ApplicationSuccessMessage;
 use Yikes\LevelPlayingField\Settings\Fields\DisableFrontEndCSS;
@@ -28,28 +32,37 @@ $settings = $this->settings;
 	<div id="notice-container"></div>
 
 	<div class="lpf-settings lpf-settings-settings-container">
-		<h2><span class="dashicons dashicons-email"></span> <?php esc_html_e( 'Email Settings', 'yikes-level-playing-field' ); ?></h2>
+		<h2>
+			<span class="dashicons dashicons-email"></span>
+			<?php esc_html_e( 'Email Settings', 'yikes-level-playing-field' ); ?>
+		</h2>
 		<?php
-			( new AdditionalEmailRecipients() )->render( $settings->get_setting( AdditionalEmailRecipients::SLUG ) );
-			( new EmailRecipientRoles() )->render( $settings->get_setting( EmailRecipientRoles::SLUG ) );
+			( new AdditionalEmailRecipients( new AERSetting() ) )->render();
+			( new EmailRecipientRoles( new ERRSetting() ) )->render();
 		?>
 	</div>
 
 	<hr>
 
 	<div class="lpf-settings lpf-settings-settings-container">
-		<h2><span class="dashicons dashicons-feedback"></span> <?php esc_html_e( 'Application Settings', 'yikes-level-playing-field' ); ?></h2>
+		<h2>
+			<span class="dashicons dashicons-feedback"></span>
+			<?php esc_html_e( 'Application Settings', 'yikes-level-playing-field' ); ?>
+		</h2>
 		<?php
-			( new ApplicationSuccessMessage() )->render( $settings->get_setting( ApplicationSuccessMessage::SLUG ) );
+			( new ApplicationSuccessMessage( new ASMSetting() ) )->render();
 		?>
 	</div>
 
 	<hr>
 
 	<div class="lpf-settings lpf-settings-settings-container">
-		<h2><span class="dashicons dashicons-art"></span> <?php esc_html_e( 'Appearance Settings', 'yikes-level-playing-field' ); ?></h2>
+		<h2>
+			<span class="dashicons dashicons-art"></span>
+			<?php esc_html_e( 'Appearance Settings', 'yikes-level-playing-field' ); ?>
+		</h2>
 		<?php
-			( new DisableFrontEndCSS() )->render( $settings->get_setting( DisableFrontEndCSS::SLUG ) );
+			( new DisableFrontEndCSS( new DFECSetting() ) )->render();
 		?>
 	</div>
 
@@ -67,7 +80,9 @@ $settings = $this->settings;
 
 	<div class="lpf-settings lpf-settings-settings-container">
 		<div class="lpf-settings-save">
-			<button type="button" class="button button-primary lpf-button-primary" id="lpf-settings-save"><?php esc_html_e( 'Save Settings', 'yikes-level-playing-field' ); ?></button>
+			<button type="button" class="button button-primary lpf-button-primary" id="lpf-settings-save">
+				<?php esc_html_e( 'Save Settings', 'yikes-level-playing-field' ); ?>
+			</button>
 		</div>
 	</div>
 </div>
