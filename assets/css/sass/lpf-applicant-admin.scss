@@ -72,3 +72,27 @@
     }
   }
 }
+
+#basic-info,
+#interview {
+
+  .label {
+    display: inline-block;
+    font-weight: 600;
+    text-align: right;
+    width: 54px;
+  }
+}
+
+#basic-info {
+
+  .location {
+    .address-field {
+      &:last-of-type {
+        .address-field-comma {
+          display: none;
+        }
+      }
+    }
+  }
+}

@@ -12,15 +12,10 @@ namespace Yikes\LevelPlayingField;
 use Yikes\LevelPlayingField\Model\Applicant;
 
 /** @var Applicant $applicant */
-$applicant = $this->applicant;
-?>
+$applicant = $this->applicant; ?>
+
 <!-- Basic info and cover letter sidebar -->
 <div id="basic-info" class="postbox">
-	<h2 class="hndle ui-sortable-handle">
-		<span>
-			<?php esc_html_e( 'Basic Applicant Information', 'yikes-level-playing-field' ); ?>
-		</span>
-	</h2>
 	<div class="inside">
 		<?php if ( ! $applicant->is_anonymized() && ! empty( $applicant->get_email() ) ) : ?>
 			<p class="email">
@@ -37,10 +32,10 @@ $applicant = $this->applicant;
 		<?php endif; ?>
 
 		<p class="location">
-			<span class="label"><?php esc_html_e( 'Location:', 'yikes-level-playing-field' ); ?></span>
+			<span class="label"><?php esc_html_e( 'Address:', 'yikes-level-playing-field' ); ?></span>
 			<?php
 			foreach ( $applicant->get_address() as $field ) {
-				echo esc_html( $field ), '<br>';
+				echo '<span class="address-field">', esc_html( $field ), '<span class="address-field-comma">,</span> </span>';
 			}
 			?>
 		</p>

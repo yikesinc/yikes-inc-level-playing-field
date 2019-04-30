@@ -471,10 +471,10 @@ final class Applicant extends CustomPostTypeEntity {
 		$start = date_create( $experience[ ApplicantMeta::START_DATE ] );
 		$end   = date_create( $experience[ ApplicantMeta::END_DATE ] );
 		$diff  = date_diff( $start, $end );
-		$still = ! empty( $experience[ ApplicantMeta::PRESENT_POSITION ] ) ? __( '(actively working here)', 'yikes-level-playing-field' ) : '';
+		$still = ! empty( $experience[ ApplicantMeta::PRESENT_POSITION ] ) ? __( 'Presently working here.', 'yikes-level-playing-field' ) : '';
 
 		// Add calculated duration to experience and save.
-		$experience[ ApplicantMeta::YEAR_DURATION ] = $diff instanceof \DateInterval ? $diff->format( "%y Year(s) %m Month(s) %d Days {$still}" ) : '';
+		$experience[ ApplicantMeta::YEAR_DURATION ] = $diff instanceof \DateInterval ? $diff->format( "%y Years %m Months %d Days. {$still}" ) : '';
 		$this->{ApplicantMeta::EXPERIENCE}[]        = $this->filter_and_sanitize( $experience, ApplicantMeta::EXPERIENCE );
 		$this->changed_property( ApplicantMeta::EXPERIENCE );
 	}
@@ -524,10 +524,10 @@ final class Applicant extends CustomPostTypeEntity {
 		$start = date_create( $volunteer[ ApplicantMeta::START_DATE ] );
 		$end   = date_create( $volunteer[ ApplicantMeta::END_DATE ] );
 		$diff  = date_diff( $start, $end );
-		$still = ! empty( $volunteer[ ApplicantMeta::PRESENT_POSITION ] ) ? __( '(actively volunteering here)', 'yikes-level-playing-field' ) : '';
+		$still = ! empty( $volunteer[ ApplicantMeta::PRESENT_POSITION ] ) ? __( 'Presently volunteering here.', 'yikes-level-playing-field' ) : '';
 
 		// Add calculated duration to volunteer experience and save.
-		$volunteer[ ApplicantMeta::YEAR_DURATION ] = $diff instanceof \DateInterval ? $diff->format( "%y Year(s) %m Month(s) %d Days {$still}" ) : '';
+		$volunteer[ ApplicantMeta::YEAR_DURATION ] = $diff instanceof \DateInterval ? $diff->format( "%y Years %m Months %d Days. {$still}" ) : '';
 		$this->{ApplicantMeta::VOLUNTEER}[]        = $this->filter_and_sanitize( $volunteer, ApplicantMeta::VOLUNTEER );
 		$this->changed_property( ApplicantMeta::VOLUNTEER );
 	}
