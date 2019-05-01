@@ -46,7 +46,7 @@ final class Settings {
 			HiringManager::SLUG  => false,
 			HumanResources::SLUG => false,
 		],
-		SettingsFields::APPLICATION_SUCCESS_MESSAGE => 'Congratulations! Your form has been successfully submitted!',
+		SettingsFields::APPLICATION_SUCCESS_MESSAGE => 'Thank you, your application has been successfully submitted.',
 		SettingsFields::DISABLE_FRONT_END_CSS       => [
 			Application::CSS_HANDLE => false,
 			BaseJobs::CSS_HANDLE    => false,

@@ -15,7 +15,14 @@ $comments = $this->comments;
 ?>
 <!-- Applicant Messaging -->
 <div id="applicant-messaging">
-	<h2 class="lpf_mbox_title"><?php esc_html_e( 'Applicant Messaging', 'yikes-level-playing-field' ); ?></h2>
+	<?php
+	if ( false === $this->is_metabox ) {
+	?>
+		<h2>Your Messages</h2>
+	<?php } else { ?>
+		<h2 class="lpf_mbox_title"><?php esc_html_e( 'Applicant Messaging', 'yikes-level-playing-field' ); ?></h2>
+	<?php } ?>
+
 	<div class="messaging-container">
 		<?php
 		if ( false === $this->is_metabox ) {
@@ -40,7 +47,16 @@ $comments = $this->comments;
 				$classes   = array_map( 'sanitize_html_class', $classes );
 				?>
 				<div class="<?php echo esc_attr( implode( ' ', $classes ) ); ?>">
-					<div class="message"><?php echo nl2br( wp_kses( $comment->get_content(), [ 'br' => [] ] ) ); ?></div>
+					<div class="message">
+						<?php
+						echo nl2br( wp_kses( $comment->get_content(), [
+							'br'   => [],
+							'div'  => [ 'class' => [] ],
+							'span' => [ 'class' => [] ],
+						]
+						) );
+						?>
+					</div>
 					<div class="message-timestamp"><?php echo esc_html( $comment->get_formatted_date() ); ?></div>
 				</div>
 				<?php

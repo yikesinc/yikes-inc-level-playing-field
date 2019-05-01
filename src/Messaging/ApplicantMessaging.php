@@ -497,15 +497,14 @@ class ApplicantMessaging implements Renderable, AssetsAware, Service {
 		$applicant = new Applicant( get_post( $post_id ) );
 
 		/* translators: %1$s is the date and %2$s is the time. */
-		$message  = sprintf( __( 'You have received an interview reqquest for: %1$s at %2$s.', 'yikes-level-playing-field' ), $date, $time );
-		$message .= '<br>';
+		$message .= '<div class="lpf-message-interview-date">' . sprintf( __( 'You have received a request for an interview on %1$s at %2$s.', 'yikes-level-playing-field' ), $date, $time ) . '</div>';
 		/* translators: %1$s is the location. */
-		$message .= sprintf( __( 'The interview will take place at: %1$s.', 'yikes-level-playing-field' ), '<br>' . $location );
-		$message .= '<br>';
+		$message .= '<div class="lpf-message-interview-location">' . sprintf( __( 'Interview location: %1$s.', 'yikes-level-playing-field' ), '</div>' . $location );
+		$message .= '<div class="lpf-message-interview-message">' . sprintf( __( 'Message from employer', 'yikes-level-playing-field' ) ) . '</div>';
 		$message .= $comment;
-		$message .= '<br>';
-		$message .= __( 'A few statements on un-anonymization.', 'yikes-level-playing-field' );
-		$message .= '<br>';
+		$message .= '<div class="lpf-message-interview-instructions">';
+		$message .= __( 'Please click Confirm Interview to accept this date and time or Decline Interview to reschedule.', 'yikes-level-playing-field' );
+		$message .= '</div>';
 
 		$message_class = new ApplicantMessage();
 		$comment_data  = [

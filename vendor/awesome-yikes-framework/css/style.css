@@ -41,6 +41,7 @@
     .edit-post-sidebar .yks_mbox td textarea, .edit-post-sidebar .yks_mbox td input[type="text"], .edit-post-sidebar table.yks_mbox td textarea, .edit-post-sidebar table.yks_mbox td input[type="text"], .edit-post-sidebar table.form-table td textarea, .edit-post-sidebar table.form-table td input[type="text"] {
       width: 100%; }
     .edit-post-sidebar .yks_mbox td .select2-container, .edit-post-sidebar table.yks_mbox td .select2-container, .edit-post-sidebar table.form-table td .select2-container {
+      min-width: 234px !important;
       max-width: 234px !important;
       overflow: hidden; }
     .edit-post-sidebar .yks_mbox td .meta-error, .edit-post-sidebar table.yks_mbox td .meta-error, .edit-post-sidebar table.form-table td .meta-error {

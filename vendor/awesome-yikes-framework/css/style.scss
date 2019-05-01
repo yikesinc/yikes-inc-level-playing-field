@@ -89,6 +89,7 @@ $input-repeating-width: 85%;
       }
 
       .select2-container {
+        min-width: 234px !important;
         max-width: 234px !important;
         overflow: hidden;
       }

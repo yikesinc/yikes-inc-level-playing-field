@@ -10,7 +10,73 @@
 }
 
 .messaging-container {
-	padding: 0 0 0 1rem;
+
+	.wp-admin & {
+		padding: 0 0 0 1rem;
+	}
+
+	/* Interview message styles */
+
+	.lpf-message-interview-date,
+	.lpf-message-interview-location,
+	.lpf-message-interview-message {
+		font-weight: 700;
+	}
+
+	.lpf-message-interview-date {
+		margin-bottom: 0.8rem;
+	}
+
+	.lpf-message-interview-location,
+	.lpf-message-interview-message {
+		margin-bottom: 0.2rem;
+	}
+
+	.lpf-message-interview-message {
+		margin-top: 0.8rem;
+	}
+
+	.lpf-message-interview-instructions {
+		margin: 0.8rem 0;
+	}
+
+	.applicant-messaging-interview-confirm-container {
+		border: 1px solid $wp-orange;
+		margin: 1rem 0 2rem;
+		padding: 1rem;
+
+	    .applicant-messaging-interview-status {
+	    	font-weight: 700;
+	    }
+
+	    .applicant-messaging-interview-confirm-details {
+	    	margin-bottom: 0.8rem;
+	    }
+
+	    label {
+	    	font-weight: 700;
+	    }
+
+		.applicant-messaging-interview-confirm,
+		.applicant-messaging-interview-decline {
+			border-radius: 2px;
+			color: $color-white;
+			padding: 0.4rem 0.8rem;
+
+			&, &:visited {
+				color: $color-white;
+			}
+		}
+
+		.applicant-messaging-interview-confirm {
+			background-color: $wp-green;
+		}
+
+		.applicant-messaging-interview-decline {
+			background-color: $wp-red;
+			margin-left: 1rem;
+		}
+	}
 }
 
 .new-applicant-message-container {
@@ -38,10 +104,10 @@
 
 .conversation-container {
 	max-height: 500px;
-	overflow-x: hidden;
 
 	&.conversation-container.has-conversation {
-		overflow-y: scroll;	
+		overflow-y: auto;
+		overflow-x: hidden;
 	}
 
 	.lpf-message.hidden {

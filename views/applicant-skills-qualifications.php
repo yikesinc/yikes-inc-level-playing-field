@@ -14,6 +14,7 @@ use Yikes\LevelPlayingField\Model\Applicant;
 
 /** @var Applicant $applicant */
 $applicant = $this->applicant;
+
 ?>
 <!-- Applicant Skills and Qualifications -->
 <div id="applicant-skills-qualifications">
@@ -206,7 +207,7 @@ $applicant = $this->applicant;
 							esc_html( $experience[ ApplicantMeta::INDUSTRY ] ),
 							esc_html( $experience[ ApplicantMeta::ORGANIZATION ] ),
 							esc_html( date( 'm/d/Y', strtotime( $experience[ ApplicantMeta::START_DATE ] ) ) ),
-							esc_html( ! empty( $experience[ ApplicantMeta::PRESENT_POSITION ] ) ? __( 'current', 'yikes-level-playing-field' ) : date( 'm/d/Y', strtotime( $experience[ ApplicantMeta::END_DATE ] ) ) )
+							esc_html( ! empty( $experience[ ApplicantMeta::PRESENT_POSITION ] ) ? __( 'the present time.', 'yikes-level-playing-field' ) : date( 'm/d/Y', strtotime( $experience[ ApplicantMeta::END_DATE ] ) ) )
 						);
 					}
 				}
@@ -237,7 +238,7 @@ $applicant = $this->applicant;
 							esc_html( $experience[ ApplicantMeta::INDUSTRY ] ),
 							esc_html( $experience[ ApplicantMeta::ORGANIZATION ] ),
 							esc_html( date( 'm/d/Y', strtotime( $experience[ ApplicantMeta::START_DATE ] ) ) ),
-							esc_html( ! empty( $experience[ ApplicantMeta::PRESENT_POSITION ] ) ? __( 'current', 'yikes-level-playing-field' ) : date( 'm/d/Y', strtotime( $experience[ ApplicantMeta::END_DATE ] ) ) )
+							esc_html( ! empty( $experience[ ApplicantMeta::PRESENT_POSITION ] ) ? __( 'the present time.', 'yikes-level-playing-field' ) : date( 'm/d/Y', strtotime( $experience[ ApplicantMeta::END_DATE ] ) ) )
 						);
 					}
 				}
