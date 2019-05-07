@@ -76,9 +76,9 @@ class SettingsPage extends BaseAdminPage implements AssetsAware {
 			[
 				'ajax'     => [
 					'save_nonce'  => wp_create_nonce( 'save_settings' ),
-					'save_action' => 'save_settings',
+					'save_action' => 'lpf_save_settings',
 				],
-				'settings' => wp_json_encode( new Settings( true ) ),
+				'settings' => wp_json_encode( new Settings() ),
 				'strings'  => [
 					'save_success' => __( 'Success: Settings Saved.', 'yikes-level-playing-field' ),
 					'save_error'   => __( 'Error: The settings could not be saved.', 'yikes-level-playing-field' ),
@@ -123,7 +123,7 @@ class SettingsPage extends BaseAdminPage implements AssetsAware {
 	 */
 	protected function get_context() {
 		return [
-			'settings' => new Settings( true ),
+			'settings' => new Settings(),
 		];
 	}
 }

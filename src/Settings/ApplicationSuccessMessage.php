@@ -26,6 +26,6 @@ class ApplicationSuccessMessage extends BaseSetting {
 	 * @return string
 	 */
 	protected function get_default() {
-		return __( 'Congratulations! Your form has been successfully submitted.', 'yikes-level-playing-field' );
+		return __( 'Thank you, your application has been successfully submitted.', 'yikes-level-playing-field' );
 	}
 }
