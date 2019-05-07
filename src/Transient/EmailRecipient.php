@@ -52,7 +52,7 @@ final class EmailRecipient implements Service {
 		$email_recipient_roles = array_filter( ( new EmailRecipientRoles() )->get() );
 
 		foreach ( $email_recipient_roles as $role => $enabled ) {
-			if ( isset( array_flip( $roles )[ $role ] ) ) {
+			if ( in_array( $role, $roles, true ) ) {
 				delete_transient( TransientKeys::EMAILS_TRANSIENT . $role );
 			}
 		}
