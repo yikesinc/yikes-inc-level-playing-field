@@ -48,6 +48,7 @@ use Yikes\LevelPlayingField\Taxonomy\JobStatus;
 use Yikes\LevelPlayingField\TemplateController\ApplicantMessagingTemplateController as ApplicantMessageTemplate;
 use Yikes\LevelPlayingField\TemplateController\SingleApplicationsTemplateController as SingleApplications;
 use Yikes\LevelPlayingField\TemplateController\SingleJobsTemplateController as SingleJobs;
+use Yikes\LevelPlayingField\Transient\EmailRecipient;
 use Yikes\LevelPlayingField\Widget\Dashboard\JobApplicants;
 
 /**
@@ -163,6 +164,9 @@ final class PluginFactory {
 		// Required pages.
 		$services->add_service( ApplicantMessagingPage::class );
 		$services->add_service( ApplicationFormPage::class );
+
+		// Transient Handling.
+		$services->add_service( EmailRecipient::class );
 
 		return $services;
 	}
