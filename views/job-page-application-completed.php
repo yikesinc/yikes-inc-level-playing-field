@@ -9,11 +9,12 @@
 
 namespace Yikes\LevelPlayingField;
 
-use Yikes\LevelPlayingField\Settings\Settings;
-use Yikes\LevelPlayingField\Settings\SettingsFields;
 use Yikes\LevelPlayingField\Model\JobRepository;
+use Yikes\LevelPlayingField\Settings\ApplicationSuccessMessage;
 
 $job = ( new JobRepository() )->find( $this->job_id );
-$msg = ! empty( $job->get_application_success_message() ) ? $job->get_application_success_message() : ( new Settings() )->get_setting( SettingsFields::APPLICATION_SUCCESS_MESSAGE );
+$msg = ! empty( $job->get_application_success_message() )
+	? $job->get_application_success_message()
+	: ( new ApplicationSuccessMessage() )->get();
 
 printf( '<p>%s</p>', esc_html( $msg ) );

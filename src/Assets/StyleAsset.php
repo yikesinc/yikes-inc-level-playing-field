@@ -11,8 +11,7 @@ namespace Yikes\LevelPlayingField\Assets;
 
 use Closure;
 use Yikes\LevelPlayingField\Plugin;
-use Yikes\LevelPlayingField\Settings\Settings;
-use Yikes\LevelPlayingField\Settings\SettingsFields;
+use Yikes\LevelPlayingField\Settings\DisableFrontEndCss;
 
 /**
  * Class StyleAsset.
@@ -119,8 +118,7 @@ final class StyleAsset extends BaseAsset {
 				return;
 			}
 
-			$setting = $this->disableable ? ( new Settings() )->get_setting( SettingsFields::DISABLE_FRONT_END_CSS ) : false;
-			if ( $this->disableable && is_array( $setting ) && isset( $setting[ $this->handle] ) && true === $setting[ $this->handle] ) {
+			if ( $this->is_disabled() ) {
 				return;
 			}
 
@@ -158,5 +156,20 @@ final class StyleAsset extends BaseAsset {
 		return function () {
 			wp_dequeue_style( $this->handle );
 		};
+	}
+
+	/**
+	 * Whether the current style is disabled.
+	 *
+	 * @since %VERSION%
+	 * @return bool
+	 */
+	private function is_disabled() {
+		if ( ! $this->disableable ) {
+			return false;
+		}
+
+		$setting = ( new DisableFrontEndCss() )->get();
+		return isset( $setting[ $this->handle ] ) && true === $setting[ $this->handle ];
 	}
 }

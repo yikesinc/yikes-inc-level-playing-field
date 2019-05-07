@@ -23,6 +23,16 @@ class DisableFrontEndCss extends BaseSetting {
 	const SLUG = SettingsFields::DISABLE_FRONT_END_CSS;
 
 	/**
+	 * Get the plugin value.
+	 *
+	 * @since %VERSION%
+	 * @return array
+	 */
+	public function get() {
+		return (array) parent::get();
+	}
+
+	/**
 	 * Get the default value for the setting.
 	 *
 	 * @since %VERSION%
