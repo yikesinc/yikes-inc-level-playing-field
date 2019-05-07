@@ -19,10 +19,8 @@ use Yikes\LevelPlayingField\Settings\Fields\AdditionalEmailRecipients;
 use Yikes\LevelPlayingField\Settings\Fields\ApplicationSuccessMessage;
 use Yikes\LevelPlayingField\Settings\Fields\DisableFrontEndCSS;
 use Yikes\LevelPlayingField\Settings\Fields\EmailRecipientRoles;
-use Yikes\LevelPlayingField\Settings\Settings;
 use Yikes\LevelPlayingField\View\View;
 
-$settings = $this->settings;
 ?>
 <div id="lpf-settings" class="wrap lpf-page settings-page">
 	<h1 class="wp-heading-inline">
@@ -72,10 +70,9 @@ $settings = $this->settings;
 	/**
 	 * Triggered after the built-in settings.
 	 *
-	 * @param Settings $settings The settings object.
-	 * @param View     $view     The current view object.
+	 * @param View $view The current view object.
 	 */
-	do_action( 'lpf_settings_page', $settings, $this );
+	do_action( 'lpf_settings_page', $this );
 	?>
 
 	<div class="lpf-settings lpf-settings-settings-container">
