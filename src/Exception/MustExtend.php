@@ -94,4 +94,23 @@ class MustExtend extends \LogicException implements Exception {
 
 		return new static( $message );
 	}
+
+	/**
+	 * Create a new exception when a name needs to be extended.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param string $name The default name.
+	 *
+	 * @return static
+	 */
+	public static function default_name( $name ) {
+		$message = sprintf(
+			/* translators: %s refers to the default name */
+			__( 'The default name "%s" must be extended in a subclass.', 'yikes-level-playing-field' ),
+			$name
+		);
+
+		return new static( $message );
+	}
 }

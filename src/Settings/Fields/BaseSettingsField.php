@@ -9,7 +9,8 @@
 
 namespace Yikes\LevelPlayingField\Settings\Fields;
 
-use Yikes\LevelPlayingField\Settings\Settings;
+use Yikes\LevelPlayingField\Exception\MustExtend;
+use Yikes\LevelPlayingField\Settings\Setting;
 
 /**
  * Class AdditionalEmailRecipients.
@@ -19,6 +20,16 @@ use Yikes\LevelPlayingField\Settings\Settings;
  */
 abstract class BaseSettingsField {
 
+	const NAME = '_base_settings_field';
+
+	/**
+	 * The setting instance.
+	 *
+	 * @since %VERSION%
+	 * @var Setting
+	 */
+	protected $setting;
+
 	/**
 	 * The setting's field's value.
 	 *
@@ -27,18 +38,20 @@ abstract class BaseSettingsField {
 	public $value;
 
 	/**
+	 * BaseSettingsField constructor.
+	 *
+	 * @param Setting $setting The setting object for storage.
+	 */
+	public function __construct( Setting $setting ) {
+		$this->setting = $setting;
+	}
+
+	/**
 	 * Render the field.
 	 *
 	 * @since %VERSION%
-	 * @param mixed $value Settingally pass the setting field's value when rendering the field.
 	 */
-	public function render( $value = false ) {
-
-		// If we have the value already, store it. Otherwise we'll fetch it when we need it.
-		if ( false !== $value ) {
-			$this->value = $value;
-		}
-
+	public function render() {
 		$this->description();
 		$this->field();
 		$this->help();
@@ -52,12 +65,26 @@ abstract class BaseSettingsField {
 	abstract protected function field();
 
 	/**
+	 * Get the name constant for the class.
+	 *
+	 * @since %VERSION%
+	 * @throws MustExtend When the NAME constant has not been extended.
+	 */
+	protected function get_name() {
+		if ( self::NAME === static::NAME ) {
+			throw MustExtend::default_name( self::NAME );
+		}
+
+		return static::NAME;
+	}
+
+	/**
 	 * Get the value of the setting. We shouldn't need to instantiate the Settings class every time. We need to find a way to avoid that.
 	 *
 	 * @since %VERSION%
 	 */
 	protected function get_value() {
-		return $this->value ? $this->value : ( new Settings() )->get_setting( static::SLUG );
+		return $this->setting->get();
 	}
 
 	/**
@@ -107,7 +134,7 @@ abstract class BaseSettingsField {
 	 */
 	protected function html_classes() {
 		// Sanitize class names, remove empties, join each with a space, and then remove the trailing space.
-		return rtrim( implode( ' ', array_filter( array_map( 'sanitize_html_class', [ 'settings-field', static::NAME ] ) ) ) );
+		return implode( ' ', array_filter( array_map( 'sanitize_html_class', [ 'settings-field', $this->get_name() ] ) ) );
 	}
 
 	/**

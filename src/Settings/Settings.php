@@ -9,11 +9,10 @@
 
 namespace Yikes\LevelPlayingField\Settings;
 
-use Yikes\LevelPlayingField\Roles\HiringManager;
-use Yikes\LevelPlayingField\Roles\HumanResources;
+use JsonSerializable;
+use Yikes\LevelPlayingField\Exception\InvalidClass;
+use Yikes\LevelPlayingField\Exception\InvalidKey;
 use Yikes\LevelPlayingField\Exception\NoDefault;
-use Yikes\LevelPlayingField\Shortcode\Application;
-use Yikes\LevelPlayingField\Shortcode\BaseJobs;
 
 /**
  * Class Settings.
@@ -24,73 +23,85 @@ use Yikes\LevelPlayingField\Shortcode\BaseJobs;
  * @property string additional_email_recipients Email addresses that should receive applicant message emails.
  * @property array  email_recipient_roles       Roles whose members should receive applicant message emails.
  */
-final class Settings {
-
-	const FIELDS = [
-		SettingsFields::ADDITIONAL_EMAIL_RECIPIENTS,
-		SettingsFields::EMAIL_RECIPIENT_ROLES,
-		SettingsFields::APPLICATION_SUCCESS_MESSAGE,
-		SettingsFields::DISABLE_FRONT_END_CSS,
-	];
-
-	const SANITIZATION = [
-		SettingsFields::ADDITIONAL_EMAIL_RECIPIENTS => FILTER_SANITIZE_STRING,
-		SettingsFields::EMAIL_RECIPIENT_ROLES       => FILTER_VALIDATE_BOOLEAN,
-		SettingsFields::APPLICATION_SUCCESS_MESSAGE => FILTER_SANITIZE_STRING,
-		SettingsFields::DISABLE_FRONT_END_CSS       => FILTER_VALIDATE_BOOLEAN,
-	];
-
-	const DEFAULTS = [
-		SettingsFields::ADDITIONAL_EMAIL_RECIPIENTS => '',
-		SettingsFields::EMAIL_RECIPIENT_ROLES       => [
-			HiringManager::SLUG  => false,
-			HumanResources::SLUG => false,
-		],
-		SettingsFields::APPLICATION_SUCCESS_MESSAGE => 'Thank you, your application has been successfully submitted.',
-		SettingsFields::DISABLE_FRONT_END_CSS       => [
-			Application::CSS_HANDLE => false,
-			BaseJobs::CSS_HANDLE    => false,
-		],
-	];
+final class Settings implements JsonSerializable {
 
 	/**
-	 * Settingally load all settings on instantiation.
+	 * Array of available settings.
 	 *
 	 * @since %VERSION%
-	 *
-	 * @param bool $autoload True to load all settings on instantiation.
+	 * @var Setting[]
 	 */
-	public function __construct( $autoload = false ) {
-		if ( true === $autoload ) {
-			$this->load();
-		}
+	private $settings = [];
+
+	/**
+	 * Settings constructor.
+	 */
+	public function __construct() {
+		$this->settings = $this->get_available_settings();
 	}
 
 	/**
-	 * Load all settings from the database.
+	 * Get available settings to use.
+	 *
+	 * @todo These should be injected via the constructor rather than hardcoded.
 	 *
 	 * @since %VERSION%
+	 * @return Setting[] Array of setting objects.
+	 * @throws InvalidClass When the Setting interface isn't implemented.
 	 */
-	public function load() {
-		foreach ( $this->get_settings() as $key => $value ) {
-			$this->$key = $value;
+	private function get_available_settings() {
+		/**
+		 * Filter the available settings.
+		 *
+		 * @param array $settings Array of setting IDs and their handlers.
+		 */
+		$settings = (array) apply_filters( 'lpf_available_settings', [
+			SettingsFields::ADDITIONAL_EMAIL_RECIPIENTS => AdditionalEmailRecipients::class,
+			SettingsFields::EMAIL_RECIPIENT_ROLES       => EmailRecipientRoles::class,
+			SettingsFields::APPLICATION_SUCCESS_MESSAGE => ApplicationSuccessMessage::class,
+			SettingsFields::DISABLE_FRONT_END_CSS       => DisableFrontEndCss::class,
+		] );
+
+		// Instantiate and validate settings.
+		foreach ( $settings as $id => $class ) {
+			$instance = new $class();
+			if ( ! $instance instanceof Setting ) {
+				throw InvalidClass::from_interface( $class, Setting::class );
+			}
+
+			$settings[ $id ] = $instance;
 		}
+
+		return $settings;
 	}
 
 	/**
-	 * Sanitize & save each setting.
+	 * Set one of our settings.
 	 *
 	 * @since %VERSION%
+	 *
+	 * @param string $name  The setting name.
+	 * @param mixed  $value The setting value.
+	 *
+	 * @throws InvalidKey When the setting name is not recognized.
 	 */
-	public function save() {
-		foreach ( static::FIELDS as $field_name ) {
-			update_option(
-				$this->prefix_field( $field_name ),
-				is_array( $this->$field_name )
-					? filter_var_array( $this->$field_name, static::SANITIZATION[ $field_name ] )
-					: filter_var( $this->$field_name, static::SANITIZATION[ $field_name ] )
-			);
+	public function __set( $name, $value ) {
+		if ( ! isset( $this->settings[ $name ] ) ) {
+			throw InvalidKey::not_found( $name, __METHOD__ );
 		}
+
+		$this->settings[ $name ]->update( $value );
+	}
+
+	/**
+	 * Utilized for reading data from inaccessible members.
+	 *
+	 * @param string $name The setting name.
+	 *
+	 * @return mixed
+	 */
+	public function __get( $name ) {
+		return $this->get_setting( $name );
 	}
 
 	/**
@@ -104,44 +115,25 @@ final class Settings {
 	 * @throws NoDefault When a default setting has not been set for the setting.
 	 */
 	public function get_setting( $setting_name ) {
-		if ( ! isset( static::DEFAULTS[ $setting_name ] ) ) {
-			throw NoDefault::default_value( $setting_name );
+		if ( ! isset( $this->settings[ $setting_name ] ) ) {
+			throw InvalidKey::not_found( $setting_name, __METHOD__ );
 		}
-		return get_option( $this->prefix_field( $setting_name ), $this->get_default_value( $setting_name ) );
+
+		return $this->settings[ $setting_name ]->get();
 	}
 
 	/**
-	 * Fetch all of our settings from the database.
+	 * Method for serializing the object to JSON.
 	 *
 	 * @since %VERSION%
-	 *
 	 * @return array
 	 */
-	public function get_settings() {
-		return array_combine( static::FIELDS, array_map( [ $this, 'get_setting' ], static::FIELDS ) );
-	}
+	public function jsonSerialize() {
+		$return = [];
+		foreach ( $this->settings as $id => $instance ) {
+			$return[ $id ] = $instance->get();
+		}
 
-	/**
-	 * Prefix an setting name with our settings prefix.
-	 *
-	 * @since %VERSION%
-	 *
-	 * @param string $setting_name The setting field name.
-	 * @return string The prefixed field.
-	 */
-	private function prefix_field( $setting_name ) {
-		return SettingsFields::OPTION_PREFIX . $setting_name;
-	}
-
-	/**
-	 * Get a default value for an setting.
-	 *
-	 * @since %VERSION%
-	 *
-	 * @param string $setting_name The setting field name.
-	 * @return mixed The default for the given setting.
-	 */
-	private function get_default_value( $setting_name ) {
-		return static::DEFAULTS[ $setting_name ];
+		return $return;
 	}
 }
