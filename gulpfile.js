@@ -47,14 +47,14 @@ const paths = {
 		'assets/js/**/*.js',
 		'assets/images/**',
 		'assets/vendor/**',
-        'languages/*',
-        'src/**/*.php',
-        'vendor/awesome-yikes-framework/**',
-        'views/**/*.php',
-        '*.php',
-        'LICENSE.txt',
-        'readme.*',
-        '!assets/js/dev/*.js'
+		'languages/*',
+		'src/**/*.php',
+		'vendor/awesome-yikes-framework/**',
+		'views/**/*.php',
+		'*.php',
+		'LICENSE.txt',
+		'readme.*',
+		'!assets/js/dev/*.js'
 	]
 };
 
