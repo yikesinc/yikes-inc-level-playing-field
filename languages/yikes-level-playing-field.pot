@@ -10,6 +10,419 @@ msgstr ""
 "X-Poedit-KeywordsList: __;_e;_ex:1,2c;_n:1,2;_n_noop:1,2;_nx:1,2,4c;_nx_noop:1,2,3c;_x:1,2c;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+#. translators: %1$s is the required PHP version, %2$s is the current version
+#: yikes-level-playing-field.php:75
+msgid "Level Playing Field requires PHP version %1$s or above. Your site is using PHP version %2$s."
+msgstr ""
+
+#. translators: %1$s is the required WP version, %2$s is the current version
+#: yikes-level-playing-field.php:101
+msgid "Level Playing Field requires WordPress version %1$s or above. Your site is using WordPress version %2$s."
+msgstr ""
+
+#: views/applicant-basic-info.php:22
+msgid "Email:"
+msgstr ""
+
+#: views/applicant-basic-info.php:29
+msgid "Phone:"
+msgstr ""
+
+#: views/applicant-basic-info.php:35
+msgid "Address:"
+msgstr ""
+
+#: views/applicant-basic-info.php:46
+msgid "Cover Letter:"
+msgstr ""
+
+#: views/applicant-basic-info.php:47
+msgid "View Cover Letter"
+msgstr ""
+
+#: views/applicant-details.php:26
+msgid "Nickname:"
+msgstr ""
+
+#: views/applicant-details.php:29
+msgid "Edit Nickname"
+msgstr ""
+
+#: views/applicant-details.php:34
+msgid "Name:"
+msgstr ""
+
+#: views/applicant-details.php:39
+msgid "Job:"
+msgstr ""
+
+#: views/applicant-interview-details.php:24, views/interview-confirmation.php:44
+msgid "Date:"
+msgstr ""
+
+#: views/applicant-interview-details.php:27, views/interview-confirmation.php:48
+msgid "Time:"
+msgstr ""
+
+#: views/applicant-interview-details.php:30, views/interview-confirmation.php:52, src/Shortcode/Job.php:66
+msgid "Location:"
+msgstr ""
+
+#: views/applicant-interview-details.php:33, views/interview-confirmation.php:56
+msgid "Message:"
+msgstr ""
+
+#: views/applicant-interview-details.php:36
+msgid "An interview has not been scheduled yet"
+msgstr ""
+
+#: views/applicant-messaging.php:23
+msgid "Applicant Messaging"
+msgstr ""
+
+#: views/applicant-messaging.php:38
+msgid "Start a conversation with this applicant."
+msgstr ""
+
+#: views/applicant-messaging.php:70
+msgid "Send a New Message"
+msgstr ""
+
+#: views/applicant-skills-qualifications.php:21
+msgid "Skills and Qualifications"
+msgstr ""
+
+#: views/applicant-skills-qualifications.php:24, views/go-pro.php:62, src/Metabox/ApplicationManager.php:180
+msgid "Education"
+msgstr ""
+
+#: views/applicant-skills-qualifications.php:27, src/Metabox/ApplicationManager.php:191, src/Metabox/ApplicationManager.php:192
+msgid "Schooling"
+msgstr ""
+
+#: views/applicant-skills-qualifications.php:36
+msgid "Graduated from High School or High School equivalent"
+msgstr ""
+
+#: views/applicant-skills-qualifications.php:69, src/Metabox/ApplicationManager.php:215, src/Metabox/ApplicationManager.php:216
+msgid "Certifications"
+msgstr ""
+
+#: views/applicant-skills-qualifications.php:99, src/Metabox/ApplicationManager.php:241, src/Metabox/ApplicationManager.php:246
+msgid "Skills"
+msgstr ""
+
+#: views/applicant-skills-qualifications.php:104, src/Field/Skills.php:40, src/Field/Skills.php:74
+msgid "Skill"
+msgstr ""
+
+#: views/applicant-skills-qualifications.php:105, views/applicant-skills-qualifications.php:169, src/Field/Languages.php:45, src/Field/Skills.php:43
+msgid "Proficiency"
+msgstr ""
+
+#: views/applicant-skills-qualifications.php:127, src/Metabox/ApplicationManager.php:269, src/Metabox/ApplicationManager.php:274
+msgid "Languages"
+msgstr ""
+
+#: views/applicant-skills-qualifications.php:151
+msgid "Multilingual"
+msgstr ""
+
+#. translators: %d is the number of languages for the given fluency level
+#: views/applicant-skills-qualifications.php:156
+msgid "in %d language"
+msgid_plural "in %d languages"
+msgstr[0] ""
+msgstr[1] ""
+
+#: views/applicant-skills-qualifications.php:168, src/Field/Languages.php:42, src/Field/Languages.php:76
+msgid "Language"
+msgstr ""
+
+#: views/applicant-skills-qualifications.php:191, views/go-pro.php:63, src/Field/Experience.php:91, src/Metabox/ApplicationManager.php:297, src/Metabox/ApplicationManager.php:302, src/Metabox/ApplicationManager.php:308, src/Metabox/ApplicationManager.php:309
+msgid "Experience"
+msgstr ""
+
+#: views/applicant-skills-qualifications.php:210, views/applicant-skills-qualifications.php:241
+msgid "the present time."
+msgstr ""
+
+#: views/applicant-skills-qualifications.php:222, src/Metabox/ApplicationManager.php:334, src/Metabox/ApplicationManager.php:339, src/Metabox/ApplicationManager.php:345, src/Metabox/ApplicationManager.php:346
+msgid "Volunteer Work"
+msgstr ""
+
+#: views/banner1.php:17
+msgid "Leave a review!"
+msgstr ""
+
+#: views/banner1.php:27
+msgid "Tweet about Level Playing Field"
+msgstr ""
+
+#: views/banner1.php:31
+msgid "Tweet"
+msgstr ""
+
+#: views/banner2.php:25
+msgid "Upgrade to Level Playing Field Pro for great additional features including:"
+msgstr ""
+
+#: views/banner2.php:30, views/go-pro.php:42
+msgid "Unlimited Job Listings."
+msgstr ""
+
+#: views/banner2.php:33
+msgid "More Detailed Job Listings."
+msgstr ""
+
+#: views/banner2.php:36
+msgid "Custom Application Form Questions."
+msgstr ""
+
+#: views/banner2.php:39
+msgid "Applicant export."
+msgstr ""
+
+#: views/banner2.php:45, views/go-pro.php:24
+msgid "Upgrade to Pro"
+msgstr ""
+
+#: views/go-pro.php:18, src/Metabox/Banner2.php:48
+msgid "Level Playing Field Pro"
+msgstr ""
+
+#: views/go-pro.php:30
+msgid "Upgrade to Level Playing Field Pro for unlimited job listings and enhanced features."
+msgstr ""
+
+#: views/go-pro.php:46
+msgid "More detailed Job Listings."
+msgstr ""
+
+#: views/go-pro.php:49, views/go-pro.php:51
+msgid "Responsibilities"
+msgstr ""
+
+#: views/go-pro.php:52
+msgid "Schedule"
+msgstr ""
+
+#: views/go-pro.php:53
+msgid "Requirements"
+msgstr ""
+
+#: views/go-pro.php:59, views/go-pro.php:61
+msgid "Qualifications"
+msgstr ""
+
+#: views/go-pro.php:64
+msgid "Knowledge, Skills and Abilities"
+msgstr ""
+
+#: views/go-pro.php:70
+msgid "Compensation"
+msgstr ""
+
+#: views/go-pro.php:74
+msgid "Company/Organization Details"
+msgstr ""
+
+#: views/go-pro.php:76, src/Metabox/ApplicationManager.php:100, src/Metabox/ApplicationManager.php:101
+msgid "Name"
+msgstr ""
+
+#: views/go-pro.php:77, src/Shortcode/Job.php:63
+msgid "Description"
+msgstr ""
+
+#: views/go-pro.php:78
+msgid "Logo"
+msgstr ""
+
+#: views/go-pro.php:79
+msgid "Website"
+msgstr ""
+
+#: views/go-pro.php:80
+msgid "Social Links"
+msgstr ""
+
+#: views/go-pro.php:86
+msgid "More Robust Applicant Functionality."
+msgstr ""
+
+#: views/go-pro.php:89
+msgid "Ability to add custom questions to application forms"
+msgstr ""
+
+#: views/go-pro.php:90
+msgid "Ability to export applicants to CSV File"
+msgstr ""
+
+#: views/go-pro.php:94
+msgid "Premium Support."
+msgstr ""
+
+#: views/go-pro.php:97
+msgid "Prioritized one-on-one support"
+msgstr ""
+
+#: views/interview-confirmation.php:13
+msgid "Your interview request has been canceled"
+msgstr ""
+
+#: views/interview-confirmation.php:18
+msgid "Your interview request has been confirmed"
+msgstr ""
+
+#: views/interview-confirmation.php:33
+msgid "You have a confirmed interview."
+msgstr ""
+
+#: views/interview-confirmation.php:37
+msgid "You have a pending interview request"
+msgstr ""
+
+#: views/interview-confirmation.php:65
+msgid "Confirm Interview"
+msgstr ""
+
+#: views/interview-confirmation.php:68
+msgid "Decline Interview"
+msgstr ""
+
+#: views/interview-scheduler.php:13
+msgid "An interview has already been scheduled."
+msgstr ""
+
+#: views/interview-scheduler.php:13
+msgid "An interview has already been confirmed."
+msgstr ""
+
+#: views/interview-scheduler.php:19
+msgid "Schedule an Interview"
+msgstr ""
+
+#: views/interview-scheduler.php:23
+msgid "Interview Request "
+msgstr ""
+
+#: views/interview-scheduler.php:30
+msgid "Use the form below to send an interview request to the applicant."
+msgstr ""
+
+#: views/interview-scheduler.php:33
+msgid "Date"
+msgstr ""
+
+#: views/interview-scheduler.php:37
+msgid "Time"
+msgstr ""
+
+#: views/interview-scheduler.php:41
+msgid "Location details"
+msgstr ""
+
+#: views/interview-scheduler.php:45
+msgid "Message to Applicant"
+msgstr ""
+
+#: views/interview-scheduler.php:51
+msgid "Send Interview Request"
+msgstr ""
+
+#: views/job-applicants-widget.php:24
+msgid "Job Title"
+msgstr ""
+
+#: views/job-applicants-widget.php:25
+msgid "New"
+msgstr ""
+
+#: views/job-applicants-widget.php:26
+msgid "Total"
+msgstr ""
+
+#: views/job-applicants-widget.php:49
+msgid "View All Job Listings"
+msgstr ""
+
+#: views/job-applicants-widget.php:50
+msgid "View All Applicants"
+msgstr ""
+
+#: views/job-page-application.php:39
+msgid "Your application has errors. Please correct the errors below before resubmitting."
+msgstr ""
+
+#: views/job-page-application.php:48
+msgid "Submit Application"
+msgstr ""
+
+#: views/job-page-application.php:60
+msgid "Edit Application"
+msgstr ""
+
+#: views/job-page-application.php:70, src/CustomPostType/JobManager.php:91
+msgid "Edit Job"
+msgstr ""
+
+#: views/settings.php:27
+msgid "Level Playing Field Settings"
+msgstr ""
+
+#: views/settings.php:35
+msgid "Email Settings"
+msgstr ""
+
+#: views/settings.php:48
+msgid "Application Settings"
+msgstr ""
+
+#: views/settings.php:60
+msgid "Appearance Settings"
+msgstr ""
+
+#: views/settings.php:81
+msgid "Save Settings"
+msgstr ""
+
+#: views/support.php:17
+msgid "Level Playing Field Support"
+msgstr ""
+
+#: views/support.php:23
+msgid "Before submitting a support request, please visit our Knowledge Base where we have step-by-step guides and troubleshooting help."
+msgstr ""
+
+#: views/support.php:23
+msgid "Visit the Level Playing Field Knowledge Base"
+msgstr ""
+
+#: views/support.php:27
+msgid "Level Playing Field Pro users qualify for premium support."
+msgstr ""
+
+#: views/support.php:27
+msgid "Check out Level Playing Field Pro!"
+msgstr ""
+
+#: views/support.php:34
+msgid "WordPress.org Support Forums"
+msgstr ""
+
+#: views/support.php:38
+msgid "If you need help, please post questions to our support forum on the WordPress Plugin Directory."
+msgstr ""
+
+#: views/support.php:39
+msgid "Go to the free Support Forum on WordPress.org"
+msgstr ""
+
+#: views/support.php:45
+msgid "Submit a Support Request"
+msgstr ""
+
 #: src/AdminPage/GoProPage.php:78
 msgid "Go Pro - Level Playing Field"
 msgstr ""
@@ -18,7 +431,7 @@ msgstr ""
 msgid "Go Pro"
 msgstr ""
 
-#: src/AdminPage/SettingsPage.php:83, src/Settings/SettingsManager.php:146
+#: src/AdminPage/SettingsPage.php:83, src/Settings/SettingsManager.php:69
 msgid "Success: Settings Saved."
 msgstr ""
 
@@ -359,10 +772,6 @@ msgstr ""
 msgid "New Job"
 msgstr ""
 
-#: src/CustomPostType/JobManager.php:91, views/job-page-application.php:70
-msgid "Edit Job"
-msgstr ""
-
 #: src/CustomPostType/JobManager.php:92
 msgid "Update Job"
 msgstr ""
@@ -477,7 +886,7 @@ msgstr ""
 msgid "A message about your application"
 msgstr ""
 
-#: src/Email/FromApplicantEmail.php:52
+#: src/Email/FromApplicantEmail.php:62
 msgid "Click here to view the applicant."
 msgstr ""
 
@@ -576,6 +985,11 @@ msgstr ""
 #. translators: %s refers to the default type
 #: src/Exception/MustExtend.php:91
 msgid "The default type \"%s\" must be extended in a subclass."
+msgstr ""
+
+#. translators: %s refers to the default name
+#: src/Exception/MustExtend.php:110
+msgid "The default name \"%s\" must be extended in a subclass."
 msgstr ""
 
 #. translators: %s refers to a field's slug
@@ -683,10 +1097,6 @@ msgstr ""
 msgid "Experience:"
 msgstr ""
 
-#: src/Field/Experience.php:91, src/Metabox/ApplicationManager.php:297, src/Metabox/ApplicationManager.php:302, src/Metabox/ApplicationManager.php:308, src/Metabox/ApplicationManager.php:309, views/applicant-skills-qualifications.php:191, views/go-pro.php:63
-msgid "Experience"
-msgstr ""
-
 #: src/Field/Experience.php:105
 msgctxt "for \"add new\" button"
 msgid "Job Position"
@@ -694,14 +1104,6 @@ msgstr ""
 
 #: src/Field/Hidden.php:81
 msgid "Hidden field values cannot be changed."
-msgstr ""
-
-#: src/Field/Languages.php:42, src/Field/Languages.php:76, views/applicant-skills-qualifications.php:168
-msgid "Language"
-msgstr ""
-
-#: src/Field/Languages.php:45, src/Field/Skills.php:43, views/applicant-skills-qualifications.php:105, views/applicant-skills-qualifications.php:169
-msgid "Proficiency"
 msgstr ""
 
 #: src/Field/Languages.php:62
@@ -745,10 +1147,6 @@ msgstr ""
 
 #: src/Field/Select.php:111
 msgid "The submitted value is not one of the allowed options."
-msgstr ""
-
-#: src/Field/Skills.php:40, src/Field/Skills.php:74, views/applicant-skills-qualifications.php:104
-msgid "Skill"
 msgstr ""
 
 #: src/Field/Skills.php:60
@@ -863,7 +1261,7 @@ msgstr ""
 msgid "Filter Job Categories"
 msgstr ""
 
-#: src/Messaging/ApplicantMessaging.php:256, src/Messaging/ApplicantMessaging.php:318, src/Messaging/ApplicantMessaging.php:474, src/Settings/SettingsManager.php:129, src/Taxonomy/ApplicantStatus.php:305
+#: src/Messaging/ApplicantMessaging.php:256, src/Messaging/ApplicantMessaging.php:318, src/Messaging/ApplicantMessaging.php:474, src/Settings/SettingsManager.php:44, src/Taxonomy/ApplicantStatus.php:305
 msgid "An error occurred: Failed to validate the nonce."
 msgstr ""
 
@@ -950,10 +1348,6 @@ msgstr ""
 msgid "Check the basic information fields you want included on this Application Form. Name and Email are required by default. Turn on \"Required\" for fields that must be filled in by the applicant."
 msgstr ""
 
-#: src/Metabox/ApplicationManager.php:100, src/Metabox/ApplicationManager.php:101, views/go-pro.php:76
-msgid "Name"
-msgstr ""
-
 #: src/Metabox/ApplicationManager.php:112, src/Metabox/ApplicationManager.php:113, src/Metabox/ApplicationManager.php:136, src/Metabox/ApplicationManager.php:137, src/Metabox/ApplicationManager.php:156, src/Metabox/ApplicationManager.php:157, src/Metabox/ApplicationManager.php:171, src/Metabox/ApplicationManager.php:172, src/Metabox/ApplicationManager.php:203, src/Metabox/ApplicationManager.php:204, src/Metabox/ApplicationManager.php:227, src/Metabox/ApplicationManager.php:228, src/Metabox/ApplicationManager.php:260, src/Metabox/ApplicationManager.php:261, src/Metabox/ApplicationManager.php:288, src/Metabox/ApplicationManager.php:289, src/Metabox/ApplicationManager.php:320, src/Metabox/ApplicationManager.php:321, src/Metabox/ApplicationManager.php:357, src/Metabox/ApplicationManager.php:358
 msgid "Required?"
 msgstr ""
@@ -970,10 +1364,6 @@ msgstr ""
 msgid "Address"
 msgstr ""
 
-#: src/Metabox/ApplicationManager.php:180, views/applicant-skills-qualifications.php:24, views/go-pro.php:62
-msgid "Education"
-msgstr ""
-
 #: src/Metabox/ApplicationManager.php:185
 msgid "Educational Background"
 msgstr ""
@@ -982,28 +1372,12 @@ msgstr ""
 msgid "Check the educational information you want included on this Application Form. Turn on \"Required\" for fields that must be filled in by the applicant."
 msgstr ""
 
-#: src/Metabox/ApplicationManager.php:191, src/Metabox/ApplicationManager.php:192, views/applicant-skills-qualifications.php:27
-msgid "Schooling"
-msgstr ""
-
-#: src/Metabox/ApplicationManager.php:215, src/Metabox/ApplicationManager.php:216, views/applicant-skills-qualifications.php:69
-msgid "Certifications"
-msgstr ""
-
-#: src/Metabox/ApplicationManager.php:241, src/Metabox/ApplicationManager.php:246, views/applicant-skills-qualifications.php:99
-msgid "Skills"
-msgstr ""
-
 #: src/Metabox/ApplicationManager.php:247
 msgid "Check if you want Skills and Proficiency included on this Application Form. Turn on \"Required\" for fields that must be filled in by the applicant."
 msgstr ""
 
 #: src/Metabox/ApplicationManager.php:252, src/Metabox/ApplicationManager.php:253
 msgid "Skill and Proficiency"
-msgstr ""
-
-#: src/Metabox/ApplicationManager.php:269, src/Metabox/ApplicationManager.php:274, views/applicant-skills-qualifications.php:127
-msgid "Languages"
 msgstr ""
 
 #: src/Metabox/ApplicationManager.php:275
@@ -1016,10 +1390,6 @@ msgstr ""
 
 #: src/Metabox/ApplicationManager.php:303
 msgid "Check if you want Experience included on this Application Form. Turn on \"Required\" for fields that must be filled in by the applicant."
-msgstr ""
-
-#: src/Metabox/ApplicationManager.php:334, src/Metabox/ApplicationManager.php:339, src/Metabox/ApplicationManager.php:345, src/Metabox/ApplicationManager.php:346, views/applicant-skills-qualifications.php:222
-msgid "Volunteer Work"
 msgstr ""
 
 #: src/Metabox/ApplicationManager.php:340
@@ -1048,10 +1418,6 @@ msgstr ""
 
 #: src/Metabox/Banner1.php:48
 msgid "Support Merit-Based Hiring"
-msgstr ""
-
-#: src/Metabox/Banner2.php:48, views/go-pro.php:18
-msgid "Level Playing Field Pro"
 msgstr ""
 
 #: src/Metabox/JobManager.php:139
@@ -1241,36 +1607,12 @@ msgstr ""
 msgid "Human Resources"
 msgstr ""
 
-#: src/Settings/Fields/AdditionalEmailRecipients.php:50
-msgid "Enter email addresses below of people to receive email notifications when an applicant sends a message. Separate multiple email addresses with commas."
-msgstr ""
-
-#: src/Settings/Fields/AdditionalEmailRecipients.php:61
-msgid "admin@example.com, jobmanager@example.com"
-msgstr ""
-
-#: src/Settings/Fields/ApplicationSuccessMessage.php:50
-msgid "Customize the message shown to applicants after they have successfully submitted an application by entering your own text below."
-msgstr ""
-
-#: src/Settings/Fields/ApplicationSuccessMessage.php:61
+#: src/Settings/ApplicationSuccessMessage.php:29, src/Settings/Fields/ApplicationSuccessMessage.php:61
 msgid "Thank you, your application has been successfully submitted."
 msgstr ""
 
-#: src/Settings/Fields/DisableFrontEndCSS.php:34
-msgid "Turn off Application Form Styles"
-msgstr ""
-
-#: src/Settings/Fields/DisableFrontEndCSS.php:35
-msgid "Turn off Job Listings Styles"
-msgstr ""
-
-#: src/Settings/Fields/DisableFrontEndCSS.php:61
-msgid "Turn off plugin styles to give your theme full control over the way forms and job listings look on your site."
-msgstr ""
-
-#: src/Settings/Fields/EmailRecipientRoles.php:61
-msgid "Check off the user roles you want notification emails sent to. All users assigned to those roles will receive notifications."
+#: src/Settings/SettingsManager.php:64
+msgid "Failure: some settings failed to save."
 msgstr ""
 
 #: src/Shortcode/AllJobs.php:37, src/Shortcode/Job.php:67
@@ -1297,20 +1639,12 @@ msgstr ""
 msgid "There was an error displaying the form: %s"
 msgstr ""
 
-#: src/Shortcode/Job.php:63, views/go-pro.php:77
-msgid "Description"
-msgstr ""
-
 #: src/Shortcode/Job.php:64
 msgid "Job Details"
 msgstr ""
 
 #: src/Shortcode/Job.php:65
 msgid "Job Type:"
-msgstr ""
-
-#: src/Shortcode/Job.php:66, views/applicant-interview-details.php:30, views/interview-confirmation.php:52
-msgid "Location:"
 msgstr ""
 
 #: src/Shortcode/Job.php:68
@@ -1487,355 +1821,30 @@ msgstr ""
 msgid "There was an error displaying the template: %s"
 msgstr ""
 
-#: views/applicant-basic-info.php:22
-msgid "Email:"
+#: src/Settings/Fields/AdditionalEmailRecipients.php:50
+msgid "Enter email addresses below of people to receive email notifications when an applicant sends a message. Separate multiple email addresses with commas."
 msgstr ""
 
-#: views/applicant-basic-info.php:29
-msgid "Phone:"
+#: src/Settings/Fields/AdditionalEmailRecipients.php:61
+msgid "admin@example.com, jobmanager@example.com"
 msgstr ""
 
-#: views/applicant-basic-info.php:35
-msgid "Address:"
+#: src/Settings/Fields/ApplicationSuccessMessage.php:50
+msgid "Customize the message shown to applicants after they have successfully submitted an application by entering your own text below."
 msgstr ""
 
-#: views/applicant-basic-info.php:46
-msgid "Cover Letter:"
+#: src/Settings/Fields/DisableFrontEndCSS.php:34
+msgid "Turn off Application Form Styles"
 msgstr ""
 
-#: views/applicant-basic-info.php:47
-msgid "View Cover Letter"
+#: src/Settings/Fields/DisableFrontEndCSS.php:35
+msgid "Turn off Job Listings Styles"
 msgstr ""
 
-#: views/applicant-details.php:26
-msgid "Nickname:"
+#: src/Settings/Fields/DisableFrontEndCSS.php:61
+msgid "Turn off plugin styles to give your theme full control over the way forms and job listings look on your site."
 msgstr ""
 
-#: views/applicant-details.php:29
-msgid "Edit Nickname"
-msgstr ""
-
-#: views/applicant-details.php:34
-msgid "Name:"
-msgstr ""
-
-#: views/applicant-details.php:39
-msgid "Job:"
-msgstr ""
-
-#: views/applicant-interview-details.php:24, views/interview-confirmation.php:44
-msgid "Date:"
-msgstr ""
-
-#: views/applicant-interview-details.php:27, views/interview-confirmation.php:48
-msgid "Time:"
-msgstr ""
-
-#: views/applicant-interview-details.php:33, views/interview-confirmation.php:56
-msgid "Message:"
-msgstr ""
-
-#: views/applicant-interview-details.php:36
-msgid "An interview has not been scheduled yet"
-msgstr ""
-
-#: views/applicant-messaging.php:23
-msgid "Applicant Messaging"
-msgstr ""
-
-#: views/applicant-messaging.php:38
-msgid "Start a conversation with this applicant."
-msgstr ""
-
-#: views/applicant-messaging.php:70
-msgid "Send a New Message"
-msgstr ""
-
-#: views/applicant-skills-qualifications.php:21
-msgid "Skills and Qualifications"
-msgstr ""
-
-#: views/applicant-skills-qualifications.php:36
-msgid "Graduated from High School or High School equivalent"
-msgstr ""
-
-#: views/applicant-skills-qualifications.php:151
-msgid "Multilingual"
-msgstr ""
-
-#. translators: %d is the number of languages for the given fluency level
-#: views/applicant-skills-qualifications.php:156
-msgid "in %d language"
-msgid_plural "in %d languages"
-msgstr[0] ""
-msgstr[1] ""
-
-#: views/applicant-skills-qualifications.php:210, views/applicant-skills-qualifications.php:241
-msgid "the present time."
-msgstr ""
-
-#: views/banner1.php:17
-msgid "Leave a review!"
-msgstr ""
-
-#: views/banner1.php:27
-msgid "Tweet about Level Playing Field"
-msgstr ""
-
-#: views/banner1.php:31
-msgid "Tweet"
-msgstr ""
-
-#: views/banner2.php:25
-msgid "Upgrade to Level Playing Field Pro for great additional features including:"
-msgstr ""
-
-#: views/banner2.php:30, views/go-pro.php:42
-msgid "Unlimited Job Listings."
-msgstr ""
-
-#: views/banner2.php:33
-msgid "More Detailed Job Listings."
-msgstr ""
-
-#: views/banner2.php:36
-msgid "Custom Application Form Questions."
-msgstr ""
-
-#: views/banner2.php:39
-msgid "Applicant export."
-msgstr ""
-
-#: views/banner2.php:45, views/go-pro.php:24
-msgid "Upgrade to Pro"
-msgstr ""
-
-#: views/go-pro.php:30
-msgid "Upgrade to Level Playing Field Pro for unlimited job listings and enhanced features."
-msgstr ""
-
-#: views/go-pro.php:46
-msgid "More detailed Job Listings."
-msgstr ""
-
-#: views/go-pro.php:49, views/go-pro.php:51
-msgid "Responsibilities"
-msgstr ""
-
-#: views/go-pro.php:52
-msgid "Schedule"
-msgstr ""
-
-#: views/go-pro.php:53
-msgid "Requirements"
-msgstr ""
-
-#: views/go-pro.php:59, views/go-pro.php:61
-msgid "Qualifications"
-msgstr ""
-
-#: views/go-pro.php:64
-msgid "Knowledge, Skills and Abilities"
-msgstr ""
-
-#: views/go-pro.php:70
-msgid "Compensation"
-msgstr ""
-
-#: views/go-pro.php:74
-msgid "Company/Organization Details"
-msgstr ""
-
-#: views/go-pro.php:78
-msgid "Logo"
-msgstr ""
-
-#: views/go-pro.php:79
-msgid "Website"
-msgstr ""
-
-#: views/go-pro.php:80
-msgid "Social Links"
-msgstr ""
-
-#: views/go-pro.php:86
-msgid "More Robust Applicant Functionality."
-msgstr ""
-
-#: views/go-pro.php:89
-msgid "Ability to add custom questions to application forms"
-msgstr ""
-
-#: views/go-pro.php:90
-msgid "Ability to export applicants to CSV File"
-msgstr ""
-
-#: views/go-pro.php:94
-msgid "Premium Support."
-msgstr ""
-
-#: views/go-pro.php:97
-msgid "Prioritized one-on-one support"
-msgstr ""
-
-#: views/interview-confirmation.php:13
-msgid "Your interview request has been canceled"
-msgstr ""
-
-#: views/interview-confirmation.php:18
-msgid "Your interview request has been confirmed"
-msgstr ""
-
-#: views/interview-confirmation.php:33
-msgid "You have a confirmed interview."
-msgstr ""
-
-#: views/interview-confirmation.php:37
-msgid "You have a pending interview request"
-msgstr ""
-
-#: views/interview-confirmation.php:65
-msgid "Confirm Interview"
-msgstr ""
-
-#: views/interview-confirmation.php:68
-msgid "Decline Interview"
-msgstr ""
-
-#: views/interview-scheduler.php:13
-msgid "An interview has already been scheduled."
-msgstr ""
-
-#: views/interview-scheduler.php:13
-msgid "An interview has already been confirmed."
-msgstr ""
-
-#: views/interview-scheduler.php:19
-msgid "Schedule an Interview"
-msgstr ""
-
-#: views/interview-scheduler.php:23
-msgid "Interview Request "
-msgstr ""
-
-#: views/interview-scheduler.php:30
-msgid "Use the form below to send an interview request to the applicant."
-msgstr ""
-
-#: views/interview-scheduler.php:33
-msgid "Date"
-msgstr ""
-
-#: views/interview-scheduler.php:37
-msgid "Time"
-msgstr ""
-
-#: views/interview-scheduler.php:41
-msgid "Location details"
-msgstr ""
-
-#: views/interview-scheduler.php:45
-msgid "Message to Applicant"
-msgstr ""
-
-#: views/interview-scheduler.php:51
-msgid "Send Interview Request"
-msgstr ""
-
-#: views/job-applicants-widget.php:24
-msgid "Job Title"
-msgstr ""
-
-#: views/job-applicants-widget.php:25
-msgid "New"
-msgstr ""
-
-#: views/job-applicants-widget.php:26
-msgid "Total"
-msgstr ""
-
-#: views/job-applicants-widget.php:49
-msgid "View All Job Listings"
-msgstr ""
-
-#: views/job-applicants-widget.php:50
-msgid "View All Applicants"
-msgstr ""
-
-#: views/job-page-application.php:39
-msgid "Your application has errors. Please correct the errors below before resubmitting."
-msgstr ""
-
-#: views/job-page-application.php:48
-msgid "Submit Application"
-msgstr ""
-
-#: views/job-page-application.php:60
-msgid "Edit Application"
-msgstr ""
-
-#: views/settings.php:25
-msgid "Level Playing Field Settings"
-msgstr ""
-
-#: views/settings.php:31
-msgid "Email Settings"
-msgstr ""
-
-#: views/settings.php:41
-msgid "Application Settings"
-msgstr ""
-
-#: views/settings.php:50
-msgid "Appearance Settings"
-msgstr ""
-
-#: views/settings.php:70
-msgid "Save Settings"
-msgstr ""
-
-#: views/support.php:17
-msgid "Level Playing Field Support"
-msgstr ""
-
-#: views/support.php:23
-msgid "Before submitting a support request, please visit our Knowledge Base where we have step-by-step guides and troubleshooting help."
-msgstr ""
-
-#: views/support.php:23
-msgid "Visit the Level Playing Field Knowledge Base"
-msgstr ""
-
-#: views/support.php:27
-msgid "Level Playing Field Pro users qualify for premium support."
-msgstr ""
-
-#: views/support.php:27
-msgid "Check out Level Playing Field Pro!"
-msgstr ""
-
-#: views/support.php:34
-msgid "WordPress.org Support Forums"
-msgstr ""
-
-#: views/support.php:38
-msgid "If you need help, please post questions to our support forum on the WordPress Plugin Directory."
-msgstr ""
-
-#: views/support.php:39
-msgid "Go to the free Support Forum on WordPress.org"
-msgstr ""
-
-#: views/support.php:45
-msgid "Submit a Support Request"
-msgstr ""
-
-#. translators: %1$s is the required PHP version, %2$s is the current version
-#: yikes-level-playing-field.php:75
-msgid "Level Playing Field requires PHP version %1$s or above. Your site is using PHP version %2$s."
-msgstr ""
-
-#. translators: %1$s is the required WP version, %2$s is the current version
-#: yikes-level-playing-field.php:101
-msgid "Level Playing Field requires WordPress version %1$s or above. Your site is using WordPress version %2$s."
+#: src/Settings/Fields/EmailRecipientRoles.php:61
+msgid "Check off the user roles you want notification emails sent to. All users assigned to those roles will receive notifications."
 msgstr ""
