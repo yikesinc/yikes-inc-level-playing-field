@@ -13,7 +13,7 @@
  * Author URI:   http://www.yikesinc.com
  * Text Domain:  yikes-level-playing-field
  * Domain Path:  /languages
- * Version:      0.2.0
+ * Version:      1.0.0
  * Requires PHP: 5.6
  * License:      GPL-2.0+
  *
@@ -65,7 +65,7 @@ if ( version_compare( '5.6.0', PHP_VERSION, '>' ) ) {
 	/**
 	 * Display admin notice for incompatible PHP version.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	function lpf_php_version_notice() {
 		printf(
@@ -91,7 +91,7 @@ if ( version_compare( '4.8', $GLOBALS['wp_version'], '>' ) ) {
 	/**
 	 * Display admin notice for incompatible WP version.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	function lpf_wp_version_notice() {
 		printf(
