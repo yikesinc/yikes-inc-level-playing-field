@@ -9,6 +9,7 @@
 
 namespace Yikes\LevelPlayingField\CustomPostType;
 
+use Yikes\LevelPlayingField\Activateable;
 use Yikes\LevelPlayingField\Exception\MustExtend;
 use Yikes\LevelPlayingField\Service;
 
@@ -22,7 +23,7 @@ use Yikes\LevelPlayingField\Service;
  *
  * @property string $slug The CPT slug.
  */
-abstract class BaseCustomPostType implements Service {
+abstract class BaseCustomPostType implements Activateable, Service {
 
 	const SLUG = '_basecpt_';
 
@@ -34,6 +35,15 @@ abstract class BaseCustomPostType implements Service {
 	public function register() {
 		add_action( 'init', [ $this, 'register_post_type' ] );
 		add_filter( 'post_updated_messages', [ $this, 'updated_messages' ] );
+	}
+
+	/**
+	 * Activate the service.
+	 *
+	 * @since %VERSION%
+	 */
+	public function activate() {
+		$this->register_post_type();
 	}
 
 	/**

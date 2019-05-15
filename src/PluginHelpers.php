@@ -40,6 +40,16 @@ trait PluginHelpers {
 	}
 
 	/**
+	 * Get the filename for the plugin.
+	 *
+	 * @since %VERSION%
+	 * @return string
+	 */
+	public function get_plugin_file() {
+		return trailingslashit( $this->get_plugin_root() ) . 'yikes-level-playing-field.php';
+	}
+
+	/**
 	 * Is the new editor is enabled?
 	 *
 	 * Check if the register_block_type function exists to see if the new editor is available. Then check if the classic editor plugin is enabled to see if the editor is being disabled.
