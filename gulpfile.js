@@ -307,6 +307,7 @@ gulp.task( 'uglify', [ 'concat' ], () => {
 	/* Normal Scripts */
 	webpack({
         entry: paths.webpackscripts,
+        mode: 'none',
         output: {
             filename: '[name].min.js'
         }
@@ -320,6 +321,7 @@ gulp.task( 'uglify', [ 'concat' ], () => {
 			filename: '[name]/index.js'
 		},
 		devtool: 'cheap-eval-source-map',
+		mode: 'none',
 		module: {
 			rules: [
 				{
