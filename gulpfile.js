@@ -27,6 +27,7 @@ const svgstore    = require( 'gulp-svgstore' );
 const uglify      = require( 'gulp-uglify' );
 const debug       = require( 'gulp-debug' );
 const include     = require( 'gulp-include' );
+const webpack     = require( 'webpack-stream' );
 
 // Environment variables.
 const gitKey = process.env.gitKey;
@@ -40,8 +41,19 @@ const paths = {
 	'sass': 'assets/css/sass/*.scss',
 	'concat_scripts': 'assets/js/concat/*.js',
 	'scripts': [ 'assets/js/*.js', '!assets/js/*.min.js' ],
+	'webpackscripts': {
+		'applicant-status-button-groups': './assets/js/applicant-status-button-groups.js',
+		'applicant-manager': './assets/js/applicant-manager.js',
+		'application-manager': './assets/js/application-manager.js',
+		'job-manager': './assets/js/job-manager.js',
+		'messaging': './assets/js/messaging.js',
+		'settings': './assets/js/settings.js'
+	},
+	'blockscripts': {
+		'job-listing': './blocks/job-listing/index.js',
+		'job-listings': './blocks/job-listings/index.js'
+	},
 	'sprites': 'assets/images/sprites/*.png',
-	'devscripts': 'assets/js/dev/*.js',
 	'build': [
 		'assets/css/*.css',
 		'assets/js/**/*.js',
@@ -291,12 +303,51 @@ gulp.task( 'concat', [ 'clean:scripts' ], () => {
  * https://www.npmjs.com/package/gulp-uglify
  */
 gulp.task( 'uglify', [ 'concat' ], () => {
-	gulp.src( paths.scripts )
-		.pipe( plumber( { 'errorHandler': outputErrors } ) )
-		.pipe( rename( { 'extname': '.min.js' } ) )
-		.pipe( babel( { presets: [ 'latest' ] } ) )
-		.pipe( uglify( { 'mangle': false } ) )
-		.pipe( gulp.dest( 'assets/js' ) );
+
+	/* Normal Scripts */
+	webpack({
+        entry: paths.webpackscripts,
+        output: {
+            filename: '[name].min.js'
+        }
+    })
+    .pipe( gulp.dest( 'assets/js' ) );
+
+    /* Block Files */
+    webpack({
+		entry: paths.blockscripts,
+		output: {
+			filename: '[name]/index.js'
+		},
+		devtool: 'cheap-eval-source-map',
+		module: {
+			rules: [
+				{
+					test: /\.js$/,
+					exclude: /(node_modules|bower_components)/,
+					use: {
+						loader: 'babel-loader'
+					}
+				},
+				{
+					test: /\.s?css$/,
+					use: [
+						{
+							loader: "style-loader" // creates style nodes from JS strings
+						},
+						{
+							loader: "css-loader" // translates CSS into CommonJS
+						},
+						{
+							loader: "sass-loader" // compiles Sass to CSS
+						}
+					]
+				}
+			]
+		}
+	})
+	.pipe( gulp.dest( 'assets/js/blocks/' ) );
+
 } );
 
 /**
@@ -445,16 +496,6 @@ gulp.task( 'build', [ 'default' ], function() {
 } );
 
 /**
- * Process @import statements.
- */
-gulp.task( 'import', () => {
-	return gulp.src( paths.devscripts )
-		.pipe( debug() )
-		.pipe( include() )
-		.pipe( gulp.dest( 'assets/js/' ) );
-} );
-
-/**
  * Replace %VERSION% with the current version string.
  *
  * The version from package.json will be used, or the --version
@@ -531,7 +572,7 @@ gulp.task( 'release', () => {
 gulp.task( 'markup', browserSync.reload );
 gulp.task( 'i18n', [ 'wp-pot' ] );
 gulp.task( 'icons', [ 'svg' ] );
-gulp.task( 'scripts', [ 'import', 'uglify' ] );
+gulp.task( 'scripts', [ 'uglify' ] );
 gulp.task( 'styles', [ 'cssnano' ] );
 gulp.task( 'sprites', [ 'spritesmith' ] );
 gulp.task( 'lint', [ 'sass:lint', 'js:lint' ] );

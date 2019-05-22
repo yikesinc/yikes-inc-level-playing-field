@@ -1,7 +1,7 @@
+import LPFNotices from './functions/notices.js';
 ( function( $ ) {
 
-	/*=include ../functions/notices.js */
-	const notices = new class_lpf_notices();
+	const notices = new LPFNotices();
 	const post_id = document.getElementById( 'post_ID' ).value;
 
 	if ( post_id.length === 0 ) {

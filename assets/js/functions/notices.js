@@ -1,4 +1,4 @@
-class class_lpf_notices {
+export default class LPFNotices {
 
 	/**
 	 * Return the HTML for an admin notice. This inherits styles from WordPress' default admin notices.
