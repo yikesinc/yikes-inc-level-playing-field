@@ -15,6 +15,11 @@
 		padding: 0 0 0 1rem;
 	}
 
+	&.lpf-messaging-loading {
+		opacity: .5;
+		pointer-events: none;
+	}
+
 	/* Interview message styles */
 
 	.lpf-message-interview-date,
@@ -76,6 +81,19 @@
 			background-color: $wp-red;
 			margin-left: 1rem;
 		}
+	}
+
+	.lpf-messaging-loading-gif {
+    	position: absolute;
+		margin-top: -45px;
+		margin-left: 250px;
+	}
+
+	.wp-admin & .lpf-messaging-loading-gif {
+		position: absolute;
+		left: 48%;
+		bottom: 14%;
+		margin: 0;
 	}
 }
 
@@ -191,6 +209,10 @@
 		&.inline-label {
 			padding-right: 0.6rem;
 		}
+	}
+
+	.disabled {
+		pointer-events: none;
 	}
 
 	#interview-scheduler-button-container {
