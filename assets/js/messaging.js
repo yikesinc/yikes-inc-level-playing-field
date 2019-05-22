@@ -38,8 +38,7 @@ jQuery( function ( $ ) {
 				return;
 			}
 
-			// Disable interview request button while we wait for a response.
-			$( this ).attr( 'disabled', 'disabled' );
+			pre_ajax_request();
 
 			send_message( message, post_id );
 		});
@@ -89,12 +88,25 @@ jQuery( function ( $ ) {
 				}
 
 				// Disable interview request button while we wait for a response.
-				$( this ).attr( 'disabled', 'disabled' );
+				pre_ajax_request();
 
 				send_interview_request( date, time, location, message );
 			});
 		}
 	});
+
+	/**
+	 * Handle UI/UX items while AJAX is sending.
+	 */
+	function pre_ajax_request() {
+
+		// Disable the send message/send interview button.
+		$( '#send-interview-request, #send-new-applicant-message' ).prop( 'disabled', true );
+
+		// Add the AJAX spinner, loading class.
+		const messaging_container = $( '.messaging-container' );
+		messaging_container.addClass( 'lpf-messaging-loading' ).append( '<img class="lpf-messaging-loading-gif" src="http://lpf.test/wp-admin/images/spinner-2x.gif"/>' );
+	}
 
 	/**
 	 * Send an interview request.
@@ -199,7 +211,7 @@ jQuery( function ( $ ) {
 	 * Replace the messaging container with the returned HTML.
 	 */
 	function refresh_message_board_response( response ) {
-		$( '#applicant-messaging' ).html( response.data );
+		$( '#applicant-messaging' ).replaceWith( response.data );
 	}
 
 	/**
