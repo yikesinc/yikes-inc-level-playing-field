@@ -17,6 +17,7 @@ $field_id        = isset( $field['id'] ) ? $field['id'] : '';
 $field_desc      = isset( $field['desc'] ) ? $field['desc'] : '';
 $desc_type       = isset( $field['desc_type'] ) ? $field['desc_type'] : 'block';
 $repeat_btn_text = isset( $field['repeat_btn_text'] ) ? $field['repeat_btn_text'] : __( 'Add A Field', 'yikes-level-playing-field' );
+$default_option  = isset( $field['default_option'] ) ? $field['default_option'] : __( 'Select Value', 'yikes-level-playing-field' );
 $field_post_type = isset( $field['post-type'] ) ? $field['post-type'] : '';
 $field_post_type = empty( $field_post_type ) && isset( $field['post-types'] ) ? $field['post-types'] : $field_post_type; // Legacy.
 $field_posts     = get_posts_by_posttype( $field_post_type );
@@ -29,7 +30,7 @@ if ( ! empty( $field_posts ) ) {
 	wp_enqueue_script( 'select2-js-4.0.3', YKS_MBOX_URL . 'js/select2/select2.min.js', array( 'jquery' ), YIKES_Awesome_Framework_Version, true );
 
 	$field_html .= '<select class="yks_select_post_type_select2 select2_init" name="' . esc_attr( $field_id ) . '" id="' . esc_attr( $field_id ) . '">';
-	$field_html .= '<option value="">' . __( 'Select Value', 'yikes-level-playing-field' ) . '</option>';
+	$field_html .= '<option value="">' . esc_html( $default_option ) . '</option>';
 
 	foreach ( $field_posts as $post_array ) {
 		$post_name   = isset( $post_array['name'] ) ? $post_array['name'] : '';
