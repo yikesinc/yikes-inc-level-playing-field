@@ -105,7 +105,7 @@ jQuery( function ( $ ) {
 
 		// Add the AJAX spinner, loading class.
 		const messaging_container = $( '.messaging-container' );
-		messaging_container.addClass( 'lpf-messaging-loading' ).append( '<img class="lpf-messaging-loading-gif" src="http://lpf.test/wp-admin/images/spinner-2x.gif"/>' );
+		messaging_container.addClass( 'lpf-messaging-loading' ).append( `<img class="lpf-messaging-loading-gif" src="${messaging_data.spinner_url}"/>` );
 	}
 
 	/**

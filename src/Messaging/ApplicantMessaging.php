@@ -116,16 +116,17 @@ class ApplicantMessaging implements Renderable, AssetsAware, Service {
 		$script->add_localization(
 			'messaging_data',
 			[
-				'post'       => [
+				'post'        => [
 					'ID' => $post_id,
 				],
-				'ajax'       => [
+				'ajax'        => [
 					'url'             => admin_url( 'admin-ajax.php' ),
 					'send_nonce'      => wp_create_nonce( 'send_message' ),
 					'refresh_nonce'   => wp_create_nonce( 'refresh_conversation' ),
 					'interview_nonce' => wp_create_nonce( 'send_interview_request' ),
 				],
-				'is_metabox' => is_admin(),
+				'is_metabox'  => is_admin(),
+				'spinner_url' => admin_url( 'images/spinner-2x.gif' ),
 			]
 		);
 
