@@ -46,8 +46,6 @@ const paths = {
 		'application-manager': './assets/js/application-manager.js',
 		'job-manager': './assets/js/job-manager.js',
 		'messaging': './assets/js/messaging.js',
-	},
-	'webpackdevscripts': {
 		'applicant-status-button-groups': './assets/js/dev/applicant-status-button-groups.js',
 		'settings': './assets/js/dev/settings.js'
 	},
@@ -309,16 +307,6 @@ gulp.task( 'uglify', [ 'concat' ], () => {
 	/* Normal Scripts */
 	webpack({
         entry: paths.webpackscripts,
-        mode: 'none',
-        output: {
-            filename: '[name].min.js'
-        }
-    })
-    .pipe( gulp.dest( 'assets/js' ) );
-
-    /* Normal Scripts */
-	webpack({
-        entry: paths.webpackdevscripts,
         mode: 'none',
         output: {
             filename: '[name].min.js'
