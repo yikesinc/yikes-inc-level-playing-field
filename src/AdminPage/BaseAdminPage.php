@@ -153,4 +153,13 @@ abstract class BaseAdminPage implements Service {
 	protected function get_screen_base() {
 		return JobManager::SLUG . '_page_' . static::PAGE_SLUG;
 	}
+
+	/**
+	 * Get the URL to an admin page.
+	 *
+	 * @return string The full URL to the admin page.
+	 */
+	public function get_page_url() {
+		return add_query_arg( [ 'page' => static::PAGE_SLUG ], admin_url( static::PARENT_SLUG ) );
+	}
 }

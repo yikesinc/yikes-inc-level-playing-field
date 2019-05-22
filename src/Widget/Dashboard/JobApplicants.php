@@ -50,8 +50,8 @@ class JobApplicants extends BaseWidget {
 		$msg_repo       = new ApplicantMessageRepository();
 		$all_jobs       = $job_repo->find_all();
 		$records        = [];
-		$jobs_url       = add_query_arg( [ 'post_type' => JobManager::SLUG ], admin_url( 'edit.php' ) );
-		$app_url        = add_query_arg( [ 'post_type' => ApplicantManager::SLUG ], admin_url( 'edit.php' ) );
+		$jobs_url       = ( new JobManager() )->get_list_table_url();
+		$app_url        = ( new ApplicantManager() )->get_list_table_url();
 		$new_msgs       = $msg_repo->find_new_applicant_messages();
 
 		foreach ( $all_jobs as $job_id => $job ) {

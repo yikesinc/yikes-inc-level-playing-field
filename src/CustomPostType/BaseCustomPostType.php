@@ -123,4 +123,32 @@ abstract class BaseCustomPostType implements Activateable, Service {
 	 * @return array
 	 */
 	abstract protected function get_messages();
+
+	/**
+	 * Get the URL of the add new page.
+	 *
+	 * @throws MustExtend When the default slug has not been extended.
+	 * @return string The full URL to the add new page for the respective post type.
+	 */
+	public function get_add_new_url() {
+		if ( self::SLUG === static::SLUG ) {
+			throw MustExtend::default_slug( self::SLUG );
+		}
+
+		return add_query_arg( [ 'post_type' => static::SLUG ], admin_url( 'post-new.php' ) );
+	}
+
+	/**
+	 * Get the URL of the list table page.
+	 *
+	 * @throws MustExtend When the default slug has not been extended.
+	 * @return string The full URL to the list table page for the respective post type.
+	 */
+	public function get_list_table_url() {
+		if ( self::SLUG === static::SLUG ) {
+			throw MustExtend::default_slug( self::SLUG );
+		}
+
+		return add_query_arg( [ 'post_type' => static::SLUG ], admin_url( 'edit.php' ) );
+	}
 }
