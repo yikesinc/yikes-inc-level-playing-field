@@ -1,4 +1,4 @@
-import LPFNotices from './functions/notices.js';
+import LPFNotices from '../functions/notices.js';
 ( function( $ ) {
 
 	const notices = new LPFNotices();

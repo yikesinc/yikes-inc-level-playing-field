@@ -164,7 +164,7 @@ abstract class BaseAsset implements Asset {
 		$minified_uri  = str_replace( ".$extension", ".min.{$extension}", $uri );
 		$minified_path = str_replace( ".$extension", ".min.{$extension}", $path );
 
-		return ! $debug && is_readable( $minified_path ) ? $minified_uri : $uri;
+		return ( ! $debug || $debug && ! is_readable( $path ) ) && is_readable( $minified_path ) ? $minified_uri : $uri;
 	}
 
 	/**

@@ -42,12 +42,14 @@ const paths = {
 	'concat_scripts': 'assets/js/concat/*.js',
 	'scripts': [ 'assets/js/*.js', '!assets/js/*.min.js' ],
 	'webpackscripts': {
-		'applicant-status-button-groups': './assets/js/applicant-status-button-groups.js',
 		'applicant-manager': './assets/js/applicant-manager.js',
 		'application-manager': './assets/js/application-manager.js',
 		'job-manager': './assets/js/job-manager.js',
 		'messaging': './assets/js/messaging.js',
-		'settings': './assets/js/settings.js'
+	},
+	'webpackdevscripts': {
+		'applicant-status-button-groups': './assets/js/dev/applicant-status-button-groups.js',
+		'settings': './assets/js/dev/settings.js'
 	},
 	'blockscripts': {
 		'job-listing': './blocks/job-listing/index.js',
@@ -314,6 +316,16 @@ gulp.task( 'uglify', [ 'concat' ], () => {
     })
     .pipe( gulp.dest( 'assets/js' ) );
 
+    /* Normal Scripts */
+	webpack({
+        entry: paths.webpackdevscripts,
+        mode: 'none',
+        output: {
+            filename: '[name].min.js'
+        }
+    })
+    .pipe( gulp.dest( 'assets/js' ) );
+
     /* Block Files */
     webpack({
 		entry: paths.blockscripts,
@@ -349,7 +361,6 @@ gulp.task( 'uglify', [ 'concat' ], () => {
 		}
 	})
 	.pipe( gulp.dest( 'assets/js/blocks/' ) );
-
 } );
 
 /**
