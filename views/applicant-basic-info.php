@@ -34,8 +34,11 @@ $applicant = $this->applicant; ?>
 		<p class="location">
 			<span class="label"><?php esc_html_e( 'Address:', 'yikes-level-playing-field' ); ?></span>
 			<?php
-			foreach ( $applicant->get_address() as $field ) {
-				echo '<span class="address-field">', esc_html( $field ), '<span class="address-field-comma">,</span> </span>';
+			$address = array_filter( $applicant->get_address() );
+			if ( ! empty( $address ) ) {
+				foreach ( $address as $field ) {
+					echo '<span class="address-field">', esc_html( $field ), '<span class="address-field-comma">,</span> </span>';
+				}
 			}
 			?>
 		</p>
