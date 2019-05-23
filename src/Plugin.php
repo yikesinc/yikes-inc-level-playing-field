@@ -13,6 +13,10 @@ use Yikes\LevelPlayingField\PluginHelpers;
 use Yikes\LevelPlayingField\Assets\AssetsAware;
 use Yikes\LevelPlayingField\Assets\AssetsHandler;
 use Yikes\LevelPlayingField\Exception\InvalidClass;
+use Yikes\LevelPlayingField\AdminPage\SupportPage;
+use Yikes\LevelPlayingField\AdminPage\SettingsPage;
+use Yikes\LevelPlayingField\AdminPage\GoProPage;
+use Yikes\LevelPlayingField\CustomPostType\JobManager;
 
 /**
  * Class Plugin.
@@ -77,7 +81,8 @@ final class Plugin implements Registerable {
 	public function register() {
 		add_action( 'plugins_loaded', [ $this, 'register_services' ], 20 );
 		add_action( 'init', [ $this, 'register_assets_handler' ] );
-		register_activation_hook( $this->get_plugin_file(), [ $this, 'activate' ] );
+		add_action( "plugin_action_links_{$this->get_plugin_folder_name()}/{$this->get_plugin_filename()}", [ $this, 'plugin_action_links' ] );
+		register_activation_hook( $this->get_plugin_filepath(), [ $this, 'activate' ] );
 	}
 
 	/**
@@ -172,5 +177,24 @@ final class Plugin implements Registerable {
 		}
 
 		return $service;
+	}
+
+	/**
+	 * Add custom links to the plugins page LPF item.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param array $links The default action links.
+	 *
+	 * @return array The action links, extended.
+	 */
+	public function plugin_action_links( $links ) {
+		$lpf_links = [
+			SettingsPage::PAGE_SLUG => '<a href="' . esc_url( ( new SettingsPage() )->get_page_url() ) . '">' . esc_html__( 'Settings', 'yikes-level-playing-field' ) . '</a>',
+			SupportPage::PAGE_SLUG  => '<a href="' . esc_url( ( new SupportPage() )->get_page_url() ) . '">' . esc_html__( 'Support', 'yikes-level-playing-field' ) . '</a>',
+			JobManager::SLUG        => '<a href="' . esc_url( ( new JobManager() )->get_add_new_url() ) . '">' . esc_html__( 'Add a Job', 'yikes-level-playing-field' ) . '</a>',
+			GoProPage::PAGE_SLUG    => '<a href="' . esc_url( ( new GoProPage() )->get_page_url() ) . '">' . esc_html__( 'Go Pro', 'yikes-level-playing-field' ) . '</a>',
+		];
+		return array_merge( $lpf_links, $links );
 	}
 }

@@ -45,8 +45,31 @@ trait PluginHelpers {
 	 * @since %VERSION%
 	 * @return string
 	 */
-	public function get_plugin_file() {
-		return trailingslashit( $this->get_plugin_root() ) . 'yikes-level-playing-field.php';
+	public function get_plugin_filename() {
+		return 'yikes-level-playing-field.php';
+	}
+
+	/**
+	 * Get the folder name for the plugin.
+	 *
+	 * @since %VERSION%
+	 * @return string
+	 */
+	public function get_plugin_folder_name() {
+		$plugin_path   = rtrim( $this->get_plugin_root(), '/' );
+		$plugin_path   = explode( '/', $plugin_path );
+		$plugin_folder = end( $plugin_path );
+		return $plugin_folder;
+	}
+
+	/**
+	 * Get the full filepath for the plugin.
+	 *
+	 * @since %VERSION%
+	 * @return string
+	 */
+	public function get_plugin_filepath() {
+		return trailingslashit( $this->get_plugin_root() ) . $this->get_plugin_filename();
 	}
 
 	/**
