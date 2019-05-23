@@ -61,6 +61,25 @@ class SingleJobsTemplateController extends TemplateController {
 	}
 
 	/**
+	 * Filters the path of the current template before including it.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param string $template The path of the template to include.
+	 */
+	public function set_template( $template ) {
+		if ( is_singular( JobManager::SLUG ) ) {
+			$new_template = locate_template( array( 'page.php' ) );
+			if ( ! empty( $new_template ) ) {
+				return $new_template;
+			}
+		}
+
+		return $template;
+	}
+
+
+	/**
 	 * Custom logic to determine if the current request should be displayed with your template.
 	 *
 	 * @return bool True if the current request should use your template.
