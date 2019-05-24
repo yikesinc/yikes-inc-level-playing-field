@@ -60,6 +60,7 @@ final class Settings implements JsonSerializable {
 			SettingsFields::EMAIL_RECIPIENT_ROLES       => EmailRecipientRoles::class,
 			SettingsFields::APPLICATION_SUCCESS_MESSAGE => ApplicationSuccessMessage::class,
 			SettingsFields::DISABLE_FRONT_END_CSS       => DisableFrontEndCss::class,
+			SettingsFields::DELETE_ON_UNINSTALL         => DeleteOnUninstall::class,
 		] );
 
 		// Instantiate and validate settings.

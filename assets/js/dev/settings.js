@@ -42,14 +42,14 @@ import LPFNotices from '../functions/notices.js';
 	 * Handle a failed response.
 	 */
 	function handle_save_response_failure( response ) {
-		$( '#notice-container' ).html( notices.admin_notice( 'error', response.reason ) );
+		$( '.notice-container' ).html( notices.admin_notice( 'error', response.reason ) );
 	}
 
 	/**
 	 * Handle a successful response.
 	 */
 	function handle_save_response_success( response ) {
-		$( '#notice-container' ).html( notices.admin_notice( 'success', response.reason ) );
+		$( '.notice-container' ).html( notices.admin_notice( 'success', response.reason ) );
 	}
 
 	/**

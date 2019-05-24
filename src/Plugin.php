@@ -83,12 +83,15 @@ final class Plugin implements Registerable {
 		add_action( 'init', [ $this, 'register_assets_handler' ] );
 		add_action( "plugin_action_links_{$this->get_plugin_folder_name()}/{$this->get_plugin_filename()}", [ $this, 'plugin_action_links' ] );
 		register_activation_hook( $this->get_plugin_filepath(), [ $this, 'activate' ] );
+		register_deactivation_hook( $this->get_plugin_filepath(), [ $this, 'deactivate' ] );
 	}
 
 	/**
 	 * Run activation logic.
 	 */
 	public function activate() {
+		global $wpdb;
+
 		$this->register_services();
 		foreach ( $this->services as $service ) {
 			if ( $service instanceof Activateable ) {
@@ -97,6 +100,19 @@ final class Plugin implements Registerable {
 		}
 
 		flush_rewrite_rules();
+
+		// Show any comments that we previously hid.
+		$wpdb->query( "UPDATE {$wpdb->comments} SET comment_approved = '1' WHERE comment_agent = 'LevelPlayingField'" );
+	}
+
+	/**
+	 * Run deactivation logic.
+	 */
+	public function deactivate() {
+		global $wpdb;
+
+		// Hide our comments.
+		$wpdb->query( "UPDATE {$wpdb->comments} SET comment_approved = 'post-trashed' WHERE comment_agent = 'LevelPlayingField'" );
 	}
 
 	/**
