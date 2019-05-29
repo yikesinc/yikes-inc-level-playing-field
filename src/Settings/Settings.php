@@ -137,4 +137,13 @@ final class Settings implements JsonSerializable {
 
 		return $return;
 	}
+
+	/**
+	 * Delete all options.
+	 */
+	public function uninstall() {
+		foreach ( $this->settings as $id => $instance ) {
+			delete_option( SettingsFields::OPTION_PREFIX . $id );
+		}
+	}
 }
