@@ -28,7 +28,7 @@ $field_values = isset( $field_values[0] ) && is_array( $field_values[0] ) ? $fie
 if ( $field_repeating === true ) {
 
 	// Enqueue our JS file for repeating fields.
-	wp_enqueue_script( 'yks-address', YKS_MBOX_URL . 'js/fields/min/yks-address.min.js', array( 'jquery' ), YIKES_Awesome_Framework_Version, true );
+	wp_enqueue_script( 'yks-address', YKS_LPF_MBOX_URL . 'js/fields/min/yks-address.min.js', array( 'jquery' ), YIKES_LPF_Awesome_Framework_Version, true );
 
 	// Container for repeating fields.
 	$field_html .= '<ul class="yks_address_container" id="container_' . esc_attr( $field_id ) . '">';

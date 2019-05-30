@@ -23,7 +23,7 @@ $repeat_btn_text = isset( $field['repeat_btn_text'] ) ? $field['repeat_btn_text'
 if ( $field_repeating === true ) {
 
 	// Enqueue our JS file for repeating fields
-	wp_enqueue_script( 'yks-radio-inline', YKS_MBOX_URL . 'js/fields/min/yks-radio-inline.min.js', YIKES_Awesome_Framework_Version, true );
+	wp_enqueue_script( 'yks-radio-inline', YKS_LPF_MBOX_URL . 'js/fields/min/yks-radio-inline.min.js', YIKES_LPF_Awesome_Framework_Version, true );
 
 	// Container for repeating fields
 	$field_html .= '<ul class="yks_radio_inline_container" id="container_' . esc_attr( $field_id ) . '">';

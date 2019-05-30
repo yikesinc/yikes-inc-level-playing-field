@@ -49,35 +49,35 @@ if ( ! class_exists( 'YIKES_Awesome_Framework_101', false ) ) {
 				return;
 			}
 
-			if ( ! defined( 'YIKES_Awesome_Framework_Version' ) ) {
-				define( 'YIKES_Awesome_Framework_Version', self::VERSION );
+			if ( ! defined( 'YIKES_LPF_Awesome_Framework_Version' ) ) {
+				define( 'YIKES_LPF_Awesome_Framework_Version', self::VERSION );
 			}
 
-			if ( ! defined( 'YIKES_Awesome_Framework_Path' ) ) {
-				define( 'YIKES_Awesome_Framework_Path', trailingslashit( dirname( __FILE__ ) ) );
+			if ( ! defined( 'YIKES_LPF_Awesome_Framework_Path' ) ) {
+				define( 'YIKES_LPF_Awesome_Framework_Path', trailingslashit( dirname( __FILE__ ) ) );
 			}
 
-			// Including YKS_MBOX_URL for legacy support
-			if ( ! defined( 'YIKES_Awesome_Framework_URI' ) && ! defined( 'YKS_MBOX_URL' ) ) {
+			// Including YKS_LPF_MBOX_URL for legacy support
+			if ( ! defined( 'YIKES_LPF_Awesome_Framework_URI' ) && ! defined( 'YKS_LPF_MBOX_URL' ) ) {
 
 				if ( strtoupper( substr( PHP_OS, 0, 3 ) ) === 'WIN' ) {
-					define( 'YKS_MBOX_URL', trailingslashit( str_replace( DIRECTORY_SEPARATOR, '/', str_replace( str_replace( '/', DIRECTORY_SEPARATOR, WP_CONTENT_DIR ), content_url(), dirname( __FILE__ ) ) ) ) );
+					define( 'YKS_LPF_MBOX_URL', trailingslashit( str_replace( DIRECTORY_SEPARATOR, '/', str_replace( str_replace( '/', DIRECTORY_SEPARATOR, WP_CONTENT_DIR ), content_url(), dirname( __FILE__ ) ) ) ) );
 				} else {
-					define( 'YKS_MBOX_URL', apply_filters( 'yks_meta_box_url', trailingslashit( str_replace( WP_CONTENT_DIR, content_url(), dirname( __FILE__ ) ) ) ) );
+					define( 'YKS_LPF_MBOX_URL', apply_filters( 'yks_meta_box_url', trailingslashit( str_replace( WP_CONTENT_DIR, content_url(), dirname( __FILE__ ) ) ) ) );
 				}
 
-				define( 'YIKES_Awesome_Framework_URI', YKS_MBOX_URL );
+				define( 'YIKES_LPF_Awesome_Framework_URI', YKS_LPF_MBOX_URL );
 			}
 
 			// Include our save functions/files.
 			$this->include_save_files();
 
 			// Metabox/field functionality for CPTs.
-			require_once YIKES_Awesome_Framework_Path . 'classes/class-yikes-cpt-meta-boxes.php';
+			require_once YIKES_LPF_Awesome_Framework_Path . 'classes/class-yikes-cpt-meta-boxes.php';
 
 			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ), 10 );
 
-			require_once YIKES_Awesome_Framework_Path . 'inc/field-helper-functions.php';
+			require_once YIKES_LPF_Awesome_Framework_Path . 'inc/field-helper-functions.php';
 		}
 
 		/**
@@ -158,8 +158,8 @@ if ( ! class_exists( 'YIKES_Awesome_Framework_101', false ) ) {
 			$style_dependencies = [ 'thickbox', 'wp-color-picker' ];
 
 			// Register scripts.
-			wp_enqueue_script( 'yks-mbox-scripts', YKS_MBOX_URL . 'js/yks-mboxs.min.js', $script_dependencies, self::VERSION, true );
-			wp_enqueue_script( 'yks-mbox-repeating-fields', YKS_MBOX_URL . 'js/yks-mboxs-repeating-fields-helper-functions.min.js', [], self::VERSION, true );
+			wp_enqueue_script( 'yks-mbox-scripts', YKS_LPF_MBOX_URL . 'js/yks-mboxs.min.js', $script_dependencies, self::VERSION, true );
+			wp_enqueue_script( 'yks-mbox-repeating-fields', YKS_LPF_MBOX_URL . 'js/yks-mboxs-repeating-fields-helper-functions.min.js', [], self::VERSION, true );
 			wp_localize_script(
 				'yks-mbox-scripts',
 				'yks_mbox_ajax_data',
@@ -172,7 +172,7 @@ if ( ! class_exists( 'YIKES_Awesome_Framework_101', false ) ) {
 			);
 
 			// Register styles.
-			wp_enqueue_style( 'yks-mbox-styles', YKS_MBOX_URL . 'css/style.min.css', $style_dependencies, self::VERSION, 'all' );
+			wp_enqueue_style( 'yks-mbox-styles', YKS_LPF_MBOX_URL . 'css/style.min.css', $style_dependencies, self::VERSION, 'all' );
 		}
 	}
 	new YIKES_Awesome_Framework_101();

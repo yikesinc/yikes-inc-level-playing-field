@@ -35,7 +35,7 @@ $field_attributes = isset( $field['attributes'] ) ? (array) $field['attributes']
 if ( true === $field_repeating ) {
 
 	// Enqueue our JS file for repeating fields.
-	wp_enqueue_script( 'yks-checkbox', YKS_MBOX_URL . 'js/fields/min/yks-checkbox.min.js', array( 'jquery' ), YIKES_Awesome_Framework_Version, true );
+	wp_enqueue_script( 'yks-checkbox', YKS_LPF_MBOX_URL . 'js/fields/min/yks-checkbox.min.js', array( 'jquery' ), YIKES_LPF_Awesome_Framework_Version, true );
 
 	// Container for repeating fields.
 	$field_html .= sprintf( '<ul class="yks_checkbox_container" id="container_%s">', esc_attr( $field_id ) );

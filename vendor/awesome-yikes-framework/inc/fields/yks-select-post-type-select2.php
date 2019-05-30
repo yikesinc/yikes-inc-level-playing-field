@@ -25,8 +25,8 @@ $field_posts     = get_posts_by_posttype( $field_post_type );
 if ( ! empty( $field_posts ) ) {
 
 	// Enqueue Select2 CSS/JS.
-	wp_enqueue_style( 'select2-css-4.0.3', YKS_MBOX_URL . 'css/select2/select2.min.css', array(), YIKES_Awesome_Framework_Version, 'all' );
-	wp_enqueue_script( 'select2-js-4.0.3', YKS_MBOX_URL . 'js/select2/select2.min.js', array( 'jquery' ), YIKES_Awesome_Framework_Version, true );
+	wp_enqueue_style( 'select2-css-4.0.3', YKS_LPF_MBOX_URL . 'css/select2/select2.min.css', array(), YIKES_LPF_Awesome_Framework_Version, 'all' );
+	wp_enqueue_script( 'select2-js-4.0.3', YKS_LPF_MBOX_URL . 'js/select2/select2.min.js', array( 'jquery' ), YIKES_LPF_Awesome_Framework_Version, true );
 
 	$field_html .= '<select class="yks_select_post_type_select2 select2_init" name="' . esc_attr( $field_id ) . '" id="' . esc_attr( $field_id ) . '">';
 	$field_html .= '<option value="">' . __( 'Select Value', 'yikes-level-playing-field' ) . '</option>';

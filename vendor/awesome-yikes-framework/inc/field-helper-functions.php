@@ -7,8 +7,7 @@
  */
 function yikes_get_file_template_location( $field ) {
 
-	$field_name_with_dashes = str_replace( '_', '-', $field['type'] );
-	$tmp = YIKES_AWESOME_FRAMEWORK_PATH . '/inc/cpt/cpt-fields/fields/yks-' . $field_name_with_dashes . '.php';
+	$field_name_with_dashes = str_replace( '_', '-', $field['type'] );;
 
 	if ( file_exists( ( get_template_directory() . '/inc/cpt/cpt-fields/fields/yks-' . $field_name_with_dashes . '.php' ) ) !== false ) {
 
