@@ -9,6 +9,8 @@
 
 namespace Yikes\LevelPlayingField\Comment;
 
+use WP_Comment;
+
 /**
  * Abstract class Comment.
  *

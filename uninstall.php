@@ -26,7 +26,11 @@
 
 namespace Yikes\LevelPlayingField;
 
-global $wpdb;
+use Yikes\LevelPlayingField\Comment\Comment;
+use Yikes\LevelPlayingField\RequiredPages\ApplicantMessagingPage;
+use Yikes\LevelPlayingField\RequiredPages\ApplicationFormPage;
+use Yikes\LevelPlayingField\Settings\DeleteOnUninstall;
+use Yikes\LevelPlayingField\Settings\Settings;
 
 // If uninstall not called from WordPress, then exit.
 if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
@@ -39,15 +43,14 @@ $ylpf_autoloader = new Autoloader();
 $ylpf_autoloader->add_namespace( __NAMESPACE__, $namespace_dir );
 $ylpf_autoloader->register();
 
-use Yikes\LevelPlayingField\RequiredPages\ApplicantMessagingPage;
-use Yikes\LevelPlayingField\RequiredPages\ApplicationFormPage;
-use Yikes\LevelPlayingField\Settings\Settings;
-use Yikes\LevelPlayingField\Settings\DeleteOnUninstall;
-
 if ( ( new DeleteOnUninstall() )->get() ) {
 
 	// Delete comments.
-	$wpdb->query( "DELETE FROM {$wpdb->comments} WHERE comment_agent = 'LevelPlayingField'" );
+	global $wpdb;
+	$wpdb->query( $wpdb->prepare(
+		"DELETE FROM {$wpdb->comments} WHERE comment_agent = %s",
+		Comment::AGENT
+	) );
 
 	// Delete required pages.
 	wp_trash_post( ( new ApplicantMessagingPage() )->get_page_id( ApplicantMessagingPage::PAGE_SLUG ) );

@@ -81,10 +81,10 @@ import LPFNotices from '../functions/notices.js';
 
 			case 'textarea':
 			case 'text':
-				return element.value;	
+				return element.value;
 			case 'checkbox':
 				return element.checked;
-		}		
+		}
 	}
 
 	/**
