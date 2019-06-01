@@ -1,9 +1,7 @@
 // Require our dependencies
-const babel       = require( 'gulp-babel' );
 const bourbon     = require( 'bourbon' ).includePaths;
 const browserSync = require( 'browser-sync' );
 const cheerio     = require( 'gulp-cheerio' );
-const concat      = require( 'gulp-concat' );
 const cssnano     = require( 'gulp-cssnano' );
 const del         = require( 'del' );
 const eslint      = require( 'gulp-eslint' );
@@ -24,9 +22,7 @@ const sourcemaps  = require( 'gulp-sourcemaps' );
 const spritesmith = require( 'gulp.spritesmith' );
 const svgmin      = require( 'gulp-svgmin' );
 const svgstore    = require( 'gulp-svgstore' );
-const uglify      = require( 'gulp-uglify' );
 const debug       = require( 'gulp-debug' );
-const include     = require( 'gulp-include' );
 const webpack     = require( 'webpack-stream' );
 
 // Environment variables.
@@ -39,13 +35,8 @@ const paths = {
 	'images': [ 'assets/images/*', '!assets/images/*.svg' ],
 	'php': [ './*.php', './src/**/*.php', './views/**/*.php' ],
 	'sass': 'assets/css/sass/*.scss',
-	'concat_scripts': 'assets/js/concat/*.js',
 	'scripts': [ 'assets/js/*.js', '!assets/js/*.min.js' ],
-	'webpackscripts': {
-		'applicant-manager': './assets/js/applicant-manager.js',
-		'application-manager': './assets/js/application-manager.js',
-		'job-manager': './assets/js/job-manager.js',
-		'messaging': './assets/js/messaging.js',
+	'devscripts': {
 		'applicant-status-button-groups': './assets/js/dev/applicant-status-button-groups.js',
 		'settings': './assets/js/dev/settings.js'
 	},
@@ -270,52 +261,22 @@ gulp.task( 'spritesmith', () => {
 gulp.task( 'clean:scripts', () => del( [ 'assets/js/yikes-level-playing-field*.js' ] ) );
 
 /**
- * Concatenate and transform JavaScript.
- *
- * https://www.npmjs.com/package/gulp-concat
- * https://github.com/babel/gulp-babel
- * https://www.npmjs.com/package/gulp-sourcemaps
+ * Minify compiled JavaScript and bundle Blocks.
  */
-gulp.task( 'concat', [ 'clean:scripts' ], () => {
-	return gulp.src( paths.concat_scripts )
-		.pipe( plumber( { 'errorHandler': handleErrors } ) )
-
-		// Start a sourcemap.
-		.pipe( sourcemaps.init() )
-
-		// Convert ES6+ to ES2015.
-		.pipe( babel( { presets: [ 'latest' ] } ) )
-
-		// Concatenate partials into a single script.
-		.pipe( concat( 'yikes-level-playing-field.js' ) )
-
-		// Append the sourcemap to project.js.
-		.pipe( sourcemaps.write() )
-
-		// Save project.js
-		.pipe( gulp.dest( 'assets/js' ) )
-		.pipe( browserSync.stream() );
-} );
-
-/**
- * Minify compiled JavaScript.
- *
- * https://www.npmjs.com/package/gulp-uglify
- */
-gulp.task( 'uglify', [ 'concat' ], () => {
+gulp.task( 'webpack', () => {
 
 	/* Normal Scripts */
-	webpack({
-        entry: paths.webpackscripts,
-        mode: 'none',
-        output: {
-            filename: '[name].min.js'
-        }
-    })
-    .pipe( gulp.dest( 'assets/js' ) );
+	webpack( {
+		entry: paths.devscripts,
+		mode: 'none',
+		output: {
+			filename: '[name].js',
+		}
+	} )
+		.pipe( gulp.dest( 'assets/js' ) );
 
-    /* Block Files */
-    webpack({
+	/* Block Files */
+	webpack( {
 		entry: paths.blockscripts,
 		output: {
 			filename: '[name]/index.js'
@@ -349,6 +310,20 @@ gulp.task( 'uglify', [ 'concat' ], () => {
 		}
 	})
 	.pipe( gulp.dest( 'assets/js/blocks/' ) );
+} );
+
+/**
+ * Minimize all of our JS files.
+ */
+gulp.task( 'uglify', [ 'webpack' ], () => {
+	const uglify = require( 'gulp-uglify' );
+	const babel = require( 'gulp-babel' );
+	return gulp.src( paths.scripts )
+		.pipe( plumber( { 'errorHandler': outputErrors } ) )
+		.pipe( rename( { 'extname': '.min.js' } ) )
+		.pipe( babel( { presets: [ 'latest' ] } ) )
+		.pipe( uglify( { 'mangle': false } ) )
+		.pipe( gulp.dest( 'assets/js' ) );
 } );
 
 /**
