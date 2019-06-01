@@ -88,6 +88,9 @@ final class HiringManager extends BaseRole {
 
 			// Native capabilities.
 			'read'                                      => true,
+
+			// Third party capabilities.
+			'view_admin_dashboard'                      => true,
 		];
 	}
 }
