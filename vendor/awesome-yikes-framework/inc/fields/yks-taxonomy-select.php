@@ -14,6 +14,7 @@ $field_html     = '';
 $field_id       = isset( $field['id'] ) ? $field['id'] : '';
 $field_desc     = isset( $field['desc'] ) ? $field['desc'] : '';
 $desc_type      = isset( $field['desc_type'] ) ? $field['desc_type'] : 'block';
+$default_option = isset( $field['default_option'] ) ? $field['default_option'] : __( 'Select', 'yikes-level-playing-field' );
 $field_taxonomy = isset( $field['taxonomy'] ) ? $field['taxonomy'] : '';
 $terms          = get_terms(
 	array(
@@ -33,7 +34,7 @@ if ( $assigned_terms !== false && ! is_wp_error( $assigned_terms ) ) {
 if ( ! is_wp_error( $terms ) ) {
 	if ( ! empty( $terms ) ) {
 		$field_html .= '<select class="yks_taxonomy_select" name="' . esc_attr( $field_id ) . '" id="' . esc_attr( $field_id ) . '">';
-		$field_html .= '<option value="">' . esc_html__( 'Select', 'yikes-level-playing-field' ) . '</option>';
+		$field_html .= '<option value="">' . esc_html( $default_option ) . '</option>';
 		foreach ( $terms as $assigned_term ) {
 			$term_slug = isset( $assigned_term->slug ) ? $assigned_term->slug : '';
 			$term_name = isset( $assigned_term->name ) ? $assigned_term->name : '';
