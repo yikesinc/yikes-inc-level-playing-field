@@ -37,11 +37,7 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	exit;
 }
 
-$namespace_dir = trailingslashit( __DIR__ ) . 'src/';
-require_once $namespace_dir . '/Autoloader.php';
-$ylpf_autoloader = new Autoloader();
-$ylpf_autoloader->add_namespace( __NAMESPACE__, $namespace_dir );
-$ylpf_autoloader->register();
+require_once __DIR__ . '/src/bootstrap-autoloader.php';
 
 if ( ( new DeleteOnUninstall() )->get() ) {
 
