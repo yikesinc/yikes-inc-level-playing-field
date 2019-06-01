@@ -19,8 +19,7 @@ use Yikes\LevelPlayingField\Settings\SettingsFields;
  */
 final class ApplicationSuccessMessage extends BaseSettingsField {
 
-	const NAME = 'application-success-message';
-	const SLUG = SettingsFields::APPLICATION_SUCCESS_MESSAGE;
+	const NAME = SettingsFields::APPLICATION_SUCCESS_MESSAGE;
 
 	/**
 	 * Render the field's HTML.

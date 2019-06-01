@@ -15,10 +15,12 @@ use Yikes\LevelPlayingField\Settings\AdditionalEmailRecipients as AERSetting;
 use Yikes\LevelPlayingField\Settings\ApplicationSuccessMessage as ASMSetting;
 use Yikes\LevelPlayingField\Settings\DisableFrontEndCss as DFECSetting;
 use Yikes\LevelPlayingField\Settings\EmailRecipientRoles as ERRSetting;
+use Yikes\LevelPlayingField\Settings\DeleteOnUninstall as DOUSetting;
 use Yikes\LevelPlayingField\Settings\Fields\AdditionalEmailRecipients;
 use Yikes\LevelPlayingField\Settings\Fields\ApplicationSuccessMessage;
 use Yikes\LevelPlayingField\Settings\Fields\DisableFrontEndCSS;
 use Yikes\LevelPlayingField\Settings\Fields\EmailRecipientRoles;
+use Yikes\LevelPlayingField\Settings\Fields\DeleteOnUninstall;
 use Yikes\LevelPlayingField\View\View;
 
 ?>
@@ -27,7 +29,7 @@ use Yikes\LevelPlayingField\View\View;
 		<?php esc_html_e( 'Level Playing Field Settings', 'yikes-level-playing-field' ); ?>
 	</h1>
 
-	<div id="notice-container"></div>
+	<div class="notice-container"></div>
 
 	<div class="lpf-settings lpf-settings-settings-container">
 		<h2>
@@ -66,6 +68,18 @@ use Yikes\LevelPlayingField\View\View;
 
 	<hr>
 
+	<div class="lpf-settings lpf-settings-settings-container">
+		<h2>
+			<span class="dashicons dashicons-admin-plugins"></span>
+			<?php esc_html_e( 'Plugin Settings', 'yikes-level-playing-field' ); ?>
+		</h2>
+		<?php
+			( new DeleteOnUninstall( new DOUSetting() ) )->render();
+		?>
+	</div>
+
+	<hr>
+
 	<?php
 	/**
 	 * Triggered after the built-in settings.
@@ -82,4 +96,6 @@ use Yikes\LevelPlayingField\View\View;
 			</button>
 		</div>
 	</div>
+
+	<div class="notice-container"></div>
 </div>

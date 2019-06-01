@@ -9,6 +9,8 @@
 
 namespace Yikes\LevelPlayingField\Comment;
 
+use WP_Comment;
+
 /**
  * Abstract class Comment.
  *
@@ -18,7 +20,7 @@ namespace Yikes\LevelPlayingField\Comment;
 abstract class Comment {
 
 	const APPROVED     = 1;
-	const PARENT       = 0;
+	const _PARENT      = 0;
 	const AUTHOR_URL   = '';
 	const AUTHOR_EMAIL = '';
 	const AUTHOR_IP    = '';
@@ -257,7 +259,7 @@ abstract class Comment {
 	 * @return int
 	 */
 	protected function parent() {
-		return static::PARENT;
+		return static::_PARENT;
 	}
 
 	/**

@@ -19,9 +19,6 @@ use Yikes\LevelPlayingField\Exception\NoDefault;
  *
  * @since   %VERSION%
  * @package Yikes\LevelPlayingField
- *
- * @property string additional_email_recipients Email addresses that should receive applicant message emails.
- * @property array  email_recipient_roles       Roles whose members should receive applicant message emails.
  */
 final class Settings implements JsonSerializable {
 
@@ -60,6 +57,7 @@ final class Settings implements JsonSerializable {
 			SettingsFields::EMAIL_RECIPIENT_ROLES       => EmailRecipientRoles::class,
 			SettingsFields::APPLICATION_SUCCESS_MESSAGE => ApplicationSuccessMessage::class,
 			SettingsFields::DISABLE_FRONT_END_CSS       => DisableFrontEndCss::class,
+			SettingsFields::DELETE_ON_UNINSTALL         => DeleteOnUninstall::class,
 		] );
 
 		// Instantiate and validate settings.
@@ -135,5 +133,14 @@ final class Settings implements JsonSerializable {
 		}
 
 		return $return;
+	}
+
+	/**
+	 * Delete all options.
+	 */
+	public function uninstall() {
+		foreach ( $this->settings as $instance ) {
+			$instance->delete();
+		}
 	}
 }

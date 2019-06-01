@@ -19,8 +19,7 @@ use Yikes\LevelPlayingField\Settings\SettingsFields;
  */
 final class AdditionalEmailRecipients extends BaseSettingsField {
 
-	const NAME = 'additional-email-recipients';
-	const SLUG = SettingsFields::ADDITIONAL_EMAIL_RECIPIENTS;
+	const NAME = SettingsFields::ADDITIONAL_EMAIL_RECIPIENTS;
 
 	/**
 	 * Render the field's HTML.

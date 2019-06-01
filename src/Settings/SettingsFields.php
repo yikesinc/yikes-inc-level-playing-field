@@ -24,4 +24,5 @@ interface SettingsFields {
 	const EMAIL_RECIPIENT_ROLES       = 'email_recipient_roles';
 	const APPLICATION_SUCCESS_MESSAGE = 'application_success_message';
 	const DISABLE_FRONT_END_CSS       = 'disable_front_end_css';
+	const DELETE_ON_UNINSTALL         = 'delete_on_uninstall';
 }

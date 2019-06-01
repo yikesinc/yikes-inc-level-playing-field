@@ -60,7 +60,7 @@ class DisableFrontEndCss extends BaseSetting {
 		}
 
 		foreach ( $value as &$item ) {
-			$item = boolval( $item );
+			$item = filter_var( $item, FILTER_VALIDATE_BOOLEAN );
 		}
 
 		return $value;

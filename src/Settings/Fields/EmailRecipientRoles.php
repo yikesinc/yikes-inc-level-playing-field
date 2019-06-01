@@ -21,8 +21,7 @@ use Yikes\LevelPlayingField\Roles\HumanResources;
  */
 final class EmailRecipientRoles extends BaseSettingsField {
 
-	const NAME = 'email-recipient-roles';
-	const SLUG = SettingsFields::EMAIL_RECIPIENT_ROLES;
+	const NAME = SettingsFields::EMAIL_RECIPIENT_ROLES;
 
 	/**
 	 * Render the field's HTML.

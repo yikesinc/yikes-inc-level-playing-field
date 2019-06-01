@@ -21,8 +21,7 @@ use Yikes\LevelPlayingField\Shortcode\BaseJobs;
  */
 final class DisableFrontEndCSS extends BaseSettingsField {
 
-	const NAME = 'disable-front-end-css';
-	const SLUG = SettingsFields::DISABLE_FRONT_END_CSS;
+	const NAME = SettingsFields::DISABLE_FRONT_END_CSS;
 
 	/**
 	 * Render the field's HTML.
