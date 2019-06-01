@@ -58,4 +58,22 @@ class InvalidURI extends \InvalidArgumentException implements Exception {
 
 		return new static( $message );
 	}
+
+	/**
+	 * Create a new instance of the exception for a path that is invalid.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param string $path The path that is invalid.
+	 *
+	 * @return static
+	 */
+	public static function from_asset_path( $path ) {
+		$message = sprintf(
+			'The path "%s" is not readable. Do you need to run gulp?',
+			$path
+		);
+
+		return new static( $message );
+	}
 }

@@ -1,7 +1,7 @@
+import LPFNotices from '../functions/notices.js';
 ( function( $ ) {
 
-	/*=include ../functions/notices.js */
-	const notices = new class_lpf_notices();
+	const notices = new LPFNotices();
 
 	// Perhaps we should throw some type of error here.
 	if ( typeof lpf_settings_data === 'undefined' ) {

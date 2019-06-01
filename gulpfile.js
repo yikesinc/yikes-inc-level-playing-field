@@ -1,9 +1,7 @@
 // Require our dependencies
-const babel       = require( 'gulp-babel' );
 const bourbon     = require( 'bourbon' ).includePaths;
 const browserSync = require( 'browser-sync' );
 const cheerio     = require( 'gulp-cheerio' );
-const concat      = require( 'gulp-concat' );
 const cssnano     = require( 'gulp-cssnano' );
 const del         = require( 'del' );
 const eslint      = require( 'gulp-eslint' );
@@ -24,9 +22,8 @@ const sourcemaps  = require( 'gulp-sourcemaps' );
 const spritesmith = require( 'gulp.spritesmith' );
 const svgmin      = require( 'gulp-svgmin' );
 const svgstore    = require( 'gulp-svgstore' );
-const uglify      = require( 'gulp-uglify' );
 const debug       = require( 'gulp-debug' );
-const include     = require( 'gulp-include' );
+const webpack     = require( 'webpack-stream' );
 
 // Environment variables.
 const gitKey = process.env.gitKey;
@@ -38,10 +35,16 @@ const paths = {
 	'images': [ 'assets/images/*', '!assets/images/*.svg' ],
 	'php': [ './*.php', './src/**/*.php', './views/**/*.php' ],
 	'sass': 'assets/css/sass/*.scss',
-	'concat_scripts': 'assets/js/concat/*.js',
 	'scripts': [ 'assets/js/*.js', '!assets/js/*.min.js' ],
+	'devscripts': {
+		'applicant-status-button-groups': './assets/js/dev/applicant-status-button-groups.js',
+		'settings': './assets/js/dev/settings.js'
+	},
+	'blockscripts': {
+		'job-listing': './blocks/job-listing/index.js',
+		'job-listings': './blocks/job-listings/index.js'
+	},
 	'sprites': 'assets/images/sprites/*.png',
-	'devscripts': 'assets/js/dev/*.js',
 	'build': [
 		'assets/css/*.css',
 		'assets/js/**/*.js',
@@ -258,40 +261,64 @@ gulp.task( 'spritesmith', () => {
 gulp.task( 'clean:scripts', () => del( [ 'assets/js/yikes-level-playing-field*.js' ] ) );
 
 /**
- * Concatenate and transform JavaScript.
- *
- * https://www.npmjs.com/package/gulp-concat
- * https://github.com/babel/gulp-babel
- * https://www.npmjs.com/package/gulp-sourcemaps
+ * Minify compiled JavaScript and bundle Blocks.
  */
-gulp.task( 'concat', [ 'clean:scripts' ], () => {
-	return gulp.src( paths.concat_scripts )
-		.pipe( plumber( { 'errorHandler': handleErrors } ) )
+gulp.task( 'webpack', () => {
 
-		// Start a sourcemap.
-		.pipe( sourcemaps.init() )
+	/* Normal Scripts */
+	webpack( {
+		entry: paths.devscripts,
+		mode: 'none',
+		output: {
+			filename: '[name].js',
+		}
+	} )
+		.pipe( gulp.dest( 'assets/js' ) );
 
-		// Convert ES6+ to ES2015.
-		.pipe( babel( { presets: [ 'latest' ] } ) )
-
-		// Concatenate partials into a single script.
-		.pipe( concat( 'yikes-level-playing-field.js' ) )
-
-		// Append the sourcemap to project.js.
-		.pipe( sourcemaps.write() )
-
-		// Save project.js
-		.pipe( gulp.dest( 'assets/js' ) )
-		.pipe( browserSync.stream() );
+	/* Block Files */
+	webpack( {
+		entry: paths.blockscripts,
+		output: {
+			filename: '[name]/index.js'
+		},
+		devtool: 'cheap-eval-source-map',
+		mode: 'none',
+		module: {
+			rules: [
+				{
+					test: /\.js$/,
+					exclude: /(node_modules|bower_components)/,
+					use: {
+						loader: 'babel-loader'
+					}
+				},
+				{
+					test: /\.s?css$/,
+					use: [
+						{
+							loader: "style-loader" // creates style nodes from JS strings
+						},
+						{
+							loader: "css-loader" // translates CSS into CommonJS
+						},
+						{
+							loader: "sass-loader" // compiles Sass to CSS
+						}
+					]
+				}
+			]
+		}
+	})
+	.pipe( gulp.dest( 'assets/js/blocks/' ) );
 } );
 
 /**
- * Minify compiled JavaScript.
- *
- * https://www.npmjs.com/package/gulp-uglify
+ * Minimize all of our JS files.
  */
-gulp.task( 'uglify', [ 'concat' ], () => {
-	gulp.src( paths.scripts )
+gulp.task( 'uglify', [ 'webpack' ], () => {
+	const uglify = require( 'gulp-uglify' );
+	const babel = require( 'gulp-babel' );
+	return gulp.src( paths.scripts )
 		.pipe( plumber( { 'errorHandler': outputErrors } ) )
 		.pipe( rename( { 'extname': '.min.js' } ) )
 		.pipe( babel( { presets: [ 'latest' ] } ) )
@@ -445,16 +472,6 @@ gulp.task( 'build', [ 'default' ], function() {
 } );
 
 /**
- * Process @import statements.
- */
-gulp.task( 'import', () => {
-	return gulp.src( paths.devscripts )
-		.pipe( debug() )
-		.pipe( include() )
-		.pipe( gulp.dest( 'assets/js/' ) );
-} );
-
-/**
  * Replace %VERSION% with the current version string.
  *
  * The version from package.json will be used, or the --version
@@ -531,7 +548,7 @@ gulp.task( 'release', () => {
 gulp.task( 'markup', browserSync.reload );
 gulp.task( 'i18n', [ 'wp-pot' ] );
 gulp.task( 'icons', [ 'svg' ] );
-gulp.task( 'scripts', [ 'import', 'uglify' ] );
+gulp.task( 'scripts', [ 'uglify' ] );
 gulp.task( 'styles', [ 'cssnano' ] );
 gulp.task( 'sprites', [ 'spritesmith' ] );
 gulp.task( 'lint', [ 'sass:lint', 'js:lint' ] );

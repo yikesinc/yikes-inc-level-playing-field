@@ -10,6 +10,7 @@
 namespace Yikes\LevelPlayingField\Assets;
 
 use Closure;
+use Yikes\LevelPlayingField\Exception\InvalidURI;
 use Yikes\LevelPlayingField\PluginHelpers;
 
 /**
@@ -158,11 +159,17 @@ abstract class BaseAsset implements Asset {
 	 * @param string $extension Default extension to use.
 	 *
 	 * @return string URI of the asset to use.
+	 * @throws InvalidURI When the file specified by $path isn't readable.
 	 */
 	protected function check_for_minified_asset( $uri, $path, $extension ) {
 		$debug         = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG;
 		$minified_uri  = str_replace( ".$extension", ".min.{$extension}", $uri );
 		$minified_path = str_replace( ".$extension", ".min.{$extension}", $path );
+
+		// If both the regular and minified path aren't readable, that might mean that build scripts need to run.
+		if ( ! is_readable( $path ) && ! is_readable( $minified_path ) ) {
+			throw InvalidURI::from_asset_path( $path );
+		}
 
 		return ! $debug && is_readable( $minified_path ) ? $minified_uri : $uri;
 	}
