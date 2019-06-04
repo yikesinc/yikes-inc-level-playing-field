@@ -41,6 +41,7 @@ final class HiringManager extends BaseRole {
 			Capabilities::VIEW_ANONYMIZED_APPLICATIONS  => true,
 			Capabilities::MESSAGE_APPLICANTS            => true,
 			Capabilities::UNANONYMIZE                   => false,
+			Capabilities::VIEW_ADMIN_PAGES              => true,
 
 			// CPT capabilities.
 			Capabilities::EDIT_JOB                      => true,
