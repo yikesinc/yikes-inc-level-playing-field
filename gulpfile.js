@@ -24,6 +24,7 @@ const svgmin      = require( 'gulp-svgmin' );
 const svgstore    = require( 'gulp-svgstore' );
 const debug       = require( 'gulp-debug' );
 const webpack     = require( 'webpack-stream' );
+const uglifyWpack = require( 'uglifyjs-webpack-plugin' );
 
 // Environment variables.
 const gitKey = process.env.gitKey;
@@ -35,7 +36,7 @@ const paths = {
 	'images': [ 'assets/images/*', '!assets/images/*.svg' ],
 	'php': [ './*.php', './src/**/*.php', './views/**/*.php' ],
 	'sass': 'assets/css/sass/*.scss',
-	'scripts': [ 'assets/js/*.js', '!assets/js/*.min.js' ],
+	'scripts': [ 'assets/js/*.js', 'assets/js/dev/*.js', '!assets/js/*.min.js' ],
 	'devscripts': {
 		'applicant-status-button-groups': './assets/js/dev/applicant-status-button-groups.js',
 		'settings': './assets/js/dev/settings.js'
@@ -263,17 +264,7 @@ gulp.task( 'clean:scripts', () => del( [ 'assets/js/yikes-level-playing-field*.j
 /**
  * Minify compiled JavaScript and bundle Blocks.
  */
-gulp.task( 'webpack', () => {
-
-	/* Normal Scripts */
-	webpack( {
-		entry: paths.devscripts,
-		mode: 'none',
-		output: {
-			filename: '[name].js',
-		}
-	} )
-		.pipe( gulp.dest( 'assets/js' ) );
+gulp.task( 'blocks', () => {
 
 	/* Block Files */
 	webpack( {
@@ -283,6 +274,9 @@ gulp.task( 'webpack', () => {
 		},
 		devtool: 'cheap-eval-source-map',
 		mode: 'none',
+		plugins: [
+            new uglifyWpack()
+        ],
 		module: {
 			rules: [
 				{
@@ -315,14 +309,30 @@ gulp.task( 'webpack', () => {
 /**
  * Minimize all of our JS files.
  */
-gulp.task( 'uglify', [ 'webpack' ], () => {
+gulp.task( 'webpack', [ 'blocks' ], () => {
 	const uglify = require( 'gulp-uglify' );
-	const babel = require( 'gulp-babel' );
+	const babel  = require( 'gulp-babel' );
+	const named  = require( 'vinyl-named' );
 	return gulp.src( paths.scripts )
-		.pipe( plumber( { 'errorHandler': outputErrors } ) )
+		.pipe( named() )
+		.pipe( webpack( {
+			mode: 'none',
+			plugins: [
+	            new uglifyWpack()
+	        ],
+			module: {
+				rules: [
+					{
+						test: /\.js$/,
+						exclude: /(node_modules|bower_components)/,
+						use: {
+							loader: 'babel-loader'
+						}
+					},
+				]
+			}
+		} ) )
 		.pipe( rename( { 'extname': '.min.js' } ) )
-		.pipe( babel( { presets: [ 'latest' ] } ) )
-		.pipe( uglify( { 'mangle': false } ) )
 		.pipe( gulp.dest( 'assets/js' ) );
 } );
 
@@ -548,7 +558,7 @@ gulp.task( 'release', () => {
 gulp.task( 'markup', browserSync.reload );
 gulp.task( 'i18n', [ 'wp-pot' ] );
 gulp.task( 'icons', [ 'svg' ] );
-gulp.task( 'scripts', [ 'uglify' ] );
+gulp.task( 'scripts', [ 'webpack' ] );
 gulp.task( 'styles', [ 'cssnano' ] );
 gulp.task( 'sprites', [ 'spritesmith' ] );
 gulp.task( 'lint', [ 'sass:lint', 'js:lint' ] );

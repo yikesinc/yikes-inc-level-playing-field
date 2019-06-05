@@ -171,7 +171,8 @@ abstract class BaseAsset implements Asset {
 			throw InvalidURI::from_asset_path( $path );
 		}
 
-		return ! $debug && is_readable( $minified_path ) ? $minified_uri : $uri;
+		// If we're not in debug mode and we have a minified asset, or we're in a debug mode and we don't have an unminified asset but we have a minified asset, return the minified.
+		return ! $debug && is_readable( $minified_path ) || $debug && ! is_readable( $path ) && is_readable( $minified_path ) ? $minified_uri : $uri;
 	}
 
 	/**

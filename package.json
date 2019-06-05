@@ -61,6 +61,7 @@
         "sassdoc": "^2.5.1",
         "semver": "^4.1.0",
         "style-loader": "^0.19.1",
+        "uglifyjs-webpack-plugin": "^2.1.3",
         "webpack": "^3.11.0",
         "webpack-stream": "^5.2.1"
     },
@@ -68,7 +69,8 @@
         "natives": "1.1.3"
     },
     "dependencies": {
-        "isobject": "^3.0.1"
+        "isobject": "^3.0.1",
+        "vinyl-named": "^1.1.0"
     },
     "scripts": {
         "dev": "cross-env BABEL_ENV=default webpack --watch",
