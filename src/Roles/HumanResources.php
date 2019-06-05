@@ -41,6 +41,7 @@ final class HumanResources extends BaseRole {
 			Capabilities::VIEW_ANONYMIZED_APPLICATIONS  => true,
 			Capabilities::MESSAGE_APPLICANTS            => true,
 			Capabilities::UNANONYMIZE                   => true,
+			Capabilities::VIEW_ADMIN_PAGES              => true,
 
 			// CPT capabilities.
 			Capabilities::EDIT_JOB                      => true,
