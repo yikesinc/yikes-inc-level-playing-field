@@ -104,7 +104,7 @@ class JobManager extends BaseCustomPostType {
 				'items_list_navigation' => __( 'Jobs list navigation', 'yikes-level-playing-field' ),
 				'filter_items_list'     => __( 'Filter Jobs list', 'yikes-level-playing-field' ),
 			],
-			'supports'            => [ 'title', 'editor' ],
+			'supports'            => [ 'title', 'editor', 'excerpt' ],
 			'hierarchical'        => false,
 			'public'              => true,
 			'show_ui'             => true,
