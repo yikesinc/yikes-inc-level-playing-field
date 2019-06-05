@@ -33,6 +33,8 @@ final class AllJobs extends BaseJobs {
 	public function get_default_atts() {
 		$default_atts = [
 			'limit'                   => 10,
+			'show_desc'               => false,
+			'desc_type'               => 'excerpt',
 			'show_application_button' => false,
 			'button_text'             => __( 'Apply', 'yikes-level-playing-field' ),
 			'order'                   => 'asc',

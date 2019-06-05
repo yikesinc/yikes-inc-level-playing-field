@@ -56,6 +56,19 @@ $jobs = apply_filters( 'lpf_job_listings_jobs', $this->jobs );
 			</h4>
 		<?php
 
+		if ( $this->show_desc && ( ! empty( $job->get_content() ) ) ) :
+			?>
+			<div class="lpf-jobs-list-description">
+			<?php
+			if ( $this->desc_type === 'full' ) {
+				echo $job->get_content();
+			} else {
+				echo $job->get_excerpt();
+			}
+			?>
+			</div>
+		<?php
+		endif;
 		if ( $this->show_application_button && ! empty( $job->get_application() ) ) :
 			?>
 			<div class="lpf-jobs-list-application-link">
