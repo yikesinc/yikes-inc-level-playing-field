@@ -99,6 +99,42 @@ export default class JobListing extends Component {
       </PanelRow>
     );
 
+    const showDesc =
+    (
+      <PanelRow>
+        <label
+          htmlFor="job-listings-sidebar-show-desc"
+          className="blocks-base-control__label"
+        >
+          { __( 'Show Description', 'yikes-level-playing-field' ) }
+        </label>
+        <FormToggle
+          id="job-listings-sidebar-show-desc"
+          label={ __( 'Show Description', 'yikes-level-playing-field' ) }
+          checked={ !! this.props.showDesc }
+          onChange={ ( e ) => this.props.toggleFormControl( e, 'show_desc' ) }
+        />
+      </PanelRow>
+    );
+
+    const selectDescType = this.props.showDesc ?
+    (
+      <PanelRow>
+        <label
+          htmlFor="job-listings-sidebar-desc-type"
+          className="blocks-base-control__label"
+        >
+          { __( 'Description Type', 'yikes-level-playing-field' ) }
+        </label>
+        <SelectControl
+          id="job-listings-sidebar-desc-type"
+          value={ this.props.descType }
+          options={ [ { label: __( 'Excerpt', 'yikes-level-playing-field' ), value: 'excerpt' }, { 'label': __( 'Full', 'yikes-level-playing-field' ), value: 'full' } ] }
+          onChange={ ( val ) => { this.props.handleValueControl( val, 'desc_type' ); } }
+        />
+      </PanelRow>
+    ) : '';
+
     const orderby =
     (
       <PanelRow>
