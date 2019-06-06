@@ -92,7 +92,7 @@ final class JobListings extends BaseBlock {
 				'default' => $shortcode_atts['limit'],
 			],
 			'show_desc'               => [
-				'type'    => 'string',
+				'type'    => 'boolean',
 				'default' => $shortcode_atts['show_desc'],
 			],
 			'desc_type'               => [

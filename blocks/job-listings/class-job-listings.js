@@ -245,6 +245,8 @@ export default class JobListing extends Component {
       <InspectorControls>
         <PanelBody title={ __( 'Settings', 'yikes-level-playing-field' ) } >
           {limit}
+          {showDesc}
+          {selectDescType}
           {orderby}
           {order}
           {exclude}
@@ -416,6 +418,7 @@ export default class JobListing extends Component {
           return (
             <li key={ `lpf-jobs-list-item-${ job.id }` } className="lpf-jobs-list-item">
               { this.jobHeader( job ) }
+              { this.props.showDesc ? this.jobDescription( job, this.props.descType ) : '' }
               { this.props.showApplicationButton && job.application ? this.jobListingAppButton( job ) : '' }
             </li>
           );
@@ -434,6 +437,19 @@ export default class JobListing extends Component {
       <h4 key={ `job-listings-title-${ job.id }` }>
         <a key={ `job-listings-link-${ job.id }` } href={ job.link }>{ job.title.rendered }</a>
       </h4>
+    );
+  }
+
+  /**
+   * Render the job's description.
+   *
+   * @param object job The job object.
+   */
+  jobDescription( job, descType ) {
+    return (
+      <div className="lpf-job-listings-description-container">
+        <div key={ `job-listings-description-${ job.id }` } className="lpf-job-listing-description" dangerouslySetInnerHTML={ { __html: job.content.rendered } }></div>
+      </div>
     );
   }
 
