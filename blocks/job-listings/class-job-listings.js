@@ -448,7 +448,7 @@ export default class JobListing extends Component {
   jobDescription( job, descType ) {
     return (
       <div className="lpf-job-listings-description-container">
-        <div key={ `job-listings-description-${ job.id }` } className="lpf-job-listing-description" dangerouslySetInnerHTML={ { __html: job.content.rendered } }></div>
+        <div key={ `job-listings-description-${ job.id }` } className="lpf-job-listing-description" dangerouslySetInnerHTML={ { __html: descType === 'full' ? job.content.rendered : job.excerpt.rendered } }></div>
       </div>
     );
   }
