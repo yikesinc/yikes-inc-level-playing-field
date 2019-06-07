@@ -88,7 +88,7 @@ class Banner1 extends BaseMetabox {
 	}
 
 	/**
-	 * Get the post types.
+	 * Get the post types for this metabox.
 	 *
 	 * @since %VERSION%
 	 * @return array

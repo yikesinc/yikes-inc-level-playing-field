@@ -50,7 +50,7 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 	const APPLICANT_DETAILS               = 'views/applicant-details.php';
 	const APPLICANT_SKILLS_QUALIFICATIONS = 'views/applicant-skills-qualifications.php';
 
-	// Default metaboxes to remove when this metabox is registered.
+	// Remove other meta boxes when registering this one.
 	const REMOVE_META_BOXES = true;
 
 	/**
@@ -270,7 +270,7 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 	}
 
 	/**
-	 * Get the post type.
+	 * Get the post types for this metabox..
 	 *
 	 * @since %VERSION%
 	 * @return array

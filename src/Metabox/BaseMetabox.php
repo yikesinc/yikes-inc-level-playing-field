@@ -326,7 +326,7 @@ abstract class BaseMetabox implements Renderable, Service, AssetsAware {
 	}
 
 	/**
-	 * Get the post type.
+	 * Get the post types for this metabox.
 	 *
 	 * @since %VERSION%
 	 * @return array

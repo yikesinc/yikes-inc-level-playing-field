@@ -92,7 +92,7 @@ final class ApplicantInterviewDetails extends BaseMetabox {
 	}
 
 	/**
-	 * Get the post type.
+	 * Get the post types for this metabox..
 	 *
 	 * @since %VERSION%
 	 * @return array
