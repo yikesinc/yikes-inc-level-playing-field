@@ -60,7 +60,7 @@ final class ApplicantManager extends BaseCustomPostType {
 			'supports'            => false,
 			'taxonomies'          => [],
 			'hierarchical'        => false,
-			'public'              => true,
+			'public'              => false,
 			'show_ui'             => true,
 			'show_in_menu'        => 'edit.php?post_type=' . JobManager::SLUG,
 			'rewrite'             => [

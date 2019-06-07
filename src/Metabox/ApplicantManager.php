@@ -50,6 +50,9 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 	const APPLICANT_DETAILS               = 'views/applicant-details.php';
 	const APPLICANT_SKILLS_QUALIFICATIONS = 'views/applicant-skills-qualifications.php';
 
+	// Default metaboxes to remove when this metabox is registered.
+	const REMOVE_META_BOXES = true;
+
 	/**
 	 * Register the current Registerable.
 	 *
@@ -65,10 +68,6 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 			}
 
 			$this->enqueue_assets();
-		} );
-
-		add_action( "add_meta_boxes_{$this->get_post_type()}", function() {
-			$this->meta_boxes();
 		} );
 
 		add_action( 'wp_ajax_save_nickname', function() {
@@ -95,18 +94,6 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 		add_action( 'lpf_applicant_screen_rendered', function( View $view ) {
 			$this->mark_messages_read( $view->applicant );
 		}, 10 );
-	}
-
-	/**
-	 * Register our meta boxes, and remove some default boxes.
-	 *
-	 * @since %VERSION%
-	 */
-	private function meta_boxes() {
-		// Remove some of the core boxes.
-		remove_meta_box( 'submitdiv', $this->get_post_type(), 'side' );
-		remove_meta_box( 'slugdiv', $this->get_post_type(), 'normal' );
-		remove_meta_box( 'authordiv', $this->get_post_type(), 'normal' );
 	}
 
 	/**
@@ -224,7 +211,7 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 	 * @return string|array|\WP_Screen Screen on which to show the metabox.
 	 */
 	protected function get_screen() {
-		return $this->get_post_type();
+		return $this->get_post_types();
 	}
 
 	/**
@@ -286,10 +273,10 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 	 * Get the post type.
 	 *
 	 * @since %VERSION%
-	 * @return string
+	 * @return array
 	 */
-	private function get_post_type() {
-		return ApplicantCPT::SLUG;
+	protected function get_post_types() {
+		return [ ApplicantCPT::SLUG ];
 	}
 
 	/**
@@ -303,6 +290,6 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 			return false;
 		}
 
-		return $this->get_post_type() === get_current_screen()->post_type;
+		return ApplicantCPT::SLUG === get_current_screen()->post_type;
 	}
 }
