@@ -315,14 +315,12 @@ export default class JobListing extends Component {
 
   /**
    * Render the job description.
-   *
-   * @todo find a way of rendering a post's HTML without using `dangerouslySetInnerHTML.`
    */
   jobDescription() {
     return (
       <div className="lpf-job-listing-description-container">
         <h4 key="lpf-job-listing-description-header" className="lpf-job-listing-description-header">{ this.props.descriptionText }</h4>
-        <div key="lpf-job-listing-description" className="lpf-job-listing-description" dangerouslySetInnerHTML={ { __html: this.state.job.content.rendered } }></div>
+        <RawHTML className="lpf-job-listing-description">{ this.state.job.content.rendered }</RawHTML>
       </div>
     );
   }

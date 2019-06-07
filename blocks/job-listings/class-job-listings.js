@@ -2,7 +2,7 @@
 const { __ } = wp.i18n;
 const { InspectorControls } = wp.editor;
 const { Spinner, TextControl, PanelBody, PanelRow, FormToggle, SelectControl } = wp.components;
-const { Component } = wp.element;
+const { Component, RawHTML } = wp.element;
 
 export default class JobListing extends Component {
   constructor( props ) {
@@ -418,8 +418,8 @@ export default class JobListing extends Component {
           return (
             <li key={ `lpf-jobs-list-item-${ job.id }` } className="lpf-jobs-list-item">
               { this.jobHeader( job ) }
-              { this.props.showDesc ? this.jobDescription( job, this.props.descType ) : '' }
-              { this.props.showApplicationButton && job.application ? this.jobListingAppButton( job ) : '' }
+              { this.props.showDesc && this.jobDescription( job, this.props.descType ) }
+              { this.props.showApplicationButton && job.application && this.jobListingAppButton( job ) }
             </li>
           );
         }
@@ -447,8 +447,8 @@ export default class JobListing extends Component {
    */
   jobDescription( job, descType ) {
     return (
-      <div className="lpf-job-listings-description-container">
-        <div key={ `job-listings-description-${ job.id }` } className="lpf-job-listing-description" dangerouslySetInnerHTML={ { __html: descType === 'full' ? job.content.rendered : job.excerpt.rendered } }></div>
+      <div key={ `job-listings-description-${ job.id }` } className="lpf-job-listings-description-container">
+        <RawHTML>{ descType === 'full' ? job.content.rendered : job.excerpt.rendered }</RawHTML>
       </div>
     );
   }
