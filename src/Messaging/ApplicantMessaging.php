@@ -41,7 +41,7 @@ use Yikes\LevelPlayingField\View\TemplatedView;
  * @package Yikes\LevelPlayingField
  * @author  Jeremy Pry
  */
-class ApplicantMessaging  implements Activateable, Deactivateable, Renderable, AssetsAware, Service {
+class ApplicantMessaging implements Activateable, Deactivateable, Renderable, AssetsAware, Service {
 
 	use AssetsAwareness;
 
@@ -106,28 +106,28 @@ class ApplicantMessaging  implements Activateable, Deactivateable, Renderable, A
 	}
 
 	/**
-	 * Activate the service.
+	 * Activate the service: show any Applicant Messages that we previously hid.
+	 *
+	 * We're running a direct DB query here and in the deactivate function in order to prevent this operation from being filtered or from timing out.
 	 *
 	 * @since %VERSION%
 	 */
 	public function activate() {
 		global $wpdb;
 
-		// Show any Applicant Messages that we previously hid.
 		$wpdb->query(
 			$wpdb->prepare( "UPDATE {$wpdb->comments} SET comment_approved = '1' WHERE comment_agent = %s", ApplicantMessage::AGENT )
 		);
 	}
 
 	/**
-	 * Deactivate the service.
+	 * Deactivate the service: hide our applicant messages from the main comments dashboard list table.
 	 *
 	 * @since %VERSION%
 	 */
 	public function deactivate() {
 		global $wpdb;
 
-		// Hide our Applicant Messages.
 		$wpdb->query(
 			$wpdb->prepare( "UPDATE {$wpdb->comments} SET comment_approved = 'post-trashed' WHERE comment_agent = %s", ApplicantMessage::AGENT )
 		);
