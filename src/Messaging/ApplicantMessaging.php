@@ -16,6 +16,8 @@ use Yikes\LevelPlayingField\Assets\StyleAsset;
 use Yikes\LevelPlayingField\Assets\AssetsAware;
 use Yikes\LevelPlayingField\Assets\AssetsAwareness;
 use Yikes\LevelPlayingField\Service;
+use Yikes\LevelPlayingField\Activateable;
+use Yikes\LevelPlayingField\Deactivateable;
 use Yikes\LevelPlayingField\Renderable;
 use Yikes\LevelPlayingField\CustomPostType\ApplicantManager;
 use Yikes\LevelPlayingField\Comment\ApplicantMessageRepository;
@@ -39,7 +41,7 @@ use Yikes\LevelPlayingField\View\TemplatedView;
  * @package Yikes\LevelPlayingField
  * @author  Jeremy Pry
  */
-class ApplicantMessaging implements Renderable, AssetsAware, Service {
+class ApplicantMessaging  implements Activateable, Deactivateable, Renderable, AssetsAware, Service {
 
 	use AssetsAwareness;
 
@@ -101,6 +103,34 @@ class ApplicantMessaging implements Renderable, AssetsAware, Service {
 		add_action( 'wp_ajax_send_interview_request', [ $this, 'send_interview_request' ] );
 		add_action( 'pre_get_comments', [ $this, 'exclude_applicant_messages' ] );
 		add_filter( 'wp_count_comments', [ $this, 'exclude_applicant_messages_from_counts' ], 99, 2 );
+	}
+
+	/**
+	 * Activate the service.
+	 *
+	 * @since %VERSION%
+	 */
+	public function activate() {
+		global $wpdb;
+
+		// Show any Applicant Messages that we previously hid.
+		$wpdb->query(
+			$wpdb->prepare( "UPDATE {$wpdb->comments} SET comment_approved = '1' WHERE comment_agent = %s", ApplicantMessage::AGENT )
+		);
+	}
+
+	/**
+	 * Deactivate the service.
+	 *
+	 * @since %VERSION%
+	 */
+	public function deactivate() {
+		global $wpdb;
+
+		// Hide our Applicant Messages.
+		$wpdb->query(
+			$wpdb->prepare( "UPDATE {$wpdb->comments} SET comment_approved = 'post-trashed' WHERE comment_agent = %s", ApplicantMessage::AGENT )
+		);
 	}
 
 	/**
