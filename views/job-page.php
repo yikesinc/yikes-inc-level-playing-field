@@ -60,11 +60,7 @@ $jobs = apply_filters( 'lpf_job_listings_jobs', $this->jobs );
 			?>
 			<div class="lpf-jobs-list-description">
 			<?php
-			if ( 'full' === $this->desc_type ) {
-				echo $job->get_content(); //phpcs:ignore WordPress.Security.EscapeOutput
-			} else {
-				echo $job->get_excerpt(); //phpcs:ignore WordPress.Security.EscapeOutput
-			}
+			echo 'full' === $this->desc_type ? apply_filters( 'lpf_the_content', $job->get_content() ) : $job->get_excerpt();
 			?>
 			</div>
 			<?php
