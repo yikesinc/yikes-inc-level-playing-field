@@ -2,7 +2,7 @@
 const { __ } = wp.i18n;
 const { InspectorControls } = wp.editor;
 const { Spinner, TextControl, PanelBody, PanelRow, FormToggle, SelectControl } = wp.components;
-const { Component } = wp.element;
+const { Component, RawHTML } = wp.element;
 
 export default class JobListing extends Component {
   constructor( props ) {
