@@ -42,7 +42,7 @@ class SingleApplicationsTemplateController extends TemplateController {
 	 */
 	protected function get_assets() {
 		return [
-			new StyleAsset( ApplicationShortcode::CSS_HANDLE, ApplicationShortcode::CSS_URI ),
+			new StyleAsset( ApplicationShortcode::CSS_HANDLE, ApplicationShortcode::CSS_URI, StyleAsset::DEPENDENCIES, StyleAsset::VERSION, StyleAsset::MEDIA_ALL ),
 		];
 	}
 
