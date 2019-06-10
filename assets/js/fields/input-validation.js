@@ -158,10 +158,10 @@ jQuery( document ).ready( function( $ ) {
 
 		if ( checked ) {
 			edLabel.addClass( 'lpf-disabled' );	
-			endDate.prop( 'required', false );
+			endDate.prop( 'required', false ).prop( 'disabled', true ).val( '' );
 		} else {
 			edLabel.removeClass( 'lpf-disabled' );
-			endDate.prop( 'required', true );
+			endDate.prop( 'required', true ).prop( 'disabled', false );
 		}
 	};
 
