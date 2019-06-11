@@ -168,6 +168,9 @@ final class PluginFactory {
 		// Transient Handling.
 		$services->add_service( EmailRecipient::class );
 
+		// Handle Welcome Message.
+		$services->add_service( Welcome::class );
+
 		return $services;
 	}
 }
