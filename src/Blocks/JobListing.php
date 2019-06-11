@@ -26,7 +26,6 @@ final class JobListing extends BaseBlock {
 	use PluginHelpers;
 
 	const BLOCK_SLUG = 'job-listing';
-	const CATEGORY   = 'widgets';
 
 	/**
 	 * Get the array of known assets.

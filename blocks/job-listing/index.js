@@ -67,7 +67,7 @@ const saveJobListingBlock = function( props ) {
 // Block settings.
 const settings = {
   title     : __( 'Job Listing', 'yikes-level-playing-field' ),
-  category  : 'widgets',
+  category  : 'lpf-blocks',
   icon      : 'welcome-widgets-menus',
   keywords  : [ 'yikes level playing field', 'job listing', 'jobs' ],
   attributes: lpf_job_listing_data.attributes,
