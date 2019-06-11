@@ -50,6 +50,7 @@ use Yikes\LevelPlayingField\TemplateController\SingleApplicationsTemplateControl
 use Yikes\LevelPlayingField\TemplateController\SingleJobsTemplateController as SingleJobs;
 use Yikes\LevelPlayingField\Transient\EmailRecipient;
 use Yikes\LevelPlayingField\Widget\Dashboard\JobApplicants;
+use Yikes\LevelPlayingField\Welcome;
 
 /**
  * Class PluginFactory
