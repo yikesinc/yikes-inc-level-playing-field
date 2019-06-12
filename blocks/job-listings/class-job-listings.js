@@ -135,23 +135,23 @@ export default class JobListing extends Component {
       </PanelRow>
     ) : '';
 
-      const showDetails =
-      (
-          <PanelRow>
-              <label
-                  htmlFor="job-listings-sidebar-show-details"
-                  className="blocks-base-control__label"
-              >
-                  { __( 'Show Details', 'yikes-level-playing-field' ) }
-              </label>
-              <FormToggle
-                  id="job-listings-sidebar-show-details"
-                  label={ __( 'Show Details', 'yikes-level-playing-field' ) }
-                  checked={ !! this.props.showDetails }
-                  onChange={ ( e ) => this.props.toggleFormControl( e, 'show_details' ) }
-              />
-          </PanelRow>
-      );
+    const showDetails =
+    (
+        <PanelRow>
+            <label
+                htmlFor="job-listings-sidebar-show-details"
+                className="blocks-base-control__label"
+            >
+                { __( 'Show Details', 'yikes-level-playing-field' ) }
+            </label>
+            <FormToggle
+                id="job-listings-sidebar-show-details"
+                label={ __( 'Show Details', 'yikes-level-playing-field' ) }
+                checked={ !! this.props.showDetails }
+                onChange={ ( e ) => this.props.toggleFormControl( e, 'show_details' ) }
+            />
+        </PanelRow>
+    );
 
     const detailsText = this.props.showDetails ?
     (
@@ -200,6 +200,24 @@ export default class JobListing extends Component {
           />
         </PanelRow>
       ) : '';
+
+    const groupByCategory =
+    (
+      <PanelRow>
+        <label
+          htmlFor="job-listings-sidebar-group-by-category"
+          className="blocks-base-control__label"
+        >
+          { __( 'Group By Category', 'yikes-level-playing-field' ) }
+        </label>
+        <FormToggle
+          id="job-listings-sidebar-group-by-category"
+          label={ __( 'Group By Category', 'yikes-level-playing-field' ) }
+          checked={ !! this.props.groupedByCat }
+          onChange={ ( e ) => this.props.toggleFormControl( e, 'grouped_by_cat' ) }
+        />
+      </PanelRow>
+    );
 
     const orderby =
     (
@@ -318,6 +336,7 @@ export default class JobListing extends Component {
           {jobTypeText}
           {locationText}
           {remoteLocationText}
+          {groupByCategory}
           {orderby}
           {order}
           {exclude}

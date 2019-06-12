@@ -39,6 +39,7 @@ final class AllJobs extends BaseJobs {
 			'show_application_button' => false,
 			'order'                   => 'asc',
 			'orderby'                 => 'title',
+			'grouped_by_cat'          => false,
 			'exclude'                 => [],
 			'cat_exclude_ids'         => [],
 			'details_text'            => __( 'Job Details', 'yikes-level-playing-field' ),

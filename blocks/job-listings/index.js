@@ -43,6 +43,7 @@ const editJobListingBlock = function( props ) {
       remoteLocationText={ props.attributes.remote_location_text }
       showApplicationButton={ props.attributes.show_application_button }
       buttonText={ props.attributes.button_text }
+      groupedByCat={ props.attributes.grouped_by_cat }
       order={ props.attributes.order }
       orderby={ props.attributes.orderby }
       exclude={ props.attributes.exclude }
