@@ -98,6 +98,26 @@ final class JobListings extends BaseBlock {
 				'type'    => 'string',
 				'default' => $shortcode_atts['desc_type'],
 			],
+			'show_details'            => [
+				'type'    => 'boolean',
+				'default' => $shortcode_atts['show_details'],
+			],
+			'details_text'            => [
+				'type'    => 'string',
+				'default' => $shortcode_atts['details_text'],
+			],
+			'job_type_text'           => [
+				'type'    => 'string',
+				'default' => $shortcode_atts['job_type_text'],
+			],
+			'location_text'           => [
+				'type'    => 'string',
+				'default' => $shortcode_atts['location_text'],
+			],
+			'remote_location_text'    => [
+				'type'    => 'string',
+				'default' => $shortcode_atts['remote_location_text'],
+			],
 			'show_application_button' => [
 				'type'    => 'boolean',
 				'default' => $shortcode_atts['show_application_button'],
@@ -141,11 +161,16 @@ final class JobListings extends BaseBlock {
 
 		// We want to run the shortcode directly but we need to return the plaintext shortcode or Gutenberg will autop() the shortcode content.
 		return sprintf(
-			'[%s limit="%s" show_desc="%s" desc_type="%s" order="%s" orderby="%s" exclude="%s" cat_exclude_ids="%s" show_application_button="%s" button_text="%s"]',
+			'[%s limit="%s" show_desc="%s" desc_type="%s" show_details="%s" details_text="%s" job_type_text="%s" location_text="%s" remote_location_text="%s" order="%s" orderby="%s" exclude="%s" cat_exclude_ids="%s" show_application_button="%s" button_text="%s"]',
 			esc_attr( JobsShortcode::TAG ),
 			esc_attr( $attributes['limit'] ),
 			esc_attr( $attributes['show_desc'] ),
 			esc_attr( $attributes['desc_type'] ),
+			esc_attr( $attributes['show_details'] ),
+			esc_attr( $attributes['details_text'] ),
+			esc_attr( $attributes['job_type_text'] ),
+			esc_attr( $attributes['location_text'] ),
+			esc_attr( $attributes['remote_location_text'] ),
 			esc_attr( $attributes['order'] ),
 			esc_attr( $attributes['orderby'] ),
 			esc_attr( implode( ',', $attributes['exclude'] ) ),

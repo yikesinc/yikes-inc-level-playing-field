@@ -135,6 +135,72 @@ export default class JobListing extends Component {
       </PanelRow>
     ) : '';
 
+      const showDetails =
+      (
+          <PanelRow>
+              <label
+                  htmlFor="job-listings-sidebar-show-details"
+                  className="blocks-base-control__label"
+              >
+                  { __( 'Show Details', 'yikes-level-playing-field' ) }
+              </label>
+              <FormToggle
+                  id="job-listings-sidebar-show-details"
+                  label={ __( 'Show Details', 'yikes-level-playing-field' ) }
+                  checked={ !! this.props.showDetails }
+                  onChange={ ( e ) => this.props.toggleFormControl( e, 'show_details' ) }
+              />
+          </PanelRow>
+      );
+
+    const detailsText = this.props.showDetails ?
+    (
+      <PanelRow>
+        <TextControl
+          id="lpf-details-text-control"
+          label={ __( 'Details Text', 'yikes-level-playing-field' ) }
+          value={ this.props.detailsText }
+          onChange={ ( val ) => this.props.handleValueControl( val, 'details_text' ) }
+        />
+      </PanelRow>
+    ) : '';
+
+    const jobTypeText = this.props.showDetails ?
+    (
+      <PanelRow>
+        <TextControl
+          id="lpf-job-type-text-control"
+          label={ __( 'Job Type Text', 'yikes-level-playing-field' ) }
+          value={ this.props.jobTypeText }
+          onChange={ ( val ) => this.props.handleValueControl( val, 'job_type_text' ) }
+        />
+      </PanelRow>
+    ) : '';
+
+    const locationText = this.props.showDetails ?
+    (
+      <PanelRow>
+        <TextControl
+          id="lpf-location-text-control"
+          label={ __( 'Location Text', 'yikes-level-playing-field' ) }
+          value={ this.props.locationText }
+          onChange={ ( val ) => this.props.handleValueControl( val, 'location_text' ) }
+        />
+      </PanelRow>
+    ) : '';
+
+    const remoteLocationText = this.props.showDetails ?
+      (
+        <PanelRow>
+          <TextControl
+            id="lpf-remote-location-text-control"
+            label={ __( 'Remote Location Text', 'yikes-level-playing-field' ) }
+            value={ this.props.remoteLocationText }
+            onChange={ ( val ) => this.props.handleValueControl( val, 'remote_location_text' ) }
+          />
+        </PanelRow>
+      ) : '';
+
     const orderby =
     (
       <PanelRow>
@@ -247,6 +313,11 @@ export default class JobListing extends Component {
           {limit}
           {showDesc}
           {selectDescType}
+          {showDetails}
+          {detailsText}
+          {jobTypeText}
+          {locationText}
+          {remoteLocationText}
           {orderby}
           {order}
           {exclude}
@@ -419,6 +490,7 @@ export default class JobListing extends Component {
             <li key={ `lpf-jobs-list-item-${ job.id }` } className="lpf-jobs-list-item">
               { this.jobHeader( job ) }
               { this.props.showDesc && this.jobDescription( job, this.props.descType ) }
+              { this.props.showDetails && this.jobListingMeta( job ) }
               { this.props.showApplicationButton && job.application && this.jobListingAppButton( job ) }
             </li>
           );
@@ -450,6 +522,74 @@ export default class JobListing extends Component {
       <div key={ `job-listings-description-${ job.id }` } className="lpf-job-listings-description-container">
         <RawHTML>{ descType === 'full' ? job.content.rendered : job.excerpt.rendered }</RawHTML>
       </div>
+    );
+  }
+
+  /**
+   * Render the job listing meta.
+   */
+  jobListingMeta( job ) {
+    return (
+      <div key={ `job-listings-description-${ job.id }` } className="lpf-job-listing-meta-container">
+        { this.jobMetaHeading() }
+        { job.job_type !== '' && this.jobType( job ) }
+        { this.jobLocation( job ) }
+      </div>
+    );
+  }
+
+  /**
+   * Render the job listing meta title.
+   */
+  jobMetaHeading() {
+    return <h4 className="lpf-job-listing-meta-header">{ this.props.detailsText }</h4>
+  }
+
+  /**
+   * Render the job type.
+   */
+  jobType( job ) {
+    return (
+      <div className="lpf-job-listing-type">
+        <span key="lpf-job-listing-meta-label" className="lpf-job-listing-meta-label lpf-job-listing-type-label">{ this.props.jobTypeText + ' ' }</span>
+        <span key="lpf-job-listing-meta-content" className="lpf-job-listing-meta-content lpf-job-listing-type">{ job.job_type }</span>
+      </div>
+    );
+  }
+
+  /**
+   * Render the job's location.
+   */
+  jobLocation( job ) {
+    return (
+      <div className="lpf-job-listing-location-container">
+        <span className="lpf-job-listing-meta-label lpf-job-listing-location-label">{ this.props.locationText + ' ' }</span>
+        { job.location === 'remote' ? this.remoteLocation() : this.jobAddress( job ) }
+      </div>
+    );
+  }
+
+  /**
+   * Render the remote location.
+   */
+  remoteLocation() {
+    return <span className="lpf-job-listing-location-remote">{ this.props.remoteLocationText }</span>
+  }
+
+  /**
+   * Render the job address.
+   */
+  jobAddress( job ) {
+    return (
+      <address className="lpf-job-listing-location-address">
+        <div className="lpf-address1">{ job.address['address-1'] }</div>
+        <div className="lpf-address2">{ job.address['address-2'] }</div>
+        <span className="lpf-city">{ job.address['city'] }</span>
+        &nbsp;<span className="lpf-state">{ job.address['state'] }</span>
+        { ( job.address['state'] || job.address['city'] ) && ( job.address['zip'] || job.address['country'] ) ? <span className="lpf-city-state-comma">,</span> : '' }
+        <div className="lpf-country">{ job.address['country'] }</div>
+        <div className="lpf-zip">{ job.address['zip'] }</div>
+      </address>
     );
   }
 
