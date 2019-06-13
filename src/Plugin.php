@@ -9,7 +9,7 @@
 
 namespace Yikes\LevelPlayingField;
 
-use Yikes\LevelPlayingField\PluginHelpers;
+use Yikes\LevelPlayingField\PluginHelper;
 use Yikes\LevelPlayingField\Assets\AssetsAware;
 use Yikes\LevelPlayingField\Assets\AssetsHandler;
 use Yikes\LevelPlayingField\Exception\InvalidClass;
@@ -31,7 +31,7 @@ use Yikes\LevelPlayingField\CustomPostType\JobManager;
  */
 final class Plugin implements Registerable {
 
-	use PluginHelpers;
+	use PluginHelper;
 
 	const VERSION = '1.0.0';
 

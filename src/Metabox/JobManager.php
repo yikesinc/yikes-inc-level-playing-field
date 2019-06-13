@@ -9,7 +9,7 @@
 
 namespace Yikes\LevelPlayingField\Metabox;
 
-use Yikes\LevelPlayingField\PluginHelpers;
+use Yikes\LevelPlayingField\PluginHelper;
 use Yikes\LevelPlayingField\Assets\Asset;
 use Yikes\LevelPlayingField\Assets\AssetsAware;
 use Yikes\LevelPlayingField\Assets\AssetsAwareness;
@@ -34,7 +34,7 @@ final class JobManager extends AwesomeBaseMetabox implements AssetsAware {
 
 	use AssetsAwareness;
 	use JobMetaDropdowns;
-	use PluginHelpers;
+	use PluginHelper;
 
 	const CSS_HANDLE = 'lpf-admin-jobs-css';
 	const CSS_URI    = 'assets/css/lpf-jobs-admin';

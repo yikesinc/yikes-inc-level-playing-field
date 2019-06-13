@@ -9,7 +9,7 @@
 
 namespace Yikes\LevelPlayingField;
 
-use Yikes\LevelPlayingField\PluginHelpers;
+use Yikes\LevelPlayingField\PluginHelper;
 use Yikes\LevelPlayingField\AdminPage\GoProPage;
 use Yikes\LevelPlayingField\AdminPage\SettingsPage;
 use Yikes\LevelPlayingField\AdminPage\SupportPage;
@@ -61,7 +61,7 @@ use Yikes\LevelPlayingField\Widget\Dashboard\JobApplicants;
  */
 final class PluginFactory {
 
-	use PluginHelpers;
+	use PluginHelper;
 
 	/**
 	 * Create and return an instance of the plugin.

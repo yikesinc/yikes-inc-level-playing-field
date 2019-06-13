@@ -12,7 +12,7 @@
 
 namespace Yikes\LevelPlayingField\Assets;
 
-use Yikes\LevelPlayingField\PluginHelpers;
+use Yikes\LevelPlayingField\PluginHelper;
 
 /**
  * Class MediaAsset.
@@ -24,7 +24,7 @@ use Yikes\LevelPlayingField\PluginHelpers;
  */
 final class MediaAsset {
 
-	use PluginHelpers;
+	use PluginHelper;
 
 	const IMG_ASSETS_DIR = '/assets/images/';
 	const IMG_NOT_FOUND  = '';

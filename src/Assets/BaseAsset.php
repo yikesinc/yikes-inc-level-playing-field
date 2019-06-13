@@ -11,7 +11,7 @@ namespace Yikes\LevelPlayingField\Assets;
 
 use Closure;
 use Yikes\LevelPlayingField\Exception\InvalidURI;
-use Yikes\LevelPlayingField\PluginHelpers;
+use Yikes\LevelPlayingField\PluginHelper;
 
 /**
  * Abstract class BaseAsset.
@@ -23,7 +23,7 @@ use Yikes\LevelPlayingField\PluginHelpers;
  */
 abstract class BaseAsset implements Asset {
 
-	use PluginHelpers;
+	use PluginHelper;
 
 	const REGISTER_PRIORITY = 1;
 	const ENQUEUE_PRIORITY  = 10;
