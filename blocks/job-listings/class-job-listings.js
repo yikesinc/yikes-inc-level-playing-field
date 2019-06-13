@@ -20,7 +20,7 @@ export default class JobListing extends Component {
 
     this.jobsCategoryEndpoint = `/wp/v2/${lpf_job_listings_data.job_categories_slug}/?hide_empty=true`;
     this.baseJobsEndpoint     = `/wp/v2/${lpf_job_listings_data.jobs_slug}`;
-    this.jobsStatusEndpoint   = `/wp/v2/${lpf_job_listings_data.job_status_slug}/?slug=active`;
+    this.jobsStatusEndpoint   = `/wp/v2/${lpf_job_listings_data.job_status_slug}/?slug=${lpf_job_listings_data.job_status_active_slug}`;
 
   }
 
