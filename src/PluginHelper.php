@@ -10,14 +10,14 @@
 namespace Yikes\LevelPlayingField;
 
 /**
- * Trait PluginHelpers.
+ * Trait PluginHelper.
  *
  * Handle basic WordPress plugin variables like the plugin's path and URL.
  *
  * @since   %VERSION%
  * @package Yikes\LevelPlayingField
  */
-trait PluginHelpers {
+trait PluginHelper {
 
 	/**
 	 * Get the root directory for the plugin.
@@ -27,6 +27,16 @@ trait PluginHelpers {
 	 */
 	public function get_plugin_root() {
 		return dirname( __DIR__ );
+	}
+
+	/**
+	 * Get the version of the plugin.
+	 *
+	 * @since %VERSION%
+	 * @return string
+	 */
+	protected function get_version() {
+		return '1.0.0';
 	}
 
 	/**

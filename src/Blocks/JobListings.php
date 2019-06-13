@@ -11,7 +11,7 @@ namespace Yikes\LevelPlayingField\Blocks;
 
 use Yikes\LevelPlayingField\Assets\Asset;
 use Yikes\LevelPlayingField\Assets\BlockAsset;
-use Yikes\LevelPlayingField\PluginHelpers;
+use Yikes\LevelPlayingField\PluginHelper;
 use Yikes\LevelPlayingField\CustomPostType\JobManager;
 use Yikes\LevelPlayingField\Taxonomy\JobCategory;
 use Yikes\LevelPlayingField\Shortcode\AllJobs as JobsShortcode;
@@ -24,7 +24,7 @@ use Yikes\LevelPlayingField\Shortcode\AllJobs as JobsShortcode;
  */
 final class JobListings extends BaseBlock {
 
-	use PluginHelpers;
+	use PluginHelper;
 
 	const BLOCK_SLUG = 'job-listings';
 	const CATEGORY   = 'widgets';
