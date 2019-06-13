@@ -20,7 +20,9 @@ use Yikes\LevelPlayingField\Roles\Capabilities;
  */
 final class JobStatus extends BaseTaxonomy {
 
-	const SLUG = 'job_status';
+	const SLUG            = 'job_status';
+	const ACTIVE_STATUS   = 'active';
+	const INACTIVE_STATUS = 'inactive';
 
 	/**
 	 * Register the WordPress hooks.
@@ -47,7 +49,7 @@ final class JobStatus extends BaseTaxonomy {
 			'show_admin_column'  => true,
 			'show_in_quick_edit' => false,
 			'query_var'          => true,
-			'show_in_rest'       => false,
+			'show_in_rest'       => true,
 			'meta_box_cb'        => [ $this, 'meta_box_cb' ],
 			'rewrite'            => [
 				'slug' => 'status',
@@ -100,11 +102,11 @@ final class JobStatus extends BaseTaxonomy {
 		$terms = [
 			'Inactive' => [
 				'description' => __( 'Job is inactive', 'yikes-level-playing-field' ),
-				'slug'        => 'inactive',
+				'slug'        => self::ACTIVE_STATUS,
 			],
 			'Active'   => [
 				'description' => __( 'Job is active', 'yikes-level-playing-field' ),
-				'slug'        => 'active',
+				'slug'        => self::INACTIVE_STATUS,
 			],
 		];
 

@@ -11,22 +11,24 @@ export default class JobListing extends Component {
       jobs                   : {},
       jobsLoaded             : false,
       jobCategories          : {},
+      jobStatusActiveTermID  : 0,
       show_exclude_toggle    : props.exclude.length > 0,
       exclude                : props.exclude,
       show_exclude_cat_toggle: props.cat_exclude_ids.length > 0,
       catExclude             : props.cat_exclude_ids
     };
 
-    this.jobsCategoryEndpoint = `/wp/v2/${lpf_job_listings_data.job_categories_slug}`;
+    this.jobsCategoryEndpoint = `/wp/v2/${lpf_job_listings_data.job_categories_slug}/?hide_empty=true`;
     this.baseJobsEndpoint     = `/wp/v2/${lpf_job_listings_data.jobs_slug}`;
-    this.setJobsEndpoint( this.props.order, this.props.orderby );
+    this.jobsStatusEndpoint   = `/wp/v2/${lpf_job_listings_data.job_status_slug}/?slug=active`;
+
   }
 
   /**
    * Run our API calls after the component has mounted. You can't use setState before a component is mounted.
    */
   componentDidMount() {
-    this.fetchAllJobs();
+    this.fetchActiveJobStatusId();
     this.fetchAllCategories();
   }
 
@@ -41,7 +43,7 @@ export default class JobListing extends Component {
    * Set the WP REST API endpoint for the jobs CPT.
    */
   setJobsEndpoint( order, orderby ) {
-    this.jobsEndpoint = `${this.baseJobsEndpoint}/?order=${order}&orderby=${orderby}`
+    this.jobsEndpoint = `${this.baseJobsEndpoint}/?${lpf_job_listings_data.job_status_slug}=${this.state.jobStatusActiveTermID}&order=${order}&orderby=${orderby}`;
   }
 
   /**
@@ -61,6 +63,17 @@ export default class JobListing extends Component {
   fetchAllCategories() {
     wp.apiFetch( { path: this.jobsCategoryEndpoint } ).then( cats => {
       this.setState( { jobCategories: cats } );
+    });
+  }
+
+  /**
+   * Fetch ID of job status of active.
+   */
+  fetchActiveJobStatusId() {
+    wp.apiFetch( { path: this.jobsStatusEndpoint } ).then( statuses => {
+      this.setState( { jobStatusActiveTermID: statuses[0].id } );
+      this.setJobsEndpoint( this.props.order, this.props.orderby );
+      this.fetchAllJobs();
     });
   }
 
@@ -481,14 +494,24 @@ export default class JobListing extends Component {
   }
 
   /**
+   * Filter
+   */
+  jobsByCategory() {
+    //console.log( this.state.jobs );
+  }
+
+  /**
    * Render the jobs list.
    */
   jobs() {
-    return Object.keys( this.state.jobs ).length > 0 ? (
+    this.jobsByCategory();
+    const jobsHTML =
+    (
       <ul className="lpf-jobs-list">
         { this.jobListing() }
       </ul>
-    ) : `<em>${ __( 'No jobs found...', 'yikes-level-playing-field' ) }</em>`;
+    );
+    return Object.keys( this.state.jobs ).length > 0 ? jobsHTML : <em>{ __( 'No jobs found...', 'yikes-level-playing-field' ) }</em>;
   }
 
   /**

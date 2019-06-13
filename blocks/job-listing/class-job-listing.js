@@ -283,7 +283,7 @@ export default class JobListing extends Component {
         className="lpf-jobs-dropdown"
         options={ this.jobsDropdownOptions() }
       />
-    : `<em>${ __( 'No jobs found...', 'yikes-level-playing-field' ) }</em>`;
+    : <em>{ __( 'No jobs found...', 'yikes-level-playing-field' ) }</em>;
   }
 
   jobsDropdownOptions() {

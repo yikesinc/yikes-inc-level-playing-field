@@ -14,6 +14,7 @@ use Yikes\LevelPlayingField\Assets\BlockAsset;
 use Yikes\LevelPlayingField\PluginHelpers;
 use Yikes\LevelPlayingField\CustomPostType\JobManager;
 use Yikes\LevelPlayingField\Taxonomy\JobCategory;
+use Yikes\LevelPlayingField\Taxonomy\JobStatus;
 use Yikes\LevelPlayingField\Shortcode\AllJobs as JobsShortcode;
 
 /**
@@ -50,11 +51,13 @@ final class JobListings extends BaseBlock {
 		$block_script->add_localization(
 			'lpf_job_listings_data',
 			[
-				'block_name'          => $this->get_block_slug(),
-				'jobs_slug'           => JobManager::SLUG,
-				'edit_jobs_url'       => add_query_arg( [ 'action' => 'edit' ], admin_url( 'post.php' ) ),
-				'attributes'          => $this->get_attributes(),
-				'job_categories_slug' => JobCategory::SLUG,
+				'block_name'             => $this->get_block_slug(),
+				'jobs_slug'              => JobManager::SLUG,
+				'edit_jobs_url'          => add_query_arg( [ 'action' => 'edit' ], admin_url( 'post.php' ) ),
+				'attributes'             => $this->get_attributes(),
+				'job_categories_slug'    => JobCategory::SLUG,
+				'job_status_slug'        => JobStatus::SLUG,
+				'job_status_active_slug' => JobStatus::ACTIVE_STATUS,
 			]
 		);
 
