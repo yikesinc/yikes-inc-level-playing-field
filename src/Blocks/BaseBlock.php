@@ -148,19 +148,10 @@ abstract class BaseBlock implements Service, AssetsAware {
 	 * @return array
 	 */
 	public function set_block_category( $categories, $post ) {
-
-		// Flag to confirm our block category has not already been added.
-		$category_exist = false;
-
 		foreach ( $categories as $category ) {
 			if ( static::CATEGORY === $category['slug'] ) {
-				$category_exist = true;
-				break;
+				return $categories;
 			}
-		}
-
-		if ( $category_exist ) {
-			return $categories;
 		}
 
 		$categories = array_merge(

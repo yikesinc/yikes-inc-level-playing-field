@@ -497,47 +497,64 @@ export default class JobListing extends Component {
    * Filter
    */
   jobsByCategory() {
-    //console.log( this.state.jobs );
+    return (
+      <div className="lpf-jobs-by-category-list">
+        {
+          Object.keys(this.state.jobCategories).map((cat_index) => {
+            const jobCategory = this.state.jobCategories[cat_index];
+            return (
+              <div key={`job-listings-category-${ jobCategory.id }`} className="lpf-jobs-by-category-list">
+                <h3 className="lpf-jobs-by-category-header">{jobCategory.name}</h3>
+                { this.jobListing( jobCategory.id ) }
+              </div>
+            );
+          })
+        }
+      </div>
+    );
   }
 
   /**
    * Render the jobs list.
    */
   jobs() {
-    this.jobsByCategory();
-    const jobsHTML =
-    (
-      <ul className="lpf-jobs-list">
-        { this.jobListing() }
-      </ul>
-    );
+    const jobsHTML = this.props.groupedByCat ? this.jobsByCategory() : this.jobListing();
     return Object.keys( this.state.jobs ).length > 0 ? jobsHTML : <em>{ __( 'No jobs found...', 'yikes-level-playing-field' ) }</em>;
   }
 
   /**
    * Render each job.
    */
-  jobListing() {
+  jobListing( categoryId = false ) {
     let counter = 1;
     return (
-      Object.keys( this.state.jobs ).map( ( job_index ) => {
+      <ul className="lpf-jobs-list">
+        {
+          Object.keys(this.state.jobs).map((job_index) => {
+            const job = this.state.jobs[job_index];
+            let hasCategoryId = true;
 
-        const job     = this.state.jobs[ job_index ];
-        const exclude = this.state.exclude.includes( job.id ) || this.jobHasExcludedCategory( job[ lpf_job_listings_data.job_categories_slug ] ) || counter > this.props.limit;
+            if ( categoryId ) {
+              hasCategoryId = job.job_category.includes( categoryId );
+            }
 
-        if ( ! exclude ) {
-          counter++;
+            const exclude = this.state.exclude.includes(job.id) || this.jobHasExcludedCategory(job[lpf_job_listings_data.job_categories_slug]) || counter > this.props.limit || ! hasCategoryId;
 
-          return (
-            <li key={ `lpf-jobs-list-item-${ job.id }` } className="lpf-jobs-list-item">
-              { this.jobHeader( job ) }
-              { this.props.showDesc && this.jobDescription( job, this.props.descType ) }
-              { this.props.showDetails && this.jobListingMeta( job ) }
-              { this.props.showApplicationButton && job.application && this.jobListingAppButton( job ) }
-            </li>
-          );
+            if (!exclude) {
+              counter++;
+
+              return (
+                <li key={`lpf-jobs-list-item-${ job.id }`} className="lpf-jobs-list-item">
+                  {this.jobHeader(job)}
+                  {this.props.showDesc && this.jobDescription(job, this.props.descType)}
+                  {this.props.showDetails && this.jobListingMeta(job)}
+                  {this.props.showApplicationButton && job.application && this.jobListingAppButton(job)}
+                </li>
+              );
+            }
+          })
         }
-      })
+      </ul>
     );
   }
 
