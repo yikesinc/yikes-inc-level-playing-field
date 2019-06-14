@@ -63,10 +63,14 @@ trait PluginHelper {
 	 * Get the folder name for the plugin.
 	 *
 	 * @since %VERSION%
+	 *
+	 * @param string $plugin_root See the get_plugin_root() method.
+	 *
 	 * @return string
 	 */
-	public function get_plugin_folder_name() {
-		$plugin_path   = rtrim( $this->get_plugin_root(), '/' );
+	public function get_plugin_folder_name( $plugin_root = '' ) {
+		$plugin_root   = empty( $plugin_root ) ? $this->get_plugin_root() : $plugin_root;
+		$plugin_path   = rtrim( $plugin_root, '/' );
 		$plugin_path   = explode( '/', $plugin_path );
 		$plugin_folder = end( $plugin_path );
 		return $plugin_folder;
@@ -76,10 +80,16 @@ trait PluginHelper {
 	 * Get the full filepath for the plugin.
 	 *
 	 * @since %VERSION%
+	 *
+	 * @param string $plugin_root     See the get_plugin_root() method.
+	 * @param string $plugin_filename See the get_plugin_filename() method.
+	 *
 	 * @return string
 	 */
-	public function get_plugin_filepath() {
-		return trailingslashit( $this->get_plugin_root() ) . $this->get_plugin_filename();
+	public function get_plugin_filepath( $plugin_root = '', $plugin_filename = '' ) {
+		$plugin_root     = empty( $plugin_root ) ? $this->get_plugin_root() : $plugin_root;
+		$plugin_filename = empty( $plugin_filename ) ? $this->get_plugin_filename() : $plugin_filename;
+		return trailingslashit( $plugin_root ) . $plugin_filename;
 	}
 
 	/**
