@@ -37,35 +37,6 @@ $use_comma = (bool) apply_filters( 'lpf_single_job_template_address_use_comma', 
 $jobs = apply_filters( 'lpf_job_listings_jobs', $this->jobs );
 
 /**
- * Handling of grouping jobs by category (if enabled).
- */
-$job_cats    = [];
-$jobs_by_cat = [];
-
-if ( $this->grouped_by_cat && ( 'true' === $this->grouped_by_cat || '1' === $this->grouped_by_cat ) ) {
-
-	// Loop through each job and determine job category.
-	foreach ( $jobs as $job ) {
-		$job_terms = get_the_terms( $job->get_post_object(), JobCategory::SLUG );
-
-		// If job does not have a term, skip.
-		if ( ! $job_terms ) {
-			continue;
-		}
-
-		// Otherwise, set up category variables for proper rendering.
-		foreach ( $job_terms as $job_term ) {
-			$job_cats[ $job_term->term_id ] = $job_term->name;
-			if ( isset( $jobs_by_cat[ $job_term->term_id ] ) ) {
-				$jobs_by_cat[ $job_term->term_id ][] = $job;
-			} else {
-				$jobs_by_cat[ $job_term->term_id ] = [ $job ];
-			}
-		}
-	}
-}
-
-/**
 * Fires before displaying all of the Jobs for Level Playing Field.
 *
 * @param Job[] $jobs The array of Job objects.

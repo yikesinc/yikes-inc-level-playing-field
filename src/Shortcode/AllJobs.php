@@ -75,9 +75,39 @@ final class AllJobs extends BaseJobs {
 	 */
 	protected function get_context( array $atts ) {
 		$jobs_repository = new JobRepository();
+		$jobs            = $jobs_repository->find_active( $atts['limit'], $atts['orderby'], $atts['order'], $atts['exclude'], $atts['cat_exclude_ids'] );
+		$job_cats        = [];
+		$jobs_by_cat     = [];
+
+		$atts['grouped_by_cat'] = filter_var( $atts['grouped_by_cat'], FILTER_VALIDATE_BOOLEAN );
+
+		if ( $atts['grouped_by_cat'] ) {
+
+			// Loop through each job and determine job category.
+			foreach ( $jobs as $job ) {
+				$job_terms = get_the_terms( $job->get_post_object(), JobCategory::SLUG );
+
+				// If job does not have a term, skip.
+				if ( ! $job_terms ) {
+					continue;
+				}
+
+				// Otherwise, set up category variables for proper rendering.
+				foreach ( $job_terms as $job_term ) {
+					$job_cats[ $job_term->term_id ] = $job_term->name;
+					if ( isset( $jobs_by_cat[ $job_term->term_id ] ) ) {
+						$jobs_by_cat[ $job_term->term_id ][] = $job;
+					} else {
+						$jobs_by_cat[ $job_term->term_id ] = [ $job ];
+					}
+				}
+			}
+		}
 
 		return [
-			'jobs' => $jobs_repository->find_active( $atts['limit'], $atts['orderby'], $atts['order'], $atts['exclude'], $atts['cat_exclude_ids'] ),
+			'jobs'        => $jobs,
+			'job_cats'    => $job_cats,
+			'jobs_by_cat' => $jobs_by_cat,
 		];
 	}
 }
