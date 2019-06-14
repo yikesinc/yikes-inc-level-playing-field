@@ -10,6 +10,7 @@
 namespace Yikes\LevelPlayingField\Shortcode;
 
 use Yikes\LevelPlayingField\Model\JobRepository;
+use Yikes\LevelPlayingField\Taxonomy\JobCategory;
 
 /**
  * Class AllJobs
@@ -21,8 +22,10 @@ use Yikes\LevelPlayingField\Model\JobRepository;
  */
 final class AllJobs extends BaseJobs {
 
-	const TAG      = 'lpf_all_jobs';
-	const VIEW_URI = 'views/job-page';
+	const TAG                      = 'lpf_all_jobs';
+	const VIEW_URI                 = 'views/job-page';
+	const JOBS_LIST_PARTIAL        = 'views/jobs';
+	const JOBS_BY_CAT_LIST_PARTIAL = 'views/jobs_by_cat';
 
 	/**
 	 * Get the default array of attributes for the shortcode.
@@ -108,6 +111,10 @@ final class AllJobs extends BaseJobs {
 			'jobs'        => $jobs,
 			'job_cats'    => $job_cats,
 			'jobs_by_cat' => $jobs_by_cat,
+			'partials'    => [
+				'jobs_list'             => static::JOBS_LIST_PARTIAL,
+				'jobs_by_category_list' => static::JOBS_BY_CAT_LIST_PARTIAL,
+			],
 		];
 	}
 }
