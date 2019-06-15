@@ -39,15 +39,17 @@ final class MediaAsset {
 	 *
 	 * @return string $file_url
 	 */
-	public function get_image( string $filename ) {
-		$file_url = $this->get_plugin_url() . self::IMG_ASSETS_DIR . $filename;
+	public function get_image( $filename ) {
+		$relative_file = self::IMG_ASSETS_DIR . $filename;
+		$file_url      = $this->get_plugin_url( $relative_file );
 
 		// Build absolute path to file to confirm file exists.
-		$file_path = $this->get_root_dir() . self::IMG_ASSETS_DIR . $filename;
+		$file_path = $this->get_root_dir() . $relative_file;
 
 		if ( ! file_exists( $file_path ) ) {
 			return self::IMG_NOT_FOUND;
 		}
+
 		return $file_url;
 	}
 }

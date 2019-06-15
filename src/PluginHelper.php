@@ -59,7 +59,7 @@ trait PluginHelper {
 	 * @return string
 	 */
 	protected function get_plugin_url( $path = '' ) {
-		return plugins_url( $path, $this->get_root_dir() );
+		return plugins_url( $path, $this->get_main_file() );
 	}
 
 	/**
