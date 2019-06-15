@@ -142,8 +142,8 @@ abstract class BaseAsset implements Asset {
 	 */
 	protected function normalize_source( $uri, $extension ) {
 		$uri  = $this->check_extension( $uri, $extension );
-		$path = trailingslashit( $this->get_plugin_root() ) . $uri;
-		$uri  = plugins_url( $uri, dirname( __FILE__, 2 ) );
+		$path = trailingslashit( $this->get_root_dir() ) . $uri;
+		$uri  = $this->get_plugin_url( $uri );
 
 		return $this->check_for_minified_asset( $uri, $path, $extension );
 	}
