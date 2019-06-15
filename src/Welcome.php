@@ -9,7 +9,6 @@
 
 namespace Yikes\LevelPlayingField;
 
-use Yikes\LevelPlayingField\Service;
 use Yikes\LevelPlayingField\CustomPostType\JobManager;
 
 /**
