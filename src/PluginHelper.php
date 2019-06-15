@@ -20,12 +20,22 @@ namespace Yikes\LevelPlayingField;
 trait PluginHelper {
 
 	/**
+	 * Get the main plugin file.
+	 *
+	 * @since %VERSION%
+	 * @return string
+	 */
+	protected function get_main_file() {
+		return "{$this->get_root_dir()}/{$this->get_main_filename()}";
+	}
+
+	/**
 	 * Get the root directory for the plugin.
 	 *
 	 * @since %VERSION%
 	 * @return string
 	 */
-	public function get_plugin_root() {
+	protected function get_root_dir() {
 		return dirname( __DIR__ );
 	}
 
@@ -43,10 +53,13 @@ trait PluginHelper {
 	 * Get the url for the plugin.
 	 *
 	 * @since %VERSION%
+	 *
+	 * @param string $path The URL path.
+	 *
 	 * @return string
 	 */
-	public function get_plugin_url() {
-		return plugins_url( '', dirname( __FILE__ ) );
+	protected function get_plugin_url( $path = '' ) {
+		return plugins_url( $path, $this->get_root_dir() );
 	}
 
 	/**
@@ -55,41 +68,18 @@ trait PluginHelper {
 	 * @since %VERSION%
 	 * @return string
 	 */
-	public function get_plugin_filename() {
+	protected function get_main_filename() {
 		return 'yikes-level-playing-field.php';
 	}
 
 	/**
-	 * Get the folder name for the plugin.
+	 * Get the WordPress plugin name for this plugin.
 	 *
 	 * @since %VERSION%
-	 *
-	 * @param string $plugin_root See the get_plugin_root() method.
-	 *
 	 * @return string
 	 */
-	public function get_plugin_folder_name( $plugin_root = '' ) {
-		$plugin_root   = empty( $plugin_root ) ? $this->get_plugin_root() : $plugin_root;
-		$plugin_path   = rtrim( $plugin_root, '/' );
-		$plugin_path   = explode( '/', $plugin_path );
-		$plugin_folder = end( $plugin_path );
-		return $plugin_folder;
-	}
-
-	/**
-	 * Get the full filepath for the plugin.
-	 *
-	 * @since %VERSION%
-	 *
-	 * @param string $plugin_root     See the get_plugin_root() method.
-	 * @param string $plugin_filename See the get_plugin_filename() method.
-	 *
-	 * @return string
-	 */
-	public function get_plugin_filepath( $plugin_root = '', $plugin_filename = '' ) {
-		$plugin_root     = empty( $plugin_root ) ? $this->get_plugin_root() : $plugin_root;
-		$plugin_filename = empty( $plugin_filename ) ? $this->get_plugin_filename() : $plugin_filename;
-		return trailingslashit( $plugin_root ) . $plugin_filename;
+	protected function get_basename() {
+		return plugin_basename( $this->get_main_file() );
 	}
 
 	/**
@@ -100,7 +90,7 @@ trait PluginHelper {
 	 * @since %VERSION%
 	 * @return bool
 	 */
-	public function is_new_editor_enabled() {
+	protected function is_new_editor_enabled() {
 		/**
 		 * Filter whether the new editor is enabled.
 		 *
@@ -110,6 +100,9 @@ trait PluginHelper {
 		 *
 		 * @return bool True if the new editor is enabled.
 		 */
-		return apply_filters( 'lpf_is_new_editor_enabled', function_exists( 'register_block_type' ) && ! class_exists( 'Classic_Editor' ) );
+		return apply_filters(
+			'lpf_is_new_editor_enabled',
+			function_exists( 'register_block_type' ) && ! class_exists( 'Classic_Editor' )
+		);
 	}
 }

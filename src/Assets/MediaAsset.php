@@ -43,7 +43,7 @@ final class MediaAsset {
 		$file_url = $this->get_plugin_url() . self::IMG_ASSETS_DIR . $filename;
 
 		// Build absolute path to file to confirm file exists.
-		$file_path = $this->get_plugin_root() . self::IMG_ASSETS_DIR . $filename;
+		$file_path = $this->get_root_dir() . self::IMG_ASSETS_DIR . $filename;
 
 		if ( ! file_exists( $file_path ) ) {
 			return self::IMG_NOT_FOUND;
