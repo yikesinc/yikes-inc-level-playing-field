@@ -50,8 +50,13 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 	const APPLICANT_DETAILS               = 'views/applicant-details.php';
 	const APPLICANT_SKILLS_QUALIFICATIONS = 'views/applicant-skills-qualifications.php';
 
-	// Remove other meta boxes when registering this one.
-	const REMOVE_META_BOXES = true;
+	/**
+	 * Whether to remove 3rd party metaboxes.
+	 *
+	 * @since %VERSION%
+	 * @var bool
+	 */
+	protected $remove_3rd_party_boxes = true;
 
 	/**
 	 * Register the current Registerable.
@@ -94,6 +99,20 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 		add_action( 'lpf_applicant_screen_rendered', function( View $view ) {
 			$this->mark_messages_read( $view->applicant );
 		}, 10 );
+	}
+
+	/**
+	 * Wrapper for adding/removing metaboxes for a given post type.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param string $post_type The post type.
+	 */
+	protected function meta_boxes( $post_type ) {
+		parent::meta_boxes( $post_type );
+		remove_meta_box( 'submitdiv', $post_type, 'side' );
+		remove_meta_box( 'slugdiv', $post_type, 'normal' );
+		remove_meta_box( 'authordiv', $post_type, 'normal' );
 	}
 
 	/**

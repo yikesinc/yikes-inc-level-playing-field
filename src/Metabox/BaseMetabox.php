@@ -29,7 +29,6 @@ use Yikes\LevelPlayingField\View\TemplatedView;
 abstract class BaseMetabox implements Renderable, Service, AssetsAware {
 
 	use AssetsAwareness;
-	use MetaBoxHandler;
 
 	const CONTEXT_ADVANCED = 'advanced';
 	const CONTEXT_NORMAL   = 'normal';
@@ -43,6 +42,14 @@ abstract class BaseMetabox implements Renderable, Service, AssetsAware {
 	const REMOVE_META_BOXES = false;
 
 	/**
+	 * Whether to remove 3rd party metaboxes.
+	 *
+	 * @since %VERSION%
+	 * @var bool
+	 */
+	protected $remove_3rd_party_boxes = false;
+
+	/**
 	 * Register the Metabox.
 	 *
 	 * @since %VERSION%
@@ -52,24 +59,43 @@ abstract class BaseMetabox implements Renderable, Service, AssetsAware {
 		$this->register_persistence_hooks();
 
 		foreach ( $this->get_post_types() as $post_type ) {
-			add_action( "add_meta_boxes_{$post_type}", function() {
-				$this->meta_boxes();
+			add_action( 'add_meta_boxes', function( $current_type ) use ( $post_type ) {
+				if ( $current_type === $post_type ) {
+					$this->maybe_remove_meta_boxes();
+				}
+			}, 0, 1 );
+			add_action( "add_meta_boxes_{$post_type}", function() use ( $post_type ) {
+				$this->meta_boxes( $post_type );
 			}, static::PRIORITY );
 		}
+	}
 
+	/**
+	 * Possibly remove 3rd party metaboxes.
+	 *
+	 * @since %VERSION%
+	 */
+	protected function maybe_remove_meta_boxes() {
+		if ( ! $this->remove_3rd_party_boxes ) {
+			return;
+		}
+
+		remove_all_actions( 'add_meta_boxes' );
 	}
 
 	/**
 	 * Wrapper for adding/removing metaboxes for a given post type.
 	 *
 	 * @since %VERSION%
-	 */	
-	protected function meta_boxes() {
-		$this->add_meta_box(
+	 *
+	 * @param string $post_type The post type.
+	 */
+	protected function meta_boxes( $post_type ) {
+		add_meta_box(
 			$this->get_id(),
 			$this->get_title(),
 			[ $this, 'process_metabox' ],
-			$this->get_screen(),
+			$post_type,
 			$this->get_context(),
 			$this->get_priority(),
 			$this->get_callback_args()
