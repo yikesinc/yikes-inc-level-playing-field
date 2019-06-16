@@ -26,6 +26,7 @@ final class AllJobs extends BaseJobs {
 	const VIEW_URI                 = 'views/job-page';
 	const JOBS_LIST_PARTIAL        = 'views/jobs';
 	const JOBS_BY_CAT_LIST_PARTIAL = 'views/jobs_by_cat';
+	const JOBS_LOOP_PARTIAL        = 'views/jobs_loop';
 
 	/**
 	 * Get the default array of attributes for the shortcode.
@@ -114,6 +115,7 @@ final class AllJobs extends BaseJobs {
 			'partials'    => [
 				'jobs_list'             => static::JOBS_LIST_PARTIAL,
 				'jobs_by_category_list' => static::JOBS_BY_CAT_LIST_PARTIAL,
+				'jobs_loop'             => static::JOBS_LOOP_PARTIAL,
 			],
 		];
 	}
