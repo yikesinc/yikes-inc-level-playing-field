@@ -84,16 +84,16 @@ class Banner2 extends BaseMetabox {
 	 * @return string|array|\WP_Screen Screen on which to show the metabox.
 	 */
 	protected function get_screen() {
-		return $this->get_post_type();
+		return $this->get_post_types();
 	}
 
 	/**
-	 * Get the post types.
+	 * Get the post types for this metabox.
 	 *
 	 * @since %VERSION%
 	 * @return array
 	 */
-	private function get_post_type() {
+	protected function get_post_types() {
 		return [ ApplicantCPT::SLUG, ApplicationCPT::SLUG ];
 	}
 }
