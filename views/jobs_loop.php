@@ -5,7 +5,7 @@
  * This is the template for the [lpf_all_jobs] shortcode.
  *
  * @package Yikes\LevelPlayingField
- * @author  Jeremy Pry
+ * @author  Ebonie Butler
  * @license GPL2
  */
 
