@@ -40,6 +40,14 @@ abstract class BaseMetabox implements Renderable, Service, AssetsAware {
 	const PRIORITY         = 10;
 
 	/**
+	 * Whether to remove 3rd party metaboxes.
+	 *
+	 * @since %VERSION%
+	 * @var bool
+	 */
+	protected $remove_3rd_party_boxes = false;
+
+	/**
 	 * Register the Metabox.
 	 *
 	 * @since %VERSION%
@@ -48,17 +56,48 @@ abstract class BaseMetabox implements Renderable, Service, AssetsAware {
 		$this->register_assets();
 		$this->register_persistence_hooks();
 
-		add_action( 'add_meta_boxes', function () {
-			add_meta_box(
-				$this->get_id(),
-				$this->get_title(),
-				[ $this, 'process_metabox' ],
-				$this->get_screen(),
-				$this->get_context(),
-				$this->get_priority(),
-				$this->get_callback_args()
-			);
-		}, static::PRIORITY );
+		foreach ( $this->get_post_types() as $post_type ) {
+			add_action( 'add_meta_boxes', function( $current_type ) use ( $post_type ) {
+				if ( $current_type === $post_type ) {
+					$this->maybe_remove_meta_boxes();
+				}
+			}, 0, 1 );
+			add_action( "add_meta_boxes_{$post_type}", function() use ( $post_type ) {
+				$this->meta_boxes( $post_type );
+			}, static::PRIORITY );
+		}
+	}
+
+	/**
+	 * Possibly remove 3rd party metaboxes.
+	 *
+	 * @since %VERSION%
+	 */
+	protected function maybe_remove_meta_boxes() {
+		if ( ! $this->remove_3rd_party_boxes ) {
+			return;
+		}
+
+		remove_all_actions( 'add_meta_boxes' );
+	}
+
+	/**
+	 * Wrapper for adding/removing metaboxes for a given post type.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param string $post_type The post type.
+	 */
+	protected function meta_boxes( $post_type ) {
+		add_meta_box(
+			$this->get_id(),
+			$this->get_title(),
+			[ $this, 'process_metabox' ],
+			$post_type,
+			$this->get_context(),
+			$this->get_priority(),
+			$this->get_callback_args()
+		);
 	}
 
 	/**
@@ -309,4 +348,12 @@ abstract class BaseMetabox implements Renderable, Service, AssetsAware {
 	protected function get_view_uri() {
 		return static::VIEW;
 	}
+
+	/**
+	 * Get the post types for this metabox.
+	 *
+	 * @since %VERSION%
+	 * @return array
+	 */
+	abstract protected function get_post_types();
 }

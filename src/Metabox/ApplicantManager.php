@@ -51,6 +51,14 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 	const APPLICANT_SKILLS_QUALIFICATIONS = 'views/applicant-skills-qualifications.php';
 
 	/**
+	 * Whether to remove 3rd party metaboxes.
+	 *
+	 * @since %VERSION%
+	 * @var bool
+	 */
+	protected $remove_3rd_party_boxes = true;
+
+	/**
 	 * Register the current Registerable.
 	 *
 	 * @since %VERSION%
@@ -65,10 +73,6 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 			}
 
 			$this->enqueue_assets();
-		} );
-
-		add_action( "add_meta_boxes_{$this->get_post_type()}", function() {
-			$this->meta_boxes();
 		} );
 
 		add_action( 'wp_ajax_save_nickname', function() {
@@ -98,15 +102,17 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 	}
 
 	/**
-	 * Register our meta boxes, and remove some default boxes.
+	 * Wrapper for adding/removing metaboxes for a given post type.
 	 *
 	 * @since %VERSION%
+	 *
+	 * @param string $post_type The post type.
 	 */
-	private function meta_boxes() {
-		// Remove some of the core boxes.
-		remove_meta_box( 'submitdiv', $this->get_post_type(), 'side' );
-		remove_meta_box( 'slugdiv', $this->get_post_type(), 'normal' );
-		remove_meta_box( 'authordiv', $this->get_post_type(), 'normal' );
+	protected function meta_boxes( $post_type ) {
+		parent::meta_boxes( $post_type );
+		remove_meta_box( 'submitdiv', $post_type, 'side' );
+		remove_meta_box( 'slugdiv', $post_type, 'normal' );
+		remove_meta_box( 'authordiv', $post_type, 'normal' );
 	}
 
 	/**
@@ -224,7 +230,7 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 	 * @return string|array|\WP_Screen Screen on which to show the metabox.
 	 */
 	protected function get_screen() {
-		return $this->get_post_type();
+		return $this->get_post_types();
 	}
 
 	/**
@@ -283,13 +289,13 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 	}
 
 	/**
-	 * Get the post type.
+	 * Get the post types for this metabox..
 	 *
 	 * @since %VERSION%
-	 * @return string
+	 * @return array
 	 */
-	private function get_post_type() {
-		return ApplicantCPT::SLUG;
+	protected function get_post_types() {
+		return [ ApplicantCPT::SLUG ];
 	}
 
 	/**
@@ -303,6 +309,6 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 			return false;
 		}
 
-		return $this->get_post_type() === get_current_screen()->post_type;
+		return ApplicantCPT::SLUG === get_current_screen()->post_type;
 	}
 }
