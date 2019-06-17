@@ -17,7 +17,7 @@ $comments = $this->comments;
 <div id="applicant-messaging">
 	<?php
 	if ( false === $this->is_metabox ) {
-	?>
+		?>
 		<h2>Your Messages</h2>
 	<?php } else { ?>
 		<h2 class="lpf_mbox_title"><?php esc_html_e( 'Applicant Messaging', 'yikes-level-playing-field' ); ?></h2>
@@ -26,7 +26,7 @@ $comments = $this->comments;
 	<div class="messaging-container">
 		<?php
 		if ( false === $this->is_metabox ) {
-			echo $this->render_partial( $this->partials['interview_confirmation'] ); // phpcs:ignore WordPress.Security.EscapeOutput
+			echo $this->render_partial( $this->partials['interview_confirmation'] );
 		}
 		?>
 
@@ -53,8 +53,7 @@ $comments = $this->comments;
 							'br'   => [],
 							'div'  => [ 'class' => [] ],
 							'span' => [ 'class' => [] ],
-						]
-						) );
+						] ) );
 						?>
 					</div>
 					<div class="message-timestamp"><?php echo esc_html( $comment->get_formatted_date() ); ?></div>
@@ -77,7 +76,7 @@ $comments = $this->comments;
 		</div>
 		<?php
 		if ( true === $this->is_metabox ) {
-			echo $this->render_partial( $this->partials['interview_scheduler'] ); //phpcs:ignore WordPress.Security.EscapeOutput
+			echo $this->render_partial( $this->partials['interview_scheduler'] );
 		}
 		?>
 	</div>

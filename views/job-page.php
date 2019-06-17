@@ -21,9 +21,9 @@ use Yikes\LevelPlayingField\Model\Job;
 do_action( 'lpf_jobs_before', $jobs );
 
 if ( $this->grouped_by_cat ) {
-	echo $this->render_partial( $this->partials['jobs_by_category_list'] ); // phpcs:ignore WordPress.Security.EscapeOutput
+	echo $this->render_partial( $this->partials['jobs_by_category_list'] );
 } else {
-	echo $this->render_partial( $this->partials['jobs_list'] ); // phpcs:ignore WordPress.Security.EscapeOutput
+	echo $this->render_partial( $this->partials['jobs_list'] );
 }
 
 

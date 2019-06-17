@@ -21,7 +21,7 @@ $job = $this->job;
 	<!-- Avatar, nicknme and associated job -->
 	<div id="applicant-info">
 		<section id="header">
-			<?php echo $applicant->get_avatar_img( 120 ); //phpcs:ignore WordPress.Security.EscapeOutput ?>
+			<?php echo $applicant->get_avatar_img( 120 ); ?>
 			<h5>
 				<span class="label"><?php esc_html_e( 'Nickname:', 'yikes-level-playing-field' ); ?></span>
 				<span id="editable-nick-name"><?php echo esc_html( $applicant->get_nickname() ); ?></span>
