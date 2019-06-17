@@ -14,6 +14,16 @@ namespace Yikes\LevelPlayingField;
 use Yikes\LevelPlayingField\Model\Job;
 
 /**
+ * These are the available jobs.
+ *
+ * Storing as a custom variable here is not needed, but we hope it is less confusing for
+ * those looking to extend this template.
+ *
+ * @var Job[] $jobs
+ */
+$jobs = $this->jobs;
+
+/**
 * Fires before displaying all of the Jobs for Level Playing Field.
 *
 * @param Job[] $jobs The array of Job objects.
