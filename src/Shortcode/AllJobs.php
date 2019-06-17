@@ -109,10 +109,9 @@ final class AllJobs extends BaseJobs {
 		}
 
 		return [
-			'jobs'        => $jobs,
-			'job_cats'    => $job_cats,
-			'jobs_by_cat' => $jobs_by_cat,
-			'partials'    => [
+			'jobs'     => $atts['grouped_by_cat'] ? $jobs_by_cat : $jobs,
+			'job_cats' => $job_cats,
+			'partials' => [
 				'jobs_list'             => static::JOBS_LIST_PARTIAL,
 				'jobs_by_category_list' => static::JOBS_BY_CAT_LIST_PARTIAL,
 				'jobs_loop'             => static::JOBS_LOOP_PARTIAL,

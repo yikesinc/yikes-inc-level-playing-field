@@ -11,6 +11,7 @@
 
 namespace Yikes\LevelPlayingField;
 
+use Yikes\LevelPlayingField\Model\Job;
 
 /**
  * These are the available jobs.
@@ -34,8 +35,6 @@ $use_comma = (bool) apply_filters( 'lpf_single_job_template_address_use_comma', 
  */
 $jobs = apply_filters( 'lpf_job_listings_jobs', $this->jobs );
 
-
-
 foreach ( $jobs as $job ) {
 	?>
 	<li class="lpf-jobs-list-item">
@@ -45,7 +44,7 @@ foreach ( $jobs as $job ) {
 			</a>
 		</h4>
 		<?php
-		if ( $this->show_desc && ( 'true' === $this->show_desc || '1' === $this->show_desc ) && ( ! empty( $job->get_content() ) ) ) :
+		if ( $this->show_desc && ( ! empty( $job->get_content() ) ) ) :
 			?>
 			<div class="lpf-jobs-list-description">
 				<?php
@@ -54,7 +53,7 @@ foreach ( $jobs as $job ) {
 			</div>
 			<?php
 		endif;
-		if ( $this->show_details && ( 'true' === $this->show_details || '1' === $this->show_details ) ) :
+		if ( $this->show_details ) :
 			?>
 			<div class="lpf-job-listing-meta-container">
 				<h4 class="lpf-job-listing-meta-header"><?php echo esc_html( $this->details_text ); ?></h4>
@@ -104,7 +103,7 @@ foreach ( $jobs as $job ) {
 			</div><!-- / .lpf-job-listing-meta-container -->
 			<?php
 		endif;
-		if ( $this->show_application_button && ( 'true' === $this->show_application_button || '1' === $this->show_application_button ) && ! empty( $job->get_application() ) ) :
+		if ( $this->show_application_button && ! empty( $job->get_application() ) ) :
 			?>
 			<div class="lpf-jobs-list-application-link">
 				<a href="<?php echo esc_url( $job->get_application_url() ); ?>">

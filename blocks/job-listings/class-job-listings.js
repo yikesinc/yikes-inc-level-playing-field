@@ -532,12 +532,7 @@ export default class JobListing extends Component {
         {
           Object.keys(this.state.jobs).map((job_index) => {
             const job = this.state.jobs[job_index];
-            let hasCategoryId = true;
-
-            if ( categoryId ) {
-              hasCategoryId = job.job_category.includes( categoryId );
-            }
-
+            let hasCategoryId = categoryId ? job.job_category.includes( categoryId ) : true;
             const exclude = this.state.exclude.includes(job.id) || this.jobHasExcludedCategory(job[lpf_job_listings_data.job_categories_slug]) || counter > this.props.limit || ! hasCategoryId;
 
             if (!exclude) {
@@ -575,6 +570,7 @@ export default class JobListing extends Component {
    * Render the job's description.
    *
    * @param object job The job object.
+   * @param string descType Whether to show full description or description excerpt.
    */
   jobDescription( job, descType ) {
     return (
