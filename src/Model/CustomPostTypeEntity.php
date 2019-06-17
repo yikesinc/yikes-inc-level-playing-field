@@ -121,6 +121,17 @@ abstract class CustomPostTypeEntity implements Entity {
 	}
 
 	/**
+	 * Get the post's excerpt.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @return string Excerpt of the post.
+	 */
+	public function get_excerpt() {
+		return wp_trim_excerpt( $this->post->post_excerpt, $this->post->ID );
+	}
+
+	/**
 	 * Set the post's content.
 	 *
 	 * @since %VERSION%

@@ -2,7 +2,7 @@
 const { __ } = wp.i18n;
 const { InspectorControls } = wp.editor;
 const { Spinner, TextControl, PanelBody, PanelRow, FormToggle, SelectControl } = wp.components;
-const { Component } = wp.element;
+const { Component, RawHTML } = wp.element;
 
 export default class JobListing extends Component {
   constructor( props ) {
@@ -283,7 +283,7 @@ export default class JobListing extends Component {
         className="lpf-jobs-dropdown"
         options={ this.jobsDropdownOptions() }
       />
-    : `<em>${ __( 'No jobs found...', 'yikes-level-playing-field' ) }</em>`;
+    : <em>{ __( 'No jobs found...', 'yikes-level-playing-field' ) }</em>;
   }
 
   jobsDropdownOptions() {
@@ -315,14 +315,12 @@ export default class JobListing extends Component {
 
   /**
    * Render the job description.
-   *
-   * @todo find a way of rendering a post's HTML without using `dangerouslySetInnerHTML.`
    */
   jobDescription() {
     return (
       <div className="lpf-job-listing-description-container">
         <h4 key="lpf-job-listing-description-header" className="lpf-job-listing-description-header">{ this.props.descriptionText }</h4>
-        <div key="lpf-job-listing-description" className="lpf-job-listing-description" dangerouslySetInnerHTML={ { __html: this.state.job.content.rendered } }></div>
+        <RawHTML className="lpf-job-listing-description">{ this.state.job.content.rendered }</RawHTML>
       </div>
     );
   }

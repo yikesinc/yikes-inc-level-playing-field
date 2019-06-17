@@ -29,7 +29,8 @@ abstract class BaseBlock implements Service, AssetsAware {
 	const BLOCK_PATH = 'assets/js/blocks/';
 	const BLOCK_FILE = '/index';
 	const BLOCK_SLUG = '__BLOCKSLUG__';
-	const CATEGORY   = 'widgets';
+	const CATEGORY   = 'lpf-blocks';
+	const PRIORITY   = 10;
 
 	/**
 	 * Register the current Registerable.
@@ -38,6 +39,9 @@ abstract class BaseBlock implements Service, AssetsAware {
 	 */
 	public function register() {
 		$this->register_assets();
+
+		// Create LPF block category.
+		add_filter( 'block_categories', [ $this, 'set_block_category' ], static::PRIORITY, 2 );
 
 		// Register the block type.
 		add_action( 'init', function() {
@@ -132,5 +136,34 @@ abstract class BaseBlock implements Service, AssetsAware {
 			'attributes'      => $this->get_attributes(),
 			'render_callback' => [ $this, 'render_block' ],
 		];
+	}
+
+	/**
+	 * Filter the default array of block categories.
+	 *
+	 * @param array   $categories Array of block categories.
+	 * @param WP_Post $post               Post being loaded.
+	 *
+	 * @since %VERSION%
+	 * @return array
+	 */
+	public function set_block_category( $categories, $post ) {
+		foreach ( $categories as $category ) {
+			if ( static::CATEGORY === $category['slug'] ) {
+				return $categories;
+			}
+		}
+
+		$categories = array_merge(
+			$categories,
+			[
+				[
+					'slug'  => static::CATEGORY,
+					'title' => __( 'Level Playing Field', 'yikes-level-playing-field' ),
+				],
+			]
+		);
+
+		return $categories;
 	}
 }

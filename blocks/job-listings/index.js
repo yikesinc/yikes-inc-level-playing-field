@@ -34,8 +34,16 @@ const editJobListingBlock = function( props ) {
       toggleFormControl={ toggleFormControl }
       handleValueControl={ handleValueControl }
       limit={ props.attributes.limit }
+      showDesc={ props.attributes.show_desc }
+      descType={ props.attributes.desc_type }
+      showDetails={ props.attributes.show_details }
+      detailsText={ props.attributes.details_text }
+      jobTypeText={ props.attributes.job_type_text }
+      locationText={ props.attributes.location_text }
+      remoteLocationText={ props.attributes.remote_location_text }
       showApplicationButton={ props.attributes.show_application_button }
       buttonText={ props.attributes.button_text }
+      groupedByCat={ props.attributes.grouped_by_cat }
       order={ props.attributes.order }
       orderby={ props.attributes.orderby }
       exclude={ props.attributes.exclude }
@@ -55,7 +63,7 @@ const saveJobListingBlock = function( props ) {
 // Block settings.
 const settings = {
   title     : __( 'Job Listings', 'yikes-level-playing-field' ),
-  category  : 'widgets',
+  category  : 'lpf-blocks',
   icon      : 'list-view',
   keywords  : [ 'yikes level playing field', 'job listings', 'jobs' ],
   attributes: lpf_job_listings_data.attributes,

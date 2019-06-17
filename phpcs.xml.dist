@@ -58,12 +58,17 @@
 			<property name="text_domain" type="array" value="yikes-level-playing-field"/>
 		</properties>
 	</rule>
+
+	<!-- Some directories have relaxed rules -->
 	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
 		<properties>
 			<property name="prefixes" type="array" value="lpf,ylpf"/>
 		</properties>
 		<exclude-pattern type="relative">/views/*</exclude-pattern>
 		<exclude-pattern type="relative">/vendor/awesome-yikes-framework/*</exclude-pattern>
+	</rule>
+	<rule ref="WordPress.Security.EscapeOutput.OutputNotEscaped">
+		<exclude-pattern type="relative">/views/*</exclude-pattern>
 	</rule>
 
 	<!-- Check all PHP files in directory tree by default. -->

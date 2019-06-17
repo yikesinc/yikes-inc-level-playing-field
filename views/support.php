@@ -27,7 +27,7 @@ namespace Yikes\LevelPlayingField;
 				<?php esc_html_e( 'Level Playing Field Pro users qualify for premium support.', 'yikes-level-playing-field' ); ?> <a href="https://yikesplugins.com/plugin/level-playing-field-pro/" target="_blank"><?php esc_html_e( 'Check out Level Playing Field Pro!', 'yikes-level-playing-field' ); ?></a>
 			</p>
 
-			<hr />					
+			<hr />
 
 
 			<h2>

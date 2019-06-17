@@ -14,6 +14,7 @@ use Yikes\LevelPlayingField\Assets\BlockAsset;
 use Yikes\LevelPlayingField\PluginHelper;
 use Yikes\LevelPlayingField\CustomPostType\JobManager;
 use Yikes\LevelPlayingField\Taxonomy\JobCategory;
+use Yikes\LevelPlayingField\Taxonomy\JobStatus;
 use Yikes\LevelPlayingField\Shortcode\AllJobs as JobsShortcode;
 
 /**
@@ -27,7 +28,6 @@ final class JobListings extends BaseBlock {
 	use PluginHelper;
 
 	const BLOCK_SLUG = 'job-listings';
-	const CATEGORY   = 'widgets';
 
 	/**
 	 * Get the array of known assets.
@@ -51,11 +51,13 @@ final class JobListings extends BaseBlock {
 		$block_script->add_localization(
 			'lpf_job_listings_data',
 			[
-				'block_name'          => $this->get_block_slug(),
-				'jobs_slug'           => JobManager::SLUG,
-				'edit_jobs_url'       => add_query_arg( [ 'action' => 'edit' ], admin_url( 'post.php' ) ),
-				'attributes'          => $this->get_attributes(),
-				'job_categories_slug' => JobCategory::SLUG,
+				'block_name'             => $this->get_block_slug(),
+				'jobs_slug'              => JobManager::SLUG,
+				'edit_jobs_url'          => add_query_arg( [ 'action' => 'edit' ], admin_url( 'post.php' ) ),
+				'attributes'             => $this->get_attributes(),
+				'job_categories_slug'    => JobCategory::SLUG,
+				'job_status_slug'        => JobStatus::SLUG,
+				'job_status_active_slug' => JobStatus::ACTIVE_STATUS,
 			]
 		);
 
@@ -91,6 +93,34 @@ final class JobListings extends BaseBlock {
 				'type'    => 'string',
 				'default' => $shortcode_atts['limit'],
 			],
+			'show_desc'               => [
+				'type'    => 'boolean',
+				'default' => $shortcode_atts['show_desc'],
+			],
+			'desc_type'               => [
+				'type'    => 'string',
+				'default' => $shortcode_atts['desc_type'],
+			],
+			'show_details'            => [
+				'type'    => 'boolean',
+				'default' => $shortcode_atts['show_details'],
+			],
+			'details_text'            => [
+				'type'    => 'string',
+				'default' => $shortcode_atts['details_text'],
+			],
+			'job_type_text'           => [
+				'type'    => 'string',
+				'default' => $shortcode_atts['job_type_text'],
+			],
+			'location_text'           => [
+				'type'    => 'string',
+				'default' => $shortcode_atts['location_text'],
+			],
+			'remote_location_text'    => [
+				'type'    => 'string',
+				'default' => $shortcode_atts['remote_location_text'],
+			],
 			'show_application_button' => [
 				'type'    => 'boolean',
 				'default' => $shortcode_atts['show_application_button'],
@@ -98,6 +128,10 @@ final class JobListings extends BaseBlock {
 			'button_text'             => [
 				'type'    => 'string',
 				'default' => $shortcode_atts['button_text'],
+			],
+			'grouped_by_cat'          => [
+				'type'    => 'boolean',
+				'default' => $shortcode_atts['grouped_by_cat'],
 			],
 			'orderby'                 => [
 				'type'    => 'string',
@@ -134,9 +168,17 @@ final class JobListings extends BaseBlock {
 
 		// We want to run the shortcode directly but we need to return the plaintext shortcode or Gutenberg will autop() the shortcode content.
 		return sprintf(
-			'[%s limit="%s" order="%s" orderby="%s" exclude="%s" cat_exclude_ids="%s" show_application_button="%s" button_text="%s"]',
+			'[%s limit="%s" show_desc="%s" desc_type="%s" show_details="%s" details_text="%s" job_type_text="%s" location_text="%s" remote_location_text="%s" grouped_by_cat="%s" order="%s" orderby="%s" exclude="%s" cat_exclude_ids="%s" show_application_button="%s" button_text="%s"]',
 			esc_attr( JobsShortcode::TAG ),
 			esc_attr( $attributes['limit'] ),
+			esc_attr( $attributes['show_desc'] ),
+			esc_attr( $attributes['desc_type'] ),
+			esc_attr( $attributes['show_details'] ),
+			esc_attr( $attributes['details_text'] ),
+			esc_attr( $attributes['job_type_text'] ),
+			esc_attr( $attributes['location_text'] ),
+			esc_attr( $attributes['remote_location_text'] ),
+			esc_attr( $attributes['grouped_by_cat'] ),
 			esc_attr( $attributes['order'] ),
 			esc_attr( $attributes['orderby'] ),
 			esc_attr( implode( ',', $attributes['exclude'] ) ),
