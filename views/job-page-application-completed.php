@@ -17,4 +17,4 @@ $msg = ! empty( $job->get_application_success_message() )
 	? $job->get_application_success_message()
 	: ( new ApplicationSuccessMessage() )->get();
 
-printf( '<p>%s</p>', esc_html( $msg ) );
+printf( '<p>%s</p>', nl2br( esc_html( $msg ) ) );
