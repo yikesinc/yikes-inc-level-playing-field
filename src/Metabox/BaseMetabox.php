@@ -39,8 +39,6 @@ abstract class BaseMetabox implements Renderable, Service, AssetsAware {
 	const PRIORITY_LOW     = 'low';
 	const PRIORITY         = 10;
 
-	const REMOVE_META_BOXES = false;
-
 	/**
 	 * Whether to remove 3rd party metaboxes.
 	 *
