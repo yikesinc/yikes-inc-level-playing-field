@@ -25,8 +25,8 @@ final class AllJobs extends BaseJobs {
 	const TAG                      = 'lpf_all_jobs';
 	const VIEW_URI                 = 'views/job-page';
 	const JOBS_LIST_PARTIAL        = 'views/jobs';
-	const JOBS_BY_CAT_LIST_PARTIAL = 'views/jobs_by_cat';
-	const JOBS_LOOP_PARTIAL        = 'views/jobs_loop';
+	const JOBS_BY_CAT_LIST_PARTIAL = 'views/jobs-by-cat';
+	const JOBS_LOOP_PARTIAL        = 'views/jobs-loop';
 
 	/**
 	 * Get the default array of attributes for the shortcode.
@@ -115,6 +115,8 @@ final class AllJobs extends BaseJobs {
 				'jobs_list'             => static::JOBS_LIST_PARTIAL,
 				'jobs_by_category_list' => static::JOBS_BY_CAT_LIST_PARTIAL,
 				'jobs_loop'             => static::JOBS_LOOP_PARTIAL,
+				'job_details'           => static::JOB_DETAILS_PARTIAL,
+				'job_apply_button'      => static::JOB_APPLY_PARTIAL,
 			],
 		];
 	}

@@ -20,8 +20,10 @@ use Yikes\LevelPlayingField\Assets\StyleAsset;
  */
 abstract class BaseJobs extends BaseShortcode {
 
-	const CSS_HANDLE = 'lpf-jobs-css';
-	const CSS_URI    = 'assets/css/lpf-jobs-frontend';
+	const CSS_HANDLE          = 'lpf-jobs-css';
+	const CSS_URI             = 'assets/css/lpf-jobs-frontend';
+	const JOB_DETAILS_PARTIAL = 'views/job-details';
+	const JOB_APPLY_PARTIAL   = 'views/job-apply-button';
 
 	/**
 	 * Get the array of known assets.
