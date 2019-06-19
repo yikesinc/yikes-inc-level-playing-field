@@ -45,8 +45,9 @@ class Experience extends RepeatableField {
 				'label' => esc_html__( 'Industry', 'yikes-level-playing-field' ),
 			],
 			ApplicantMeta::START_DATE       => [
-				'label' => esc_html__( 'Start Date', 'yikes-level-playing-field' ),
-				'class' => Types::DATE,
+				'label'   => esc_html__( 'Start Date', 'yikes-level-playing-field' ),
+				'class'   => Types::DATE,
+				'classes' => [ 'lpf-datepicker' ],
 			],
 			ApplicantMeta::PRESENT_POSITION => [
 				'label'    => esc_html__( 'Presently Working', 'yikes-level-playing-field' ),
@@ -57,6 +58,7 @@ class Experience extends RepeatableField {
 				'label'    => esc_html__( 'End Date', 'yikes-level-playing-field' ),
 				'class'    => Types::DATE,
 				'required' => false,
+				'classes'  => [ 'lpf-datepicker' ],
 			],
 			ApplicantMeta::POSITION         => [
 				'label' => esc_html__( 'Position', 'yikes-level-playing-field' ),

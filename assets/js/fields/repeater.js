@@ -1,4 +1,4 @@
-jQuery( document ).ready( function() {
+jQuery( document ).ready( function( $ ) {
 	'use strict';
 
 	// Initial variables.
@@ -7,7 +7,8 @@ jQuery( document ).ready( function() {
 		i18n = window.lpfRepeater || {},
 		repeatFieldsets = document.querySelectorAll( '.lpf-fieldset-repeatable' ),
 		repeatableFieldContainer = 'lpf-fieldset-container',
-		repeatableFieldNumber = 'lpf-fieldset-number';
+		repeatableFieldNumber = 'lpf-fieldset-number',
+		datePickers = 'lpf-datepicker';
 
 	// Main object to work with.
 	const repeater = {
@@ -18,6 +19,20 @@ jQuery( document ).ready( function() {
 		init: function() {
 			this.addRepeaterButtons();
 			document.querySelectorAll( `.${deleteButton}` ).forEach( this.hookDeletButton );
+			this.initializeDatePickers();
+		},
+
+		/**
+		 * Initialize datepicker fields w/ the jQuery UI Datepicker.
+		 */
+		initializeDatePickers: function() {
+			const yearRange = "1950:" + ( new Date().getFullYear() + 1 );
+			$( `.${datePickers}` ).removeClass( 'hasDatepicker' ).datepicker({
+				changeYear: true,
+				changeMonth: true,
+				yearRange: yearRange,
+				dateFormat: 'yy-mm-dd'
+			});
 		},
 
 		/**
@@ -70,6 +85,14 @@ jQuery( document ).ready( function() {
 			// Remove the repeat button from the parent.
 			fieldContainer.removeChild( fieldContainer.querySelector( `.${repeatButton}` ) );
 
+			// Check if there are any datepickers to initialize.
+			const hasDatepicker = newNode.querySelectorAll( `.${datePickers}` ).length > 0;
+			
+			// Remove any current instances of datepickers.
+			if ( hasDatepicker ) {
+				$( `.${datePickers}` ).datepicker( 'destroy' );
+			}
+
 			// Update each input element.
 			newNode.querySelectorAll( 'input, select' ).forEach( function( item ) {
 				const id    = item.getAttribute( 'id' );
@@ -121,6 +144,10 @@ jQuery( document ).ready( function() {
 
 			// Insert the new section.
 			fieldContainer.parentElement.insertBefore( newNode, fieldContainer.nextElementSibling );
+
+			if ( hasDatepicker ) {
+				repeater.initializeDatePickers();
+			}
 		},
 
 		/**
