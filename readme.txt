@@ -31,17 +31,17 @@ Upgrade to [Level Playing Field Pro](https://yikesplugins.com/plugin/#) for unli
 
 == Installation ==
 
-1. Download the plugin .zip file and make note of where on your computer you downloaded it to.
+1. Download the plugin .zip file and make note of where you downloaded the file on your computer.
 2. In the WordPress admin (yourdomain.com/wp-admin) go to Plugins > Add New or click the "Add New" button on the main plugins screen.
 3. On the following screen, click the "Upload Plugin" button.
-4. Browse your computer to where you downloaded the plugin .zip file, select it and click the "Install Now" button.
+4. Browse your computer to where you downloaded the plugin .zip file, select it, and click the "Install Now" button.
 5. After the plugin has successfully installed, click "Activate Plugin" and enjoy!
 
 == Frequently Asked Questions ==
 
 = Why anonymize job applications? =
 
-An answer to that question.
+Unconscious bias in hiring resulting in a homogenous workforce has a negative impact on business earnings, corporate culture and employees. Scientifically proven bias based on name, gender and gender identity, sexual orientation, ethnicity, age and other factors have created a lack of inclusion and stifled innovation. 
 
 == Screenshots ==
 
