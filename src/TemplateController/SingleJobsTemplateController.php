@@ -12,6 +12,7 @@ namespace Yikes\LevelPlayingField\TemplateController;
 use Yikes\LevelPlayingField\Assets\StyleAsset;
 use Yikes\LevelPlayingField\CustomPostType\JobManager;
 use Yikes\LevelPlayingField\Model\JobRepository;
+use Yikes\LevelPlayingField\Shortcode\BaseJobs;
 use Yikes\LevelPlayingField\Shortcode\Job as JobShortcode;
 
 /**
@@ -107,8 +108,12 @@ class SingleJobsTemplateController extends TemplateController {
 	 * @return array Context to pass onto view.
 	 */
 	protected function get_context( $id ) {
-		$shortcode_atts        = ( new JobShortcode() )->get_default_atts();
-		$shortcode_atts['job'] = ( new JobRepository() )->find( $id );
+		$shortcode_atts             = ( new JobShortcode() )->get_default_atts();
+		$shortcode_atts['job']      = ( new JobRepository() )->find( $id );
+		$shortcode_atts['partials'] = [
+			'job_details'      => BaseJobs::JOB_DETAILS_PARTIAL,
+			'job_apply_button' => BaseJobs::JOB_APPLY_PARTIAL,
+		];
 		return $shortcode_atts;
 	}
 }
