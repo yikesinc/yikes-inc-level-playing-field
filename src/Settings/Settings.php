@@ -10,6 +10,7 @@
 namespace Yikes\LevelPlayingField\Settings;
 
 use JsonSerializable;
+use Yikes\LevelPlayingField\Uninstallable;
 use Yikes\LevelPlayingField\Exception\InvalidClass;
 use Yikes\LevelPlayingField\Exception\InvalidKey;
 use Yikes\LevelPlayingField\Exception\NoDefault;
@@ -20,7 +21,7 @@ use Yikes\LevelPlayingField\Exception\NoDefault;
  * @since   %VERSION%
  * @package Yikes\LevelPlayingField
  */
-final class Settings implements JsonSerializable {
+final class Settings implements JsonSerializable, Uninstallable {
 
 	/**
 	 * Array of available settings.

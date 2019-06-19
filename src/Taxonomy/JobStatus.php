@@ -102,11 +102,11 @@ final class JobStatus extends BaseTaxonomy {
 		$terms = [
 			'Inactive' => [
 				'description' => __( 'Job is inactive', 'yikes-level-playing-field' ),
-				'slug'        => self::ACTIVE_STATUS,
+				'slug'        => self::INACTIVE_STATUS,
 			],
 			'Active'   => [
 				'description' => __( 'Job is active', 'yikes-level-playing-field' ),
-				'slug'        => self::INACTIVE_STATUS,
+				'slug'        => self::ACTIVE_STATUS,
 			],
 		];
 

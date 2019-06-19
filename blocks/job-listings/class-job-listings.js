@@ -543,7 +543,7 @@ export default class JobListing extends Component {
                   {this.jobHeader(job)}
                   {this.props.showDesc && this.jobDescription(job, this.props.descType)}
                   {this.props.showDetails && this.jobListingMeta(job)}
-                  {this.props.showApplicationButton && job.application && this.jobListingAppButton(job)}
+                  {this.props.showApplicationButton && job.application != false && this.jobListingAppButton(job)}
                 </li>
               );
             }

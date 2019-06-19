@@ -10,8 +10,10 @@
 namespace Yikes\LevelPlayingField\Taxonomy;
 
 use Yikes\LevelPlayingField\Activateable;
+use Yikes\LevelPlayingField\Uninstallable;
 use Yikes\LevelPlayingField\Exception\MustExtend;
 use Yikes\LevelPlayingField\Service;
+use WP_Term_Query;
 
 /**
  * Abstract class BaseTaxonomy.
@@ -21,7 +23,7 @@ use Yikes\LevelPlayingField\Service;
  * @package Yikes\LevelPlayingField
  * @author  Jeremy Pry
  */
-abstract class BaseTaxonomy implements Activateable, Service {
+abstract class BaseTaxonomy implements Activateable, Uninstallable, Service {
 
 	const SLUG               = '_basetax_';
 	const SHOW_IN_QUICK_EDIT = true;
@@ -66,6 +68,25 @@ abstract class BaseTaxonomy implements Activateable, Service {
 		}
 
 		return static::SLUG;
+	}
+
+	/**
+	 * Delete all terms.
+	 */
+	public function uninstall() {
+		$wp_term_query_args = [
+			'taxonomy'   => static::SLUG,
+			'hide_empty' => false,
+			'fields'     => 'ids',
+		];
+
+		$wp_terms = new WP_Term_Query( $wp_term_query_args );
+
+		if ( ! empty( $wp_terms->terms ) ) {
+			foreach ( $wp_terms->terms as $term_id ) {
+				wp_delete_term( $term_id, static::SLUG );
+			}
+		}
 	}
 
 	/**

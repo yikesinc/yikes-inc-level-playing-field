@@ -11,6 +11,7 @@ namespace Yikes\LevelPlayingField\Roles;
 
 use Yikes\LevelPlayingField\Exception\MustExtend;
 use Yikes\LevelPlayingField\Service;
+use Yikes\LevelPlayingField\Uninstallable;
 
 /**
  * Class BaseRole
@@ -18,7 +19,7 @@ use Yikes\LevelPlayingField\Service;
  * @since   %VERSION%
  * @package Yikes\LevelPlayingField
  */
-abstract class BaseRole implements Service {
+abstract class BaseRole implements Service, Uninstallable {
 
 	const SLUG = '_baserole_';
 
@@ -54,6 +55,13 @@ abstract class BaseRole implements Service {
 		}
 
 		return static::SLUG;
+	}
+
+	/**
+	 * Remove role.
+	 */
+	public function uninstall() {
+		remove_role( static::SLUG );
 	}
 
 	/**

@@ -10,6 +10,8 @@
 namespace Yikes\LevelPlayingField\Model;
 
 use Yikes\LevelPlayingField\Exception\FailedToSavePost;
+use Yikes\LevelPlayingField\Uninstallable;
+use WP_Query;
 
 /**
  * Abstract class CustomPostTypeRepository.
@@ -19,7 +21,7 @@ use Yikes\LevelPlayingField\Exception\FailedToSavePost;
  * @package Yikes\LevelPlayingField
  * @author  Jeremy Pry
  */
-abstract class CustomPostTypeRepository {
+abstract class CustomPostTypeRepository implements Uninstallable {
 
 	/**
 	 * Persist a modified entity to the storage.
@@ -79,4 +81,33 @@ abstract class CustomPostTypeRepository {
 			'type'    => 'NUMERIC',
 		];
 	}
+
+	/**
+	 * Force delete all posts.
+	 *
+	 * @since %VERSION%
+	 */
+	public function uninstall() {
+		$wp_query_args = [
+			'post_type'      => $this->get_post_type(),
+			'post_status'    => [ 'any' ],
+			'posts_per_page' => -1,
+			'fields'         => 'ids',
+		];
+		$posts         = new WP_Query( $wp_query_args );
+
+		if ( ! empty( $posts->posts ) ) {
+			foreach ( $posts->posts as $post ) {
+				wp_delete_post( $post, true );
+			}
+		}
+	}
+
+	/**
+	 * Get the post type slug to find.
+	 *
+	 * @since %VERSION%
+	 * @return string
+	 */
+	abstract protected function get_post_type();
 }
