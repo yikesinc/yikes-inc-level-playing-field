@@ -1,5 +1,5 @@
 === Level Playing Field ===
-Contributors: yikesinc, JPry, metalandcoffee, yikesitskevin, liljimmi
+Contributors: yikesinc, JPry, metalandcoffee, yikesitskevin, liljimmi, mialevesque
 Donate link: http://example.com/
 Tags: jobs, job listing, job management, job manager, applicant, anonymize, anonymization, applicant anonymization
 Requires at least: 4.8
@@ -13,9 +13,10 @@ A WordPress plugin that anonymizes job applications to fight bias in employment 
 
 == Description ==
 
-Level Playing Field allows businesses and organizations to easily list jobs on a WordPress website and receive **anonymized** job applications with all identifiable applicant information hidden. Hiring managers can review applicants without proven unconscious bias factors. Employers can message potential candidates and schedule an interview anonymously. After an interview is scheduled and confirmed, the applicant’s information is revealed. This process gives people an opportunity to show their skills and strengths based on merit alone.
 
-Level Playing Field is a tool that can help all types of companies and organizations hire truly based on merit while providing more opportunities to people from diverse communities. 
+Level Playing Field allows businesses and organizations to easily list jobs on a WordPress website and receive **anonymized** job applications with all identifiable applicant information hidden. Hiring managers can review applicants without seeing proven unconscious bias factors. Employers can message potential candidates and schedule interviews anonymously. After an interview is scheduled and confirmed, the applicant’s information is revealed. This process gives people an opportunity to show their skills and strengths based on merit alone.
+
+Level Playing Field is a tool that can help companies and nonprofits hire truly based on merit while providing more opportunities to people from diverse communities. 
 
 Upgrade to [Level Playing Field Pro](https://yikesplugins.com/plugin/#) for unlimited job listings and great enhanced features!
 
