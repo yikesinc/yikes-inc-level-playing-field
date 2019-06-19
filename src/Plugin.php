@@ -79,6 +79,7 @@ final class Plugin implements Registerable {
 	 * @since %VERSION%
 	 */
 	public function register() {
+		add_action( 'plugins_loaded', [ $this, 'register_services' ], 20 );
 		add_action( 'init', [ $this, 'register_assets_handler' ] );
 		add_action( "plugin_action_links_{$this->get_basename()}", [ $this, 'plugin_action_links' ] );
 		register_activation_hook( $this->get_main_file(), [ $this, 'activate' ] );
@@ -89,10 +90,16 @@ final class Plugin implements Registerable {
 			/**
 			 * Fires after the Level Playing Field plugin has been loaded.
 			 *
+			 * This runs on the plugins_loaded hook so that other plugins have a chance to hook
+			 * in. It also runs on an early priority of 0 so that other plugins hooking in have
+			 * a chance to modify our early filters.
+			 *
+			 * @since %VERSION%
+			 *
 			 * @param Plugin $lpf_plugin The main plugin instance.
 			 */
 			do_action( 'lpf_loaded', $this );
-		}, 50 );
+		}, 0 );
 	}
 
 	/**
