@@ -96,7 +96,11 @@ final class Job extends BaseJobs {
 		$jobs_repository = new JobRepository();
 
 		return [
-			'job' => $jobs_repository->find( $atts['id'] ),
+			'job'      => $jobs_repository->find( $atts['id'] ),
+			'partials' => [
+				'job_details'      => static::JOB_DETAILS_PARTIAL,
+				'job_apply_button' => static::JOB_APPLY_PARTIAL,
+			],
 		];
 	}
 }
