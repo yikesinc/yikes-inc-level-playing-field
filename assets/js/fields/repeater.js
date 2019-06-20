@@ -26,6 +26,10 @@ jQuery( document ).ready( function( $ ) {
 		 * Initialize datepicker fields w/ the jQuery UI Datepicker.
 		 */
 		initializeDatePickers: function() {
+			if ( $( `.${datePickers}` ).length === 0 ) {
+				return;
+			}
+
 			const yearRange = "1950:" + ( new Date().getFullYear() + 1 );
 			$( `.${datePickers}` ).removeClass( 'hasDatepicker' ).datepicker({
 				changeYear: true,
