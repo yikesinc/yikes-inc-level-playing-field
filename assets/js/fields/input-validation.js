@@ -153,11 +153,11 @@ jQuery( document ).ready( function( $ ) {
 	const toggleEndDate = ( event ) => {
 		const element = $( event.target );
 		const checked = event.target.checked;
-		const endDate = element.closest( '.lpf-fieldset' ).find( 'input[name$="[end_date]"]' );
+		const endDate = element.closest( '.lpf-fieldset-container' ).find( 'input[name$="[end_date]"]' );
 		const edLabel = endDate.closest( '.lpf-field-container' );
 
 		if ( checked ) {
-			edLabel.addClass( 'lpf-disabled' );	
+			edLabel.addClass( 'lpf-disabled' );
 			endDate.prop( 'required', false ).prop( 'disabled', true ).val( '' );
 		} else {
 			edLabel.removeClass( 'lpf-disabled' );
