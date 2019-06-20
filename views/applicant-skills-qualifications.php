@@ -14,12 +14,6 @@ use Yikes\LevelPlayingField\Model\Applicant;
 
 /** @var Applicant $applicant */
 $applicant = $this->applicant;
-
-if ( isset ($_GET['somevar' ] ) ) {
-	$a = $this->applicant->get_anonymizer();
-	$this->applicant->unanonymize( new $a() );
-}
-
 ?>
 <!-- Applicant Skills and Qualifications -->
 <div id="applicant-skills-qualifications">
