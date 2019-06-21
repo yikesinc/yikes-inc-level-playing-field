@@ -9,6 +9,8 @@
 
 namespace Yikes\LevelPlayingField\View;
 
+use Yikes\LevelPlayingField\PluginHelper;
+
 /**
  * Class NoOverrideLocationView
  *
@@ -18,7 +20,9 @@ namespace Yikes\LevelPlayingField\View;
  * @since   %VERSION%
  * @package Yikes\LevelPlayingField
  */
-final class NoOverrideLocationView extends TemplatedView {
+class NoOverrideLocationView extends TemplatedView {
+
+	use PluginHelper;
 
 	/**
 	 * Get the possible locations for the view.
@@ -31,7 +35,7 @@ final class NoOverrideLocationView extends TemplatedView {
 	 */
 	protected function get_locations( $uri ) {
 		return [
-			trailingslashit( dirname( __DIR__, 2 ) ) . $uri,
+			trailingslashit( $this->get_root_dir() ) . $uri,
 		];
 	}
 }

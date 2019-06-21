@@ -12,11 +12,9 @@ namespace Yikes\LevelPlayingField\View;
 /**
  * Class AdminView.
  *
- * ???????????????????????
- *
  * @since   %VERSION%
  *
  * @package Yikes\LevelPlayingField
  * @author  Jeremy Pry
  */
-final class AdminView extends BaseView {}
+final class AdminView extends NoOverrideLocationView {}
