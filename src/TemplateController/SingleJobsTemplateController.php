@@ -70,9 +70,11 @@ class SingleJobsTemplateController extends TemplateController {
 	 */
 	public function set_template( $template ) {
 		if ( is_singular( JobManager::SLUG ) ) {
+
 			// @todo Modifying query directly is not optimal. Alternative solution would be preferred.
 			global $wp_query;
 			$wp_query->is_page = true;
+
 			$new_template = locate_template( array( 'page.php' ) );
 			if ( ! empty( $new_template ) ) {
 				return $new_template;
