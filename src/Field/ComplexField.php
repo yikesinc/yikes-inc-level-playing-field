@@ -86,10 +86,10 @@ abstract class ComplexField extends BaseField {
 	 * @throws InvalidField When an invalid field class is provided through the filter.
 	 */
 	protected function generate_sub_fields() {
-		$classes        = $this->get_classes();
-		$default_fields = $this->get_default_fields();
-		$id_base        = $this->get_id_base();
-		$sub_fields     = [];
+		$default_classes = $this->get_classes();
+		$default_fields  = $this->get_default_fields();
+		$id_base         = $this->get_id_base();
+		$sub_fields      = [];
 
 		foreach ( $default_fields as $field => $settings ) {
 			$settings = wp_parse_args( $settings, [
@@ -98,7 +98,9 @@ abstract class ComplexField extends BaseField {
 				'required' => $this->required,
 				'callback' => null,
 				'options'  => [],
+				'classes'  => [],
 			] );
+			$classes  = array_merge( $default_classes, $settings['classes'] );
 
 			// Instantiate the sub field, using callback if available.
 			if ( isset( $settings['callback'] ) && is_callable( $settings['callback'] ) ) {

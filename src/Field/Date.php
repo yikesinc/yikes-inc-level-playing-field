@@ -16,5 +16,6 @@ namespace Yikes\LevelPlayingField\Field;
  * @package Yikes\LevelPlayingField
  */
 class Date extends BaseInput {
-	const TYPE = 'date';
+
+	const TYPE = 'text';
 }

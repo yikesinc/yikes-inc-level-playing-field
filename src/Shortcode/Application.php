@@ -209,7 +209,7 @@ final class Application extends BaseShortcode {
 	 * @return Asset[]
 	 */
 	protected function get_assets() {
-		$repeater = new ScriptAsset( 'lpf-repeater', 'assets/js/fields/repeater', [ 'jquery' ] );
+		$repeater = new ScriptAsset( 'lpf-repeater', 'assets/js/fields/repeater', [ 'jquery', 'jquery-ui-datepicker' ] );
 		$repeater->add_localization( 'lpfRepeater', [
 			'addNew' => _x( 'Add New', 'button for adding section in application', 'yikes-level-playing-field' ),
 		] );
@@ -227,12 +227,15 @@ final class Application extends BaseShortcode {
 			],
 		] );
 
+		$jquery_datepicker_styles = new StyleAsset( 'lpf-jquery-ui-datepicker-styles', 'assets/vendor/datepicker/jquery-ui', StyleAsset::DEPENDENCIES, StyleAsset::VERSION, StyleAsset::MEDIA_ALL );
+
 		$styles = new StyleAsset( self::CSS_HANDLE, self::CSS_URI, StyleAsset::DEPENDENCIES, StyleAsset::VERSION, StyleAsset::MEDIA_ALL, true );
 
 		return [
 			$repeater,
 			$styles,
 			$input_validation,
+			$jquery_datepicker_styles,
 		];
 	}
 
