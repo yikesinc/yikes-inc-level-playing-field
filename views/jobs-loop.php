@@ -24,6 +24,9 @@ use Yikes\LevelPlayingField\Model\Job;
 $jobs      = $this->jobs;
 $use_comma = (bool) apply_filters( 'lpf_single_job_template_address_use_comma', true, $jobs );
 
+$show_desc               = filter_var( $this->show_desc, FILTER_VALIDATE_BOOLEAN );
+$show_details            = filter_var( $this->show_details, FILTER_VALIDATE_BOOLEAN );
+$show_application_button = filter_var( $this->show_application_button, FILTER_VALIDATE_BOOLEAN );
 /**
  * Filter the jobs displayed in the job listings shortcode.
  *
@@ -44,7 +47,7 @@ foreach ( $jobs as $job ) {
 			</a>
 		</h4>
 		<?php
-		if ( $this->show_desc && ( ! empty( $job->get_content() ) ) ) :
+		if ( $show_desc && ( ! empty( $job->get_content() ) ) ) :
 			?>
 			<div class="lpf-jobs-list-description">
 				<?php
@@ -57,13 +60,13 @@ foreach ( $jobs as $job ) {
 			</div>
 			<?php
 		endif;
-		if ( $this->show_details ) :
+		if ( $show_details ) :
 			echo $this->render_partial(
 				$this->partials['job_details'],
 				array_merge( $this->_context_, [ 'job' => $job ] )
 			);
 		endif;
-		if ( $this->show_application_button && ! empty( $job->get_application() ) ) :
+		if ( $show_application_button && ! empty( $job->get_application() ) ) :
 			echo $this->render_partial(
 				$this->partials['job_apply_button'],
 				array_merge( $this->_context_, [ 'job' => $job ] )
