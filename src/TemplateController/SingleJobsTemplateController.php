@@ -108,9 +108,10 @@ class SingleJobsTemplateController extends TemplateController {
 	 * @return array Context to pass onto view.
 	 */
 	protected function get_context( $id ) {
-		$shortcode_atts             = ( new JobShortcode() )->get_default_atts();
-		$shortcode_atts['job']      = ( new JobRepository() )->find( $id );
-		$shortcode_atts['partials'] = [
+		$shortcode_atts               = ( new JobShortcode() )->get_default_atts();
+		$shortcode_atts['job']        = ( new JobRepository() )->find( $id );
+		$shortcode_atts['show_title'] = false;
+		$shortcode_atts['partials']   = [
 			'job_details'      => BaseJobs::JOB_DETAILS_PARTIAL,
 			'job_apply_button' => BaseJobs::JOB_APPLY_PARTIAL,
 		];
