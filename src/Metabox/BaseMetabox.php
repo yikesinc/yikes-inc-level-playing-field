@@ -16,7 +16,7 @@ use Yikes\LevelPlayingField\Assets\AssetsAwareness;
 use Yikes\LevelPlayingField\Renderable;
 use Yikes\LevelPlayingField\Service;
 use Yikes\LevelPlayingField\View\FormEscapedView;
-use Yikes\LevelPlayingField\View\TemplatedView;
+use Yikes\LevelPlayingField\View\NoOverrideLocationView;
 
 /**
  * Abstract class BaseMetabox.
@@ -324,7 +324,7 @@ abstract class BaseMetabox implements Renderable, Service, AssetsAware {
 			$this->enqueue_assets();
 
 			$view = new FormEscapedView(
-				new TemplatedView( $this->get_view_uri() )
+				new NoOverrideLocationView( $this->get_view_uri() )
 			);
 
 			return $view->render( $context );

@@ -10,6 +10,7 @@
 namespace Yikes\LevelPlayingField\View;
 
 use Yikes\LevelPlayingField\Exception\InvalidURI;
+use Yikes\LevelPlayingField\PluginHelper;
 
 /**
  * Class TemplatedView.
@@ -23,6 +24,8 @@ use Yikes\LevelPlayingField\Exception\InvalidURI;
  * @author  Jeremy Pry
  */
 class TemplatedView extends BaseView {
+
+	use PluginHelper;
 
 	/**
 	 * Validate an URI.
@@ -69,12 +72,12 @@ class TemplatedView extends BaseView {
 		 * @param array $locations
 		 */
 		$locations = (array) apply_filters( 'lpf_templated_view_locations', [
-			trailingslashit( get_stylesheet_directory() ) . $uri,
-			trailingslashit( get_template_directory() ) . $uri,
+			trailingslashit( get_stylesheet_directory() ) . trailingslashit( static::VIEW_OVERRIDE_FOLDER ) . $uri,
+			trailingslashit( get_template_directory() ) . trailingslashit( static::VIEW_OVERRIDE_FOLDER ) . $uri,
 		] );
 
 		// Ensure the plugin folder is always available.
-		$locations[] = trailingslashit( dirname( __DIR__, 2 ) ) . $uri;
+		$locations[] = trailingslashit( $this->get_root_dir() ) . $uri;
 
 		return $locations;
 	}

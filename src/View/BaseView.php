@@ -11,6 +11,7 @@ namespace Yikes\LevelPlayingField\View;
 
 use Yikes\LevelPlayingField\Exception\FailedToLoadView;
 use Yikes\LevelPlayingField\Exception\InvalidURI;
+use Yikes\LevelPlayingField\PluginHelper;
 
 /**
  * Class BaseView.
@@ -26,6 +27,8 @@ use Yikes\LevelPlayingField\Exception\InvalidURI;
  */
 class BaseView implements View {
 
+	use PluginHelper;
+
 	/**
 	 * Extension to use for view files.
 	 *
@@ -40,6 +43,13 @@ class BaseView implements View {
 	 */
 	const CONTEXT_HTML       = 'html';
 	const CONTEXT_JAVASCRIPT = 'js';
+
+	/**
+	 * Custom folder for theme view overrides.
+	 *
+	 * @since %VERSION%
+	 */
+	const VIEW_OVERRIDE_FOLDER = 'lpf';
 
 	/**
 	 * URI to the view file to render.
@@ -152,7 +162,7 @@ class BaseView implements View {
 	 */
 	protected function validate( $uri ) {
 		$uri = $this->check_extension( $uri, static::VIEW_EXTENSION );
-		$uri = trailingslashit( dirname( __DIR__, 2 ) ) . $uri;
+		$uri = trailingslashit( $this->get_root_dir() ) . $uri;
 
 		if ( ! is_readable( $uri ) ) {
 			throw InvalidURI::from_uri( $uri );
