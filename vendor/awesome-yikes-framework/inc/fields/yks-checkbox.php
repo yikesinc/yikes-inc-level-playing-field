@@ -88,6 +88,8 @@ if ( true === $field_repeating ) {
 
 	$field_attributes['class'] = array_unique( array_merge( $field_attributes['class'], [ 'yks_checkbox' ] ) );
 
+	$field_html .= sprintf( '<label for="%s">', $field_attributes['id'] );
+
 	// Build the HTML.
 	$field_html .= '<input ';
 	foreach ( $field_attributes as $key => $value ) {
@@ -98,6 +100,8 @@ if ( true === $field_repeating ) {
 		}
 	}
 	$field_html .= ' />';
+
+	$field_html .= sprintf( '%s</label>', $field['name'] );
 }
 
 // Field description.
