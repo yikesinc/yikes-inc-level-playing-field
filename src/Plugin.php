@@ -99,7 +99,7 @@ final class Plugin implements Registerable {
 			 * @param Plugin $lpf_plugin The main plugin instance.
 			 */
 			do_action( 'lpf_loaded', $this );
-		}, 0 );
+		}, 5 );
 	}
 
 	/**
