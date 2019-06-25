@@ -79,7 +79,6 @@ final class Plugin implements Registerable {
 	 * @since %VERSION%
 	 */
 	public function register() {
-		add_action( 'plugins_loaded', [ $this, 'register_services' ], 20 );
 		add_action( 'init', [ $this, 'register_assets_handler' ] );
 		add_action( "plugin_action_links_{$this->get_basename()}", [ $this, 'plugin_action_links' ] );
 		register_activation_hook( $this->get_main_file(), [ $this, 'activate' ] );
