@@ -14,16 +14,16 @@ use Yikes\LevelPlayingField\CustomPostType\ApplicationManager as ApplicationCPT;
 use Yikes\LevelPlayingField\View\View;
 
 /**
- * Class Banner2
+ * Class ReviewBanner
  *
  * @since   %VERSION%
  * @package Yikes\LevelPlayingField
  */
-class Banner2 extends BaseMetabox {
+class ReviewBanner extends BaseMetabox {
 
 	// Base Metabox.
-	const BOX_ID   = 'banner2';
-	const VIEW     = 'views/banner2';
+	const BOX_ID   = 'review-banner';
+	const VIEW     = 'views/review-banner';
 	const PRIORITY = 30;
 
 	/**
@@ -45,7 +45,7 @@ class Banner2 extends BaseMetabox {
 	 * @return string Title to use for the metabox.
 	 */
 	protected function get_title() {
-		return __( 'Level Playing Field Pro', 'yikes-level-playing-field' );
+		return __( 'Support Merit-Based Hiring', 'yikes-level-playing-field' );
 	}
 
 	/**

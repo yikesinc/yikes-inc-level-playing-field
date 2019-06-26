@@ -9,7 +9,6 @@
 
 namespace Yikes\LevelPlayingField;
 
-use Yikes\LevelPlayingField\PluginHelper;
 use Yikes\LevelPlayingField\Assets\AssetsAware;
 use Yikes\LevelPlayingField\Assets\AssetsHandler;
 use Yikes\LevelPlayingField\Exception\InvalidClass;
