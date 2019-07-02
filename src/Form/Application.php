@@ -9,6 +9,7 @@
 
 namespace Yikes\LevelPlayingField\Form;
 
+use Yikes\LevelPlayingField\Exception\InvalidClass;
 use Yikes\LevelPlayingField\Exception\InvalidField;
 use Yikes\LevelPlayingField\Field\Field;
 use Yikes\LevelPlayingField\Field\Hidden;
@@ -159,10 +160,66 @@ final class Application {
 		// Add all of the active fields.
 		foreach ( $this->application->get_active_fields() as $field ) {
 			$field_name     = ApplicationMeta::FORM_FIELD_PREFIX . $field;
-			$field_label    = ucwords( str_replace( [ '-', '_' ], ' ', $field ) );
-			$type           = isset( Meta::FIELD_MAP[ $field ] ) ? Meta::FIELD_MAP[ $field ] : Types::TEXT;
-			$this->fields[] = new $type( $field_name, $field_label, $this->field_classes, $this->application->is_required( $field ) );
+			$field_label    = $this->get_field_label( $field );
+			$type           = $this->get_field_type( $field );
+			$this->fields[] = new $type(
+				$field_name,
+				$field_label,
+				$this->field_classes,
+				$this->application->is_required( $field )
+			);
 		}
+	}
+
+	/**
+	 * Get the label for the form field.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param string $field The field name.
+	 *
+	 * @return string
+	 */
+	private function get_field_label( $field ) {
+		$field_label = ucwords( str_replace( [ '-', '_' ], ' ', $field ) );
+
+		/**
+		 * Filter the label for the form field.
+		 *
+		 * @param string $field_label The field label.
+		 * @param string $field       The field name.
+		 */
+		return apply_filters( 'lpf_application_form_field_label', $field_label, $field );
+	}
+
+	/**
+	 * Get the class type for a particular field.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param string $field The field name.
+	 *
+	 * @return string The class name to instantiate that field.
+	 * @throws InvalidClass When a field type is returned to the filter that doesn't implement Field.
+	 */
+	private function get_field_type( $field ) {
+		$type = isset( Meta::FIELD_MAP[ $field ] ) ? Meta::FIELD_MAP[ $field ] : Types::TEXT;
+
+		/**
+		 * Filter the class used to instantiate the field.
+		 *
+		 * @param string $type  The field class name. Must extend implment the Field interface.
+		 * @param string $field The field name.
+		 */
+		$type = apply_filters( 'lpf_application_form_field_type', $type, $field );
+
+		// Ensure that the field implements the Field interface..
+		$implements = class_implements( $type );
+		if ( ! isset( $implements[ Field::class ] ) ) {
+			throw InvalidClass::from_interface( $type, Field::class );
+		}
+
+		return $type;
 	}
 
 	/**
