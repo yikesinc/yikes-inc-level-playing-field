@@ -13,6 +13,12 @@ jQuery( document ).ready( function( $ ) {
 			this.disableMetaboxSorting();
 			$( "input[name='job_cpt_meta_location']" ).on( 'change', this.address_div ).change();
 			this.deregisterBlocks();
+
+			wp.hooks.addFilter(
+			    'blocks.registerBlockType',
+			    'ylpf',
+			    this.filterParagraphPlaceholderText
+			);
 		},
 
 		/**
@@ -64,6 +70,19 @@ jQuery( document ).ready( function( $ ) {
 					}
 				}
 			}
+		},
+
+		/**
+		 * Filter the core paragraph block placeholder text.
+		 */
+		filterParagraphPlaceholderText: function( settings, name ) {
+			if ( name !== 'core/paragraph' ) {
+				return settings;
+			}
+
+			settings.attributes.placeholder = { ...settings.attributes.placeholder, default: 'Freddie will change this ;)' };
+
+			return settings;
 		}
 	};
 
