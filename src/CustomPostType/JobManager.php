@@ -42,6 +42,15 @@ class JobManager extends BaseCustomPostType {
 			return __( 'Add Job Title', 'yikes-level-playing-field' );
 		}, 10, 2 );
 
+		// Modify the default paragraph for the block editor.
+		add_filter( 'write_your_story', function( $title, $post ) {
+			if ( $this->get_slug() !== $post->post_type ) {
+					  return $title;
+			}
+			
+			return __( 'Enter your jobs description.', 'yikes-level-playing-field' );
+		}, 10, 2 );
+
 		add_action( 'rest_api_init', function( WP_REST_Server $server ) {
 			$callback = function( $object, $field_name ) {
 				static $repo = null;
