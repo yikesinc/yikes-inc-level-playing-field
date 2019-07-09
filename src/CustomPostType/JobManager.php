@@ -40,16 +40,16 @@ class JobManager extends BaseCustomPostType {
 			}
 
 			return __( 'Add Job Title', 'yikes-level-playing-field' );
-    }, 10, 2 );
-    
-    // Modify the default paragraph for the block editor.
-    add_filter( 'write_your_story', function( $title, $post ) {
-      if ( $this->get_slug() !== $post->post_type ) {
-				return $title;
-      }
-      
-      return __( 'Enter your jobs description.', 'yikes-level-playing-field' );
-    }, 10, 2 );
+		}, 10, 2 );
+
+		// Modify the default paragraph for the block editor.
+		add_filter( 'write_your_story', function( $title, $post ) {
+			if ( $this->get_slug() !== $post->post_type ) {
+					  return $title;
+			}
+			
+			return __( 'Enter your jobs description.', 'yikes-level-playing-field' );
+		}, 10, 2 );
 
 		add_action( 'rest_api_init', function( WP_REST_Server $server ) {
 			$callback = function( $object, $field_name ) {
@@ -112,7 +112,7 @@ class JobManager extends BaseCustomPostType {
 				'items_list'            => __( 'Jobs list', 'yikes-level-playing-field' ),
 				'items_list_navigation' => __( 'Jobs list navigation', 'yikes-level-playing-field' ),
 				'filter_items_list'     => __( 'Filter Jobs list', 'yikes-level-playing-field' ),
-      ],
+			],
 			'supports'            => [ 'title', 'editor', 'excerpt' ],
 			'hierarchical'        => false,
 			'public'              => true,
@@ -146,7 +146,7 @@ class JobManager extends BaseCustomPostType {
 			'rewrite'             => [
 				'slug' => _x( 'lpf-jobs', "The CPT's rewrite slug. Translatable as per WP's documentation.", 'yikes-level-playing-field' ),
 			],
-      'show_in_rest'        => true,
+			'show_in_rest'        => true,
 		];
 	}
 
