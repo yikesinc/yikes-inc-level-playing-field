@@ -23,6 +23,7 @@ use Yikes\LevelPlayingField\Taxonomy\JobStatus;
 use Yikes\LevelPlayingField\Model\JobMetaDropdowns;
 use Yikes\LevelPlayingField\Blocks\JobListing;
 use Yikes\LevelPlayingField\RequiredPages\ApplicationFormPage;
+use Yikes\LevelPlayingField\Model\JobDescriptionPlaceholder;
 
 /**
  * Class JobManager
@@ -35,6 +36,7 @@ final class JobManager extends AwesomeBaseMetabox implements AssetsAware {
 	use AssetsAwareness;
 	use JobMetaDropdowns;
 	use PluginHelper;
+	use JobDescriptionPlaceholder;
 
 	const CSS_HANDLE = 'lpf-admin-jobs-css';
 	const CSS_URI    = 'assets/css/lpf-jobs-admin';
@@ -253,7 +255,8 @@ final class JobManager extends AwesomeBaseMetabox implements AssetsAware {
 				'disallowed_blocks' => [
 					( new JobListing() )->get_block_slug(),
 				],
-				'mbox_sort'         => apply_filters( 'lpf_jobs_admin_enable_mbox_sorting', false ),
+				'mbox_sort'            => apply_filters( 'lpf_jobs_admin_enable_mbox_sorting', false ),
+				'job_desc_placeholder' => $this->get_job_description_placeholder(),
 			]
 		);
 
