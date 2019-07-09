@@ -3,14 +3,14 @@
  * YIKES Inc. Level Playing Field Plugin.
  *
  * @package Yikes\LevelPlayingField
- * @author  Kevin Utz
+ * @author  Freddie Mixell
  * @license GPL2
  */
 
 namespace Yikes\LevelPlayingField\Model;
 
 /**
-* Trait JoDescriptionPlaceholder
+* Trait JobDescriptionPlaceholder
 *
 * @since   %VERSION%
 * @package Yikes\LevelPlayingField
@@ -18,10 +18,10 @@ namespace Yikes\LevelPlayingField\Model;
 trait JobDescriptionPlaceholder {
 
 	/**
-	 * Get dropdown options for job type.
+	 * Get placeholder text for job description paragraph block.
 	 *
 	 * @since %VERSION%
-	 * @return array
+	 * @return string
 	 */
 	public function get_job_description_placeholder() {
 		return __( "Enter your job's description.", 'yikes-level-playing-field' );

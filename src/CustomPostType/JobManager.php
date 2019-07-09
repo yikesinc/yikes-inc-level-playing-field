@@ -48,7 +48,7 @@ class JobManager extends BaseCustomPostType {
 		// Modify the default paragraph for the block editor.
 		add_filter( 'write_your_story', function( $title, $post ) {
 			if ( $this->get_slug() !== $post->post_type ) {
-					  return $title;
+				return $title;
 			}
 			
 			return $this->get_job_description_placeholder();

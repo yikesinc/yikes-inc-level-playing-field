@@ -248,7 +248,6 @@ final class JobManager extends AwesomeBaseMetabox implements AssetsAware {
 	 * @return Asset[]
 	 */
 	protected function get_assets() {
-		$job_desc_placeholder = $this->get_job_description_placeholder();
 		$script = new ScriptAsset( self::JS_HANDLE, self::JS_URI, [ 'wp-blocks' ] );
 		$script->add_localization(
 			'lpf_job_manager_data',
@@ -257,7 +256,7 @@ final class JobManager extends AwesomeBaseMetabox implements AssetsAware {
 					( new JobListing() )->get_block_slug(),
 				],
 				'mbox_sort'            => apply_filters( 'lpf_jobs_admin_enable_mbox_sorting', false ),
-				'job_desc_placeholder' => $job_desc_placeholder,
+				'job_desc_placeholder' => $this->get_job_description_placeholder(),
 			]
 		);
 
