@@ -44,7 +44,9 @@ $applicant = $this->applicant;
 			<?php } ?>
 
 		<?php } else { ?>
-			<p><span class="label"><?php esc_html_e( 'An interview has not been scheduled yet', 'yikes-level-playing-field' ); ?>.</span>
+			<p>
+				<?php esc_html_e( 'An interview has not been scheduled.', 'yikes-level-playing-field' ); ?>
+			</p>
 		<?php } ?>
 	</div>
 </div>
