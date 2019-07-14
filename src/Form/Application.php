@@ -186,10 +186,11 @@ final class Application {
 		/**
 		 * Filter the label for the form field.
 		 *
-		 * @param string $field_label The field label.
-		 * @param string $field       The field name.
+		 * @param string   $field_label The field label.
+		 * @param string   $field       The field name.
+		 * @param AppModel $application The application object.
 		 */
-		return apply_filters( 'lpf_application_form_field_label', $field_label, $field );
+		return apply_filters( 'lpf_application_form_field_label', $field_label, $field, $this->application );
 	}
 
 	/**
