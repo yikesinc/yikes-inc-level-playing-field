@@ -44,7 +44,7 @@ class ApplicantMessageToApplicantEmail extends ToApplicantEmail {
 		$message  = $this->subject();
 		$message .= '<br>';
 		*/
-		$message .= $this->comment;
+		$message = $this->comment;
 		$message .= $this->get_messaging_link();
 		return $message;
 	}
