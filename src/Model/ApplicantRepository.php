@@ -266,7 +266,7 @@ class ApplicantRepository extends CustomPostTypeRepository {
 	 * @since %VERSION%
 	 * @return array
 	 */
-	private function get_default_query_vars() {
+	protected function get_default_query_vars() {
 		return [
 			'post_type'              => $this->get_post_type(),
 			'post_status'            => [ 'any' ],
