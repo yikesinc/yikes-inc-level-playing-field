@@ -50,7 +50,7 @@ $interview_status = $applicant->get_interview_status();
 			<p>
 				<?php esc_html_e( 'Interview request cancelled by applicant.', 'yikes-level-playing-field' ); ?>
 			</p>
-        <?php }	else { ?>
+		<?php } else { ?>
 			<p>
 				<?php esc_html_e( 'An interview has not been scheduled.', 'yikes-level-playing-field' ); ?>
 			</p>
