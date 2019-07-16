@@ -20,7 +20,7 @@ use Yikes\LevelPlayingField\Applicant;
  * @package Yikes\LevelPlayingField
  * @author  Kevin Utz / Jeremy Pry
  */
-class InterviewCancellationToApplicantEmail extends FromApplicantEmail {
+class InterviewCancellationToApplicantEmail extends ToApplicantEmail {
 
 	const EMAIL_TYPE = 'interview-cancellation';
 
