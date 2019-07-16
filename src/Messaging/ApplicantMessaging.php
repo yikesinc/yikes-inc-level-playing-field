@@ -314,7 +314,7 @@ class ApplicantMessaging implements Activateable, Deactivateable, Renderable, As
 
 		if ( $new_message ) {
 
-			if ( ApplicantMessage::APPLICANT_AUTHOR === $author ) {
+			if ( ApplicantMessage::APPLICANT_AUTHOR === $comment_data['comment_author'] ) {
 
 				// Send the message as an email to the admin/job manager.
 				$email = ( new ApplicantMessageFromApplicantEmail( $post_id, $comment ) )->send();
@@ -417,7 +417,7 @@ class ApplicantMessaging implements Activateable, Deactivateable, Renderable, As
 		$comment_counts = (array) $comment_counts;
 
 		// These are the keys WordPress expects for the comment statuses.
-		$comment_stati = array(
+		$comment_stati = [
 			'0'              => 'moderated',
 			'1'              => 'approved',
 			'spam'           => 'spam',
@@ -425,7 +425,7 @@ class ApplicantMessaging implements Activateable, Deactivateable, Renderable, As
 			'post-trashed'   => 'post-trashed',
 			'all'            => 'all',
 			'total_comments' => 'total_comments',
-		);
+		];
 
 		// If nothing else has filtered the comment counts, use WordPress' function to get the default counts.
 		if ( empty( $comment_counts ) ) {
