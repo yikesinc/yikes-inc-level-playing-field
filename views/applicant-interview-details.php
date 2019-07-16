@@ -44,9 +44,7 @@ $interview_status = $applicant->get_interview_status();
 				</p>
 			<?php } ?>
 
-		<?php } ?>
-
-		<?php if ( 'cancelled' === $interview_status ) { ?>
+		<?php } elseif ( 'cancelled' === $interview_status ) { ?>
 			<p>
 				<?php esc_html_e( 'Interview request cancelled by the applicant.', 'yikes-level-playing-field' ); ?>
 			</p>
