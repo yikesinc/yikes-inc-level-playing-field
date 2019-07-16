@@ -292,9 +292,6 @@ class ApplicantMessaging implements Activateable, Deactivateable, Renderable, As
 		$comment = filter_var( $_POST['message'], FILTER_SANITIZE_STRING );
 		$post_id = filter_var( $_POST['post_id'], FILTER_SANITIZE_NUMBER_INT );
 
-		// Determine if message was sent by a logged in user
-		$author  = is_user_logged_in() ? ApplicantMessage::ADMIN_AUTHOR : ApplicantMessage::APPLICANT_AUTHOR;
-
 		// Confirm we have our variables.
 		if ( empty( $comment ) || empty( $post_id ) ) {
 			wp_send_json_error( [
@@ -317,7 +314,7 @@ class ApplicantMessaging implements Activateable, Deactivateable, Renderable, As
 
 		if ( $new_message ) {
 
-			if ( ApplicantMessage::APPLICANT_AUTHOR === $author ) {
+			if ( ApplicantMessage::APPLICANT_AUTHOR === $comment_data['comment_author'] ) {
 
 				// Send the message as an email to the admin/job manager.
 				$email = ( new ApplicantMessageFromApplicantEmail( $post_id, $comment ) )->send();
