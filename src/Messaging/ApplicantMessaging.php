@@ -417,7 +417,7 @@ class ApplicantMessaging implements Activateable, Deactivateable, Renderable, As
 		$comment_counts = (array) $comment_counts;
 
 		// These are the keys WordPress expects for the comment statuses.
-		$comment_stati = array(
+		$comment_stati = [
 			'0'              => 'moderated',
 			'1'              => 'approved',
 			'spam'           => 'spam',
@@ -425,7 +425,7 @@ class ApplicantMessaging implements Activateable, Deactivateable, Renderable, As
 			'post-trashed'   => 'post-trashed',
 			'all'            => 'all',
 			'total_comments' => 'total_comments',
-		);
+		];
 
 		// If nothing else has filtered the comment counts, use WordPress' function to get the default counts.
 		if ( empty( $comment_counts ) ) {
