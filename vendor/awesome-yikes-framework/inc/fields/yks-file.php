@@ -21,7 +21,7 @@ $field_counter	 = 0;
 $field_id		 = ( isset( $field['id'] ) ) ? $field['id'] : '';
 $field_desc		 = ( isset( $field['desc'] ) ) ? $field['desc'] : '';
 $desc_type		 = ( isset( $field['desc_type'] ) ) ? $field['desc_type'] : 'block';
-$input_type 	 = ( $field['view'] === 'url' ) ? 'text' : 'hidden';
+$input_type 	 = isset( $field['view'] ) && ( $field['view'] === 'url' ) ? 'text' : 'hidden';
 $repeat_btn_text = isset( $field['repeat_btn_text'] ) ? $field['repeat_btn_text'] : 'Add A Field';
 
 if ( $field_repeating === true ) {
