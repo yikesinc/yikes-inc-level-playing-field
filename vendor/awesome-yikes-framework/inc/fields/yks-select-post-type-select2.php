@@ -39,6 +39,7 @@ if ( ! empty( $field_posts ) ) {
 		$selected    = (string) $field_values === (string) $post_id || (string) $field_values === (string) $post_slug ? 'selected="selected"' : '';
 		$field_html .= '<option value="' . esc_attr( $post_id ) . '"' . esc_attr( $selected ) . '>';
 		$field_html .= esc_html( $post_name );
+		$field_html .= isset( $field['std'] ) && (string) $field['std'] === (string) $post_id || (string) $field['std'] === (string) $post_slug ? ' (Default)' : '';
 		$field_html .= '</option>';
 	}
 

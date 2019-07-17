@@ -132,6 +132,23 @@ abstract class CustomPostTypeEntity implements Entity {
 	}
 
 	/**
+	 * Get the post's publish date, possibly formatted.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param string $date_format A date format usable in PHP's date function.
+	 *
+	 * @return string
+	 */
+	public function get_post_date( $date_format = '' ) {
+		if ( ! empty( $date_format ) ) {
+			return date( $date_format, strtotime( $this->post->post_date ) );
+		}
+
+		return $this->post->post_date;
+	}
+
+	/**
 	 * Set the post's content.
 	 *
 	 * @since %VERSION%

@@ -12,6 +12,7 @@ namespace Yikes\LevelPlayingField\CustomPostType;
 use Yikes\LevelPlayingField\Roles\Capabilities;
 use Yikes\LevelPlayingField\Model\JobMeta;
 use Yikes\LevelPlayingField\Model\JobRepository;
+use Yikes\LevelPlayingField\Model\JobDescriptionPlaceholder;
 use WP_REST_Server;
 
 /**
@@ -24,6 +25,8 @@ class JobManager extends BaseCustomPostType {
 
 	const SLUG          = 'jobs';
 	const SINGULAR_SLUG = 'job';
+
+	use JobDescriptionPlaceholder;
 
 	/**
 	 * Register the WordPress hooks.
@@ -40,6 +43,15 @@ class JobManager extends BaseCustomPostType {
 			}
 
 			return __( 'Add Job Title', 'yikes-level-playing-field' );
+		}, 10, 2 );
+
+		// Modify the default paragraph for the block editor.
+		add_filter( 'write_your_story', function( $title, $post ) {
+			if ( $this->get_slug() !== $post->post_type ) {
+				return $title;
+			}
+			
+			return $this->get_job_description_placeholder();
 		}, 10, 2 );
 
 		add_action( 'rest_api_init', function( WP_REST_Server $server ) {
