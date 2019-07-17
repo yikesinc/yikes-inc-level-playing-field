@@ -293,10 +293,12 @@ final class Application extends BaseShortcode {
 	 * @return string
 	 */
 	private function exception_to_string( \Exception $e ) {
-		return sprintf(
-			/* translators: %s refers to the error message */
-			esc_html__( 'There was an error displaying the form: %s', 'yikes-level-playing-field' ),
+		$error_message = "If you see this message, something's wrong! To view an application for a specific job, do one of the following:<br/>";
+		$error_message .= sprintf(
+		/* translators: %s refers to the error message */
+			__( 'There was an error displaying the form: %s', 'yikes-level-playing-field' ),
 			$e->getMessage()
 		);
+		return $error_message;
 	}
 }
