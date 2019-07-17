@@ -18,7 +18,7 @@ namespace Yikes\LevelPlayingField\RequiredPages;
 class ApplicationFormPage extends BaseRequiredPage {
 
 	const PAGE_SLUG      = 'lpf-application-page';
-	const POST_TITLE     = 'Application Form';
+	const POST_TITLE     = 'Application Formrer';
 	const POST_STATUS    = 'publish';
 	const POST_TYPE      = 'page';
 	const COMMENT_STATUS = 'closed';
@@ -35,6 +35,7 @@ class ApplicationFormPage extends BaseRequiredPage {
 	protected function get_post_array() {
 		return [
 			'post_title'     => static::POST_TITLE,
+			'post-name'      => static::PAGE_SLUG,
 			'post_status'    => static::POST_STATUS,
 			'post_type'      => static::POST_TYPE,
 			'comment_status' => static::COMMENT_STATUS,
