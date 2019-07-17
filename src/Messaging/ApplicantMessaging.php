@@ -305,7 +305,7 @@ class ApplicantMessaging implements Activateable, Deactivateable, Renderable, As
 
 		$comment_data = [
 			'comment_author'   => is_user_logged_in() ? ApplicantMessage::ADMIN_AUTHOR : ApplicantMessage::APPLICANT_AUTHOR,
-			'comment_approved' => 1,
+			'comment_approved' => is_user_logged_in() ? 1 : 0,
 			'comment_post_ID'  => $post_id,
 			'comment_content'  => $comment,
 		];
