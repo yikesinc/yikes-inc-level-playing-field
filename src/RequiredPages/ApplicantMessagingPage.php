@@ -35,6 +35,7 @@ class ApplicantMessagingPage extends BaseRequiredPage {
 	protected function get_post_array() {
 		return [
 			'post_title'     => static::POST_TITLE,
+			'post_name'      => static::PAGE_SLUG,
 			'post_status'    => static::POST_STATUS,
 			'post_type'      => static::POST_TYPE,
 			'comment_status' => static::COMMENT_STATUS,
