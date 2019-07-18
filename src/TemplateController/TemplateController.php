@@ -41,7 +41,6 @@ abstract class TemplateController implements Renderable, AssetsAware, Service {
 	 */
 	public function register() {
 		add_filter( 'the_content', [ $this, 'set_content' ], static::PRIORITY );
-		add_filter( 'template_include', [ $this, 'set_template' ], 99 );
 	}
 
 	/**
@@ -54,17 +53,6 @@ abstract class TemplateController implements Renderable, AssetsAware, Service {
 	 * @return string The post's content, maybe overridden.
 	 */
 	abstract public function set_content( $content );
-
-	/**
-	 * Filters the path of the current template before including it.
-	 *
-	 * @since %VERSION%
-	 *
-	 * @param string $template The path of the template to include.
-	 */
-	public function set_template( $template ) {
-		return $template;
-	}
 
 	/**
 	 * Custom logic to determine if the current template request should be filled with your object's content.
