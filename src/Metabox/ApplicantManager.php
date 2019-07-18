@@ -40,9 +40,13 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 	const VIEW     = 'views/applicant';
 	const PRIORITY = 1;
 
-	// CSS.
-	const CSS_HANDLE = 'lpf-admin-applicant-css';
-	const CSS_URI    = 'assets/css/lpf-applicant-admin';
+	// CSS and Javascript.
+	const CSS_HANDLE                 = 'lpf-admin-applicant-css';
+	const CSS_URI                    = 'assets/css/lpf-applicant-admin';
+	const JS_HANDLE                  = 'lpf-interview-details-admin-script';
+	const JS_URI                     = 'assets/js/interview-details';
+	const JS_DEPENDENCIES            = [ 'wp-element', 'wp-data' ];
+	const JS_VERSION                 = false;
 
 	// Applicant Partials.
 	const APPLICANT_BASIC_INFO            = 'views/applicant-basic-info';
@@ -75,6 +79,13 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 			$this->enqueue_assets();
 		} );
 
+		add_action( 'rest_api_init', function() {
+			register_rest_route( 'level-playing-field/v1', '/interview-status', [
+				'methods' => 'GET',
+				'callback' => [ $this, 'get_interview_status' ]
+			]);
+		});
+
 		add_action( 'wp_ajax_save_nickname', function() {
 			$this->save_nickname();
 		} );
@@ -99,6 +110,18 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 		add_action( 'lpf_applicant_screen_rendered', function( View $view ) {
 			$this->mark_messages_read( $view->applicant );
 		}, 10 );
+	}
+
+	public function get_interview_status( \WP_REST_Request $request ) {
+		$id = ! empty( $request['id'] ) ? $request['id'] : null;
+
+		if( ! isset( $id ) ) {
+			die;
+		}
+
+		$applicant = ( new ApplicantRepository() )->find( $id );
+
+		return $applicant->get_interview_status();
 	}
 
 	/**
@@ -272,6 +295,7 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 	 * @return Asset[]
 	 */
 	protected function get_assets() {
+		$script  = new ScriptAsset( self::JS_HANDLE, self::JS_URI, self::JS_DEPENDENCIES, self::JS_VERSION, ScriptAsset::ENQUEUE_FOOTER );
 		$applicant = new ScriptAsset( 'lpf-applicant-manager-js', 'assets/js/applicant-manager', [ 'jquery' ] );
 		$applicant->add_localization( 'applicantManager', [
 			'cancel' => _x( 'Cancel', 'undo action to edit nickname when viewing an applicant', 'yikes-level-playing-field' ),
@@ -283,6 +307,7 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 		] );
 
 		return [
+			$script,
 			$applicant,
 			new StyleAsset( self::CSS_HANDLE, self::CSS_URI ),
 		];

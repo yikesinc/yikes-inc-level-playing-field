@@ -16,6 +16,8 @@ $applicant        = $this->applicant;
 $interview_status = $applicant->get_interview_status();
 ?>
 
+<div id="test"></div>
+
 <!-- Interview details sidebar -->
 <div id="interview" class="postbox">
 	<div class="inside">
