@@ -44,7 +44,7 @@ abstract class ToApplicantEmail extends ApplicantEmail {
 	 */
 	protected function get_messaging_link() {
 		$url  = $this->applicant->get_messaging_endpoint();
-		$link = "<br><br><a href={$url}>" . __( 'Click here to view your correspondence.', 'yikes-level-playing-field' ) . '</a>';
+		$link = "<br><br>Please use this link to <a href={$url}>" . __( 'view and respond to messages.', 'yikes-level-playing-field' ) . '</a>';
 		return $link;
 	}
 }

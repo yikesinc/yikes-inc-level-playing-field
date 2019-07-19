@@ -31,7 +31,7 @@ class InterviewRequestToApplicantEmail extends ToApplicantEmail {
 	 * @return string The subject of the email.
 	 */
 	protected function subject() {
-		return __( 'You have been selected for an interview.', 'yikes-level-playing-field' );
+		return __( 'Interview request', 'yikes-level-playing-field' );
 	}
 
 	/**
@@ -42,10 +42,12 @@ class InterviewRequestToApplicantEmail extends ToApplicantEmail {
 	 * @return string The email's message.
 	 */
 	protected function message() {
-		$message  = $this->subject();
-		$message .= '<br>';
+		$message .= 'The employer has sent you an interview request. Please review the date, time and location and confirm or decline below.';
+		$message .= '<br><br>';
 		$message .= $this->comment;
+		$message .= '<br><br>';
 		$message .= $this->get_interview_links();
+		$message .= '<br><br>';
 		$message .= $this->get_messaging_link();
 		return $message;
 	}
@@ -63,9 +65,9 @@ class InterviewRequestToApplicantEmail extends ToApplicantEmail {
 		$cancellation_endpoint = $this->applicant->get_cancellation_endpoint();
 
 		// Create some HTML URLs.
-		$message  = '<a href="' . esc_url( $confirmation_endpoint ) . '">' . __( 'Click here to unanonymize your information and confirm your interview', 'yikes-level-playing-field' ) . '</a>';
-		$message .= '<br>';
-		$message .= '<a href="' . esc_url( $cancellation_endpoint ) . '">' . __( 'Click here to decline your interview request', 'yikes-level-playing-field' ) . '</a>';
+		$message  = '<a href="' . esc_url( $confirmation_endpoint ) . '">' . __( 'Confirm interview request', 'yikes-level-playing-field' ) . '</a>';
+		$message .= '<br><br>';
+		$message .= '<a href="' . esc_url( $cancellation_endpoint ) . '">' . __( 'Decline interview request', 'yikes-level-playing-field' ) . '</a>';
 
 		return $message;
 	}

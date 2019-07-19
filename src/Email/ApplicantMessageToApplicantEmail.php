@@ -29,7 +29,7 @@ class ApplicantMessageToApplicantEmail extends ToApplicantEmail {
 	 * @return string The subject of the email.
 	 */
 	protected function subject() {
-		return __( 'A message about your application', 'yikes-level-playing-field' );
+		return __( 'A message regarding your job application', 'yikes-level-playing-field' );
 	}
 
 	/**
@@ -40,8 +40,8 @@ class ApplicantMessageToApplicantEmail extends ToApplicantEmail {
 	 * @return string The email's message.
 	 */
 	protected function message() {
-		$message  = $this->subject();
-		$message .= '<br>';
+		$message .= 'You have received a message from the employer regarding your job application.';
+		$message .= '<br><br>';
 		$message .= $this->comment;
 		$message .= $this->get_messaging_link();
 		return $message;

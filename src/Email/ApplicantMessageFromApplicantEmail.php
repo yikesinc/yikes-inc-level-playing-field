@@ -30,7 +30,7 @@ class ApplicantMessageFromApplicantEmail extends FromApplicantEmail {
 	 * @return string The subject of the email.
 	 */
 	protected function subject() {
-		return __( 'An applicant has sent a message about their application', 'yikes-level-playing-field' );
+		return __( 'An applicant has responded your message', 'yikes-level-playing-field' );
 	}
 
 	/**
@@ -41,8 +41,8 @@ class ApplicantMessageFromApplicantEmail extends FromApplicantEmail {
 	 * @return string The email's message.
 	 */
 	protected function message() {
-		$message  = $this->subject();
-		$message .= '<br>';
+		$message .= 'An applicant has responded to your message regarding their job application.';
+		$message .= '<br><br>';
 		$message .= $this->comment;
 		$message .= $this->get_messaging_link();
 		return $message;
