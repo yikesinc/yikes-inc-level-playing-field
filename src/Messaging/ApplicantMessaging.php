@@ -528,7 +528,7 @@ class ApplicantMessaging implements Activateable, Deactivateable, Renderable, As
 		$applicant = new Applicant( get_post( $post_id ) );
 
 		/* translators: %1$s is the date and %2$s is the time. */
-		$message .= '<div class="lpf-message-interview-date">' . sprintf( __( 'You have received a request for an interview on %1$s at %2$s.', 'yikes-level-playing-field' ), $date, $time ) . '</div>';
+		$message = '<div class="lpf-message-interview-date">' . sprintf( __( 'You have received a request for an interview on %1$s at %2$s.', 'yikes-level-playing-field' ), $date, $time ) . '</div>';
 		/* translators: %1$s is the location. */
 		$message .= '<div class="lpf-message-interview-location">' . sprintf( __( 'Interview location: %1$s.', 'yikes-level-playing-field' ), '</div>' . $location );
 		$message .= '<div class="lpf-message-interview-message">' . sprintf( __( 'Message from employer', 'yikes-level-playing-field' ) ) . '</div>';
