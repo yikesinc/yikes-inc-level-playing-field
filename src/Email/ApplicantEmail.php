@@ -75,15 +75,6 @@ abstract class ApplicantEmail extends BaseEmail {
 	}
 
 	/**
-	 * Get the recipient's email address.
-	 *
-	 * @since %VERSION%
-	 *
-	 * @return mixed An array or comma-separated list of email addresses.
-	 */
-	abstract protected function recipient();
-
-	/**
 	 * Get the email subject.
 	 *
 	 * @since %VERSION%
