@@ -43,9 +43,10 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 	// CSS and Javascript.
 	const CSS_HANDLE                 = 'lpf-admin-applicant-css';
 	const CSS_URI                    = 'assets/css/lpf-applicant-admin';
+	const CSS_DEPENDENCIES           = [ 'wp-components' ];
 	const JS_HANDLE                  = 'lpf-interview-details-admin-script';
 	const JS_URI                     = 'assets/js/interview-details';
-	const JS_DEPENDENCIES            = [ 'wp-element', 'wp-data' ];
+	const JS_DEPENDENCIES            = [ 'wp-element', 'wp-i18n', 'wp-components' ];
 	const JS_VERSION                 = false;
 
 	// Applicant Partials.
@@ -113,15 +114,35 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 	}
 
 	public function get_interview_status( \WP_REST_Request $request ) {
-		$id = ! empty( $request['id'] ) ? $request['id'] : null;
+		// Handle nonce.
+		if ( ! check_ajax_referer( 'wp_rest', $request['_wpnonce'], false ) ) {
+			wp_send_json_error( [
+				'message' => 'Please login.'
+			], 400 );
+		}
 
-		if( ! isset( $id ) ) {
-			die;
+		$id = isset( $request['id'] ) ? absint( wp_unslash( $request['id'] ) ) : 0;
+
+		if( 0 === $id ) {
+			wp_send_json_error( [
+				'message' => 'User Not Found.',
+			], 400 );
 		}
 
 		$applicant = ( new ApplicantRepository() )->find( $id );
+		$status = $applicant->get_interview_status();
+		$interview = $applicant->get_interview();
 
-		return $applicant->get_interview_status();
+		$response  = [
+			'id' => $id,
+			'status' => $status,
+			'date' => $interview['date'],
+			'time' => $interview['time'],
+			'location' => $interview['location'],
+			'message' => $interview['message'],
+		];
+
+		wp_send_json_success( $response );
 	}
 
 	/**
@@ -295,7 +316,14 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 	 * @return Asset[]
 	 */
 	protected function get_assets() {
-		$script  = new ScriptAsset( self::JS_HANDLE, self::JS_URI, self::JS_DEPENDENCIES, self::JS_VERSION, ScriptAsset::ENQUEUE_FOOTER );
+		$post_id = isset( $_GET['post'] ) ? filter_var( $_GET['post'], FILTER_SANITIZE_NUMBER_INT ) : 0;
+		$interview_status  = new ScriptAsset( self::JS_HANDLE, self::JS_URI, self::JS_DEPENDENCIES, self::JS_VERSION, ScriptAsset::ENQUEUE_FOOTER );
+		$interview_status->add_localization( 'interviewStatus', [
+			'post'        => [
+				'ID' => $post_id,
+			],
+			'nonce' => wp_create_nonce( 'wp_rest' ),
+		] );
 		$applicant = new ScriptAsset( 'lpf-applicant-manager-js', 'assets/js/applicant-manager', [ 'jquery' ] );
 		$applicant->add_localization( 'applicantManager', [
 			'cancel' => _x( 'Cancel', 'undo action to edit nickname when viewing an applicant', 'yikes-level-playing-field' ),
@@ -307,9 +335,9 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 		] );
 
 		return [
-			$script,
+			$interview_status,
 			$applicant,
-			new StyleAsset( self::CSS_HANDLE, self::CSS_URI ),
+			new StyleAsset( self::CSS_HANDLE, self::CSS_URI, self::CSS_DEPENDENCIES ),
 		];
 	}
 
