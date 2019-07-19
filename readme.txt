@@ -1,5 +1,5 @@
 === Level Playing Field ===
-Contributors: yikesinc, JPry, metalandcoffee, yikesitskevin, liljimmi, mialevesque
+Contributors: yikesinc, JPry, metalandcoffee, yikesitskevin, liljimmi, fmixell, mialevesque
 Donate link: http://example.com/
 Tags: jobs, job listing, job management, job manager, applicant, anonymize, anonymization, applicant anonymization
 Requires at least: 4.8
