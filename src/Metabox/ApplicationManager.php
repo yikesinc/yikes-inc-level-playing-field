@@ -16,6 +16,8 @@ use Yikes\LevelPlayingField\Assets\ScriptAsset;
 use Yikes\LevelPlayingField\Assets\StyleAsset;
 use Yikes\LevelPlayingField\CustomPostType\ApplicationManager as ApplicationCPT;
 use Yikes\LevelPlayingField\Model\ApplicationMeta;
+use Yikes\LevelPlayingField\Model\ApplicationPrefix;
+use Yikes\LevelPlayingField\Model\RequiredSuffix;
 
 /**
  * Class ApplicationManager
@@ -25,7 +27,9 @@ use Yikes\LevelPlayingField\Model\ApplicationMeta;
  */
 final class ApplicationManager extends AwesomeBaseMetabox implements AssetsAware {
 
+	use ApplicationPrefix;
 	use AssetsAwareness;
+	use RequiredSuffix;
 
 	const CSS_HANDLE = 'lpf-admin-applications-css';
 	const CSS_URI    = 'assets/css/lpf-applications-admin';
@@ -48,26 +52,6 @@ final class ApplicationManager extends AwesomeBaseMetabox implements AssetsAware
 	}
 
 	/**
-	 * Get the prefix for use with meta fields.
-	 *
-	 * @since %VERSION%
-	 * @return string
-	 */
-	public function get_prefix() {
-		return ApplicationMeta::META_PREFIX;
-	}
-
-	/**
-	 * Get the prefix for use with meta fields.
-	 *
-	 * @since %VERSION%
-	 * @return string
-	 */
-	public function get_required_suffix() {
-		return ApplicationMeta::REQUIRED_SUFFIX;
-	}
-
-	/**
 	 * Register meta boxes.
 	 *
 	 * @since  %VERSION%
@@ -79,7 +63,7 @@ final class ApplicationManager extends AwesomeBaseMetabox implements AssetsAware
 	 */
 	public function register_boxes( $meta_boxes ) {
 		$application_boxes = [
-			'id'         => $this->prefix_field( 'metabox' ),
+			'id'         => $this->meta_prefix( 'metabox' ),
 			'title'      => __( 'Application Form Fields', 'yikes-level-playing-field' ),
 			'pages'      => [ ApplicationCPT::SLUG ],
 			'show_names' => false,
@@ -93,12 +77,12 @@ final class ApplicationManager extends AwesomeBaseMetabox implements AssetsAware
 						[
 							'name' => __( 'Basic Information', 'yikes-level-playing-field' ),
 							'desc' => __( 'Check the basic information fields you want included on this Application Form. Name and Email are required by default. Turn on "Required" for fields that must be filled in by the applicant.', 'yikes-level-playing-field' ),
-							'id'   => $this->prefix_field( 'info_message' ),
+							'id'   => $this->meta_prefix( 'info_message' ),
 							'type' => 'title',
 						],
 						[
 							'name'       => __( 'Name', 'yikes-level-playing-field' ),
-							'id'         => $this->prefix_field( ApplicationMeta::NAME ),
+							'id'         => $this->meta_prefix( ApplicationMeta::NAME ),
 							'type'       => 'checkbox',
 							'value'      => 1,
 							'desc_type'  => 'inline',
@@ -109,7 +93,7 @@ final class ApplicationManager extends AwesomeBaseMetabox implements AssetsAware
 						],
 						[
 							'name'       => __( 'Required?', 'yikes-level-playing-field' ),
-							'id'         => $this->suffix_required_field( $this->prefix_field( ApplicationMeta::NAME ) ),
+							'id'         => $this->required_suffix( $this->meta_prefix( ApplicationMeta::NAME ) ),
 							'type'       => 'toggle',
 							'value'      => 1,
 							'desc_type'  => 'inline',
@@ -120,7 +104,7 @@ final class ApplicationManager extends AwesomeBaseMetabox implements AssetsAware
 						],
 						[
 							'name'       => __( 'Email Address', 'yikes-level-playing-field' ),
-							'id'         => $this->prefix_field( ApplicationMeta::EMAIL ),
+							'id'         => $this->meta_prefix( ApplicationMeta::EMAIL ),
 							'type'       => 'checkbox',
 							'value'      => 1,
 							'desc_type'  => 'inline',
@@ -131,7 +115,7 @@ final class ApplicationManager extends AwesomeBaseMetabox implements AssetsAware
 						],
 						[
 							'name'       => __( 'Required?', 'yikes-level-playing-field' ),
-							'id'         => $this->suffix_required_field( $this->prefix_field( ApplicationMeta::EMAIL ) ),
+							'id'         => $this->required_suffix( $this->meta_prefix( ApplicationMeta::EMAIL ) ),
 							'type'       => 'toggle',
 							'value'      => 1,
 							'desc_type'  => 'inline',
@@ -142,27 +126,27 @@ final class ApplicationManager extends AwesomeBaseMetabox implements AssetsAware
 						],
 						[
 							'name'      => __( 'Phone Number', 'yikes-level-playing-field' ),
-							'id'        => $this->prefix_field( ApplicationMeta::PHONE ),
+							'id'        => $this->meta_prefix( ApplicationMeta::PHONE ),
 							'type'      => 'checkbox',
 							'value'     => 1,
 							'desc_type' => 'inline',
 						],
 						[
 							'name'  => __( 'Required?', 'yikes-level-playing-field' ),
-							'id'    => $this->suffix_required_field( $this->prefix_field( ApplicationMeta::PHONE ) ),
+							'id'    => $this->required_suffix( $this->meta_prefix( ApplicationMeta::PHONE ) ),
 							'type'  => 'toggle',
 							'value' => 1,
 						],
 						[
 							'name'      => __( 'Address', 'yikes-level-playing-field' ),
-							'id'        => $this->prefix_field( ApplicationMeta::ADDRESS ),
+							'id'        => $this->meta_prefix( ApplicationMeta::ADDRESS ),
 							'type'      => 'checkbox',
 							'value'     => 1,
 							'desc_type' => 'inline',
 						],
 						[
 							'name'  => __( 'Required?', 'yikes-level-playing-field' ),
-							'id'    => $this->suffix_required_field( $this->prefix_field( ApplicationMeta::ADDRESS ) ),
+							'id'    => $this->required_suffix( $this->meta_prefix( ApplicationMeta::ADDRESS ) ),
 							'type'  => 'toggle',
 							'value' => 1,
 						],
@@ -176,12 +160,12 @@ final class ApplicationManager extends AwesomeBaseMetabox implements AssetsAware
 						[
 							'name' => __( 'Educational Background', 'yikes-level-playing-field' ),
 							'desc' => __( 'Check the educational information you want included on this Application Form. Turn on "Required" for fields that must be filled in by the applicant.', 'yikes-level-playing-field' ),
-							'id'   => $this->prefix_field( ApplicationMeta::EDUCATION . '_message' ),
+							'id'   => $this->meta_prefix( ApplicationMeta::EDUCATION . '_message' ),
 							'type' => 'title',
 						],
 						[
 							'name'       => __( 'Schooling', 'yikes-level-playing-field' ),
-							'id'         => $this->prefix_field( ApplicationMeta::SCHOOLING ),
+							'id'         => $this->meta_prefix( ApplicationMeta::SCHOOLING ),
 							'type'       => 'checkbox',
 							'value'      => 1,
 							'desc_type'  => 'inline',
@@ -192,18 +176,18 @@ final class ApplicationManager extends AwesomeBaseMetabox implements AssetsAware
 						],
 						[
 							'name'  => __( 'Required?', 'yikes-level-playing-field' ),
-							'id'    => $this->suffix_required_field( $this->prefix_field( ApplicationMeta::SCHOOLING ) ),
+							'id'    => $this->required_suffix( $this->meta_prefix( ApplicationMeta::SCHOOLING ) ),
 							'type'  => 'toggle',
 							'value' => 1,
 						],
 						[
 							'desc' => $this->get_schooling_html(),
-							'id'   => $this->prefix_field( ApplicationMeta::SCHOOLING . '_message' ),
+							'id'   => $this->meta_prefix( ApplicationMeta::SCHOOLING . '_message' ),
 							'type' => 'message',
 						],
 						[
 							'name'       => __( 'Certifications', 'yikes-level-playing-field' ),
-							'id'         => $this->prefix_field( ApplicationMeta::CERTIFICATIONS ),
+							'id'         => $this->meta_prefix( ApplicationMeta::CERTIFICATIONS ),
 							'type'       => 'checkbox',
 							'value'      => 1,
 							'desc_type'  => 'inline',
@@ -214,13 +198,13 @@ final class ApplicationManager extends AwesomeBaseMetabox implements AssetsAware
 						],
 						[
 							'name'  => __( 'Required?', 'yikes-level-playing-field' ),
-							'id'    => $this->suffix_required_field( $this->prefix_field( ApplicationMeta::CERTIFICATIONS ) ),
+							'id'    => $this->required_suffix( $this->meta_prefix( ApplicationMeta::CERTIFICATIONS ) ),
 							'type'  => 'toggle',
 							'value' => 1,
 						],
 						[
 							'desc' => $this->get_certification_html(),
-							'id'   => $this->prefix_field( ApplicationMeta::CERTIFICATIONS . '_message' ),
+							'id'   => $this->meta_prefix( ApplicationMeta::CERTIFICATIONS . '_message' ),
 							'type' => 'message',
 						],
 					],
@@ -233,19 +217,19 @@ final class ApplicationManager extends AwesomeBaseMetabox implements AssetsAware
 						[
 							'name' => __( 'Skills', 'yikes-level-playing-field' ),
 							'desc' => __( 'Check if you want Skills and Proficiency included on this Application Form. Turn on "Required" for fields that must be filled in by the applicant.', 'yikes-level-playing-field' ),
-							'id'   => $this->prefix_field( ApplicationMeta::SKILLS . '_message' ),
+							'id'   => $this->meta_prefix( ApplicationMeta::SKILLS . '_message' ),
 							'type' => 'title',
 						],
 						[
 							'name'      => __( 'Skill and Proficiency', 'yikes-level-playing-field' ),
-							'id'        => $this->prefix_field( ApplicationMeta::SKILLS ),
+							'id'        => $this->meta_prefix( ApplicationMeta::SKILLS ),
 							'type'      => 'checkbox',
 							'value'     => 1,
 							'desc_type' => 'inline',
 						],
 						[
 							'name'  => __( 'Required?', 'yikes-level-playing-field' ),
-							'id'    => $this->suffix_required_field( $this->prefix_field( ApplicationMeta::SKILLS ) ),
+							'id'    => $this->required_suffix( $this->meta_prefix( ApplicationMeta::SKILLS ) ),
 							'type'  => 'toggle',
 							'value' => 1,
 						],
@@ -259,19 +243,19 @@ final class ApplicationManager extends AwesomeBaseMetabox implements AssetsAware
 						[
 							'name' => __( 'Languages', 'yikes-level-playing-field' ),
 							'desc' => __( 'Check if you want Languages and Proficiency included on this Application Form. Turn on "Required" for fields that must be filled in by the applicant.', 'yikes-level-playing-field' ),
-							'id'   => $this->prefix_field( ApplicationMeta::LANGUAGES . '_message' ),
+							'id'   => $this->meta_prefix( ApplicationMeta::LANGUAGES . '_message' ),
 							'type' => 'title',
 						],
 						[
 							'name'      => __( 'Language and Proficiency', 'yikes-level-playing-field' ),
-							'id'        => $this->prefix_field( ApplicationMeta::LANGUAGES ),
+							'id'        => $this->meta_prefix( ApplicationMeta::LANGUAGES ),
 							'type'      => 'checkbox',
 							'value'     => 1,
 							'desc_type' => 'inline',
 						],
 						[
 							'name'  => __( 'Required?', 'yikes-level-playing-field' ),
-							'id'    => $this->suffix_required_field( $this->prefix_field( ApplicationMeta::LANGUAGES ) ),
+							'id'    => $this->required_suffix( $this->meta_prefix( ApplicationMeta::LANGUAGES ) ),
 							'type'  => 'toggle',
 							'value' => 1,
 						],
@@ -285,12 +269,12 @@ final class ApplicationManager extends AwesomeBaseMetabox implements AssetsAware
 						[
 							'name' => __( 'Experience', 'yikes-level-playing-field' ),
 							'desc' => __( 'Check if you want Experience included on this Application Form. Turn on "Required" for fields that must be filled in by the applicant.', 'yikes-level-playing-field' ),
-							'id'   => $this->prefix_field( ApplicationMeta::EXPERIENCE . '_message' ),
+							'id'   => $this->meta_prefix( ApplicationMeta::EXPERIENCE . '_message' ),
 							'type' => 'title',
 						],
 						[
 							'name'       => __( 'Experience', 'yikes-level-playing-field' ),
-							'id'         => $this->prefix_field( ApplicationMeta::EXPERIENCE ),
+							'id'         => $this->meta_prefix( ApplicationMeta::EXPERIENCE ),
 							'type'       => 'checkbox',
 							'value'      => 1,
 							'desc_type'  => 'inline',
@@ -301,13 +285,13 @@ final class ApplicationManager extends AwesomeBaseMetabox implements AssetsAware
 						],
 						[
 							'name'  => __( 'Required?', 'yikes-level-playing-field' ),
-							'id'    => $this->suffix_required_field( $this->prefix_field( ApplicationMeta::EXPERIENCE ) ),
+							'id'    => $this->required_suffix( $this->meta_prefix( ApplicationMeta::EXPERIENCE ) ),
 							'type'  => 'toggle',
 							'value' => 1,
 						],
 						[
 							'desc' => $this->get_experience_html(),
-							'id'   => $this->prefix_field( ApplicationMeta::EXPERIENCE . '_message' ),
+							'id'   => $this->meta_prefix( ApplicationMeta::EXPERIENCE . '_message' ),
 							'type' => 'message',
 						],
 					],
@@ -320,12 +304,12 @@ final class ApplicationManager extends AwesomeBaseMetabox implements AssetsAware
 						[
 							'name' => __( 'Volunteer Work', 'yikes-level-playing-field' ),
 							'desc' => __( 'Check if you want Volunteer Work included on this Application Form. Turn on "Required" for fields that must be filled in by the applicant.', 'yikes-level-playing-field' ),
-							'id'   => $this->prefix_field( ApplicationMeta::VOLUNTEER . '_message' ),
+							'id'   => $this->meta_prefix( ApplicationMeta::VOLUNTEER . '_message' ),
 							'type' => 'title',
 						],
 						[
 							'name'       => __( 'Volunteer Work', 'yikes-level-playing-field' ),
-							'id'         => $this->prefix_field( ApplicationMeta::VOLUNTEER ),
+							'id'         => $this->meta_prefix( ApplicationMeta::VOLUNTEER ),
 							'type'       => 'checkbox',
 							'value'      => 1,
 							'desc_type'  => 'inline',
@@ -336,13 +320,13 @@ final class ApplicationManager extends AwesomeBaseMetabox implements AssetsAware
 						],
 						[
 							'name'  => __( 'Required?', 'yikes-level-playing-field' ),
-							'id'    => $this->suffix_required_field( $this->prefix_field( ApplicationMeta::VOLUNTEER ) ),
+							'id'    => $this->required_suffix( $this->meta_prefix( ApplicationMeta::VOLUNTEER ) ),
 							'type'  => 'toggle',
 							'value' => 1,
 						],
 						[
 							'desc' => $this->get_volunteer_html(),
-							'id'   => $this->prefix_field( ApplicationMeta::VOLUNTEER . '_message' ),
+							'id'   => $this->meta_prefix( ApplicationMeta::VOLUNTEER . '_message' ),
 							'type' => 'message',
 						],
 					],

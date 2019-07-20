@@ -17,6 +17,7 @@ use Yikes\LevelPlayingField\Field\Types;
 use Yikes\LevelPlayingField\Model\ApplicantMeta as Meta;
 use Yikes\LevelPlayingField\Model\Application as AppModel;
 use Yikes\LevelPlayingField\Model\ApplicationMeta;
+use Yikes\LevelPlayingField\Model\ApplicationPrefix;
 
 /**
  * Class Application
@@ -29,6 +30,8 @@ use Yikes\LevelPlayingField\Model\ApplicationMeta;
  * @property array   form_classes  The array of classes used for the main form element.
  */
 final class Application {
+
+	use ApplicationPrefix;
 
 	/**
 	 * The application object.
@@ -245,7 +248,7 @@ final class Application {
 			return $pre;
 		}
 
-		$field_name  = ApplicationMeta::FORM_FIELD_PREFIX . $field;
+		$field_name  = $this->form_prefix( $field );
 		$field_label = $this->get_field_label( $field );
 		$type        = $this->get_field_type( $field );
 
