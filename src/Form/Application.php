@@ -159,7 +159,7 @@ final class Application {
 
 		// Add all of the active fields.
 		foreach ( $this->application->get_active_fields() as $field ) {
-			$fields[] = array_merge( $fields, $this->instantiate_field( $field ) );
+			$fields = array_merge( $fields, $this->instantiate_field( $field ) );
 		}
 
 		$this->fields = $fields;
