@@ -9,6 +9,7 @@
 
 namespace Yikes\LevelPlayingField\Form;
 
+use Yikes\LevelPlayingField\Exception\InvalidClass;
 use Yikes\LevelPlayingField\Exception\InvalidField;
 use Yikes\LevelPlayingField\Field\Field;
 use Yikes\LevelPlayingField\Field\Hidden;
@@ -147,22 +148,115 @@ final class Application {
 	 * @since %VERSION%
 	 */
 	private function create_fields() {
-		$this->fields = [];
+		$fields = [];
 
 		// Manually add the hidden nonce and referrer fields.
-		$this->fields[] = new Hidden( 'lpf_nonce', wp_create_nonce( 'lpf_application_submit' ) );
-		$this->fields[] = new Hidden( '_wp_http_referer', wp_unslash( $_SERVER['REQUEST_URI'] ) );
+		$fields[] = new Hidden( 'lpf_nonce', wp_create_nonce( 'lpf_application_submit' ) );
+		$fields[] = new Hidden( '_wp_http_referer', wp_unslash( $_SERVER['REQUEST_URI'] ) );
 
 		// Manually add the hidden Job ID field.
-		$this->fields[] = new Hidden( 'job_id', $this->job_id );
+		$fields[] = new Hidden( 'job_id', $this->job_id );
 
 		// Add all of the active fields.
 		foreach ( $this->application->get_active_fields() as $field ) {
-			$field_name     = ApplicationMeta::FORM_FIELD_PREFIX . $field;
-			$field_label    = ucwords( str_replace( [ '-', '_' ], ' ', $field ) );
-			$type           = isset( Meta::FIELD_MAP[ $field ] ) ? Meta::FIELD_MAP[ $field ] : Types::TEXT;
-			$this->fields[] = new $type( $field_name, $field_label, $this->field_classes, $this->application->is_required( $field ) );
+			$fields[] = array_merge( $fields, $this->instantiate_field( $field ) );
 		}
+
+		$this->fields = $fields;
+	}
+
+	/**
+	 * Get the label for the form field.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param string $field The field name.
+	 *
+	 * @return string
+	 */
+	private function get_field_label( $field ) {
+		$field_label = ucwords( str_replace( [ '-', '_' ], ' ', $field ) );
+
+		/**
+		 * Filter the label for the form field.
+		 *
+		 * @param string   $field_label The field label.
+		 * @param string   $field       The field name.
+		 * @param AppModel $application The application object.
+		 */
+		return apply_filters( 'lpf_application_form_field_label', $field_label, $field, $this->application );
+	}
+
+	/**
+	 * Get the class type for a particular field.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param string $field The field name.
+	 *
+	 * @return string The class name to instantiate that field.
+	 * @throws InvalidClass When a field type is returned to the filter that doesn't implement Field.
+	 */
+	private function get_field_type( $field ) {
+		$type = isset( Meta::FIELD_MAP[ $field ] ) ? Meta::FIELD_MAP[ $field ] : Types::TEXT;
+
+		/**
+		 * Filter the class used to instantiate the field.
+		 *
+		 * @param string $type  The field class name. Must extend implment the Field interface.
+		 * @param string $field The field name.
+		 */
+		$type = apply_filters( 'lpf_application_form_field_type', $type, $field );
+
+		// Ensure that the field implements the Field interface..
+		$implements = class_implements( $type );
+		if ( ! isset( $implements[ Field::class ] ) ) {
+			throw InvalidClass::from_interface( $type, Field::class );
+		}
+
+		return $type;
+	}
+
+	/**
+	 * Instantiate a field.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param string $field The raw field name.
+	 *
+	 * @return Field[] Array of Field objects.
+	 */
+	private function instantiate_field( $field ) {
+		/**
+		 * Short-circuit the instantiation of a field object.
+		 *
+		 * To effectively short-circuit normal instantiation, an array of Field objects must be returned.
+		 *
+		 * @param array|null $pre         Array of Field objects or null.
+		 * @param string     $field       The raw field name.
+		 * @param AppModel   $application The application object.
+		 */
+		$pre = apply_filters( 'lpf_application_instantiate_field', null, $field, $this->application );
+		if ( is_array( $pre ) && ! empty( $pre ) ) {
+			foreach ( $pre as $object ) {
+				$this->validate_is_field( $object );
+			}
+
+			return $pre;
+		}
+
+		$field_name  = ApplicationMeta::FORM_FIELD_PREFIX . $field;
+		$field_label = $this->get_field_label( $field );
+		$type        = $this->get_field_type( $field );
+
+		return [
+			new $type(
+				$field_name,
+				$field_label,
+				$this->field_classes,
+				$this->application->is_required( $field )
+			),
+		];
 	}
 
 	/**
@@ -230,5 +324,20 @@ final class Application {
 		}
 
 		$this->valid_data = $valid;
+	}
+
+	/**
+	 * Validate that the given object is a Field.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param object $maybe_field The object to validate.
+	 *
+	 * @throws InvalidClass When the object isn't a Field object.
+	 */
+	private function validate_is_field( $maybe_field ) {
+		if ( ! $maybe_field instanceof Field ) {
+			throw InvalidClass::from_interface( get_class( $maybe_field ), Field::class );
+		}
 	}
 }
