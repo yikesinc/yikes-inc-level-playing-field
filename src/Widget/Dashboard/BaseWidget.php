@@ -59,8 +59,6 @@ abstract class BaseWidget implements Renderable, AssetsAware, Service {
 	 *
 	 * @since %VERSION%
 	 *
-	 * @param array|string $atts Attributes as passed to the shortcode.
-	 *
 	 * @return string Rendered HTML of the shortcode.
 	 */
 	public function process_widget() {
@@ -104,14 +102,13 @@ abstract class BaseWidget implements Renderable, AssetsAware, Service {
 	 * @since %VERSION%
 	 *
 	 * @param array $context Context in which to render.
-	 *
 	 */
 	public function render( array $context = [] ) {
 		try {
 			$this->enqueue_assets();
 			$view = new PostEscapedView( new TemplatedView( $this->get_view_uri() ) );
 
-			echo $view->render( $context );
+			echo $view->render( $context ); // phpcs:ignore WordPress.Security.EscapeOutput
 		} catch ( \Exception $exception ) {
 			// Don't let exceptions bubble up. Just render an empty widget instead.
 			return;

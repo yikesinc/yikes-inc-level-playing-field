@@ -252,7 +252,7 @@ final class JobManager extends AwesomeBaseMetabox implements AssetsAware {
 		$script->add_localization(
 			'lpf_job_manager_data',
 			[
-				'disallowed_blocks' => [
+				'disallowed_blocks'    => [
 					( new JobListing() )->get_block_slug(),
 				],
 				'mbox_sort'            => apply_filters( 'lpf_jobs_admin_enable_mbox_sorting', false ),

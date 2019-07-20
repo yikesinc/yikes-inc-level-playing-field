@@ -30,21 +30,21 @@ final class JobCategory extends BaseTaxonomy {
 	 */
 	protected function get_arguments() {
 		return [
-			'hierarchical'          => true,
-			'public'                => true,
-			'show_in_nav_menus'     => true,
-			'show_ui'               => true,
-			'show_admin_column'     => true,
-			'show_in_quick_edit'    => true,
-			'query_var'             => true,
-			'show_in_rest'          => true,
-			'capabilities'          => [
+			'hierarchical'       => true,
+			'public'             => true,
+			'show_in_nav_menus'  => true,
+			'show_ui'            => true,
+			'show_admin_column'  => true,
+			'show_in_quick_edit' => true,
+			'query_var'          => true,
+			'show_in_rest'       => true,
+			'capabilities'       => [
 				'manage_terms' => Capabilities::EDIT_JOBS,
 				'edit_terms'   => Capabilities::EDIT_JOBS,
 				'delete_terms' => Capabilities::EDIT_JOBS,
 				'assign_terms' => Capabilities::EDIT_JOBS,
 			],
-			'labels'                => [
+			'labels'             => [
 				'name'                       => __( 'Job Categories', 'yikes-level-playing-field' ),
 				'singular_name'              => _x( 'Job Category', 'taxonomy general name', 'yikes-level-playing-field' ),
 				'search_items'               => __( 'Search Job Categories', 'yikes-level-playing-field' ),
