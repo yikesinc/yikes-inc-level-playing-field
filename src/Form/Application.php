@@ -148,27 +148,21 @@ final class Application {
 	 * @since %VERSION%
 	 */
 	private function create_fields() {
-		$this->fields = [];
+		$fields = [];
 
 		// Manually add the hidden nonce and referrer fields.
-		$this->fields[] = new Hidden( 'lpf_nonce', wp_create_nonce( 'lpf_application_submit' ) );
-		$this->fields[] = new Hidden( '_wp_http_referer', wp_unslash( $_SERVER['REQUEST_URI'] ) );
+		$fields[] = new Hidden( 'lpf_nonce', wp_create_nonce( 'lpf_application_submit' ) );
+		$fields[] = new Hidden( '_wp_http_referer', wp_unslash( $_SERVER['REQUEST_URI'] ) );
 
 		// Manually add the hidden Job ID field.
-		$this->fields[] = new Hidden( 'job_id', $this->job_id );
+		$fields[] = new Hidden( 'job_id', $this->job_id );
 
 		// Add all of the active fields.
 		foreach ( $this->application->get_active_fields() as $field ) {
-			$field_name     = ApplicationMeta::FORM_FIELD_PREFIX . $field;
-			$field_label    = $this->get_field_label( $field );
-			$type           = $this->get_field_type( $field );
-			$this->fields[] = new $type(
-				$field_name,
-				$field_label,
-				$this->field_classes,
-				$this->application->is_required( $field )
-			);
+			$fields[] = array_merge( $fields, $this->instantiate_field( $field ) );
 		}
+
+		$this->fields = $fields;
 	}
 
 	/**
@@ -221,6 +215,48 @@ final class Application {
 		}
 
 		return $type;
+	}
+
+	/**
+	 * Instantiate a field.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param string $field The raw field name.
+	 *
+	 * @return Field[] Array of Field objects.
+	 */
+	private function instantiate_field( $field ) {
+		/**
+		 * Short-circuit the instantiation of a field object.
+		 *
+		 * To effectively short-circuit normal instantiation, an array of Field objects must be returned.
+		 *
+		 * @param array|null $pre         Array of Field objects or null.
+		 * @param string     $field       The raw field name.
+		 * @param AppModel   $application The application object.
+		 */
+		$pre = apply_filters( 'lpf_application_instantiate_field', null, $field, $this->application );
+		if ( is_array( $pre ) && ! empty( $pre ) ) {
+			foreach ( $pre as $object ) {
+				$this->validate_is_field( $object );
+			}
+
+			return $pre;
+		}
+
+		$field_name  = ApplicationMeta::FORM_FIELD_PREFIX . $field;
+		$field_label = $this->get_field_label( $field );
+		$type        = $this->get_field_type( $field );
+
+		return [
+			new $type(
+				$field_name,
+				$field_label,
+				$this->field_classes,
+				$this->application->is_required( $field )
+			),
+		];
 	}
 
 	/**
@@ -288,5 +324,20 @@ final class Application {
 		}
 
 		$this->valid_data = $valid;
+	}
+
+	/**
+	 * Validate that the given object is a Field.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param object $maybe_field The object to validate.
+	 *
+	 * @throws InvalidClass When the object isn't a Field object.
+	 */
+	private function validate_is_field( $maybe_field ) {
+		if ( ! $maybe_field instanceof Field ) {
+			throw InvalidClass::from_interface( get_class( $maybe_field ), Field::class );
+		}
 	}
 }
