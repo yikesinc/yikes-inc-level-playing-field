@@ -67,7 +67,7 @@ if ( ! $this->is_cancel && ( 'confirmed' === $interview_status || 'scheduled' ==
 			<a href="<?php echo esc_url( $this->applicant->get_cancellation_endpoint() ); ?>" class="applicant-messaging-interview-decline">
 				&#10006; <?php esc_html_e( 'Decline Interview', 'yikes-level-playing-field' ); ?>
 			</a>
-		<?php
+			<?php
 		}
 		?>
 	</div>

@@ -51,8 +51,8 @@ foreach ( $jobs as $job ) {
 			?>
 			<div class="lpf-jobs-list-description">
 				<?php
-				global $post; // phpcs:ignore WordPress.WP.GlobalVariablesOverride
-				$post = $job->get_post_object();
+				global $post;
+				$post = $job->get_post_object(); // phpcs:ignore WordPress.WP.GlobalVariablesOverride
 				setup_postdata( $post );
 				echo 'full' === $this->desc_type ? apply_filters( 'lpf_the_content', $job->get_content() ) : $job->get_excerpt();
 				wp_reset_postdata();

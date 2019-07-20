@@ -115,8 +115,8 @@ class Application extends CustomPostTypeEntity {
 		}
 
 		// Name and email fields are always active and required.
-		$this->{AMMeta::NAME}  = true;
-		$this->{AMMeta::EMAIL} = true;
+		$this->{AMMeta::NAME}                      = true;
+		$this->{AMMeta::EMAIL}                     = true;
 		$this->{AMMeta::REQUIRED}[ AMMeta::NAME ]  = true;
 		$this->{AMMeta::REQUIRED}[ AMMeta::EMAIL ] = true;
 	}
