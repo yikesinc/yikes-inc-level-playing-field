@@ -357,11 +357,11 @@ abstract class Comment {
 
 	/**
 	 * Delete comments that were created during email errors.
-	 * 
+	 *
 	 * @since %VERSION%
-	 * 
+	 *
 	 * @param int $comment The ID of comment.
-	 * 
+	 *
 	 * @return int
 	 */
 	public function delete_comment( $comment ) {
