@@ -62,7 +62,7 @@ final class JobManager extends AwesomeBaseMetabox implements AssetsAware {
 
 		// Filter post meta to save JSON.
 		add_filter( 'update_post_metadata', function( $check, $id, $key, $value, $prev_value ) {
-			if ( ! isset( JobMeta::JSON_PROPERTIES[ $key ] ) ) {
+			if ( ! array_key_exists( $key, JobMeta::JSON_PROPERTIES ) ) {
 				return $check;
 			}
 
@@ -89,7 +89,7 @@ final class JobManager extends AwesomeBaseMetabox implements AssetsAware {
 
 		// Filter post meta to retrieve JSON.
 		add_filter( 'get_post_metadata', function( $check, $id, $key, $single ) {
-			if ( ! isset( JobMeta::JSON_PROPERTIES[ $key ] ) ) {
+			if ( ! array_key_exists( $key, JobMeta::JSON_PROPERTIES ) ) {
 				return $check;
 			}
 
