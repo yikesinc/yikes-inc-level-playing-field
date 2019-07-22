@@ -750,7 +750,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 *
 	 * @param string $interview_status Whether an interview has been scheduled for this applicant.
 	 */
-	public function set_interview_status( string $interview_status ) {
+	public function set_interview_status( $interview_status ) {
 		$this->{ApplicantMeta::INTERVIEW_STATUS} = filter_var( $interview_status, self::SANITIZATION[ ApplicantMeta::INTERVIEW_STATUS ] );
 		$this->changed_property( ApplicantMeta::INTERVIEW_STATUS );
 	}
