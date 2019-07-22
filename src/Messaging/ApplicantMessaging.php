@@ -556,8 +556,6 @@ class ApplicantMessaging implements Activateable, Deactivateable, Renderable, As
 			// Check if error occured and handle it.
 			if ( ! $email ) {
 
-				$email_error = json_encode( error_get_last() );
-
 				// Delete interview request comment because it wasn't sent.
 				$message_class->delete_comment( $new_message );
 
@@ -565,11 +563,11 @@ class ApplicantMessaging implements Activateable, Deactivateable, Renderable, As
 				if ( ! get_option( 'lpf_interview_request_failed' ) ) {
 
 					update_option( 'lpf_interview_request_failed', true );
-				
+
 				}
 
 				wp_send_json_error( [
-					'reason' => __( $email_error, 'yikes-level-playing-field' ),
+					'reason'  => __( 'Email failed to send.', 'yikes-level-playing-field' ),
 					'post_id' => $post_id,
 				] );
 			}
@@ -578,7 +576,7 @@ class ApplicantMessaging implements Activateable, Deactivateable, Renderable, As
 			if ( get_option( 'lpf_interview_request_failed' ) ) {
 
 				update_option( 'lpf_interview_request_failed', false );
-			
+
 			}
 
 			// Save the interview variables to the applicant model.
@@ -609,11 +607,9 @@ class ApplicantMessaging implements Activateable, Deactivateable, Renderable, As
 	 * @since %VERSION%
 	 */
 	public function maybe_display_email_error_notice() {
-		$error_id        = 'lpf-email-error-message';
-		$class           = 'notice notice-error';
-		$error_message   = 'Irks! Your website is having trouble sending email. ';
-		$link            = 'https://wordpress.org/plugins/wp-mail-smtp/';
-		$wp_smtp_message = 'Try using WP Mail SMTP To Send Emails.';
+		$error_id = 'lpf-email-error-message';
+		$class    = 'notice notice-error';
+		$link     = 'https://wordpress.org/plugins/wp-mail-smtp/';
 
 		$check_for_errors = get_option( 'lpf_interview_request_failed' );
 
@@ -625,9 +621,9 @@ class ApplicantMessaging implements Activateable, Deactivateable, Renderable, As
 			'<div id="%1$s" class="%2$s"><p>%3$s<a href="%4$s" rel=”noopener noreferrer” target="_blank">%5$s</a></p></div>',
 			esc_attr( $error_id ),
 			esc_attr( $class ),
-			esc_html__( $error_message, 'yikes-level-playing-field' ),
+			esc_html__( 'Irks! Your website is having trouble sending email. ', 'yikes-level-playing-field' ),
 			esc_attr( $link ),
-			esc_html__( $wp_smtp_message, 'yikes-level-playing-field' )
+			esc_html__( 'Try using WP Mail SMTP To Send Emails.', 'yikes-level-playing-field' )
 		);
 	}
 
