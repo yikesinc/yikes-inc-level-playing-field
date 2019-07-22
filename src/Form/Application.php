@@ -201,7 +201,7 @@ final class Application {
 	 * @throws InvalidClass When a field type is returned to the filter that doesn't implement Field.
 	 */
 	private function get_field_type( $field ) {
-		$type = isset( Meta::FIELD_MAP[ $field ] ) ? Meta::FIELD_MAP[ $field ] : Types::TEXT;
+		$type = array_key_exists( $field, Meta::FIELD_MAP ) ? Meta::FIELD_MAP[ $field ] : Types::TEXT;
 
 		/**
 		 * Filter the class used to instantiate the field.
