@@ -41,13 +41,13 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 	const PRIORITY = 1;
 
 	// CSS and Javascript.
-	const CSS_HANDLE                 = 'lpf-admin-applicant-css';
-	const CSS_URI                    = 'assets/css/lpf-applicant-admin';
-	const CSS_DEPENDENCIES           = [ 'wp-components' ];
-	const JS_HANDLE                  = 'lpf-interview-details-admin-script';
-	const JS_URI                     = 'assets/js/interview-details';
-	const JS_DEPENDENCIES            = [ 'wp-element', 'wp-i18n', 'wp-components' ];
-	const JS_VERSION                 = false;
+	const CSS_HANDLE       = 'lpf-admin-applicant-css';
+	const CSS_URI          = 'assets/css/lpf-applicant-admin';
+	const CSS_DEPENDENCIES = [ 'wp-components' ];
+	const JS_HANDLE        = 'lpf-interview-details-admin-script';
+	const JS_URI           = 'assets/js/interview-details';
+	const JS_DEPENDENCIES  = [ 'wp-element', 'wp-i18n', 'wp-components' ];
+	const JS_VERSION       = false;
 
 	// Applicant Partials.
 	const APPLICANT_BASIC_INFO            = 'views/applicant-basic-info';
@@ -81,9 +81,9 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 		} );
 
 		add_action( 'rest_api_init', function() {
-			register_rest_route( 'level-playing-field/v1', '/interview-status', [
-				'methods' => 'GET',
-				'callback' => [ $this, 'get_interview_status' ]
+			register_rest_route( 'yikes-level-playing-field/v1', '/interview-status', [
+				'methods'  => 'GET',
+				'callback' => [ $this, 'get_interview_status' ],
 			]);
 		});
 
@@ -113,33 +113,40 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 		}, 10 );
 	}
 
+	/**
+	 * Rest API Callback Function Returns Interview Status For Single Applicant
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param \WP_REST_Request $request contains request params id and nonce.
+	 */
 	public function get_interview_status( \WP_REST_Request $request ) {
 		// Handle nonce.
 		if ( ! check_ajax_referer( 'wp_rest', $request['_wpnonce'], false ) ) {
 			wp_send_json_error( [
-				'message' => 'Please login.'
+				'message' => 'Please login.',
 			], 400 );
 		}
 
 		$id = isset( $request['id'] ) ? absint( wp_unslash( $request['id'] ) ) : 0;
 
-		if( 0 === $id ) {
+		if ( 0 === $id ) {
 			wp_send_json_error( [
 				'message' => 'User Not Found.',
 			], 400 );
 		}
 
 		$applicant = ( new ApplicantRepository() )->find( $id );
-		$status = $applicant->get_interview_status();
+		$status    = $applicant->get_interview_status();
 		$interview = $applicant->get_interview();
 
-		$response  = [
-			'id' => $id,
-			'status' => $status,
-			'date' => $interview['date'],
-			'time' => $interview['time'],
-			'location' => $interview['location'],
-			'message' => $interview['message'],
+		$response = [
+			'id'       => $id,
+			'status'   => $status,
+			'date'     => $interview['date'] ? $interview['date'] : '',
+			'time'     => $interview['time'] ? $interview['time'] : '',
+			'location' => $interview['location'] ? $interview['location'] : '',
+			'message'  => $interview['message'] ? $interview['message'] : '',
 		];
 
 		wp_send_json_success( $response );
@@ -316,7 +323,7 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 	 * @return Asset[]
 	 */
 	protected function get_assets() {
-		$post_id = isset( $_GET['post'] ) ? filter_var( $_GET['post'], FILTER_SANITIZE_NUMBER_INT ) : 0;
+		$post_id           = isset( $_GET['post'] ) ? filter_var( $_GET['post'], FILTER_SANITIZE_NUMBER_INT ) : 0;
 		$interview_status  = new ScriptAsset( self::JS_HANDLE, self::JS_URI, self::JS_DEPENDENCIES, self::JS_VERSION, ScriptAsset::ENQUEUE_FOOTER );
 		$interview_status->add_localization( 'interviewStatus', [
 			'post'        => [

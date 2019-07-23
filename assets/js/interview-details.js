@@ -206,11 +206,11 @@ class InterviewStatus extends Component {
 
     this.setState( { loading: true } );
 
-    const endpoint = { path: `/level-playing-field/v1/interview-status?id=${applicantId}&_wpnonce=${nonce}` };
+    const path = `/yikes-level-playing-field/v1/interview-status?id=${applicantId}&_wpnonce=${nonce}`;
     const timeout = 1000;
 
     setTimeout(() => { 
-      apiFetch( endpoint )
+      apiFetch( { path } )
         .then( (applicant) => this.handleStatusResponse(applicant) )},
       timeout
     );
