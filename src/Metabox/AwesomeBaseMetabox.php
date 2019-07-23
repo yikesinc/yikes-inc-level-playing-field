@@ -33,51 +33,6 @@ abstract class AwesomeBaseMetabox implements Service {
 	}
 
 	/**
-	 * Get the prefixed version of a field's name.
-	 *
-	 * @since %VERSION%
-	 *
-	 * @param string $name The field name.
-	 *
-	 * @return string The field name with prefix.
-	 */
-	protected function prefix_field( $name ) {
-		return $this->get_prefix() . $name;
-	}
-
-	/**
-	 * Get the prefixed & suffixed version of a required field's name.
-	 *
-	 * @since %VERSION%
-	 *
-	 * @param string $name The field name.
-	 *
-	 * @return string The field name with prefix.
-	 */
-	protected function suffix_required_field( $name ) {
-		return $name . $this->get_required_suffix();
-	}
-
-	/**
-	 * Get the required suffix for use with meta fields.
-	 *
-	 * @since %VERSION%
-	 *
-	 * @return string The field name with suffix.
-	 */
-	public function get_required_suffix() {
-		return '';
-	}
-
-	/**
-	 * Get the prefix for use with meta fields.
-	 *
-	 * @since %VERSION%
-	 * @return string
-	 */
-	abstract public function get_prefix();
-
-	/**
 	 * Register meta boxes.
 	 *
 	 * @since  %VERSION%

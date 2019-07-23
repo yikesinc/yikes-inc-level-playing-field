@@ -19,6 +19,9 @@ use Yikes\LevelPlayingField\Model\ApplicationMeta as AMMeta;
  */
 class Application extends CustomPostTypeEntity {
 
+	use ApplicationPrefix;
+	use RequiredSuffix;
+
 	/**
 	 * Persist the additional properties of the entity.
 	 *
@@ -27,11 +30,11 @@ class Application extends CustomPostTypeEntity {
 	public function persist_properties() {
 		foreach ( $this->get_lazy_properties() as $key => $default ) {
 			if ( $this->$key === $default ) {
-				delete_post_meta( $this->get_id(), AMMeta::META_PREFIX . $key );
+				delete_post_meta( $this->get_id(), $this->meta_prefix( $key ) );
 				continue;
 			}
 
-			update_post_meta( $this->get_id(), AMMeta::META_PREFIX . $key, $this->$key );
+			update_post_meta( $this->get_id(), $this->meta_prefix( $key ), $this->$key );
 		}
 	}
 
@@ -106,17 +109,20 @@ class Application extends CustomPostTypeEntity {
 		$this->{AMMeta::REQUIRED} = [];
 
 		foreach ( $this->get_lazy_properties() as $key => $default ) {
-			$this->$key = array_key_exists( AMMeta::META_PREFIX . $key, $meta )
-				? (bool) $meta[ AMMeta::META_PREFIX . $key ][0]
+			$this->$key = array_key_exists( $this->meta_prefix( $key ), $meta )
+				? (bool) $meta[ $this->meta_prefix( $key ) ][0]
 				: $default;
 
 			// If required flag for current field exists.
-			$this->{AMMeta::REQUIRED}[ $key ] = array_key_exists( AMMeta::META_PREFIX . $key . AMMeta::REQUIRED_SUFFIX, $meta );
+			$this->{AMMeta::REQUIRED}[ $key ] = array_key_exists(
+				$this->required_suffix( $this->meta_prefix( $key ) ),
+				$meta
+			);
 		}
 
 		// Name and email fields are always active and required.
-		$this->{AMMeta::NAME}  = true;
-		$this->{AMMeta::EMAIL} = true;
+		$this->{AMMeta::NAME}                      = true;
+		$this->{AMMeta::EMAIL}                     = true;
 		$this->{AMMeta::REQUIRED}[ AMMeta::NAME ]  = true;
 		$this->{AMMeta::REQUIRED}[ AMMeta::EMAIL ] = true;
 	}

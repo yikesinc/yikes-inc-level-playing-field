@@ -75,7 +75,7 @@ class SingleJobsTemplateController extends TemplateController {
 			global $wp_query;
 			$wp_query->is_page = true;
 
-			$new_template = locate_template( array( 'page.php' ) );
+			$new_template = locate_template( [ 'page.php' ] );
 			if ( ! empty( $new_template ) ) {
 				return $new_template;
 			}

@@ -127,23 +127,23 @@ $applicant = $this->applicant;
 			<div class="applicant-skills-container">
 			<?php if ( $applicant->is_anonymized() ) : ?>
 				<?php
-					$is_multilingual = count( $languages ) > 1;
+				$is_multilingual = count( $languages ) > 1;
 
-					// Build up language proficiency data.
-					$proficiency_labels = $applicant->get_language_options();
-					$proficiency_counts = [];
+				// Build up language proficiency data.
+				$proficiency_labels = $applicant->get_language_options();
+				$proficiency_counts = [];
 
-					foreach ( $languages as $language ) {
-						if ( ! array_key_exists( $language[ ApplicantMeta::PROFICIENCY ], $proficiency_counts ) ) {
-							$proficiency_counts[ $language[ ApplicantMeta::PROFICIENCY ] ] = 1;
-							continue;
-						}
-
-						$proficiency_counts[ $language[ ApplicantMeta::PROFICIENCY ] ]++;
+				foreach ( $languages as $language ) {
+					if ( ! array_key_exists( $language[ ApplicantMeta::PROFICIENCY ], $proficiency_counts ) ) {
+						$proficiency_counts[ $language[ ApplicantMeta::PROFICIENCY ] ] = 1;
+						continue;
 					}
 
-					// Set up a counter for when we need to output a comma.
-					$needs_comma = count( $proficiency_counts ) - 1;
+					$proficiency_counts[ $language[ ApplicantMeta::PROFICIENCY ] ]++;
+				}
+
+				// Set up a counter for when we need to output a comma.
+				$needs_comma = count( $proficiency_counts ) - 1;
 				?>
 					<p>
 						<?php

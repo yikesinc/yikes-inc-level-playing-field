@@ -335,7 +335,7 @@ abstract class Comment {
 	 *
 	 * @param array $comment_data The array of comment data to override the defaults.
 	 *
-	 * @return bool
+	 * @return int
 	 */
 	public function create_comment( $comment_data ) {
 
@@ -349,9 +349,30 @@ abstract class Comment {
 
 		if ( false !== $comment_id ) {
 			$this->set_comment( $comment_id );
-			return true;
+			return $comment_id;
 		}
 
 		return false;
+	}
+
+	/**
+	 * Delete comments that were created during email errors.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param int $comment The ID of comment.
+	 *
+	 * @return int
+	 */
+	public function delete_comment( $comment ) {
+
+		if ( empty( $comment ) ) {
+			return false;
+		}
+
+		$comment_id = wp_delete_comment( $comment, true );
+
+		return $comment_id;
+
 	}
 }
