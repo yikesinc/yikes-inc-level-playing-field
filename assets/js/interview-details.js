@@ -1,3 +1,9 @@
+/**
+ * Interview Details React Update Listener
+ *
+ * @author Freddie Mixell
+ */
+
 const { Component, Fragment } = wp.element;
 const { Spinner } = wp.components;
 const { __ } = wp.i18n;
@@ -5,6 +11,41 @@ const { apiFetch } = wp;
 const applicantId = typeof interviewStatus.post !== "undefined" && typeof interviewStatus.post.ID !== "undefined" ? parseInt(interviewStatus.post.ID) : 0;
 const nonce = typeof interviewStatus.nonce !== "undefined" ? interviewStatus.nonce : "";
 
+/**
+ * Listening for interview request submission to update metabox.
+ */
+
+window.addEventListener('DOMContentLoaded', () => {
+
+  // Button to listen for interview requests
+  const target = document.querySelector( "#send-interview-request" );
+
+  /**
+   * Callback function that renders react to refresh interview status.
+   * 
+   * @param {Object} event
+   */
+  target.addEventListener( 'click', function handle_interview_submit( event ) {
+
+    event.preventDefault();
+
+    wp.element.render(
+      wp.element.createElement( InterviewStatus, null ),
+      document.getElementById( "interview" )
+    );
+
+    target.removeEventListener( 'click', handle_interview_submit, true);
+  
+  }, true );
+
+});
+
+/**
+ * Label component abstraction.
+ *
+ * @param {string} label
+ * @param {string} info
+ */
 const Label = ( { label, info } ) => {
   return wp.element.createElement(
     "p",
@@ -20,6 +61,9 @@ const Label = ( { label, info } ) => {
   );
 };
 
+/**
+ * Displays label component with scheduled status.
+ */
 const Scheduled = () => {
   return wp.element.createElement(Label, {
     label: "Status:",
@@ -27,6 +71,12 @@ const Scheduled = () => {
   });
 };
 
+/**
+ * Fragment with 3 labels used for confirmed status.
+ *
+ * @param {string} location 
+ * @param {string} message
+ */
 const Confirmed = ( { location, message } ) => {
   return wp.element.createElement(
     Fragment,
@@ -46,6 +96,9 @@ const Confirmed = ( { location, message } ) => {
   );
 };
 
+/**
+ * Displays label component for cancelled status.
+ */
 const Cancelled = () => {
   return wp.element.createElement(
     Label,
@@ -56,6 +109,9 @@ const Cancelled = () => {
   );
 };
 
+/**
+ * Displays label component for no interview status.
+ */
 const NoInterview = () => {
   return wp.element.createElement(
     Label,
@@ -68,6 +124,17 @@ const NoInterview = () => {
 
 const DisplayError = ( { message = "An error occured." } ) => wp.element.createElement( "p", null, message );
 
+/**
+ * Chooses which components to rendered based off props passed in.
+ *
+ * @param {string} status
+ * @param {string} location
+ * @param {string} date
+ * @param {string} time
+ * @param {string} message
+ * @param {bool} loading
+ * @param {Object} error
+ */
 const DynamicStatus = ( { status, location, date, time, message, loading, error } ) => {
 
   if ( error !== null ) {
@@ -108,13 +175,13 @@ const DynamicStatus = ( { status, location, date, time, message, loading, error 
   }
 };
 
+/**
+ * Handle stateful logic and pass down to function components.
+ */
 class InterviewStatus extends Component {
   constructor() {
     super();
     this.state = {
-      target: "",
-      nonce: "",
-      applicantId: "",
       status: "",
       date: "",
       time: "",
@@ -123,63 +190,48 @@ class InterviewStatus extends Component {
       loading: true,
       error: null,
     };
-    this.listenForInterviews = this.listenForInterviews.bind( this );
+    this.fetchInterviews = this.fetchInterviews.bind( this );
+    this.handleStatusResponse = this.handleStatusResponse.bind( this );
   }
 
   componentDidMount() {
-    const target = document.querySelector( "#send-interview-request" );
-    this.setState(
-      {
-        target,
-        applicantId,
-        nonce
-      },
-      () => {
-        const { target } = this.state;
-        this.listenForInterviews();
-        target.addEventListener( "click", this.listenForInterviews );
-      }
-    );
+    // Fetch interview data on load.
+    this.fetchInterviews();
   }
 
-  componentWillUnmount() {
-    const { target } = this.state;
-    target.removeEventListener( "click", this.listenForInterviews );
-  }
-
-  listenForInterviews( event ) {
-    let timeout = 0;
-
-    if ( typeof event !== "undefined" ) {
-      event.preventDefault();
-      timeout = 1000;
-    }
-
-    const { applicantId, nonce } = this.state;
+  /**
+   * Fetch interview request status from rest api with nonce for validation.
+   */
+  fetchInterviews() {
 
     this.setState( { loading: true } );
 
-    setTimeout( () => {
-      apiFetch( {
-        path: `/level-playing-field/v1/interview-status?id=${applicantId}&_wpnonce=${nonce}`
-      } )
-        .then( ( applicant ) =>  {
-          if ( ! applicant.success ) {
-            const { message } = applicant.data;
-            return this.setState( { error: message, loading: false } );
-          }
-    
-          const { status, date, time, location, message } = applicant.data;
-          return this.setState( {
-            status,
-            date,
-            time,
-            location,
-            message,
-            loading: false,
-          } );
-        } )
-    }, timeout );
+    const endpoint = { path: `/level-playing-field/v1/interview-status?id=${applicantId}&_wpnonce=${nonce}` };
+    const timeout = 1000;
+
+    setTimeout(() => { 
+      apiFetch( endpoint )
+        .then( (applicant) => this.handleStatusResponse(applicant) )},
+      timeout
+    );
+
+  }
+
+  handleStatusResponse(applicant) {
+    if ( ! applicant.success ) {
+      const { message } = applicant.data;
+      return this.setState( { error: message, loading: false } );
+    }
+
+    const { status, date, time, location, message } = applicant.data;
+    return this.setState( {
+      status,
+      date,
+      time,
+      location,
+      message,
+      loading: false,
+    } );
   }
 
   render() {
@@ -193,7 +245,3 @@ class InterviewStatus extends Component {
   }
 }
 
-wp.element.render(
-  wp.element.createElement( InterviewStatus, null ),
-  document.getElementById( "interview" )
-);
