@@ -242,10 +242,11 @@ class ApplicantRepository extends CustomPostTypeRepository {
 			/**
 			 * Fires when an applicant field is saved.
 			 *
-			 * @param Field     $field     The current field being saved.
-			 * @param Applicant $applicant The applicant object.
+			 * @param Field       $field     The current field being saved.
+			 * @param Applicant   $applicant The applicant object.
+			 * @param Application $form      The application form object.
 			 */
-			do_action( 'lpf_applicant_save_field', $field, $applicant );
+			do_action( 'lpf_applicant_save_field', $field, $applicant, $form );
 		}
 
 		// Anonymize!
