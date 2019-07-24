@@ -961,9 +961,9 @@ final class Applicant extends CustomPostTypeEntity {
 				$this->persist_status();
 			} elseif ( $this->$key === $default ) {
 				// Default meta value can be deleted from the DB.
-				delete_post_meta( $this->post->ID, ApplicantMeta::META_PREFIXES[ $key ] );
+				delete_post_meta( $this->post->ID, $this->get_meta_key( $key ) );
 			} else {
-				update_post_meta( $this->post->ID, ApplicantMeta::META_PREFIXES[ $key ], $this->$key );
+				update_post_meta( $this->post->ID, $this->get_meta_key( $key ), $this->$key );
 			}
 
 			unset( $this->changes[ $key ] );
@@ -1141,35 +1141,12 @@ final class Applicant extends CustomPostTypeEntity {
 		// Load other properties from post meta.
 		$meta = $this->new ? [] : get_post_meta( $this->get_id() );
 		foreach ( $this->get_lazy_properties() as $key => $default ) {
-			$should_load = array_key_exists( $key, ApplicantMeta::META_PREFIXES );
-			/**
-			 * Filter whether a given meta value should be loaded into the Applicant.
-			 *
-			 * @param bool   $should_load Whether the property should be loaded.
-			 * @param string $key         The applicant property key.
-			 */
-			$should_load = apply_filters( 'lpf_applicant_should_load_property', $should_load, $key );
-			if ( ! $should_load ) {
-				continue;
-			}
-
 			// If they key has been changed, don't overwrite the change.
 			if ( array_key_exists( $key, $this->changes ) ) {
 				continue;
 			}
 
-			$meta_key = array_key_exists( $key, ApplicantMeta::META_PREFIXES )
-				? ApplicantMeta::META_PREFIXES[ $key ]
-				: $key;
-
-			/**
-			 * Filter the meta key of a given property key.
-			 *
-			 * @param string $meta_key The version of the key used for the postmeta table.
-			 * @param string $key      The applicant property key.
-			 */
-			$meta_key = apply_filters( 'lpf_applicant_meta_key', $meta_key, $key );
-
+			$meta_key = $this->get_meta_key( $key );
 			if ( array_key_exists( $meta_key, $meta ) ) {
 				$this->$key = maybe_unserialize( $meta[ $meta_key ][0] );
 			} else {
@@ -1478,5 +1455,28 @@ final class Applicant extends CustomPostTypeEntity {
 		 * @param string $property  The property name.
 		 */
 		return (array) apply_filters( 'lpf_applicant_property_structure', $structure, $property );
+	}
+
+	/**
+	 * Get the meta key for a given property.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param string $property The we want a meta key for.
+	 *
+	 * @return string The meta key.
+	 */
+	private function get_meta_key( $property ) {
+		$meta_key = array_key_exists( $property, ApplicantMeta::META_PREFIXES )
+			? ApplicantMeta::META_PREFIXES[ $property ]
+			: $property;
+
+		/**
+		 * Filter the meta key of a given property key.
+		 *
+		 * @param string $meta_key The version of the key used for the postmeta table.
+		 * @param string $property The applicant property key.
+		 */
+		return apply_filters( 'lpf_applicant_meta_key', $meta_key, $property );
 	}
 }
