@@ -22,12 +22,12 @@ use Yikes\LevelPlayingField\Exception\InvalidApplicantValue;
 use Yikes\LevelPlayingField\Exception\InvalidClass;
 use Yikes\LevelPlayingField\Exception\InvalidKey;
 use Yikes\LevelPlayingField\Exception\InvalidMethod;
+use Yikes\LevelPlayingField\Exception\InvalidProperty;
 use Yikes\LevelPlayingField\Field\Certifications;
 use Yikes\LevelPlayingField\Field\Experience;
 use Yikes\LevelPlayingField\Field\Schooling;
 use Yikes\LevelPlayingField\Field\Volunteer;
 use Yikes\LevelPlayingField\RequiredPages\ApplicantMessagingPage;
-use Yikes\LevelPlayingField\Roles\Capabilities;
 use Yikes\LevelPlayingField\Taxonomy\ApplicantStatus;
 
 /**
@@ -57,76 +57,6 @@ use Yikes\LevelPlayingField\Taxonomy\ApplicantStatus;
 final class Applicant extends CustomPostTypeEntity {
 
 	use ApplicantMetaDropdowns;
-
-	const SANITIZATION = [
-		ApplicantMeta::JOB              => FILTER_SANITIZE_NUMBER_INT,
-		ApplicantMeta::APPLICATION      => FILTER_SANITIZE_NUMBER_INT,
-		ApplicantMeta::EMAIL            => FILTER_SANITIZE_EMAIL,
-		ApplicantMeta::NAME             => FILTER_SANITIZE_STRING,
-		ApplicantMeta::COVER_LETTER     => FILTER_UNSAFE_RAW,
-		ApplicantMeta::PHONE            => FILTER_SANITIZE_NUMBER_INT,
-		ApplicantMeta::STATUS           => FILTER_SANITIZE_STRING,
-		ApplicantMeta::SCHOOLING        => [
-			ApplicantMeta::INSTITUTION => FILTER_SANITIZE_STRING,
-			ApplicantMeta::TYPE        => FILTER_SANITIZE_STRING,
-			ApplicantMeta::YEAR        => FILTER_SANITIZE_NUMBER_INT,
-			ApplicantMeta::MAJOR       => FILTER_SANITIZE_STRING,
-			ApplicantMeta::DEGREE      => FILTER_SANITIZE_STRING,
-		],
-		ApplicantMeta::CERTIFICATIONS   => [
-			ApplicantMeta::INSTITUTION => FILTER_SANITIZE_STRING,
-			ApplicantMeta::TYPE        => FILTER_SANITIZE_STRING,
-			ApplicantMeta::CERT_TYPE   => FILTER_SANITIZE_STRING,
-			ApplicantMeta::YEAR        => FILTER_SANITIZE_NUMBER_INT,
-			ApplicantMeta::STATUS      => FILTER_SANITIZE_STRING,
-		],
-		ApplicantMeta::SKILLS           => [
-			ApplicantMeta::SKILL       => FILTER_SANITIZE_STRING,
-			ApplicantMeta::PROFICIENCY => FILTER_SANITIZE_STRING,
-		],
-		ApplicantMeta::EXPERIENCE       => [
-			ApplicantMeta::ORGANIZATION     => FILTER_SANITIZE_STRING,
-			ApplicantMeta::INDUSTRY         => FILTER_SANITIZE_STRING,
-			ApplicantMeta::POSITION         => FILTER_SANITIZE_STRING,
-			ApplicantMeta::START_DATE       => FILTER_SANITIZE_STRING,
-			ApplicantMeta::END_DATE         => FILTER_SANITIZE_STRING,
-			ApplicantMeta::PRESENT_POSITION => FILTER_SANITIZE_NUMBER_INT,
-			ApplicantMeta::YEAR_DURATION    => FILTER_SANITIZE_STRING,
-		],
-		ApplicantMeta::VOLUNTEER        => [
-			ApplicantMeta::ORGANIZATION     => FILTER_SANITIZE_STRING,
-			ApplicantMeta::INDUSTRY         => FILTER_SANITIZE_STRING,
-			ApplicantMeta::POSITION         => FILTER_SANITIZE_STRING,
-			ApplicantMeta::START_DATE       => FILTER_SANITIZE_STRING,
-			ApplicantMeta::END_DATE         => FILTER_SANITIZE_STRING,
-			ApplicantMeta::PRESENT_POSITION => FILTER_SANITIZE_NUMBER_INT,
-			ApplicantMeta::YEAR_DURATION    => FILTER_SANITIZE_STRING,
-		],
-		ApplicantMeta::NICKNAME         => FILTER_SANITIZE_STRING,
-		ApplicantMeta::VIEWED           => FILTER_SANITIZE_NUMBER_INT,
-		ApplicantMeta::ADDRESS          => [
-			ApplicantMeta::LINE_1  => FILTER_SANITIZE_STRING,
-			ApplicantMeta::LINE_2  => FILTER_SANITIZE_STRING,
-			ApplicantMeta::CITY    => FILTER_SANITIZE_STRING,
-			ApplicantMeta::STATE   => FILTER_SANITIZE_STRING,
-			ApplicantMeta::COUNTRY => FILTER_SANITIZE_STRING,
-			ApplicantMeta::ZIP     => FILTER_SANITIZE_NUMBER_INT,
-		],
-		ApplicantMeta::INTERVIEW        => [
-			ApplicantMeta::DATE     => FILTER_SANITIZE_STRING,
-			ApplicantMeta::TIME     => FILTER_SANITIZE_STRING,
-			ApplicantMeta::LOCATION => FILTER_SANITIZE_STRING,
-			ApplicantMeta::MESSAGE  => FILTER_SANITIZE_STRING,
-		],
-		ApplicantMeta::INTERVIEW_STATUS => FILTER_SANITIZE_STRING,
-		ApplicantMeta::GUID             => FILTER_SANITIZE_STRING,
-		ApplicantMeta::LANGUAGES        => [
-			ApplicantMeta::LANGUAGE    => FILTER_SANITIZE_STRING,
-			ApplicantMeta::PROFICIENCY => FILTER_SANITIZE_STRING,
-		],
-		ApplicantMeta::ANONYMIZER       => FILTER_SANITIZE_STRING,
-		ApplicantMeta::ANONYMIZED       => FILTER_VALIDATE_BOOLEAN,
-	];
 
 	/**
 	 * The anonymizer class used for anonymization.
@@ -751,7 +681,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @param string $interview_status Whether an interview has been scheduled for this applicant.
 	 */
 	public function set_interview_status( $interview_status ) {
-		$this->{ApplicantMeta::INTERVIEW_STATUS} = filter_var( $interview_status, self::SANITIZATION[ ApplicantMeta::INTERVIEW_STATUS ] );
+		$this->{ApplicantMeta::INTERVIEW_STATUS} = filter_var( $interview_status, $this->get_sanitize_filter( ApplicantMeta::INTERVIEW_STATUS ) );
 		$this->changed_property( ApplicantMeta::INTERVIEW_STATUS );
 	}
 
@@ -877,8 +807,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @param string $guid A guid.
 	 */
 	public function set_guid( $guid ) {
-		$this->{ApplicantMeta::GUID} = filter_var( $guid, self::SANITIZATION[ ApplicantMeta::GUID ] );
-		$this->changed_property( ApplicantMeta::GUID );
+		$this->set_property( ApplicantMeta::GUID, $guid );
 	}
 
 	/**
@@ -902,7 +831,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @param string $anonymizer The class name used for anonymization.
 	 */
 	private function set_anonymizer( $anonymizer ) {
-		$this->{ApplicantMeta::ANONYMIZER} = addslashes( filter_var( $anonymizer, self::SANITIZATION[ ApplicantMeta::ANONYMIZER ] ) );
+		$this->{ApplicantMeta::ANONYMIZER} = addslashes( $anonymizer );
 		$this->changed_property( ApplicantMeta::ANONYMIZER );
 	}
 
@@ -925,7 +854,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @param bool $anonymized True to set this applicant as anonymized.
 	 */
 	private function set_anonymized( $anonymized ) {
-		$this->{ApplicantMeta::ANONYMIZED} = filter_var( $anonymized, self::SANITIZATION[ ApplicantMeta::ANONYMIZED ] );
+		$this->{ApplicantMeta::ANONYMIZED} = (bool) $anonymized;
 		$this->changed_property( ApplicantMeta::ANONYMIZED );
 	}
 
@@ -1082,7 +1011,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @return array
 	 */
 	protected function get_lazy_properties() {
-		return [
+		$defaults = [
 			ApplicantMeta::JOB              => 0,
 			ApplicantMeta::APPLICATION      => 0,
 			ApplicantMeta::EMAIL            => '',
@@ -1105,6 +1034,18 @@ final class Applicant extends CustomPostTypeEntity {
 			ApplicantMeta::GUID             => '',
 			ApplicantMeta::LANGUAGES        => [],
 		];
+
+		/**
+		 * Filter additional applicant "lazy" properties.
+		 *
+		 * These are properties that are loaded only when needed.
+		 *
+		 * @param array $properties The array of applicant properties as keys, with their default
+		 *                          setting as values.
+		 */
+		$additional = (array) apply_filters( 'lpf_applicant_lazy_properties', [] );
+
+		return array_merge( $additional, $defaults );
 	}
 
 	/**
@@ -1129,8 +1070,15 @@ final class Applicant extends CustomPostTypeEntity {
 		// Load other properties from post meta.
 		$meta = $this->new ? [] : get_post_meta( $this->get_id() );
 		foreach ( $this->get_lazy_properties() as $key => $default ) {
-			// Only include the meta we care about.
-			if ( ! array_key_exists( $key, ApplicantMeta::META_PREFIXES ) ) {
+			$should_load = array_key_exists( $key, ApplicantMeta::META_PREFIXES );
+			/**
+			 * Filter whether a given meta value should be loaded into the Applicant.
+			 *
+			 * @param bool   $should_load Whether the property should be loaded.
+			 * @param string $key         The applicant property key.
+			 */
+			$should_load = apply_filters( 'lpf_applicant_should_load_property', $should_load, $key );
+			if ( ! $should_load ) {
 				continue;
 			}
 
@@ -1139,9 +1087,20 @@ final class Applicant extends CustomPostTypeEntity {
 				continue;
 			}
 
-			$prefixed_key = ApplicantMeta::META_PREFIXES[ $key ];
-			if ( array_key_exists( $prefixed_key, $meta ) ) {
-				$this->$key = maybe_unserialize( $meta[ $prefixed_key ][0] );
+			$meta_key = array_key_exists( $key, ApplicantMeta::META_PREFIXES )
+				? ApplicantMeta::META_PREFIXES[ $key ]
+				: $key;
+
+			/**
+			 * Filter the meta key of a given property key.
+			 *
+			 * @param string $meta_key The version of the key used for the postmeta table.
+			 * @param string $key      The applicant property key.
+			 */
+			$meta_key = apply_filters( 'lpf_applicant_meta_key', $meta_key, $key );
+
+			if ( array_key_exists( $meta_key, $meta ) ) {
+				$this->$key = maybe_unserialize( $meta[ $meta_key ][0] );
 			} else {
 				$this->$key = $default;
 				$this->changed_property( $key );
@@ -1179,19 +1138,20 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @throws EmptyArray When an empty array of data is provided.
 	 */
 	private function filter_and_sanitize( $data, $key ) {
-		if ( ! array_key_exists( $key, self::SANITIZATION ) ) {
+		$structure = $this->get_data_structure( $key );
+		if ( empty( $structure ) ) {
 			throw InvalidKey::not_found( $key, __METHOD__ );
 		}
 
 		// Remove any extraneous keys.
-		$data = array_intersect_key( $data, self::SANITIZATION[ $key ] );
+		$data = array_intersect_key( $data, $structure );
 		if ( empty( $data ) ) {
 			throw EmptyArray::from_function( __METHOD__ );
 		}
 
 		// Sanitize each piece of data.
 		foreach ( $data as $index => &$value ) {
-			$value = filter_var( $value, self::SANITIZATION[ $key ][ $index ] );
+			$value = filter_var( $value, $this->get_sanitize_filter( $index ) );
 		}
 
 		return $data;
@@ -1207,12 +1167,18 @@ final class Applicant extends CustomPostTypeEntity {
 	 *
 	 * @throws InvalidApplicantValue When the value is not valid, or when there is no sanitization setting.
 	 */
-	private function set_property( $property, $value ) {
-		if ( ! array_key_exists( $property, self::SANITIZATION ) ) {
+	public function set_property( $property, $value ) {
+		$sanitize = $this->get_sanitize_filter( $property );
+		if ( FILTER_FLAG_NONE === $sanitize ) {
 			throw InvalidApplicantValue::no_sanitization( $property );
 		}
 
-		$filtered = filter_var( $value, self::SANITIZATION[ $property ] );
+		// Certain properties are only able to be modified by internal methods.
+		if ( array_key_exists( $property, $this->get_excluded_properties() ) ) {
+			throw InvalidProperty::cannot_modify( $property );
+		}
+
+		$filtered = filter_var( $value, $sanitize );
 		if ( false === $value ) {
 			throw InvalidApplicantValue::property_value( $property, $value );
 		}
@@ -1261,5 +1227,185 @@ final class Applicant extends CustomPostTypeEntity {
 		}
 
 		return $properties;
+	}
+
+	/**
+	 * Get the sanitization value for use with filter_var().
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param string $property The property being filtered.
+	 *
+	 * @return int The sanitization value.
+	 */
+	private function get_sanitize_filter( $property ) {
+		switch ( $property ) {
+			case ApplicantMeta::ANONYMIZER:
+			case ApplicantMeta::CERT_TYPE:
+			case ApplicantMeta::CITY:
+			case ApplicantMeta::COUNTRY:
+			case ApplicantMeta::DATE:
+			case ApplicantMeta::DEGREE:
+			case ApplicantMeta::END_DATE:
+			case ApplicantMeta::GUID:
+			case ApplicantMeta::INDUSTRY:
+			case ApplicantMeta::INSTITUTION:
+			case ApplicantMeta::INTERVIEW_STATUS:
+			case ApplicantMeta::LANGUAGE:
+			case ApplicantMeta::LINE_1:
+			case ApplicantMeta::LINE_2:
+			case ApplicantMeta::LOCATION:
+			case ApplicantMeta::MAJOR:
+			case ApplicantMeta::MESSAGE:
+			case ApplicantMeta::NAME:
+			case ApplicantMeta::NICKNAME:
+			case ApplicantMeta::ORGANIZATION:
+			case ApplicantMeta::POSITION:
+			case ApplicantMeta::PROFICIENCY:
+			case ApplicantMeta::SKILL:
+			case ApplicantMeta::START_DATE:
+			case ApplicantMeta::STATE:
+			case ApplicantMeta::STATUS:
+			case ApplicantMeta::TIME:
+			case ApplicantMeta::TYPE:
+			case ApplicantMeta::YEAR_DURATION:
+				$sanitize = FILTER_SANITIZE_STRING;
+				break;
+
+			case ApplicantMeta::APPLICATION:
+			case ApplicantMeta::JOB:
+			case ApplicantMeta::PHONE:
+			case ApplicantMeta::PRESENT_POSITION:
+			case ApplicantMeta::VIEWED:
+			case ApplicantMeta::YEAR:
+			case ApplicantMeta::ZIP:
+				$sanitize = FILTER_SANITIZE_NUMBER_INT;
+				break;
+
+			case ApplicantMeta::EMAIL:
+				$sanitize = FILTER_SANITIZE_EMAIL;
+				break;
+
+			case ApplicantMeta::COVER_LETTER:
+				$sanitize = FILTER_UNSAFE_RAW;
+				break;
+
+			case ApplicantMeta::ANONYMIZED:
+				$sanitize = FILTER_VALIDATE_BOOLEAN;
+				break;
+
+			default:
+				$sanitize = FILTER_FLAG_NONE;
+		}
+
+		/**
+		 * Filter the sanitize setting for a given property.
+		 *
+		 * @param int    $sanitize The sanitization setting for use with filter_var().
+		 * @param string $property The property being filtered.
+		 */
+		return (int) apply_filters( 'lpf_applicant_sanitize_property', $sanitize, $property );
+	}
+
+	/**
+	 * Get the data structure of a complex property.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param string $property The property name.
+	 *
+	 * @return array The structure of the data. Intended to be used with array_intersect_key().
+	 */
+	private function get_data_structure( $property ) {
+		switch ( $property ) {
+			case ApplicantMeta::SCHOOLING:
+				$structure = [
+					ApplicantMeta::INSTITUTION => 1,
+					ApplicantMeta::TYPE        => 1,
+					ApplicantMeta::YEAR        => 1,
+					ApplicantMeta::MAJOR       => 1,
+					ApplicantMeta::DEGREE      => 1,
+				];
+				break;
+
+			case ApplicantMeta::CERTIFICATIONS:
+				$structure = [
+					ApplicantMeta::INSTITUTION => 1,
+					ApplicantMeta::TYPE        => 1,
+					ApplicantMeta::CERT_TYPE   => 1,
+					ApplicantMeta::YEAR        => 1,
+					ApplicantMeta::STATUS      => 1,
+				];
+				break;
+
+			case ApplicantMeta::SKILLS:
+				$structure = [
+					ApplicantMeta::SKILL       => 1,
+					ApplicantMeta::PROFICIENCY => 1,
+				];
+				break;
+
+			case ApplicantMeta::EXPERIENCE:
+				$structure = [
+					ApplicantMeta::ORGANIZATION     => 1,
+					ApplicantMeta::INDUSTRY         => 1,
+					ApplicantMeta::POSITION         => 1,
+					ApplicantMeta::START_DATE       => 1,
+					ApplicantMeta::END_DATE         => 1,
+					ApplicantMeta::PRESENT_POSITION => 1,
+					ApplicantMeta::YEAR_DURATION    => 1,
+				];
+				break;
+
+			case ApplicantMeta::VOLUNTEER:
+				$structure = [
+					ApplicantMeta::ORGANIZATION     => 1,
+					ApplicantMeta::INDUSTRY         => 1,
+					ApplicantMeta::POSITION         => 1,
+					ApplicantMeta::START_DATE       => 1,
+					ApplicantMeta::END_DATE         => 1,
+					ApplicantMeta::PRESENT_POSITION => 1,
+					ApplicantMeta::YEAR_DURATION    => 1,
+				];
+				break;
+
+			case ApplicantMeta::ADDRESS:
+				$structure = [
+					ApplicantMeta::LINE_1  => 1,
+					ApplicantMeta::LINE_2  => 1,
+					ApplicantMeta::CITY    => 1,
+					ApplicantMeta::STATE   => 1,
+					ApplicantMeta::COUNTRY => 1,
+					ApplicantMeta::ZIP     => 1,
+				];
+				break;
+
+			case ApplicantMeta::INTERVIEW:
+				$structure = [
+					ApplicantMeta::DATE     => 1,
+					ApplicantMeta::TIME     => 1,
+					ApplicantMeta::LOCATION => 1,
+					ApplicantMeta::MESSAGE  => 1,
+				];
+				break;
+
+			case ApplicantMeta::LANGUAGES:
+				$structure = [
+					ApplicantMeta::LANGUAGE    => 1,
+					ApplicantMeta::PROFICIENCY => 1,
+				];
+				break;
+
+			default:
+				$structure = [];
+		}
+
+		/**
+		 * Filter the structure of a complex property of applicant data.
+		 *
+		 * @param array  $structure The structure of the data. Intended to be used with array_intersect_key().
+		 * @param string $property  The property name.
+		 */
+		return (array) apply_filters( 'lpf_applicant_property_structure', $structure, $property );
 	}
 }
