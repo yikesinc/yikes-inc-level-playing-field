@@ -16,6 +16,7 @@ use WP_Query;
 use Yikes\LevelPlayingField\Anonymizer\AnonymizerFactory;
 use Yikes\LevelPlayingField\CustomPostType\ApplicantManager as ApplicantCPT;
 use Yikes\LevelPlayingField\Exception\InvalidPostID;
+use Yikes\LevelPlayingField\Field\Field;
 use Yikes\LevelPlayingField\Form\Application;
 
 /**
@@ -234,11 +235,17 @@ class ApplicantRepository extends CustomPostTypeRepository {
 		foreach ( $form->fields as $field ) {
 			$name   = str_replace( ApplicationMeta::FORM_FIELD_PREFIX, '', $field->get_id() );
 			$method = "set_{$name}";
-			if ( ! method_exists( $applicant, $method ) ) {
-				continue;
+			if ( method_exists( $applicant, $method ) ) {
+				$applicant->{$method}( $field->get_sanitized_value() );
 			}
 
-			$applicant->{$method}( $field->get_sanitized_value() );
+			/**
+			 * Fires when an applicant field is saved.
+			 *
+			 * @param Field     $field     The current field being saved.
+			 * @param Applicant $applicant The applicant object.
+			 */
+			do_action( 'lpf_applicant_save_field', $field, $applicant );
 		}
 
 		// Anonymize!
