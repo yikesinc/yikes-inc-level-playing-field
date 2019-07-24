@@ -71,7 +71,7 @@ class InvalidField extends \InvalidArgumentException implements Exception {
 	public static function field_required( $field, $context = '' ) {
 		$message = sprintf(
 			/* translators: %1$s is the field label, %2$s is the optional additional context */
-			esc_html__( 'The field %1$s is required. %$2s', 'yikes-level-playing-field' ),
+			esc_html__( 'The field %1$s is required. %2$s', 'yikes-level-playing-field' ),
 			$field,
 			$context
 		);
