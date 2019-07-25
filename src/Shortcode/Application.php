@@ -293,7 +293,10 @@ final class Application extends BaseShortcode {
 	 * @return string
 	 */
 	private function exception_to_string( \Exception $e ) {
-		$error_message = "If you see this message, something's wrong! To view an application for a specific job, do one of the following:<br/>";
+		$error_message = "Please do not delete this page. If you see this message, something's wrong! To display the application for a specific job, do one of the following on a separate post, page or other available post type:" . "<br/>";
+		$error_message .= "Use the application shortcode.";
+		$error_message .= "Use the job shortcode/block";
+		$error_message .= "Use the job listings shortcode/block";
 		$error_message .= sprintf(
 		/* translators: %s refers to the error message */
 			__( 'There was an error displaying the form: %s', 'yikes-level-playing-field' ),
