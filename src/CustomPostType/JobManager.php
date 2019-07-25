@@ -50,7 +50,7 @@ class JobManager extends BaseCustomPostType {
 			if ( $this->get_slug() !== $post->post_type ) {
 				return $title;
 			}
-			
+
 			return $this->get_job_description_placeholder();
 		}, 10, 2 );
 

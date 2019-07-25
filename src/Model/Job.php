@@ -28,6 +28,7 @@ use Yikes\LevelPlayingField\RequiredPages\ApplicationFormPage;
 final class Job extends CustomPostTypeEntity {
 
 	use JobMetaDropdowns;
+	use JobPrefix;
 
 	/**
 	 * Get the job status.
@@ -182,7 +183,7 @@ final class Job extends CustomPostTypeEntity {
 	 */
 	public function persist_properties() {
 		foreach ( $this->get_lazy_properties() as $key => $default ) {
-			$prefixed_key = JobMeta::META_PREFIX . $key;
+			$prefixed_key = $this->meta_prefix( $key );
 			if ( $this->$key === $default ) {
 				delete_post_meta( $this->get_id(), $prefixed_key );
 				continue;

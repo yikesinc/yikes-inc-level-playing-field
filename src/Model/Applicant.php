@@ -475,7 +475,7 @@ final class Applicant extends CustomPostTypeEntity {
 		$diff  = date_diff( $start, $end );
 
 		// Add calculated duration to experience and save.
-		$experience[ ApplicantMeta::YEAR_DURATION ] = $diff instanceof DateInterval ? $this->calculate_date_diff( $diff, $experience[ ApplicantMeta::PRESENT_POSITION ] ) : ''; 
+		$experience[ ApplicantMeta::YEAR_DURATION ] = $diff instanceof DateInterval ? $this->calculate_date_diff( $diff, $experience[ ApplicantMeta::PRESENT_POSITION ] ) : '';
 		$this->{ApplicantMeta::EXPERIENCE}[]        = $this->filter_and_sanitize( $experience, ApplicantMeta::EXPERIENCE );
 		$this->changed_property( ApplicantMeta::EXPERIENCE );
 	}

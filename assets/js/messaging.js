@@ -123,6 +123,19 @@ jQuery( function ( $ ) {
 		};
 
 		$.post( messaging_data.ajax.url, data, function( response ) {
+
+			// Handle Failed Email Requests.
+			if ( ! response.success ) {
+				return send_interview_request_failed( response );
+			}
+
+			// Check if error message is present and remove it.
+			if ( $( '#lpf-email-error-message' ).length ) {
+
+				$( '#lpf-email-error-message' ).remove();
+
+			}
+
 			send_interview_request_response( response );
 		});
 	}
@@ -150,6 +163,31 @@ jQuery( function ( $ ) {
 
 		// Show the new message on the message board.
 		refresh_message_board( response.data.post_id );
+	}
+
+	/**
+	 * Display error when interview request email fails.
+	 */
+	function send_interview_request_failed( response ) {
+
+		refresh_message_board( response.data.post_id );
+
+		// If error message is already present don't add another.
+		if ( $( '#lpf-email-error-message' ).length ) {
+
+			return;
+
+		}
+
+		const errorId       = 'lpf-email-error-message';
+		const errorClass    = 'notice notice-error';
+		const errorMessage  = 'Irks! Your website is having trouble sending email. ';
+		const wpsmtpLink    = 'https://wordpress.org/plugins/wp-mail-smtp/';
+		const wpsmtpMessage = 'Try using WP Mail SMTP To Send Emails.';
+		const errorElement  = `<div id="${errorId}" class="${errorClass}"><p>${errorMessage}<a href="${wpsmtpLink}" target="_blank" rel="noopener noreferrer">${wpsmtpMessage}</a></p></div>`;
+
+		 // Use js to display error message before refresh.
+		$( errorElement ).insertAfter( '.wp-header-end' );
 	}
 
 	/**
@@ -203,6 +241,7 @@ jQuery( function ( $ ) {
 
 		$.post( messaging_data.ajax.url, data, function( response ){
 			refresh_message_board_response( response );
+
 			scroll_to_bottom();
 		});
 	}
@@ -221,4 +260,5 @@ jQuery( function ( $ ) {
 	 	const conversation_container = $( '.conversation-container' );
 		conversation_container.animate({ scrollTop: conversation_container.prop( 'scrollHeight' ) - conversation_container.height() }, 1 );
 	 }
+
 });

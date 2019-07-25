@@ -103,6 +103,8 @@ class ApplicantMessaging implements Activateable, Deactivateable, Renderable, As
 		add_action( 'wp_ajax_send_interview_request', [ $this, 'send_interview_request' ] );
 		add_action( 'pre_get_comments', [ $this, 'exclude_applicant_messages' ] );
 		add_filter( 'wp_count_comments', [ $this, 'exclude_applicant_messages_from_counts' ], 99, 2 );
+		add_option( 'lpf_interview_request_failed', false, '', 'yes' );
+		add_action( 'admin_notices', [ $this, 'maybe_display_email_error_notice' ] );
 	}
 
 	/**
@@ -528,7 +530,7 @@ class ApplicantMessaging implements Activateable, Deactivateable, Renderable, As
 		$applicant = new Applicant( get_post( $post_id ) );
 
 		/* translators: %1$s is the date and %2$s is the time. */
-		$message .= '<div class="lpf-message-interview-date">' . sprintf( __( 'You have received a request for an interview on %1$s at %2$s.', 'yikes-level-playing-field' ), $date, $time ) . '</div>';
+		$message = '<div class="lpf-message-interview-date">' . sprintf( __( 'You have received a request for an interview on %1$s at %2$s.', 'yikes-level-playing-field' ), $date, $time ) . '</div>';
 		/* translators: %1$s is the location. */
 		$message .= '<div class="lpf-message-interview-location">' . sprintf( __( 'Interview location: %1$s.', 'yikes-level-playing-field' ), '</div>' . $location );
 		$message .= '<div class="lpf-message-interview-message">' . sprintf( __( 'Message from employer', 'yikes-level-playing-field' ) ) . '</div>';
@@ -551,6 +553,32 @@ class ApplicantMessaging implements Activateable, Deactivateable, Renderable, As
 			// Send the message as an email to the applicant.
 			$email = ( new InterviewRequestToApplicantEmail( $applicant, $message ) )->send();
 
+			// Check if error occured and handle it.
+			if ( ! $email ) {
+
+				// Delete interview request comment because it wasn't sent.
+				$message_class->delete_comment( $new_message );
+
+				// Update option to set off admin notice for email error.
+				if ( ! get_option( 'lpf_interview_request_failed' ) ) {
+
+					update_option( 'lpf_interview_request_failed', true );
+
+				}
+
+				wp_send_json_error( [
+					'reason'  => __( 'Email failed to send.', 'yikes-level-playing-field' ),
+					'post_id' => $post_id,
+				] );
+			}
+
+			// Email was successful reset our error option if set.
+			if ( get_option( 'lpf_interview_request_failed' ) ) {
+
+				update_option( 'lpf_interview_request_failed', false );
+
+			}
+
 			// Save the interview variables to the applicant model.
 			$applicant->set_interview_status( 'scheduled' );
 			$applicant->set_interview([
@@ -572,4 +600,31 @@ class ApplicantMessaging implements Activateable, Deactivateable, Renderable, As
 			'reason' => __( 'The comment could not be inserted.', 'yikes-level-playing-field' ),
 		], 400 );
 	}
+
+	/**
+	 * Display email error notice if error occurs during interview request.
+	 *
+	 * @since %VERSION%
+	 */
+	public function maybe_display_email_error_notice() {
+		$error_id = 'lpf-email-error-message';
+		$class    = 'notice notice-error';
+		$link     = 'https://wordpress.org/plugins/wp-mail-smtp/';
+
+		$check_for_errors = get_option( 'lpf_interview_request_failed' );
+
+		if ( ! $check_for_errors ) {
+			return;
+		}
+
+		printf(
+			'<div id="%1$s" class="%2$s"><p>%3$s<a href="%4$s" rel=”noopener noreferrer” target="_blank">%5$s</a></p></div>',
+			esc_attr( $error_id ),
+			esc_attr( $class ),
+			esc_html__( 'Irks! Your website is having trouble sending email. ', 'yikes-level-playing-field' ),
+			esc_attr( $link ),
+			esc_html__( 'Try using WP Mail SMTP To Send Emails.', 'yikes-level-playing-field' )
+		);
+	}
+
 }
