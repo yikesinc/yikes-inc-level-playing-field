@@ -115,7 +115,7 @@ abstract class BaseRequiredPage implements Registerable, Service {
 	 * @param int $post_id The post ID.
 	 */
 	public function delete_option_on_page_delete( $post_id ) {
-		if ( $this->get_page_id( static::PAGE_SLUG ) === $post_id ) {
+		if ( $this->get_page_id( static::PAGE_SLUG ) === (int) $post_id ) {
 			delete_option( static::PAGE_SLUG );
 		}
 	}
