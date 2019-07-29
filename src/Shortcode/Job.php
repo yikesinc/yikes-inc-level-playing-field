@@ -9,7 +9,7 @@
 
 namespace Yikes\LevelPlayingField\Shortcode;
 
-use Yikes\LevelPlayingField\Exception\InvalidPostID;
+use Yikes\LevelPlayingField\Exception\Exception;
 use Yikes\LevelPlayingField\Model\JobRepository;
 
 /**
@@ -41,8 +41,8 @@ final class Job extends BaseJobs {
 	public function process_shortcode( $atts ) {
 		try {
 			return parent::process_shortcode( $atts );
-		} catch ( InvalidPostID $e ) {
-			return WP_DEBUG ? esc_html( $e->getMessage() ) : '';
+		} catch ( Exception $e ) {
+			return $this->exception_to_string( $e );
 		}
 	}
 
@@ -102,5 +102,25 @@ final class Job extends BaseJobs {
 				'job_apply_button' => static::JOB_APPLY_PARTIAL,
 			],
 		];
+	}
+
+	/**
+	 * Convert an exception to a string.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param \Exception $e The exception object.
+	 *
+	 * @return string
+	 */
+	private function exception_to_string( \Exception $e ) {
+		$error_message = sprintf(
+		/* translators: %s refers to the error message */
+			__( 'There was an error displaying the job listing: %s', 'yikes-level-playing-field' ),
+			$e->getMessage()
+		);
+		$error_message .= '<br />';
+		$error_message .= __( 'Please verify that the correct job ID has been provided in the job shortcode.', 'yikes-level-playing-field' );
+		return $error_message;
 	}
 }
