@@ -36,6 +36,12 @@ abstract class BaseRequiredPage implements Registerable, Service {
 		// Add a post display state for our messaging page.
 		add_filter( 'display_post_states', [ $this, 'required_pages_post_states' ], 10, 2 );
 
+		//
+		add_filter( 'pre_trash_post', [ $this, 'prevent_trash_required_pages' ], 10, 2 );
+
+		// Show a notice on attempted trash of required page.
+		add_action( 'admin_notices', [ $this, 'trash_page_failure_notice' ], 20, 2 );
+
 		// Delete our corresponding option if a required page is deleted.
 		add_action( 'delete_post', [ $this, 'delete_option_on_page_delete' ], 10, 1 );
 	}
@@ -105,6 +111,39 @@ abstract class BaseRequiredPage implements Registerable, Service {
 		}
 
 		return $post_states;
+	}
+
+	/**
+	 * Set flag to prevent required pages from being trashed.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param bool     $trash Whether to go forward with trashing.
+	 * @param /WP_Post $post  Post object.
+	 *
+	 * @return bool   $trash  Whether to go forward with trashing.
+	 */
+	public function prevent_trash_required_pages( $trash, $post ) {
+		if ( $this->get_page_id( static::PAGE_SLUG ) === $post->ID ) {
+			return true;
+		}
+		return $trash;
+	}
+
+	/**
+	 * Show a notice if we failed to create a page.
+	 *
+	 * @since %VERSION%
+	 */
+	public function trash_page_failure_notice() {
+		printf(
+			'<div class="notice notice-error is-dismissible"><p>%s</p></div>',
+			sprintf(
+			/* translators: %1$s is the post titles for our required pages. */
+				esc_html__( 'Ebonie There was an error creating one of the plugin\'s required pages: %1$s.', 'yikes-level-playing-field' ),
+				esc_attr( static::POST_TITLE )
+			)
+		);
 	}
 
 	/**
