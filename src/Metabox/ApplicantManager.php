@@ -24,6 +24,7 @@ use Yikes\LevelPlayingField\Model\ApplicantRepository;
 use Yikes\LevelPlayingField\Model\JobRepository;
 use Yikes\LevelPlayingField\Service;
 use Yikes\LevelPlayingField\View\View;
+use Yikes\LevelPlayingField\Roles\Capabilities;
 
 /**
  * Class ApplicantManager
@@ -82,8 +83,42 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 
 		add_action( 'rest_api_init', function() {
 			register_rest_route( 'yikes-level-playing-field/v1', '/interview-status', [
-				'methods'  => 'GET',
-				'callback' => [ $this, 'get_interview_status' ],
+				'methods'             => \WP_REST_Server::READABLE,
+				'permission_callback' => function () {
+					return current_user_can( Capabilities::EDIT_APPLICANTS );
+				},
+				'callback'            => function( \WP_REST_Request $request ) {
+					$id = isset( $request['id'] ) ? absint( wp_unslash( $request['id'] ) ) : 0;
+
+					if ( 0 === $id ) {
+						wp_send_json_error( [
+							'message' => __( 'User Not Found.', 'yikes-level-playing-field' ),
+						], 400 );
+					}
+
+					try {
+						$applicant = ( new ApplicantRepository() )->find( $id );
+					} catch ( \Exception $e ) {
+						wp_send_json_error( [
+							'code'    => get_class( $e ),
+							'message' => esc_js( $e->getMessage() ),
+						], 400 );
+					}
+
+					$status    = $applicant->get_interview_status();
+					$interview = $applicant->get_interview();
+
+					$response = [
+						'id'       => $id,
+						'status'   => $status,
+						'date'     => $interview['date'] ? $interview['date'] : '',
+						'time'     => $interview['time'] ? $interview['time'] : '',
+						'location' => $interview['location'] ? $interview['location'] : '',
+						'message'  => $interview['message'] ? $interview['message'] : '',
+					];
+
+					return new \WP_REST_Response( $response );
+				},
 			]);
 		});
 
@@ -111,45 +146,6 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 		add_action( 'lpf_applicant_screen_rendered', function( View $view ) {
 			$this->mark_messages_read( $view->applicant );
 		}, 10 );
-	}
-
-	/**
-	 * Rest API Callback Function Returns Interview Status For Single Applicant
-	 *
-	 * @since %VERSION%
-	 *
-	 * @param \WP_REST_Request $request contains request params id and nonce.
-	 */
-	public function get_interview_status( \WP_REST_Request $request ) {
-		// Handle nonce.
-		if ( ! check_ajax_referer( 'wp_rest', $request['_wpnonce'], false ) ) {
-			wp_send_json_error( [
-				'message' => 'Please login.',
-			], 400 );
-		}
-
-		$id = isset( $request['id'] ) ? absint( wp_unslash( $request['id'] ) ) : 0;
-
-		if ( 0 === $id ) {
-			wp_send_json_error( [
-				'message' => 'User Not Found.',
-			], 400 );
-		}
-
-		$applicant = ( new ApplicantRepository() )->find( $id );
-		$status    = $applicant->get_interview_status();
-		$interview = $applicant->get_interview();
-
-		$response = [
-			'id'       => $id,
-			'status'   => $status,
-			'date'     => $interview['date'] ? $interview['date'] : '',
-			'time'     => $interview['time'] ? $interview['time'] : '',
-			'location' => $interview['location'] ? $interview['location'] : '',
-			'message'  => $interview['message'] ? $interview['message'] : '',
-		];
-
-		wp_send_json_success( $response );
 	}
 
 	/**
@@ -325,8 +321,8 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 	protected function get_assets() {
 		$post_id          = isset( $_GET['post'] ) ? filter_var( $_GET['post'], FILTER_SANITIZE_NUMBER_INT ) : 0;
 		$interview_status = new ScriptAsset( self::JS_HANDLE, self::JS_URI, self::JS_DEPENDENCIES, self::JS_VERSION, ScriptAsset::ENQUEUE_FOOTER );
-		$interview_status->add_localization( 'interviewStatus', [
-			'post'  => [ 'ID' => $post_id ],
+		$interview_status->add_localization( 'wp-api', 'wpApiSettings', [
+			'root'  => esc_url_raw( rest_url() ),
 			'nonce' => wp_create_nonce( 'wp_rest' ),
 		] );
 		$applicant = new ScriptAsset( 'lpf-applicant-manager-js', 'assets/js/applicant-manager', [ 'jquery' ] );
