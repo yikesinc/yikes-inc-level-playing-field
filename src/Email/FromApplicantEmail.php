@@ -34,7 +34,7 @@ abstract class FromApplicantEmail extends ApplicantEmail {
 	 */
 	protected function recipient() {
 		// Fetch the CSV list of email addresses.
-		$recipients = explode( ',', ( new AdditionalEmailRecipients() )->get() );
+		$recipients = array_map( 'trim', explode( ',', ( new AdditionalEmailRecipients() )->get() ) );
 
 		// Fetch the enabled roles for email addresses.
 		$recipient_roles = array_filter( ( new EmailRecipientRoles() )->get() );
