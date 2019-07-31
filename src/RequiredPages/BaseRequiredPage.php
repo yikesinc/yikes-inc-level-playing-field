@@ -36,10 +36,10 @@ abstract class BaseRequiredPage implements Registerable, Service {
 		// Add a post display state for our messaging page.
 		add_filter( 'display_post_states', [ $this, 'required_pages_post_states' ], 10, 2 );
 
-		//
+		// Keep our application and messaging page from being moved to trash.
 		add_filter( 'pre_trash_post', [ $this, 'prevent_trash_required_pages' ], 10, 2 );
 
-		// Show a notice on attempted trash of required page.
+		// Show a notice on attempted trash of a required page.
 		add_action( 'admin_notices', [ $this, 'trash_page_failure_notice' ], 20, 2 );
 
 		// Delete our corresponding option if a required page is deleted.
@@ -136,11 +136,22 @@ abstract class BaseRequiredPage implements Registerable, Service {
 	 * @since %VERSION%
 	 */
 	public function trash_page_failure_notice() {
+
+		if ( ! isset( $_REQUEST['ids'] ) ) {
+			return;
+		}
+
+		$post_ids = explode( ',', $_REQUEST['ids'] );
+		$tmp = $this->get_page_id( static::PAGE_SLUG );
+		if ( ! in_array( (string) $this->get_page_id( static::PAGE_SLUG ), $post_ids, true ) ) {
+			return;
+		}
+
 		printf(
 			'<div class="notice notice-error is-dismissible"><p>%s</p></div>',
 			sprintf(
 			/* translators: %1$s is the post titles for our required pages. */
-				esc_html__( 'Ebonie There was an error creating one of the plugin\'s required pages: %1$s.', 'yikes-level-playing-field' ),
+				esc_html__( 'The following page is required for the Level Playing Field plugin and cannot be moved to Trash: %1$s.', 'yikes-level-playing-field' ),
 				esc_attr( static::POST_TITLE )
 			)
 		);
