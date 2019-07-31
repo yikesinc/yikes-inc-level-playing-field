@@ -50,7 +50,6 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 	const CSS_DEPENDENCIES = [ 'wp-components' ];
 	const JS_HANDLE        = 'lpf-interview-details-admin-script';
 	const JS_URI           = 'assets/js/interview-details';
-	const JS_DEPENDENCIES  = [ 'wp-element', 'wp-i18n', 'wp-components' ];
 	const JS_VERSION       = false;
 
 	// Applicant Partials.
@@ -333,7 +332,7 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 	 */
 	protected function get_assets() {
 		$post_id          = isset( $_GET['post'] ) ? filter_var( $_GET['post'], FILTER_SANITIZE_NUMBER_INT ) : 0;
-		$interview_status = new ScriptAsset( self::JS_HANDLE, self::JS_URI, self::JS_DEPENDENCIES, self::JS_VERSION, ScriptAsset::ENQUEUE_FOOTER );
+		$interview_status = new ScriptAsset( self::JS_HANDLE, self::JS_URI, [], self::JS_VERSION, ScriptAsset::ENQUEUE_FOOTER );
 		$interview_status->add_localization( 'wpApiSettings', [
 			'nonce' => wp_create_nonce( 'wp_rest' ),
 		] );
