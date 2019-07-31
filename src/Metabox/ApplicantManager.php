@@ -88,36 +88,45 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 					return current_user_can( Capabilities::EDIT_APPLICANTS );
 				},
 				'callback'            => function( \WP_REST_Request $request ) {
+					// Initialize our response to modify for different responses.
+					$response = new \WP_REST_Response();
+
 					$id = isset( $request['id'] ) ? absint( wp_unslash( $request['id'] ) ) : 0;
 
 					if ( 0 === $id ) {
-						wp_send_json_error( [
+						$response->set_data( [
 							'message' => __( 'User Not Found.', 'yikes-level-playing-field' ),
-						], 400 );
+						] );
+
+						// Set 400 status code
+						$response->set_status( 400 );
+
+						return $response;
 					}
 
 					try {
 						$applicant = ( new ApplicantRepository() )->find( $id );
 					} catch ( \Exception $e ) {
-						wp_send_json_error( [
+						$response->set_data([
 							'code'    => get_class( $e ),
 							'message' => esc_js( $e->getMessage() ),
-						], 400 );
+						]);
+						return $response;
 					}
 
 					$status    = $applicant->get_interview_status();
 					$interview = $applicant->get_interview();
 
-					$response = [
+					$response->set_data( [
 						'id'       => $id,
 						'status'   => $status,
 						'date'     => $interview['date'] ? $interview['date'] : '',
 						'time'     => $interview['time'] ? $interview['time'] : '',
 						'location' => $interview['location'] ? $interview['location'] : '',
 						'message'  => $interview['message'] ? $interview['message'] : '',
-					];
+					] );
 
-					return new \WP_REST_Response( $response );
+					return $response;
 				},
 			]);
 		});
@@ -321,8 +330,7 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 	protected function get_assets() {
 		$post_id          = isset( $_GET['post'] ) ? filter_var( $_GET['post'], FILTER_SANITIZE_NUMBER_INT ) : 0;
 		$interview_status = new ScriptAsset( self::JS_HANDLE, self::JS_URI, self::JS_DEPENDENCIES, self::JS_VERSION, ScriptAsset::ENQUEUE_FOOTER );
-		$interview_status->add_localization( 'wp-api', 'wpApiSettings', [
-			'root'  => esc_url_raw( rest_url() ),
+		$interview_status->add_localization( 'wpApiSettings', [
 			'nonce' => wp_create_nonce( 'wp_rest' ),
 		] );
 		$applicant = new ScriptAsset( 'lpf-applicant-manager-js', 'assets/js/applicant-manager', [ 'jquery' ] );
