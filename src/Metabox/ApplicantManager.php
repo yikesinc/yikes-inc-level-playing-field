@@ -93,6 +93,7 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 
 					$id = isset( $request['id'] ) ? absint( wp_unslash( $request['id'] ) ) : 0;
 
+					// If the users not found return an error.
 					if ( 0 === $id ) {
 						$response->set_data( [
 							'message' => __( 'User Not Found.', 'yikes-level-playing-field' ),
