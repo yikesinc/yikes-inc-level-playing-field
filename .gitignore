@@ -5,7 +5,6 @@ node_modules/
 *.sql
 *.tar.gz
 *.zip
-.vscode
 
 # Ignore compiled files. This prevents unnecessary noise in Git history
 assets/css/*.css
