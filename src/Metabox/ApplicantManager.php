@@ -10,6 +10,9 @@
 namespace Yikes\LevelPlayingField\Metabox;
 
 use WP_Post;
+use WP_REST_Request;
+use WP_REST_Response;
+use WP_REST_Server;
 use Yikes\LevelPlayingField\Assets\Asset;
 use Yikes\LevelPlayingField\Assets\AssetsAware;
 use Yikes\LevelPlayingField\Assets\AssetsAwareness;
@@ -83,13 +86,13 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 
 		add_action( 'rest_api_init', function() {
 			register_rest_route( 'yikes-level-playing-field/v1', '/interview-status', [
-				'methods'             => \WP_REST_Server::READABLE,
+				'methods'             => WP_REST_Server::READABLE,
 				'permission_callback' => function () {
 					return current_user_can( Capabilities::EDIT_APPLICANTS );
 				},
-				'callback'            => function( \WP_REST_Request $request ) {
+				'callback'            => function( WP_REST_Request $request ) {
 					// Initialize our response to modify for different responses.
-					$response = new \WP_REST_Response();
+					$response = new WP_REST_Response();
 
 					$id = isset( $request['id'] ) ? absint( wp_unslash( $request['id'] ) ) : 0;
 
