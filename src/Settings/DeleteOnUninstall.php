@@ -27,6 +27,6 @@ class DeleteOnUninstall extends BaseSetting {
 	 * @return bool
 	 */
 	protected function get_default() {
-		return false;
+		return true;
 	}
 }

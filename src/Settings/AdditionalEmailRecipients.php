@@ -26,6 +26,6 @@ class AdditionalEmailRecipients extends BaseSetting {
 	 * @return string
 	 */
 	protected function get_default() {
-		return '';
+		return get_option( 'admin_email' );
 	}
 }
