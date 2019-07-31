@@ -59,8 +59,8 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 	const APPLICANT_SKILLS_QUALIFICATIONS = 'views/applicant-skills-qualifications.php';
 
 	// Interview Status API Route.
-	const LPF_NAMESPACE = 'yikes-level-playing-field/v1';
-	const INTERVIEW_STATUS_ROUTE     = '/interview-status';
+	const LPF_NAMESPACE          = 'yikes-level-playing-field/v1';
+	const INTERVIEW_STATUS_ROUTE = '/interview-status';
 
 	/**
 	 * Whether to remove 3rd party metaboxes.
