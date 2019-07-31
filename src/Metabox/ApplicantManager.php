@@ -98,7 +98,7 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 							'message' => __( 'User Not Found.', 'yikes-level-playing-field' ),
 						] );
 
-						// Set 400 status code
+						// Set 400 status code.
 						$response->set_status( 400 );
 
 						return $response;
