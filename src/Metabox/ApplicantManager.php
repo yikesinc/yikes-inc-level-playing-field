@@ -58,6 +58,10 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 	const APPLICANT_DETAILS               = 'views/applicant-details.php';
 	const APPLICANT_SKILLS_QUALIFICATIONS = 'views/applicant-skills-qualifications.php';
 
+	// Interview Status API Route.
+	const INTERVIEW_STATUS_NAMESPACE = 'yikes-level-playing-field/v1';
+	const INTERVIEW_STATUS_ROUTE     = '/interview-status';
+
 	/**
 	 * Whether to remove 3rd party metaboxes.
 	 *
@@ -84,7 +88,7 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 		} );
 
 		add_action( 'rest_api_init', function() {
-			register_rest_route( 'yikes-level-playing-field/v1', '/interview-status', [
+			register_rest_route( self::INTERVIEW_STATUS_NAMESPACE, self::INTERVIEW_STATUS_ROUTE, [
 				'methods'             => WP_REST_Server::READABLE,
 				'permission_callback' => function () {
 					return current_user_can( Capabilities::EDIT_APPLICANTS );
@@ -335,6 +339,10 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 		$interview_status = new ScriptAsset( self::JS_HANDLE, self::JS_URI, [], self::JS_VERSION, ScriptAsset::ENQUEUE_FOOTER );
 		$interview_status->add_localization( 'wpApiSettings', [
 			'nonce' => wp_create_nonce( 'wp_rest' ),
+			'root'  => site_url(
+				implode( [ self::INTERVIEW_STATUS_NAMESPACE, self::INTERVIEW_STATUS_ROUTE ] ),
+				'https'
+			),
 		] );
 		$applicant = new ScriptAsset( 'lpf-applicant-manager-js', 'assets/js/applicant-manager', [ 'jquery' ] );
 		$applicant->add_localization( 'applicantManager', [
