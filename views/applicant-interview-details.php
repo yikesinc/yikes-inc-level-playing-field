@@ -9,49 +9,47 @@
 
 namespace Yikes\LevelPlayingField;
 
-use Yikes\LevelPlayingField\Model\Applicant;
-
 /** @var Applicant $applicant */
-$applicant        = $this->applicant;
-$interview_status = $applicant->get_interview_status();
+$applicant       = $this->applicant;
+$display_details = $applicant->get_interview_object();
 ?>
 
 <!-- Interview details sidebar -->
 <div id="interview" class="postbox">
 	<div class="inside">
-		<?php if ( 'scheduled' === $interview_status || 'confirmed' === $interview_status ) { ?>
-			<?php $interview = $applicant->get_interview(); ?>
 
-			<?php if ( 'scheduled' === $interview_status ) { ?>
-				<p>
-					<span class="label"><?php esc_html_e( 'Pending:', 'yikes-level-playing-field' ); ?></span> <?php esc_html_e( 'Awaiting Applicant Confirmation', 'yikes-level-playing-field' ); ?>
-				</p>
-			<?php } ?>
+		<!-- Interview Status (Always display a status). -->
+		<p>
+			<?php echo esc_html( $display_details['status'] ); ?>
+		</p>
+		
+		<?php if ( array_key_exists( 'date', $display_details ) ) : ?>
+		<!-- Interview Date. -->
+		<p>
+			<span class="label"><?php esc_html_e( 'Date:', 'yikes-level-playing-field' ); ?></span> <?php echo esc_html( $display_details['date'] ); ?>
+		</p>
+		<?php endif; ?>
 
-			<p>
-				<span class="label"><?php esc_html_e( 'Date:', 'yikes-level-playing-field' ); ?></span> <?php echo esc_html( $interview['date'] ); ?>
-			</p>
-			<p>
-				<span class="label"><?php esc_html_e( 'Time:', 'yikes-level-playing-field' ); ?></span> <?php echo esc_html( $interview['time'] ); ?>
-			</p>
+		<?php if ( array_key_exists( 'time', $display_details ) ) : ?>
+		<!-- Interview Time. -->
+		<p>
+			<span class="label"><?php esc_html_e( 'Time:', 'yikes-level-playing-field' ); ?></span> <?php echo esc_html( $display_details['time'] ); ?>
+		</p>
+		<?php endif; ?>
 
-			<?php if ( 'confirmed' === $interview_status ) { ?>
-				<p>
-					<span class="label"><?php esc_html_e( 'Location:', 'yikes-level-playing-field' ); ?></span> <?php echo esc_html( $interview['location'] ); ?>
-				</p>
-				<p>
-					<span class="label"><?php esc_html_e( 'Message:', 'yikes-level-playing-field' ); ?></span> <?php echo esc_html( $interview['message'] ); ?>
-				</p>
-			<?php } ?>
+		<?php if ( array_key_exists( 'location', $display_details ) ) : ?>
+		<!-- Interview Location. -->
+		<p>
+			<span class="label"><?php esc_html_e( 'Location:', 'yikes-level-playing-field' ); ?></span> <?php echo esc_html( $display_details['location'] ); ?>
+		</p>
+		<?php endif; ?>
 
-		<?php } elseif ( 'cancelled' === $interview_status ) { ?>
-			<p>
-				<?php esc_html_e( 'Interview request cancelled by the applicant.', 'yikes-level-playing-field' ); ?>
-			</p>
-		<?php } else { ?>
-			<p>
-				<?php esc_html_e( 'An interview has not been scheduled.', 'yikes-level-playing-field' ); ?>
-			</p>
-		<?php } ?>
+		<?php if ( array_key_exists( 'message', $display_details ) ) : ?>
+		<!-- Interview Message. -->
+		<p>
+			<span class="label"><?php esc_html_e( 'Message:', 'yikes-level-playing-field' ); ?></span> <?php echo esc_html( $display_details['message'] ); ?>
+		</p>
+		<?php endif; ?>
+
 	</div>
 </div>
