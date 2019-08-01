@@ -121,17 +121,7 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 						return $response;
 					}
 
-					$status    = $applicant->get_interview_status();
-					$interview = $applicant->get_interview();
-
-					$response->set_data( [
-						'id'       => $id,
-						'status'   => $status,
-						'date'     => $interview['date'] ? $interview['date'] : '',
-						'time'     => $interview['time'] ? $interview['time'] : '',
-						'location' => $interview['location'] ? $interview['location'] : '',
-						'message'  => $interview['message'] ? $interview['message'] : '',
-					] );
+					$response->set_data( $applicant->get_interview_object() );
 
 					return $response;
 				},
