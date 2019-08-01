@@ -44,7 +44,7 @@
       $.get( req );
   
       // Done listening for interview requests.
-      target.off( 'click', handle_interview_submit);
+      target.off( 'click', handle_interview_submit );
     
     } );
 
