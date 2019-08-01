@@ -738,6 +738,44 @@ final class Applicant extends CustomPostTypeEntity {
 	}
 
 	/**
+	 * Get all interview details for interview widget
+	 *
+	 * @since %VERSION%
+	 * @return array
+	 */
+	public function get_interview_object() {
+		$status_check      = $this->get_interview_status();
+		$interview_details = $this->get_interview();
+		switch ( $status_check ) {
+			case 'scheduled':
+				return [
+					'status' => __( 'Awaiting Applicant Confirmation.', 'yikes-level-playing-field' ),
+					'date'   => $interview_details['date'],
+					'time'   => $interview_details['time'],
+				];
+
+			case 'confirmed':
+				return [
+					'status'   => __( 'Interview Request Accepted', 'yikes-level-playing-field' ),
+					'date'     => $interview_details['date'],
+					'time'     => $interview_details['time'],
+					'location' => $interview_details['location'],
+					'message'  => $interview_details['message'],
+				];
+
+			case 'cancelled':
+				return [
+					'status' => __( 'Interview request cancelled by the applicant.', 'yikes-level-playing-field' ),
+				];
+
+			default:
+				return [
+					'status' => __( 'An interview has not been scheduled.', 'yikes-level-playing-field' ),
+				];
+		}
+	}
+
+	/**
 	 * Set the status of an interview request.
 	 *
 	 * @since %VERSION%
