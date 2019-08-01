@@ -335,7 +335,6 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 	 * @return Asset[]
 	 */
 	protected function get_assets() {
-		$post_id          = isset( $_GET['post'] ) ? filter_var( $_GET['post'], FILTER_SANITIZE_NUMBER_INT ) : 0;
 		$interview_status = new ScriptAsset( self::JS_HANDLE, self::JS_URI, [], self::JS_VERSION, ScriptAsset::ENQUEUE_FOOTER );
 		$interview_status->add_localization( 'wpApiSettings', [
 			'nonce' => wp_create_nonce( 'wp_rest' ),
