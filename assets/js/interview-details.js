@@ -4,51 +4,70 @@
  * @author Freddie Mixell
  */
 
+ // Scoping var globally.
+ let refreshInterviewDetails = null;
+
   jQuery(document).ready(function( $ ) {
 
-    const target = $( "#send-interview-request" );
-    const applicantID = $( '#post_ID' ).value;
-    const widgetLocation = $( "#interview" );
+    const applicantID = $( '#post_ID' ).val();
+    const widgetLocation = $( "#interview > div.inside" );
 
-    // Listening for interview requests.
-    target.on( 'click', function handle_interview_submit( event ) {
-  
-      event.preventDefault();
-
-      // Build our request.
-      const req = {
-        url: wpApiSettings.root + '/?id=' + applicantID,
+    /**
+     * Scoping functionality to document.ready
+     */ 
+    refreshInterviewDetails = function() {
+      return $.get( {
+        url: wpApiSettings.root + '?id=' + applicantID,
         beforeSend: function( xhr ) {
           xhr.setRequestHeader( 'X-WP-Nonce', wpApiSettings.nonce );
         },
-        success: function( data ) {
-          const { 
-            status = '',
-            date = '',
-            time = '',
-            location = '',
-            message = '',
-           } = data;
+        success: handle_success,
+        error: handle_error,
+      } );
+    }
 
-          const statusEl   = makeLabel( 'Status:', status );
-          const dateEl     = makeLabel( 'Date:', date );
-          const timeEl     = makeLabel( 'Time:', time );
-          const locationEl = makeLabel( 'Location:', location );
-          const messageEl  = makeLabel( 'Message:', message );
+    /**
+     * Handle Response from REST API GET Request.
+     *
+     * @param {object} data
+     */
+    function handle_success( data ) {
+      const { 
+        status = '',
+        date = '',
+        time = '',
+        location = '',
+        message = '',
+      } = data;
 
-          widgetLocation.replaceWith( statusEl + dateEl + timeEl + locationEl + messageEl );
-        },
-      }
+      // If the key exists return string dom node.
+      const statusEl   = makeLabel( '', status );
+      const dateEl     = makeLabel( 'Date:', date );
+      const timeEl     = makeLabel( 'Time:', time );
+      const locationEl = makeLabel( 'Location:', location );
+      const messageEl  = makeLabel( 'Message:', message );
 
-      // Execute our request and update widget.
-      $.get( req );
-  
-      // Done listening for interview requests.
-      target.off( 'click', handle_interview_submit );
-    
-    } );
+      // Create DOM Nodes from our label function output.
+      const parsed = $.parseHTML( statusEl + dateEl + timeEl + locationEl + messageEl );
 
-    // Helper function to make templated labels.
+      widgetLocation.html( parsed );
+    }
+
+    /**
+     * Handle Errors from REST API GET Request.
+     *
+     * @param {object} error 
+     */
+    function handle_error( error ) {
+      return console.log( error );
+    }
+
+    /**
+     * Helper function to make templated labels.
+     *
+     * @param {string} label 
+     * @param {string} info 
+     */
     function makeLabel( label = '', info = '' ) {
       if ( ! info ) {
         return '';
