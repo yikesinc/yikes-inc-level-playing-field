@@ -38,7 +38,7 @@ final class RestAPI implements Service, AssetsAware {
 	const INTERVIEW_STATUS_ROUTE = '/interview-status/';
 
 	/**
-	 * Register the current Registerable.
+	 * Register the REST Registerables.
 	 *
 	 * @since %VERSION%
 	 */
