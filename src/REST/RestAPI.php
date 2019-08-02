@@ -54,6 +54,7 @@ final class RestAPI implements Service, AssetsAware {
 	 * @since %VERSION%
 	 */
 	public function register_routes() {
+		// Interview Status Route Registration.
 		register_rest_route(
 			self::LPF_NAMESPACE,
 			self::INTERVIEW_STATUS_ROUTE,
@@ -61,13 +62,21 @@ final class RestAPI implements Service, AssetsAware {
 				'methods'             => WP_REST_Server::READABLE,
 				'callback'            => [ $this, 'get_interview_status' ],
 				'permission_callback' => [ $this, 'check_api_permissions' ],
+				'args'                => [
+					'id' => [
+						'required'          => true,
+						'validate_callback' => function ( $param, $request, $key ) {
+							return is_numeric( $param );
+						},
+					],
+				],
 			]
 		);
 		// Register the rest of the routes here.
 	}
 
 	/**
-	 * Define LPF rest api routes.
+	 * Get interview status object by Applicant ID.
 	 *
 	 * @since %VERSION%
 	 *
