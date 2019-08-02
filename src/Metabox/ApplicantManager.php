@@ -10,9 +10,6 @@
 namespace Yikes\LevelPlayingField\Metabox;
 
 use WP_Post;
-use WP_REST_Request;
-use WP_REST_Response;
-use WP_REST_Server;
 use Yikes\LevelPlayingField\Assets\Asset;
 use Yikes\LevelPlayingField\Assets\AssetsAware;
 use Yikes\LevelPlayingField\Assets\AssetsAwareness;
