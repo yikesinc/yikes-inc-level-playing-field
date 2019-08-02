@@ -163,6 +163,13 @@ jQuery( function ( $ ) {
 
 		// Show the new message on the message board.
 		refresh_message_board( response.data.post_id );
+
+		// Use refresh function located in /interview-details.js
+		if ( null !== refreshInterviewDetails && 'function' === typeof refreshInterviewDetails ) {
+			refreshInterviewDetails();
+		} else {
+			console.warn('Interview details refresh function not found.');
+		}
 	}
 
 	/**
