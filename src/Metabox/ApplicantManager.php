@@ -87,47 +87,6 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 			$this->enqueue_assets();
 		} );
 
-		add_action( 'rest_api_init', function() {
-			register_rest_route( self::LPF_NAMESPACE, self::INTERVIEW_STATUS_ROUTE, [
-				'methods'             => WP_REST_Server::READABLE,
-				'permission_callback' => function () {
-					return current_user_can( Capabilities::EDIT_APPLICANTS );
-				},
-				'callback'            => function( WP_REST_Request $request ) {
-					// Initialize our response to modify for different responses.
-					$response = new WP_REST_Response();
-
-					$id = isset( $request['id'] ) ? absint( wp_unslash( $request['id'] ) ) : 0;
-
-					// If the users not found return an error.
-					if ( 0 === $id ) {
-						$response->set_data( [
-							'message' => __( 'User Not Found.', 'yikes-level-playing-field' ),
-						] );
-
-						// Set 400 status code.
-						$response->set_status( 400 );
-
-						return $response;
-					}
-
-					try {
-						$applicant = ( new ApplicantRepository() )->find( $id );
-					} catch ( \Exception $e ) {
-						$response->set_data([
-							'code'    => get_class( $e ),
-							'message' => esc_js( $e->getMessage() ),
-						]);
-						return $response;
-					}
-
-					$response->set_data( $applicant->get_interview_object() );
-
-					return $response;
-				},
-			]);
-		});
-
 		add_action( 'wp_ajax_save_nickname', function() {
 			$this->save_nickname();
 		} );
