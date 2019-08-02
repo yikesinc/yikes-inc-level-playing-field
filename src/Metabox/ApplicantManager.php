@@ -10,6 +10,7 @@
 namespace Yikes\LevelPlayingField\Metabox;
 
 use WP_Post;
+use Yikes\LevelPlayingField\REST\RestAPI;
 use Yikes\LevelPlayingField\Assets\Asset;
 use Yikes\LevelPlayingField\Assets\AssetsAware;
 use Yikes\LevelPlayingField\Assets\AssetsAwareness;
@@ -54,10 +55,6 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 	const APPLICANT_INTERVIEW_DETAILS     = 'views/applicant-interview-details';
 	const APPLICANT_DETAILS               = 'views/applicant-details.php';
 	const APPLICANT_SKILLS_QUALIFICATIONS = 'views/applicant-skills-qualifications.php';
-
-	// Interview Status API Route.
-	const LPF_NAMESPACE          = 'yikes-level-playing-field/v1';
-	const INTERVIEW_STATUS_ROUTE = '/interview-status';
 
 	/**
 	 * Whether to remove 3rd party metaboxes.
@@ -284,7 +281,7 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 		$interview_status = new ScriptAsset( self::JS_HANDLE, self::JS_URI, [], self::JS_VERSION, ScriptAsset::ENQUEUE_FOOTER );
 		$interview_status->add_localization( 'wpApiSettings', [
 			'nonce' => wp_create_nonce( 'wp_rest' ),
-			'root'  => site_url( 'wp-json/' . self::LPF_NAMESPACE . self::INTERVIEW_STATUS_ROUTE ),
+			'root'  => site_url( rest_get_url_prefix() . '/' . RestAPI::LPF_NAMESPACE . RestAPI::INTERVIEW_STATUS_ROUTE ),
 		] );
 		$applicant = new ScriptAsset( 'lpf-applicant-manager-js', 'assets/js/applicant-manager', [ 'jquery' ] );
 		$applicant->add_localization( 'applicantManager', [
