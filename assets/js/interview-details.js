@@ -16,10 +16,16 @@
      * Scoping functionality to document.ready
      */ 
     refreshInterviewDetails = function() {
+      const {
+        restUrl,
+        interview_status_route,
+        nonce,
+      } = wpApiSettings;
+
       return $.get( {
-        url: wpApiSettings.root + '?id=' + applicantID,
+        url: restUrl + interview_status_route + '?id=' + applicantID,
         beforeSend: function( xhr ) {
-          xhr.setRequestHeader( 'X-WP-Nonce', wpApiSettings.nonce );
+          xhr.setRequestHeader( 'X-WP-Nonce', nonce );
         },
         success: handle_success,
         error: handle_error,
@@ -50,7 +56,7 @@
       // Create DOM Nodes from our label function output.
       const parsed = $.parseHTML( statusEl + dateEl + timeEl + locationEl + messageEl );
 
-      widgetLocation.html( parsed );
+      return widgetLocation.html( parsed );
     }
 
     /**
