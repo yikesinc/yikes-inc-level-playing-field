@@ -31,7 +31,7 @@ use Yikes\LevelPlayingField\Metabox\ApplicationManager as ApplicationMetabox;
 use Yikes\LevelPlayingField\Metabox\JobManager;
 use Yikes\LevelPlayingField\Metabox\ReviewBanner;
 use Yikes\LevelPlayingField\Metabox\ProBanner;
-use Yikes\LevelPlayingField\REST\RestAPI;
+use Yikes\LevelPlayingField\REST\InterviewAPI;
 use Yikes\LevelPlayingField\RequiredPages\ApplicantMessagingPage;
 use Yikes\LevelPlayingField\RequiredPages\ApplicationFormPage;
 use Yikes\LevelPlayingField\Roles\Administrator;
@@ -123,7 +123,7 @@ final class PluginFactory {
 		$services->add_service( ProBanner::class );
 
 		// REST API.
-		$services->add_service( RestAPI::class );
+		$services->add_service( InterviewAPI::class );
 
 		// Custom list tables.
 		$services->add_service( JobListTable::class );

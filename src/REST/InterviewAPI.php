@@ -1,63 +1,20 @@
 <?php
-/**
- * YIKES Inc. Level Playing Field Plugin.
- *
- * @package   Yikes\LevelPlayingField
- * @author    Freddie Mixell
- * @license   GPL2
- */
 
 namespace Yikes\LevelPlayingField\REST;
 
 use WP_REST_Request;
 use WP_REST_Response;
 use WP_REST_Server;
-use Yikes\LevelPlayingField\Assets\AssetsAware;
-use Yikes\LevelPlayingField\Assets\AssetsAwareness;
-use Yikes\LevelPlayingField\Service;
-use Yikes\LevelPlayingField\Roles\Capabilities;
 use Yikes\LevelPlayingField\Model\ApplicantRepository;
+use Yikes\LevelPlayingField\REST\BaseRestAPI;
+use Yikes\LevelPlayingField\REST\APISettings;
 
-/**
- * Class RestAPI
- *
- * @since   %VERSION%
- *
- * @package Yikes\LevelPlayingField
- * @author  Freddie Mixell
- */
-final class RestAPI implements Service, AssetsAware {
+final class InterviewAPI extends BaseRestAPI {
 
-	use AssetsAwareness;
-
-	// API SETTINGS.
-	const API_VERSION   = 1;
-	const LPF_NAMESPACE = 'yikes-level-playing-field/v' . self::API_VERSION;
-
-	// API ROUTES.
-	const INTERVIEW_STATUS_ROUTE = '/interview-status/';
-
-	/**
-	 * Register the REST Registerables.
-	 *
-	 * @since %VERSION%
-	 */
-	public function register() {
-		$this->register_assets();
-
-		add_action( 'rest_api_init', [ $this, 'register_routes' ] );
-	}
-
-	/**
-	 * Define LPF rest api routes.
-	 *
-	 * @since %VERSION%
-	 */
-	public function register_routes() {
-		// Interview Status Route Registration.
-		register_rest_route(
-			self::LPF_NAMESPACE,
-			self::INTERVIEW_STATUS_ROUTE,
+    function register_routes() {
+        register_rest_route(
+			APISettings::LPF_NAMESPACE,
+			APISettings::INTERVIEW_STATUS_ROUTE,
 			[
 				'methods'             => WP_REST_Server::READABLE,
 				'callback'            => [ $this, 'get_interview_status' ],
@@ -72,10 +29,9 @@ final class RestAPI implements Service, AssetsAware {
 				],
 			]
 		);
-		// Register the rest of the routes here.
-	}
+    }
 
-	/**
+    /**
 	 * Get interview status object by Applicant ID.
 	 *
 	 * @since %VERSION%
@@ -85,7 +41,6 @@ final class RestAPI implements Service, AssetsAware {
 	 * @return WP_REST_Response $response WordPress REST API Response Object.
 	 */
 	public function get_interview_status( WP_REST_Request $request ) {
-		// Initialize our response to modify for different responses.
 		$response = new WP_REST_Response();
 
 		$id = isset( $request['id'] ) ? absint( wp_unslash( $request['id'] ) ) : 0;
@@ -112,18 +67,10 @@ final class RestAPI implements Service, AssetsAware {
 			return $response;
 		}
 
+        // Return Interview Status Object.
 		$response->set_data( $applicant->get_interview_object() );
 
 		return $response;
-	}
-
-	/**
-	 * Check if user can view routes.
-	 *
-	 * @since %VERSION%
-	 */
-	public function check_api_permissions() {
-		return current_user_can( Capabilities::EDIT_APPLICANTS );
 	}
 
 }
