@@ -51,7 +51,7 @@ abstract class BaseRestAPI implements Service, AssetsAware {
 	 *
 	 * @since %VERSION%
 	 */
-	abstract function register_routes();
+	abstract protected function register_routes();
 
 	/**
 	 * Permission Callback For Routes.

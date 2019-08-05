@@ -1,4 +1,11 @@
 <?php
+/**
+ * YIKES Inc. Level Playing Field Plugin.
+ *
+ * @package   Yikes\LevelPlayingField
+ * @author    Freddie Mixell
+ * @license   GPL2
+ */
 
 namespace Yikes\LevelPlayingField\REST;
 
@@ -9,10 +16,24 @@ use Yikes\LevelPlayingField\Model\ApplicantRepository;
 use Yikes\LevelPlayingField\REST\BaseRestAPI;
 use Yikes\LevelPlayingField\REST\APISettings;
 
+
+/**
+ *  Class InterviewAPI
+ *
+ * @since   %VERSION%
+ *
+ * @package Yikes\LevelPlayingField
+ * @author  Freddie Mixell
+ */
 final class InterviewAPI extends BaseRestAPI {
 
-    function register_routes() {
-        register_rest_route(
+	/**
+	 * Registering Interview API Routes.
+	 *
+	 * @since %VERSION%
+	 */
+	public function register_routes() {
+		register_rest_route(
 			APISettings::LPF_NAMESPACE,
 			APISettings::INTERVIEW_STATUS_ROUTE,
 			[
@@ -29,9 +50,9 @@ final class InterviewAPI extends BaseRestAPI {
 				],
 			]
 		);
-    }
+	}
 
-    /**
+	/**
 	 * Get interview status object by Applicant ID.
 	 *
 	 * @since %VERSION%
@@ -67,7 +88,7 @@ final class InterviewAPI extends BaseRestAPI {
 			return $response;
 		}
 
-        // Return Interview Status Object.
+		// Return Interview Status Object.
 		$response->set_data( $applicant->get_interview_object() );
 
 		return $response;
