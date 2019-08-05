@@ -10,7 +10,7 @@
 namespace Yikes\LevelPlayingField\REST;
 
 /**
- * Trait APISettings
+ * Interface APISettings
  *
  * @since   %VERSION%
  * @package Yikes\LevelPlayingField
