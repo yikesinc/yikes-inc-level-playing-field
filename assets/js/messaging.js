@@ -164,12 +164,8 @@ jQuery( function ( $ ) {
 		// Show the new message on the message board.
 		refresh_message_board( response.data.post_id );
 
-		// Use refresh function located in /interview-details.js
-		if ( null !== refreshInterviewDetails && 'function' === typeof refreshInterviewDetails ) {
-			refreshInterviewDetails();
-		} else {
-			console.warn('Interview details refresh function not found.');
-		}
+		// Refresh Interview Details widget.
+		refreshInterviewDetails();
 	}
 
 	/**
@@ -258,6 +254,54 @@ jQuery( function ( $ ) {
 	 */
 	function refresh_message_board_response( response ) {
 		$( '#applicant-messaging' ).replaceWith( response.data );
+	}
+
+	function refreshInterviewDetails() {
+		const { restUrl, interviewStatusRoute, nonce } = wpApiSettings;
+		return $.get( {
+			url: restUrl + interviewStatusRoute + '?id=' + post_id,
+			beforeSend: function( xhr ) {
+				xhr.setRequestHeader( 'X-WP-Nonce', nonce );
+			},
+			success: function() {
+				const { 
+					status = '',
+					date = '',
+					time = '',
+					location = '',
+					message = '',
+				} = data;
+			
+				// If the key exists return string dom node.
+				const statusEl   = makeLabel( '', status );
+				const dateEl     = makeLabel( 'Date:', date );
+				const timeEl     = makeLabel( 'Time:', time );
+				const locationEl = makeLabel( 'Location:', location );
+				const messageEl  = makeLabel( 'Message:', message );
+		
+				// Create DOM Nodes from our label function output.
+				const parsed = $.parseHTML( statusEl + dateEl + timeEl + locationEl + messageEl );
+				const widgetLocation = $( "#interview > div.inside" );
+
+				return widgetLocation.html( parsed );
+			},
+			error: function( error ) {
+				return console.warn( error );
+			},
+		  } );
+	}
+
+	/**
+     * Helper function to make templated labels.
+     *
+     * @param {string} label 
+     * @param {string} info 
+     */
+    function makeLabel( label = '', info = '' ) {
+		if ( ! info ) {
+			return '';
+		}
+		return '<p><span class="label">' + label + '</span>' + info + '</p>';
 	}
 
 	/**

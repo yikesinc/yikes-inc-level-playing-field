@@ -47,7 +47,7 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 	const CSS_URI          = 'assets/css/lpf-applicant-admin';
 	const CSS_DEPENDENCIES = [ 'wp-components' ];
 	const JS_HANDLE        = 'lpf-interview-details-admin-script';
-	const JS_URI           = 'assets/js/interview-details';
+	const JS_URI           = 'assets/js/messaging';
 	const JS_VERSION       = false;
 
 	// Applicant Partials.
@@ -280,9 +280,9 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 	protected function get_assets() {
 		$interview_status = new ScriptAsset( self::JS_HANDLE, self::JS_URI, [ 'jquery' ], self::JS_VERSION, ScriptAsset::ENQUEUE_FOOTER );
 		$interview_status->add_localization( 'wpApiSettings', [
-			'nonce'                  => wp_create_nonce( 'wp_rest' ),
-			'restUrl'                => site_url( rest_get_url_prefix() . '/' . APISettings::LPF_NAMESPACE ),
-			'interview_status_route' => APISettings::INTERVIEW_STATUS_ROUTE . '/',
+			'nonce'                => wp_create_nonce( 'wp_rest' ),
+			'restUrl'              => site_url( rest_get_url_prefix() . '/' . APISettings::LPF_NAMESPACE ),
+			'interviewStatusRoute' => APISettings::INTERVIEW_STATUS_ROUTE . '/',
 		] );
 		$applicant = new ScriptAsset( 'lpf-applicant-manager-js', 'assets/js/applicant-manager', [ 'jquery' ] );
 		$applicant->add_localization( 'applicantManager', [
