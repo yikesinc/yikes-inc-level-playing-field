@@ -784,30 +784,13 @@ final class Applicant extends CustomPostTypeEntity {
 	 * Create a unique hash/guid.
 	 *
 	 * @since %VERSION%
-	 *
-	 * @return string $guid A unique hash/guid.
 	 */
 	public function create_guid() {
-
-		// wp_generate_uuid4() was added in WP4.7.
-		if ( function_exists( 'wp_generate_uuid4' ) ) {
-			return wp_generate_uuid4();
-		} else {
-			return uniqid( '', true );
+		if ( ! empty( $this->{ApplicantMeta::GUID} ) ) {
+			return;
 		}
-	}
 
-	/**
-	 * Set an applicant's guid.
-	 *
-	 * @todo throw an error if there is already a guid set for this applicant?
-	 *
-	 * @since %VERSION%
-	 *
-	 * @param string $guid A guid.
-	 */
-	public function set_guid( $guid ) {
-		$this->set_property( ApplicantMeta::GUID, $guid );
+		$this->set_property( ApplicantMeta::GUID, wp_generate_uuid4() );
 	}
 
 	/**
