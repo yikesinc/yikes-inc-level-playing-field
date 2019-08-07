@@ -64,7 +64,7 @@ final class InterviewAPI extends RestAPI {
 	public function get_interview_status( WP_REST_Request $request ) {
 		$response = new WP_REST_Response();
 
-		$id = isset( $request['id'] ) ? absint( wp_unslash( $request['id'] ) ) : 0;
+		$id = isset( $request['id'] ) ? absint( $request['id'] ) : 0;
 
 		// If the users not found return an error.
 		if ( 0 === $id ) {
