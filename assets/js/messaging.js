@@ -257,27 +257,19 @@ jQuery( function ( $ ) {
 	}
 
 	function refreshInterviewDetails() {
-		const { restUrl, interviewStatusRoute, nonce } = wpApiSettings;
+		const { restUrl, interviewStatusRoute, restNonce } = messaging_data.wpApiSettings;
 		return $.get( {
 			url: restUrl + interviewStatusRoute + '?id=' + post_id,
 			beforeSend: function( xhr ) {
-				xhr.setRequestHeader( 'X-WP-Nonce', nonce );
+				xhr.setRequestHeader( 'X-WP-Nonce', restNonce );
 			},
-			success: function() {
-				const { 
-					status = '',
-					date = '',
-					time = '',
-					location = '',
-					message = '',
-				} = data;
-			
+			success: function({ status, date, time, location, message, }) {
 				// If the key exists return string dom node.
-				const statusEl   = makeLabel( '', status );
-				const dateEl     = makeLabel( 'Date:', date );
-				const timeEl     = makeLabel( 'Time:', time );
-				const locationEl = makeLabel( 'Location:', location );
-				const messageEl  = makeLabel( 'Message:', message );
+				const statusEl   = status ? makeLabel( '', status ) : '';
+				const dateEl     = date ? makeLabel( date.label, date.value ) : '';
+				const timeEl     = time ? makeLabel( time.label, time.value ) : '';
+				const locationEl = location ? makeLabel( location.label, location.value ) : '';
+				const messageEl  = message ? makeLabel( message.label, message.value ) : '';
 		
 				// Create DOM Nodes from our label function output.
 				const parsed = $.parseHTML( statusEl + dateEl + timeEl + locationEl + messageEl );
@@ -288,8 +280,9 @@ jQuery( function ( $ ) {
 			error: function( error ) {
 				return console.warn( error );
 			},
-		  } );
+		})
 	}
+
 
 	/**
      * Helper function to make templated labels.
