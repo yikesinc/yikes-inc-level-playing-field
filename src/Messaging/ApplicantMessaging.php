@@ -149,19 +149,19 @@ class ApplicantMessaging implements Activateable, Deactivateable, Renderable, As
 		$script->add_localization(
 			'messaging_data',
 			[
-				'post'        => [
+				'post'          => [
 					'ID' => $post_id,
 				],
-				'ajax'        => [
+				'ajax'          => [
 					'url'             => admin_url( 'admin-ajax.php' ),
 					'send_nonce'      => wp_create_nonce( 'send_message' ),
 					'refresh_nonce'   => wp_create_nonce( 'refresh_conversation' ),
 					'interview_nonce' => wp_create_nonce( 'send_interview_request' ),
 				],
-				'is_metabox'  => is_admin(),
-				'spinner_url' => admin_url( 'images/spinner-2x.gif' ),
+				'is_metabox'    => is_admin(),
+				'spinner_url'   => admin_url( 'images/spinner-2x.gif' ),
 				'wpApiSettings' => [
-					'restNonce'                => wp_create_nonce( 'wp_rest' ),
+					'restNonce'            => wp_create_nonce( 'wp_rest' ),
 					'restUrl'              => site_url( rest_get_url_prefix() . '/' . APISettings::LPF_NAMESPACE ),
 					'interviewStatusRoute' => APISettings::INTERVIEW_STATUS_ROUTE . '/',
 				]
