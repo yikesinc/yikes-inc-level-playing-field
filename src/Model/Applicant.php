@@ -750,17 +750,35 @@ final class Applicant extends CustomPostTypeEntity {
 			case 'scheduled':
 				return [
 					'status' => __( 'Awaiting Applicant Confirmation.', 'yikes-level-playing-field' ),
-					'date'   => $interview_details['date'],
-					'time'   => $interview_details['time'],
+					'date'     => [
+						'label'  => __( 'Date:', 'yikes-level-playing-field' ),
+						'value'  => $interview_details['date']
+					],
+					'time'   => [
+						'label'  => __( 'Time:', 'yikes-level-playing-field' ), 
+						'value'  => $interview_details['time']
+					],
 				];
 
 			case 'confirmed':
 				return [
 					'status'   => __( 'Interview Request Accepted', 'yikes-level-playing-field' ),
-					'date'     => $interview_details['date'],
-					'time'     => $interview_details['time'],
-					'location' => $interview_details['location'],
-					'message'  => $interview_details['message'],
+					'date'     => [
+						'label'  => __( 'Date:', 'yikes-level-playing-field' ),
+						'value'  => $interview_details['date']
+					],
+					'time'     => [
+						'label'  => __( 'Time:', 'yikes-level-playing-field' ), 
+						'value'  => $interview_details['time']
+					],
+					'location' => [
+						'label'  => __( 'Location:', 'yikes-level-playing-field' ), 
+						'value'  => $interview_details['location']
+					],
+					'message'  => [
+						'label'  => __( 'Message:', 'yikes-level-playing-field' ), 
+						'value'  => $interview_details['message']
+					],
 				];
 
 			case 'cancelled':
