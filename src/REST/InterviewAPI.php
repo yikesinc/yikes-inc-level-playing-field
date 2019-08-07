@@ -35,7 +35,7 @@ final class InterviewAPI extends RestAPI {
 	public function register_routes() {
 		register_rest_route(
 			APISettings::LPF_NAMESPACE,
-			APISettings::INTERVIEW_STATUS_ROUTE,
+			APISettings::INTERVIEW_STATUS_ROUTE . '/',
 			[
 				'methods'             => WP_REST_Server::READABLE,
 				'callback'            => [ $this, 'get_interview_status' ],

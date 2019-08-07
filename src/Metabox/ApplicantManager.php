@@ -282,7 +282,7 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 		$interview_status->add_localization( 'wpApiSettings', [
 			'nonce'                  => wp_create_nonce( 'wp_rest' ),
 			'restUrl'                => site_url( rest_get_url_prefix() . '/' . APISettings::LPF_NAMESPACE ),
-			'interview_status_route' => APISettings::INTERVIEW_STATUS_ROUTE,
+			'interview_status_route' => APISettings::INTERVIEW_STATUS_ROUTE . '/',
 		] );
 		$applicant = new ScriptAsset( 'lpf-applicant-manager-js', 'assets/js/applicant-manager', [ 'jquery' ] );
 		$applicant->add_localization( 'applicantManager', [

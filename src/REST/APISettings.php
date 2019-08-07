@@ -22,6 +22,6 @@ interface APISettings {
 	const LPF_NAMESPACE = 'yikes-level-playing-field/v' . self::API_VERSION;
 
 	// API ROUTES.
-	const INTERVIEW_STATUS_ROUTE = '/interview-status/';
+	const INTERVIEW_STATUS_ROUTE = '/interview-status';
 
 }
