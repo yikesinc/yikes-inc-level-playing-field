@@ -66,18 +66,6 @@ final class InterviewAPI extends RestAPI {
 
 		$id = isset( $request['id'] ) ? absint( $request['id'] ) : 0;
 
-		// If the users not found return an error.
-		if ( 0 === $id ) {
-			$response->set_data( [
-				'message' => __( 'User Not Found.', 'yikes-level-playing-field' ),
-			] );
-
-			// Set 400 status code.
-			$response->set_status( 400 );
-
-			return $response;
-		}
-
 		try {
 			$applicant = ( new ApplicantRepository() )->find( $id );
 		} catch ( \Exception $e ) {
