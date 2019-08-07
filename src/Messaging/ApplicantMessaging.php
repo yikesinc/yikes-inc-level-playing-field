@@ -32,6 +32,7 @@ use Yikes\LevelPlayingField\Model\Applicant;
 use Yikes\LevelPlayingField\Model\ApplicantRepository;
 use Yikes\LevelPlayingField\View\FormEscapedView;
 use Yikes\LevelPlayingField\View\TemplatedView;
+use Yikes\LevelPlayingField\REST\APISettings;
 
 /**
  * Class ApplicantMessaging.
@@ -159,6 +160,11 @@ class ApplicantMessaging implements Activateable, Deactivateable, Renderable, As
 				],
 				'is_metabox'  => is_admin(),
 				'spinner_url' => admin_url( 'images/spinner-2x.gif' ),
+				'wpApiSettings' => [
+					'restNonce'                => wp_create_nonce( 'wp_rest' ),
+					'restUrl'              => site_url( rest_get_url_prefix() . '/' . APISettings::LPF_NAMESPACE ),
+					'interviewStatusRoute' => APISettings::INTERVIEW_STATUS_ROUTE . '/',
+				]
 			]
 		);
 
