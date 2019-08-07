@@ -15,7 +15,6 @@ namespace Yikes\LevelPlayingField\REST;
  * @since   %VERSION%
  * @package Yikes\LevelPlayingField
  */
-
 interface APISettings {
 
 	// API SETTINGS.
