@@ -13,7 +13,7 @@ use WP_REST_Request;
 use WP_REST_Response;
 use WP_REST_Server;
 use Yikes\LevelPlayingField\Model\ApplicantRepository;
-use Yikes\LevelPlayingField\REST\BaseRestAPI;
+use Yikes\LevelPlayingField\REST\RestAPI;
 use Yikes\LevelPlayingField\REST\APISettings;
 
 
@@ -25,7 +25,7 @@ use Yikes\LevelPlayingField\REST\APISettings;
  * @package Yikes\LevelPlayingField
  * @author  Freddie Mixell
  */
-final class InterviewAPI extends BaseRestAPI {
+final class InterviewAPI extends RestAPI {
 
 	/**
 	 * Registering Interview API Routes.
@@ -39,7 +39,7 @@ final class InterviewAPI extends BaseRestAPI {
 			[
 				'methods'             => WP_REST_Server::READABLE,
 				'callback'            => [ $this, 'get_interview_status' ],
-				'permission_callback' => [ $this, 'check_api_permissions' ],
+				'permission_callback' => [ $this, 'can_edit_applications' ],
 				'args'                => [
 					'id' => [
 						'required'          => true,
