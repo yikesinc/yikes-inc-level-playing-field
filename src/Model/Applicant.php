@@ -743,7 +743,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @since %VERSION%
 	 * @return array
 	 */
-	public function get_interview_object() {
+	public function get_interview_details() {
 		$status_check      = $this->get_interview_status();
 		$interview_details = $this->get_interview();
 		switch ( $status_check ) {

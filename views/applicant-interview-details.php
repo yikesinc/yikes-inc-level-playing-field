@@ -11,7 +11,7 @@ namespace Yikes\LevelPlayingField;
 
 /** @var Applicant $applicant */
 $applicant       = $this->applicant;
-$display_details = $applicant->get_interview_object();
+$display_details = $applicant->get_interview_details();
 ?>
 
 <!-- Interview details sidebar -->

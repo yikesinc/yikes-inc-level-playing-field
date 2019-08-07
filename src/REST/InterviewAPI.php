@@ -74,7 +74,7 @@ final class InterviewAPI extends RestAPI {
 		}
 
 		// Return Interview Status Object.
-		$response->set_data( $applicant->get_interview_object() );
+		$response->set_data( $applicant->get_interview_details() );
 
 		return $response;
 	}
