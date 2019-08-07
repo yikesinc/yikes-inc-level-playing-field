@@ -12,6 +12,7 @@ namespace Yikes\LevelPlayingField\REST;
 use WP_REST_Request;
 use WP_REST_Response;
 use WP_REST_Server;
+use WP_Error;
 use Yikes\LevelPlayingField\Model\ApplicantRepository;
 use Yikes\LevelPlayingField\REST\RestAPI;
 use Yikes\LevelPlayingField\REST\APISettings;
@@ -69,11 +70,7 @@ final class InterviewAPI extends RestAPI {
 		try {
 			$applicant = ( new ApplicantRepository() )->find( $id );
 		} catch ( \Exception $e ) {
-			$response->set_data([
-				'code'    => get_class( $e ),
-				'message' => esc_js( $e->getMessage() ),
-			]);
-			return $response;
+			return WP_Error( get_class( $e ), $e->getMessage() );
 		}
 
 		// Return Interview Status Object.
