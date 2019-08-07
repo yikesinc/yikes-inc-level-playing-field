@@ -26,28 +26,28 @@ $display_details = $applicant->get_interview_details();
 		<?php if ( array_key_exists( 'date', $display_details ) ) : ?>
 		<!-- Interview Date. -->
 		<p>
-			<span class="label"><?php esc_html_e( 'Date:', 'yikes-level-playing-field' ); ?></span> <?php echo esc_html( $display_details['date'] ); ?>
+			<span class="label"><?php echo esc_html( $display_details['date']['label'] ); ?></span> <?php echo esc_html( $display_details['date']['value'] ); ?>
 		</p>
 		<?php endif; ?>
 
 		<?php if ( array_key_exists( 'time', $display_details ) ) : ?>
 		<!-- Interview Time. -->
 		<p>
-			<span class="label"><?php esc_html_e( 'Time:', 'yikes-level-playing-field' ); ?></span> <?php echo esc_html( $display_details['time'] ); ?>
+			<span class="label"><?php echo esc_html( $display_details['time']['label'] ); ?></span> <?php echo esc_html( $display_details['time']['value'] ); ?>
 		</p>
 		<?php endif; ?>
 
 		<?php if ( array_key_exists( 'location', $display_details ) ) : ?>
 		<!-- Interview Location. -->
 		<p>
-			<span class="label"><?php esc_html_e( 'Location:', 'yikes-level-playing-field' ); ?></span> <?php echo esc_html( $display_details['location'] ); ?>
+			<span class="label"><?php echo esc_html( $display_details['location']['label'] ); ?></span> <?php echo esc_html( $display_details['location']['value'] ); ?>
 		</p>
 		<?php endif; ?>
 
 		<?php if ( array_key_exists( 'message', $display_details ) ) : ?>
 		<!-- Interview Message. -->
 		<p>
-			<span class="label"><?php esc_html_e( 'Message:', 'yikes-level-playing-field' ); ?></span> <?php echo esc_html( $display_details['message'] ); ?>
+			<span class="label"><?php echo esc_html( $display_details['message']['label'] ); ?></span> <?php echo esc_html( $display_details['message']['value'] ); ?>
 		</p>
 		<?php endif; ?>
 
