@@ -1441,6 +1441,36 @@ final class Applicant extends CustomPostTypeEntity {
 	}
 
 	/**
+	 * Determine if the property allows multiple values.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param string $property The property name.
+	 *
+	 * @return bool
+	 */
+	private function property_is_multiple( $property ) {
+		switch ( $property ) {
+			case ApplicantMeta::SCHOOLING:
+			case ApplicantMeta::CERTIFICATIONS:
+			case ApplicantMeta::SKILLS:
+			case ApplicantMeta::EXPERIENCE:
+			case ApplicantMeta::VOLUNTEER:
+			case ApplicantMeta::LANGUAGES:
+				return true;
+
+			default:
+				/**
+				 * Filter whether a given property contains multiple values.
+				 *
+				 * @param bool   $is_multiple Whether the property allows multiple values.
+				 * @param string $property    The property name.
+				 */
+				return (bool) apply_filters( 'lpf_applicant_property_multiple', false, $property );
+		}
+	}
+
+	/**
 	 * Get the meta key for a given property.
 	 *
 	 * @since %VERSION%
@@ -1461,5 +1491,37 @@ final class Applicant extends CustomPostTypeEntity {
 		 * @param string $property The applicant property key.
 		 */
 		return apply_filters( 'lpf_applicant_meta_key', $meta_key, $property );
+	}
+
+	/**
+	 * Validate that a property can be modified.
+	 *
+	 * Certain properties are only able to be modified by internal methods.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param string $property The property to validate.
+	 *
+	 * @throws InvalidProperty When the property cannot be modified.
+	 */
+	private function validate_can_modify_property( $property ) {
+		if ( array_key_exists( $property, $this->get_excluded_properties() ) ) {
+			throw InvalidProperty::cannot_modify( $property );
+		}
+	}
+
+	/**
+	 * Validate that a property allows multiple values.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param string $property The property name.
+	 *
+	 * @throws InvalidProperty When the property does not allow multiple values.
+	 */
+	private function validate_property_multiple( $property ) {
+		if ( ! $this->property_is_multiple( $property ) ) {
+			throw InvalidProperty::not_multiple( $property );
+		}
 	}
 }
