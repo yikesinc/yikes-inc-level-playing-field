@@ -392,16 +392,8 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @param array $experience The experience data.
 	 */
 	public function add_experience( array $experience ) {
-
-		// Calculate duration between start and end dates.
-		$start = date_create( $experience[ ApplicantMeta::START_DATE ] );
-		$end   = date_create( $experience[ ApplicantMeta::END_DATE ] );
-		$diff  = date_diff( $start, $end );
-
-		// Add calculated duration to experience and save.
-		$experience[ ApplicantMeta::YEAR_DURATION ] = $diff instanceof DateInterval ? $this->calculate_date_diff( $diff, $experience[ ApplicantMeta::PRESENT_POSITION ] ) : '';
-		$this->{ApplicantMeta::EXPERIENCE}[]        = $this->filter_and_sanitize( $experience, ApplicantMeta::EXPERIENCE );
-		$this->changed_property( ApplicantMeta::EXPERIENCE );
+		$experience = $this->add_date_diff( $experience );
+		$this->add_property( ApplicantMeta::EXPERIENCE, $experience );
 	}
 
 	/**
@@ -445,43 +437,8 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @param array $volunteer Array of volunteer work.
 	 */
 	public function add_volunteer( array $volunteer ) {
-		// Calculate duration between start and end dates.
-		$start = date_create( $volunteer[ ApplicantMeta::START_DATE ] );
-		$end   = date_create( $volunteer[ ApplicantMeta::END_DATE ] );
-		$diff  = date_diff( $start, $end );
-
-		// Add calculated duration to volunteer experience and save.
-		$volunteer[ ApplicantMeta::YEAR_DURATION ] = $diff instanceof DateInterval ? $this->calculate_date_diff( $diff, $volunteer[ ApplicantMeta::PRESENT_POSITION ] ) : '';
-		$this->{ApplicantMeta::VOLUNTEER}[]        = $this->filter_and_sanitize( $volunteer, ApplicantMeta::VOLUNTEER );
-		$this->changed_property( ApplicantMeta::VOLUNTEER );
-	}
-
-	/**
-	 * Calculate the date difference from a time interval and return a readable string.
-	 *
-	 * @since %VERSION%
-	 *
-	 * @param DateInterval $diff             A date interval object.
-	 * @param string       $present_position A flag indicating whether this is a present position.
-	 *
-	 * @return string A readable time difference || empty if there is no time difference.
-	 */
-	private function calculate_date_diff( DateInterval $diff, $present_position ) {
-		if ( $diff->y > 0 || $diff->m > 0 || $diff->d > 0 ) {
-			$still = ! empty( $present_position ) ? __( 'Presently working here.', 'yikes-level-playing-field' ) : '';
-			/* translators: the placeholder is a number of years */
-			$diff_string = $diff->y > 0 ? _n( '%y Year ', '%y Years ', $diff->y, 'yikes-level-playing-field' ) : '';
-			/* translators: the placeholder is a number of months */
-			$diff_string .= $diff->m > 0 ? _n( '%m Month ', '%m Months ', $diff->m, 'yikes-level-playing-field' ) : '';
-			/* translators: the placeholder is a number of days */
-			$diff_string .= $diff->d > 0 ? _n( '%d Day', '%d Days', $diff->d, 'yikes-level-playing-field' ) : '';
-			$diff_string  = rtrim( $diff_string ) . '. ';
-			$diff_string .= $still;
-			$interval     = $diff->format( rtrim( $diff_string ) );
-			return $interval;
-		}
-
-		return '';
+		$volunteer = $this->add_date_diff( $volunteer );
+		$this->add_property( ApplicantMeta::VOLUNTEER, $volunteer );
 	}
 
 	/**
@@ -497,12 +454,96 @@ final class Applicant extends CustomPostTypeEntity {
 		// Passing an empty array will remove volunteer work.
 		if ( empty( $volunteer ) ) {
 			$this->changed_property( ApplicantMeta::VOLUNTEER );
+
 			return;
 		}
 
 		foreach ( $volunteer as $item ) {
 			$this->add_volunteer( $item );
 		}
+	}
+
+	/**
+	 * Add date interval information to an array of data.
+	 *
+	 * This requires the array of data to have a start and end date.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param array $data The array of data with date information.
+	 *
+	 * @return array The array of data with date information added.
+	 */
+	private function add_date_diff( $data ) {
+		// Make sure we have the correct array keys.
+		if ( ! isset( $data[ ApplicantMeta::START_DATE ], $data[ ApplicantMeta::END_DATE ] ) ) {
+			return $data;
+		}
+
+		// Make sure the keys we need aren't empty.
+		if ( empty( $data[ ApplicantMeta::START_DATE ] ) || empty( $data[ ApplicantMeta::END_DATE ] ) ) {
+			return $data;
+		}
+
+		// Calculate duration between start and end dates.
+		$present = isset( $data[ ApplicantMeta::PRESENT_POSITION ] ) && $data[ ApplicantMeta::PRESENT_POSITION ];
+		$start   = date_create( $data[ ApplicantMeta::START_DATE ] );
+		$end     = date_create( $data[ ApplicantMeta::END_DATE ] );
+		$diff    = date_diff( $start, $end );
+
+		// Add calculated duration to data.
+		$data[ ApplicantMeta::YEAR_DURATION ] = $diff instanceof DateInterval
+			? $this->calculate_date_diff( $diff, $present )
+			: '';
+
+		return $data;
+	}
+
+	/**
+	 * Calculate the date difference from a time interval and return a readable string.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param DateInterval $diff             A date interval object.
+	 * @param bool         $present_position A flag indicating whether this is a present position.
+	 *
+	 * @return string A readable time difference, or an empty string if there is no time difference.
+	 */
+	private function calculate_date_diff( DateInterval $diff, $present_position ) {
+		if ( 0 === $diff->y && 0 === $diff->m && 0 === $diff->d ) {
+			return '';
+		}
+
+		$parts = [];
+		if ( $diff->y > 0 ) {
+			$parts[] = sprintf(
+				/* translators: the placeholder is a number of years */
+				_n( '%s Year', '%s Years', $diff->y, 'yikes-level-playing-field' ),
+				number_format_i18n( (float) $diff->y )
+			);
+		}
+
+		if ( $diff->m > 0 ) {
+			$parts[] = sprintf(
+				/* translators: the placeholder is a number of months */
+				_n( '%s Month', '%s Months', $diff->m, 'yikes-level-playing-field' ),
+				number_format_i18n( (float) $diff->m )
+			);
+		}
+
+		if ( $diff->d > 0 ) {
+			$parts = sprintf(
+				/* translators: the placeholder is a number of days */
+				_n( '%s Day', '%s Days', $diff->d, 'yikes-level-playing-field' ),
+				number_format_i18n( (float) $diff->d )
+			);
+		}
+
+		if ( $present_position ) {
+			$parts[] = '. ' . __( 'Presently working here.', 'yikes-level-playing-field' );
+		}
+
+		return implode( ' ', $parts );
 	}
 
 	/**
