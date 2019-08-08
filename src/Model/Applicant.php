@@ -262,8 +262,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @param array $schooling Array of schooling data.
 	 */
 	public function add_schooling( array $schooling ) {
-		$this->{ApplicantMeta::SCHOOLING}[] = $this->filter_and_sanitize( $schooling, ApplicantMeta::SCHOOLING );
-		$this->changed_property( ApplicantMeta::SCHOOLING );
+		$this->add_property( ApplicantMeta::SCHOOLING, $schooling );
 	}
 
 	/**
@@ -308,11 +307,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @param array $certification The certification data.
 	 */
 	public function add_certification( array $certification ) {
-		$this->{ApplicantMeta::CERTIFICATIONS}[] = $this->filter_and_sanitize(
-			$certification,
-			ApplicantMeta::CERTIFICATIONS
-		);
-		$this->changed_property( ApplicantMeta::CERTIFICATIONS );
+		$this->add_property( ApplicantMeta::CERTIFICATIONS, $certification );
 	}
 
 	/**
@@ -354,8 +349,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @param array $skill The skill data.
 	 */
 	public function add_skill( array $skill ) {
-		$this->{ApplicantMeta::SKILLS}[] = $this->filter_and_sanitize( $skill, ApplicantMeta::SKILLS );
-		$this->changed_property( ApplicantMeta::SKILLS );
+		$this->add_property( ApplicantMeta::SKILLS, $skill );
 	}
 
 	/**
@@ -560,8 +554,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @param array $address The array of address data.
 	 */
 	public function set_address( $address ) {
-		$this->{ApplicantMeta::ADDRESS} = $this->filter_and_sanitize( $address, ApplicantMeta::ADDRESS );
-		$this->changed_property( ApplicantMeta::ADDRESS );
+		$this->set_property( ApplicantMeta::ADDRESS, $address );
 	}
 
 	/**
@@ -603,8 +596,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @param array $language Array of language data.
 	 */
 	public function add_language( array $language ) {
-		$this->{ApplicantMeta::LANGUAGES}[] = $this->filter_and_sanitize( $language, ApplicantMeta::LANGUAGES );
-		$this->changed_property( ApplicantMeta::LANGUAGES );
+		$this->add_property( ApplicantMeta::LANGUAGES, $language );
 	}
 
 	/**
@@ -653,8 +645,7 @@ final class Applicant extends CustomPostTypeEntity {
 			return;
 		}
 
-		$this->{ApplicantMeta::INTERVIEW} = $this->filter_and_sanitize( $interview, ApplicantMeta::INTERVIEW );
-		$this->changed_property( ApplicantMeta::INTERVIEW );
+		$this->set_property( ApplicantMeta::INTERVIEW, $interview );
 	}
 
 	/**
@@ -681,8 +672,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @param string $interview_status Whether an interview has been scheduled for this applicant.
 	 */
 	public function set_interview_status( $interview_status ) {
-		$this->{ApplicantMeta::INTERVIEW_STATUS} = filter_var( $interview_status, $this->get_sanitize_filter( ApplicantMeta::INTERVIEW_STATUS ) );
-		$this->changed_property( ApplicantMeta::INTERVIEW_STATUS );
+		$this->set_property( ApplicantMeta::INTERVIEW_STATUS, $interview_status );
 	}
 
 	/**
@@ -1086,64 +1076,48 @@ final class Applicant extends CustomPostTypeEntity {
 	}
 
 	/**
-	 * Filter and sanitize data according to the sanitization rules.
-	 *
-	 * @since %VERSION%
-	 *
-	 * @param array  $data The data to filter and sanitize.
-	 * @param string $key  The sanitization key.
-	 *
-	 * @return array
-	 * @throws InvalidKey When the provided key is not in self::SANITIZATION.
-	 * @throws EmptyArray When an empty array of data is provided.
-	 */
-	private function filter_and_sanitize( $data, $key ) {
-		$structure = $this->get_data_structure( $key );
-		if ( empty( $structure ) ) {
-			throw InvalidKey::not_found( $key, __METHOD__ );
-		}
-
-		// Remove any extraneous keys.
-		$data = array_intersect_key( $data, $structure );
-		if ( empty( $data ) ) {
-			throw EmptyArray::from_function( __METHOD__ );
-		}
-
-		// Sanitize each piece of data.
-		foreach ( $data as $index => &$value ) {
-			$value = filter_var( $value, $this->get_sanitize_filter( $index ) );
-		}
-
-		return $data;
-	}
-
-	/**
 	 * Set a property for this Applicant.
 	 *
 	 * @since %VERSION%
 	 *
 	 * @param string $property The property to set.
-	 * @param string $value    The value of that property.
+	 * @param mixed  $value    The value of that property.
 	 *
 	 * @throws InvalidApplicantValue When the value is not valid, or when there is no sanitization setting.
 	 */
 	public function set_property( $property, $value ) {
-		$sanitize = $this->get_sanitize_filter( $property );
-		if ( FILTER_FLAG_NONE === $sanitize ) {
-			throw InvalidApplicantValue::no_sanitization( $property );
+		$this->validate_can_modify_property( $property );
+		$this->$property = $this->sanitize_property( $property, $value );
+		$this->changed_property( $property );
+	}
+
+	/**
+	 * Add a value to a property.
+	 *
+	 * This is only to be used for properties that contain multiple values, such as experience. For properties
+	 * with only one value (even if that value is an array, like address), use the set_property() method.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param string $property The property name.
+	 * @param mixed  $value    The property value.
+	 * @param string $key      (Optional) The key to use for the property value.
+	 */
+	public function add_property( $property, $value, $key = null ) {
+		$this->validate_can_modify_property( $property );
+		$this->validate_property_multiple( $property );
+
+		if ( ! isset( $this->{$property} ) ) {
+			$this->{$property} = [];
 		}
 
-		// Certain properties are only able to be modified by internal methods.
-		if ( array_key_exists( $property, $this->get_excluded_properties() ) ) {
-			throw InvalidProperty::cannot_modify( $property );
+		$sanitized = $this->sanitize_property( $property, $value );
+		if ( null === $key ) {
+			$this->{$property}[] = $sanitized;
+		} else {
+			$this->{$property}[ $key ] = $sanitized;
 		}
 
-		$filtered = filter_var( $value, $sanitize );
-		if ( false === $value ) {
-			throw InvalidApplicantValue::property_value( $property, $value );
-		}
-
-		$this->$property = $filtered;
 		$this->changed_property( $property );
 	}
 
@@ -1276,7 +1250,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 *
 	 * @return array The structure of the data. Intended to be used with array_intersect_key().
 	 */
-	private function get_data_structure( $property ) {
+	private function get_property_structure( $property ) {
 		switch ( $property ) {
 			case ApplicantMeta::SCHOOLING:
 				$structure = [
@@ -1306,17 +1280,6 @@ final class Applicant extends CustomPostTypeEntity {
 				break;
 
 			case ApplicantMeta::EXPERIENCE:
-				$structure = [
-					ApplicantMeta::ORGANIZATION     => 1,
-					ApplicantMeta::INDUSTRY         => 1,
-					ApplicantMeta::POSITION         => 1,
-					ApplicantMeta::START_DATE       => 1,
-					ApplicantMeta::END_DATE         => 1,
-					ApplicantMeta::PRESENT_POSITION => 1,
-					ApplicantMeta::YEAR_DURATION    => 1,
-				];
-				break;
-
 			case ApplicantMeta::VOLUNTEER:
 				$structure = [
 					ApplicantMeta::ORGANIZATION     => 1,
@@ -1420,6 +1383,73 @@ final class Applicant extends CustomPostTypeEntity {
 		 * @param string $property The applicant property key.
 		 */
 		return apply_filters( 'lpf_applicant_meta_key', $meta_key, $property );
+	}
+
+	/**
+	 * Sanitize a property for this object.
+	 *
+	 * For a structured property, each element will be sanitized individually. For
+	 * a non-structured property, the value will be sanitized directly.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param string $property The property name to sanitize.
+	 * @param mixed  $data     The data for the property.
+	 *
+	 * @return mixed The sanitized data.
+	 * @throws EmptyArray When a structured property has none of the correct keys.
+	 */
+	private function sanitize_property( $property, $data ) {
+		// Handle non-array properties.
+		$structure = $this->get_property_structure( $property );
+		if ( empty( $structure ) ) {
+			return $this->sanitize_key( $property, $data );
+		}
+
+		// Remove any extraneous keys.
+		$data = array_intersect_key( (array) $data, $structure );
+		if ( empty( $data ) ) {
+			throw EmptyArray::from_function( __METHOD__ );
+		}
+
+		// Sanitize each element of the array based on the sanitization rules.
+		foreach ( $data as $key => &$value ) {
+			$value = $this->sanitize_key( $key, $value );
+		}
+
+		return $data;
+	}
+
+	/**
+	 * Sanitize a value for a given key.
+	 *
+	 * The key is either a top-level property of the Applicant, or an array key
+	 * of a top-level property that has an array structure.
+	 *
+	 * @see Applicant::get_sanitize_filter()
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param string $key   The key to sanitize against.
+	 * @param mixed  $value The value to sanitize.
+	 *
+	 * @return mixed The sanitized value.
+	 * @throws InvalidApplicantValue When the value has no sanitization filter, or when the
+	 *                               sanitized value is invalide.
+	 */
+	private function sanitize_key( $key, $value ) {
+		$original = $value;
+		$sanitize = $this->get_sanitize_filter( $key );
+		if ( FILTER_FLAG_NONE === $sanitize ) {
+			throw InvalidApplicantValue::no_sanitization( $key );
+		}
+
+		$filtered = filter_var( $value, $sanitize );
+		if ( false === $value && false !== $original ) {
+			throw InvalidApplicantValue::property_value( $key, $value );
+		}
+
+		return $filtered;
 	}
 
 	/**
