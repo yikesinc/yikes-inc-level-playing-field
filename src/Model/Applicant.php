@@ -784,13 +784,12 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @since %VERSION%
 	 */
 	public function cancel_interview() {
-
 		// Don't allow cancellation of an interview that isn't scheduled, is already confirmed, or is already cancelled.
 		if ( $this->get_interview_status() !== 'scheduled' ) {
 			return;
 		}
 
-		// todo: Maybe add a message like 'The applicant has confirmed the interview'?
+		// todo: Maybe add a message like 'The applicant has cancelled the interview'?
 		$this->set_interview_status( 'cancelled' );
 		$this->set_interview( [] );
 		$this->persist_properties();
@@ -909,7 +908,10 @@ final class Applicant extends CustomPostTypeEntity {
 	/**
 	 * Set the anonymizer class used for this applicant's anonymization.
 	 *
-	 * Note: we need to use addslashes to escape namespace backslashes as WordPress will stripslashes when updating the DB.
+	 * Note: we need to use addslashes to escape namespace backslashes as WordPress will stripslashes()
+	 * when updating the DB.
+	 *
+	 * This function should NOT use the set_property() method.
 	 *
 	 * @since %VERSION%
 	 *
