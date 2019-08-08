@@ -32,4 +32,20 @@ class InvalidProperty extends \InvalidArgumentException implements Exception {
 			$property
 		) );
 	}
+
+	/**
+	 * Create a new instance of the class when the property does not allow multiple values.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param string $property The property name.
+	 *
+	 * @return static
+	 */
+	public static function not_multiple( $property ) {
+		return new static( sprintf(
+			'The property "%s" does not allow multiple values.',
+			$property
+		) );
+	}
 }
