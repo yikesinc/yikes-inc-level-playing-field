@@ -14,9 +14,6 @@ use WP_REST_Response;
 use WP_REST_Server;
 use WP_Error;
 use Yikes\LevelPlayingField\Model\ApplicantRepository;
-use Yikes\LevelPlayingField\REST\RestAPI;
-use Yikes\LevelPlayingField\REST\APISettings;
-
 
 /**
  *  Class InterviewAPI
@@ -27,6 +24,8 @@ use Yikes\LevelPlayingField\REST\APISettings;
  * @author  Freddie Mixell
  */
 final class InterviewAPI extends RestAPI {
+
+	use RestRestrict;
 
 	/**
 	 * Registering Interview API Routes.
@@ -44,7 +43,7 @@ final class InterviewAPI extends RestAPI {
 				'args'                => [
 					'id' => [
 						'required'          => true,
-						'validate_callback' => function ( $param, $request, $key ) {
+						'validate_callback' => function ( $param ) {
 							return is_numeric( $param );
 						},
 					],
@@ -60,7 +59,7 @@ final class InterviewAPI extends RestAPI {
 	 *
 	 * @param WP_REST_Request $request WordPress REST API Request Object.
 	 *
-	 * @return WP_REST_Response $response WordPress REST API Response Object.
+	 * @return WP_REST_Response|WP_Error $response WordPress REST API Response Object.
 	 */
 	public function get_interview_status( WP_REST_Request $request ) {
 		$response = new WP_REST_Response();
@@ -70,7 +69,7 @@ final class InterviewAPI extends RestAPI {
 		try {
 			$applicant = ( new ApplicantRepository() )->find( $id );
 		} catch ( \Exception $e ) {
-			return WP_Error( get_class( $e ), $e->getMessage() );
+			return new WP_Error( get_class( $e ), $e->getMessage() );
 		}
 
 		// Return Interview Status Object.
@@ -78,5 +77,4 @@ final class InterviewAPI extends RestAPI {
 
 		return $response;
 	}
-
 }

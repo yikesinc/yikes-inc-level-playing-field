@@ -9,6 +9,8 @@
 
 namespace Yikes\LevelPlayingField;
 
+use Yikes\LevelPlayingField\Model\Applicant;
+
 /** @var Applicant $applicant */
 $applicant       = $this->applicant;
 $display_details = $applicant->get_interview_details();
@@ -22,7 +24,7 @@ $display_details = $applicant->get_interview_details();
 		<p>
 			<?php echo esc_html( $display_details['status'] ); ?>
 		</p>
-		
+
 		<?php if ( array_key_exists( 'date', $display_details ) ) : ?>
 		<!-- Interview Date. -->
 		<p>

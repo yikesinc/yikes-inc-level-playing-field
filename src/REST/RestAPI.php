@@ -24,7 +24,6 @@ use Yikes\LevelPlayingField\Service;
 abstract class RestAPI implements Service, AssetsAware {
 
 	use AssetsAwareness;
-	use RestRestrict;
 
 	/**
 	 * Register the REST Registerables.
@@ -36,5 +35,4 @@ abstract class RestAPI implements Service, AssetsAware {
 
 		add_action( 'rest_api_init', [ $this, 'register_routes' ] );
 	}
-
 }
