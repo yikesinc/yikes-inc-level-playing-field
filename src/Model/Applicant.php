@@ -284,10 +284,16 @@ final class Applicant extends CustomPostTypeEntity {
 		 * Use different arguments depending on whether the applicant is anonymized.
 		 * Non-anonymized applicants are allowed to show their regular avatars.
 		 */
-		$avatar = get_avatar( $this->get_email(), $size, 'identicon', '', [
-			'force_default' => $this->is_anonymized(),
-			'force_display' => true,
-		] );
+		$avatar = get_avatar(
+			$this->get_email(),
+			$size,
+			'identicon',
+			'',
+			[
+				'force_default' => $this->is_anonymized(),
+				'force_display' => true,
+			]
+		);
 
 		return $avatar ?: '';
 	}
@@ -738,6 +744,62 @@ final class Applicant extends CustomPostTypeEntity {
 	}
 
 	/**
+	 * Get all interview details for interview widget
+	 *
+	 * @since %VERSION%
+	 * @return array
+	 */
+	public function get_interview_details() {
+		$status_check      = $this->get_interview_status();
+		$interview_details = $this->get_interview();
+		switch ( $status_check ) {
+			case 'scheduled':
+				return [
+					'status' => __( 'Awaiting Applicant Confirmation.', 'yikes-level-playing-field' ),
+					'date'   => [
+						'label' => __( 'Date:', 'yikes-level-playing-field' ),
+						'value' => $interview_details['date'],
+					],
+					'time'   => [
+						'label' => __( 'Time:', 'yikes-level-playing-field' ),
+						'value' => $interview_details['time'],
+					],
+				];
+
+			case 'confirmed':
+				return [
+					'status'   => __( 'Interview Request Accepted', 'yikes-level-playing-field' ),
+					'date'     => [
+						'label' => __( 'Date:', 'yikes-level-playing-field' ),
+						'value' => $interview_details['date'],
+					],
+					'time'     => [
+						'label' => __( 'Time:', 'yikes-level-playing-field' ),
+						'value' => $interview_details['time'],
+					],
+					'location' => [
+						'label' => __( 'Location:', 'yikes-level-playing-field' ),
+						'value' => $interview_details['location'],
+					],
+					'message'  => [
+						'label' => __( 'Message:', 'yikes-level-playing-field' ),
+						'value' => $interview_details['message'],
+					],
+				];
+
+			case 'cancelled':
+				return [
+					'status' => __( 'Interview request cancelled by the applicant.', 'yikes-level-playing-field' ),
+				];
+
+			default:
+				return [
+					'status' => __( 'An interview has not been scheduled.', 'yikes-level-playing-field' ),
+				];
+		}
+	}
+
+	/**
 	 * Set the status of an interview request.
 	 *
 	 * @since %VERSION%
@@ -818,10 +880,13 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @return string $messaging_endpoint The URL to the messaging page with the applicant's secret keys appended.
 	 */
 	public function get_messaging_endpoint() {
-		return add_query_arg( [
-			'guid' => $this->get_guid(),
-			'post' => $this->get_id(),
-		], get_permalink( ( new ApplicantMessagingPage() )->get_page_id( ApplicantMessagingPage::PAGE_SLUG ) ) );
+		return add_query_arg(
+			[
+				'guid' => $this->get_guid(),
+				'post' => $this->get_id(),
+			],
+			get_permalink( ( new ApplicantMessagingPage() )->get_page_id( ApplicantMessagingPage::PAGE_SLUG ) )
+		);
 	}
 
 	/**
@@ -832,9 +897,12 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @return string $cancellation_endpoint The endpoint that cancels a scheduled interview.
 	 */
 	public function get_cancellation_endpoint() {
-		return add_query_arg( [
-			'cancel' => '1',
-		], $this->get_messaging_endpoint() );
+		return add_query_arg(
+			[
+				'cancel' => '1',
+			],
+			$this->get_messaging_endpoint()
+		);
 	}
 
 	/**
@@ -845,9 +913,12 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @return string $confirmation_endpoint The endpoint that confirms a scheduled interview.
 	 */
 	public function get_confirmation_endpoint() {
-		return add_query_arg( [
-			'confirm' => '1',
-		], $this->get_messaging_endpoint() );
+		return add_query_arg(
+			[
+				'confirm' => '1',
+			],
+			$this->get_messaging_endpoint()
+		);
 	}
 
 	/**

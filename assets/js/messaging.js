@@ -3,16 +3,16 @@ jQuery( function ( $ ) {
 	/**
 	 * Getters, setters, global values.
 	 */
-	const get_message            = function() { return document.getElementById( 'new-applicant-message' ).value; }
-	const set_message            = function( value ) { document.getElementById( 'new-applicant-message' ).value = value; }
-	const get_interview_date     = function() { return document.getElementById( 'interview-date' ).value; }
-	const set_interview_date     = function( value ) { document.getElementById( 'interview-date' ).value = value; }
-	const get_interview_time     = function() { return document.getElementById( 'interview-time' ).value; }
-	const set_interview_time     = function( value ) { document.getElementById( 'interview-time' ).value = value; }
-	const get_interview_location = function() { return document.getElementById( 'interview-location' ).value; }
-	const set_interview_location = function( value ) { document.getElementById( 'interview-location' ).value = value; }
-	const get_interview_message  = function() { return document.getElementById( 'interview-message' ).value; }
-	const set_interview_message  = function( value ) { document.getElementById( 'interview-message' ).value = value; }
+	const get_message            = function() { return document.getElementById( 'new-applicant-message' ).value; };
+	const set_message            = function( value ) { document.getElementById( 'new-applicant-message' ).value = value; };
+	const get_interview_date     = function() { return document.getElementById( 'interview-date' ).value; };
+	const set_interview_date     = function( value ) { document.getElementById( 'interview-date' ).value = value; };
+	const get_interview_time     = function() { return document.getElementById( 'interview-time' ).value; };
+	const set_interview_time     = function( value ) { document.getElementById( 'interview-time' ).value = value; };
+	const get_interview_location = function() { return document.getElementById( 'interview-location' ).value; };
+	const set_interview_location = function( value ) { document.getElementById( 'interview-location' ).value = value; };
+	const get_interview_message  = function() { return document.getElementById( 'interview-message' ).value; };
+	const set_interview_message  = function( value ) { document.getElementById( 'interview-message' ).value = value; };
 	const post_id                = typeof messaging_data.post !== 'undefined' && typeof messaging_data.post.ID !== 'undefined' ? parseInt( messaging_data.post.ID ) : 0;
 
 	if ( 0 === post_id ) {
@@ -49,11 +49,11 @@ jQuery( function ( $ ) {
 			/**
 			 * Initialize interview fields when interview scheduler is clicked.
 			 */
-			$( 'body' ).on( 'click', '#interview-scheduler', function() { 
+			$( 'body' ).on( 'click', '#interview-scheduler', function() {
 				const dashicon = $( this ).children( '.dashicons' );
 				dashicon.hasClass( 'dashicons-arrow-down' ) ? dashicon.removeClass( 'dashicons-arrow-down' ).addClass( 'dashicons-arrow-up' ) : dashicon.removeClass( 'dashicons-arrow-up' ).addClass( 'dashicons-arrow-down' );
-				$( '#interview-scheduler-fields-container, #send-interview-request-button-container' ).toggleClass( 'hidden' ); 
-				$( '.new-applicant-message-container' ).toggleClass( 'cursor-disabled' ); 
+				$( '#interview-scheduler-fields-container, #send-interview-request-button-container' ).toggleClass( 'hidden' );
+				$( '.new-applicant-message-container' ).toggleClass( 'cursor-disabled' );
 				$( '#new-applicant-message' ).toggleClass( 'disabled-for-interview' );
 
 				// Enable datepicker.
@@ -163,6 +163,9 @@ jQuery( function ( $ ) {
 
 		// Show the new message on the message board.
 		refresh_message_board( response.data.post_id );
+
+		// Refresh Interview Details widget.
+		refreshInterviewDetails();
 	}
 
 	/**
@@ -253,6 +256,46 @@ jQuery( function ( $ ) {
 		$( '#applicant-messaging' ).replaceWith( response.data );
 	}
 
+	function refreshInterviewDetails() {
+		const { url, route, nonce } = messaging_data.api;
+		return $.get( {
+			url: url + route + '?id=' + post_id,
+			beforeSend: function( xhr ) {
+				xhr.setRequestHeader( 'X-WP-Nonce', nonce );
+			},
+			success: function({ status, date, time, location, message, }) {
+				// If the key exists return string dom node.
+				const statusEl   = status ? makeLabel( '', status ) : '';
+				const dateEl     = date ? makeLabel( date.label, date.value ) : '';
+				const timeEl     = time ? makeLabel( time.label, time.value ) : '';
+				const locationEl = location ? makeLabel( location.label, location.value ) : '';
+				const messageEl  = message ? makeLabel( message.label, message.value ) : '';
+
+				// Create DOM Nodes from our label function output.
+				const parsed = $.parseHTML( statusEl + dateEl + timeEl + locationEl + messageEl );
+				const widgetLocation = $( "#interview > div.inside" );
+
+				return widgetLocation.html( parsed );
+			},
+			error: function( error ) {
+				return console.warn( error );
+			},
+		})
+	}
+
+	/**
+	 * Helper function to make templated labels.
+	 *
+	 * @param {string} label
+	 * @param {string} info
+	 */
+	function makeLabel( label = '', info = '' ) {
+		if ( ! info ) {
+			return '';
+		}
+		return '<p><span class="label">' + label + '</span>' + info + '</p>';
+	}
+
 	/**
 	 * Scroll to the bottom of the messaging container.
 	 */
@@ -260,5 +303,4 @@ jQuery( function ( $ ) {
 	 	const conversation_container = $( '.conversation-container' );
 		conversation_container.animate({ scrollTop: conversation_container.prop( 'scrollHeight' ) - conversation_container.height() }, 1 );
 	 }
-
 });

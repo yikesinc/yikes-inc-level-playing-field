@@ -40,7 +40,7 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 	const VIEW     = 'views/applicant';
 	const PRIORITY = 1;
 
-	// CSS.
+	// CSS and Javascript.
 	const CSS_HANDLE = 'lpf-admin-applicant-css';
 	const CSS_URI    = 'assets/css/lpf-applicant-admin';
 
@@ -284,7 +284,7 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 
 		return [
 			$applicant,
-			new StyleAsset( self::CSS_HANDLE, self::CSS_URI ),
+			new StyleAsset( self::CSS_HANDLE, self::CSS_URI, [ 'wp-components' ] ),
 		];
 	}
 
