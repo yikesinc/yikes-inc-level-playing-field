@@ -27,5 +27,4 @@ trait RestRestrict {
 	public function can_edit_applications() {
 		return current_user_can( Capabilities::EDIT_APPLICANTS );
 	}
-
 }

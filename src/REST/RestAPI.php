@@ -12,8 +12,6 @@ namespace Yikes\LevelPlayingField\REST;
 use Yikes\LevelPlayingField\Assets\AssetsAware;
 use Yikes\LevelPlayingField\Assets\AssetsAwareness;
 use Yikes\LevelPlayingField\Service;
-use Yikes\LevelPlayingField\REST\Routeable;
-use Yikes\LevelPlayingField\REST\RestRestrict;
 
 /**
  * Abstract class RestAPI
@@ -23,7 +21,7 @@ use Yikes\LevelPlayingField\REST\RestRestrict;
  * @package Yikes\LevelPlayingField
  * @author  Freddie Mixell
  */
-abstract class RestAPI implements Routeable, Service, AssetsAware {
+abstract class RestAPI implements Service, AssetsAware {
 
 	use AssetsAwareness;
 	use RestRestrict;
