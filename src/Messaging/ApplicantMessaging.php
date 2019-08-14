@@ -149,22 +149,22 @@ class ApplicantMessaging implements Activateable, Deactivateable, Renderable, As
 		$script->add_localization(
 			'messaging_data',
 			[
-				'post'          => [
+				'post'        => [
 					'ID' => $post_id,
 				],
-				'ajax'          => [
+				'ajax'        => [
 					'url'             => admin_url( 'admin-ajax.php' ),
 					'send_nonce'      => wp_create_nonce( 'send_message' ),
 					'refresh_nonce'   => wp_create_nonce( 'refresh_conversation' ),
 					'interview_nonce' => wp_create_nonce( 'send_interview_request' ),
 				],
-				'is_metabox'    => is_admin(),
-				'spinner_url'   => admin_url( 'images/spinner-2x.gif' ),
-				'wpApiSettings' => [
-					'restNonce'            => wp_create_nonce( 'wp_rest' ),
-					'restUrl'              => site_url( rest_get_url_prefix() . '/' . APISettings::LPF_NAMESPACE ),
-					'interviewStatusRoute' => APISettings::INTERVIEW_STATUS_ROUTE . '/',
-				]
+				'is_metabox'  => is_admin(),
+				'spinner_url' => admin_url( 'images/spinner-2x.gif' ),
+				'api'         => [
+					'nonce' => wp_create_nonce( 'wp_rest' ),
+					'url'   => site_url( rest_get_url_prefix() . '/' . APISettings::LPF_NAMESPACE ),
+					'route' => APISettings::INTERVIEW_STATUS_ROUTE . '/',
+				],
 			]
 		);
 
@@ -362,9 +362,10 @@ class ApplicantMessaging implements Activateable, Deactivateable, Renderable, As
 		$is_metabox = filter_var( filter_var( wp_unslash( $_POST['is_metabox'] ), FILTER_SANITIZE_NUMBER_INT ), FILTER_VALIDATE_INT ) === 1;
 
 		// We need to format the args array to match the way `get_callback_args()` formats the callback data.
-		$args         = [];
-		$args['args'] = [
-			'is_metabox' => $is_metabox,
+		$args = [
+			'args' => [
+				'is_metabox' => $is_metabox,
+			],
 		];
 
 		ob_start();
