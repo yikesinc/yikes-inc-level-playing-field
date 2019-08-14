@@ -24,7 +24,6 @@ use Yikes\LevelPlayingField\Model\ApplicantRepository;
 use Yikes\LevelPlayingField\Model\JobRepository;
 use Yikes\LevelPlayingField\Service;
 use Yikes\LevelPlayingField\View\View;
-use Yikes\LevelPlayingField\Roles\Capabilities;
 
 /**
  * Class ApplicantManager
@@ -42,9 +41,8 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 	const PRIORITY = 1;
 
 	// CSS and Javascript.
-	const CSS_HANDLE       = 'lpf-admin-applicant-css';
-	const CSS_URI          = 'assets/css/lpf-applicant-admin';
-	const CSS_DEPENDENCIES = [ 'wp-components' ];
+	const CSS_HANDLE = 'lpf-admin-applicant-css';
+	const CSS_URI    = 'assets/css/lpf-applicant-admin';
 
 	// Applicant Partials.
 	const APPLICANT_BASIC_INFO            = 'views/applicant-basic-info';
@@ -286,7 +284,7 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 
 		return [
 			$applicant,
-			new StyleAsset( self::CSS_HANDLE, self::CSS_URI, self::CSS_DEPENDENCIES ),
+			new StyleAsset( self::CSS_HANDLE, self::CSS_URI, [ 'wp-components' ] ),
 		];
 	}
 
