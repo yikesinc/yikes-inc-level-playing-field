@@ -76,38 +76,6 @@ msgstr ""
 msgid "Job:"
 msgstr ""
 
-#: views/applicant-interview-details.php:27
-msgid "Pending:"
-msgstr ""
-
-#: views/applicant-interview-details.php:27
-msgid "Awaiting Applicant Confirmation"
-msgstr ""
-
-#: views/applicant-interview-details.php:32, views/interview-confirmation.php:44
-msgid "Date:"
-msgstr ""
-
-#: views/applicant-interview-details.php:35, views/interview-confirmation.php:48
-msgid "Time:"
-msgstr ""
-
-#: views/applicant-interview-details.php:40, views/interview-confirmation.php:52, src/Shortcode/AllJobs.php:51, src/Shortcode/Job.php:66
-msgid "Location:"
-msgstr ""
-
-#: views/applicant-interview-details.php:43, views/interview-confirmation.php:56
-msgid "Message:"
-msgstr ""
-
-#: views/applicant-interview-details.php:49
-msgid "Interview request cancelled by the applicant."
-msgstr ""
-
-#: views/applicant-interview-details.php:53
-msgid "An interview has not been scheduled."
-msgstr ""
-
 #: views/applicant-messaging.php:23
 msgid "Applicant Messaging"
 msgstr ""
@@ -305,6 +273,22 @@ msgstr ""
 
 #: views/interview-confirmation.php:37
 msgid "You have a pending interview request"
+msgstr ""
+
+#: views/interview-confirmation.php:44, src/Model/Applicant.php:722, src/Model/Applicant.php:735
+msgid "Date:"
+msgstr ""
+
+#: views/interview-confirmation.php:48, src/Model/Applicant.php:726, src/Model/Applicant.php:739
+msgid "Time:"
+msgstr ""
+
+#: views/interview-confirmation.php:52, src/Model/Applicant.php:743, src/Shortcode/AllJobs.php:51, src/Shortcode/Job.php:66
+msgid "Location:"
+msgstr ""
+
+#: views/interview-confirmation.php:56, src/Model/Applicant.php:747
+msgid "Message:"
 msgstr ""
 
 #: views/interview-confirmation.php:65
@@ -998,7 +982,7 @@ msgstr ""
 
 #. translators: %1$s is the field label, %2$s is the optional additional context
 #: src/Exception/InvalidField.php:74
-msgid "The field %1$s is required. %$2s"
+msgid "The field %1$s is required. %2$s"
 msgstr ""
 
 #. translators: %1$s is the field label, %2$s is the optional additional context
@@ -1305,42 +1289,54 @@ msgstr ""
 msgid "Filter Job Categories"
 msgstr ""
 
-#: src/Messaging/ApplicantMessaging.php:287, src/Messaging/ApplicantMessaging.php:349, src/Messaging/ApplicantMessaging.php:505, src/Settings/SettingsManager.php:44, src/Taxonomy/ApplicantStatus.php:305
+#: src/Messaging/ApplicantMessaging.php:295, src/Messaging/ApplicantMessaging.php:357, src/Messaging/ApplicantMessaging.php:514, src/Settings/SettingsManager.php:44, src/Taxonomy/ApplicantStatus.php:305
 msgid "An error occurred: Failed to validate the nonce."
 msgstr ""
 
-#: src/Messaging/ApplicantMessaging.php:298, src/Messaging/ApplicantMessaging.php:519
+#: src/Messaging/ApplicantMessaging.php:306, src/Messaging/ApplicantMessaging.php:528
 msgid "Please review: a required field is missing."
 msgstr ""
 
-#: src/Messaging/ApplicantMessaging.php:328
+#: src/Messaging/ApplicantMessaging.php:336
 msgid "The message was sent successfully."
 msgstr ""
 
-#: src/Messaging/ApplicantMessaging.php:335, src/Messaging/ApplicantMessaging.php:572
+#: src/Messaging/ApplicantMessaging.php:343, src/Messaging/ApplicantMessaging.php:607
 msgid "The comment could not be inserted."
 msgstr ""
 
 #. translators: %1$s is the date and %2$s is the time.
-#: src/Messaging/ApplicantMessaging.php:531
+#: src/Messaging/ApplicantMessaging.php:540
 msgid "You have received a request for an interview on %1$s at %2$s."
 msgstr ""
 
 #. translators: %1$s is the location.
-#: src/Messaging/ApplicantMessaging.php:533
+#: src/Messaging/ApplicantMessaging.php:542
 msgid "Interview location: %1$s."
 msgstr ""
 
-#: src/Messaging/ApplicantMessaging.php:534
+#: src/Messaging/ApplicantMessaging.php:543
 msgid "Message from employer"
 msgstr ""
 
-#: src/Messaging/ApplicantMessaging.php:537
+#: src/Messaging/ApplicantMessaging.php:546
 msgid "Please click Confirm Interview to accept this date and time or Decline Interview to reschedule."
 msgstr ""
 
-#: src/Messaging/ApplicantMessaging.php:565
+#: src/Messaging/ApplicantMessaging.php:577
+msgid "Email failed to send."
+msgstr ""
+
+#: src/Messaging/ApplicantMessaging.php:600
 msgid "The interview request was sent successfully."
+msgstr ""
+
+#: src/Messaging/ApplicantMessaging.php:631
+msgid "Irks! Your website is having trouble sending email. "
+msgstr ""
+
+#: src/Messaging/ApplicantMessaging.php:633
+msgid "Try using WP Mail SMTP To Send Emails."
 msgstr ""
 
 #: src/Metabox/ApplicantBasicInfo.php:49
@@ -1540,30 +1536,46 @@ msgstr ""
 msgid "Support Merit-Based Hiring"
 msgstr ""
 
-#: src/Model/Applicant.php:547
-msgid "Presently working here."
-msgstr ""
-
 #. translators: the placeholder is a number of years
-#: src/Model/Applicant.php:549
-msgid "%y Year "
-msgid_plural "%y Years "
+#: src/Model/Applicant.php:527
+msgid "%s Year"
+msgid_plural "%s Years"
 msgstr[0] ""
 msgstr[1] ""
 
 #. translators: the placeholder is a number of months
-#: src/Model/Applicant.php:551
-msgid "%m Month "
-msgid_plural "%m Months "
+#: src/Model/Applicant.php:535
+msgid "%s Month"
+msgid_plural "%s Months"
 msgstr[0] ""
 msgstr[1] ""
 
 #. translators: the placeholder is a number of days
-#: src/Model/Applicant.php:553
-msgid "%d Day"
-msgid_plural "%d Days"
+#: src/Model/Applicant.php:543
+msgid "%s Day"
+msgid_plural "%s Days"
 msgstr[0] ""
 msgstr[1] ""
+
+#: src/Model/Applicant.php:549
+msgid "Presently working here."
+msgstr ""
+
+#: src/Model/Applicant.php:720
+msgid "Awaiting Applicant Confirmation."
+msgstr ""
+
+#: src/Model/Applicant.php:733
+msgid "Interview Request Accepted"
+msgstr ""
+
+#: src/Model/Applicant.php:754
+msgid "Interview request cancelled by the applicant."
+msgstr ""
+
+#: src/Model/Applicant.php:759
+msgid "An interview has not been scheduled."
+msgstr ""
 
 #: src/Model/ApplicantMetaDropdowns.php:28
 msgid "High School"
@@ -1621,7 +1633,7 @@ msgstr ""
 msgid "Elementary"
 msgstr ""
 
-#: src/Model/ApplicantRepository.php:250
+#: src/Model/ApplicantRepository.php:258
 msgctxt "Default applicant nickname. Followed by a number"
 msgid "Applicant #"
 msgstr ""
@@ -1667,12 +1679,17 @@ msgid "Level Playing Field's Application Form Page"
 msgstr ""
 
 #. translators: %1$s is the post titles for our required pages.
-#: src/RequiredPages/BaseRequiredPage.php:147
+#: src/RequiredPages/BaseRequiredPage.php:154
+msgid "The following page is required for the Level Playing Field plugin and cannot be moved to Trash: %1$s."
+msgstr ""
+
+#. translators: %1$s is the post titles for our required pages.
+#: src/RequiredPages/BaseRequiredPage.php:197
 msgid "There was an error creating one of the plugin's required pages: %1$s."
 msgstr ""
 
 #. translators: %1$s is the post titles for our required pages.
-#: src/RequiredPages/BaseRequiredPage.php:163
+#: src/RequiredPages/BaseRequiredPage.php:213
 msgid "The following required page was successfully created: %1$s."
 msgstr ""
 
