@@ -1321,3 +1321,27 @@ function yks_awesome_framework_countries_array() {
 function yks_return_attribute( $key, $value ) {
 	return sprintf( '%1$s="%2$s" ', $key, esc_attr( $value ) );
 }
+
+/**
+ * Take ID of media attachment and return appropriate preview HTML
+ *
+ * @param int    | $attachment_id  | ID for media object
+ * @param string | $attachment_url | URL for media object
+ *
+ * @return string $preview_html
+ */
+function yks_get_preview_html_from_file_type( $attachment_id, $attachment_url ) {
+	$type = get_post_mime_type( $attachment_id );
+	$type = explode( '/', $type );
+	$type = is_array( $type ) && isset( $type[0] ) ? $type[0] : '';
+	$preview_html = '<span class="dashicons dashicons-media-default"></span>';
+	switch ( $type ) {
+		case 'image':
+			$preview_html = '<img src="' . htmlspecialchars( $attachment_url ) . '">';
+			break;
+		case 'video':
+			$preview_html = '<span class="dashicons dashicons-media-video"></span>';
+			break;
+	}
+	return $preview_html;
+}
