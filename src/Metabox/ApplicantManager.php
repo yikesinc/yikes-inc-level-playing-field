@@ -94,11 +94,8 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 
 		add_action( 'lpf_applicant_screen_rendered', function( View $view ) {
 			$this->update_viewed_by( $view->applicant );
-		}, 10 );
-
-		add_action( 'lpf_applicant_screen_rendered', function( View $view ) {
 			$this->mark_messages_read( $view->applicant );
-		}, 10 );
+		} );
 	}
 
 	/**
