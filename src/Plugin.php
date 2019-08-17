@@ -215,6 +215,7 @@ final class Plugin implements Registerable {
 	 * @return array The action links, extended.
 	 */
 	public function plugin_action_links( $links ) {
+		// @todo: move this into a separate class.
 		$lpf_links = [
 			SettingsPage::PAGE_SLUG => '<a href="' . esc_url( ( new SettingsPage() )->get_page_url() ) . '">' . esc_html__( 'Settings', 'yikes-level-playing-field' ) . '</a>',
 			SupportPage::PAGE_SLUG  => '<a href="' . esc_url( ( new SupportPage() )->get_page_url() ) . '">' . esc_html__( 'Support', 'yikes-level-playing-field' ) . '</a>',
