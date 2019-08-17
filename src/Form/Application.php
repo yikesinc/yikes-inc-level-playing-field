@@ -16,7 +16,6 @@ use Yikes\LevelPlayingField\Field\Hidden;
 use Yikes\LevelPlayingField\Field\Types;
 use Yikes\LevelPlayingField\Model\ApplicantMeta as Meta;
 use Yikes\LevelPlayingField\Model\Application as AppModel;
-use Yikes\LevelPlayingField\Model\ApplicationMeta;
 use Yikes\LevelPlayingField\Model\ApplicationPrefix;
 
 /**
