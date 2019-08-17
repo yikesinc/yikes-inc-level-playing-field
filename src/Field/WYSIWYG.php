@@ -32,7 +32,7 @@ class WYSIWYG extends BaseField {
 	public function render() {
 		?>
 		<div class="lpf-field-container">
-			<label class="lpf-input-label"><?php echo esc_html( $this->label ); ?>
+			<label class="lpf-input-label"><?php $this->render_label(); ?>
 			<?php
 				wp_editor( esc_textarea( $this->value ), $this->id, $this->get_editor_settings() );
 			?>

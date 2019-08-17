@@ -262,7 +262,7 @@ abstract class ComplexField extends BaseField {
 		}
 
 		if ( empty( $values ) ) {
-			throw InvalidField::value_invalid( $this->label );
+			throw InvalidField::value_invalid( $this->get_label() );
 		}
 
 		return $values;
@@ -278,7 +278,7 @@ abstract class ComplexField extends BaseField {
 	protected function validate_raw_value() {
 		// We cannot have an empty array.
 		if ( empty( $this->raw_value ) ) {
-			throw InvalidField::value_invalid( $this->label, 'Empty array received for complex field.' );
+			throw InvalidField::value_invalid( $this->get_label(), 'Empty array received for complex field.' );
 		}
 	}
 

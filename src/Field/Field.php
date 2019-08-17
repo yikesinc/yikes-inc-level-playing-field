@@ -82,4 +82,12 @@ interface Field {
 	 * @return bool
 	 */
 	public function is_required();
+
+	/**
+	 * Get the label for the field.
+	 *
+	 * @since %VERSION%
+	 * @return string The label for the field.
+	 */
+	public function get_label();
 }

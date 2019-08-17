@@ -107,7 +107,7 @@ class Select extends BaseField {
 		// Validate that the option is one of the available options.
 		if ( ! isset( $this->options[ $this->raw_value ] ) ) {
 			throw InvalidField::value_invalid(
-				$this->label,
+				$this->get_label(),
 				esc_html__( 'The submitted value is not one of the allowed options.', 'yikes-level-playing-field' )
 			);
 		}

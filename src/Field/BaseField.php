@@ -327,7 +327,7 @@ abstract class BaseField implements Field {
 	public function get_sanitized_value() {
 		$filtered = $this->sanitize_value( $this->raw_value );
 		if ( false === $filtered || ( empty( $filtered ) && $this->required ) ) {
-			throw InvalidField::value_invalid( $this->label );
+			throw InvalidField::value_invalid( $this->get_label() );
 		}
 
 		return $filtered;
@@ -342,7 +342,7 @@ abstract class BaseField implements Field {
 	 */
 	protected function validate_raw_value() {
 		if ( empty( $this->raw_value ) && $this->required ) {
-			throw InvalidField::field_required( $this->label );
+			throw InvalidField::field_required( $this->get_label() );
 		}
 	}
 
@@ -405,7 +405,7 @@ abstract class BaseField implements Field {
 	 * @since %VERSION%
 	 */
 	protected function render_label() {
-		echo esc_html( $this->label );
+		echo esc_html( $this->get_label() );
 	}
 
 	/**
@@ -416,6 +416,16 @@ abstract class BaseField implements Field {
 	protected function render_extra_attributes() {
 		$this->render_required();
 		$this->render_data_attributes();
+	}
+
+	/**
+	 * Get the label for the field.
+	 *
+	 * @since %VERSION%
+	 * @return string The label for the field.
+	 */
+	public function get_label() {
+		return $this->label;
 	}
 
 	/**

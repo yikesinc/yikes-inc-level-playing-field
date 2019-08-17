@@ -224,7 +224,7 @@ abstract class RepeatableField extends ComplexField {
 		}
 
 		if ( empty( $values ) ) {
-			throw InvalidField::value_invalid( $this->label );
+			throw InvalidField::value_invalid( $this->get_label() );
 		}
 
 		return $values;
@@ -278,7 +278,7 @@ abstract class RepeatableField extends ComplexField {
 		foreach ( $this->raw_value as $key => $value ) {
 			if ( ! is_numeric( $key ) || ! is_array( $value ) ) {
 				throw InvalidField::value_invalid(
-					$this->label,
+					$this->get_label(),
 					'Unexpected format for repeatable complex field.'
 				);
 			}
