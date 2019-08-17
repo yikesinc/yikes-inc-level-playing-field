@@ -249,6 +249,14 @@ class ApplicantRepository extends CustomPostTypeRepository {
 			do_action( 'lpf_applicant_save_field', $field, $applicant, $form );
 		}
 
+		/**
+		 * Fires before the applicant is anonymized.
+		 *
+		 * @param Applicant   $applicant The applicant object.
+		 * @param Application $form      The application form object.
+		 */
+		do_action( 'lpf_applicant_pre_anonymize', $applicant, $form );
+
 		// Anonymize!
 		$applicant->anonymize( AnonymizerFactory::get_anonymizer() );
 
