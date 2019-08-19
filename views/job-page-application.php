@@ -9,6 +9,11 @@
 
 namespace Yikes\LevelPlayingField;
 
+// Only run this within WordPress.
+if ( ! defined( 'ABSPATH' ) ) {
+	die();
+}
+
 /**
  * These variables are included here for easy visibility, but they
  * can also be used as $this->var_name directly.

@@ -11,6 +11,11 @@
 
 namespace Yikes\LevelPlayingField;
 
+// Only run this within WordPress.
+if ( ! defined( 'ABSPATH' ) ) {
+	die();
+}
+
 ?>
 <ul class="lpf-jobs-list">
 	<?php echo $this->render_partial( $this->partials['jobs_loop'] ); ?>

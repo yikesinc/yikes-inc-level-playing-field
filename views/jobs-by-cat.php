@@ -11,6 +11,11 @@
 
 namespace Yikes\LevelPlayingField;
 
+// Only run this within WordPress.
+if ( ! defined( 'ABSPATH' ) ) {
+	die();
+}
+
 ?>
 <div class="lpf-jobs-by-category-list">
 	<?php

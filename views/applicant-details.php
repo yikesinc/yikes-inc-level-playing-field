@@ -12,6 +12,11 @@ namespace Yikes\LevelPlayingField;
 use Yikes\LevelPlayingField\Model\Applicant;
 use Yikes\LevelPlayingField\Model\Job;
 
+// Only run this within WordPress.
+if ( ! defined( 'ABSPATH' ) ) {
+	die();
+}
+
 /** @var Applicant $applicant */
 $applicant = $this->applicant;
 
@@ -39,7 +44,7 @@ $job = $this->job;
 				<span class="label"><?php esc_html_e( 'Job:', 'yikes-level-playing-field' ); ?></span>
 				<?php echo esc_html( $job->get_title() ); ?>
 			</h5>
-		</section><!-- /header -->				
+		</section><!-- /header -->
 		<br class="clear">
 		</br>
 	</div><!-- /applicant-info -->

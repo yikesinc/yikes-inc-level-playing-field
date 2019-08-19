@@ -11,6 +11,11 @@ namespace Yikes\LevelPlayingField;
 
 use Yikes\LevelPlayingField\Model\Applicant;
 
+// Only run this within WordPress.
+if ( ! defined( 'ABSPATH' ) ) {
+	die();
+}
+
 /** @var Applicant $applicant */
 $applicant       = $this->applicant;
 $display_details = $applicant->get_interview_details();

@@ -9,6 +9,11 @@
 
 namespace Yikes\LevelPlayingField;
 
+// Only run this within WordPress.
+if ( ! defined( 'ABSPATH' ) ) {
+	die();
+}
+
 ?>
 <ul class="yikes_lpf_applicant_widget-notifications">
 	<li class="yikes_lpf_applicant_widget-notifications-icon">

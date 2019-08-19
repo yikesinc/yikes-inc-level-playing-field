@@ -11,6 +11,11 @@ namespace Yikes\LevelPlayingField;
 
 use Yikes\LevelPlayingField\View\View;
 
+// Only run this within WordPress.
+if ( ! defined( 'ABSPATH' ) ) {
+	die();
+}
+
 /**
  * Trigger the applicant screen first section.
  *

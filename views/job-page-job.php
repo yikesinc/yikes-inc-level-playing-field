@@ -11,6 +11,11 @@ namespace Yikes\LevelPlayingField;
 
 use Yikes\LevelPlayingField\Model\Job;
 
+// Only run this within WordPress.
+if ( ! defined( 'ABSPATH' ) ) {
+	die();
+}
+
 /** @var Job $job */
 $job       = $this->job;
 $use_comma = (bool) apply_filters( 'lpf_single_job_template_address_use_comma', true, $job );

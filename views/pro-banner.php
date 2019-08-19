@@ -11,6 +11,11 @@ namespace Yikes\LevelPlayingField;
 
 use Yikes\LevelPlayingField\Assets\MediaAsset;
 
+// Only run this within WordPress.
+if ( ! defined( 'ABSPATH' ) ) {
+	die();
+}
+
 ?>
 
 <!-- Banners -->

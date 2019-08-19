@@ -9,6 +9,11 @@
 
 namespace Yikes\LevelPlayingField;
 
+// Only run this within WordPress.
+if ( ! defined( 'ABSPATH' ) ) {
+	die();
+}
+
 ?>
 
 <div class="wrap lpf-page support-page">
@@ -17,7 +22,7 @@ namespace Yikes\LevelPlayingField;
 		<?php esc_html_e( 'Level Playing Field Support', 'yikes-level-playing-field' ); ?>
 	</h1>
 
-	<div class="lpf-page-content lpf-support-page-content">		
+	<div class="lpf-page-content lpf-support-page-content">
 		<div class="cptpro-settings cptpro-settings-support-help-container">
 			<p>
 				<?php esc_html_e( 'Before submitting a support request, please visit our Knowledge Base where we have step-by-step guides and troubleshooting help.', 'yikes-level-playing-field' ); ?> <a href="https://yikesplugins.com/support/knowledge-base/product/level-playing-field/" target="_blank"><?php esc_html_e( 'Visit the Level Playing Field Knowledge Base', 'yikes-level-playing-field' ); ?></a>

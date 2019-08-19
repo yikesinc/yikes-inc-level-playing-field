@@ -9,6 +9,11 @@
 
 namespace Yikes\LevelPlayingField;
 
+// Only run this within WordPress.
+if ( ! defined( 'ABSPATH' ) ) {
+	die();
+}
+
 ?>
 
 <!-- Banners -->
@@ -28,7 +33,7 @@ namespace Yikes\LevelPlayingField;
 		</p>
 		<p>
 			<a class="button button-primary banners-tweet-button" href="https://twitter.com/intent/tweet?text=I use Level Playing Field by @yikesinc to receive anonymized job applications to fight bias in hiring and employment. #WordPress &url=https://wordpress.org/plugins/level-playing-field/" target="_blank" data-size="large">
-				<?php esc_html_e( 'Tweet', 'yikes-level-playing-field' ); ?>			
+				<?php esc_html_e( 'Tweet', 'yikes-level-playing-field' ); ?>
 			</a>
 		</p>
 	</div>

@@ -7,6 +7,13 @@
  * @license GPL2
  */
 
+namespace Yikes\LevelPlayingField;
+
+// Only run this within WordPress.
+if ( ! defined( 'ABSPATH' ) ) {
+	die();
+}
+
 if ( true === $this->is_cancel ) {
 	$this->applicant->cancel_interview();
 	?>

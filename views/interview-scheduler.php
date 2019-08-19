@@ -7,6 +7,13 @@
  * @license GPL2
  */
 
+namespace Yikes\LevelPlayingField;
+
+// Only run this within WordPress.
+if ( ! defined( 'ABSPATH' ) ) {
+	die();
+}
+
 $interview_status    = $this->applicant->get_interview_status();
 $interview_closed    = 'scheduled' === $interview_status || 'confirmed' === $interview_status;
 $interview_class     = $interview_closed ? 'disabled' : '';

@@ -11,6 +11,11 @@ namespace Yikes\LevelPlayingField;
 
 use Yikes\LevelPlayingField\Comment\ApplicantMessage;
 
+// Only run this within WordPress.
+if ( ! defined( 'ABSPATH' ) ) {
+	die();
+}
+
 $comments = $this->comments;
 ?>
 <!-- Applicant Messaging -->

@@ -23,6 +23,11 @@ use Yikes\LevelPlayingField\Settings\Fields\EmailRecipientRoles;
 use Yikes\LevelPlayingField\Settings\Fields\DeleteOnUninstall;
 use Yikes\LevelPlayingField\View\View;
 
+// Only run this within WordPress.
+if ( ! defined( 'ABSPATH' ) ) {
+	die();
+}
+
 ?>
 <div id="lpf-settings" class="wrap lpf-page settings-page">
 	<h1 class="wp-heading-inline">

@@ -13,6 +13,11 @@ namespace Yikes\LevelPlayingField;
 
 use Yikes\LevelPlayingField\Model\Job;
 
+// Only run this within WordPress.
+if ( ! defined( 'ABSPATH' ) ) {
+	die();
+}
+
 /**
  * These are the available jobs.
  *
