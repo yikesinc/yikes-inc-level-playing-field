@@ -45,13 +45,6 @@ class BaseView implements View {
 	const CONTEXT_JAVASCRIPT = 'js';
 
 	/**
-	 * Custom folder for theme view overrides.
-	 *
-	 * @since %VERSION%
-	 */
-	const VIEW_OVERRIDE_FOLDER = 'lpf';
-
-	/**
 	 * URI to the view file to render.
 	 *
 	 * @since %VERSION%

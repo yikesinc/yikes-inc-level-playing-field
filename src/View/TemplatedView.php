@@ -72,8 +72,8 @@ class TemplatedView extends BaseView {
 		 * @param array $locations
 		 */
 		$locations = (array) apply_filters( 'lpf_templated_view_locations', [
-			trailingslashit( get_stylesheet_directory() ) . trailingslashit( static::VIEW_OVERRIDE_FOLDER ) . $uri,
-			trailingslashit( get_template_directory() ) . trailingslashit( static::VIEW_OVERRIDE_FOLDER ) . $uri,
+			trailingslashit( get_stylesheet_directory() ) . "lpf/{$uri}",
+			trailingslashit( get_template_directory() ) . "lpf/{$uri}",
 		] );
 
 		// Ensure the plugin folder is always available.
