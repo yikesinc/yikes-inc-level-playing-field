@@ -204,7 +204,7 @@ final class Job extends CustomPostTypeEntity {
 	 * @return array
 	 */
 	protected function get_lazy_properties() {
-		return [
+		$defaults = [
 			JobMeta::TYPE                        => '',
 			JobMeta::LOCATION                    => '',
 			JobMeta::ADDRESS                     => [
@@ -220,6 +220,18 @@ final class Job extends CustomPostTypeEntity {
 			JobMeta::APPLICATION_SUCCESS_MESSAGE => '',
 			JobMeta::APPLICATION_PAGE            => ( new ApplicationFormPage() )->get_page_id( ApplicationFormPage::PAGE_SLUG ),
 		];
+
+		/**
+		 * Filter additional job "lazy" properties.
+		 *
+		 * These are properties that are loaded only when needed.
+		 *
+		 * @param array $properties The array of applicant properties as keys, with their default
+		 *                          setting as values.
+		 */
+		$additional = (array) apply_filters( 'lpf_job_lazy_properties', [] );
+
+		return array_merge( $additional, $defaults );
 	}
 
 	/**
