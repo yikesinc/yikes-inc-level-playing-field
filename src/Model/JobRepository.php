@@ -10,7 +10,6 @@
 namespace Yikes\LevelPlayingField\Model;
 
 use WP_Post;
-use Yikes\LevelPlayingField\CustomPostType\JobManager as JobManagerCPT;
 use Yikes\LevelPlayingField\Exception\InvalidPostID;
 use Yikes\LevelPlayingField\Taxonomy\JobStatus;
 use Yikes\LevelPlayingField\Taxonomy\JobCategory;
@@ -24,6 +23,7 @@ use Yikes\LevelPlayingField\Taxonomy\JobCategory;
 final class JobRepository extends CustomPostTypeRepository {
 
 	use PostFinder;
+	use PostTypeJob;
 
 	/**
 	 * Find the Job with a given post ID.
@@ -144,16 +144,6 @@ final class JobRepository extends CustomPostTypeRepository {
 		$query = new \WP_Query( $args );
 
 		return absint( $query->found_posts );
-	}
-
-	/**
-	 * Get the post type slug to find.
-	 *
-	 * @since %VERSION%
-	 * @return string
-	 */
-	protected function get_post_type() {
-		return JobManagerCPT::SLUG;
 	}
 
 	/**

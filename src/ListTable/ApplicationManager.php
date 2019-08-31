@@ -9,9 +9,9 @@
 
 namespace Yikes\LevelPlayingField\ListTable;
 
-use Yikes\LevelPlayingField\CustomPostType\ApplicationManager as ApplicationManagerCPT;
 use Yikes\LevelPlayingField\Model\ApplicantRepository;
 use Yikes\LevelPlayingField\Model\JobRepository;
+use Yikes\LevelPlayingField\Model\PostTypeApplication;
 
 /**
  * Class ApplicationManager
@@ -20,6 +20,8 @@ use Yikes\LevelPlayingField\Model\JobRepository;
  * @package Yikes\LevelPlayingField
  */
 final class ApplicationManager extends BasePostType {
+
+	use PostTypeApplication;
 
 	/**
 	 * Register the WordPress hooks.
@@ -136,15 +138,5 @@ final class ApplicationManager extends BasePostType {
 	 */
 	protected function create_custom_dropdowns( $which ) {
 		// @todo Decide whether we need custom dropdowns for Applications.
-	}
-
-	/**
-	 * Get the post type.
-	 *
-	 * @since %VERSION%
-	 * @return string
-	 */
-	protected function get_post_type() {
-		return ApplicationManagerCPT::SLUG;
 	}
 }

@@ -9,8 +9,8 @@
 
 namespace Yikes\LevelPlayingField\ListTable;
 
-use Yikes\LevelPlayingField\CustomPostType\JobManager as JobManagerCPT;
 use Yikes\LevelPlayingField\Model\ApplicantRepository;
+use Yikes\LevelPlayingField\Model\PostTypeJob;
 use Yikes\LevelPlayingField\Taxonomy\JobCategory;
 use Yikes\LevelPlayingField\Taxonomy\JobStatus;
 use Yikes\LevelPlayingField\Shortcode\Job;
@@ -28,6 +28,7 @@ use Yikes\LevelPlayingField\Assets\AssetsAwareness;
 final class JobManager extends BasePostType implements AssetsAware {
 
 	use AssetsAwareness;
+	use PostTypeJob;
 
 	const CSS_HANDLE = 'lpf-jobs-list-table-admin';
 	const CSS_URI    = '/assets/css/lpf-jobs-list-table-admin';
@@ -179,15 +180,5 @@ final class JobManager extends BasePostType implements AssetsAware {
 
 			echo $category_dropdown; // phpcs:ignore WordPress.Security.EscapeOutput
 		}
-	}
-
-	/**
-	 * Get the post type.
-	 *
-	 * @since %VERSION%
-	 * @return string
-	 */
-	protected function get_post_type() {
-		return JobManagerCPT::SLUG;
 	}
 }

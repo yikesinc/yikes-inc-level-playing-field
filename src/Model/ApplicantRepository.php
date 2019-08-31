@@ -14,7 +14,6 @@ use stdClass;
 use WP_Post;
 use WP_Query;
 use Yikes\LevelPlayingField\Anonymizer\AnonymizerFactory;
-use Yikes\LevelPlayingField\CustomPostType\ApplicantManager as ApplicantCPT;
 use Yikes\LevelPlayingField\Exception\InvalidPostID;
 use Yikes\LevelPlayingField\Field\Field;
 use Yikes\LevelPlayingField\Form\Application;
@@ -28,6 +27,7 @@ use Yikes\LevelPlayingField\Form\Application;
 class ApplicantRepository extends CustomPostTypeRepository {
 
 	use PostFinder;
+	use PostTypeApplicant;
 
 	/**
 	 * Find the Applicant with a given post ID.
@@ -52,16 +52,6 @@ class ApplicantRepository extends CustomPostTypeRepository {
 	 */
 	public function find_all() {
 		return $this->find_all_items();
-	}
-
-	/**
-	 * Get the post type slug to find.
-	 *
-	 * @since %VERSION%
-	 * @return string
-	 */
-	protected function get_post_type() {
-		return ApplicantCPT::SLUG;
 	}
 
 	/**

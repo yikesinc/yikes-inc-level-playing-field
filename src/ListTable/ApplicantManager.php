@@ -10,7 +10,6 @@
 namespace Yikes\LevelPlayingField\ListTable;
 
 use WP_Post;
-use Yikes\LevelPlayingField\CustomPostType\ApplicantManager as ApplicantManagerCPT;
 use Yikes\LevelPlayingField\Exception\InvalidPostID;
 use Yikes\LevelPlayingField\Model\Applicant;
 use Yikes\LevelPlayingField\Model\ApplicantMeta;
@@ -18,6 +17,7 @@ use Yikes\LevelPlayingField\Model\ApplicantRepository;
 use Yikes\LevelPlayingField\Model\JobRepository;
 use Yikes\LevelPlayingField\Model\JobDropdown;
 use Yikes\LevelPlayingField\Model\MetaLinks;
+use Yikes\LevelPlayingField\Model\PostTypeApplicant;
 use Yikes\LevelPlayingField\Roles\Capabilities;
 use Yikes\LevelPlayingField\Taxonomy\ApplicantStatus;
 use Yikes\LevelPlayingField\Taxonomy\ApplicantStatusDropdown;
@@ -31,8 +31,9 @@ use Yikes\LevelPlayingField\Comment\ApplicantMessageRepository;
  */
 class ApplicantManager extends BasePostType {
 
-	use JobDropdown;
 	use ApplicantStatusDropdown;
+	use JobDropdown;
+	use PostTypeApplicant;
 
 	/**
 	 * Register hooks.
@@ -280,16 +281,6 @@ class ApplicantManager extends BasePostType {
 			];
 		}
 		$query->set( 'meta_query', $meta_query );
-	}
-
-	/**
-	 * Get the post type.
-	 *
-	 * @since %VERSION%
-	 * @return string
-	 */
-	protected function get_post_type() {
-		return ApplicantManagerCPT::SLUG;
 	}
 
 	/**

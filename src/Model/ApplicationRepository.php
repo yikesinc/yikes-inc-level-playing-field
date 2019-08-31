@@ -10,7 +10,6 @@
 namespace Yikes\LevelPlayingField\Model;
 
 use WP_Post;
-use Yikes\LevelPlayingField\CustomPostType\ApplicationManager as ApplicationManagerCPT;
 use Yikes\LevelPlayingField\Exception\InvalidPostID;
 
 /**
@@ -22,6 +21,7 @@ use Yikes\LevelPlayingField\Exception\InvalidPostID;
 final class ApplicationRepository extends CustomPostTypeRepository {
 
 	use PostFinder;
+	use PostTypeApplication;
 
 	/**
 	 * Find the item with a given post ID.
@@ -46,16 +46,6 @@ final class ApplicationRepository extends CustomPostTypeRepository {
 	 */
 	public function find_all() {
 		return $this->find_all_items();
-	}
-
-	/**
-	 * Get the post type slug to find.
-	 *
-	 * @since %VERSION%
-	 * @return string
-	 */
-	protected function get_post_type() {
-		return ApplicationManagerCPT::SLUG;
 	}
 
 	/**
