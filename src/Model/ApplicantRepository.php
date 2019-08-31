@@ -12,11 +12,11 @@ namespace Yikes\LevelPlayingField\Model;
 use InvalidArgumentException;
 use stdClass;
 use WP_Post;
-use WP_Query;
 use Yikes\LevelPlayingField\Anonymizer\AnonymizerFactory;
 use Yikes\LevelPlayingField\Exception\InvalidPostID;
 use Yikes\LevelPlayingField\Field\Field;
 use Yikes\LevelPlayingField\Form\Application;
+use Yikes\LevelPlayingField\Query\ApplicantQueryBuilder;
 
 /**
  * Class ApplicantRepository
@@ -77,14 +77,10 @@ class ApplicantRepository extends CustomPostTypeRepository {
 	 * @return int The count of applicants for the Job.
 	 */
 	public function get_applicant_count_for_job( $job_id ) {
-		$args = $this->get_default_query_vars();
-
-		// Specifics for this query.
-		$args['posts_per_page'] = 1;
-		$args['fields']         = 'ids';
-		$args['meta_query'][]   = $this->get_job_meta_query( $job_id );
-
-		$query = new WP_Query( $args );
+		$query = ( new ApplicantQueryBuilder() )
+			->for_count()
+			->where_job_id( $job_id )
+			->get_query();
 
 		return absint( $query->found_posts );
 	}
@@ -99,15 +95,11 @@ class ApplicantRepository extends CustomPostTypeRepository {
 	 * @return int The count of applicants for the Job who have been viewed.
 	 */
 	public function get_viewed_applicant_count_for_job( $job_id ) {
-		$args = $this->get_default_query_vars();
-
-		// Specifics for this query.
-		$args['posts_per_page'] = 1;
-		$args['fields']         = 'ids';
-		$args['meta_query'][]   = $this->get_job_meta_query( $job_id );
-		$args['meta_query'][]   = $this->get_viewed_applicant_meta_query();
-
-		$query = new WP_Query( $args );
+		$query = ( new ApplicantQueryBuilder() )
+			->for_count()
+			->where_job_id( $job_id )
+			->where_applicant_viewed()
+			->get_query();
 
 		return absint( $query->found_posts );
 	}
@@ -122,18 +114,11 @@ class ApplicantRepository extends CustomPostTypeRepository {
 	 * @return int The count of new applicants for the Job.
 	 */
 	public function get_new_applicant_count_for_job( $job_id ) {
-		$args = $this->get_default_query_vars();
-
-		// Specifics for this query.
-		$args['posts_per_page'] = 1;
-		$args['fields']         = 'ids';
-		$args['meta_query'][]   = $this->get_job_meta_query( $job_id );
-		$args['meta_query'][]   = [
-			'key'     => ApplicantMeta::META_PREFIXES['viewed'],
-			'compare' => 'NOT EXISTS',
-		];
-
-		$query = new WP_Query( $args );
+		$query = ( new ApplicantQueryBuilder() )
+			->for_count()
+			->where_job_id( $job_id )
+			->where_applicant_not_viewed()
+			->get_query();
 
 		return absint( $query->found_posts );
 	}
@@ -148,9 +133,9 @@ class ApplicantRepository extends CustomPostTypeRepository {
 	 * @return Applicant[]
 	 */
 	public function get_applicants_for_job( $job_id ) {
-		$args                 = $this->get_default_query_vars();
-		$args['meta_query'][] = $this->get_job_meta_query( $job_id );
-		$query                = new WP_Query( $args );
+		$query = ( new ApplicantQueryBuilder() )
+			->where_job_id( $job_id )
+			->get_query();
 
 		$applicants = [];
 		foreach ( $query->posts as $post ) {
@@ -170,14 +155,10 @@ class ApplicantRepository extends CustomPostTypeRepository {
 	 * @return int The count of applicants for the Application.
 	 */
 	public function get_count_for_application( $application_id ) {
-		$args = $this->get_default_query_vars();
-
-		// Specifics for this query.
-		$args['posts_per_page'] = 1;
-		$args['fields']         = 'ids';
-		$args['meta_query'][]   = $this->get_application_meta_query( $application_id );
-
-		$query = new WP_Query( $args );
+		$query = ( new ApplicantQueryBuilder() )
+			->for_count()
+			->where_application_id( $application_id )
+			->get_query();
 
 		return absint( $query->found_posts );
 	}
@@ -264,21 +245,5 @@ class ApplicantRepository extends CustomPostTypeRepository {
 		$applicant->persist();
 
 		return $applicant;
-	}
-
-	/**
-	 * Get the default arguments to use when querying for this repository.
-	 *
-	 * @since %VERSION%
-	 * @return array
-	 */
-	protected function get_default_query_vars() {
-		return [
-			'post_type'              => $this->get_post_type(),
-			'post_status'            => [ 'any' ],
-			'update_post_meta_cache' => false,
-			'update_post_term_cache' => false,
-			'meta_query'             => [],
-		];
 	}
 }

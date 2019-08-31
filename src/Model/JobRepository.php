@@ -11,6 +11,7 @@ namespace Yikes\LevelPlayingField\Model;
 
 use WP_Post;
 use Yikes\LevelPlayingField\Exception\InvalidPostID;
+use Yikes\LevelPlayingField\Query\JobQueryBuilder;
 use Yikes\LevelPlayingField\Taxonomy\JobStatus;
 use Yikes\LevelPlayingField\Taxonomy\JobCategory;
 
@@ -64,28 +65,25 @@ final class JobRepository extends CustomPostTypeRepository {
 	 * @return Job[]
 	 */
 	public function find_active( $limit = 10, $orderby = 'title', $order = 'ASC', $exclude = [], $cat_exclude_ids = [] ) {
-		$args = [
-			'post_type'      => $this->get_post_type(),
-			'post_status'    => [ 'publish' ],
-			'posts_per_page' => $limit,
-			'orderby'        => $orderby,
-			'order'          => $order,
-			'tax_query'      => [
-				$this->get_active_job_status_tax_query(),
-			],
-		];
+		$job_query = ( new JobQueryBuilder() )
+			->posts_per_page( $limit )
+			->orderby( $orderby )
+			->where_job_active();
+
+		if ( 'ASC' === strtoupper( $order ) ) {
+			$job_query->order_ascending();
+		}
 
 		if ( ! empty( $exclude ) ) {
-			$args['post__not_in'] = is_array( $exclude ) ? $exclude : explode( ',', $exclude );
+			$job_query->post__not_in( $exclude );
 		}
 
-		if ( ! empty( $ids ) ) {
-			$args['tax_query'][] = $this->get_job_category_exclude_tax_query( $cat_exclude_ids );
+		if ( ! empty( $cat_exclude_ids ) ) {
+			$job_query->exclude_category_ids( $cat_exclude_ids );
 		}
 
-		$query = new \WP_Query( $args );
-
-		$jobs = [];
+		$query = $job_query->get_query();
+		$jobs  = [];
 		foreach ( $query->posts as $post ) {
 			$jobs[ $post->ID ] = $this->get_model_object( $post );
 		}
@@ -100,20 +98,11 @@ final class JobRepository extends CustomPostTypeRepository {
 	 * @return int
 	 */
 	public function count_active() {
-		$args = [
-			'post_type'              => $this->get_post_type(),
-			'post_status'            => [ 'any' ],
-			// Limit posts per page, because WP_Query will still tell us the total.
-			'posts_per_page'         => 1,
-			'update_post_meta_cache' => false,
-			'update_post_term_cache' => false,
-			'fields'                 => 'ids',
-			'tax_query'              => [
-				$this->get_active_job_status_tax_query(),
-			],
-		];
-
-		$query = new \WP_Query( $args );
+		$query = ( new JobQueryBuilder() )
+			->for_count()
+			->post_status( [ 'any' ] )
+			->where_job_active()
+			->get_query();
 
 		return absint( $query->found_posts );
 	}
@@ -128,20 +117,10 @@ final class JobRepository extends CustomPostTypeRepository {
 	 * @return int The count of jobs for the Application.
 	 */
 	public function get_count_for_application( $application_id ) {
-		$args = [
-			'post_type'              => $this->get_post_type(),
-			'post_status'            => [ 'any' ],
-			// Limit posts per page, because WP_Query will still tell us the total.
-			'posts_per_page'         => 1,
-			'update_post_meta_cache' => false,
-			'update_post_term_cache' => false,
-			'fields'                 => 'ids',
-			'meta_query'             => [
-				$this->get_application_meta_query( $application_id ),
-			],
-		];
-
-		$query = new \WP_Query( $args );
+		$query = ( new JobQueryBuilder() )
+			->for_count()
+			->where_application_id( $application_id )
+			->get_query();
 
 		return absint( $query->found_posts );
 	}
@@ -157,37 +136,5 @@ final class JobRepository extends CustomPostTypeRepository {
 	 */
 	protected function get_model_object( WP_Post $post ) {
 		return new Job( $post );
-	}
-
-	/**
-	 * Get the tax query array for Jobs with Active status.
-	 *
-	 * @since %VERSION%
-	 * @return array
-	 */
-	private function get_active_job_status_tax_query() {
-		return [
-			'taxonomy' => JobStatus::SLUG,
-			'field'    => 'slug',
-			'terms'    => 'active',
-		];
-	}
-
-	/**
-	 * Get the tax query array for excluding the specified categories.
-	 *
-	 * @since %VERSION%
-	 *
-	 * @param mixed $ids An array or string of IDs to exclude.
-	 *
-	 * @return array
-	 */
-	private function get_job_category_exclude_tax_query( $ids = [] ) {
-		return [
-			'taxonomy' => JobCategory::SLUG,
-			'field'    => 'term_id',
-			'terms'    => is_array( $ids ) ? $ids : explode( ',', $ids ),
-			'operator' => 'NOT IN',
-		];
 	}
 }
