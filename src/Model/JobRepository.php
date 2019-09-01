@@ -12,8 +12,6 @@ namespace Yikes\LevelPlayingField\Model;
 use WP_Post;
 use Yikes\LevelPlayingField\Exception\InvalidPostID;
 use Yikes\LevelPlayingField\Query\JobQueryBuilder;
-use Yikes\LevelPlayingField\Taxonomy\JobStatus;
-use Yikes\LevelPlayingField\Taxonomy\JobCategory;
 
 /**
  * Class JobRepository
