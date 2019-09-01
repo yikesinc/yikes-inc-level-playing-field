@@ -133,16 +133,9 @@ class ApplicantRepository extends CustomPostTypeRepository {
 	 * @return Applicant[]
 	 */
 	public function get_applicants_for_job( $job_id ) {
-		$query = ( new ApplicantQueryBuilder() )
-			->where_job_id( $job_id )
-			->get_query();
+		$query = ( new ApplicantQueryBuilder() )->where_job_id( $job_id );
 
-		$applicants = [];
-		foreach ( $query->posts as $post ) {
-			$applicants[ $post->ID ] = $this->get_model_object( $post );
-		}
-
-		return $applicants;
+		return $this->get_applicants( $query );
 	}
 
 	/**
@@ -161,6 +154,25 @@ class ApplicantRepository extends CustomPostTypeRepository {
 			->get_query();
 
 		return absint( $query->found_posts );
+	}
+
+	/**
+	 * Get Applicants using a query builder object.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param ApplicantQueryBuilder $query_builder The query builder object.
+	 *
+	 * @return Applicant[] Array of applicant objects.
+	 */
+	public function get_applicants( ApplicantQueryBuilder $query_builder ) {
+		$query      = $query_builder->get_query();
+		$applicants = [];
+		foreach ( $query->posts as $post ) {
+			$applicants[ $post->ID ] = $this->get_model_object( $post );
+		}
+
+		return $applicants;
 	}
 
 	/**
