@@ -89,6 +89,21 @@ abstract class BaseQueryBuilder {
 	}
 
 	/**
+	 * Filter the query by a particular year/date.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param int $m The year/date value. E.g. 201908 for August 2019.
+	 *
+	 * @return $this
+	 */
+	public function m( $m ) {
+		$this->args['m'] = $m;
+
+		return $this;
+	}
+
+	/**
 	 * Filter the query with a meta query.
 	 *
 	 * @since %VERSION%
@@ -210,6 +225,21 @@ abstract class BaseQueryBuilder {
 	 */
 	public function post_status( $status ) {
 		$this->args['post_status'] = (array) $status;
+
+		return $this;
+	}
+
+	/**
+	 * Filter the results by a searc string.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param string $s The string to search for.
+	 *
+	 * @return $this
+	 */
+	public function s( $s ) {
+		$this->args['s'] = $s;
 
 		return $this;
 	}
