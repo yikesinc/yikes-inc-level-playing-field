@@ -16,6 +16,7 @@ use Yikes\LevelPlayingField\AdminPage\SupportPage;
 use Yikes\LevelPlayingField\Assets\AdminStyles;
 use Yikes\LevelPlayingField\Blocks\JobListing;
 use Yikes\LevelPlayingField\Blocks\JobListings;
+use Yikes\LevelPlayingField\Blocks\Application as ApplicationBlock;
 use Yikes\LevelPlayingField\CustomPostType\ApplicantManager;
 use Yikes\LevelPlayingField\CustomPostType\ApplicationManager;
 use Yikes\LevelPlayingField\CustomPostType\LimitedJobManager;
@@ -101,6 +102,7 @@ final class PluginFactory {
 		if ( $this->is_new_editor_enabled() ) {
 			$services->add_service( JobListing::class );
 			$services->add_service( JobListings::class );
+			$services->add_service( ApplicationBlock::class );
 		}
 
 		// CPTs.

@@ -43,7 +43,8 @@ const paths = {
 	},
 	'blockscripts': {
 		'job-listing': './blocks/job-listing/index.js',
-		'job-listings': './blocks/job-listings/index.js'
+		'job-listings': './blocks/job-listings/index.js',
+		'application': './blocks/application/index.js'
 	},
 	'sprites': 'assets/images/sprites/*.png',
 	'build': [
