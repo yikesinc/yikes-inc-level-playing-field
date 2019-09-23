@@ -258,8 +258,10 @@ jQuery( function ( $ ) {
 
 	function refreshInterviewDetails() {
 		const { url, route, nonce } = messaging_data.api;
+		// Fixes issues with anyone using plain permalinks.
+		const q = url.includes('rest_route') ? '&' : '?';
 		return $.get( {
-			url: url + route + '?id=' + post_id,
+			url: url + route + q + 'id=' + post_id,
 			beforeSend: function( xhr ) {
 				xhr.setRequestHeader( 'X-WP-Nonce', nonce );
 			},
@@ -293,7 +295,9 @@ jQuery( function ( $ ) {
 		if ( ! info ) {
 			return '';
 		}
-		return '<p><span class="label">' + label + '</span>' + info + '</p>';
+		return label
+			? '<p><span class="label">' + label + '</span>' + info + '</p>'
+			: '<p>' + info + '</p>'
 	}
 
 	/**
