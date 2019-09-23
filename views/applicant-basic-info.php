@@ -71,7 +71,7 @@ $is_sidebar_empty = true;
 			</div>
 		<?php endif; ?>
 		<?php if ( $is_sidebar_empty ) : ?>
-			<p class="no-info">No information to display.</p>
+			<p class="no-info"><?php esc_html_e( 'No information to display.', 'yikes-level-playing-field' ); ?></p>
 		<?php endif; ?>
 	</div><!-- /inside -->
 </div><!-- /postbox -->
