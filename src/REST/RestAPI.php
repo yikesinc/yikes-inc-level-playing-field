@@ -43,7 +43,6 @@ abstract class RestAPI implements Service, AssetsAware {
 	 * @since %VERSION%
 	 */
 	public function fix_rest_base( $prefix ) {
-
 		if ( ! get_option('permalink_structure') ) {
 			$prefix = '?rest_route=';
 		}
