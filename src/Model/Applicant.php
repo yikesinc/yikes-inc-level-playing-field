@@ -795,17 +795,16 @@ final class Applicant extends CustomPostTypeEntity {
 		$this->set_interview( [] );
 		$this->persist_properties();
 
-		$post_id  = filter_var( $_POST['post_id'], FILTER_SANITIZE_NUMBER_INT );
-
 		$message = '<div class="lpf-message-interview-declined">' . __( 'The applicant has declined the interview.', 'yikes-level-playing-field' ) . '</div>';
 
 		$message_class = new ApplicantMessage();
 		$comment_data  = [
 			'comment_author'   => ApplicantMessage::APPLICANT_AUTHOR,
 			'comment_approved' => 1,
-			'comment_post_ID'  => $post_id,
+			'comment_post_ID'  => $this->get_id(),
 			'comment_content'  => $message,
 		];
+		$new_message   = $message_class->create_comment( $comment_data );
 
 		// Send off canceled interview email to both the applicant and job managers.
 		( new InterviewCancellationToApplicantEmail( $this ) )->send();
@@ -836,17 +835,16 @@ final class Applicant extends CustomPostTypeEntity {
 		$this->unanonymize( new $anonymizer() );
 		$this->persist_properties();
 
-		$post_id  = filter_var( $_POST['post_id'], FILTER_SANITIZE_NUMBER_INT );
-
 		$message = '<div class="lpf-message-interview-confirmed">' . __( 'The applicant has confirmed the interview.', 'yikes-level-playing-field' ) . '</div>';
 
 		$message_class = new ApplicantMessage();
 		$comment_data  = [
 			'comment_author'   => ApplicantMessage::APPLICANT_AUTHOR,
 			'comment_approved' => 1,
-			'comment_post_ID'  => $post_id,
+			'comment_post_ID'  => $this->get_id(),
 			'comment_content'  => $message,
 		];
+		$new_message   = $message_class->create_comment( $comment_data );
 
 		// Send off confirmed interview email to both the applicant and job managers.
 		( new InterviewConfirmationToApplicantEmail( $this ) )->send();
