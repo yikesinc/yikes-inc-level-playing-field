@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /** @var Applicant $applicant */
 $applicant = $this->applicant;
 
-/** @var Boolean $is_sidebar_empty */
+/** @var bool $is_sidebar_empty */
 $is_sidebar_empty = true;
 ?>
 

@@ -790,7 +790,6 @@ final class Applicant extends CustomPostTypeEntity {
 			return;
 		}
 
-		// todo: Maybe add a message like 'The applicant has cancelled the interview'?
 		$this->set_interview_status( 'cancelled' );
 		$this->set_interview( [] );
 		$this->persist_properties();
@@ -798,13 +797,17 @@ final class Applicant extends CustomPostTypeEntity {
 		$message = '<div class="lpf-message-interview-declined">' . __( 'The applicant has declined the interview.', 'yikes-level-playing-field' ) . '</div>';
 
 		$message_class = new ApplicantMessage();
-		$comment_data  = [
-			'comment_author'   => ApplicantMessage::APPLICANT_AUTHOR,
-			'comment_approved' => 1,
-			'comment_post_ID'  => $this->get_id(),
-			'comment_content'  => $message,
-		];
-		$new_message   = $message_class->create_comment( $comment_data );
+		$message_class->create_comment(
+			[
+				'comment_author'   => ApplicantMessage::APPLICANT_AUTHOR,
+				'comment_approved' => 1,
+				'comment_post_ID'  => $this->get_id(),
+				'comment_content'  => sprintf(
+					'<div class="lpf-message-interview-declined">%s</div>',
+					esc_html__( 'The applicant has declined the interview.', 'yikes-level-playing-field' )
+				),
+			]
+		);
 
 		// Send off canceled interview email to both the applicant and job managers.
 		( new InterviewCancellationToApplicantEmail( $this ) )->send();
