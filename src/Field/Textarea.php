@@ -26,15 +26,14 @@ class Textarea extends BaseField {
 		$classes = array_merge( $this->classes, [ 'lpf-field-textarea' ] );
 		?>
 		<div class="lpf-field-container">
-			<label class="lpf-input-label"><?php $this->render_label(); ?>
-				<textarea name="<?php echo esc_attr( $this->id ); ?>"
-						  id="<?php echo esc_attr( $this->id ); ?>"
-						  class="<?php esc_attr( join( ' ', $classes ) ); ?>"
-						  rows="10"
+			<label class="lpf-input-label"><?php $this->render_label(); ?></label>
+			<textarea name="<?php echo esc_attr( $this->id ); ?>"
+					  id="<?php echo esc_attr( $this->id ); ?>"
+					  class="<?php esc_attr( join( ' ', $classes ) ); ?>"
+					  rows="10"
 					<?php $this->render_required(); ?>
-					<?php $this->render_data_attributes(); ?>
+				<?php $this->render_data_attributes(); ?>
 				><?php echo esc_textarea( $this->value ); ?></textarea>
-			</label>
 		</div>
 		<?php
 	}
