@@ -42,3 +42,11 @@ $use_comma = (bool) apply_filters( 'lpf_single_job_template_address_use_comma', 
 	endif;
 	?>
 </div>
+<?php
+
+/**
+ * Fires after displaying basic job listing information.
+ *
+ * @param Job[] $job The Job object.
+ */
+do_action( 'lpf_job_after', $job );
