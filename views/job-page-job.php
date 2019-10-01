@@ -47,6 +47,6 @@ $use_comma = (bool) apply_filters( 'lpf_single_job_template_address_use_comma', 
 /**
  * Fires after displaying basic job listing information.
  *
- * @param Job[] $job The Job object.
+ * @param View $view The current view object.
  */
-do_action( 'lpf_job_after', $job );
+do_action( 'lpf_job_after', $this );
