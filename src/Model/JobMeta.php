@@ -29,17 +29,6 @@ interface JobMeta {
 	const APPLICATION_SUCCESS_MESSAGE = 'application_success_message';
 	const APPLICATION_PAGE            = 'application_page';
 
-	// Responsibilities.
-	const RESPONSIBILITIES = 'responsibilities';
-	const SCHEDULE         = 'schedule';
-	const REQUIREMENTS     = 'requirements';
-
-	// Qualifications.
-	const QUALIFICATIONS = 'qualifications';
-	const EDUCATION      = 'education';
-	const EXPERIENCE     = 'experience';
-	const KNOWLEDGE      = 'knowledge';
-
 	// Properties that should be JSON-encoded.
 	const JSON_PROPERTIES = [
 		self::META_PREFIX . self::ADDRESS => true,
@@ -51,13 +40,6 @@ interface JobMeta {
 		self::LOCATION                    => self::META_PREFIX . self::LOCATION,
 		self::ADDRESS                     => self::META_PREFIX . self::ADDRESS,
 		self::APPLICATION                 => MetaLinks::APPLICATION,
-		self::RESPONSIBILITIES            => self::META_PREFIX . self::RESPONSIBILITIES,
-		self::SCHEDULE                    => self::META_PREFIX . self::SCHEDULE,
-		self::REQUIREMENTS                => self::META_PREFIX . self::REQUIREMENTS,
-		self::QUALIFICATIONS              => self::META_PREFIX . self::QUALIFICATIONS,
-		self::EDUCATION                   => self::META_PREFIX . self::EDUCATION,
-		self::EXPERIENCE                  => self::META_PREFIX . self::EXPERIENCE,
-		self::KNOWLEDGE                   => self::META_PREFIX . self::KNOWLEDGE,
 		self::APPLICATION_SUCCESS_MESSAGE => self::META_PREFIX . self::APPLICATION_SUCCESS_MESSAGE,
 		self::APPLICATION_PAGE            => self::META_PREFIX . self::APPLICATION_PAGE,
 	];
