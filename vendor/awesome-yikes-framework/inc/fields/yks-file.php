@@ -70,7 +70,7 @@ if ( $field_repeating === true ) {
 } else {
 
 	// Get the field value
-	$value = isset( $field_values[0] ) ? $field_values[0] : '';
+	$value = isset( $field_values[0] ) ? $field_values[0] : $field_values;
 
 	// Defaults
 	$url_value = isset( $value['url'] ) ? $value['url'] : '';
