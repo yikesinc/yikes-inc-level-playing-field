@@ -239,7 +239,7 @@ final class Application {
 		 * @param AppModel   $application The application object.
 		 */
 		$pre = apply_filters( 'lpf_application_instantiate_field', null, $field, $this->application );
-		if ( is_array( $pre ) && ! empty( $pre ) ) {
+		if ( is_array( $pre ) ) {
 			foreach ( $pre as $object ) {
 				$this->validate_is_field( $object );
 			}
