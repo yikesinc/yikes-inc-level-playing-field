@@ -162,7 +162,7 @@ class ApplicantMessaging implements Activateable, Deactivateable, Renderable, As
 				'spinner_url' => admin_url( 'images/spinner-2x.gif' ),
 				'api'         => [
 					'nonce' => wp_create_nonce( 'wp_rest' ),
-					'url'   => site_url( rest_get_url_prefix() . '/' . APISettings::LPF_NAMESPACE ),
+					'url'   => get_rest_url( null, '/' . APISettings::LPF_NAMESPACE ),
 					'route' => APISettings::INTERVIEW_STATUS_ROUTE . '/',
 				],
 			]
