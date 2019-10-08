@@ -34,5 +34,18 @@ abstract class RestAPI implements Service, AssetsAware {
 		$this->register_assets();
 
 		add_action( 'rest_api_init', [ $this, 'register_routes' ] );
+		add_filter( 'rest_url_prefix', [ $this, 'fix_rest_base' ], 9999 );
+	}
+
+	/**
+	 * Fixes the rest base if a site isn't using permalinks.
+	 *
+	 * @since %VERSION%
+	 */
+	public function fix_rest_base( $prefix ) {
+		if ( ! get_option('permalink_structure') ) {
+			$prefix = '?rest_route=';
+		}
+		return $prefix;
 	}
 }
