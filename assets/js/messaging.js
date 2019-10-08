@@ -259,7 +259,7 @@ jQuery( function ( $ ) {
 	function refreshInterviewDetails() {
 		const { url, route, nonce } = messaging_data.api;
 		// Fixes issues with anyone using plain permalinks.
-		const q = url.includes('rest_route') ? '&' : '?';
+		const q = url.includes('?') ? '&' : '?';
 		return $.get( {
 			url: url + route + q + 'id=' + post_id,
 			beforeSend: function( xhr ) {
