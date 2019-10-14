@@ -19,7 +19,6 @@ const rename      = require( 'gulp-rename' );
 const sassLint    = require( 'gulp-sass-lint' );
 const sort        = require( 'gulp-sort' );
 const sourcemaps  = require( 'gulp-sourcemaps' );
-const spritesmith = require( 'gulp.spritesmith' );
 const svgmin      = require( 'gulp-svgmin' );
 const svgstore    = require( 'gulp-svgstore' );
 const debug       = require( 'gulp-debug' );
@@ -229,26 +228,6 @@ gulp.task( 'imagemin', () => gulp.src( paths.images )
 		'progressive': true,
 		'interlaced': true
 	} ) )
-	.pipe( gulp.dest( 'assets/images' ) ) );
-
-/**
- * Delete the sprites.png before rebuilding sprite.
- */
-gulp.task( 'clean:sprites', () => {
-	del( [ 'assets/images/sprites.png' ] );
-} );
-
-/**
- * Concatenate images into a single PNG sprite.
- *
- * https://www.npmjs.com/package/gulp.spritesmith
- */
-gulp.task( 'spritesmith', () => {
-	return gulp.src( paths.sprites )
-		.pipe( plumber( { 'errorHandler': handleErrors } ) )
-		.pipe( spritesmith( {
-			'imgName': 'sprites.png',
-			'cssName': '../../assets/sass/base/_sprites.scss',
 			'imgPath': 'assets/images/sprites.png',
 			'algorithm': 'binary-tree'
 		} ) )
