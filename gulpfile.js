@@ -36,9 +36,9 @@ const paths = {
 	images: [ 'assets/images/*', '!assets/images/*.svg' ],
 	php: [ './*.php', './src/**/*.php', './views/**/*.php' ],
 	sass: 'assets/css/sass/*.scss',
-	scripts: [ 'assets/js/*.js', '!assets/js/*.min.js' ],
+	scripts: [ 'assets/js/*.js', 'assets/js/blocks/**/*.js', '!assets/js/**/*.min.js' ],
 	devscripts: [ 'assets/js/dev/*.js' ],
-	blocks: [ 'assets/js/blocks/*/index.js'],
+	blocks: [ 'blocks/*/index.js' ],
 	sprites: 'assets/images/sprites/*.png',
 	build: [
 		'assets/css/*.css',
@@ -55,7 +55,6 @@ const paths = {
 		'!assets/js/dev/*.js'
 	]
 };
-
 
 // Command line options
 const options = minimist( process.argv.slice( 2 ), {
@@ -235,68 +234,68 @@ task( 'imagemin', () => src( paths.images )
  * Delete the scripts before rebuilding them.
  */
 function cleanScripts() {
-	return del( paths.scripts );
+	return del( [ ...paths.scripts, 'assets/js/**/*.min.js' ] );
 }
 
 /**
- * Minify compiled JavaScript and bundle Blocks.
+ * Compile javascript files from the dev directory.
+ * @returns {*}
  */
-gulp.task( 'blocks', () => {
-
-	/* Block Files */
-	webpack( {
-		entry: paths.blockscripts,
-		output: {
-			filename: '[name]/index.js'
-		},
-		devtool: 'cheap-eval-source-map',
-		mode: 'none',
-		plugins: [
-            new uglifyWpack()
-        ],
-		module: {
-			rules: [
-				{
-					test: /\.js$/,
-					exclude: /(node_modules|bower_components)/,
-					use: {
-						loader: 'babel-loader'
-					}
-				},
-				{
-					test: /\.s?css$/,
-					use: [
-						{
-							loader: "style-loader" // creates style nodes from JS strings
-						},
-						{
-							loader: "css-loader" // translates CSS into CommonJS
-						},
-						{
-							loader: "sass-loader" // compiles Sass to CSS
-						}
-					]
+function compileScripts() {
+	const babel = require( 'gulp-babel' );
+	return src( paths.devscripts )
+		.pipe( plumber( { errorHandler: outputErrors } ) )
+		.pipe( sourcemaps.init() )
+		.pipe( babel( {
+			"presets": [ [ "env", {
+				"targets": {
+					"browsers": [ "last 2 versions" ]
 				}
-			]
-		}
-	})
-	.pipe( gulp.dest( 'assets/js/blocks/' ) );
-} );
+			} ] ]
+		} ) )
+		.pipe( sourcemaps.write() )
+		.pipe( dest( 'assets/js' ) );
+}
 
 /**
- * Minimize all of our JS files.
+ * Minimize scripts using uglify.
+ * @returns {*}
  */
-gulp.task( 'webpack', [ 'blocks' ], () => {
+function minimizeScripts() {
 	const uglify = require( 'gulp-uglify' );
-	const babel  = require( 'gulp-babel' );
-	const named  = require( 'vinyl-named' );
-	return gulp.src( paths.scripts )
+	return src( paths.scripts, { base: 'assets/js' } )
+		.pipe( rename( { suffix: '.min' } ) )
+		.pipe( uglify( { mangle: false } ) )
+		.pipe( dest( 'assets/js' ) );
+}
+
+/**
+ * Compile blocks using webpack.
+ */
+function compileBlocks() {
+	const named = require( 'vinyl-named' );
+	const findBlocks = () => {
+		const glob = require( 'glob' );
+		const path = require( 'path' );
+		const globs = glob.sync( './blocks/**/index.js' );
+		let blocks = {};
+		globs.map( ( glob ) => {
+			const name = path.basename( path.dirname( glob ) );
+			blocks[ name ] = glob;
+		} );
+
+		return blocks;
+	};
+
+	return src( paths.blocks )
 		.pipe( named() )
 		.pipe( webpack( {
+			entry: findBlocks(),
+			output: {
+				filename: '[name]/index.js'
+			},
+			devtool: 'cheap-eval-source-map',
 			mode: 'none',
-			plugins: [
-	            new uglifyWpack()
-	        ],
 			module: {
 				rules: [
 					{
@@ -306,12 +305,24 @@ gulp.task( 'webpack', [ 'blocks' ], () => {
 							loader: 'babel-loader'
 						}
 					},
+					{
+						test: /\.s?css$/,
+						use: [ {
+							// creates style nodes from JS strings
+							loader: "style-loader"
+						}, {
+							// translates CSS into CommonJS
+							loader: "css-loader"
+						}, {
+							// compiles Sass to CSS
+							loader: "sass-loader"
+						} ]
+					}
 				]
 			}
 		} ) )
-		.pipe( rename( { 'extname': '.min.js' } ) )
-		.pipe( gulp.dest( 'assets/js' ) );
-} );
+		.pipe( dest( 'assets/js/blocks' ) );
+}
 
 /**
  * Delete the theme's .pot before we create a new one.
@@ -351,7 +362,6 @@ function checkTextDomain() {
 
 /**
  * Scan the theme and create a POT file.
- *f
  */
 function makePot() {
 	const wpPot = require( 'gulp-wp-pot' );
@@ -374,8 +384,8 @@ function makePot() {
  *
  * https://www.npmjs.com/package/sass-lint
  */
-gulp.task( 'sass:lint', () => {
-	return gulp.src( [
+task( 'sass:lint', () => {
+	return src( [
 		'assets/css/sass/**/*.scss',
 		'!assets/css/sass/base/_normalize.scss',
 		'!assets/css/sass/base/_sprites.scss',
@@ -534,11 +544,20 @@ task( 'release', () => {
 /**
  * Create individual tasks.
  */
+// task( 'markup', browserSync.reload );
+// task( 'i18n', [ 'wp-pot' ] );
+// task( 'icons', [ 'svg' ] );
+// task( 'scripts', [ 'webpack' ] );
+// task( 'lint', [ 'sass:lint', 'js:lint' ] );
+// task( 'docs', [ 'sassdoc' ] );
+// task( 'assets', [ 'styles', 'scripts' ] );
+// task( 'default', [ 'i18n', 'assets' ] );
+
 exports['check-textdomain'] = checkTextDomain;
 exports.i18n = series( parallel( cleanPot, exports['check-textdomain'] ), makePot );
 exports.icons = series( cleanIcons, compileSvg );
 exports.styles = series( cleanStyles, compileSass, minifyCss );
-exports.scripts = series( cleanScripts, compileScripts );
+exports.scripts = series( cleanScripts, parallel( compileBlocks, compileScripts ), minimizeScripts );
 exports.assets = parallel( exports.styles, exports.scripts );
 exports.default = parallel( exports.i18n, exports.assets );
 exports.build = series( exports.default, build );
