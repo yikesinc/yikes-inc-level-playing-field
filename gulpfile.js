@@ -2,10 +2,8 @@
 const bourbon     = require( 'bourbon' ).includePaths;
 const browserSync = require( 'browser-sync' );
 const cheerio     = require( 'gulp-cheerio' );
-const cssnano     = require( 'gulp-cssnano' );
 const del         = require( 'del' );
 const eslint      = require( 'gulp-eslint' );
-const gulp        = require( 'gulp' );
 const gutil       = require( 'gulp-util' );
 const imagemin    = require( 'gulp-imagemin' );
 const merge       = require( 'gulp-merge' );
@@ -19,34 +17,30 @@ const rename      = require( 'gulp-rename' );
 const sassLint    = require( 'gulp-sass-lint' );
 const sort        = require( 'gulp-sort' );
 const sourcemaps  = require( 'gulp-sourcemaps' );
-const spritesmith = require( 'gulp.spritesmith' );
 const svgmin      = require( 'gulp-svgmin' );
 const svgstore    = require( 'gulp-svgstore' );
 const debug       = require( 'gulp-debug' );
 const webpack     = require( 'webpack-stream' );
 const uglifyWpack = require( 'uglifyjs-webpack-plugin' );
+const {
+	series, parallel, task, src, dest, watch
+} = require( 'gulp' );
 
 // Environment variables.
 const gitKey = process.env.gitKey;
 
 // Set assets paths.
 const paths = {
-	'css': [ 'assets/css/*.css', '!assets/css/*.min.css' ],
-	'icons': 'assets/images/svg-icons/*.svg',
-	'images': [ 'assets/images/*', '!assets/images/*.svg' ],
-	'php': [ './*.php', './src/**/*.php', './views/**/*.php' ],
-	'sass': 'assets/css/sass/*.scss',
-	'scripts': [ 'assets/js/*.js', 'assets/js/dev/*.js', '!assets/js/*.min.js' ],
-	'devscripts': {
-		'applicant-status-button-groups': './assets/js/dev/applicant-status-button-groups.js',
-		'settings': './assets/js/dev/settings.js'
-	},
-	'blockscripts': {
-		'job-listing': './blocks/job-listing/index.js',
-		'job-listings': './blocks/job-listings/index.js'
-	},
-	'sprites': 'assets/images/sprites/*.png',
-	'build': [
+	css: [ 'assets/css/*.css', '!assets/css/*.min.css' ],
+	icons: 'assets/images/svg-icons/*.svg',
+	images: [ 'assets/images/*', '!assets/images/*.svg' ],
+	php: [ './*.php', './src/**/*.php', './views/**/*.php' ],
+	sass: 'assets/css/sass/*.scss',
+	scripts: [ 'assets/js/*.js', 'assets/js/blocks/**/*.js', '!assets/js/**/*.min.js' ],
+	devscripts: [ 'assets/js/dev/*.js' ],
+	blocks: [ 'blocks/*/index.js' ],
+	sprites: 'assets/images/sprites/*.png',
+	build: [
 		'assets/css/*.css',
 		'assets/js/**/*.js',
 		'assets/images/**',
@@ -61,7 +55,6 @@ const paths = {
 		'!assets/js/dev/*.js'
 	]
 };
-
 
 // Command line options
 const options = minimist( process.argv.slice( 2 ), {
@@ -111,11 +104,11 @@ function outputErrors( error ) {
 }
 
 /**
- * Delete style.css and style.min.css before we minify and optimize
+ * Delete *.css and *.min.css before we minify and optimize
  */
-gulp.task( 'clean:styles', () => del( [
-	'assets/css/yikes-level-playing-field.css', 'assets/css/yikes-level-playing-field.min.css'
-] ) );
+function cleanStyles() {
+	return del( [ 'assets/css/*.css' ] );
+}
 
 /**
  * Compile Sass and run stylesheet through PostCSS.
@@ -125,11 +118,10 @@ gulp.task( 'clean:styles', () => del( [
  * https://www.npmjs.com/package/gulp-autoprefixer
  * https://www.npmjs.com/package/css-mqpacker
  */
-gulp.task( 'postcss', [ 'clean:styles' ], () => {
+function compileSass() {
 	const sass = require( 'gulp-sass' ), autoprefixer = require( 'autoprefixer' );
-	return gulp.src( paths.sass, paths.css )
-
-	// Deal with errors.
+	return src( paths.sass, paths.css )
+		// Deal with errors.
 		.pipe( plumber( { 'errorHandler': handleErrors } ) )
 
 		// Wrap tasks in a sourcemap.
@@ -155,32 +147,37 @@ gulp.task( 'postcss', [ 'clean:styles' ], () => {
 		.pipe( sourcemaps.write() )
 
 		// Create .css files.
-		.pipe( gulp.dest( 'assets/css' ) )
+		.pipe( dest( 'assets/css' ) )
 		.pipe( browserSync.stream() );
-} );
+}
 
 /**
  * Minify and optimize style.css.
  *
  * https://www.npmjs.com/package/gulp-cssnano
  */
-gulp.task( 'cssnano', [ 'postcss' ], () => gulp.src( paths.css )
-	.pipe( plumber( { 'errorHandler': handleErrors } ) )
-	.pipe( cssnano( {
-		// Use safe optimizations.
-		'safe': true
-	} ) )
-	.pipe( rename( {
-		// Ensure .min.css extension.
-		'extname': '.min.css'
-	} ) )
-	.pipe( gulp.dest( 'assets/css' ) )
-	.pipe( browserSync.stream() ) );
+function minifyCss() {
+	const cssnano = require( 'cssnano' );
+	return src( paths.css )
+		.pipe( plumber( { 'errorHandler': handleErrors } ) )
+		.pipe( cssnano( {
+			// Use safe optimizations.
+			'safe': true
+		} ) )
+		.pipe( rename( {
+			// Ensure .min.css extension.
+			'extname': '.min.css'
+		} ) )
+		.pipe( dest( 'assets/css' ) )
+		.pipe( browserSync.stream() );
+}
 
 /**
  * Delete the svg-icons.svg before we minify, concat.
  */
-gulp.task( 'clean:icons', () => del( [ 'assets/images/svg-icons.svg' ] ) );
+function cleanIcons() {
+	return del( [ 'assets/images/svg-icons.svg' ] );
+}
 
 /**
  * Minify, concatenate, and clean SVG icons.
@@ -189,137 +186,116 @@ gulp.task( 'clean:icons', () => del( [ 'assets/images/svg-icons.svg' ] ) );
  * https://www.npmjs.com/package/gulp-svgstore
  * https://www.npmjs.com/package/gulp-cheerio
  */
-gulp.task( 'svg', [ 'clean:icons' ], () => gulp.src( paths.icons )
+function compileSvg() {
+	return src( paths.icons )
 
-// Deal with errors.
-	.pipe( plumber( { 'errorHandler': handleErrors } ) )
+	// Deal with errors.
+		.pipe( plumber( { 'errorHandler': handleErrors } ) )
 
-	// Minify SVGs.
-	.pipe( svgmin() )
+		// Minify SVGs.
+		.pipe( svgmin() )
 
-	// Add a prefix to SVG IDs.
-	.pipe( rename( { 'prefix': 'icon-' } ) )
+		// Add a prefix to SVG IDs.
+		.pipe( rename( { 'prefix': 'icon-' } ) )
 
-	// Combine all SVGs into a single <symbol>
-	.pipe( svgstore( { 'inlineSvg': true } ) )
+		// Combine all SVGs into a single <symbol>
+		.pipe( svgstore( { 'inlineSvg': true } ) )
 
-	// Clean up the <symbol> by removing the following cruft...
-	.pipe( cheerio( {
-		'run': function( $, file ) {
-			$( 'svg' ).attr( 'style', 'display:none' );
-			$( '[fill]' ).removeAttr( 'fill' );
-			$( 'path' ).removeAttr( 'class' );
-		},
-		'parserOptions': { 'xmlMode': true }
-	} ) )
+		// Clean up the <symbol> by removing the following cruft...
+		.pipe( cheerio( {
+			'run': function( $, file ) {
+				$( 'svg' ).attr( 'style', 'display:none' );
+				$( '[fill]' ).removeAttr( 'fill' );
+				$( 'path' ).removeAttr( 'class' );
+			},
+			'parserOptions': { 'xmlMode': true }
+		} ) )
 
-	// Save svg-icons.svg.
-	.pipe( gulp.dest( 'assets/images/' ) )
-	.pipe( browserSync.stream() ) );
+		// Save svg-icons.svg.
+		.pipe( dest( 'assets/images/' ) )
+		.pipe( browserSync.stream() );
+}
 
 /**
  * Optimize images.
  *
  * https://www.npmjs.com/package/gulp-imagemin
  */
-gulp.task( 'imagemin', () => gulp.src( paths.images )
+task( 'imagemin', () => src( paths.images )
 	.pipe( plumber( { 'errorHandler': handleErrors } ) )
 	.pipe( imagemin( {
 		'optimizationLevel': 5,
 		'progressive': true,
 		'interlaced': true
 	} ) )
-	.pipe( gulp.dest( 'assets/images' ) ) );
-
-/**
- * Delete the sprites.png before rebuilding sprite.
- */
-gulp.task( 'clean:sprites', () => {
-	del( [ 'assets/images/sprites.png' ] );
-} );
-
-/**
- * Concatenate images into a single PNG sprite.
- *
- * https://www.npmjs.com/package/gulp.spritesmith
- */
-gulp.task( 'spritesmith', () => {
-	return gulp.src( paths.sprites )
-		.pipe( plumber( { 'errorHandler': handleErrors } ) )
-		.pipe( spritesmith( {
-			'imgName': 'sprites.png',
-			'cssName': '../../assets/sass/base/_sprites.scss',
-			'imgPath': 'assets/images/sprites.png',
-			'algorithm': 'binary-tree'
-		} ) )
-		.pipe( gulp.dest( 'assets/images/' ) )
-		.pipe( browserSync.stream() );
-} );
+	.pipe( dest( 'assets/images' ) ) );
 
 /**
  * Delete the scripts before rebuilding them.
  */
-gulp.task( 'clean:scripts', () => del( [ 'assets/js/yikes-level-playing-field*.js' ] ) );
+function cleanScripts() {
+	return del( [ ...paths.scripts, 'assets/js/**/*.min.js' ] );
+}
 
 /**
- * Minify compiled JavaScript and bundle Blocks.
+ * Compile javascript files from the dev directory.
+ * @returns {*}
  */
-gulp.task( 'blocks', () => {
-
-	/* Block Files */
-	webpack( {
-		entry: paths.blockscripts,
-		output: {
-			filename: '[name]/index.js'
-		},
-		devtool: 'cheap-eval-source-map',
-		mode: 'none',
-		plugins: [
-            new uglifyWpack()
-        ],
-		module: {
-			rules: [
-				{
-					test: /\.js$/,
-					exclude: /(node_modules|bower_components)/,
-					use: {
-						loader: 'babel-loader'
-					}
-				},
-				{
-					test: /\.s?css$/,
-					use: [
-						{
-							loader: "style-loader" // creates style nodes from JS strings
-						},
-						{
-							loader: "css-loader" // translates CSS into CommonJS
-						},
-						{
-							loader: "sass-loader" // compiles Sass to CSS
-						}
-					]
+function compileScripts() {
+	const babel = require( 'gulp-babel' );
+	return src( paths.devscripts )
+		.pipe( plumber( { errorHandler: outputErrors } ) )
+		.pipe( sourcemaps.init() )
+		.pipe( babel( {
+			"presets": [ [ "env", {
+				"targets": {
+					"browsers": [ "last 2 versions" ]
 				}
-			]
-		}
-	})
-	.pipe( gulp.dest( 'assets/js/blocks/' ) );
-} );
+			} ] ]
+		} ) )
+		.pipe( sourcemaps.write() )
+		.pipe( dest( 'assets/js' ) );
+}
 
 /**
- * Minimize all of our JS files.
+ * Minimize scripts using uglify.
+ * @returns {*}
  */
-gulp.task( 'webpack', [ 'blocks' ], () => {
+function minimizeScripts() {
 	const uglify = require( 'gulp-uglify' );
-	const babel  = require( 'gulp-babel' );
-	const named  = require( 'vinyl-named' );
-	return gulp.src( paths.scripts )
+	return src( paths.scripts, { base: 'assets/js' } )
+		.pipe( rename( { suffix: '.min' } ) )
+		.pipe( uglify( { mangle: false } ) )
+		.pipe( dest( 'assets/js' ) );
+}
+
+/**
+ * Compile blocks using webpack.
+ */
+function compileBlocks() {
+	const named = require( 'vinyl-named' );
+	const findBlocks = () => {
+		const glob = require( 'glob' );
+		const path = require( 'path' );
+		const globs = glob.sync( './blocks/**/index.js' );
+		let blocks = {};
+		globs.map( ( glob ) => {
+			const name = path.basename( path.dirname( glob ) );
+			blocks[ name ] = glob;
+		} );
+
+		return blocks;
+	};
+
+	return src( paths.blocks )
 		.pipe( named() )
 		.pipe( webpack( {
+			entry: findBlocks(),
+			output: {
+				filename: '[name]/index.js'
+			},
+			devtool: 'cheap-eval-source-map',
 			mode: 'none',
-			plugins: [
-	            new uglifyWpack()
-	        ],
 			module: {
 				rules: [
 					{
@@ -329,24 +305,38 @@ gulp.task( 'webpack', [ 'blocks' ], () => {
 							loader: 'babel-loader'
 						}
 					},
+					{
+						test: /\.s?css$/,
+						use: [ {
+							// creates style nodes from JS strings
+							loader: "style-loader"
+						}, {
+							// translates CSS into CommonJS
+							loader: "css-loader"
+						}, {
+							// compiles Sass to CSS
+							loader: "sass-loader"
+						} ]
+					}
 				]
 			}
 		} ) )
-		.pipe( rename( { 'extname': '.min.js' } ) )
-		.pipe( gulp.dest( 'assets/js' ) );
-} );
+		.pipe( dest( 'assets/js/blocks' ) );
+}
 
 /**
  * Delete the theme's .pot before we create a new one.
  */
-gulp.task( 'clean:pot', () => del( [ 'languages/yikes-level-playing-field.pot' ] ) );
+function cleanPot() {
+	return del( [ 'languages/yikes-level-playing-field.pot' ] );
+}
 
 /**
  * Check that the text domain is present in all of our PHP files.
  */
-gulp.task( 'wp-check-textdomain', () => {
+function checkTextDomain() {
 	const wpCheckTextDomain = require( 'gulp-checktextdomain' );
-	return gulp.src( paths.php )
+	return src( paths.php )
 		.pipe( plumber( { 'errorHandler': outputErrors } ) )
 		.pipe( wpCheckTextDomain( {
 			text_domain: packageJSON.name,
@@ -368,15 +358,14 @@ gulp.task( 'wp-check-textdomain', () => {
 				'_nx_noop:1,2,3c,4d'
 			]
 		} ) );
-} );
+}
 
 /**
  * Scan the theme and create a POT file.
- *f
  */
-gulp.task( 'wp-pot', [ 'wp-check-textdomain', 'clean:pot' ], () => {
+function makePot() {
 	const wpPot = require( 'gulp-wp-pot' );
-	return gulp.src( paths.php )
+	return src( paths.php )
 		.pipe( plumber( { 'errorHandler': handleErrors } ) )
 		.pipe( sort() )
 		.pipe( wpPot( {
@@ -387,16 +376,16 @@ gulp.task( 'wp-pot', [ 'wp-check-textdomain', 'clean:pot' ], () => {
 				'Language': 'en_US'
 			}
 		} ) )
-		.pipe( gulp.dest( `languages/${packageJSON.name}.pot` ) );
-} );
+		.pipe( dest( `languages/${packageJSON.name}.pot` ) );
+}
 
 /**
  * Sass linting.
  *
  * https://www.npmjs.com/package/sass-lint
  */
-gulp.task( 'sass:lint', () => {
-	return gulp.src( [
+task( 'sass:lint', () => {
+	return src( [
 		'assets/css/sass/**/*.scss',
 		'!assets/css/sass/base/_normalize.scss',
 		'!assets/css/sass/base/_sprites.scss',
@@ -412,8 +401,8 @@ gulp.task( 'sass:lint', () => {
  *
  * https://www.npmjs.com/package/gulp-eslint
  */
-gulp.task( 'js:lint', () => {
-	return gulp.src( [
+task( 'js:lint', () => {
+	return src( [
 		'assets/js/concat/*.js',
 		'assets/js/*.js',
 		'!assets/js/yikes-level-playing-field.js',
@@ -430,9 +419,9 @@ gulp.task( 'js:lint', () => {
 /**
  * Generate Sass docs.
  */
-gulp.task( 'sassdoc', () => {
+task( 'sassdoc', () => {
 	const sassdoc = require( 'sassdoc' );
-	return gulp.src( 'assets/css/sass/**/*.scss' )
+	return src( 'assets/css/sass/**/*.scss' )
 		.pipe( sassdoc( { dest: 'docs' } ) );
 } );
 
@@ -441,7 +430,7 @@ gulp.task( 'sassdoc', () => {
  *
  * https://www.npmjs.com/package/browser-sync
  */
-gulp.task( 'watch', () => {
+task( 'watch', () => {
 
 	// Kick off BrowserSync.
 	browserSync( {
@@ -454,32 +443,32 @@ gulp.task( 'watch', () => {
 	} );
 
 	// Run tasks when files change.
-	// gulp.watch( paths.icons, [ 'icons' ]);
-	gulp.watch( paths.sass, [ 'styles' ] );
-	gulp.watch( paths.scripts, [ 'scripts' ] );
-	gulp.watch( paths.concat_scripts, [ 'scripts' ] );
-	// gulp.watch( paths.sprites, [ 'sprites' ]);
-	gulp.watch( paths.php, [ 'markup' ] );
+	// watch( paths.icons, [ 'icons' ]);
+	watch( paths.sass, [ 'styles' ] );
+	watch( paths.scripts, [ 'scripts' ] );
+	watch( paths.concat_scripts, [ 'scripts' ] );
+	// watch( paths.sprites, [ 'sprites' ]);
+	watch( paths.php, [ 'markup' ] );
 } );
 
 /**
  * Build a zip file appropriate for distribution.
  */
-gulp.task( 'build', [ 'default' ], function() {
+function build() {
 	const zip = require( 'gulp-zip' );
-	return gulp.src( paths.build, { base: process.cwd() } )
+	return src( paths.build, { base: process.cwd() } )
 		.pipe( rename( function( path ) {
 			// Prefix the paths with the directory name before zipping.
 			path.dirname = `${packageJSON.name}/${path.dirname}`;
 		} ) )
 
 		// Pipe each file to the build directory and the Zip file
-		.pipe( gulp.dest( 'build' ) )
+		.pipe( dest( 'build' ) )
 		.pipe( zip( `${packageJSON.name}-${currentVersion}.zip` ) )
 
 		// Pipe the zip file to the build directory
-		.pipe( gulp.dest( 'build' ) );
-} );
+		.pipe( dest( 'build' ) );
+}
 
 /**
  * Replace %VERSION% with the current version string.
@@ -490,16 +479,16 @@ gulp.task( 'build', [ 'default' ], function() {
 function replaceVersion() {
 	const replace = require( 'gulp-replace' );
 	const version = options.version || currentVersion;
-	return gulp.src( paths.php, { base: process.cwd() } )
+	return src( paths.php, { base: process.cwd() } )
 		.pipe( plumber( { 'errorHandler': handleErrors } ) )
 		.pipe( replace( '%VERSION%', version ) )
-		.pipe( gulp.dest( './' ) );
+		.pipe( dest( './' ) );
 }
 
 /**
  * Task for replacing the version in all PHP files.
  */
-gulp.task( 'replace:version', () => {
+task( 'replace:version', () => {
 	return replaceVersion();
 } );
 
@@ -511,23 +500,23 @@ gulp.task( 'replace:version', () => {
 function bumpVersion() {
 	const bump = require( 'gulp-bump' );
 
-	return gulp.src( [ './yikes-level-playing-field.php', './package.json' ] )
+	return src( [ './yikes-level-playing-field.php', './package.json' ] )
 		.pipe( plumber( { 'errorHandler': outputErrors } ) )
 		.pipe( bump( { version: currentVersion } ) )
-		.pipe( gulp.dest( './' ) );
+		.pipe( dest( './' ) );
 }
 
 /**
  * Tasks for updating versions in preparation for a new release.
  */
-gulp.task( 'release:patch', () => {
+task( 'release:patch', () => {
 	throw new Error('This task is not yet ready for use.');
 	const semver = require( 'semver' );
 	currentVersion = semver.inc( packageJSON.version, 'patch' );
 
 	return merge( replaceVersion(), bumpVersion() );
 } );
-gulp.task( 'release:minor', () => {
+task( 'release:minor', () => {
 	throw new Error( 'This task is not yet ready for use.' );
 	const semver = require( 'semver' );
 	currentVersion = semver.inc( packageJSON.version, 'minor' );
@@ -535,7 +524,7 @@ gulp.task( 'release:minor', () => {
 
 	return replaceVersion();
 } );
-gulp.task( 'release:major', () => {
+task( 'release:major', () => {
 	throw new Error( 'This task is not yet ready for use.' );
 	return merge( bumpVersion( 'major' ), gulp.run( 'replace:version' ) );
 } );
@@ -547,7 +536,7 @@ gulp.task( 'release:major', () => {
  * --release refers to a SemVer release type. Use "preminor" or "premajor".
  * --preid refers to the type of pre-release. Use "beta" or "rc".
  */
-gulp.task( 'release', () => {
+task( 'release', () => {
 	throw new Error( 'This task is not yet ready for use.' );
 	return merge( bumpVersion( options.release, options.preid ), gulp.run( 'replace:version' ) );
 } );
@@ -555,14 +544,20 @@ gulp.task( 'release', () => {
 /**
  * Create individual tasks.
  */
-gulp.task( 'markup', browserSync.reload );
-gulp.task( 'i18n', [ 'wp-pot' ] );
-gulp.task( 'icons', [ 'svg' ] );
-gulp.task( 'scripts', [ 'webpack' ] );
-gulp.task( 'styles', [ 'cssnano' ] );
-gulp.task( 'sprites', [ 'spritesmith' ] );
-gulp.task( 'lint', [ 'sass:lint', 'js:lint' ] );
-gulp.task( 'docs', [ 'sassdoc' ] );
-// gulp.task( 'default', [ 'sprites', 'i18n', 'icons', 'styles', 'scripts', 'imagemin'] );
-gulp.task( 'assets', [ 'styles', 'scripts' ] );
-gulp.task( 'default', [ 'i18n', 'assets' ] );
+// task( 'markup', browserSync.reload );
+// task( 'i18n', [ 'wp-pot' ] );
+// task( 'icons', [ 'svg' ] );
+// task( 'scripts', [ 'webpack' ] );
+// task( 'lint', [ 'sass:lint', 'js:lint' ] );
+// task( 'docs', [ 'sassdoc' ] );
+// task( 'assets', [ 'styles', 'scripts' ] );
+// task( 'default', [ 'i18n', 'assets' ] );
+
+exports['check-textdomain'] = checkTextDomain;
+exports.i18n = series( parallel( cleanPot, exports['check-textdomain'] ), makePot );
+exports.icons = series( cleanIcons, compileSvg );
+exports.styles = series( cleanStyles, compileSass, minifyCss );
+exports.scripts = series( cleanScripts, parallel( compileBlocks, compileScripts ), minimizeScripts );
+exports.assets = parallel( exports.styles, exports.scripts );
+exports.default = parallel( exports.i18n, exports.assets );
+exports.build = series( exports.default, build );
