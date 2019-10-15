@@ -50,13 +50,11 @@ abstract class BaseBlock implements Service, AssetsAware {
 	}
 
 	/**
-	 * Get the array of known assets.
+	 * Load asset objects for use.
 	 *
 	 * @since %VERSION%
-	 *
-	 * @return Asset[]
 	 */
-	abstract protected function get_assets();
+	abstract protected function load_assets();
 
 	/**
 	 * Get the slug for use with registering the block.

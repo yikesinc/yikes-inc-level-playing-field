@@ -233,13 +233,11 @@ final class JobManager extends AwesomeBaseMetabox implements AssetsAware {
 	}
 
 	/**
-	 * Get the array of known assets.
+	 * Load asset objects for use.
 	 *
 	 * @since %VERSION%
-	 *
-	 * @return Asset[]
 	 */
-	protected function get_assets() {
+	protected function load_assets() {
 		$script = new ScriptAsset( self::JS_HANDLE, self::JS_URI, [ 'wp-blocks' ] );
 		$script->add_localization(
 			'lpf_job_manager_data',
@@ -252,7 +250,7 @@ final class JobManager extends AwesomeBaseMetabox implements AssetsAware {
 			]
 		);
 
-		return [
+		$this->assets = [
 			new StyleAsset( self::CSS_HANDLE, self::CSS_URI ),
 			$script,
 		];

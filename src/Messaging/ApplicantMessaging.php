@@ -10,7 +10,6 @@
 namespace Yikes\LevelPlayingField\Messaging;
 
 use WP_Post;
-use Yikes\LevelPlayingField\Assets\Asset;
 use Yikes\LevelPlayingField\Assets\ScriptAsset;
 use Yikes\LevelPlayingField\Assets\StyleAsset;
 use Yikes\LevelPlayingField\Assets\AssetsAware;
@@ -25,8 +24,6 @@ use Yikes\LevelPlayingField\Comment\ApplicantMessage;
 use Yikes\LevelPlayingField\Email\ApplicantMessageToApplicantEmail;
 use Yikes\LevelPlayingField\Email\ApplicantMessageFromApplicantEmail;
 use Yikes\LevelPlayingField\Email\InterviewRequestToApplicantEmail;
-use Yikes\LevelPlayingField\RequiredPages\ApplicantMessagingPage;
-use Yikes\LevelPlayingField\RequiredPages\BaseRequiredPage;
 use Yikes\LevelPlayingField\Model\ApplicantMeta;
 use Yikes\LevelPlayingField\Model\Applicant;
 use Yikes\LevelPlayingField\Model\ApplicantRepository;
@@ -44,7 +41,9 @@ use Yikes\LevelPlayingField\REST\APISettings;
  */
 class ApplicantMessaging implements Activateable, Deactivateable, Renderable, AssetsAware, Service {
 
-	use AssetsAwareness;
+	use AssetsAwareness {
+		enqueue_assets as trait_enqueue_assets;
+	}
 
 	const POST_TYPE = ApplicantManager::SLUG;
 	const VIEW      = 'views/applicant-messaging';
@@ -137,16 +136,53 @@ class ApplicantMessaging implements Activateable, Deactivateable, Renderable, As
 	}
 
 	/**
-	 * Get the array of known assets.
+	 * Load asset objects for use.
 	 *
 	 * @since %VERSION%
-	 *
-	 * @return Asset[]
 	 */
-	protected function get_assets() {
+	protected function load_assets() {
+		$this->assets = [
+			self::JS_HANDLE             => new ScriptAsset(
+				self::JS_HANDLE,
+				self::JS_URI,
+				self::JS_DEPENDENCIES,
+				self::JS_VERSION,
+				ScriptAsset::ENQUEUE_FOOTER
+			),
+			self::TIMEPICKER_JS_HANDLE  => new ScriptAsset(
+				self::TIMEPICKER_JS_HANDLE,
+				self::TIMEPICKER_JS_URI,
+				self::TIMEPICKER_JS_DEPENDENCIES,
+				self::JS_VERSION,
+				ScriptAsset::ENQUEUE_FOOTER
+			),
+			self::CSS_HANDLE            => new StyleAsset( self::CSS_HANDLE, self::CSS_URI ),
+			self::DATEPICKER_CSS_HANDLE => new StyleAsset( self::DATEPICKER_CSS_HANDLE, self::DATEPICKER_CSS_URI ),
+			self::TIMEPICKER_CSS_HANDLE => new StyleAsset( self::TIMEPICKER_CSS_HANDLE, self::TIMEPICKER_CSS_URI ),
+		];
+	}
+
+	/**
+	 * Enqueue the known assets.
+	 *
+	 * @since %VERSION%
+	 */
+	protected function enqueue_assets() {
+		$this->add_script_localization();
+		$this->trait_enqueue_assets();
+	}
+
+	/**
+	 * Add the script localization separately from the registration.
+	 *
+	 * This is necessary because we need to use get_rest_url(), which isn't available early
+	 * on the plugins_loaded hook where asset registration takes place.
+	 *
+	 * @since %VERSION%
+	 */
+	protected function add_script_localization() {
 		$post_id = isset( $_GET['post'] ) ? filter_var( $_GET['post'], FILTER_SANITIZE_NUMBER_INT ) : 0;
-		$script  = new ScriptAsset( self::JS_HANDLE, self::JS_URI, self::JS_DEPENDENCIES, self::JS_VERSION, ScriptAsset::ENQUEUE_FOOTER );
-		$script->add_localization(
+		$this->assets[ self::JS_HANDLE ]->add_localization(
 			'messaging_data',
 			[
 				'post'        => [
@@ -167,14 +203,6 @@ class ApplicantMessaging implements Activateable, Deactivateable, Renderable, As
 				],
 			]
 		);
-
-		return [
-			$script,
-			new ScriptAsset( self::TIMEPICKER_JS_HANDLE, self::TIMEPICKER_JS_URI, self::TIMEPICKER_JS_DEPENDENCIES, self::JS_VERSION, ScriptAsset::ENQUEUE_FOOTER ),
-			new StyleAsset( self::CSS_HANDLE, self::CSS_URI ),
-			new StyleAsset( self::DATEPICKER_CSS_HANDLE, self::DATEPICKER_CSS_URI ),
-			new StyleAsset( self::TIMEPICKER_CSS_HANDLE, self::TIMEPICKER_CSS_URI ),
-		];
 	}
 
 	/**

@@ -31,6 +31,14 @@ trait AssetsAwareness {
 	protected $assets_handler;
 
 	/**
+	 * Array of asset objects.
+	 *
+	 * @since %VERSION%
+	 * @var Asset[]
+	 */
+	protected $assets = [];
+
+	/**
 	 * Get the array of known assets.
 	 *
 	 * @since %VERSION%
@@ -38,7 +46,11 @@ trait AssetsAwareness {
 	 * @return Asset[]
 	 */
 	protected function get_assets() {
-		return [];
+		if ( empty( $this->assets ) ) {
+			$this->load_assets();
+		}
+
+		return $this->assets;
 	}
 
 	/**
@@ -87,5 +99,14 @@ trait AssetsAwareness {
 	 */
 	public function with_assets_handler( AssetsHandler $assets ) {
 		$this->assets_handler = $assets;
+	}
+
+	/**
+	 * Load asset objects for use.
+	 *
+	 * @since %VERSION%
+	 */
+	protected function load_assets() {
+		$this->assets = [];
 	}
 }

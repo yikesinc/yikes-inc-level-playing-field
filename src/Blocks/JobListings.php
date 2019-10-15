@@ -30,13 +30,11 @@ final class JobListings extends BaseBlock {
 	const BLOCK_SLUG = 'job-listings';
 
 	/**
-	 * Get the array of known assets.
+	 * Load asset objects for use.
 	 *
 	 * @since %VERSION%
-	 *
-	 * @return Asset[]
 	 */
-	protected function get_assets() {
+	protected function load_assets() {
 		$block_script = new BlockAsset(
 			static::BLOCK_SLUG,
 			$this->get_block_path(),
@@ -62,7 +60,7 @@ final class JobListings extends BaseBlock {
 		);
 
 		// todo: add styles.
-		return [
+		$this->assets = [
 			$block_script,
 		];
 	}

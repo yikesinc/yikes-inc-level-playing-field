@@ -188,19 +188,27 @@ final class ApplicantStatus extends BaseTaxonomy implements AssetsAware {
 	}
 
 	/**
-	 * Get the array of known assets.
+	 * Load asset objects for use.
 	 *
 	 * @since %VERSION%
-	 *
-	 * @return Asset[]
 	 */
-	protected function get_assets() {
-		$script = new ScriptAsset( self::JS_HANDLE, self::JS_URI, self::JS_DEPENDENCIES, self::JS_VERSION, ScriptAsset::ENQUEUE_FOOTER );
-		$script->add_localization( 'taxonomy_button_group_data', [
-			'nonce' => wp_create_nonce( 'add_post_terms' ),
-		]);
+	protected function load_assets() {
+		$script = new ScriptAsset(
+			self::JS_HANDLE,
+			self::JS_URI,
+			self::JS_DEPENDENCIES,
+			self::JS_VERSION,
+			ScriptAsset::ENQUEUE_FOOTER
+		);
 
-		return [
+		$script->add_localization(
+			'taxonomy_button_group_data',
+			[
+				'nonce' => wp_create_nonce( 'add_post_terms' ),
+			]
+		);
+
+		$this->assets = [
 			$script,
 			new StyleAsset( self::CSS_HANDLE, self::CSS_URI ),
 		];

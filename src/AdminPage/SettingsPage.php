@@ -62,15 +62,19 @@ class SettingsPage extends BaseAdminPage implements AssetsAware {
 	}
 
 	/**
-	 * Get the array of known assets.
+	 * Load asset objects for use.
 	 *
 	 * @since %VERSION%
-	 *
-	 * @return Asset[]
 	 */
-	protected function get_assets() {
+	protected function load_assets() {
+		$script = new ScriptAsset(
+			self::JS_HANDLE,
+			self::JS_URI,
+			self::JS_DEPENDENCIES,
+			self::JS_VERSION,
+			ScriptAsset::ENQUEUE_FOOTER
+		);
 
-		$script = new ScriptAsset( self::JS_HANDLE, self::JS_URI, self::JS_DEPENDENCIES, self::JS_VERSION, ScriptAsset::ENQUEUE_FOOTER );
 		$script->add_localization(
 			'lpf_settings_data',
 			[
@@ -86,7 +90,7 @@ class SettingsPage extends BaseAdminPage implements AssetsAware {
 			]
 		);
 
-		return [
+		$this->assets = [
 			$script,
 			new StyleAsset( self::CSS_HANDLE, self::CSS_URI ),
 		];

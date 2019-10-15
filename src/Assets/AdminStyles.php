@@ -37,14 +37,12 @@ class AdminStyles implements Service, AssetsAware {
 	}
 
 	/**
-	 * Get the array of known assets.
+	 * Load asset objects for use.
 	 *
 	 * @since %VERSION%
-	 *
-	 * @return Asset[]
 	 */
-	protected function get_assets() {
-		return [
+	protected function load_assets() {
+		$this->assets = [
 			new StyleAsset( 'lpf-admin-css', 'assets/css/admin' ),
 		];
 	}
