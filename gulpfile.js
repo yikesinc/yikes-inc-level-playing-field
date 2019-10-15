@@ -137,7 +137,7 @@ function compileSass() {
 		// Parse with PostCSS plugins.
 		.pipe( postcss( [
 			autoprefixer( {
-				'browsers': [ 'last 2 version' ]
+				'overrideBrowserslist': [ 'last 2 version' ]
 			} ), mqpacker( {
 				'sort': true
 			} )
@@ -158,12 +158,14 @@ function compileSass() {
  */
 function minifyCss() {
 	const cssnano = require( 'cssnano' );
+	const postcss = require( 'gulp-postcss' );
+
 	return src( paths.css )
 		.pipe( plumber( { 'errorHandler': handleErrors } ) )
-		.pipe( cssnano( {
+		.pipe( postcss( [ cssnano( {
 			// Use safe optimizations.
 			'safe': true
-		} ) )
+		} ) ] ) )
 		.pipe( rename( {
 			// Ensure .min.css extension.
 			'extname': '.min.css'
