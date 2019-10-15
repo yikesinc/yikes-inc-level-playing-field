@@ -40,11 +40,3 @@ if ( $this->grouped_by_cat ) {
 } else {
 	echo $this->render_partial( $this->partials['jobs_list'] );
 }
-
-
-/**
- * Fires after displaying all of the Jobs.
- *
- * @param Job[] $jobs The array of Job objects.
- */
-do_action( 'lpf_jobs_after', $jobs );

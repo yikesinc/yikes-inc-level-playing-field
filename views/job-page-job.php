@@ -37,16 +37,17 @@ $use_comma = (bool) apply_filters( 'lpf_single_job_template_address_use_comma', 
 		<?php
 	endif;
 	echo $this->render_partial( $this->partials['job_details'] );
+
+	/**
+	 * Fires after displaying basic job listing information.
+	 *
+	 * @param View $view The current view object.
+	 */
+	do_action( 'lpf_job_after', $this );
+
 	if ( $this->show_application_button && ! empty( $job->get_application() ) ) :
 		echo $this->render_partial( $this->partials['job_apply_button'] );
 	endif;
 	?>
 </div>
 <?php
-
-/**
- * Fires after displaying basic job listing information.
- *
- * @param View $view The current view object.
- */
-do_action( 'lpf_job_after', $this );
