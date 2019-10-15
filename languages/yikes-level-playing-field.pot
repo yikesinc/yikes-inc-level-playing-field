@@ -20,19 +20,19 @@ msgstr ""
 msgid "Level Playing Field requires WordPress version %1$s or above. Your site is using WordPress version %2$s."
 msgstr ""
 
-#: src/Plugin.php:219, src/AdminPage/SettingsPage.php:114
+#: src/Plugin.php:220, src/AdminPage/SettingsPage.php:118
 msgid "Settings"
 msgstr ""
 
-#: src/Plugin.php:220, src/AdminPage/SupportPage.php:89
+#: src/Plugin.php:221, src/AdminPage/SupportPage.php:87
 msgid "Support"
 msgstr ""
 
-#: src/Plugin.php:221
+#: src/Plugin.php:222
 msgid "Add a Job"
 msgstr ""
 
-#: src/Plugin.php:222, src/AdminPage/GoProPage.php:89
+#: src/Plugin.php:223, src/AdminPage/GoProPage.php:87
 msgid "Go Pro"
 msgstr ""
 
@@ -40,462 +40,466 @@ msgstr ""
 msgid "Thanks for installing Level Playing Field!"
 msgstr ""
 
-#: views/applicant-basic-info.php:22
+#: views/applicant-basic-info.php:33
 msgid "Email:"
 msgstr ""
 
-#: views/applicant-basic-info.php:29
+#: views/applicant-basic-info.php:42
 msgid "Phone:"
 msgstr ""
 
-#: views/applicant-basic-info.php:35
+#: views/applicant-basic-info.php:53
 msgid "Address:"
 msgstr ""
 
-#: views/applicant-basic-info.php:49
+#: views/applicant-basic-info.php:66
 msgid "Cover Letter:"
 msgstr ""
 
-#: views/applicant-basic-info.php:50
+#: views/applicant-basic-info.php:67
 msgid "View Cover Letter"
 msgstr ""
 
-#: views/applicant-details.php:26
+#: views/applicant-basic-info.php:74
+msgid "No information to display."
+msgstr ""
+
+#: views/applicant-details.php:31
 msgid "Nickname:"
 msgstr ""
 
-#: views/applicant-details.php:29
+#: views/applicant-details.php:34
 msgid "Edit Nickname"
 msgstr ""
 
-#: views/applicant-details.php:34
+#: views/applicant-details.php:39
 msgid "Name:"
 msgstr ""
 
-#: views/applicant-details.php:39
+#: views/applicant-details.php:44
 msgid "Job:"
 msgstr ""
 
-#: views/applicant-messaging.php:23
+#: views/applicant-messaging.php:28
 msgid "Applicant Messaging"
 msgstr ""
 
-#: views/applicant-messaging.php:38
+#: views/applicant-messaging.php:43
 msgid "Start a conversation with this applicant."
 msgstr ""
 
-#: views/applicant-messaging.php:69
+#: views/applicant-messaging.php:74
 msgid "Send a New Message"
 msgstr ""
 
-#: views/applicant-skills-qualifications.php:20
+#: views/applicant-skills-qualifications.php:25
 msgid "Skills and Qualifications"
 msgstr ""
 
-#: views/applicant-skills-qualifications.php:23, views/go-pro.php:62, src/Metabox/ApplicationManager.php:156
+#: views/applicant-skills-qualifications.php:28, views/go-pro.php:67, src/Metabox/ApplicationManager.php:156
 msgid "Education"
 msgstr ""
 
-#: views/applicant-skills-qualifications.php:26, src/Metabox/ApplicationManager.php:167
+#: views/applicant-skills-qualifications.php:31, src/Metabox/ApplicationManager.php:167
 msgid "Schooling"
 msgstr ""
 
-#: views/applicant-skills-qualifications.php:35
+#: views/applicant-skills-qualifications.php:40
 msgid "Graduated from High School or High School equivalent"
 msgstr ""
 
-#: views/applicant-skills-qualifications.php:68, src/Metabox/ApplicationManager.php:189
+#: views/applicant-skills-qualifications.php:73, src/Metabox/ApplicationManager.php:189
 msgid "Certifications"
 msgstr ""
 
-#: views/applicant-skills-qualifications.php:98, src/Metabox/ApplicationManager.php:213, src/Metabox/ApplicationManager.php:218
+#: views/applicant-skills-qualifications.php:103, src/Metabox/ApplicationManager.php:213, src/Metabox/ApplicationManager.php:218
 msgid "Skills"
 msgstr ""
 
-#: views/applicant-skills-qualifications.php:103, src/Field/Skills.php:40, src/Field/Skills.php:74
+#: views/applicant-skills-qualifications.php:108, src/Field/Skills.php:40, src/Field/Skills.php:74
 msgid "Skill"
 msgstr ""
 
-#: views/applicant-skills-qualifications.php:104, views/applicant-skills-qualifications.php:168, src/Field/Languages.php:45, src/Field/Skills.php:43
+#: views/applicant-skills-qualifications.php:109, views/applicant-skills-qualifications.php:173, src/Field/Languages.php:45, src/Field/Skills.php:43
 msgid "Proficiency"
 msgstr ""
 
-#: views/applicant-skills-qualifications.php:126, src/Metabox/ApplicationManager.php:239, src/Metabox/ApplicationManager.php:244
+#: views/applicant-skills-qualifications.php:131, src/Metabox/ApplicationManager.php:239, src/Metabox/ApplicationManager.php:244
 msgid "Languages"
 msgstr ""
 
-#: views/applicant-skills-qualifications.php:150
+#: views/applicant-skills-qualifications.php:155
 msgid "Multilingual"
 msgstr ""
 
 #. translators: %d is the number of languages for the given fluency level
-#: views/applicant-skills-qualifications.php:155
+#: views/applicant-skills-qualifications.php:160
 msgid "in %d language"
 msgid_plural "in %d languages"
 msgstr[0] ""
 msgstr[1] ""
 
-#: views/applicant-skills-qualifications.php:167, src/Field/Languages.php:42, src/Field/Languages.php:76
+#: views/applicant-skills-qualifications.php:172, src/Field/Languages.php:42, src/Field/Languages.php:76
 msgid "Language"
 msgstr ""
 
-#: views/applicant-skills-qualifications.php:190, views/go-pro.php:63, src/Field/Experience.php:93, src/Metabox/ApplicationManager.php:265, src/Metabox/ApplicationManager.php:270, src/Metabox/ApplicationManager.php:276
+#: views/applicant-skills-qualifications.php:195, views/go-pro.php:68, src/Field/Experience.php:93, src/Metabox/ApplicationManager.php:265, src/Metabox/ApplicationManager.php:270, src/Metabox/ApplicationManager.php:276
 msgid "Experience"
 msgstr ""
 
-#: views/applicant-skills-qualifications.php:205, views/applicant-skills-qualifications.php:217, views/applicant-skills-qualifications.php:253, views/applicant-skills-qualifications.php:265
+#: views/applicant-skills-qualifications.php:210, views/applicant-skills-qualifications.php:222, views/applicant-skills-qualifications.php:258, views/applicant-skills-qualifications.php:270
 msgid " in "
 msgstr ""
 
-#: views/applicant-skills-qualifications.php:207, views/applicant-skills-qualifications.php:255
+#: views/applicant-skills-qualifications.php:212, views/applicant-skills-qualifications.php:260
 msgid " for "
 msgstr ""
 
-#: views/applicant-skills-qualifications.php:219, views/applicant-skills-qualifications.php:267
+#: views/applicant-skills-qualifications.php:224, views/applicant-skills-qualifications.php:272
 msgid " at "
 msgstr ""
 
-#: views/applicant-skills-qualifications.php:221, views/applicant-skills-qualifications.php:269
+#: views/applicant-skills-qualifications.php:226, views/applicant-skills-qualifications.php:274
 msgid " from "
 msgstr ""
 
-#: views/applicant-skills-qualifications.php:223, views/applicant-skills-qualifications.php:271
+#: views/applicant-skills-qualifications.php:228, views/applicant-skills-qualifications.php:276
 msgid " to "
 msgstr ""
 
-#: views/applicant-skills-qualifications.php:224, views/applicant-skills-qualifications.php:272
+#: views/applicant-skills-qualifications.php:229, views/applicant-skills-qualifications.php:277
 msgid "the present time."
 msgstr ""
 
-#: views/applicant-skills-qualifications.php:238, src/Metabox/ApplicationManager.php:300, src/Metabox/ApplicationManager.php:305, src/Metabox/ApplicationManager.php:311
+#: views/applicant-skills-qualifications.php:243, src/Metabox/ApplicationManager.php:300, src/Metabox/ApplicationManager.php:305, src/Metabox/ApplicationManager.php:311
 msgid "Volunteer Work"
 msgstr ""
 
-#: views/go-pro.php:18, src/Metabox/ProBanner.php:48
+#: views/go-pro.php:23, src/Metabox/ProBanner.php:48
 msgid "Level Playing Field Pro"
 msgstr ""
 
-#: views/go-pro.php:24, views/pro-banner.php:45
+#: views/go-pro.php:29, views/pro-banner.php:50
 msgid "Upgrade to Pro"
 msgstr ""
 
-#: views/go-pro.php:30
+#: views/go-pro.php:35
 msgid "Upgrade to Level Playing Field Pro for unlimited job listings and enhanced features."
 msgstr ""
 
-#: views/go-pro.php:42, views/pro-banner.php:30
+#: views/go-pro.php:47, views/pro-banner.php:35
 msgid "Unlimited Job Listings."
 msgstr ""
 
-#: views/go-pro.php:46
+#: views/go-pro.php:51
 msgid "More detailed Job Listings."
 msgstr ""
 
-#: views/go-pro.php:49, views/go-pro.php:51
+#: views/go-pro.php:54, views/go-pro.php:56
 msgid "Responsibilities"
 msgstr ""
 
-#: views/go-pro.php:52
+#: views/go-pro.php:57
 msgid "Schedule"
 msgstr ""
 
-#: views/go-pro.php:53
+#: views/go-pro.php:58
 msgid "Requirements"
 msgstr ""
 
-#: views/go-pro.php:59, views/go-pro.php:61
+#: views/go-pro.php:64, views/go-pro.php:66
 msgid "Qualifications"
 msgstr ""
 
-#: views/go-pro.php:64
+#: views/go-pro.php:69
 msgid "Knowledge, Skills and Abilities"
 msgstr ""
 
-#: views/go-pro.php:70
+#: views/go-pro.php:75
 msgid "Compensation"
 msgstr ""
 
-#: views/go-pro.php:74
+#: views/go-pro.php:79
 msgid "Company/Organization Details"
 msgstr ""
 
-#: views/go-pro.php:76, src/Metabox/ApplicationManager.php:84
+#: views/go-pro.php:81, src/Metabox/ApplicationManager.php:84
 msgid "Name"
 msgstr ""
 
-#: views/go-pro.php:77, src/Shortcode/Job.php:63
+#: views/go-pro.php:82, src/Shortcode/Job.php:63
 msgid "Description"
 msgstr ""
 
-#: views/go-pro.php:78
+#: views/go-pro.php:83
 msgid "Logo"
 msgstr ""
 
-#: views/go-pro.php:79
+#: views/go-pro.php:84
 msgid "Website"
 msgstr ""
 
-#: views/go-pro.php:80
+#: views/go-pro.php:85
 msgid "Social Links"
 msgstr ""
 
-#: views/go-pro.php:86
+#: views/go-pro.php:91
 msgid "More Robust Applicant Functionality."
 msgstr ""
 
-#: views/go-pro.php:89
+#: views/go-pro.php:94
 msgid "Ability to add custom questions to application forms"
 msgstr ""
 
-#: views/go-pro.php:90
+#: views/go-pro.php:95
 msgid "Ability to export applicants to CSV File"
 msgstr ""
 
-#: views/go-pro.php:94
+#: views/go-pro.php:99
 msgid "Premium Support."
 msgstr ""
 
-#: views/go-pro.php:97
+#: views/go-pro.php:102
 msgid "Prioritized one-on-one support"
 msgstr ""
 
-#: views/interview-confirmation.php:13
+#: views/interview-confirmation.php:20
 msgid "Your interview request has been canceled"
 msgstr ""
 
-#: views/interview-confirmation.php:18
+#: views/interview-confirmation.php:25
 msgid "Your interview request has been confirmed"
 msgstr ""
 
-#: views/interview-confirmation.php:33
+#: views/interview-confirmation.php:40
 msgid "You have a confirmed interview."
 msgstr ""
 
-#: views/interview-confirmation.php:37
+#: views/interview-confirmation.php:44
 msgid "You have a pending interview request"
 msgstr ""
 
-#: views/interview-confirmation.php:44, src/Model/Applicant.php:722, src/Model/Applicant.php:735
+#: views/interview-confirmation.php:51, src/Model/Applicant.php:723, src/Model/Applicant.php:736
 msgid "Date:"
 msgstr ""
 
-#: views/interview-confirmation.php:48, src/Model/Applicant.php:726, src/Model/Applicant.php:739
+#: views/interview-confirmation.php:55, src/Model/Applicant.php:727, src/Model/Applicant.php:740
 msgid "Time:"
 msgstr ""
 
-#: views/interview-confirmation.php:52, src/Model/Applicant.php:743, src/Shortcode/AllJobs.php:51, src/Shortcode/Job.php:66
+#: views/interview-confirmation.php:59, src/Model/Applicant.php:744, src/Shortcode/AllJobs.php:51, src/Shortcode/Job.php:66
 msgid "Location:"
 msgstr ""
 
-#: views/interview-confirmation.php:56, src/Model/Applicant.php:747
+#: views/interview-confirmation.php:63, src/Model/Applicant.php:748
 msgid "Message:"
 msgstr ""
 
-#: views/interview-confirmation.php:65
+#: views/interview-confirmation.php:72
 msgid "Confirm Interview"
 msgstr ""
 
-#: views/interview-confirmation.php:68
+#: views/interview-confirmation.php:75
 msgid "Decline Interview"
 msgstr ""
 
-#: views/interview-scheduler.php:13
+#: views/interview-scheduler.php:20
 msgid "An interview has already been scheduled."
 msgstr ""
 
-#: views/interview-scheduler.php:13
+#: views/interview-scheduler.php:20
 msgid "An interview has already been confirmed."
 msgstr ""
 
-#: views/interview-scheduler.php:19
+#: views/interview-scheduler.php:26
 msgid "Schedule an Interview"
 msgstr ""
 
-#: views/interview-scheduler.php:23
+#: views/interview-scheduler.php:30
 msgid "Interview Request "
 msgstr ""
 
-#: views/interview-scheduler.php:30
+#: views/interview-scheduler.php:37
 msgid "Use the form below to send an interview request to the applicant."
 msgstr ""
 
-#: views/interview-scheduler.php:33
+#: views/interview-scheduler.php:40
 msgid "Date"
 msgstr ""
 
-#: views/interview-scheduler.php:37
+#: views/interview-scheduler.php:44
 msgid "Time"
 msgstr ""
 
-#: views/interview-scheduler.php:41
+#: views/interview-scheduler.php:48
 msgid "Location details"
 msgstr ""
 
-#: views/interview-scheduler.php:45
+#: views/interview-scheduler.php:52
 msgid "Message to Applicant"
 msgstr ""
 
-#: views/interview-scheduler.php:51
+#: views/interview-scheduler.php:58
 msgid "Send Interview Request"
 msgstr ""
 
-#: views/job-applicants-widget.php:24
+#: views/job-applicants-widget.php:29
 msgid "Job Title"
 msgstr ""
 
-#: views/job-applicants-widget.php:25
+#: views/job-applicants-widget.php:30
 msgid "New"
 msgstr ""
 
-#: views/job-applicants-widget.php:26
+#: views/job-applicants-widget.php:31
 msgid "Total"
 msgstr ""
 
-#: views/job-applicants-widget.php:49
+#: views/job-applicants-widget.php:54
 msgid "View All Job Listings"
 msgstr ""
 
-#: views/job-applicants-widget.php:50
+#: views/job-applicants-widget.php:55
 msgid "View All Applicants"
 msgstr ""
 
-#: views/job-page-application.php:39
+#: views/job-page-application.php:44
 msgid "Your application has errors. Please correct the errors below before resubmitting."
 msgstr ""
 
-#: views/job-page-application.php:48
+#: views/job-page-application.php:53
 msgid "Submit Application"
 msgstr ""
 
-#: views/job-page-application.php:60
+#: views/job-page-application.php:65
 msgid "Edit Application"
 msgstr ""
 
-#: views/job-page-application.php:70, src/CustomPostType/JobManager.php:103
+#: views/job-page-application.php:75, src/CustomPostType/JobManager.php:103
 msgid "Edit Job"
 msgstr ""
 
-#: views/pro-banner.php:25
+#: views/pro-banner.php:30
 msgid "Upgrade to Level Playing Field Pro for great additional features including:"
 msgstr ""
 
-#: views/pro-banner.php:33
+#: views/pro-banner.php:38
 msgid "More Detailed Job Listings."
 msgstr ""
 
-#: views/pro-banner.php:36
+#: views/pro-banner.php:41
 msgid "Custom Application Form Questions."
 msgstr ""
 
-#: views/pro-banner.php:39
+#: views/pro-banner.php:44
 msgid "Applicant export."
 msgstr ""
 
-#: views/review-banner.php:17
+#: views/review-banner.php:22
 msgid "Leave a review!"
 msgstr ""
 
-#: views/review-banner.php:27
+#: views/review-banner.php:32
 msgid "Tweet about Level Playing Field"
 msgstr ""
 
-#: views/review-banner.php:31
+#: views/review-banner.php:36
 msgid "Tweet"
 msgstr ""
 
-#: views/settings.php:29
+#: views/settings.php:34
 msgid "Level Playing Field Settings"
 msgstr ""
 
-#: views/settings.php:37
+#: views/settings.php:42
 msgid "Email Settings"
 msgstr ""
 
-#: views/settings.php:50
+#: views/settings.php:55
 msgid "Application Settings"
 msgstr ""
 
-#: views/settings.php:62
+#: views/settings.php:67
 msgid "Appearance Settings"
 msgstr ""
 
-#: views/settings.php:74
+#: views/settings.php:79
 msgid "Plugin Settings"
 msgstr ""
 
-#: views/settings.php:95
+#: views/settings.php:100
 msgid "Save Settings"
 msgstr ""
 
-#: views/support.php:17
+#: views/support.php:22
 msgid "Level Playing Field Support"
 msgstr ""
 
-#: views/support.php:23
+#: views/support.php:28
 msgid "Before submitting a support request, please visit our Knowledge Base where we have step-by-step guides and troubleshooting help."
 msgstr ""
 
-#: views/support.php:23
+#: views/support.php:28
 msgid "Visit the Level Playing Field Knowledge Base"
 msgstr ""
 
-#: views/support.php:27
+#: views/support.php:32
 msgid "Level Playing Field Pro users qualify for premium support."
 msgstr ""
 
-#: views/support.php:27
+#: views/support.php:32
 msgid "Check out Level Playing Field Pro!"
 msgstr ""
 
-#: views/support.php:34
+#: views/support.php:39
 msgid "WordPress.org Support Forums"
 msgstr ""
 
-#: views/support.php:38
+#: views/support.php:43
 msgid "If you need help, please post questions to our support forum on the WordPress Plugin Directory."
 msgstr ""
 
-#: views/support.php:39
+#: views/support.php:44
 msgid "Go to the free Support Forum on WordPress.org"
 msgstr ""
 
-#: views/support.php:45
+#: views/support.php:50
 msgid "Submit a Support Request"
 msgstr ""
 
-#: src/AdminPage/GoProPage.php:78
+#: src/AdminPage/GoProPage.php:76
 msgid "Go Pro - Level Playing Field"
 msgstr ""
 
-#: src/AdminPage/SettingsPage.php:83, src/Settings/SettingsManager.php:69
+#: src/AdminPage/SettingsPage.php:87, src/Settings/SettingsManager.php:69
 msgid "Success: Settings Saved."
 msgstr ""
 
-#: src/AdminPage/SettingsPage.php:84
+#: src/AdminPage/SettingsPage.php:88
 msgid "Error: The settings could not be saved."
 msgstr ""
 
-#: src/AdminPage/SettingsPage.php:103
+#: src/AdminPage/SettingsPage.php:107
 msgid "Settings &ndash; Level Playing Field"
 msgstr ""
 
-#: src/AdminPage/SupportPage.php:78
+#: src/AdminPage/SupportPage.php:76
 msgid "Support - Level Playing Field"
 msgstr ""
 
-#: src/Blocks/BaseBlock.php:162, src/CustomPostType/JobManager.php:95
+#: src/Blocks/BaseBlock.php:160, src/CustomPostType/JobManager.php:95
 msgid "Level Playing Field"
 msgstr ""
 
-#: src/Blocks/JobListing.php:71
+#: src/Blocks/JobListing.php:69
 msgid "Job Listing"
 msgstr ""
 
-#: src/Blocks/JobListings.php:77
+#: src/Blocks/JobListings.php:75
 msgid "Job Listings"
 msgstr ""
 
-#: src/CustomPostType/ApplicantManager.php:34, src/Metabox/ApplicantManager.php:148, src/Roles/Applicant.php:29
+#: src/CustomPostType/ApplicantManager.php:34, src/Metabox/ApplicantManager.php:145, src/Roles/Applicant.php:29
 msgid "Applicant"
 msgstr ""
 
@@ -1076,7 +1080,7 @@ msgstr ""
 msgid "Certification Type"
 msgstr ""
 
-#: src/Field/Certifications.php:55, src/Taxonomy/ApplicantStatus.php:235, src/Taxonomy/JobStatus.php:64
+#: src/Field/Certifications.php:55, src/Taxonomy/ApplicantStatus.php:243, src/Taxonomy/JobStatus.php:64
 msgid "Status"
 msgstr ""
 
@@ -1203,139 +1207,139 @@ msgctxt "for \"add new\" button"
 msgid "Volunteer Position"
 msgstr ""
 
-#: src/ListTable/ApplicantManager.php:67
+#: src/ListTable/ApplicantManager.php:68
 msgctxt "column heading"
 msgid "ID"
 msgstr ""
 
-#: src/ListTable/ApplicantManager.php:68, src/ListTable/JobManager.php:95
+#: src/ListTable/ApplicantManager.php:69, src/ListTable/JobManager.php:94
 msgctxt "column heading"
 msgid "Job Title"
 msgstr ""
 
-#: src/ListTable/ApplicantManager.php:69
+#: src/ListTable/ApplicantManager.php:70
 msgctxt "column heading"
 msgid "Avatar"
 msgstr ""
 
-#: src/ListTable/ApplicantManager.php:70
+#: src/ListTable/ApplicantManager.php:71
 msgctxt "column heading"
 msgid "Nick Name"
 msgstr ""
 
-#: src/ListTable/ApplicantManager.php:72
+#: src/ListTable/ApplicantManager.php:73
 msgctxt "column heading"
 msgid "New Messages"
 msgstr ""
 
-#: src/ListTable/ApplicantManager.php:74
+#: src/ListTable/ApplicantManager.php:75
 msgctxt "column heading"
 msgid "Viewed by"
 msgstr ""
 
 #. translators: %s is the applicant ID
 #. translators: %s is the applicant ID
-#: src/ListTable/ApplicantManager.php:127, src/ListTable/ApplicantManager.php:173
+#: src/ListTable/ApplicantManager.php:128, src/ListTable/ApplicantManager.php:174
 msgid "Edit Applicant &#8220;%s&#8221;"
 msgstr ""
 
-#: src/ListTable/ApplicantManager.php:141
+#: src/ListTable/ApplicantManager.php:142
 msgid "No job set for applicant."
 msgstr ""
 
-#: src/ListTable/ApplicantManager.php:162
+#: src/ListTable/ApplicantManager.php:163
 msgctxt "No one has viewed applicant submission"
 msgid "No one"
 msgstr ""
 
-#: src/ListTable/ApplicantManager.php:174
+#: src/ListTable/ApplicantManager.php:175
 msgid "View"
 msgstr ""
 
-#: src/ListTable/ApplicantManager.php:218
+#: src/ListTable/ApplicantManager.php:219
 msgid "All Viewed"
 msgstr ""
 
-#: src/ListTable/ApplicantManager.php:219
+#: src/ListTable/ApplicantManager.php:220
 msgid "No One Viewed"
-msgstr ""
-
-#: src/ListTable/ApplicationManager.php:48
-msgctxt "column heading"
-msgid "Application Name"
-msgstr ""
-
-#: src/ListTable/ApplicationManager.php:49
-msgctxt "column heading"
-msgid "Jobs"
 msgstr ""
 
 #: src/ListTable/ApplicationManager.php:50
 msgctxt "column heading"
+msgid "Application Name"
+msgstr ""
+
+#: src/ListTable/ApplicationManager.php:51
+msgctxt "column heading"
+msgid "Jobs"
+msgstr ""
+
+#: src/ListTable/ApplicationManager.php:52
+msgctxt "column heading"
 msgid "Applicants"
 msgstr ""
 
-#: src/ListTable/JobManager.php:98
+#: src/ListTable/JobManager.php:97
 msgctxt "column heading"
 msgid "Applications"
 msgstr ""
 
-#: src/ListTable/JobManager.php:99
+#: src/ListTable/JobManager.php:98
 msgctxt "column heading"
 msgid "Shortcode"
 msgstr ""
 
-#: src/ListTable/JobManager.php:177
+#: src/ListTable/JobManager.php:176
 msgid "Filter Job Categories"
 msgstr ""
 
-#: src/Messaging/ApplicantMessaging.php:295, src/Messaging/ApplicantMessaging.php:357, src/Messaging/ApplicantMessaging.php:514, src/Settings/SettingsManager.php:44, src/Taxonomy/ApplicantStatus.php:305
+#: src/Messaging/ApplicantMessaging.php:323, src/Messaging/ApplicantMessaging.php:385, src/Messaging/ApplicantMessaging.php:542, src/Settings/SettingsManager.php:44, src/Taxonomy/ApplicantStatus.php:313
 msgid "An error occurred: Failed to validate the nonce."
 msgstr ""
 
-#: src/Messaging/ApplicantMessaging.php:306, src/Messaging/ApplicantMessaging.php:528
+#: src/Messaging/ApplicantMessaging.php:334, src/Messaging/ApplicantMessaging.php:556
 msgid "Please review: a required field is missing."
 msgstr ""
 
-#: src/Messaging/ApplicantMessaging.php:336
+#: src/Messaging/ApplicantMessaging.php:364
 msgid "The message was sent successfully."
 msgstr ""
 
-#: src/Messaging/ApplicantMessaging.php:343, src/Messaging/ApplicantMessaging.php:607
+#: src/Messaging/ApplicantMessaging.php:371, src/Messaging/ApplicantMessaging.php:635
 msgid "The comment could not be inserted."
 msgstr ""
 
 #. translators: %1$s is the date and %2$s is the time.
-#: src/Messaging/ApplicantMessaging.php:540
+#: src/Messaging/ApplicantMessaging.php:568
 msgid "You have received a request for an interview on %1$s at %2$s."
 msgstr ""
 
 #. translators: %1$s is the location.
-#: src/Messaging/ApplicantMessaging.php:542
+#: src/Messaging/ApplicantMessaging.php:570
 msgid "Interview location: %1$s."
 msgstr ""
 
-#: src/Messaging/ApplicantMessaging.php:543
+#: src/Messaging/ApplicantMessaging.php:571
 msgid "Message from employer"
 msgstr ""
 
-#: src/Messaging/ApplicantMessaging.php:546
+#: src/Messaging/ApplicantMessaging.php:574
 msgid "Please click Confirm Interview to accept this date and time or Decline Interview to reschedule."
 msgstr ""
 
-#: src/Messaging/ApplicantMessaging.php:577
+#: src/Messaging/ApplicantMessaging.php:605
 msgid "Email failed to send."
 msgstr ""
 
-#: src/Messaging/ApplicantMessaging.php:600
+#: src/Messaging/ApplicantMessaging.php:628
 msgid "The interview request was sent successfully."
 msgstr ""
 
-#: src/Messaging/ApplicantMessaging.php:631
+#: src/Messaging/ApplicantMessaging.php:659
 msgid "Irks! Your website is having trouble sending email. "
 msgstr ""
 
-#: src/Messaging/ApplicantMessaging.php:633
+#: src/Messaging/ApplicantMessaging.php:661
 msgid "Try using WP Mail SMTP To Send Emails."
 msgstr ""
 
@@ -1347,27 +1351,27 @@ msgstr ""
 msgid "Interview Details"
 msgstr ""
 
-#: src/Metabox/ApplicantManager.php:277
+#: src/Metabox/ApplicantManager.php:272
 msgctxt "undo action to edit nickname when viewing an applicant"
 msgid "Cancel"
 msgstr ""
 
-#: src/Metabox/ApplicantManager.php:278
+#: src/Metabox/ApplicantManager.php:273
 msgctxt "hide cover letter when viewing an applicant"
 msgid "Hide Cover Letter"
 msgstr ""
 
-#: src/Metabox/ApplicantManager.php:279
+#: src/Metabox/ApplicantManager.php:274
 msgctxt "confirm action to edit nickname when viewing an applicant"
 msgid "OK"
 msgstr ""
 
-#: src/Metabox/ApplicantManager.php:281
+#: src/Metabox/ApplicantManager.php:276
 msgctxt "heading when viewing an applicant"
 msgid "Applicants | Applicant ID"
 msgstr ""
 
-#: src/Metabox/ApplicantManager.php:282
+#: src/Metabox/ApplicantManager.php:277
 msgctxt "view cover letter when viewing an applicant"
 msgid "View Cover Letter"
 msgstr ""
@@ -1537,44 +1541,52 @@ msgid "Support Merit-Based Hiring"
 msgstr ""
 
 #. translators: the placeholder is a number of years
-#: src/Model/Applicant.php:527
+#: src/Model/Applicant.php:528
 msgid "%s Year"
 msgid_plural "%s Years"
 msgstr[0] ""
 msgstr[1] ""
 
 #. translators: the placeholder is a number of months
-#: src/Model/Applicant.php:535
+#: src/Model/Applicant.php:536
 msgid "%s Month"
 msgid_plural "%s Months"
 msgstr[0] ""
 msgstr[1] ""
 
 #. translators: the placeholder is a number of days
-#: src/Model/Applicant.php:543
+#: src/Model/Applicant.php:544
 msgid "%s Day"
 msgid_plural "%s Days"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Model/Applicant.php:549
+#: src/Model/Applicant.php:550
 msgid "Presently working here."
 msgstr ""
 
-#: src/Model/Applicant.php:720
+#: src/Model/Applicant.php:721
 msgid "Awaiting Applicant Confirmation."
 msgstr ""
 
-#: src/Model/Applicant.php:733
+#: src/Model/Applicant.php:734
 msgid "Interview Request Accepted"
 msgstr ""
 
-#: src/Model/Applicant.php:754
+#: src/Model/Applicant.php:755
 msgid "Interview request cancelled by the applicant."
 msgstr ""
 
-#: src/Model/Applicant.php:759
+#: src/Model/Applicant.php:760
 msgid "An interview has not been scheduled."
+msgstr ""
+
+#: src/Model/Applicant.php:797, src/Model/Applicant.php:807
+msgid "The applicant has declined the interview."
+msgstr ""
+
+#: src/Model/Applicant.php:841
+msgid "The applicant has confirmed the interview."
 msgstr ""
 
 #: src/Model/ApplicantMetaDropdowns.php:28
@@ -1633,7 +1645,7 @@ msgstr ""
 msgid "Elementary"
 msgstr ""
 
-#: src/Model/ApplicantRepository.php:258
+#: src/Model/ApplicantRepository.php:249
 msgctxt "Default applicant nickname. Followed by a number"
 msgid "Applicant #"
 msgstr ""
@@ -1751,93 +1763,93 @@ msgstr ""
 msgid "The term \"%s\" is not a valid Applicant status."
 msgstr ""
 
-#: src/Taxonomy/ApplicantStatus.php:236, src/Taxonomy/JobStatus.php:65
+#: src/Taxonomy/ApplicantStatus.php:244, src/Taxonomy/JobStatus.php:65
 msgctxt "taxonomy general name"
 msgid "Status"
 msgstr ""
 
-#: src/Taxonomy/ApplicantStatus.php:237, src/Taxonomy/JobStatus.php:66
+#: src/Taxonomy/ApplicantStatus.php:245, src/Taxonomy/JobStatus.php:66
 msgid "Search Statuses"
 msgstr ""
 
-#: src/Taxonomy/ApplicantStatus.php:238, src/Taxonomy/JobStatus.php:67
+#: src/Taxonomy/ApplicantStatus.php:246, src/Taxonomy/JobStatus.php:67
 msgid "Popular Statuses"
 msgstr ""
 
-#: src/Taxonomy/ApplicantStatus.php:239, src/Taxonomy/JobStatus.php:68
+#: src/Taxonomy/ApplicantStatus.php:247, src/Taxonomy/JobStatus.php:68
 msgid "All Statuses"
 msgstr ""
 
-#: src/Taxonomy/ApplicantStatus.php:240, src/Taxonomy/JobStatus.php:69
+#: src/Taxonomy/ApplicantStatus.php:248, src/Taxonomy/JobStatus.php:69
 msgid "Parent Status"
 msgstr ""
 
-#: src/Taxonomy/ApplicantStatus.php:241, src/Taxonomy/JobStatus.php:70
+#: src/Taxonomy/ApplicantStatus.php:249, src/Taxonomy/JobStatus.php:70
 msgid "Parent Status:"
 msgstr ""
 
-#: src/Taxonomy/ApplicantStatus.php:242, src/Taxonomy/JobStatus.php:71
+#: src/Taxonomy/ApplicantStatus.php:250, src/Taxonomy/JobStatus.php:71
 msgid "Edit Status"
 msgstr ""
 
-#: src/Taxonomy/ApplicantStatus.php:243, src/Taxonomy/JobStatus.php:72
+#: src/Taxonomy/ApplicantStatus.php:251, src/Taxonomy/JobStatus.php:72
 msgid "Update Status"
 msgstr ""
 
-#: src/Taxonomy/ApplicantStatus.php:244, src/Taxonomy/ApplicantStatus.php:245, src/Taxonomy/JobStatus.php:73, src/Taxonomy/JobStatus.php:74
+#: src/Taxonomy/ApplicantStatus.php:252, src/Taxonomy/ApplicantStatus.php:253, src/Taxonomy/JobStatus.php:73, src/Taxonomy/JobStatus.php:74
 msgid "New Status"
 msgstr ""
 
-#: src/Taxonomy/ApplicantStatus.php:246, src/Taxonomy/JobStatus.php:75
+#: src/Taxonomy/ApplicantStatus.php:254, src/Taxonomy/JobStatus.php:75
 msgid "Separate Statuses with commas"
 msgstr ""
 
-#: src/Taxonomy/ApplicantStatus.php:247, src/Taxonomy/JobStatus.php:76
+#: src/Taxonomy/ApplicantStatus.php:255, src/Taxonomy/JobStatus.php:76
 msgid "Add or remove Statuses"
 msgstr ""
 
-#: src/Taxonomy/ApplicantStatus.php:248, src/Taxonomy/JobStatus.php:77
+#: src/Taxonomy/ApplicantStatus.php:256, src/Taxonomy/JobStatus.php:77
 msgid "Choose from the most used Statuses"
 msgstr ""
 
-#: src/Taxonomy/ApplicantStatus.php:249, src/Taxonomy/JobStatus.php:78
+#: src/Taxonomy/ApplicantStatus.php:257, src/Taxonomy/JobStatus.php:78
 msgid "No Statuses found."
 msgstr ""
 
-#: src/Taxonomy/ApplicantStatus.php:250, src/Taxonomy/JobStatus.php:79
+#: src/Taxonomy/ApplicantStatus.php:258, src/Taxonomy/JobStatus.php:79
 msgid "Statuses"
 msgstr ""
 
-#: src/Taxonomy/ApplicantStatus.php:277
+#: src/Taxonomy/ApplicantStatus.php:285
 msgid "Acceptance is pending"
 msgstr ""
 
-#: src/Taxonomy/ApplicantStatus.php:281
+#: src/Taxonomy/ApplicantStatus.php:289
 msgid "Accept the applicant"
 msgstr ""
 
-#: src/Taxonomy/ApplicantStatus.php:285
+#: src/Taxonomy/ApplicantStatus.php:293
 msgid "Do not accept the applicant"
 msgstr ""
 
-#: src/Taxonomy/ApplicantStatus.php:289
+#: src/Taxonomy/ApplicantStatus.php:297
 msgid "Maybe accept the applicant"
 msgstr ""
 
-#: src/Taxonomy/ApplicantStatus.php:315
+#: src/Taxonomy/ApplicantStatus.php:323
 msgid "An error occurred: the term or post ID failed validation."
 msgstr ""
 
 #. translators: the placeholder is an error message returned by the WP_Error object
-#: src/Taxonomy/ApplicantStatus.php:325
+#: src/Taxonomy/ApplicantStatus.php:333
 msgid "An error occurred: %s"
 msgstr ""
 
-#: src/Taxonomy/ApplicantStatus.php:330
+#: src/Taxonomy/ApplicantStatus.php:338
 msgid "An error occurred: Failed to set post term."
 msgstr ""
 
-#: src/Taxonomy/ApplicantStatus.php:336
+#: src/Taxonomy/ApplicantStatus.php:344
 msgid "Term successfully set."
 msgstr ""
 
