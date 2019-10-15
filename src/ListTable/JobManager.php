@@ -67,14 +67,12 @@ final class JobManager extends BasePostType implements AssetsAware {
 	}
 
 	/**
-	 * Get the array of known assets.
+	 * Load asset objects for use.
 	 *
 	 * @since %VERSION%
-	 *
-	 * @return Asset[]
 	 */
-	protected function get_assets() {
-		return [
+	protected function load_assets() {
+		$this->assets = [
 			new StyleAsset( self::CSS_HANDLE, self::CSS_URI ),
 		];
 	}

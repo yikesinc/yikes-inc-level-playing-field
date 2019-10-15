@@ -262,13 +262,11 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 	}
 
 	/**
-	 * Get the array of known assets.
+	 * Load asset objects for use.
 	 *
 	 * @since %VERSION%
-	 *
-	 * @return Asset[]
 	 */
-	protected function get_assets() {
+	protected function load_assets() {
 		$applicant = new ScriptAsset( 'lpf-applicant-manager-js', 'assets/js/applicant-manager', [ 'jquery' ] );
 		$applicant->add_localization( 'applicantManager', [
 			'cancel' => _x( 'Cancel', 'undo action to edit nickname when viewing an applicant', 'yikes-level-playing-field' ),
@@ -279,7 +277,7 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 			'view'   => _x( 'View Cover Letter', 'view cover letter when viewing an applicant', 'yikes-level-playing-field' ),
 		] );
 
-		return [
+		$this->assets = [
 			$applicant,
 			new StyleAsset( self::CSS_HANDLE, self::CSS_URI, [ 'wp-components' ] ),
 		];
