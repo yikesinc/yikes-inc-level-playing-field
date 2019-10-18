@@ -336,7 +336,7 @@ class YIKES_CPT_Meta_Boxes {
 		$raw = isset( $_POST[ $field_id ] ) ? $_POST[ $field_id ] : null;
 
 		/**
-		 * If field is a WYSIWYG, check if empty by stripping tags, converting HTML chars and trimming whitespace.
+		 * If field is a WYSIWYG, check if empty by stripping tags and clearing spaces & new lines.
 		 */
 		if ( 'wysiwyg' === $field_type ) {
 			$is_not_empty = preg_replace( '/\s+|&nbsp;/', '', wp_strip_all_tags( $raw ) );
