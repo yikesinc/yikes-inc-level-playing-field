@@ -1,5 +1,25 @@
 jQuery( function ( $ ) {
 
+	// Ensure we have our localized data.
+	const i18n = Object.assign( {}, {
+		post: {
+			ID: 0
+		},
+		ajax: {
+			url: '',
+			send_nonce: '',
+			refresh_nonce: '',
+			interview_nonce: '',
+		},
+		is_metabox: false,
+		spinnter_url: '',
+		api: {
+			nonce: '',
+			url: '',
+			route: '',
+		}
+	}, window.messaging_data || {} );
+
 	/**
 	 * Getters, setters, global values.
 	 */
@@ -13,7 +33,7 @@ jQuery( function ( $ ) {
 	const set_interview_location = function( value ) { document.getElementById( 'interview-location' ).value = value; };
 	const get_interview_message  = function() { return document.getElementById( 'interview-message' ).value; };
 	const set_interview_message  = function( value ) { document.getElementById( 'interview-message' ).value = value; };
-	const post_id                = typeof messaging_data.post !== 'undefined' && typeof messaging_data.post.ID !== 'undefined' ? parseInt( messaging_data.post.ID ) : 0;
+	const post_id                = parseInt( i18n.post.ID );
 
 	if ( 0 === post_id ) {
 		return;
