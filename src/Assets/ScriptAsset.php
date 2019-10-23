@@ -9,6 +9,7 @@
 
 namespace Yikes\LevelPlayingField\Assets;
 
+use Yikes\LevelPlayingField\Exception\FailedToRegister;
 use Yikes\LevelPlayingField\Plugin;
 use Closure;
 
@@ -137,10 +138,6 @@ class ScriptAsset extends BaseAsset {
 				$this->version,
 				$this->in_footer
 			);
-
-			foreach ( $this->localizations as $object_name => $data_array ) {
-				wp_localize_script( $this->handle, $object_name, $data_array );
-			}
 		};
 	}
 
@@ -153,6 +150,14 @@ class ScriptAsset extends BaseAsset {
 	 */
 	protected function get_enqueue_closure() {
 		return function () {
+			if ( ! wp_script_is( $this->handle, 'registered' ) ) {
+				throw FailedToRegister::asset_not_registered( $this->handle );
+			}
+
+			foreach ( $this->localizations as $object_name => $data_array ) {
+				wp_localize_script( $this->handle, $object_name, $data_array );
+			}
+
 			wp_enqueue_script( $this->handle );
 		};
 	}
