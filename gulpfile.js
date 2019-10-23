@@ -5,12 +5,15 @@ const cheerio     = require( 'gulp-cheerio' );
 const del         = require( 'del' );
 const eslint      = require( 'gulp-eslint' );
 const gutil       = require( 'gulp-util' );
+const glob        = require( 'glob' );
 const imagemin    = require( 'gulp-imagemin' );
 const merge       = require( 'gulp-merge' );
 const minimist    = require( 'minimist' );
 const mqpacker    = require( 'css-mqpacker' );
+const named       = require( 'vinyl-named' );
 const neat        = require( 'bourbon-neat' ).includePaths;
 const notify      = require( 'gulp-notify' );
+const path        = require( 'path' );
 const plumber     = require( 'gulp-plumber' );
 const postcss     = require( 'gulp-postcss' );
 const rename      = require( 'gulp-rename' );
@@ -101,6 +104,34 @@ function handleErrors() {
 function outputErrors( error ) {
 	gutil.log( gutil.colors.red( '[Error]' ), error.toString() );
 	gutil.beep();
+}
+
+/**
+ * Find all of the main block files.
+ */
+function findBlocks() {
+	const globs = glob.sync( './blocks/**/index.js' );
+	let blocks = {};
+	globs.map( ( glob ) => {
+		const name = path.basename( path.dirname( glob ) );
+		blocks[ name ] = glob;
+	} );
+
+	return blocks;
+}
+
+/**
+ * Map paths based on a glob pattern for Webpack.
+ */
+function findScripts() {
+	const globs = glob.sync( './assets/js/dev/*.js' );
+	let names = {};
+	globs.map( ( glob ) => {
+		const name = path.basename( glob, '.js' );
+		names[ name ] = glob;
+	} );
+
+	return names;
 }
 
 /**
@@ -244,16 +275,27 @@ function cleanScripts() {
  * @returns {*}
  */
 function compileScripts() {
-	const babel = require( 'gulp-babel' );
 	return src( paths.devscripts )
 		.pipe( plumber( { errorHandler: outputErrors } ) )
 		.pipe( sourcemaps.init() )
-		.pipe( babel( {
-			"presets": [ [ "env", {
-				"targets": {
-					"browsers": [ "last 2 versions" ]
-				}
-			} ] ]
+		.pipe( webpack( {
+			entry: findScripts(),
+			output: {
+				filename: '[name].js'
+			},
+			devtool: 'inline-cheap-module-source-map',
+			mode: 'none',
+			module: {
+				rules: [
+					{
+						test: /\.js$/,
+						exclude: /(node_modules|bower_components)/,
+						use: {
+							loader: 'babel-loader'
+						}
+					}
+				]
+			}
 		} ) )
 		.pipe( sourcemaps.write() )
 		.pipe( dest( 'assets/js' ) );
@@ -275,20 +317,6 @@ function minimizeScripts() {
  * Compile blocks using webpack.
  */
 function compileBlocks() {
-	const named = require( 'vinyl-named' );
-	const findBlocks = () => {
-		const glob = require( 'glob' );
-		const path = require( 'path' );
-		const globs = glob.sync( './blocks/**/index.js' );
-		let blocks = {};
-		globs.map( ( glob ) => {
-			const name = path.basename( path.dirname( glob ) );
-			blocks[ name ] = glob;
-		} );
-
-		return blocks;
-	};
-
 	return src( paths.blocks )
 		.pipe( named() )
 		.pipe( webpack( {
@@ -296,7 +324,7 @@ function compileBlocks() {
 			output: {
 				filename: '[name]/index.js'
 			},
-			devtool: 'cheap-eval-source-map',
+			// devtool: 'cheap-eval-source-map',
 			mode: 'none',
 			module: {
 				rules: [
