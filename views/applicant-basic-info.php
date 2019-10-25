@@ -26,7 +26,8 @@ $is_sidebar_empty = true;
 <!-- Basic info and cover letter sidebar -->
 <div id="basic-info" class="postbox">
 	<div class="inside">
-		<?php if ( ! $applicant->is_anonymized() && ! empty( $applicant->get_email() ) ) : 
+		<?php
+		if ( $applicant->get_email() ) :
 			$is_sidebar_empty = false;
 			?>
 			<p class="email">
@@ -35,7 +36,8 @@ $is_sidebar_empty = true;
 			</p>
 		<?php endif; ?>
 
-		<?php if ( $applicant->get_phone() ) :
+		<?php
+		if ( $applicant->get_phone() ) :
 			$is_sidebar_empty = false;
 			?>
 			<p class="email">

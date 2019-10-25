@@ -103,7 +103,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @return string
 	 */
 	public function get_email() {
-		return $this->{ApplicantMeta::EMAIL};
+		return $this->is_anonymized() ? false : $this->{ApplicantMeta::EMAIL};
 	}
 
 	/**
