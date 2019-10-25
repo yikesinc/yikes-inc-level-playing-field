@@ -35,7 +35,7 @@ $is_sidebar_empty = true;
 			</p>
 		<?php endif; ?>
 
-		<?php if ( ! $applicant->is_anonymized() && ! empty( $applicant->get_phone() ) ) :
+		<?php if ( $applicant->get_phone() ) :
 			$is_sidebar_empty = false;
 			?>
 			<p class="email">

@@ -166,7 +166,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @return int The applicant phone.
 	 */
 	public function get_phone() {
-		return $this->{ApplicantMeta::PHONE};
+		return $this->is_anonymized() ? false : $this->{ApplicantMeta::PHONE};
 	}
 
 	/**
