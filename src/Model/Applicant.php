@@ -539,7 +539,7 @@ final class Applicant extends CustomPostTypeEntity {
 		}
 
 		if ( $diff->d > 0 ) {
-			$parts = sprintf(
+			$parts[] = sprintf(
 				/* translators: the placeholder is a number of days */
 				_n( '%s Day', '%s Days', $diff->d, 'yikes-level-playing-field' ),
 				number_format_i18n( (float) $diff->d )
