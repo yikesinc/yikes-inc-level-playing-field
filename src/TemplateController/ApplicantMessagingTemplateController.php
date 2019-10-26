@@ -9,16 +9,10 @@
 
 namespace Yikes\LevelPlayingField\TemplateController;
 
-use Yikes\LevelPlayingField\Assets\ScriptAsset;
-use Yikes\LevelPlayingField\Assets\StyleAsset;
+use Yikes\LevelPlayingField\Messaging\MessagingAssets;
 use Yikes\LevelPlayingField\RequiredPages\ApplicantMessagingPage;
-use Yikes\LevelPlayingField\RequiredPages\BaseRequiredPage;
-use Yikes\LevelPlayingField\View\PostEscapedView;
-use Yikes\LevelPlayingField\View\TemplatedView;
-use Yikes\LevelPlayingField\Comment\ApplicantMessageRepository;
 use Yikes\LevelPlayingField\Messaging\ApplicantMessaging;
 use Yikes\LevelPlayingField\Model\Applicant;
-use Yikes\LevelPlayingField\Model\ApplicantRepository;
 
 /**
  * Class ApplicantMessagingTemplateController.
@@ -32,21 +26,19 @@ use Yikes\LevelPlayingField\Model\ApplicantRepository;
  */
 class ApplicantMessagingTemplateController extends TemplateController {
 
+	use MessagingAssets;
+
 	const PRIORITY = 10;
 	const VIEW_URI = ApplicantMessaging::VIEW;
 
 	/**
-	 * Get the array of known assets.
+	 * Register the current Registerable.
 	 *
 	 * @since %VERSION%
-	 *
-	 * @return Asset[]
 	 */
-	protected function get_assets() {
-		return [
-			new ScriptAsset( ApplicantMessaging::JS_HANDLE, ApplicantMessaging::JS_URI, ApplicantMessaging::JS_DEPENDENCIES, ApplicantMessaging::JS_VERSION, ScriptAsset::ENQUEUE_FOOTER ),
-			new StyleAsset( ApplicantMessaging::CSS_HANDLE, ApplicantMessaging::CSS_URI ),
-		];
+	public function register() {
+		parent::register();
+		$this->register_assets();
 	}
 
 	/**
