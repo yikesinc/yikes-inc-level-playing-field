@@ -120,7 +120,7 @@ abstract class BaseAsset implements Asset {
 	}
 
 	/**
-	 * Get the enqueue action to use.
+	 * Get the dequeue action to use.
 	 *
 	 * @since %VERSION%
 	 *
