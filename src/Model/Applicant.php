@@ -103,6 +103,16 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @return string
 	 */
 	public function get_email() {
+		return $this->is_anonymized() ? '' : $this->{ApplicantMeta::EMAIL};
+	}
+
+	/**
+	 * Get the email address of the applicant for email communication.
+	 *
+	 * @since %VERSION%
+	 * @return string
+	 */
+	public function get_email_for_send() {
 		return $this->{ApplicantMeta::EMAIL};
 	}
 
@@ -145,7 +155,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @return string The applicant name.
 	 */
 	public function get_name() {
-		return $this->{ApplicantMeta::NAME};
+		return $this->is_anonymized() ? '' : $this->{ApplicantMeta::NAME};
 	}
 
 	/**
@@ -166,7 +176,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @return int The applicant phone.
 	 */
 	public function get_phone() {
-		return $this->{ApplicantMeta::PHONE};
+		return $this->is_anonymized() ? '' : $this->{ApplicantMeta::PHONE};
 	}
 
 	/**
@@ -216,7 +226,7 @@ final class Applicant extends CustomPostTypeEntity {
 		 * Non-anonymized applicants are allowed to show their regular avatars.
 		 */
 		$avatar = get_avatar(
-			$this->get_email(),
+			$this->get_email_for_send(),
 			$size,
 			'identicon',
 			'',
@@ -258,7 +268,43 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @return array
 	 */
 	public function get_schooling() {
-		return $this->{ApplicantMeta::SCHOOLING};
+		$schooling       = [];
+		$type_selections = $this->get_schooling_options();
+		foreach ( $this->{ApplicantMeta::SCHOOLING} as $school ) :
+			if ( $this->is_anonymized() ) :
+				if ( 'high_school' === $school['type'] ) {
+					$schooling[] = sprintf(
+					'<li>%s</li>',
+					esc_html__( 'Graduated from High School or High School equivalent', 'yikes-level-playing-field' )
+					);
+				} else {
+					$schooling[] = sprintf(
+						'<li>Graduated with a %s from %s with a major in %s</li>',
+						esc_html( $school[ ApplicantMeta::DEGREE ] ),
+						esc_html( $type_selections[ $school['type'] ] ),
+						esc_html( $school[ ApplicantMeta::MAJOR ] )
+					);
+				}
+			else :
+				if ( 'high_school' === $school['type'] ) {
+					$schooling[] = sprintf(
+						'<li>Graduated from %s (High School or High School equivalent) in %s</li>',
+						esc_html( $school[ ApplicantMeta::INSTITUTION ] ),
+						esc_html( $school[ ApplicantMeta::YEAR ] )
+					);
+				} else {
+					$schooling[] = sprintf(
+						'<li>Graduated in %s with a %s from %s with a major in %s</li>',
+						esc_html( $school[ ApplicantMeta::YEAR ] ),
+						esc_html( $school[ ApplicantMeta::DEGREE ] ),
+						esc_html( $school[ ApplicantMeta::INSTITUTION ] ),
+						esc_html( $school[ ApplicantMeta::MAJOR ] )
+					);
+				}
+			endif;
+		endforeach;
+
+		return $schooling;
 	}
 
 	/**
@@ -303,7 +349,27 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @return array
 	 */
 	public function get_certifications() {
-		return $this->{ApplicantMeta::CERTIFICATIONS};
+		$certifications  = [];
+		foreach ( $this->{ApplicantMeta::CERTIFICATIONS} as $certification ) :
+			if ( $this->is_anonymized() ) :
+				$certifications[] = sprintf(
+					'<li>Certified in %s from %s. Status: %s</li>',
+					esc_html( $certification[ ApplicantMeta::CERT_TYPE ] ),
+					esc_html( $certification[ ApplicantMeta::TYPE ] ),
+					esc_html( $certification[ ApplicantMeta::STATUS ] )
+				);
+			else :
+				$certifications[] = sprintf(
+					'<li>Certified in %s from %s. Status: %s. Year: %s.</li>',
+					esc_html( $certification[ ApplicantMeta::CERT_TYPE ] ),
+					esc_html( $certification[ ApplicantMeta::INSTITUTION ] ),
+					esc_html( $certification[ ApplicantMeta::STATUS ] ),
+					esc_html( $certification[ ApplicantMeta::YEAR ] )
+				);
+			endif;
+		endforeach;
+
+		return $certifications;
 	}
 
 	/**
@@ -539,7 +605,7 @@ final class Applicant extends CustomPostTypeEntity {
 		}
 
 		if ( $diff->d > 0 ) {
-			$parts = sprintf(
+			$parts[] = sprintf(
 				/* translators: the placeholder is a number of days */
 				_n( '%s Day', '%s Days', $diff->d, 'yikes-level-playing-field' ),
 				number_format_i18n( (float) $diff->d )
