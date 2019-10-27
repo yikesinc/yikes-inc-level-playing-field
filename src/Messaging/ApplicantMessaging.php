@@ -10,10 +10,8 @@
 namespace Yikes\LevelPlayingField\Messaging;
 
 use WP_Post;
-use Yikes\LevelPlayingField\Assets\ScriptAsset;
 use Yikes\LevelPlayingField\Assets\StyleAsset;
 use Yikes\LevelPlayingField\Assets\AssetsAware;
-use Yikes\LevelPlayingField\Assets\AssetsAwareness;
 use Yikes\LevelPlayingField\Service;
 use Yikes\LevelPlayingField\Activateable;
 use Yikes\LevelPlayingField\Deactivateable;
@@ -29,7 +27,6 @@ use Yikes\LevelPlayingField\Model\Applicant;
 use Yikes\LevelPlayingField\Model\ApplicantRepository;
 use Yikes\LevelPlayingField\View\FormEscapedView;
 use Yikes\LevelPlayingField\View\TemplatedView;
-use Yikes\LevelPlayingField\REST\APISettings;
 
 /**
  * Class ApplicantMessaging.
@@ -41,8 +38,8 @@ use Yikes\LevelPlayingField\REST\APISettings;
  */
 class ApplicantMessaging implements Activateable, Deactivateable, Renderable, AssetsAware, Service {
 
-	use AssetsAwareness {
-		enqueue_assets as trait_enqueue_assets;
+	use MessagingAssets {
+		load_assets as trait_load_assets;
 	}
 
 	const POST_TYPE = ApplicantManager::SLUG;
@@ -53,19 +50,12 @@ class ApplicantMessaging implements Activateable, Deactivateable, Renderable, As
 	const INTERVIEW_SCHEDULER_PARTIAL    = 'views/interview-scheduler';
 
 	// Define the JavaScript & CSS files.
-	const JS_HANDLE                  = 'lpf-messaging-admin-script';
-	const JS_URI                     = 'assets/js/messaging';
-	const JS_DEPENDENCIES            = [ 'jquery', 'jquery-ui-datepicker' ];
-	const JS_VERSION                 = false;
-	const TIMEPICKER_JS_HANDLE       = 'jquery-timepicker-script';
-	const TIMEPICKER_JS_URI          = '/assets/vendor/timepicker/jquery.timepicker';
-	const TIMEPICKER_JS_DEPENDENCIES = [ self::JS_HANDLE ];
-	const CSS_HANDLE                 = 'lpf-messaging-admin-styles';
-	const CSS_URI                    = '/assets/css/messaging';
-	const DATEPICKER_CSS_HANDLE      = 'jquery-ui-datepicker-styles';
-	const DATEPICKER_CSS_URI         = '/assets/vendor/datepicker/jquery-ui';
-	const TIMEPICKER_CSS_HANDLE      = 'jquery-timepicker-styles';
-	const TIMEPICKER_CSS_URI         = '/assets/vendor/timepicker/jquery.timepicker';
+	const CSS_HANDLE            = 'lpf-messaging-admin-styles';
+	const CSS_URI               = '/assets/css/messaging';
+	const DATEPICKER_CSS_HANDLE = 'jquery-ui-datepicker-styles';
+	const DATEPICKER_CSS_URI    = '/assets/vendor/datepicker/jquery-ui';
+	const TIMEPICKER_CSS_HANDLE = 'jquery-timepicker-styles';
+	const TIMEPICKER_CSS_URI    = '/assets/vendor/timepicker/jquery.timepicker';
 
 	/**
 	 * Register our hooks.
@@ -141,66 +131,12 @@ class ApplicantMessaging implements Activateable, Deactivateable, Renderable, As
 	 * @since %VERSION%
 	 */
 	protected function load_assets() {
-		$this->assets = [
-			self::JS_HANDLE             => new ScriptAsset(
-				self::JS_HANDLE,
-				self::JS_URI,
-				self::JS_DEPENDENCIES,
-				self::JS_VERSION,
-				ScriptAsset::ENQUEUE_FOOTER
-			),
-			self::TIMEPICKER_JS_HANDLE  => new ScriptAsset(
-				self::TIMEPICKER_JS_HANDLE,
-				self::TIMEPICKER_JS_URI,
-				self::TIMEPICKER_JS_DEPENDENCIES,
-				self::JS_VERSION,
-				ScriptAsset::ENQUEUE_FOOTER
-			),
-			self::CSS_HANDLE            => new StyleAsset( self::CSS_HANDLE, self::CSS_URI ),
-			self::DATEPICKER_CSS_HANDLE => new StyleAsset( self::DATEPICKER_CSS_HANDLE, self::DATEPICKER_CSS_URI ),
-			self::TIMEPICKER_CSS_HANDLE => new StyleAsset( self::TIMEPICKER_CSS_HANDLE, self::TIMEPICKER_CSS_URI ),
-		];
-	}
-
-	/**
-	 * Enqueue the known assets.
-	 *
-	 * @since %VERSION%
-	 */
-	protected function enqueue_assets() {
-		$this->add_script_localization();
-		$this->trait_enqueue_assets();
-	}
-
-	/**
-	 * Add the script localization separately from the registration.
-	 *
-	 * This is necessary because we need to use get_rest_url(), which isn't available early
-	 * on the plugins_loaded hook where asset registration takes place.
-	 *
-	 * @since %VERSION%
-	 */
-	protected function add_script_localization() {
-		$post_id = isset( $_GET['post'] ) ? filter_var( $_GET['post'], FILTER_SANITIZE_NUMBER_INT ) : 0;
-		$this->assets[ self::JS_HANDLE ]->add_localization(
-			'messaging_data',
+		$this->trait_load_assets();
+		$this->assets = array_merge(
+			$this->assets,
 			[
-				'post'        => [
-					'ID' => $post_id,
-				],
-				'ajax'        => [
-					'url'             => admin_url( 'admin-ajax.php' ),
-					'send_nonce'      => wp_create_nonce( 'send_message' ),
-					'refresh_nonce'   => wp_create_nonce( 'refresh_conversation' ),
-					'interview_nonce' => wp_create_nonce( 'send_interview_request' ),
-				],
-				'is_metabox'  => is_admin(),
-				'spinner_url' => admin_url( 'images/spinner-2x.gif' ),
-				'api'         => [
-					'nonce' => wp_create_nonce( 'wp_rest' ),
-					'url'   => get_rest_url( null, '/' . APISettings::LPF_NAMESPACE ),
-					'route' => APISettings::INTERVIEW_STATUS_ROUTE . '/',
-				],
+				self::DATEPICKER_CSS_HANDLE => new StyleAsset( self::DATEPICKER_CSS_HANDLE, self::DATEPICKER_CSS_URI ),
+				self::TIMEPICKER_CSS_HANDLE => new StyleAsset( self::TIMEPICKER_CSS_HANDLE, self::TIMEPICKER_CSS_URI ),
 			]
 		);
 	}
@@ -231,19 +167,6 @@ class ApplicantMessaging implements Activateable, Deactivateable, Renderable, As
 				$exception->getMessage()
 			);
 		}
-	}
-
-	/**
-	 * Get the array of arguments to pass to the render callback.
-	 *
-	 * @since %VERSION%
-	 *
-	 * @return array Array of arguments.
-	 */
-	protected function get_callback_args() {
-		return [
-			'is_metabox' => true,
-		];
 	}
 
 	/**

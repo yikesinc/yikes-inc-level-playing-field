@@ -89,9 +89,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 	/**
 	 * Triggered after the built-in settings.
 	 *
-	 * @param View $view The current view object.
+	 * @param View  $view    The current view object.
+	 * @param array $context The context for the current view.
 	 */
-	do_action( 'lpf_settings_page', $this );
+	do_action( 'lpf_settings_page', $this, $this->_context_ );
 	?>
 
 	<div class="lpf-settings lpf-settings-settings-container">

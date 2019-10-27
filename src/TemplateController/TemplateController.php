@@ -61,6 +61,8 @@ abstract class TemplateController implements Renderable, AssetsAware, Service {
 	 * @since %VERSION%
 	 *
 	 * @param string $template The path of the template to include.
+	 *
+	 * @return string
 	 */
 	public function set_template( $template ) {
 		return $template;

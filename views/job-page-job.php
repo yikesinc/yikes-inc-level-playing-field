@@ -10,6 +10,7 @@
 namespace Yikes\LevelPlayingField;
 
 use Yikes\LevelPlayingField\Model\Job;
+use Yikes\LevelPlayingField\View\View;
 
 // Only run this within WordPress.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -41,9 +42,10 @@ $use_comma = (bool) apply_filters( 'lpf_single_job_template_address_use_comma', 
 	/**
 	 * Fires after displaying basic job listing information.
 	 *
-	 * @param View $view The current view object.
+	 * @param View  $view    The current view object.
+	 * @param array $context The context for the current view.
 	 */
-	do_action( 'lpf_job_after', $this );
+	do_action( 'lpf_job_after', $this, $this->_context_ );
 
 	if ( $this->show_application_button && ! empty( $job->get_application() ) ) :
 		echo $this->render_partial( $this->partials['job_apply_button'] );

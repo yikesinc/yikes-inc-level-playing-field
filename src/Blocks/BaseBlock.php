@@ -47,6 +47,11 @@ abstract class BaseBlock implements Service, AssetsAware {
 		add_action( 'init', function() {
 			register_block_type( $this->get_block_slug(), $this->get_block_args() );
 		} );
+
+		// Enqueue our blocks manually instead of relying on WP.
+		add_action( 'enqueue_block_editor_assets', function() {
+			$this->enqueue_assets();
+		}, 2 );
 	}
 
 	/**
