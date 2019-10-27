@@ -44,22 +44,7 @@ $applicant = $this->applicant;
 			<ol>
 				<?php
 				foreach ( $applicant->get_certifications() as $certification ) {
-					if ( $applicant->is_anonymized() ) {
-						printf(
-							'<li>Certified in %s from %s. Status: %s</li>',
-							esc_html( $certification[ ApplicantMeta::CERT_TYPE ] ),
-							esc_html( $certification[ ApplicantMeta::TYPE ] ),
-							esc_html( $certification[ ApplicantMeta::STATUS ] )
-						);
-					} else {
-						printf(
-							'<li>Certified in %s from %s. Status: %s. Year: %s.</li>',
-							esc_html( $certification[ ApplicantMeta::CERT_TYPE ] ),
-							esc_html( $certification[ ApplicantMeta::INSTITUTION ] ),
-							esc_html( $certification[ ApplicantMeta::STATUS ] ),
-							esc_html( $certification[ ApplicantMeta::YEAR ] )
-						);
-					}
+					echo $certification;
 				}
 				?>
 			</ol>
@@ -125,11 +110,13 @@ $applicant = $this->applicant;
 						echo $is_multilingual ? esc_html__( 'Multilingual', 'yikes-level-playing-field' ) . ' &ndash; ' : '';
 						foreach ( $proficiency_counts as $proficiency => $count ) {
 							echo esc_html( $proficiency_labels[ $proficiency ] ), ' ';
-							echo esc_html( sprintf(
-								/* translators: %d is the number of languages for the given fluency level */
-								_n( 'in %d language', 'in %d languages', $count, 'yikes-level-playing-field' ),
-								$count
-							) );
+							echo esc_html(
+								sprintf(
+									/* translators: %d is the number of languages for the given fluency level */
+									_n( 'in %d language', 'in %d languages', $count, 'yikes-level-playing-field' ),
+									$count
+								)
+							);
 							echo $needs_comma ? ', ' : ' ';
 							$needs_comma--;
 						}

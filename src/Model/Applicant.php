@@ -107,6 +107,16 @@ final class Applicant extends CustomPostTypeEntity {
 	}
 
 	/**
+	 * Get the email address of the applicant for email communication.
+	 *
+	 * @since %VERSION%
+	 * @return string
+	 */
+	public function get_email_for_send() {
+		return $this->{ApplicantMeta::EMAIL};
+	}
+
+	/**
 	 * Set the email for the applicant.
 	 *
 	 * @since %VERSION%
@@ -216,7 +226,7 @@ final class Applicant extends CustomPostTypeEntity {
 		 * Non-anonymized applicants are allowed to show their regular avatars.
 		 */
 		$avatar = get_avatar(
-			$this->get_email(),
+			$this->get_email_for_send(),
 			$size,
 			'identicon',
 			'',
@@ -339,7 +349,27 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @return array
 	 */
 	public function get_certifications() {
-		return $this->{ApplicantMeta::CERTIFICATIONS};
+		$certifications  = [];
+		foreach ( $this->{ApplicantMeta::CERTIFICATIONS} as $certification ) :
+			if ( $this->is_anonymized() ) :
+				$certifications[] = sprintf(
+					'<li>Certified in %s from %s. Status: %s</li>',
+					esc_html( $certification[ ApplicantMeta::CERT_TYPE ] ),
+					esc_html( $certification[ ApplicantMeta::TYPE ] ),
+					esc_html( $certification[ ApplicantMeta::STATUS ] )
+				);
+			else :
+				$certifications[] = sprintf(
+					'<li>Certified in %s from %s. Status: %s. Year: %s.</li>',
+					esc_html( $certification[ ApplicantMeta::CERT_TYPE ] ),
+					esc_html( $certification[ ApplicantMeta::INSTITUTION ] ),
+					esc_html( $certification[ ApplicantMeta::STATUS ] ),
+					esc_html( $certification[ ApplicantMeta::YEAR ] )
+				);
+			endif;
+		endforeach;
+
+		return $certifications;
 	}
 
 	/**

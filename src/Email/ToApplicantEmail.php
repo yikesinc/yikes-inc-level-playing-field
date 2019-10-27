@@ -32,7 +32,7 @@ abstract class ToApplicantEmail extends ApplicantEmail {
 	 * @return mixed An array or comma-separated list of email addresses.
 	 */
 	protected function recipient() {
-		return $this->applicant->get_email();
+		return $this->applicant->get_email_for_send();
 	}
 
 	/**
