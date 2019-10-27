@@ -142,7 +142,6 @@ abstract class BaseRequiredPage implements Registerable, Service {
 		}
 
 		$post_ids = explode( ',', $_REQUEST['ids'] );
-		$tmp = $this->get_page_id( static::PAGE_SLUG );
 		if ( ! in_array( (string) $this->get_page_id( static::PAGE_SLUG ), $post_ids, true ) ) {
 			return;
 		}
@@ -150,7 +149,7 @@ abstract class BaseRequiredPage implements Registerable, Service {
 		printf(
 			'<div class="notice notice-error is-dismissible"><p>%s</p></div>',
 			sprintf(
-			/* translators: %1$s is the post titles for our required pages. */
+				/* translators: %1$s is the post titles for our required pages. */
 				esc_html__( 'The following page is required for the Level Playing Field plugin and cannot be moved to Trash: %1$s.', 'yikes-level-playing-field' ),
 				esc_attr( static::POST_TITLE )
 			)
