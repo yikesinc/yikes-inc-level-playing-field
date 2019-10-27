@@ -34,7 +34,7 @@ $job = $this->job;
 					<button type="button" class="edit-nickname button button-small hide-if-no-js" aria-label="Edit nickname"><?php esc_html_e( 'Edit Nickname', 'yikes-level-playing-field' ); ?></button>
 				</span>
 			</h5>
-			<?php if ( ! $applicant->is_anonymized() && ! empty( $applicant->get_name() ) ) : ?>
+			<?php if ( ! empty( $applicant->get_name() ) ) : ?>
 				<h5>
 					<span class="label"><?php esc_html_e( 'Name:', 'yikes-level-playing-field' ); ?></span>
 					<?php echo esc_html( $applicant->get_name() ); ?>

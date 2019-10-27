@@ -27,7 +27,7 @@ $is_sidebar_empty = true;
 <div id="basic-info" class="postbox">
 	<div class="inside">
 		<?php
-		if ( $applicant->get_email() ) :
+		if ( ! empty( $applicant->get_email() ) ) :
 			$is_sidebar_empty = false;
 			?>
 			<p class="email">
@@ -37,7 +37,7 @@ $is_sidebar_empty = true;
 		<?php endif; ?>
 
 		<?php
-		if ( $applicant->get_phone() ) :
+		if ( ! empty( $applicant->get_phone() ) ) :
 			$is_sidebar_empty = false;
 			?>
 			<p class="email">
