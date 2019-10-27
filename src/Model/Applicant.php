@@ -258,7 +258,43 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @return array
 	 */
 	public function get_schooling() {
-		return $this->{ApplicantMeta::SCHOOLING};
+		$schooling       = [];
+		$type_selections = $this->get_schooling_options();
+		foreach ( $this->{ApplicantMeta::SCHOOLING} as $school ) :
+			if ( $this->is_anonymized() ) :
+				if ( 'high_school' === $school['type'] ) {
+					$schooling[] = sprintf(
+					'<li>%s</li>',
+					esc_html__( 'Graduated from High School or High School equivalent', 'yikes-level-playing-field' )
+					);
+				} else {
+					$schooling[] = sprintf(
+						'<li>Graduated with a %s from %s with a major in %s</li>',
+						esc_html( $school[ ApplicantMeta::DEGREE ] ),
+						esc_html( $type_selections[ $school['type'] ] ),
+						esc_html( $school[ ApplicantMeta::MAJOR ] )
+					);
+				}
+			else :
+				if ( 'high_school' === $school['type'] ) {
+					$schooling[] = sprintf(
+						'<li>Graduated from %s (High School or High School equivalent) in %s</li>',
+						esc_html( $school[ ApplicantMeta::INSTITUTION ] ),
+						esc_html( $school[ ApplicantMeta::YEAR ] )
+					);
+				} else {
+					$schooling[] = sprintf(
+						'<li>Graduated in %s with a %s from %s with a major in %s</li>',
+						esc_html( $school[ ApplicantMeta::YEAR ] ),
+						esc_html( $school[ ApplicantMeta::DEGREE ] ),
+						esc_html( $school[ ApplicantMeta::INSTITUTION ] ),
+						esc_html( $school[ ApplicantMeta::MAJOR ] )
+					);
+				}
+			endif;
+		endforeach;
+
+		return $schooling;
 	}
 
 	/**

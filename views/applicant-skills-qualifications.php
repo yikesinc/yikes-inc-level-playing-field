@@ -32,38 +32,8 @@ $applicant = $this->applicant;
 			<ol class="applicant-skills-schooling">
 				<?php
 				$type_selections = $applicant->get_schooling_options();
-				foreach ( $applicant->get_schooling() as $schooling ) {
-					if ( 'high_school' === $schooling['type'] ) {
-						if ( $applicant->is_anonymized() ) {
-							printf(
-								'<li>%s</li>',
-								esc_html__( 'Graduated from High School or High School equivalent', 'yikes-level-playing-field' )
-							);
-						} else {
-							printf(
-								'<li>Graduated from %s (High School or High School equivalent) in %s</li>',
-								esc_html( $schooling[ ApplicantMeta::INSTITUTION ] ),
-								esc_html( $schooling[ ApplicantMeta::YEAR ] )
-							);
-						}
-					} else {
-						if ( $applicant->is_anonymized() ) {
-							printf(
-								'<li>Graduated with a %s from %s with a major in %s</li>',
-								esc_html( $schooling[ ApplicantMeta::DEGREE ] ),
-								esc_html( $type_selections[ $schooling['type'] ] ),
-								esc_html( $schooling[ ApplicantMeta::MAJOR ] )
-							);
-						} else {
-							printf(
-								'<li>Graduated in %s with a %s from %s with a major in %s</li>',
-								esc_html( $schooling[ ApplicantMeta::YEAR ] ),
-								esc_html( $schooling[ ApplicantMeta::DEGREE ] ),
-								esc_html( $schooling[ ApplicantMeta::INSTITUTION ] ),
-								esc_html( $schooling[ ApplicantMeta::MAJOR ] )
-							);
-						}
-					}
+				foreach ( $applicant->get_schooling() as $school ) {
+					echo $school;
 				}
 				?>
 			</ol>
