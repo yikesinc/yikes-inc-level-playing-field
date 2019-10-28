@@ -265,12 +265,12 @@ final class Applicant extends CustomPostTypeEntity {
 			if ( $this->is_anonymized() ) :
 				if ( 'high_school' === $school['type'] ) {
 					$schooling[] = sprintf(
-						'<li>%s</li>',
+						'%s',
 						esc_html__( 'Graduated from High School or High School equivalent', 'level-playing-field' )
 					);
 				} else {
 					$schooling[] = sprintf(
-						'<li>Graduated with a %s from %s with a major in %s</li>',
+						'Graduated with a %s from %s with a major in %s',
 						esc_html( $school[ ApplicantMeta::DEGREE ] ),
 						esc_html( $type_selections[ $school['type'] ] ),
 						esc_html( $school[ ApplicantMeta::MAJOR ] )
@@ -279,13 +279,13 @@ final class Applicant extends CustomPostTypeEntity {
 			else :
 				if ( 'high_school' === $school['type'] ) {
 					$schooling[] = sprintf(
-						'<li>Graduated from %s (High School or High School equivalent) in %s</li>',
+						'Graduated from %s (High School or High School equivalent) in %s',
 						esc_html( $school[ ApplicantMeta::INSTITUTION ] ),
 						esc_html( $school[ ApplicantMeta::YEAR ] )
 					);
 				} else {
 					$schooling[] = sprintf(
-						'<li>Graduated in %s with a %s from %s with a major in %s</li>',
+						'Graduated in %s with a %s from %s with a major in %s',
 						esc_html( $school[ ApplicantMeta::YEAR ] ),
 						esc_html( $school[ ApplicantMeta::DEGREE ] ),
 						esc_html( $school[ ApplicantMeta::INSTITUTION ] ),

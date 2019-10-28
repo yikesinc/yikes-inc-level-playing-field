@@ -33,7 +33,7 @@ $applicant = $this->applicant;
 				<?php
 				$type_selections = $applicant->get_schooling_options();
 				foreach ( $applicant->get_schooling() as $school ) {
-					echo $school;
+					echo '<li>' . $school . '</li>';
 				}
 				?>
 			</ol>
