@@ -41,7 +41,7 @@ final class SettingsManager implements Service {
 		// Handle nonce.
 		if ( ! check_ajax_referer( 'save_settings', 'nonce', false ) ) {
 			wp_send_json_error( [
-				'reason' => __( 'An error occurred: Failed to validate the nonce.', 'yikes-level-playing-field' ),
+				'reason' => __( 'An error occurred: Failed to validate the nonce.', 'level-playing-field' ),
 			], 400 );
 		}
 
@@ -61,12 +61,12 @@ final class SettingsManager implements Service {
 
 		if ( ! empty( $failures ) ) {
 			wp_send_json_error( [
-				'reason'   => __( 'Failure: some settings failed to save.', 'yikes-level-playing-field' ),
+				'reason'   => __( 'Failure: some settings failed to save.', 'level-playing-field' ),
 				'failures' => $failures,
 			], 400 );
 		} else {
 			wp_send_json_success( [
-				'reason' => __( 'Success: Settings Saved.', 'yikes-level-playing-field' ),
+				'reason' => __( 'Success: Settings Saved.', 'level-playing-field' ),
 			], 200 );
 		}
 	}

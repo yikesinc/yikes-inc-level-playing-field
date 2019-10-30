@@ -243,7 +243,7 @@ class ApplicantMessaging implements Activateable, Deactivateable, Renderable, As
 		// Handle nonce.
 		if ( ! isset( $_POST['nonce'] ) || ! check_ajax_referer( 'send_message', 'nonce', false ) ) {
 			wp_send_json_error( [
-				'reason' => __( 'An error occurred: Failed to validate the nonce.', 'yikes-level-playing-field' ),
+				'reason' => __( 'An error occurred: Failed to validate the nonce.', 'level-playing-field' ),
 			], 403 );
 		}
 
@@ -254,7 +254,7 @@ class ApplicantMessaging implements Activateable, Deactivateable, Renderable, As
 		// Confirm we have our variables.
 		if ( empty( $comment ) || empty( $post_id ) ) {
 			wp_send_json_error( [
-				'reason'  => __( 'Please review: a required field is missing.', 'yikes-level-playing-field' ),
+				'reason'  => __( 'Please review: a required field is missing.', 'level-playing-field' ),
 				'comment' => $comment,
 				'post_id' => $post_id,
 			], 400 );
@@ -284,14 +284,14 @@ class ApplicantMessaging implements Activateable, Deactivateable, Renderable, As
 			}
 
 			wp_send_json_success( [
-				'reason'  => __( 'The message was sent successfully.', 'yikes-level-playing-field' ),
+				'reason'  => __( 'The message was sent successfully.', 'level-playing-field' ),
 				'post_id' => $post_id,
 				'email'   => $email,
 			], 200 );
 		}
 
 		wp_send_json_error( [
-			'reason' => __( 'The comment could not be inserted.', 'yikes-level-playing-field' ),
+			'reason' => __( 'The comment could not be inserted.', 'level-playing-field' ),
 		], 400 );
 	}
 
@@ -305,7 +305,7 @@ class ApplicantMessaging implements Activateable, Deactivateable, Renderable, As
 		// Handle nonce.
 		if ( ! isset( $_POST['nonce'] ) || ! check_ajax_referer( 'refresh_conversation', 'nonce', false ) ) {
 			wp_send_json_error( [
-				'reason' => __( 'An error occurred: Failed to validate the nonce.', 'yikes-level-playing-field' ),
+				'reason' => __( 'An error occurred: Failed to validate the nonce.', 'level-playing-field' ),
 			], 403 );
 		}
 
@@ -462,7 +462,7 @@ class ApplicantMessaging implements Activateable, Deactivateable, Renderable, As
 		// Handle nonce.
 		if ( ! isset( $_POST['nonce'] ) || ! check_ajax_referer( 'send_interview_request', 'nonce', false ) ) {
 			wp_send_json_error( [
-				'reason' => __( 'An error occurred: Failed to validate the nonce.', 'yikes-level-playing-field' ),
+				'reason' => __( 'An error occurred: Failed to validate the nonce.', 'level-playing-field' ),
 			], 403 );
 		}
 
@@ -476,7 +476,7 @@ class ApplicantMessaging implements Activateable, Deactivateable, Renderable, As
 		// Confirm we have our variables.
 		if ( empty( $comment ) || empty( $date ) || empty( $time ) || empty( $location ) || empty( $post_id ) ) {
 			wp_send_json_error( [
-				'reason'   => __( 'Please review: a required field is missing.', 'yikes-level-playing-field' ),
+				'reason'   => __( 'Please review: a required field is missing.', 'level-playing-field' ),
 				'comment'  => $comment,
 				'date'     => $date,
 				'time'     => $time,
@@ -488,13 +488,13 @@ class ApplicantMessaging implements Activateable, Deactivateable, Renderable, As
 		$applicant = new Applicant( get_post( $post_id ) );
 
 		/* translators: %1$s is the date and %2$s is the time. */
-		$message = '<div class="lpf-message-interview-date">' . sprintf( __( 'You have received a request for an interview on %1$s at %2$s.', 'yikes-level-playing-field' ), $date, $time ) . '</div>';
+		$message = '<div class="lpf-message-interview-date">' . sprintf( __( 'You have received a request for an interview on %1$s at %2$s.', 'level-playing-field' ), $date, $time ) . '</div>';
 		/* translators: %1$s is the location. */
-		$message .= '<div class="lpf-message-interview-location">' . sprintf( __( 'Interview location: %1$s.', 'yikes-level-playing-field' ), '</div>' . $location );
-		$message .= '<div class="lpf-message-interview-message">' . sprintf( __( 'Message from employer', 'yikes-level-playing-field' ) ) . '</div>';
+		$message .= '<div class="lpf-message-interview-location">' . sprintf( __( 'Interview location: %1$s.', 'level-playing-field' ), '</div>' . $location );
+		$message .= '<div class="lpf-message-interview-message">' . sprintf( __( 'Message from employer', 'level-playing-field' ) ) . '</div>';
 		$message .= $comment;
 		$message .= '<div class="lpf-message-interview-instructions">';
-		$message .= __( 'Please click Confirm Interview to accept this date and time or Decline Interview to reschedule.', 'yikes-level-playing-field' );
+		$message .= __( 'Please click Confirm Interview to accept this date and time or Decline Interview to reschedule.', 'level-playing-field' );
 		$message .= '</div>';
 
 		$message_class = new ApplicantMessage();
@@ -525,7 +525,7 @@ class ApplicantMessaging implements Activateable, Deactivateable, Renderable, As
 				}
 
 				wp_send_json_error( [
-					'reason'  => __( 'Email failed to send.', 'yikes-level-playing-field' ),
+					'reason'  => __( 'Email failed to send.', 'level-playing-field' ),
 					'post_id' => $post_id,
 				] );
 			}
@@ -548,14 +548,14 @@ class ApplicantMessaging implements Activateable, Deactivateable, Renderable, As
 			$applicant->persist_properties();
 
 			wp_send_json_success( [
-				'reason'  => __( 'The interview request was sent successfully.', 'yikes-level-playing-field' ),
+				'reason'  => __( 'The interview request was sent successfully.', 'level-playing-field' ),
 				'email'   => $email,
 				'post_id' => $post_id,
 			], 200 );
 		}
 
 		wp_send_json_error( [
-			'reason' => __( 'The comment could not be inserted.', 'yikes-level-playing-field' ),
+			'reason' => __( 'The comment could not be inserted.', 'level-playing-field' ),
 		], 400 );
 	}
 
@@ -579,9 +579,9 @@ class ApplicantMessaging implements Activateable, Deactivateable, Renderable, As
 			'<div id="%1$s" class="%2$s"><p>%3$s<a href="%4$s" rel=”noopener noreferrer” target="_blank">%5$s</a></p></div>',
 			esc_attr( $error_id ),
 			esc_attr( $class ),
-			esc_html__( 'Irks! Your website is having trouble sending email. ', 'yikes-level-playing-field' ),
+			esc_html__( 'Irks! Your website is having trouble sending email. ', 'level-playing-field' ),
 			esc_attr( $link ),
-			esc_html__( 'Try using WP Mail SMTP To Send Emails.', 'yikes-level-playing-field' )
+			esc_html__( 'Try using WP Mail SMTP To Send Emails.', 'level-playing-field' )
 		);
 	}
 

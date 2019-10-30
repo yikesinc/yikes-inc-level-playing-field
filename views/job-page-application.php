@@ -41,7 +41,7 @@ $form_classes = $this->form_classes
 ?>
 <?php if ( $form->has_errors() ) : ?>
 	<div class="lpf-form-errors">
-		<?php esc_html_e( 'Your application has errors. Please correct the errors below before resubmitting.', 'yikes-level-playing-field' ); ?>
+		<?php esc_html_e( 'Your application has errors. Please correct the errors below before resubmitting.', 'level-playing-field' ); ?>
 	</div>
 <?php endif; ?>
 <form method="POST"
@@ -50,7 +50,7 @@ $form_classes = $this->form_classes
 >
 	<?php $form->render(); ?>
 	<button class="lpf-submit" type="submit" name="lpf_submit">
-		<?php esc_html_e( 'Submit Application', 'yikes-level-playing-field' ); ?>
+		<?php esc_html_e( 'Submit Application', 'level-playing-field' ); ?>
 	</button>
 </form>
 
@@ -62,7 +62,7 @@ if ( $application_link ) {
 	printf(
 		'<br/><p><a href="%1$s">%2$s</a></p>',
 		esc_url( $application_link ),
-		esc_html__( 'Edit Application', 'yikes-level-playing-field' )
+		esc_html__( 'Edit Application', 'level-playing-field' )
 	);
 }
 
@@ -72,6 +72,6 @@ if ( $job_link ) {
 	printf(
 		'<p><a href="%1$s">%2$s</a></p>',
 		esc_url( $job_link ),
-		esc_html__( 'Edit Job', 'yikes-level-playing-field' )
+		esc_html__( 'Edit Job', 'level-playing-field' )
 	);
 }

@@ -73,7 +73,7 @@ class GoProPage extends BaseAdminPage implements AssetsAware {
 	 * @return string The text to be displayed in the title tags of the page when the menu is.
 	 */
 	protected function get_page_title() {
-		return __( 'Go Pro - Level Playing Field', 'yikes-level-playing-field' );
+		return __( 'Go Pro - Level Playing Field', 'level-playing-field' );
 	}
 
 	/**
@@ -84,6 +84,6 @@ class GoProPage extends BaseAdminPage implements AssetsAware {
 	 * @return string The text to be used for the menu.
 	 */
 	protected function get_menu_title() {
-		return __( 'Go Pro', 'yikes-level-playing-field' );
+		return __( 'Go Pro', 'level-playing-field' );
 	}
 }

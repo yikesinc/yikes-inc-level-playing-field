@@ -162,7 +162,7 @@ abstract class BaseBlock implements Service, AssetsAware {
 			[
 				[
 					'slug'  => static::CATEGORY,
-					'title' => __( 'Level Playing Field', 'yikes-level-playing-field' ),
+					'title' => __( 'Level Playing Field', 'level-playing-field' ),
 				],
 			]
 		);

@@ -28,20 +28,20 @@ $job = $this->job;
 		<section id="header">
 			<?php echo $applicant->get_avatar_img( 120 ); ?>
 			<h5>
-				<span class="label"><?php esc_html_e( 'Nickname:', 'yikes-level-playing-field' ); ?></span>
+				<span class="label"><?php esc_html_e( 'Nickname:', 'level-playing-field' ); ?></span>
 				<span id="editable-nick-name"><?php echo esc_html( $applicant->get_nickname() ); ?></span>
 				<span id="edit-nickname-buttons">
-					<button type="button" class="edit-nickname button button-small hide-if-no-js" aria-label="Edit nickname"><?php esc_html_e( 'Edit Nickname', 'yikes-level-playing-field' ); ?></button>
+					<button type="button" class="edit-nickname button button-small hide-if-no-js" aria-label="Edit nickname"><?php esc_html_e( 'Edit Nickname', 'level-playing-field' ); ?></button>
 				</span>
 			</h5>
 			<?php if ( ! empty( $applicant->get_name() ) ) : ?>
 				<h5>
-					<span class="label"><?php esc_html_e( 'Name:', 'yikes-level-playing-field' ); ?></span>
+					<span class="label"><?php esc_html_e( 'Name:', 'level-playing-field' ); ?></span>
 					<?php echo esc_html( $applicant->get_name() ); ?>
 				</h5>
 			<?php endif; ?>
 			<h5>
-				<span class="label"><?php esc_html_e( 'Job:', 'yikes-level-playing-field' ); ?></span>
+				<span class="label"><?php esc_html_e( 'Job:', 'level-playing-field' ); ?></span>
 				<?php echo esc_html( $job->get_title() ); ?>
 			</h5>
 		</section><!-- /header -->

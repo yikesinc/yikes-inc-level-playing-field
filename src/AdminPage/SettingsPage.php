@@ -84,8 +84,8 @@ class SettingsPage extends BaseAdminPage implements AssetsAware {
 				],
 				'settings' => wp_json_encode( new Settings() ),
 				'strings'  => [
-					'save_success' => __( 'Success: Settings Saved.', 'yikes-level-playing-field' ),
-					'save_error'   => __( 'Error: The settings could not be saved.', 'yikes-level-playing-field' ),
+					'save_success' => __( 'Success: Settings Saved.', 'level-playing-field' ),
+					'save_error'   => __( 'Error: The settings could not be saved.', 'level-playing-field' ),
 				],
 			]
 		);
@@ -104,7 +104,7 @@ class SettingsPage extends BaseAdminPage implements AssetsAware {
 	 * @return string The text to be displayed in the title tags of the page when the menu is.
 	 */
 	protected function get_page_title() {
-		return __( 'Settings &ndash; Level Playing Field', 'yikes-level-playing-field' );
+		return __( 'Settings &ndash; Level Playing Field', 'level-playing-field' );
 	}
 
 	/**
@@ -115,7 +115,7 @@ class SettingsPage extends BaseAdminPage implements AssetsAware {
 	 * @return string The text to be used for the menu.
 	 */
 	protected function get_menu_title() {
-		return __( 'Settings', 'yikes-level-playing-field' );
+		return __( 'Settings', 'level-playing-field' );
 	}
 
 	/**

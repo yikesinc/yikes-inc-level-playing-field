@@ -66,7 +66,7 @@ final class JobListing extends BaseBlock {
 	 * @return string
 	 */
 	protected function get_title() {
-		return __( 'Job Listing', 'yikes-level-playing-field' );
+		return __( 'Job Listing', 'level-playing-field' );
 	}
 
 	/**

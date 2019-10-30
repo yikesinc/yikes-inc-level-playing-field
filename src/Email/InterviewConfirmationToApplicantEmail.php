@@ -31,7 +31,7 @@ class InterviewConfirmationToApplicantEmail extends ToApplicantEmail {
 	 * @return string The subject of the email.
 	 */
 	protected function subject() {
-		return __( 'You have confirmed your interview.', 'yikes-level-playing-field' );
+		return __( 'You have confirmed your interview.', 'level-playing-field' );
 	}
 
 	/**
@@ -44,8 +44,8 @@ class InterviewConfirmationToApplicantEmail extends ToApplicantEmail {
 	protected function message() {
 		$message  = $this->subject();
 		$message .= '<br>';
-		$message .= __( 'Maybe show the interview details again...', 'yikes-level-playing-field' );
-		$message .= __( 'Maybe some further confirmation that your personal information is now unanonymized.', 'yikes-level-playing-field' );
+		$message .= __( 'Maybe show the interview details again...', 'level-playing-field' );
+		$message .= __( 'Maybe some further confirmation that your personal information is now unanonymized.', 'level-playing-field' );
 		$message .= $this->get_messaging_link();
 		return $message;
 	}

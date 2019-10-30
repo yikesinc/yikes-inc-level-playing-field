@@ -45,7 +45,7 @@ class ReviewBanner extends BaseMetabox {
 	 * @return string Title to use for the metabox.
 	 */
 	protected function get_title() {
-		return __( 'Support Merit-Based Hiring', 'yikes-level-playing-field' );
+		return __( 'Support Merit-Based Hiring', 'level-playing-field' );
 	}
 
 	/**

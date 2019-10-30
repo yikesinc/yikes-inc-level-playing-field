@@ -211,7 +211,7 @@ final class Application extends BaseShortcode {
 	protected function get_assets() {
 		$repeater = new ScriptAsset( 'lpf-repeater', 'assets/js/fields/repeater', [ 'jquery', 'jquery-ui-datepicker' ] );
 		$repeater->add_localization( 'lpfRepeater', [
-			'addNew' => _x( 'Add New', 'button for adding section in application', 'yikes-level-playing-field' ),
+			'addNew' => _x( 'Add New', 'button for adding section in application', 'level-playing-field' ),
 		] );
 
 		$input_validation = new ScriptAsset(
@@ -221,9 +221,9 @@ final class Application extends BaseShortcode {
 		);
 		$input_validation->add_localization( 'lpfInputValidation', [
 			'errors' => [
-				'empty'   => __( 'This field is required.', 'yikes-level-playing-field' ),
+				'empty'   => __( 'This field is required.', 'level-playing-field' ),
 				/* translators: %TYPE% should not be translated. It is a placeholder for a field name. */
-				'invalid' => __( '%TYPE% is invalid.', 'yikes-level-playing-field' ),
+				'invalid' => __( '%TYPE% is invalid.', 'level-playing-field' ),
 			],
 		] );
 
@@ -295,7 +295,7 @@ final class Application extends BaseShortcode {
 	private function exception_to_string( \Exception $e ) {
 		return sprintf(
 			/* translators: %s refers to the error message */
-			esc_html__( 'There was an error displaying the form: %s', 'yikes-level-playing-field' ),
+			esc_html__( 'There was an error displaying the form: %s', 'level-playing-field' ),
 			$e->getMessage()
 		);
 	}

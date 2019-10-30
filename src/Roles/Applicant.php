@@ -26,7 +26,7 @@ final class Applicant extends BaseRole {
 	 * @return string
 	 */
 	public function get_title() {
-		return esc_html__( 'Applicant', 'yikes-level-playing-field' );
+		return esc_html__( 'Applicant', 'level-playing-field' );
 	}
 
 	/**

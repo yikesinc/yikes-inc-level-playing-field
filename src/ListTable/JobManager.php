@@ -91,11 +91,11 @@ final class JobManager extends BasePostType implements AssetsAware {
 		$status_tax   = get_taxonomy( JobStatus::SLUG );
 		$columns      = [
 			'cb'                             => $original_columns['cb'],
-			'title'                          => _x( 'Job Title', 'column heading', 'yikes-level-playing-field' ),
+			'title'                          => _x( 'Job Title', 'column heading', 'level-playing-field' ),
 			"taxonomy-{$category_tax->name}" => $category_tax->label,
 			"taxonomy-{$status_tax->name}"   => $status_tax->label,
-			'applications'                   => _x( 'Applications', 'column heading', 'yikes-level-playing-field' ),
-			'shortcode'                      => _x( 'Shortcode', 'column heading', 'yikes-level-playing-field' ),
+			'applications'                   => _x( 'Applications', 'column heading', 'level-playing-field' ),
+			'shortcode'                      => _x( 'Shortcode', 'column heading', 'level-playing-field' ),
 			'date'                           => $original_columns['date'],
 		];
 
@@ -173,7 +173,7 @@ final class JobManager extends BasePostType implements AssetsAware {
 			printf(
 				'<label class="screen-reader-text" for="%1$s">%2$s</label>',
 				esc_attr( JobCategory::SLUG ),
-				esc_html__( 'Filter Job Categories', 'yikes-level-playing-field' )
+				esc_html__( 'Filter Job Categories', 'level-playing-field' )
 			);
 
 			echo $category_dropdown; // phpcs:ignore WordPress.Security.EscapeOutput

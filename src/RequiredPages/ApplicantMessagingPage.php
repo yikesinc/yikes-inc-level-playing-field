@@ -54,6 +54,6 @@ class ApplicantMessagingPage extends BaseRequiredPage {
 	 * @return string $post_state The description for this post in the list table.
 	 */
 	protected function get_post_state() {
-		return __( 'Level Playing Field\'s Applicant Messaging Page', 'yikes-level-playing-field' );
+		return __( 'Level Playing Field\'s Applicant Messaging Page', 'level-playing-field' );
 	}
 }

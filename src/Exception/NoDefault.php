@@ -31,7 +31,7 @@ class NoDefault extends \LogicException implements Exception {
 	public static function default_value( $slug ) {
 		$message = sprintf(
 			/* translators: %s refers to a field's slug */
-			__( 'The field "%s" must have a default value.', 'yikes-level-playing-field' ),
+			__( 'The field "%s" must have a default value.', 'level-playing-field' ),
 			$slug
 		);
 

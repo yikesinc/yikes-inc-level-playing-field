@@ -42,11 +42,11 @@ trait JobDropdown {
 		ob_start();
 		?>
 		<label class="screen-reader-text" for="<?php echo esc_attr( MetaLinks::JOB ); ?>">
-			<?php echo esc_html__( 'Filter Jobs', 'yikes-level-playing-field' ); ?>
+			<?php echo esc_html__( 'Filter Jobs', 'level-playing-field' ); ?>
 		</label>
 		<select name="<?php echo esc_attr( MetaLinks::JOB ); ?>" id="<?php echo esc_attr( MetaLinks::JOB ); ?>">
 			<option value="all" <?php selected( 'all', $selected ); ?>>
-				<?php esc_html_e( 'All Jobs', 'yikes-level-playing-field' ); ?>
+				<?php esc_html_e( 'All Jobs', 'level-playing-field' ); ?>
 			</option>
 			<?php foreach ( $jobs as $job_id => $job ) : ?>
 				<option value="<?php echo esc_attr( $job_id ); ?>" <?php selected( $job_id, $selected ); ?>>

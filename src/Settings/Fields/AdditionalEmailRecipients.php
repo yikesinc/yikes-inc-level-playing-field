@@ -46,7 +46,7 @@ final class AdditionalEmailRecipients extends BaseSettingsField {
 	 * @return string $description_text The description text for this field.
 	 */
 	protected function get_description_text() {
-		return __( 'Enter email addresses below of people to receive email notifications when an applicant sends a message. Separate multiple email addresses with commas.', 'yikes-level-playing-field' );
+		return __( 'Enter email addresses below of people to receive email notifications when an applicant sends a message. Separate multiple email addresses with commas.', 'level-playing-field' );
 	}
 
 	/**
@@ -57,6 +57,6 @@ final class AdditionalEmailRecipients extends BaseSettingsField {
 	 * @return string $placeholder_text The placeholder text for this field.
 	 */
 	protected function placeholder_text() {
-		return __( 'admin@example.com, jobmanager@example.com', 'yikes-level-playing-field' );
+		return __( 'admin@example.com, jobmanager@example.com', 'level-playing-field' );
 	}
 }

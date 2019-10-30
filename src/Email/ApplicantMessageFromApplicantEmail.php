@@ -30,7 +30,7 @@ class ApplicantMessageFromApplicantEmail extends FromApplicantEmail {
 	 * @return string The subject of the email.
 	 */
 	protected function subject() {
-		return __( 'An applicant has sent a message about their application', 'yikes-level-playing-field' );
+		return __( 'An applicant has sent a message about their application', 'level-playing-field' );
 	}
 
 	/**

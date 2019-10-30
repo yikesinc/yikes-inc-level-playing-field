@@ -150,7 +150,7 @@ abstract class BaseRequiredPage implements Registerable, Service {
 			'<div class="notice notice-error is-dismissible"><p>%s</p></div>',
 			sprintf(
 				/* translators: %1$s is the post titles for our required pages. */
-				esc_html__( 'The following page is required for the Level Playing Field plugin and cannot be moved to Trash: %1$s.', 'yikes-level-playing-field' ),
+				esc_html__( 'The following page is required for the Level Playing Field plugin and cannot be moved to Trash: %1$s.', 'level-playing-field' ),
 				esc_attr( static::POST_TITLE )
 			)
 		);
@@ -193,7 +193,7 @@ abstract class BaseRequiredPage implements Registerable, Service {
 			'<div class="notice notice-error is-dismissible"><p>%s</p></div>',
 			sprintf(
 				/* translators: %1$s is the post titles for our required pages. */
-				esc_html__( 'There was an error creating one of the plugin\'s required pages: %1$s.', 'yikes-level-playing-field' ),
+				esc_html__( 'There was an error creating one of the plugin\'s required pages: %1$s.', 'level-playing-field' ),
 				esc_attr( static::POST_TITLE )
 			)
 		);
@@ -209,7 +209,7 @@ abstract class BaseRequiredPage implements Registerable, Service {
 			'<div class="notice notice-success is-dismissible"><p>%s</p></div>',
 			sprintf(
 				/* translators: %1$s is the post titles for our required pages. */
-				esc_html__( 'The following required page was successfully created: %1$s.', 'yikes-level-playing-field' ),
+				esc_html__( 'The following required page was successfully created: %1$s.', 'level-playing-field' ),
 				esc_attr( static::POST_TITLE )
 			)
 		);

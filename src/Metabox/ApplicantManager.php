@@ -142,7 +142,7 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 	 * @return string Title to use for the metabox.
 	 */
 	protected function get_title() {
-		return __( 'Applicant', 'yikes-level-playing-field' );
+		return __( 'Applicant', 'level-playing-field' );
 	}
 
 	/**
@@ -269,12 +269,12 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 	protected function load_assets() {
 		$applicant = new ScriptAsset( 'lpf-applicant-manager-js', 'assets/js/applicant-manager', [ 'jquery' ] );
 		$applicant->add_localization( 'applicantManager', [
-			'cancel' => _x( 'Cancel', 'undo action to edit nickname when viewing an applicant', 'yikes-level-playing-field' ),
-			'hide'   => _x( 'Hide Cover Letter', 'hide cover letter when viewing an applicant', 'yikes-level-playing-field' ),
-			'ok'     => _x( 'OK', 'confirm action to edit nickname when viewing an applicant', 'yikes-level-playing-field' ),
+			'cancel' => _x( 'Cancel', 'undo action to edit nickname when viewing an applicant', 'level-playing-field' ),
+			'hide'   => _x( 'Hide Cover Letter', 'hide cover letter when viewing an applicant', 'level-playing-field' ),
+			'ok'     => _x( 'OK', 'confirm action to edit nickname when viewing an applicant', 'level-playing-field' ),
 			'nonce'  => wp_create_nonce( 'lpf_applicant_nonce' ),
-			'title'  => _x( 'Applicants | Applicant ID', 'heading when viewing an applicant', 'yikes-level-playing-field' ),
-			'view'   => _x( 'View Cover Letter', 'view cover letter when viewing an applicant', 'yikes-level-playing-field' ),
+			'title'  => _x( 'Applicants | Applicant ID', 'heading when viewing an applicant', 'level-playing-field' ),
+			'view'   => _x( 'View Cover Letter', 'view cover letter when viewing an applicant', 'level-playing-field' ),
 		] );
 
 		$this->assets = [

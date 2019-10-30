@@ -90,7 +90,7 @@ class SingleApplicationsTemplateController extends TemplateController {
 		} catch ( \Exception $e ) {
 			return sprintf(
 				/* translators: %s refers to the error message */
-				esc_html__( 'There was an error displaying the form: %s', 'yikes-level-playing-field' ),
+				esc_html__( 'There was an error displaying the form: %s', 'level-playing-field' ),
 				$e->getMessage()
 			);
 		}

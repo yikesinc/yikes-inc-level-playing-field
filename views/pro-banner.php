@@ -27,27 +27,27 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</a>
 
 		<p>
-			<?php esc_html_e( 'Upgrade to Level Playing Field Pro for great additional features including:', 'yikes-level-playing-field' ); ?>
+			<?php esc_html_e( 'Upgrade to Level Playing Field Pro for great additional features including:', 'level-playing-field' ); ?>
 		</p>
 
 		<ul class="banners-pro-list">
 			<li>
-				<span class="dashicons dashicons-star-filled"></span> <?php esc_html_e( 'Unlimited Job Listings.', 'yikes-level-playing-field' ); ?>
+				<span class="dashicons dashicons-star-filled"></span> <?php esc_html_e( 'Unlimited Job Listings.', 'level-playing-field' ); ?>
 			</li>
 			<li>
-				<span class="dashicons dashicons-star-filled"></span> <?php esc_html_e( 'More Detailed Job Listings.', 'yikes-level-playing-field' ); ?>
+				<span class="dashicons dashicons-star-filled"></span> <?php esc_html_e( 'More Detailed Job Listings.', 'level-playing-field' ); ?>
 			</li>
 			<li>
-				<span class="dashicons dashicons-star-filled"></span> <?php esc_html_e( 'Custom Application Form Questions.', 'yikes-level-playing-field' ); ?>
+				<span class="dashicons dashicons-star-filled"></span> <?php esc_html_e( 'Custom Application Form Questions.', 'level-playing-field' ); ?>
 			</li>
 			<li>
-				<span class="dashicons dashicons-star-filled"></span> <?php esc_html_e( 'Applicant export.', 'yikes-level-playing-field' ); ?>
+				<span class="dashicons dashicons-star-filled"></span> <?php esc_html_e( 'Applicant export.', 'level-playing-field' ); ?>
 			</li>
 		</ul>
 
 		<p>
 			<a class="button button-primary" href="https://yikesplugins.com/plugin/level-playing-field-pro/" target="_blank">
-				<?php esc_html_e( 'Upgrade to Pro', 'yikes-level-playing-field' ); ?>
+				<?php esc_html_e( 'Upgrade to Pro', 'level-playing-field' ); ?>
 			</a>
 		</p>
 	</div>

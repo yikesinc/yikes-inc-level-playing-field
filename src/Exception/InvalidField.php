@@ -30,7 +30,7 @@ class InvalidField extends \InvalidArgumentException implements Exception {
 	public static function from_field( $field ) {
 		$message = sprintf(
 			/* translators: %s represents the class name */
-			esc_html__( 'The field class "%s" is not recognized and cannot be used.', 'yikes-level-playing-field' ),
+			esc_html__( 'The field class "%s" is not recognized and cannot be used.', 'level-playing-field' ),
 			is_object( $field )
 				? get_class( $field )
 				: (string) $field
@@ -51,7 +51,7 @@ class InvalidField extends \InvalidArgumentException implements Exception {
 	public static function invalid_id( $id ) {
 		$message = sprintf(
 			/* translators: %s represents the field ID */
-			esc_html__( 'The ID "%s" is invalid. The ID must be a simple string, or a single depth array', 'yikes-level-playing-field' ),
+			esc_html__( 'The ID "%s" is invalid. The ID must be a simple string, or a single depth array', 'level-playing-field' ),
 			$id
 		);
 
@@ -71,7 +71,7 @@ class InvalidField extends \InvalidArgumentException implements Exception {
 	public static function field_required( $field, $context = '' ) {
 		$message = sprintf(
 			/* translators: %1$s is the field label, %2$s is the optional additional context */
-			esc_html__( 'The field %1$s is required. %2$s', 'yikes-level-playing-field' ),
+			esc_html__( 'The field %1$s is required. %2$s', 'level-playing-field' ),
 			$field,
 			$context
 		);
@@ -92,7 +92,7 @@ class InvalidField extends \InvalidArgumentException implements Exception {
 	public static function value_invalid( $field, $context = '' ) {
 		$message = sprintf(
 			/* translators: %1$s is the field label, %2$s is the optional additional context */
-			esc_html__( 'The value submitted for the field %1$s is invalid. %2$s', 'yikes-level-playing-field' ),
+			esc_html__( 'The value submitted for the field %1$s is invalid. %2$s', 'level-playing-field' ),
 			$field,
 			$context
 		);

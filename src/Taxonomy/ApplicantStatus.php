@@ -81,7 +81,7 @@ final class ApplicantStatus extends BaseTaxonomy implements AssetsAware {
 					'lpf_invalid_term',
 					sprintf(
 						/* translators: %s refers to the term that was attempted to be inserted. */
-						__( 'The term "%s" is not a valid Applicant status.', 'yikes-level-playing-field' ),
+						__( 'The term "%s" is not a valid Applicant status.', 'level-playing-field' ),
 						$term
 					)
 				);
@@ -240,22 +240,22 @@ final class ApplicantStatus extends BaseTaxonomy implements AssetsAware {
 				'assign_terms' => Capabilities::EDIT_APPLICANTS,
 			],
 			'labels'             => [
-				'name'                       => __( 'Status', 'yikes-level-playing-field' ),
-				'singular_name'              => _x( 'Status', 'taxonomy general name', 'yikes-level-playing-field' ),
-				'search_items'               => __( 'Search Statuses', 'yikes-level-playing-field' ),
-				'popular_items'              => __( 'Popular Statuses', 'yikes-level-playing-field' ),
-				'all_items'                  => __( 'All Statuses', 'yikes-level-playing-field' ),
-				'parent_item'                => __( 'Parent Status', 'yikes-level-playing-field' ),
-				'parent_item_colon'          => __( 'Parent Status:', 'yikes-level-playing-field' ),
-				'edit_item'                  => __( 'Edit Status', 'yikes-level-playing-field' ),
-				'update_item'                => __( 'Update Status', 'yikes-level-playing-field' ),
-				'add_new_item'               => __( 'New Status', 'yikes-level-playing-field' ),
-				'new_item_name'              => __( 'New Status', 'yikes-level-playing-field' ),
-				'separate_items_with_commas' => __( 'Separate Statuses with commas', 'yikes-level-playing-field' ),
-				'add_or_remove_items'        => __( 'Add or remove Statuses', 'yikes-level-playing-field' ),
-				'choose_from_most_used'      => __( 'Choose from the most used Statuses', 'yikes-level-playing-field' ),
-				'not_found'                  => __( 'No Statuses found.', 'yikes-level-playing-field' ),
-				'menu_name'                  => __( 'Statuses', 'yikes-level-playing-field' ),
+				'name'                       => __( 'Status', 'level-playing-field' ),
+				'singular_name'              => _x( 'Status', 'taxonomy general name', 'level-playing-field' ),
+				'search_items'               => __( 'Search Statuses', 'level-playing-field' ),
+				'popular_items'              => __( 'Popular Statuses', 'level-playing-field' ),
+				'all_items'                  => __( 'All Statuses', 'level-playing-field' ),
+				'parent_item'                => __( 'Parent Status', 'level-playing-field' ),
+				'parent_item_colon'          => __( 'Parent Status:', 'level-playing-field' ),
+				'edit_item'                  => __( 'Edit Status', 'level-playing-field' ),
+				'update_item'                => __( 'Update Status', 'level-playing-field' ),
+				'add_new_item'               => __( 'New Status', 'level-playing-field' ),
+				'new_item_name'              => __( 'New Status', 'level-playing-field' ),
+				'separate_items_with_commas' => __( 'Separate Statuses with commas', 'level-playing-field' ),
+				'add_or_remove_items'        => __( 'Add or remove Statuses', 'level-playing-field' ),
+				'choose_from_most_used'      => __( 'Choose from the most used Statuses', 'level-playing-field' ),
+				'not_found'                  => __( 'No Statuses found.', 'level-playing-field' ),
+				'menu_name'                  => __( 'Statuses', 'level-playing-field' ),
 			],
 			'show_in_rest'       => false,
 		];
@@ -282,19 +282,19 @@ final class ApplicantStatus extends BaseTaxonomy implements AssetsAware {
 	private function get_default_terms() {
 		return [
 			static::DEFAULT_TERM_NAME => [
-				'description' => __( 'Acceptance is pending', 'yikes-level-playing-field' ),
+				'description' => __( 'Acceptance is pending', 'level-playing-field' ),
 				'slug'        => static::DEFAULT_TERM_SLUG,
 			],
 			'Yes'                     => [
-				'description' => __( 'Accept the applicant', 'yikes-level-playing-field' ),
+				'description' => __( 'Accept the applicant', 'level-playing-field' ),
 				'slug'        => 'yes',
 			],
 			'No'                      => [
-				'description' => __( 'Do not accept the applicant', 'yikes-level-playing-field' ),
+				'description' => __( 'Do not accept the applicant', 'level-playing-field' ),
 				'slug'        => 'no',
 			],
 			'Maybe'                   => [
-				'description' => __( 'Maybe accept the applicant', 'yikes-level-playing-field' ),
+				'description' => __( 'Maybe accept the applicant', 'level-playing-field' ),
 				'slug'        => 'maybe',
 			],
 		];
@@ -310,7 +310,7 @@ final class ApplicantStatus extends BaseTaxonomy implements AssetsAware {
 		// Handle nonce.
 		if ( ! isset( $_POST['nonce'] ) || ! check_ajax_referer( 'add_post_terms', 'nonce', false ) ) {
 			wp_send_json_error( [
-				'reason' => __( 'An error occurred: Failed to validate the nonce.', 'yikes-level-playing-field' ),
+				'reason' => __( 'An error occurred: Failed to validate the nonce.', 'level-playing-field' ),
 			], 403 );
 		}
 
@@ -320,7 +320,7 @@ final class ApplicantStatus extends BaseTaxonomy implements AssetsAware {
 
 		if ( empty( $term ) || empty( $post_id ) ) {
 			wp_send_json_error( [
-				'reason'  => __( 'An error occurred: the term or post ID failed validation.', 'yikes-level-playing-field' ),
+				'reason'  => __( 'An error occurred: the term or post ID failed validation.', 'level-playing-field' ),
 				'term'    => $term,
 				'post_id' => $post_id,
 			], 400 );
@@ -330,18 +330,18 @@ final class ApplicantStatus extends BaseTaxonomy implements AssetsAware {
 		if ( is_wp_error( $result ) ) {
 			wp_send_json_error( [
 				/* translators: the placeholder is an error message returned by the WP_Error object */
-				'reason'   => sprintf( __( 'An error occurred: %s', 'yikes-level-playing-field' ), $result->get_error_message() ),
+				'reason'   => sprintf( __( 'An error occurred: %s', 'level-playing-field' ), $result->get_error_message() ),
 				'wp_error' => $result,
 			], 422 );
 		} elseif ( false === $result ) {
 			wp_send_json_error( [
-				'reason'  => __( 'An error occurred: Failed to set post term.', 'yikes-level-playing-field' ),
+				'reason'  => __( 'An error occurred: Failed to set post term.', 'level-playing-field' ),
 				'term'    => $term,
 				'post_id' => $post_id,
 			], 422 );
 		} else {
 			wp_send_json_success( [
-				'reason' => __( 'Term successfully set.', 'yikes-level-playing-field' ),
+				'reason' => __( 'Term successfully set.', 'level-playing-field' ),
 			], 200 );
 		}
 	}

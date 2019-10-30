@@ -55,7 +55,7 @@
 	</rule>
 	<rule ref="WordPress.WP.I18n">
 		<properties>
-			<property name="text_domain" type="array" value="yikes-level-playing-field"/>
+			<property name="text_domain" type="array" value="level-playing-field"/>
 		</properties>
 	</rule>
 

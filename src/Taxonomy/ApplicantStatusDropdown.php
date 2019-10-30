@@ -48,7 +48,7 @@ trait ApplicantStatusDropdown {
 		printf(
 			'<label class="screen-reader-text" for="%1$s">%2$s</label>',
 			esc_attr( ApplicantStatus::SLUG ),
-			esc_html__( 'Filter Applicant Statuses', 'yikes-level-playing-field' )
+			esc_html__( 'Filter Applicant Statuses', 'level-playing-field' )
 		);
 
 		wp_dropdown_categories( $dropdown_options );

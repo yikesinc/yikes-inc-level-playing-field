@@ -149,7 +149,7 @@ abstract class RepeatableField extends ComplexField {
 	protected function render_repeater_button() {
 		printf(
 			'<button type="button" class="lpf-repeat-button">%1$s %2$s</button>',
-			esc_html_x( 'Add Another', 'button for adding section in application', 'yikes-level-playing-field' ),
+			esc_html_x( 'Add Another', 'button for adding section in application', 'level-playing-field' ),
 			esc_html( $this->get_add_new_label() )
 		);
 	}

@@ -275,7 +275,7 @@ final class Applicant extends CustomPostTypeEntity {
 				if ( 'high_school' === $school['type'] ) {
 					$schooling[] = sprintf(
 					'<li>%s</li>',
-					esc_html__( 'Graduated from High School or High School equivalent', 'yikes-level-playing-field' )
+					esc_html__( 'Graduated from High School or High School equivalent', 'level-playing-field' )
 					);
 				} else {
 					$schooling[] = sprintf(
@@ -591,7 +591,7 @@ final class Applicant extends CustomPostTypeEntity {
 		if ( $diff->y > 0 ) {
 			$parts[] = sprintf(
 				/* translators: the placeholder is a number of years */
-				_n( '%s Year', '%s Years', $diff->y, 'yikes-level-playing-field' ),
+				_n( '%s Year', '%s Years', $diff->y, 'level-playing-field' ),
 				number_format_i18n( (float) $diff->y )
 			);
 		}
@@ -599,7 +599,7 @@ final class Applicant extends CustomPostTypeEntity {
 		if ( $diff->m > 0 ) {
 			$parts[] = sprintf(
 				/* translators: the placeholder is a number of months */
-				_n( '%s Month', '%s Months', $diff->m, 'yikes-level-playing-field' ),
+				_n( '%s Month', '%s Months', $diff->m, 'level-playing-field' ),
 				number_format_i18n( (float) $diff->m )
 			);
 		}
@@ -607,13 +607,13 @@ final class Applicant extends CustomPostTypeEntity {
 		if ( $diff->d > 0 ) {
 			$parts[] = sprintf(
 				/* translators: the placeholder is a number of days */
-				_n( '%s Day', '%s Days', $diff->d, 'yikes-level-playing-field' ),
+				_n( '%s Day', '%s Days', $diff->d, 'level-playing-field' ),
 				number_format_i18n( (float) $diff->d )
 			);
 		}
 
 		if ( $present_position ) {
-			$parts[] = '. ' . __( 'Presently working here.', 'yikes-level-playing-field' );
+			$parts[] = '. ' . __( 'Presently working here.', 'level-playing-field' );
 		}
 
 		return implode( ' ', $parts );
@@ -784,46 +784,46 @@ final class Applicant extends CustomPostTypeEntity {
 		switch ( $status_check ) {
 			case 'scheduled':
 				return [
-					'status' => __( 'Awaiting Applicant Confirmation.', 'yikes-level-playing-field' ),
+					'status' => __( 'Awaiting Applicant Confirmation.', 'level-playing-field' ),
 					'date'   => [
-						'label' => __( 'Date:', 'yikes-level-playing-field' ),
+						'label' => __( 'Date:', 'level-playing-field' ),
 						'value' => $interview_details['date'],
 					],
 					'time'   => [
-						'label' => __( 'Time:', 'yikes-level-playing-field' ),
+						'label' => __( 'Time:', 'level-playing-field' ),
 						'value' => $interview_details['time'],
 					],
 				];
 
 			case 'confirmed':
 				return [
-					'status'   => __( 'Interview Request Accepted', 'yikes-level-playing-field' ),
+					'status'   => __( 'Interview Request Accepted', 'level-playing-field' ),
 					'date'     => [
-						'label' => __( 'Date:', 'yikes-level-playing-field' ),
+						'label' => __( 'Date:', 'level-playing-field' ),
 						'value' => $interview_details['date'],
 					],
 					'time'     => [
-						'label' => __( 'Time:', 'yikes-level-playing-field' ),
+						'label' => __( 'Time:', 'level-playing-field' ),
 						'value' => $interview_details['time'],
 					],
 					'location' => [
-						'label' => __( 'Location:', 'yikes-level-playing-field' ),
+						'label' => __( 'Location:', 'level-playing-field' ),
 						'value' => $interview_details['location'],
 					],
 					'message'  => [
-						'label' => __( 'Message:', 'yikes-level-playing-field' ),
+						'label' => __( 'Message:', 'level-playing-field' ),
 						'value' => $interview_details['message'],
 					],
 				];
 
 			case 'cancelled':
 				return [
-					'status' => __( 'Interview request cancelled by the applicant.', 'yikes-level-playing-field' ),
+					'status' => __( 'Interview request cancelled by the applicant.', 'level-playing-field' ),
 				];
 
 			default:
 				return [
-					'status' => __( 'An interview has not been scheduled.', 'yikes-level-playing-field' ),
+					'status' => __( 'An interview has not been scheduled.', 'level-playing-field' ),
 				];
 		}
 	}
@@ -860,7 +860,7 @@ final class Applicant extends CustomPostTypeEntity {
 		$this->set_interview( [] );
 		$this->persist_properties();
 
-		$message = '<div class="lpf-message-interview-declined">' . __( 'The applicant has declined the interview.', 'yikes-level-playing-field' ) . '</div>';
+		$message = '<div class="lpf-message-interview-declined">' . __( 'The applicant has declined the interview.', 'level-playing-field' ) . '</div>';
 
 		$message_class = new ApplicantMessage();
 		$message_class->create_comment(
@@ -870,7 +870,7 @@ final class Applicant extends CustomPostTypeEntity {
 				'comment_post_ID'  => $this->get_id(),
 				'comment_content'  => sprintf(
 					'<div class="lpf-message-interview-declined">%s</div>',
-					esc_html__( 'The applicant has declined the interview.', 'yikes-level-playing-field' )
+					esc_html__( 'The applicant has declined the interview.', 'level-playing-field' )
 				),
 			]
 		);
@@ -904,7 +904,7 @@ final class Applicant extends CustomPostTypeEntity {
 		$this->unanonymize( new $anonymizer() );
 		$this->persist_properties();
 
-		$message = '<div class="lpf-message-interview-confirmed">' . __( 'The applicant has confirmed the interview.', 'yikes-level-playing-field' ) . '</div>';
+		$message = '<div class="lpf-message-interview-confirmed">' . __( 'The applicant has confirmed the interview.', 'level-playing-field' ) . '</div>';
 
 		$message_class = new ApplicantMessage();
 		$comment_data  = [

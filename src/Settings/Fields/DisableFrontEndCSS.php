@@ -30,8 +30,8 @@ final class DisableFrontEndCSS extends BaseSettingsField {
 	 */
 	protected function field() {
 		$disableable_css_files = [
-			Application::CSS_HANDLE => __( 'Turn off Application Form Styles', 'yikes-level-playing-field' ),
-			BaseJobs::CSS_HANDLE    => __( 'Turn off Job Listings Styles', 'yikes-level-playing-field' ),
+			Application::CSS_HANDLE => __( 'Turn off Application Form Styles', 'level-playing-field' ),
+			BaseJobs::CSS_HANDLE    => __( 'Turn off Job Listings Styles', 'level-playing-field' ),
 		];
 		foreach ( $disableable_css_files as $file_handle => $file_label ) :
 			?>
@@ -57,6 +57,6 @@ final class DisableFrontEndCSS extends BaseSettingsField {
 	 * @return string $description_text The description text for this field.
 	 */
 	protected function get_description_text() {
-		return __( 'Turn off plugin styles to give your theme full control over the way forms and job listings look on your site.', 'yikes-level-playing-field' );
+		return __( 'Turn off plugin styles to give your theme full control over the way forms and job listings look on your site.', 'level-playing-field' );
 	}
 }

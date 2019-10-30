@@ -36,7 +36,7 @@ final class DeleteOnUninstall extends BaseSettingsField {
 				value="1"
 				<?php checked( true === boolval( $this->get_value() ) ); ?>
 			/>
-			<?php echo esc_html__( 'Delete Data on Uninstall', 'yikes-level-playing-field' ); ?>
+			<?php echo esc_html__( 'Delete Data on Uninstall', 'level-playing-field' ); ?>
 		</label>
 		<?php
 	}
@@ -49,6 +49,6 @@ final class DeleteOnUninstall extends BaseSettingsField {
 	 * @return string $description_text The description text for this field.
 	 */
 	protected function get_description_text() {
-		return __( 'Delete plugin data, such as pages, messages, applications, applicants, and jobs, when the plugin is uninstalled.', 'yikes-level-playing-field' );
+		return __( 'Delete plugin data, such as pages, messages, applications, applicants, and jobs, when the plugin is uninstalled.', 'level-playing-field' );
 	}
 }

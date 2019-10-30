@@ -59,7 +59,7 @@ abstract class FromApplicantEmail extends ApplicantEmail {
 			'post'   => $this->applicant->get_id(),
 			'action' => 'edit',
 		], admin_url( 'post.php' ) );
-		$link = "<br><br><a href='" . esc_url( $url ) . "'>" . __( 'Click here to view the applicant.', 'yikes-level-playing-field' ) . '</a>';
+		$link = "<br><br><a href='" . esc_url( $url ) . "'>" . __( 'Click here to view the applicant.', 'level-playing-field' ) . '</a>';
 		return $link;
 	}
 

@@ -65,14 +65,14 @@ class ApplicantManager extends BasePostType {
 			$status_tax = get_taxonomy( ApplicantStatus::SLUG );
 			$columns    = [
 				'cb'                           => $original_columns['cb'],
-				'id'                           => _x( 'ID', 'column heading', 'yikes-level-playing-field' ),
-				'job_title'                    => _x( 'Job Title', 'column heading', 'yikes-level-playing-field' ),
-				'avatar'                       => _x( 'Avatar', 'column heading', 'yikes-level-playing-field' ),
-				'nickname'                     => _x( 'Nick Name', 'column heading', 'yikes-level-playing-field' ),
+				'id'                           => _x( 'ID', 'column heading', 'level-playing-field' ),
+				'job_title'                    => _x( 'Job Title', 'column heading', 'level-playing-field' ),
+				'avatar'                       => _x( 'Avatar', 'column heading', 'level-playing-field' ),
+				'nickname'                     => _x( 'Nick Name', 'column heading', 'level-playing-field' ),
 				"taxonomy-{$status_tax->name}" => $status_tax->label,
-				'new_messages'                 => _x( 'New Messages', 'column heading', 'yikes-level-playing-field' ),
+				'new_messages'                 => _x( 'New Messages', 'column heading', 'level-playing-field' ),
 				'date'                         => $original_columns['date'],
-				'viewed'                       => _x( 'Viewed by', 'column heading', 'yikes-level-playing-field' ),
+				'viewed'                       => _x( 'Viewed by', 'column heading', 'level-playing-field' ),
 			];
 
 			// Only show the view column if the user can edit.
@@ -125,7 +125,7 @@ class ApplicantManager extends BasePostType {
 						'<a href="%1$s" aria-label="%2$s">%3$s</a>',
 						esc_url( get_edit_post_link( $post_id ) ),
 						/* translators: %s is the applicant ID */
-						esc_attr( sprintf( __( 'Edit Applicant &#8220;%s&#8221;', 'yikes-level-playing-field' ), $post_id ) ),
+						esc_attr( sprintf( __( 'Edit Applicant &#8220;%s&#8221;', 'level-playing-field' ), $post_id ) ),
 						esc_html( $post_id )
 					);
 					break;
@@ -139,7 +139,7 @@ class ApplicantManager extends BasePostType {
 					try {
 						$job_titles[ $job_id ] = $job_repo->find( $job_id )->get_title();
 					} catch ( InvalidPostID $e ) {
-						echo esc_html__( 'No job set for applicant.', 'yikes-level-playing-field' );
+						echo esc_html__( 'No job set for applicant.', 'level-playing-field' );
 						break;
 					}
 				}
@@ -160,7 +160,7 @@ class ApplicantManager extends BasePostType {
 
 			case 'viewed':
 				$viewed_by = $applicants[ $post_id ]->get_viewed_by() === 0
-					? _x( 'No one', 'No one has viewed applicant submission', 'yikes-level-playing-field' )
+					? _x( 'No one', 'No one has viewed applicant submission', 'level-playing-field' )
 					: get_user_meta( $applicants[ $post_id ]->get_viewed_by(), 'nickname', true );
 				echo esc_html( $viewed_by );
 				break;
@@ -171,8 +171,8 @@ class ApplicantManager extends BasePostType {
 						'<a href="%1$s" aria-label="%2$s">%3$s</a>',
 						esc_url( get_edit_post_link( $post_id ) ),
 						/* translators: %s is the applicant ID */
-						esc_attr( sprintf( __( 'Edit Applicant &#8220;%s&#8221;', 'yikes-level-playing-field' ), $post_id ) ),
-						esc_html__( 'View', 'yikes-level-playing-field' )
+						esc_attr( sprintf( __( 'Edit Applicant &#8220;%s&#8221;', 'level-playing-field' ), $post_id ) ),
+						esc_html__( 'View', 'level-playing-field' )
 					);
 				}
 				break;
@@ -216,8 +216,8 @@ class ApplicantManager extends BasePostType {
 		);
 		?>
 		<select name="<?php echo esc_attr( ApplicantMeta::VIEWED ); ?>" id="<?php echo esc_attr( ApplicantMeta::VIEWED ); ?>">
-			<option value="all" <?php selected( 'all', $current_viewed ); ?>><?php esc_html_e( 'All Viewed', 'yikes-level-playing-field' ); ?></option>
-			<option value="none" <?php selected( 'none', $current_viewed ); ?>><?php esc_html_e( 'No One Viewed', 'yikes-level-playing-field' ); ?></option>
+			<option value="all" <?php selected( 'all', $current_viewed ); ?>><?php esc_html_e( 'All Viewed', 'level-playing-field' ); ?></option>
+			<option value="none" <?php selected( 'none', $current_viewed ); ?>><?php esc_html_e( 'No One Viewed', 'level-playing-field' ); ?></option>
 			<?php foreach ( $result as $user_id ) { ?>
 				<option value="<?php echo esc_attr( $user_id ); ?>" <?php selected( $user_id, $current_viewed ); ?>><?php echo esc_html( get_user_meta( $user_id, 'nickname', true ) ); ?></option>
 			<?php } ?>

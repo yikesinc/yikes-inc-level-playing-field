@@ -40,7 +40,7 @@ class Welcome implements Service {
 		}
 		?>
 		<div class="notice notice-success is-dismissible">
-			<p><?php esc_html_e( 'Thanks for installing Level Playing Field!', 'yikes-level-playing-field' ); ?></p>
+			<p><?php esc_html_e( 'Thanks for installing Level Playing Field!', 'level-playing-field' ); ?></p>
 		</div>
 		<?php
 	}

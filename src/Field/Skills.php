@@ -37,10 +37,10 @@ class Skills extends RepeatableField {
 	protected function get_default_fields() {
 		return apply_filters( 'lpf_field_skills_fields', [
 			ApplicantMeta::SKILL       => [
-				'label' => esc_html__( 'Skill', 'yikes-level-playing-field' ),
+				'label' => esc_html__( 'Skill', 'level-playing-field' ),
 			],
 			ApplicantMeta::PROFICIENCY => [
-				'label'    => esc_html__( 'Proficiency', 'yikes-level-playing-field' ),
+				'label'    => esc_html__( 'Proficiency', 'level-playing-field' ),
 				'callback' => $this->get_skills_callback(),
 				'options'  => $this->get_skills_options(),
 			],
@@ -57,7 +57,7 @@ class Skills extends RepeatableField {
 	protected function render_grouping_label() {
 		printf(
 			'<legend class="lpf-field-skills lpf-input-label">%s</legend>',
-			esc_html__( 'Skills:', 'yikes-level-playing-field' )
+			esc_html__( 'Skills:', 'level-playing-field' )
 		);
 	}
 
@@ -71,8 +71,8 @@ class Skills extends RepeatableField {
 	protected function render_repeatable_field_label() {
 		printf(
 			'<div class="lpf-field-skills lpf-fieldset-label">%1$s <span class="lpf-fieldset-number">%2$s</span></div>',
-			esc_html__( 'Skill', 'yikes-level-playing-field' ),
-			esc_html__( '1', 'yikes-level-playing-field' )
+			esc_html__( 'Skill', 'level-playing-field' ),
+			esc_html__( '1', 'level-playing-field' )
 		);
 	}
 
@@ -108,6 +108,6 @@ class Skills extends RepeatableField {
 	 * @return string
 	 */
 	protected function get_add_new_label() {
-		return esc_attr_x( 'Skill', 'for "add new" button', 'yikes-level-playing-field' );
+		return esc_attr_x( 'Skill', 'for "add new" button', 'level-playing-field' );
 	}
 }

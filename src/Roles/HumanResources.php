@@ -26,7 +26,7 @@ final class HumanResources extends BaseRole {
 	 * @return string
 	 */
 	public function get_title() {
-		return esc_html__( 'Human Resources', 'yikes-level-playing-field' );
+		return esc_html__( 'Human Resources', 'level-playing-field' );
 	}
 
 	/**

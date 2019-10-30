@@ -61,22 +61,22 @@ final class JobStatus extends BaseTaxonomy {
 				'assign_terms' => Capabilities::EDIT_JOBS,
 			],
 			'labels'             => [
-				'name'                       => __( 'Status', 'yikes-level-playing-field' ),
-				'singular_name'              => _x( 'Status', 'taxonomy general name', 'yikes-level-playing-field' ),
-				'search_items'               => __( 'Search Statuses', 'yikes-level-playing-field' ),
-				'popular_items'              => __( 'Popular Statuses', 'yikes-level-playing-field' ),
-				'all_items'                  => __( 'All Statuses', 'yikes-level-playing-field' ),
-				'parent_item'                => __( 'Parent Status', 'yikes-level-playing-field' ),
-				'parent_item_colon'          => __( 'Parent Status:', 'yikes-level-playing-field' ),
-				'edit_item'                  => __( 'Edit Status', 'yikes-level-playing-field' ),
-				'update_item'                => __( 'Update Status', 'yikes-level-playing-field' ),
-				'add_new_item'               => __( 'New Status', 'yikes-level-playing-field' ),
-				'new_item_name'              => __( 'New Status', 'yikes-level-playing-field' ),
-				'separate_items_with_commas' => __( 'Separate Statuses with commas', 'yikes-level-playing-field' ),
-				'add_or_remove_items'        => __( 'Add or remove Statuses', 'yikes-level-playing-field' ),
-				'choose_from_most_used'      => __( 'Choose from the most used Statuses', 'yikes-level-playing-field' ),
-				'not_found'                  => __( 'No Statuses found.', 'yikes-level-playing-field' ),
-				'menu_name'                  => __( 'Statuses', 'yikes-level-playing-field' ),
+				'name'                       => __( 'Status', 'level-playing-field' ),
+				'singular_name'              => _x( 'Status', 'taxonomy general name', 'level-playing-field' ),
+				'search_items'               => __( 'Search Statuses', 'level-playing-field' ),
+				'popular_items'              => __( 'Popular Statuses', 'level-playing-field' ),
+				'all_items'                  => __( 'All Statuses', 'level-playing-field' ),
+				'parent_item'                => __( 'Parent Status', 'level-playing-field' ),
+				'parent_item_colon'          => __( 'Parent Status:', 'level-playing-field' ),
+				'edit_item'                  => __( 'Edit Status', 'level-playing-field' ),
+				'update_item'                => __( 'Update Status', 'level-playing-field' ),
+				'add_new_item'               => __( 'New Status', 'level-playing-field' ),
+				'new_item_name'              => __( 'New Status', 'level-playing-field' ),
+				'separate_items_with_commas' => __( 'Separate Statuses with commas', 'level-playing-field' ),
+				'add_or_remove_items'        => __( 'Add or remove Statuses', 'level-playing-field' ),
+				'choose_from_most_used'      => __( 'Choose from the most used Statuses', 'level-playing-field' ),
+				'not_found'                  => __( 'No Statuses found.', 'level-playing-field' ),
+				'menu_name'                  => __( 'Statuses', 'level-playing-field' ),
 			],
 		];
 	}
@@ -101,11 +101,11 @@ final class JobStatus extends BaseTaxonomy {
 	public function default_terms() {
 		$terms = [
 			'Inactive' => [
-				'description' => __( 'Job is inactive', 'yikes-level-playing-field' ),
+				'description' => __( 'Job is inactive', 'level-playing-field' ),
 				'slug'        => self::INACTIVE_STATUS,
 			],
 			'Active'   => [
-				'description' => __( 'Job is active', 'yikes-level-playing-field' ),
+				'description' => __( 'Job is active', 'level-playing-field' ),
 				'slug'        => self::ACTIVE_STATUS,
 			],
 		];

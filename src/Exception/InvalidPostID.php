@@ -32,7 +32,7 @@ class InvalidPostID extends \InvalidArgumentException implements Exception {
 	public static function from_id( $id, $type ) {
 		$message = sprintf(
 			/* translators: %1$s: the post ID. %2$s is a post type */
-			__( 'The post ID "%1$s" is not a valid %2$s.', 'yikes-level-playing-field' ),
+			__( 'The post ID "%1$s" is not a valid %2$s.', 'level-playing-field' ),
 			$id,
 			$type
 		);

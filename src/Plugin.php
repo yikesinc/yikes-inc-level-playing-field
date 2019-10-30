@@ -217,10 +217,10 @@ final class Plugin implements Registerable {
 	public function plugin_action_links( $links ) {
 		// @todo: move this into a separate class.
 		$lpf_links = [
-			SettingsPage::PAGE_SLUG => '<a href="' . esc_url( ( new SettingsPage() )->get_page_url() ) . '">' . esc_html__( 'Settings', 'yikes-level-playing-field' ) . '</a>',
-			SupportPage::PAGE_SLUG  => '<a href="' . esc_url( ( new SupportPage() )->get_page_url() ) . '">' . esc_html__( 'Support', 'yikes-level-playing-field' ) . '</a>',
-			JobManager::SLUG        => '<a href="' . esc_url( ( new JobManager() )->get_add_new_url() ) . '">' . esc_html__( 'Add a Job', 'yikes-level-playing-field' ) . '</a>',
-			GoProPage::PAGE_SLUG    => '<a href="' . esc_url( ( new GoProPage() )->get_page_url() ) . '">' . esc_html__( 'Go Pro', 'yikes-level-playing-field' ) . '</a>',
+			SettingsPage::PAGE_SLUG => '<a href="' . esc_url( ( new SettingsPage() )->get_page_url() ) . '">' . esc_html__( 'Settings', 'level-playing-field' ) . '</a>',
+			SupportPage::PAGE_SLUG  => '<a href="' . esc_url( ( new SupportPage() )->get_page_url() ) . '">' . esc_html__( 'Support', 'level-playing-field' ) . '</a>',
+			JobManager::SLUG        => '<a href="' . esc_url( ( new JobManager() )->get_add_new_url() ) . '">' . esc_html__( 'Add a Job', 'level-playing-field' ) . '</a>',
+			GoProPage::PAGE_SLUG    => '<a href="' . esc_url( ( new GoProPage() )->get_page_url() ) . '">' . esc_html__( 'Go Pro', 'level-playing-field' ) . '</a>',
 		];
 		return array_merge( $lpf_links, $links );
 	}

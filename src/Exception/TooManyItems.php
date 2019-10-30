@@ -34,7 +34,7 @@ class TooManyItems extends \InvalidArgumentException implements Exception {
 				'%1$s do not support more than %2$d item.',
 				'%1$s do not support more than %2$d items.',
 				$limit,
-				'yikes-level-playing-field'
+				'level-playing-field'
 			),
 			$post_type,
 			$limit

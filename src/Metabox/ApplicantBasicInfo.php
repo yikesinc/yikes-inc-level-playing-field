@@ -46,7 +46,7 @@ final class ApplicantBasicInfo extends BaseMetabox {
 	 * @return string Title to use for the metabox.
 	 */
 	protected function get_title() {
-		return __( 'Basic Applicant Information', 'yikes-level-playing-field' );
+		return __( 'Basic Applicant Information', 'level-playing-field' );
 	}
 
 	/**

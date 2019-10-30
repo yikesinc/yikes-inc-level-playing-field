@@ -32,7 +32,7 @@ class InterviewCancellationToApplicantEmail extends ToApplicantEmail {
 	 * @return string The subject of the email.
 	 */
 	protected function subject() {
-		return __( 'You declined your interview request.', 'yikes-level-playing-field' );
+		return __( 'You declined your interview request.', 'level-playing-field' );
 	}
 
 	/**
@@ -45,7 +45,7 @@ class InterviewCancellationToApplicantEmail extends ToApplicantEmail {
 	protected function message() {
 		$message  = $this->subject();
 		$message .= '<br>';
-		$message .= __( 'Maybe some further instructions that your information is still anonymous and that you can message the company to re-schedule.', 'yikes-level-playing-field' );
+		$message .= __( 'Maybe some further instructions that your information is still anonymous and that you can message the company to re-schedule.', 'level-playing-field' );
 		$message .= $this->get_messaging_link();
 		return $message;
 	}

@@ -93,7 +93,7 @@ abstract class TemplateController implements Renderable, AssetsAware, Service {
 		} catch ( \Exception $e ) {
 			return sprintf(
 				/* translators: %s refers to the error message */
-				esc_html__( 'There was an error displaying the template: %s', 'yikes-level-playing-field' ),
+				esc_html__( 'There was an error displaying the template: %s', 'level-playing-field' ),
 				$e->getMessage()
 			);
 		}

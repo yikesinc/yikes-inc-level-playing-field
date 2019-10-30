@@ -39,10 +39,10 @@ final class Languages extends RepeatableField {
 		 */
 		return apply_filters( 'lpf_field_language_fields', [
 			ApplicantMeta::LANGUAGE    => [
-				'label' => esc_html__( 'Language', 'yikes-level-playing-field' ),
+				'label' => esc_html__( 'Language', 'level-playing-field' ),
 			],
 			ApplicantMeta::PROFICIENCY => [
-				'label'    => esc_html__( 'Proficiency', 'yikes-level-playing-field' ),
+				'label'    => esc_html__( 'Proficiency', 'level-playing-field' ),
 				'callback' => $this->get_proficiency_callback(),
 				'options'  => $this->get_language_options(),
 			],
@@ -59,7 +59,7 @@ final class Languages extends RepeatableField {
 	protected function render_grouping_label() {
 		printf(
 			'<legend class="lpf-field-language lpf-input-label">%s</legend>',
-			esc_html__( 'Language and Proficiency:', 'yikes-level-playing-field' )
+			esc_html__( 'Language and Proficiency:', 'level-playing-field' )
 		);
 	}
 
@@ -73,8 +73,8 @@ final class Languages extends RepeatableField {
 	protected function render_repeatable_field_label() {
 		printf(
 			'<div class="lpf-field-language lpf-fieldset-label">%1$s <span class="lpf-fieldset-number">%2$s</span></div>',
-			esc_html__( 'Language', 'yikes-level-playing-field' ),
-			esc_html__( '1', 'yikes-level-playing-field' )
+			esc_html__( 'Language', 'level-playing-field' ),
+			esc_html__( '1', 'level-playing-field' )
 		);
 	}
 
@@ -110,6 +110,6 @@ final class Languages extends RepeatableField {
 	 * @return string
 	 */
 	protected function get_add_new_label() {
-		return esc_html_x( 'Language', 'for "add new" button', 'yikes-level-playing-field' );
+		return esc_html_x( 'Language', 'for "add new" button', 'level-playing-field' );
 	}
 }

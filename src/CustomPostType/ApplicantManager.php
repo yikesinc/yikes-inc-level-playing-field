@@ -31,31 +31,31 @@ final class ApplicantManager extends BaseCustomPostType {
 	 */
 	protected function get_arguments() {
 		return [
-			'label'               => __( 'Applicant', 'yikes-level-playing-field' ),
-			'description'         => __( 'Applicants who have applied for a job through the website form.', 'yikes-level-playing-field' ),
+			'label'               => __( 'Applicant', 'level-playing-field' ),
+			'description'         => __( 'Applicants who have applied for a job through the website form.', 'level-playing-field' ),
 			'labels'              => [
-				'name'                  => _x( 'Applicants', 'Post Type General Name', 'yikes-level-playing-field' ),
-				'singular_name'         => _x( 'Applicant', 'Post Type Singular Name', 'yikes-level-playing-field' ),
-				'parent_item_colon'     => __( 'Parent Applicant:', 'yikes-level-playing-field' ),
-				'all_items'             => __( 'Applicants', 'yikes-level-playing-field' ),
-				'add_new_item'          => __( 'Add New Applicant', 'yikes-level-playing-field' ),
-				'add_new'               => __( 'Add New Applicant', 'yikes-level-playing-field' ),
-				'new_item'              => __( 'New Applicant', 'yikes-level-playing-field' ),
-				'edit_item'             => __( 'View Applicant', 'yikes-level-playing-field' ),
-				'update_item'           => __( 'Update Applicant', 'yikes-level-playing-field' ),
-				'view_item'             => __( 'View Applicant', 'yikes-level-playing-field' ),
-				'search_items'          => __( 'Search Applicant', 'yikes-level-playing-field' ),
-				'not_found'             => __( 'Applicant Not found', 'yikes-level-playing-field' ),
-				'not_found_in_trash'    => __( 'Applicant Not found in Trash', 'yikes-level-playing-field' ),
-				'featured_image'        => __( 'Applicant Image', 'yikes-level-playing-field' ),
-				'set_featured_image'    => __( 'Set Applicant image', 'yikes-level-playing-field' ),
-				'remove_featured_image' => __( 'Remove Applicant image', 'yikes-level-playing-field' ),
-				'use_featured_image'    => __( 'Use as Applicant image', 'yikes-level-playing-field' ),
-				'insert_into_item'      => __( 'Insert into Applicant', 'yikes-level-playing-field' ),
-				'uploaded_to_this_item' => __( 'Uploaded to this Applicant', 'yikes-level-playing-field' ),
-				'items_list'            => __( 'Applicants list', 'yikes-level-playing-field' ),
-				'items_list_navigation' => __( 'Applicants list navigation', 'yikes-level-playing-field' ),
-				'filter_items_list'     => __( 'Filter Applicants list', 'yikes-level-playing-field' ),
+				'name'                  => _x( 'Applicants', 'Post Type General Name', 'level-playing-field' ),
+				'singular_name'         => _x( 'Applicant', 'Post Type Singular Name', 'level-playing-field' ),
+				'parent_item_colon'     => __( 'Parent Applicant:', 'level-playing-field' ),
+				'all_items'             => __( 'Applicants', 'level-playing-field' ),
+				'add_new_item'          => __( 'Add New Applicant', 'level-playing-field' ),
+				'add_new'               => __( 'Add New Applicant', 'level-playing-field' ),
+				'new_item'              => __( 'New Applicant', 'level-playing-field' ),
+				'edit_item'             => __( 'View Applicant', 'level-playing-field' ),
+				'update_item'           => __( 'Update Applicant', 'level-playing-field' ),
+				'view_item'             => __( 'View Applicant', 'level-playing-field' ),
+				'search_items'          => __( 'Search Applicant', 'level-playing-field' ),
+				'not_found'             => __( 'Applicant Not found', 'level-playing-field' ),
+				'not_found_in_trash'    => __( 'Applicant Not found in Trash', 'level-playing-field' ),
+				'featured_image'        => __( 'Applicant Image', 'level-playing-field' ),
+				'set_featured_image'    => __( 'Set Applicant image', 'level-playing-field' ),
+				'remove_featured_image' => __( 'Remove Applicant image', 'level-playing-field' ),
+				'use_featured_image'    => __( 'Use as Applicant image', 'level-playing-field' ),
+				'insert_into_item'      => __( 'Insert into Applicant', 'level-playing-field' ),
+				'uploaded_to_this_item' => __( 'Uploaded to this Applicant', 'level-playing-field' ),
+				'items_list'            => __( 'Applicants list', 'level-playing-field' ),
+				'items_list_navigation' => __( 'Applicants list navigation', 'level-playing-field' ),
+				'filter_items_list'     => __( 'Filter Applicants list', 'level-playing-field' ),
 			],
 			'supports'            => false,
 			'taxonomies'          => [],
@@ -104,27 +104,27 @@ final class ApplicantManager extends BaseCustomPostType {
 
 		return [
 			0  => '', // Unused. Messages start at index 1.
-			1  => __( 'Applicant updated.', 'yikes-level-playing-field' ),
-			2  => __( 'Custom field updated.', 'yikes-level-playing-field' ),
-			3  => __( 'Custom field deleted.', 'yikes-level-playing-field' ),
-			4  => __( 'Applicant updated.', 'yikes-level-playing-field' ),
+			1  => __( 'Applicant updated.', 'level-playing-field' ),
+			2  => __( 'Custom field updated.', 'level-playing-field' ),
+			3  => __( 'Custom field deleted.', 'level-playing-field' ),
+			4  => __( 'Applicant updated.', 'level-playing-field' ),
 			5  => isset( $_GET['revision'] )
 				? sprintf(
 					/* translators: %s: date and time of the revision */
-					__( 'Applicant restored to revision from %s', 'yikes-level-playing-field' ),
+					__( 'Applicant restored to revision from %s', 'level-playing-field' ),
 					wp_post_revision_title( (int) $_GET['revision'], false )
 				)
 				: false,
-			6  => __( 'Applicant published.', 'yikes-level-playing-field' ),
-			7  => __( 'Applicant saved.', 'yikes-level-playing-field' ),
-			8  => __( 'Applicant submitted.', 'yikes-level-playing-field' ),
+			6  => __( 'Applicant published.', 'level-playing-field' ),
+			7  => __( 'Applicant saved.', 'level-playing-field' ),
+			8  => __( 'Applicant submitted.', 'level-playing-field' ),
 			9  => sprintf(
 				/* translators: %1$s: translated date. */
-				__( 'Applicant scheduled for: <strong>%1$s</strong>.', 'yikes-level-playing-field' ),
+				__( 'Applicant scheduled for: <strong>%1$s</strong>.', 'level-playing-field' ),
 				/* translators: Publish box date format, see http://php.net/date */
-				date_i18n( __( 'M j, Y @ G:i', 'yikes-level-playing-field' ), strtotime( $post->post_date ) )
+				date_i18n( __( 'M j, Y @ G:i', 'level-playing-field' ), strtotime( $post->post_date ) )
 			),
-			10 => __( 'Applicant draft updated.', 'yikes-level-playing-field' ),
+			10 => __( 'Applicant draft updated.', 'level-playing-field' ),
 		];
 	}
 }

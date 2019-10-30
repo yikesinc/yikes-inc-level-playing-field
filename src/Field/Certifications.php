@@ -39,20 +39,20 @@ class Certifications extends RepeatableField {
 		 */
 		return apply_filters( 'lpf_field_certification_fields', [
 			ApplicantMeta::INSTITUTION => [
-				'label' => esc_html__( 'Institution', 'yikes-level-playing-field' ),
+				'label' => esc_html__( 'Institution', 'level-playing-field' ),
 			],
 			ApplicantMeta::TYPE        => [
-				'label' => esc_html__( 'Institution Type', 'yikes-level-playing-field' ),
+				'label' => esc_html__( 'Institution Type', 'level-playing-field' ),
 			],
 			ApplicantMeta::YEAR        => [
-				'label' => esc_html__( 'Year Certified', 'yikes-level-playing-field' ),
+				'label' => esc_html__( 'Year Certified', 'level-playing-field' ),
 				'class' => Types::YEAR,
 			],
 			ApplicantMeta::CERT_TYPE   => [
-				'label' => esc_html__( 'Certification Type', 'yikes-level-playing-field' ),
+				'label' => esc_html__( 'Certification Type', 'level-playing-field' ),
 			],
 			ApplicantMeta::STATUS      => [
-				'label' => esc_html__( 'Status', 'yikes-level-playing-field' ),
+				'label' => esc_html__( 'Status', 'level-playing-field' ),
 			],
 		] );
 	}
@@ -67,7 +67,7 @@ class Certifications extends RepeatableField {
 	protected function render_grouping_label() {
 		printf(
 			'<legend class="lpf-field-certifications lpf-input-label">%s</legend>',
-			esc_html__( 'Certifications:', 'yikes-level-playing-field' )
+			esc_html__( 'Certifications:', 'level-playing-field' )
 		);
 	}
 
@@ -81,8 +81,8 @@ class Certifications extends RepeatableField {
 	protected function render_repeatable_field_label() {
 		printf(
 			'<div class="lpf-field-certifications lpf-fieldset-label">%1$s <span class="lpf-fieldset-number">%2$s</span></div>',
-			esc_html__( 'Certification', 'yikes-level-playing-field' ),
-			esc_html__( '1', 'yikes-level-playing-field' )
+			esc_html__( 'Certification', 'level-playing-field' ),
+			esc_html__( '1', 'level-playing-field' )
 		);
 	}
 
@@ -95,6 +95,6 @@ class Certifications extends RepeatableField {
 	 * @return string
 	 */
 	protected function get_add_new_label() {
-		return esc_html_x( 'Certification', 'for "add new" button', 'yikes-level-playing-field' );
+		return esc_html_x( 'Certification', 'for "add new" button', 'level-playing-field' );
 	}
 }

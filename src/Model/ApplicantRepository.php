@@ -246,7 +246,7 @@ class ApplicantRepository extends CustomPostTypeRepository {
 		// Set the nickname after the post object has been saved.
 		$applicant->set_nickname( sprintf(
 			'%s%d',
-			_x( 'Applicant #', 'Default applicant nickname. Followed by a number', 'yikes-level-playing-field' ),
+			_x( 'Applicant #', 'Default applicant nickname. Followed by a number', 'level-playing-field' ),
 			$applicant->get_id()
 		) );
 

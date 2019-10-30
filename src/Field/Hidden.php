@@ -78,7 +78,7 @@ class Hidden extends BaseField {
 		if ( (string) $this->value !== (string) $this->raw_value ) {
 			throw InvalidField::value_invalid(
 				static::class,
-				__( 'Hidden field values cannot be changed.', 'yikes-level-playing-field' )
+				__( 'Hidden field values cannot be changed.', 'level-playing-field' )
 			);
 		}
 	}

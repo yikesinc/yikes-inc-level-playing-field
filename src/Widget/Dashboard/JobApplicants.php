@@ -86,7 +86,7 @@ class JobApplicants extends BaseWidget {
 	 * @since %VERSION%
 	 */
 	public function get_title() {
-		return __( 'Applicants', 'yikes-level-playing-field' );
+		return __( 'Applicants', 'level-playing-field' );
 	}
 
 	/**

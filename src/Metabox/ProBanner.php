@@ -45,7 +45,7 @@ class ProBanner extends BaseMetabox {
 	 * @return string Title to use for the metabox.
 	 */
 	protected function get_title() {
-		return __( 'Level Playing Field Pro', 'yikes-level-playing-field' );
+		return __( 'Level Playing Field Pro', 'level-playing-field' );
 	}
 
 	/**

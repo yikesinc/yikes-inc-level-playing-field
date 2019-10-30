@@ -31,31 +31,31 @@ final class ApplicationManager extends BaseCustomPostType {
 	 */
 	protected function get_arguments() {
 		return [
-			'label'               => __( 'Applications', 'yikes-level-playing-field' ),
-			'description'         => __( 'Job Applications that are associated with the level playing field jobs.', 'yikes-level-playing-field' ),
+			'label'               => __( 'Applications', 'level-playing-field' ),
+			'description'         => __( 'Job Applications that are associated with the level playing field jobs.', 'level-playing-field' ),
 			'labels'              => [
-				'name'                  => _x( 'Application Forms', 'Post Type General Name', 'yikes-level-playing-field' ),
-				'singular_name'         => _x( 'Application Form', 'Post Type Singular Name', 'yikes-level-playing-field' ),
-				'parent_item_colon'     => __( 'Parent Application Form:', 'yikes-level-playing-field' ),
-				'all_items'             => __( 'Application Forms', 'yikes-level-playing-field' ),
-				'add_new_item'          => __( 'Add New Application Form', 'yikes-level-playing-field' ),
-				'add_new'               => __( 'Add New Application Form', 'yikes-level-playing-field' ),
-				'new_item'              => __( 'New Application Form', 'yikes-level-playing-field' ),
-				'edit_item'             => __( 'Edit Application Form', 'yikes-level-playing-field' ),
-				'update_item'           => __( 'Update Application Form', 'yikes-level-playing-field' ),
-				'view_item'             => __( 'View Application Form', 'yikes-level-playing-field' ),
-				'search_items'          => __( 'Search Application Forms', 'yikes-level-playing-field' ),
-				'not_found'             => __( 'Application Form Not found', 'yikes-level-playing-field' ),
-				'not_found_in_trash'    => __( 'Application Form Not found in Trash', 'yikes-level-playing-field' ),
-				'featured_image'        => __( 'Application Form Image', 'yikes-level-playing-field' ),
-				'set_featured_image'    => __( 'Set Application Form image', 'yikes-level-playing-field' ),
-				'remove_featured_image' => __( 'Remove Application Form image', 'yikes-level-playing-field' ),
-				'use_featured_image'    => __( 'Use as Application Form image', 'yikes-level-playing-field' ),
-				'insert_into_item'      => __( 'Insert into Application Form', 'yikes-level-playing-field' ),
-				'uploaded_to_this_item' => __( 'Uploaded to this Application Form', 'yikes-level-playing-field' ),
-				'items_list'            => __( 'Application Forms list', 'yikes-level-playing-field' ),
-				'items_list_navigation' => __( 'Application Forms list navigation', 'yikes-level-playing-field' ),
-				'filter_items_list'     => __( 'Filter Application Forms list', 'yikes-level-playing-field' ),
+				'name'                  => _x( 'Application Forms', 'Post Type General Name', 'level-playing-field' ),
+				'singular_name'         => _x( 'Application Form', 'Post Type Singular Name', 'level-playing-field' ),
+				'parent_item_colon'     => __( 'Parent Application Form:', 'level-playing-field' ),
+				'all_items'             => __( 'Application Forms', 'level-playing-field' ),
+				'add_new_item'          => __( 'Add New Application Form', 'level-playing-field' ),
+				'add_new'               => __( 'Add New Application Form', 'level-playing-field' ),
+				'new_item'              => __( 'New Application Form', 'level-playing-field' ),
+				'edit_item'             => __( 'Edit Application Form', 'level-playing-field' ),
+				'update_item'           => __( 'Update Application Form', 'level-playing-field' ),
+				'view_item'             => __( 'View Application Form', 'level-playing-field' ),
+				'search_items'          => __( 'Search Application Forms', 'level-playing-field' ),
+				'not_found'             => __( 'Application Form Not found', 'level-playing-field' ),
+				'not_found_in_trash'    => __( 'Application Form Not found in Trash', 'level-playing-field' ),
+				'featured_image'        => __( 'Application Form Image', 'level-playing-field' ),
+				'set_featured_image'    => __( 'Set Application Form image', 'level-playing-field' ),
+				'remove_featured_image' => __( 'Remove Application Form image', 'level-playing-field' ),
+				'use_featured_image'    => __( 'Use as Application Form image', 'level-playing-field' ),
+				'insert_into_item'      => __( 'Insert into Application Form', 'level-playing-field' ),
+				'uploaded_to_this_item' => __( 'Uploaded to this Application Form', 'level-playing-field' ),
+				'items_list'            => __( 'Application Forms list', 'level-playing-field' ),
+				'items_list_navigation' => __( 'Application Forms list navigation', 'level-playing-field' ),
+				'filter_items_list'     => __( 'Filter Application Forms list', 'level-playing-field' ),
 			],
 			'supports'            => [ 'title' ],
 			'taxonomies'          => [],
@@ -104,22 +104,22 @@ final class ApplicationManager extends BaseCustomPostType {
 
 		return [
 			0  => '', // Unused. Messages start at index 1.
-			1  => __( 'Application updated.', 'yikes-level-playing-field' ),
-			2  => __( 'Custom field updated.', 'yikes-level-playing-field' ),
-			3  => __( 'Custom field deleted.', 'yikes-level-playing-field' ),
-			4  => __( 'Application updated.', 'yikes-level-playing-field' ),
+			1  => __( 'Application updated.', 'level-playing-field' ),
+			2  => __( 'Custom field updated.', 'level-playing-field' ),
+			3  => __( 'Custom field deleted.', 'level-playing-field' ),
+			4  => __( 'Application updated.', 'level-playing-field' ),
 			/* translators: %s: date and time of the revision */
-			5  => isset( $_GET['revision'] ) ? sprintf( __( 'Application restored to revision from %s', 'yikes-level-playing-field' ), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
-			6  => __( 'Application published.', 'yikes-level-playing-field' ),
-			7  => __( 'Application saved.', 'yikes-level-playing-field' ),
-			8  => __( 'Application submitted.', 'yikes-level-playing-field' ),
+			5  => isset( $_GET['revision'] ) ? sprintf( __( 'Application restored to revision from %s', 'level-playing-field' ), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
+			6  => __( 'Application published.', 'level-playing-field' ),
+			7  => __( 'Application saved.', 'level-playing-field' ),
+			8  => __( 'Application submitted.', 'level-playing-field' ),
 			9  => sprintf(
 				/* translators: %1$s: translated date. */
-				__( 'Application scheduled for: <strong>%1$s</strong>.', 'yikes-level-playing-field' ),
+				__( 'Application scheduled for: <strong>%1$s</strong>.', 'level-playing-field' ),
 				/* translators: Publish box date format, see http://php.net/date */
-				date_i18n( __( 'M j, Y @ G:i', 'yikes-level-playing-field' ), strtotime( $post->post_date ) )
+				date_i18n( __( 'M j, Y @ G:i', 'level-playing-field' ), strtotime( $post->post_date ) )
 			),
-			10 => __( 'Application draft updated.', 'yikes-level-playing-field' ),
+			10 => __( 'Application draft updated.', 'level-playing-field' ),
 		];
 	}
 }

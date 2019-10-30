@@ -31,7 +31,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ?>
 <div id="lpf-settings" class="wrap lpf-page settings-page">
 	<h1 class="wp-heading-inline">
-		<?php esc_html_e( 'Level Playing Field Settings', 'yikes-level-playing-field' ); ?>
+		<?php esc_html_e( 'Level Playing Field Settings', 'level-playing-field' ); ?>
 	</h1>
 
 	<div class="notice-container"></div>
@@ -39,7 +39,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<div class="lpf-settings lpf-settings-settings-container">
 		<h2>
 			<span class="dashicons dashicons-email"></span>
-			<?php esc_html_e( 'Email Settings', 'yikes-level-playing-field' ); ?>
+			<?php esc_html_e( 'Email Settings', 'level-playing-field' ); ?>
 		</h2>
 		<?php
 			( new AdditionalEmailRecipients( new AERSetting() ) )->render();
@@ -52,7 +52,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<div class="lpf-settings lpf-settings-settings-container">
 		<h2>
 			<span class="dashicons dashicons-feedback"></span>
-			<?php esc_html_e( 'Application Settings', 'yikes-level-playing-field' ); ?>
+			<?php esc_html_e( 'Application Settings', 'level-playing-field' ); ?>
 		</h2>
 		<?php
 			( new ApplicationSuccessMessage( new ASMSetting() ) )->render();
@@ -64,7 +64,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<div class="lpf-settings lpf-settings-settings-container">
 		<h2>
 			<span class="dashicons dashicons-art"></span>
-			<?php esc_html_e( 'Appearance Settings', 'yikes-level-playing-field' ); ?>
+			<?php esc_html_e( 'Appearance Settings', 'level-playing-field' ); ?>
 		</h2>
 		<?php
 			( new DisableFrontEndCSS( new DFECSetting() ) )->render();
@@ -76,7 +76,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<div class="lpf-settings lpf-settings-settings-container">
 		<h2>
 			<span class="dashicons dashicons-admin-plugins"></span>
-			<?php esc_html_e( 'Plugin Settings', 'yikes-level-playing-field' ); ?>
+			<?php esc_html_e( 'Plugin Settings', 'level-playing-field' ); ?>
 		</h2>
 		<?php
 			( new DeleteOnUninstall( new DOUSetting() ) )->render();
@@ -98,7 +98,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<div class="lpf-settings lpf-settings-settings-container">
 		<div class="lpf-settings-save">
 			<button type="button" class="button button-primary lpf-button-primary" id="lpf-settings-save">
-				<?php esc_html_e( 'Save Settings', 'yikes-level-playing-field' ); ?>
+				<?php esc_html_e( 'Save Settings', 'level-playing-field' ); ?>
 			</button>
 		</div>
 	</div>

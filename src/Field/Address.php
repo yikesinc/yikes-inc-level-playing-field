@@ -39,23 +39,23 @@ class Address extends ComplexField {
 		 */
 		return apply_filters( 'lpf_field_address_fields', [
 			ApplicantMeta::LINE_1  => [
-				'label' => esc_html__( 'Line 1', 'yikes-level-playing-field' ),
+				'label' => esc_html__( 'Line 1', 'level-playing-field' ),
 			],
 			ApplicantMeta::LINE_2  => [
-				'label'    => esc_html__( 'Line 2', 'yikes-level-playing-field' ),
+				'label'    => esc_html__( 'Line 2', 'level-playing-field' ),
 				'required' => false,
 			],
 			ApplicantMeta::CITY    => [
-				'label' => esc_html__( 'City', 'yikes-level-playing-field' ),
+				'label' => esc_html__( 'City', 'level-playing-field' ),
 			],
 			ApplicantMeta::STATE   => [
-				'label' => esc_html__( 'State', 'yikes-level-playing-field' ),
+				'label' => esc_html__( 'State', 'level-playing-field' ),
 			],
 			ApplicantMeta::COUNTRY => [
-				'label' => esc_html__( 'Country', 'yikes-level-playing-field' ),
+				'label' => esc_html__( 'Country', 'level-playing-field' ),
 			],
 			ApplicantMeta::ZIP     => [
-				'label' => esc_html__( 'Postal Code', 'yikes-level-playing-field' ),
+				'label' => esc_html__( 'Postal Code', 'level-playing-field' ),
 				'class' => Types::POSTAL_CODE,
 			],
 		] );
@@ -71,7 +71,7 @@ class Address extends ComplexField {
 	protected function render_grouping_label() {
 		printf(
 			'<legend class="lpf-field-address lpf-input-label">%s</legend>',
-			esc_html__( 'Address: ', 'yikes-level-playing-field' )
+			esc_html__( 'Address: ', 'level-playing-field' )
 		);
 	}
 }

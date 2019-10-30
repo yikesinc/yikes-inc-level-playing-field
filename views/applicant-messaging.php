@@ -25,7 +25,7 @@ $comments = $this->comments;
 		?>
 		<h2>Your Messages</h2>
 	<?php } else { ?>
-		<h2 class="lpf_mbox_title"><?php esc_html_e( 'Applicant Messaging', 'yikes-level-playing-field' ); ?></h2>
+		<h2 class="lpf_mbox_title"><?php esc_html_e( 'Applicant Messaging', 'level-playing-field' ); ?></h2>
 	<?php } ?>
 
 	<div class="messaging-container">
@@ -40,7 +40,7 @@ $comments = $this->comments;
 
 		if ( empty( $comments ) ) {
 			?>
-			<p class="conversation-container-text"><?php esc_html_e( 'Start a conversation with this applicant.', 'yikes-level-playing-field' ); ?></p>
+			<p class="conversation-container-text"><?php esc_html_e( 'Start a conversation with this applicant.', 'level-playing-field' ); ?></p>
 			<?php
 		} else {
 
@@ -71,7 +71,7 @@ $comments = $this->comments;
 
 		<div class="new-applicant-message-container">
 			<h4 class="applicant-message-title">
-				<?php esc_html_e( 'Send a New Message', 'yikes-level-playing-field' ); ?>
+				<?php esc_html_e( 'Send a New Message', 'level-playing-field' ); ?>
 			</h4>
 			<textarea id="new-applicant-message" name="new-applicant-message"></textarea>
 		</div>

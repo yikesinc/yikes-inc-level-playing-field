@@ -26,9 +26,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 <table>
 	<thead>
 		<tr>
-			<th><?php esc_html_e( 'Job Title', 'yikes-level-playing-field' ); ?></th>
-			<th><?php esc_html_e( 'New', 'yikes-level-playing-field' ); ?></th>
-			<th><?php esc_html_e( 'Total', 'yikes-level-playing-field' ); ?></th>
+			<th><?php esc_html_e( 'Job Title', 'level-playing-field' ); ?></th>
+			<th><?php esc_html_e( 'New', 'level-playing-field' ); ?></th>
+			<th><?php esc_html_e( 'Total', 'level-playing-field' ); ?></th>
 		</tr>
 	</thead>
 	<tbody>
@@ -51,5 +51,5 @@ if ( ! defined( 'ABSPATH' ) ) {
 	?>
 	</tbody>
 </table>
-<a href="<?php echo esc_url( $this->jobs_url ); ?>" class="button"><?php esc_html_e( 'View All Job Listings', 'yikes-level-playing-field' ); ?></a>
-<a href="<?php echo esc_url( $this->applicants_url ); ?>" class="button"><?php esc_html_e( 'View All Applicants', 'yikes-level-playing-field' ); ?></a>
+<a href="<?php echo esc_url( $this->jobs_url ); ?>" class="button"><?php esc_html_e( 'View All Job Listings', 'level-playing-field' ); ?></a>
+<a href="<?php echo esc_url( $this->applicants_url ); ?>" class="button"><?php esc_html_e( 'View All Applicants', 'level-playing-field' ); ?></a>

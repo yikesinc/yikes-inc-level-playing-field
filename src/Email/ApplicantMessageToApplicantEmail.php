@@ -29,7 +29,7 @@ class ApplicantMessageToApplicantEmail extends ToApplicantEmail {
 	 * @return string The subject of the email.
 	 */
 	protected function subject() {
-		return __( 'A message about your application', 'yikes-level-playing-field' );
+		return __( 'A message about your application', 'level-playing-field' );
 	}
 
 	/**

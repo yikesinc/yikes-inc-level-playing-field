@@ -60,12 +60,12 @@ final class Job extends BaseJobs {
 			'show_job_type'           => true,
 			'show_location'           => true,
 			'show_application_button' => true,
-			'description_text'        => __( 'Description', 'yikes-level-playing-field' ),
-			'details_text'            => __( 'Job Details', 'yikes-level-playing-field' ),
-			'job_type_text'           => __( 'Job Type:', 'yikes-level-playing-field' ),
-			'location_text'           => __( 'Location:', 'yikes-level-playing-field' ),
-			'button_text'             => __( 'Apply', 'yikes-level-playing-field' ),
-			'remote_location_text'    => _x( 'Remote - employees work from their location of choice. ', 'Description of the job location', 'yikes-level-playing-field' ),
+			'description_text'        => __( 'Description', 'level-playing-field' ),
+			'details_text'            => __( 'Job Details', 'level-playing-field' ),
+			'job_type_text'           => __( 'Job Type:', 'level-playing-field' ),
+			'location_text'           => __( 'Location:', 'level-playing-field' ),
+			'button_text'             => __( 'Apply', 'level-playing-field' ),
+			'remote_location_text'    => _x( 'Remote - employees work from their location of choice. ', 'Description of the job location', 'level-playing-field' ),
 		];
 
 		/**

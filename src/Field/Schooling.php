@@ -42,22 +42,22 @@ class Schooling extends RepeatableField {
 		 */
 		return apply_filters( 'lpf_field_schooling_fields', [
 			ApplicantMeta::INSTITUTION => [
-				'label' => esc_html__( 'Institution', 'yikes-level-playing-field' ),
+				'label' => esc_html__( 'Institution', 'level-playing-field' ),
 			],
 			ApplicantMeta::TYPE        => [
-				'label'    => esc_html__( 'Institution Type', 'yikes-level-playing-field' ),
+				'label'    => esc_html__( 'Institution Type', 'level-playing-field' ),
 				'callback' => $this->get_schooling_callback(),
 				'options'  => $this->get_schooling_options(),
 			],
 			ApplicantMeta::YEAR        => [
-				'label' => esc_html__( 'Graduation Year', 'yikes-level-playing-field' ),
+				'label' => esc_html__( 'Graduation Year', 'level-playing-field' ),
 				'class' => Types::YEAR,
 			],
 			ApplicantMeta::MAJOR       => [
-				'label' => esc_html__( 'Major', 'yikes-level-playing-field' ),
+				'label' => esc_html__( 'Major', 'level-playing-field' ),
 			],
 			ApplicantMeta::DEGREE      => [
-				'label' => esc_html__( 'Degree', 'yikes-level-playing-field' ),
+				'label' => esc_html__( 'Degree', 'level-playing-field' ),
 			],
 		] );
 	}
@@ -72,7 +72,7 @@ class Schooling extends RepeatableField {
 	protected function render_grouping_label() {
 		printf(
 			'<legend class="lpf-field-schooling lpf-input-label">%s</legend>',
-			esc_html__( 'Schooling:', 'yikes-level-playing-field' )
+			esc_html__( 'Schooling:', 'level-playing-field' )
 		);
 	}
 
@@ -86,8 +86,8 @@ class Schooling extends RepeatableField {
 	protected function render_repeatable_field_label() {
 		printf(
 			'<div class="lpf-field-schooling lpf-fieldset-label">%1$s <span class="lpf-fieldset-number">%2$s</span></div>',
-			esc_html__( 'School', 'yikes-level-playing-field' ),
-			esc_html__( '1', 'yikes-level-playing-field' )
+			esc_html__( 'School', 'level-playing-field' ),
+			esc_html__( '1', 'level-playing-field' )
 		);
 	}
 
@@ -123,6 +123,6 @@ class Schooling extends RepeatableField {
 	 * @return string
 	 */
 	protected function get_add_new_label() {
-		return esc_html_x( 'School', 'for "add new" button', 'yikes-level-playing-field' );
+		return esc_html_x( 'School', 'for "add new" button', 'level-playing-field' );
 	}
 }

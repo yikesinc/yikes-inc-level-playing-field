@@ -46,7 +46,7 @@ final class ApplicantInterviewDetails extends BaseMetabox {
 	 * @return string Title to use for the metabox.
 	 */
 	protected function get_title() {
-		return __( 'Interview Details', 'yikes-level-playing-field' );
+		return __( 'Interview Details', 'level-playing-field' );
 	}
 
 	/**

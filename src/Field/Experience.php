@@ -39,29 +39,29 @@ class Experience extends RepeatableField {
 		 */
 		return apply_filters( 'lpf_field_experience_fields', [
 			ApplicantMeta::ORGANIZATION     => [
-				'label' => esc_html__( 'Organization', 'yikes-level-playing-field' ),
+				'label' => esc_html__( 'Organization', 'level-playing-field' ),
 			],
 			ApplicantMeta::INDUSTRY         => [
-				'label' => esc_html__( 'Industry', 'yikes-level-playing-field' ),
+				'label' => esc_html__( 'Industry', 'level-playing-field' ),
 			],
 			ApplicantMeta::START_DATE       => [
-				'label'   => esc_html__( 'Start Date', 'yikes-level-playing-field' ),
+				'label'   => esc_html__( 'Start Date', 'level-playing-field' ),
 				'class'   => Types::DATE,
 				'classes' => [ 'lpf-datepicker' ],
 			],
 			ApplicantMeta::PRESENT_POSITION => [
-				'label'    => esc_html__( 'Presently Working', 'yikes-level-playing-field' ),
+				'label'    => esc_html__( 'Presently Working', 'level-playing-field' ),
 				'class'    => Types::CHECKBOX,
 				'required' => false,
 			],
 			ApplicantMeta::END_DATE         => [
-				'label'    => esc_html__( 'End Date', 'yikes-level-playing-field' ),
+				'label'    => esc_html__( 'End Date', 'level-playing-field' ),
 				'class'    => Types::DATE,
 				'required' => false,
 				'classes'  => [ 'lpf-datepicker' ],
 			],
 			ApplicantMeta::POSITION         => [
-				'label' => esc_html__( 'Position', 'yikes-level-playing-field' ),
+				'label' => esc_html__( 'Position', 'level-playing-field' ),
 			],
 		] );
 	}
@@ -76,7 +76,7 @@ class Experience extends RepeatableField {
 	protected function render_grouping_label() {
 		printf(
 			'<legend class="lpf-field-experience lpf-input-label">%s</legend>',
-			esc_html__( 'Experience:', 'yikes-level-playing-field' )
+			esc_html__( 'Experience:', 'level-playing-field' )
 		);
 	}
 
@@ -90,8 +90,8 @@ class Experience extends RepeatableField {
 	protected function render_repeatable_field_label() {
 		printf(
 			'<div class="lpf-field-experience lpf-fieldset-label">%1$s <span class="lpf-fieldset-number">%2$s</span></div>',
-			esc_html__( 'Experience', 'yikes-level-playing-field' ),
-			esc_html__( '1', 'yikes-level-playing-field' )
+			esc_html__( 'Experience', 'level-playing-field' ),
+			esc_html__( '1', 'level-playing-field' )
 		);
 	}
 
@@ -104,6 +104,6 @@ class Experience extends RepeatableField {
 	 * @return string
 	 */
 	protected function get_add_new_label() {
-		return esc_html_x( 'Job Position', 'for "add new" button', 'yikes-level-playing-field' );
+		return esc_html_x( 'Job Position', 'for "add new" button', 'level-playing-field' );
 	}
 }
