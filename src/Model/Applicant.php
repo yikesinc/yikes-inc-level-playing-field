@@ -9,8 +9,8 @@
 
 namespace Yikes\LevelPlayingField\Model;
 
-use WP_Term;
 use DateInterval;
+use WP_Term;
 use Yikes\LevelPlayingField\Anonymizer\AnonymizerInterface;
 use Yikes\LevelPlayingField\Comment\ApplicantMessage;
 use Yikes\LevelPlayingField\Email\InterviewCancellationFromApplicantEmail;
@@ -21,7 +21,6 @@ use Yikes\LevelPlayingField\Exception\EmptyArray;
 use Yikes\LevelPlayingField\Exception\FailedToUnanonymize;
 use Yikes\LevelPlayingField\Exception\InvalidApplicantValue;
 use Yikes\LevelPlayingField\Exception\InvalidClass;
-use Yikes\LevelPlayingField\Exception\InvalidKey;
 use Yikes\LevelPlayingField\Exception\InvalidMethod;
 use Yikes\LevelPlayingField\Exception\InvalidProperty;
 use Yikes\LevelPlayingField\Field\Certifications;
@@ -274,8 +273,8 @@ final class Applicant extends CustomPostTypeEntity {
 			if ( $this->is_anonymized() ) :
 				if ( 'high_school' === $school['type'] ) {
 					$schooling[] = sprintf(
-					'<li>%s</li>',
-					esc_html__( 'Graduated from High School or High School equivalent', 'level-playing-field' )
+						'<li>%s</li>',
+						esc_html__( 'Graduated from High School or High School equivalent', 'level-playing-field' )
 					);
 				} else {
 					$schooling[] = sprintf(
@@ -332,6 +331,7 @@ final class Applicant extends CustomPostTypeEntity {
 		// Passing an empty array is a way to remove schooling.
 		if ( empty( $schooling ) ) {
 			$this->changed_property( ApplicantMeta::SCHOOLING );
+
 			return;
 		}
 
@@ -349,16 +349,16 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @return array
 	 */
 	public function get_certifications() {
-		$certifications  = [];
-		foreach ( $this->{ApplicantMeta::CERTIFICATIONS} as $certification ) :
-			if ( $this->is_anonymized() ) :
+		$certifications = [];
+		foreach ( $this->{ApplicantMeta::CERTIFICATIONS} as $certification ) {
+			if ( $this->is_anonymized() ) {
 				$certifications[] = sprintf(
 					'<li>Certified in %s from %s. Status: %s</li>',
 					esc_html( $certification[ ApplicantMeta::CERT_TYPE ] ),
 					esc_html( $certification[ ApplicantMeta::TYPE ] ),
 					esc_html( $certification[ ApplicantMeta::STATUS ] )
 				);
-			else :
+			} else {
 				$certifications[] = sprintf(
 					'<li>Certified in %s from %s. Status: %s. Year: %s.</li>',
 					esc_html( $certification[ ApplicantMeta::CERT_TYPE ] ),
@@ -366,8 +366,8 @@ final class Applicant extends CustomPostTypeEntity {
 					esc_html( $certification[ ApplicantMeta::STATUS ] ),
 					esc_html( $certification[ ApplicantMeta::YEAR ] )
 				);
-			endif;
-		endforeach;
+			}
+		}
 
 		return $certifications;
 	}
