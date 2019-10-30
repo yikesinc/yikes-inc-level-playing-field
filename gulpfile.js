@@ -358,7 +358,7 @@ function compileBlocks() {
  * Delete the theme's .pot before we create a new one.
  */
 function cleanPot() {
-	return del( [ 'languages/yikes-level-playing-field.pot' ] );
+	return del( [ 'languages/*.pot' ] );
 }
 
 /**
