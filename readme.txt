@@ -3,7 +3,7 @@ Contributors: yikesinc, JPry, metalandcoffee, yikesitskevin, liljimmi, fmixell, 
 Donate link: https://yikesplugins.com/
 Tags: anonymized job applications, fight bias, jobs, job listing, job management, job manager, applicant, anonymize, anonymization, applicant anonymization
 Requires at least: 4.8
-Tested up to: 5.1
+Tested up to: 5.3
 Requires PHP: 5.6
 Stable tag: 1.0.0
 License: GPLv2 or later
