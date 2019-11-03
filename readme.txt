@@ -41,7 +41,7 @@ Upgrade to [Level Playing Field Pro](https://yikesplugins.com/plugin/level-playi
 
 = Why anonymize job applications? =
 
-Scientifically proven hirning bias based on name, gender and gender identity, sexual orientation, ethnicity, age and other factors has created a lack of inclusion in various industries. This has resulted in a homogenous workforces and has a negative impact on business earnings, corporate culture and employees. Hiding all factors that gives away an applicant's ethnicity, gender, age and other factors allows hiring managers to bring applicants purely based on skills and qualifications.
+Scientifically proven bias based on name, gender and gender identity, sexual orientation, ethnicity, age and other factors during the hiring process, has created a lack of diversity in various industries. This creates homogeneous teams and has a negative impact on productivity, corporate culture and profits. Hiding information that gives away an applicant's ethnicity, gender, age and other factors allows hiring managers to bring in applicants based purely on skills and qualifications.
 
 == Changelog ==
 
