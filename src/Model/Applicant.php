@@ -345,14 +345,14 @@ final class Applicant extends CustomPostTypeEntity {
 		foreach ( $this->{ApplicantMeta::CERTIFICATIONS} as $certification ) {
 			if ( $this->is_anonymized() ) {
 				$certifications[] = sprintf(
-					'<li>Certified in %s from %s. Status: %s</li>',
+					'Certified in %s from %s. Status: %s',
 					esc_html( $certification[ ApplicantMeta::CERT_TYPE ] ),
 					esc_html( $certification[ ApplicantMeta::TYPE ] ),
 					esc_html( $certification[ ApplicantMeta::STATUS ] )
 				);
 			} else {
 				$certifications[] = sprintf(
-					'<li>Certified in %s from %s. Status: %s. Year: %s.</li>',
+					'Certified in %s from %s. Status: %s. Year: %s.',
 					esc_html( $certification[ ApplicantMeta::CERT_TYPE ] ),
 					esc_html( $certification[ ApplicantMeta::INSTITUTION ] ),
 					esc_html( $certification[ ApplicantMeta::STATUS ] ),
@@ -691,7 +691,43 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @return array
 	 */
 	public function get_languages() {
-		return $this->{ApplicantMeta::LANGUAGES};
+		$languages = $this->{ApplicantMeta::LANGUAGES};
+		if ( $this->is_anonymized() ) :
+			$is_multilingual = count( $languages ) > 1;
+
+			// Build up language proficiency data.
+			$proficiency_labels = $this->get_language_options();
+			$proficiency_counts = [];
+
+			foreach ( $languages as $language ) {
+				if ( ! array_key_exists( $language[ ApplicantMeta::PROFICIENCY ], $proficiency_counts ) ) {
+					$proficiency_counts[ $language[ ApplicantMeta::PROFICIENCY ] ] = 1;
+					continue;
+				}
+
+				$proficiency_counts[ $language[ ApplicantMeta::PROFICIENCY ] ]++;
+			}
+
+			// Set up a counter for when we need to output a comma.
+			$needs_comma = count( $proficiency_counts ) - 1;
+			$output      = $is_multilingual ? esc_html__( 'Multilingual', 'level-playing-field' ) . ' &ndash; ' : '';
+
+			foreach ( $proficiency_counts as $proficiency => $count ) {
+				$output .= esc_html( $proficiency_labels[ $proficiency ] ) . ' ';
+				$output .= esc_html(
+					sprintf(
+						/* translators: %d is the number of languages for the given fluency level */
+						_n( 'in %d language', 'in %d languages', $count, 'level-playing-field' ),
+						$count
+					)
+				);
+				$output .= $needs_comma ? ', ' : ' ';
+				$needs_comma--;
+			}
+			return $output;
+		else :
+			return $languages;
+		endif;
 	}
 
 	/**
