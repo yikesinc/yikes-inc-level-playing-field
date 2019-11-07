@@ -121,40 +121,7 @@ $applicant = $this->applicant;
 			<ol>
 				<?php
 				foreach ( $applicant->get_experience() as $experience ) {
-
-					if ( empty( array_filter( $experience ) ) ) {
-						continue;
-					}
-
-					if ( $applicant->is_anonymized() ) {
-						?>
-						<li>
-							<?php
-							echo esc_html( $experience[ ApplicantMeta::POSITION ] );
-							echo ! empty( $experience[ ApplicantMeta::POSITION ] ) ? esc_html__( ' in ', 'level-playing-field' ) : '';
-							echo esc_html( $experience[ ApplicantMeta::INDUSTRY ] );
-							echo ! empty( $experience[ ApplicantMeta::YEAR_DURATION ] ) ? esc_html__( ' for ', 'level-playing-field' ) : '';
-							echo ! empty( $experience[ ApplicantMeta::YEAR_DURATION ] ) ? esc_html( $experience[ ApplicantMeta::YEAR_DURATION ] ) : '';
-							?>
-						</li>
-						<?php
-					} else {
-						?>
-						<li>
-							<?php
-							echo esc_html( $experience[ ApplicantMeta::POSITION ] );
-							echo ! empty( $experience[ ApplicantMeta::POSITION ] ) ? esc_html__( ' in ', 'level-playing-field' ) : '';
-							echo esc_html( $experience[ ApplicantMeta::INDUSTRY ] );
-							echo ! empty( $experience[ ApplicantMeta::ORGANIZATION ] ) ? esc_html__( ' at ', 'level-playing-field' ) : '';
-							echo esc_html( $experience[ ApplicantMeta::ORGANIZATION ] );
-							echo ! empty( $experience[ ApplicantMeta::START_DATE ] ) ? esc_html__( ' from ', 'level-playing-field' ) : '';
-							echo esc_html( date( 'm/d/Y', strtotime( $experience[ ApplicantMeta::START_DATE ] ) ) );
-							echo ! empty( $experience[ ApplicantMeta::PRESENT_POSITION ] ) || ! empty( $experience[ ApplicantMeta::END_DATE ] ) ? esc_html__( ' to ', 'level-playing-field' ) : '';
-							echo esc_html( ! empty( $experience[ ApplicantMeta::PRESENT_POSITION ] ) ? __( 'the present time.', 'level-playing-field' ) : date( 'm/d/Y', strtotime( $experience[ ApplicantMeta::END_DATE ] ) ) );
-							?>
-						</li>
-						<?php
-					}
+					echo '<li>' . $experience . '</li>';
 				}
 				?>
 			</ol>

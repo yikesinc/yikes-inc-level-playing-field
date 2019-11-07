@@ -345,14 +345,16 @@ final class Applicant extends CustomPostTypeEntity {
 		foreach ( $this->{ApplicantMeta::CERTIFICATIONS} as $certification ) {
 			if ( $this->is_anonymized() ) {
 				$certifications[] = sprintf(
-					'Certified in %s from %s. Status: %s',
+					/* translators: %1$s: certification type. %2$s: institution type. %3$s: status. */
+					__( 'Certified in %1$s from %2$s. Status: %3$s', 'level-playing-field' ),
 					esc_html( $certification[ ApplicantMeta::CERT_TYPE ] ),
 					esc_html( $certification[ ApplicantMeta::TYPE ] ),
 					esc_html( $certification[ ApplicantMeta::STATUS ] )
 				);
 			} else {
 				$certifications[] = sprintf(
-					'Certified in %s from %s. Status: %s. Year: %s.',
+					/* translators: %1$s: certification type. %2$s: institution. %3$s: status. %4$s: year. */
+					__( 'Certified in %1$s from %2$s. Status: %3$s. Year: %4$s.', 'level-playing-field' ),
 					esc_html( $certification[ ApplicantMeta::CERT_TYPE ] ),
 					esc_html( $certification[ ApplicantMeta::INSTITUTION ] ),
 					esc_html( $certification[ ApplicantMeta::STATUS ] ),
@@ -446,7 +448,33 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @return array
 	 */
 	public function get_experience() {
-		return $this->{ApplicantMeta::EXPERIENCE};
+		$experiences = [];
+		foreach ( $this->{ApplicantMeta::EXPERIENCE} as $experience ) {
+			if ( empty( array_filter( $experience ) ) ) {
+				continue;
+			}
+
+			if ( $this->is_anonymized() ) {
+				$experiences[] = sprintf(
+					/* translators: %1$s: position. %2$s: industry. %3$s: number of years. */
+					__( '%1$s in %2$s %3$s', 'level-playing-field' ),
+					esc_html( $experience[ ApplicantMeta::POSITION ] ),
+					esc_html( $experience[ ApplicantMeta::INDUSTRY ] ),
+					! empty( $experience[ ApplicantMeta::YEAR_DURATION ] ) ? esc_html( 'for ' . $experience[ ApplicantMeta::YEAR_DURATION ] ) : ''
+				);
+			} else {
+				$experiences[] = sprintf(
+					/* translators: %1$s: position. %2$s: industry. %3$s: organization. %4$s: start date. %5$s: end date. */
+					__( '%1$s in %2$s at %3$s from %4$s to %5$s', 'level-playing-field' ),
+					esc_html( $experience[ ApplicantMeta::POSITION ] ),
+					esc_html( $experience[ ApplicantMeta::INDUSTRY ] ),
+					esc_html( $experience[ ApplicantMeta::ORGANIZATION ] ),
+					esc_html( date( 'm/d/Y', strtotime( $experience[ ApplicantMeta::START_DATE ] ) ) ),
+					esc_html( ! empty( $experience[ ApplicantMeta::PRESENT_POSITION ] ) ? __( 'the present time.', 'level-playing-field' ) : date( 'm/d/Y', strtotime( $experience[ ApplicantMeta::END_DATE ] ) ) )
+				);
+			}
+		}
+		return $experiences;
 	}
 
 	/**
