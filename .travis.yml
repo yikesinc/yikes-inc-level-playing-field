@@ -21,6 +21,7 @@ matrix:
 
 before_script:
   - export PATH="$HOME/.composer/vendor/bin:$PATH"
+  - composer install --no-interaction --no-suggest --no-scripts
   - |
     if [[ ! -z "$WP_VERSION" ]] ; then
       bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION
