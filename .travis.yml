@@ -39,5 +39,5 @@ script:
     fi
   - |
     if [[ $RUN_PHPCS ]] ; then
-      phpcs
+      vendor/bin/phpcs
     fi
