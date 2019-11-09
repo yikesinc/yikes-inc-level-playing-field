@@ -7,24 +7,12 @@
 
 	<!-- Default WordPress sniffs -->
 	<rule ref="WordPress-Core">
-		<exclude name="WordPress.Files.FileName"/>
 		<exclude name="Generic.Files.LineEndings"/>
-	</rule>
-	<rule ref="WordPress-Docs"/>
-	<rule ref="WordPress-Extra">
-		<exclude name="WordPress.Security.NonceVerification.NoNonceVerification"/>
-	</rule>
-
-	<!-- Other generic sniffs to include -->
-	<rule ref="Generic.Arrays.DisallowLongArraySyntax"/>
-	<rule ref="Generic.Commenting.Todo"/>
-
-	<!-- Remove some sniffs we don't need to follow -->
-	<rule ref="PEAR.Files.IncludingFile">
 		<exclude name="PEAR.Files.IncludingFile.BracketsNotRequired"/>
-	</rule>
-	<rule ref="WordPress.WhiteSpace.PrecisionAlignment">
-		<!-- This rule flags space indents in HTML tags, which are OK -->
+		<exclude name="PEAR.Functions.FunctionCallSignature"/>
+		<exclude name="PSR2.Classes.PropertyDeclaration.Underscore"/>
+		<exclude name="WordPress.Files.FileName"/>
+		<exclude name="WordPress.Security.NonceVerification.Recommended"/>
 		<exclude name="WordPress.WhiteSpace.PrecisionAlignment.Found"/>
 	</rule>
 
@@ -39,30 +27,40 @@
 	</rule>
 	<rule ref="WordPress.PHP.DevelopmentFunctions">
 		<properties>
-			<property name="exclude" value="error_log"/>
+			<property name="exclude" type="array">
+				<element value="error_log"/>
+			</property>
 		</properties>
 	</rule>
 	<rule ref="WordPress.PHP.DiscouragedPHPFunctions">
 		<properties>
-			<property name="exclude" value="obfuscation"/>
+			<property name="exclude" type="array">
+				<element value="obfuscation"/>
+			</property>
 		</properties>
 	</rule>
 	<rule ref="WordPress.WP.AlternativeFunctions">
 		<properties>
 			<!-- wp_json_encode() recommended for compatibility with older PHP versions. We require 5.6+, so no need. -->
-			<property name="exclude" value="json_encode"/>
+			<property name="exclude" type="array">
+				<element value="json_encode"/>
+			</property>
 		</properties>
 	</rule>
 	<rule ref="WordPress.WP.I18n">
 		<properties>
-			<property name="text_domain" type="array" value="level-playing-field"/>
+			<property name="text_domain" value="level-playing-field"/>
 		</properties>
 	</rule>
 
 	<!-- Some directories have relaxed rules -->
 	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
 		<properties>
-			<property name="prefixes" type="array" value="lpf,ylpf"/>
+			<property name="prefixes" type="array">
+				<element value="lpf"/>
+				<element value="ylpf"/>
+				<element value="yikes_levelplayingfield"/>
+			</property>
 		</properties>
 		<exclude-pattern type="relative">/views/*</exclude-pattern>
 		<exclude-pattern type="relative">/vendor/awesome-yikes-framework/*</exclude-pattern>
