@@ -14,7 +14,7 @@ use Yikes\LevelPlayingField\Taxonomy\ApplicantStatus;
 /**
  * Trait JobDropdown
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 trait ApplicantStatusDropdown {
@@ -22,7 +22,7 @@ trait ApplicantStatusDropdown {
 	/**
 	 * Output a custom dropdown for the applicant_status taxonomy.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	protected function applicant_status_dropdown() {
 		$taxonomy = get_taxonomy( ApplicantStatus::SLUG );

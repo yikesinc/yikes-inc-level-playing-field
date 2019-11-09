@@ -27,7 +27,7 @@ use Yikes\LevelPlayingField\View\NoOverrideLocationView;
 /**
  * Class Application
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 final class Application extends BaseShortcode {
@@ -41,7 +41,7 @@ final class Application extends BaseShortcode {
 	/**
 	 * Whether a form has been submitted.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @var bool
 	 */
 	private $is_submitted = false;
@@ -52,7 +52,7 @@ final class Application extends BaseShortcode {
 	 * This property is used so that the view can be switched dynamically
 	 * as needed.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @var string
 	 */
 	private $view_uri = self::VIEW_URI;
@@ -60,7 +60,7 @@ final class Application extends BaseShortcode {
 	/**
 	 * Register the Shortcode.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	public function register() {
 		parent::register();
@@ -73,7 +73,7 @@ final class Application extends BaseShortcode {
 	/**
 	 * Get the default array of attributes for the shortcode.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return array
 	 */
 	public function get_default_atts() {
@@ -88,7 +88,7 @@ final class Application extends BaseShortcode {
 	 * Override to provide data to the view that is not part of the shortcode
 	 * attributes.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param array $atts Array of shortcode attributes.
 	 *
@@ -120,7 +120,7 @@ final class Application extends BaseShortcode {
 	/**
 	 * Process the shortcode attributes and prepare rendering.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param array|string $atts Attributes as passed to the shortcode.
 	 *
@@ -144,7 +144,7 @@ final class Application extends BaseShortcode {
 	/**
 	 * Get the View URI to use for rendering the shortcode.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return string View URI.
 	 */
@@ -157,7 +157,7 @@ final class Application extends BaseShortcode {
 	 *
 	 * Must be either the VIEW_URI or SUBMITTED_URI.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $uri The URI to use.
 	 *
@@ -174,7 +174,7 @@ final class Application extends BaseShortcode {
 	/**
 	 * Determine whether an application is currently being submitted.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return bool
 	 */
 	private function is_submitting_application() {
@@ -184,7 +184,7 @@ final class Application extends BaseShortcode {
 	/**
 	 * Render the current Renderable.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param array $context Context in which to render.
 	 *
@@ -204,7 +204,7 @@ final class Application extends BaseShortcode {
 	/**
 	 * Get the array of known assets.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return Asset[]
 	 */
@@ -242,7 +242,7 @@ final class Application extends BaseShortcode {
 	/**
 	 * Get the Application form object.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param int              $job_id        The Job ID for the form.
 	 * @param ApplicationModel $application   The application Object.
@@ -263,7 +263,7 @@ final class Application extends BaseShortcode {
 	/**
 	 * Handle the form submission.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param ApplicationForm $form The form object.
 	 *
@@ -286,7 +286,7 @@ final class Application extends BaseShortcode {
 	/**
 	 * Convert an exception to a string.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param \Exception $e The exception object.
 	 *

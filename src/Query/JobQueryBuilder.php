@@ -16,7 +16,7 @@ use Yikes\LevelPlayingField\Taxonomy\JobStatus;
 /**
  * Class JobQuery
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 final class JobQueryBuilder extends BaseQueryBuilder {
@@ -34,7 +34,7 @@ final class JobQueryBuilder extends BaseQueryBuilder {
 	/**
 	 * Filter by Jobs with active status.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return $this
 	 */
 	public function where_job_active() {
@@ -44,7 +44,7 @@ final class JobQueryBuilder extends BaseQueryBuilder {
 	/**
 	 * Exclude Jobs with certain categories from results.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string|array $ids Category IDs to exclude. A string should be comma-separated.
 	 *

@@ -22,7 +22,7 @@ use Yikes\LevelPlayingField\Assets\AssetsAwareness;
 /**
  * Class JobManager
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 final class JobManager extends BasePostType implements AssetsAware {
@@ -36,7 +36,7 @@ final class JobManager extends BasePostType implements AssetsAware {
 	/**
 	 * Register the WordPress hooks.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	public function register() {
 		parent::register();
@@ -69,7 +69,7 @@ final class JobManager extends BasePostType implements AssetsAware {
 	/**
 	 * Load asset objects for use.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	protected function load_assets() {
 		$this->assets = [
@@ -80,7 +80,7 @@ final class JobManager extends BasePostType implements AssetsAware {
 	/**
 	 * Adjust the columns to display for the list table.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param array $original_columns The original columns.
 	 *
@@ -105,7 +105,7 @@ final class JobManager extends BasePostType implements AssetsAware {
 	/**
 	 * Output the values for our custom columns.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $column_name The column slug.
 	 * @param int    $post_id     The post ID.
@@ -130,7 +130,7 @@ final class JobManager extends BasePostType implements AssetsAware {
 	/**
 	 * Output custom dropdowns for filtering.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $which     The location of the extra table nav markup: 'top' or 'bottom' for WP_Posts_List_Table, 'bar' for WP_Media_List_Table.
 	 */
@@ -143,7 +143,7 @@ final class JobManager extends BasePostType implements AssetsAware {
 	/**
 	 * Display a dropdown filter for this category.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	protected function job_category_dropdown_filter() {
 		$taxonomy = get_taxonomy( JobCategory::SLUG );

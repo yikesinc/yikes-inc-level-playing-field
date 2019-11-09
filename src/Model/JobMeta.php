@@ -12,7 +12,7 @@ namespace Yikes\LevelPlayingField\Model;
 /**
  * Interface JobMeta
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 interface JobMeta {

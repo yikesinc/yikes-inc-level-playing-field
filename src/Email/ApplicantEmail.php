@@ -15,7 +15,7 @@ use Yikes\LevelPlayingField\Model\Applicant;
 /**
  * Class ApplicantEmail.
  *
- * @since   %VERSION%
+ * @since   1.0.0
  *
  * @package Yikes\LevelPlayingField
  * @author  Kevin Utz / Jeremy Pry
@@ -39,7 +39,7 @@ abstract class ApplicantEmail extends BaseEmail {
 	/**
 	 * Fetch the applicant object and assign it to the $applicant property.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param mixed  $applicant An applicant object or applicant post ID.
 	 * @param string $comment   The content of the comment.
@@ -77,7 +77,7 @@ abstract class ApplicantEmail extends BaseEmail {
 	/**
 	 * Get the HTML link to the applicant's messaging page.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return string The HTML of message with the URL appended.
 	 */

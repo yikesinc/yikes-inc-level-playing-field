@@ -15,7 +15,7 @@ use Yikes\LevelPlayingField\Settings\EmailRecipientRoles;
 /**
  * Class EmailRecipient
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 final class EmailRecipient implements Service {
@@ -23,7 +23,7 @@ final class EmailRecipient implements Service {
 	/**
 	 * Register the current Registerable.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	public function register() {
 		$bust_transients = function( $user_id ) {
@@ -40,7 +40,7 @@ final class EmailRecipient implements Service {
 	 *
 	 * If a user is added, deleted, or their role has changed and they have one of the assigned roles, delete our LPF emails transient.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param int $user_id The user's ID.
 	 */

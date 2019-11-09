@@ -12,7 +12,7 @@ namespace Yikes\LevelPlayingField\Anonymizer;
 /**
  * Interface AnonymizerInterface
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 interface AnonymizerInterface {
@@ -20,7 +20,7 @@ interface AnonymizerInterface {
 	/**
 	 * Get anonmyized data.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param mixed $data The data to anonymize.
 	 *
@@ -31,7 +31,7 @@ interface AnonymizerInterface {
 	/**
 	 * Get original form of data.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param mixed $data The data to reveal.
 	 *

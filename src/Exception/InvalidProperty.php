@@ -12,7 +12,7 @@ namespace Yikes\LevelPlayingField\Exception;
 /**
  * Class InvalidProperty
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 class InvalidProperty extends \InvalidArgumentException implements Exception {
@@ -20,7 +20,7 @@ class InvalidProperty extends \InvalidArgumentException implements Exception {
 	/**
 	 * Create a new instance of the class when a property cannot be modified.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $property The property that cannot be modified.
 	 *
@@ -36,7 +36,7 @@ class InvalidProperty extends \InvalidArgumentException implements Exception {
 	/**
 	 * Create a new instance of the class when the property does not allow multiple values.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $property The property name.
 	 *

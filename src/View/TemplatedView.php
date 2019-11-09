@@ -18,7 +18,7 @@ use Yikes\LevelPlayingField\PluginHelper;
  * Looks within the child theme and parent theme folders first for a view,
  * before defaulting to the plugin folder.
  *
- * @since   %VERSION%
+ * @since   1.0.0
  *
  * @package Yikes\LevelPlayingField
  * @author  Jeremy Pry
@@ -30,7 +30,7 @@ class TemplatedView extends BaseView {
 	/**
 	 * Validate an URI.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $uri URI to validate.
 	 *
@@ -56,7 +56,7 @@ class TemplatedView extends BaseView {
 	/**
 	 * Get the possible locations for the view.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $uri URI of the view to get the locations for.
 	 *

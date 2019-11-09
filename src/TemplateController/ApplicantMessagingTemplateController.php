@@ -19,7 +19,7 @@ use Yikes\LevelPlayingField\Model\Applicant;
  *
  * A class to control which template file is used to display the applicant messaging page.
  *
- * @since   %VERSION%
+ * @since   1.0.0
  *
  * @package Yikes\LevelPlayingField
  * @author  JP, KU, EB, TL
@@ -34,7 +34,7 @@ class ApplicantMessagingTemplateController extends TemplateController {
 	/**
 	 * Register the current Registerable.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	public function register() {
 		parent::register();
@@ -44,7 +44,7 @@ class ApplicantMessagingTemplateController extends TemplateController {
 	/**
 	 * Check if the current request is for this class' object and supply the current post w/ content.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param  string $content The default template file WordPress is handing us.
 	 *
@@ -61,7 +61,7 @@ class ApplicantMessagingTemplateController extends TemplateController {
 	/**
 	 * Custom logic to determine if the current request should be displayed with your template.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return bool True if the current request should use your template.
 	 */
@@ -76,7 +76,7 @@ class ApplicantMessagingTemplateController extends TemplateController {
 	/**
 	 * Retrieve the applicant ID based on parameters in the URL.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return int $post_id ID of the applicant object.
 	 */
@@ -87,7 +87,7 @@ class ApplicantMessagingTemplateController extends TemplateController {
 	/**
 	 * Verify that the value in the URL is valid.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param  int $applicant_id The applicant's post ID.
 	 *
@@ -100,7 +100,7 @@ class ApplicantMessagingTemplateController extends TemplateController {
 	/**
 	 * Check if this is an interview cancellation request.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return bool True if this is a cancellation request.
 	 */
@@ -111,7 +111,7 @@ class ApplicantMessagingTemplateController extends TemplateController {
 	/**
 	 * Check if this is an interview confirmation request.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return bool True if this is a confirmation request.
 	 */
@@ -122,7 +122,7 @@ class ApplicantMessagingTemplateController extends TemplateController {
 	/**
 	 * Get the data needed for this context. In this case, the page ID.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return int The page ID.
 	 */
@@ -133,7 +133,7 @@ class ApplicantMessagingTemplateController extends TemplateController {
 	/**
 	 * Get the data to pass onto the view.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param  int $id The Page ID.
 	 *

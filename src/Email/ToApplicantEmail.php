@@ -15,7 +15,7 @@ use Yikes\LevelPlayingField\Model\Applicant;
 /**
  * Class ApplicantMessageFromApplicantEmail.
  *
- * @since   %VERSION%
+ * @since   1.0.0
  *
  * @package Yikes\LevelPlayingField
  * @author  Kevin Utz / Jeremy Pry
@@ -27,7 +27,7 @@ abstract class ToApplicantEmail extends ApplicantEmail {
 	/**
 	 * Get the recipient's email address.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return mixed An array or comma-separated list of email addresses.
 	 */
@@ -38,7 +38,7 @@ abstract class ToApplicantEmail extends ApplicantEmail {
 	/**
 	 * Get the HTML link to the applicant's messaging page.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return string The HTML of message with the URL appended.
 	 */

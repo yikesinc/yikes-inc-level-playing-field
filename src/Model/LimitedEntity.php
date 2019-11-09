@@ -12,7 +12,7 @@ namespace Yikes\LevelPlayingField\Model;
 /**
  * Interface LimitedEntity
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 interface LimitedEntity extends Entity {
@@ -20,7 +20,7 @@ interface LimitedEntity extends Entity {
 	/**
 	 * Get the number of items the entity is limited to.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return int
 	 */
 	public function get_limit();

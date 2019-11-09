@@ -16,7 +16,7 @@ use Yikes\LevelPlayingField\Service;
 /**
  * Abstract class RestAPI
  *
- * @since   %VERSION%
+ * @since   1.0.0
  *
  * @package Yikes\LevelPlayingField
  * @author  Freddie Mixell
@@ -28,7 +28,7 @@ abstract class RestAPI implements Service, AssetsAware {
 	/**
 	 * Register the REST Registerables.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	public function register() {
 		$this->register_assets();

@@ -12,7 +12,7 @@ namespace Yikes\LevelPlayingField\Exception;
 /**
  * Class InvalidPostID.
  *
- * @since   %VERSION%
+ * @since   1.0.0
  *
  * @package Yikes\LevelPlayingField\Exception
  * @author  Jeremy Pry
@@ -22,7 +22,7 @@ class InvalidCommentID extends \InvalidArgumentException implements Exception {
 	/**
 	 * Create a new instance of the exception for a comment ID that is not valid.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param int $id Post ID that is not valid.
 	 *

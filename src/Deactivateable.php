@@ -12,7 +12,7 @@ namespace Yikes\LevelPlayingField;
 /**
  * Interface Deactivateable
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 interface Deactivateable {
@@ -20,7 +20,7 @@ interface Deactivateable {
 	/**
 	 * Deactivate the service.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	public function deactivate();
 }

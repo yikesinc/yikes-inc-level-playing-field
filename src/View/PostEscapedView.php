@@ -18,7 +18,7 @@ use Yikes\LevelPlayingField\Exception\InvalidURI;
  * This is a Decorator that decorates a given View with escaping meant for
  * standard HTML post output.
  *
- * @since   %VERSION%
+ * @since   1.0.0
  *
  * @package Yikes\LevelPlayingField\View
  * @author  Jeremy Pry
@@ -28,7 +28,7 @@ final class PostEscapedView implements View {
 	/**
 	 * View instance to decorate.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @var View
 	 */
@@ -37,7 +37,7 @@ final class PostEscapedView implements View {
 	/**
 	 * Instantiate a PostEscapedView object.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param View $view View instance to decorate.
 	 */
@@ -48,7 +48,7 @@ final class PostEscapedView implements View {
 	/**
 	 * Render a given URI.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param array $context Context in which to render.
 	 *
@@ -68,7 +68,7 @@ final class PostEscapedView implements View {
 	 * The passed-in context is optional, and will fall back to the parent's
 	 * context if omitted.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string     $uri     URI of the partial to render.
 	 * @param array|null $context Context in which to render the partial.

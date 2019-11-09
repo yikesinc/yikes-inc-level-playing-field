@@ -12,7 +12,7 @@ namespace Yikes\LevelPlayingField\Model;
 /**
  * Trait JobDropdown
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 trait JobDropdown {
@@ -20,7 +20,7 @@ trait JobDropdown {
 	/**
 	 * Create a dropdown of jobs.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param Job[]  $jobs     An array of Job objects. If no job objects are passed in, the function will fetch them all.
 	 * @param string $selected The item that should be pre-selected in the dropdown.

@@ -12,7 +12,7 @@ namespace Yikes\LevelPlayingField\Exception;
 /**
  * Class InvalidAssetHandle.
  *
- * @since   %VERSION%
+ * @since   1.0.0
  *
  * @package Yikes\LevelPlayingField\Exception
  * @author  Jeremy Pry
@@ -23,7 +23,7 @@ class InvalidAssetHandle extends \InvalidArgumentException implements Exception 
 	 * Create a new instance of the exception for a asset handle that is not
 	 * valid.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param int $handle Asset handle that is not valid.
 	 *

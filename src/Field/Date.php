@@ -12,7 +12,7 @@ namespace Yikes\LevelPlayingField\Field;
 /**
  * Class Date
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 class Date extends BaseInput {

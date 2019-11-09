@@ -15,7 +15,7 @@ use Yikes\LevelPlayingField\Exception\InvalidPostID;
 /**
  * Class ApplicationRepository
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 final class ApplicationRepository extends CustomPostTypeRepository {
@@ -26,7 +26,7 @@ final class ApplicationRepository extends CustomPostTypeRepository {
 	/**
 	 * Find the item with a given post ID.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param int $id Post ID to retrieve.
 	 *
@@ -40,7 +40,7 @@ final class ApplicationRepository extends CustomPostTypeRepository {
 	/**
 	 * Find all the published items.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return Application[]
 	 */
@@ -51,7 +51,7 @@ final class ApplicationRepository extends CustomPostTypeRepository {
 	/**
 	 * Get the name of the class to use when instantiating a model object.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param WP_Post $post The post object to use when instantiating the model.
 	 *

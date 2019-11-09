@@ -20,7 +20,7 @@ use Yikes\LevelPlayingField\Exception\InvalidAnonymousData;
  * data. While the data will be anonymized for most people who are not technically inclined,
  * it will be trivial for someone to reveal the data on their own.
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 final class Base64 implements AnonymizerInterface {
@@ -28,7 +28,7 @@ final class Base64 implements AnonymizerInterface {
 	/**
 	 * Anonymize data with base64 encoding.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $data The data to anonmyize.
 	 *
@@ -46,7 +46,7 @@ final class Base64 implements AnonymizerInterface {
 	/**
 	 * Reveal anonymized data.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $data The data to reveal.
 	 *

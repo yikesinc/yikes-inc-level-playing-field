@@ -15,7 +15,7 @@ use Yikes\LevelPlayingField\Shortcode\BaseJobs;
 /**
  * Class DisableFrontEndCss
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 class DisableFrontEndCss extends BaseSetting {
@@ -25,7 +25,7 @@ class DisableFrontEndCss extends BaseSetting {
 	/**
 	 * Get the plugin value.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return array
 	 */
 	public function get() {
@@ -35,7 +35,7 @@ class DisableFrontEndCss extends BaseSetting {
 	/**
 	 * Get the default value for the setting.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return mixed
 	 */
 	protected function get_default() {
@@ -48,7 +48,7 @@ class DisableFrontEndCss extends BaseSetting {
 	/**
 	 * Sanitize the setting value.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param mixed $value The value to sanitize.
 	 *

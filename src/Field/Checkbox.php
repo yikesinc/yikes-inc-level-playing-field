@@ -12,7 +12,7 @@ namespace Yikes\LevelPlayingField\Field;
 /**
  * Class Checkbox
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 class Checkbox extends BaseInput {
@@ -23,7 +23,7 @@ class Checkbox extends BaseInput {
 	 *
 	 * Default checkbox values to 1.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @var int.
 	 */
 	protected $value = 1;

@@ -17,7 +17,7 @@ use Yikes\LevelPlayingField\Model\JobRepository;
  *
  * This adds the "lpf_job" shortcode.
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 final class Job extends BaseJobs {
@@ -32,7 +32,7 @@ final class Job extends BaseJobs {
 	 * job ID doesn't exist. When WP_DEBUG is enabled, any error message
 	 * will be returned in place of the shortcode content.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param array|string $atts Attributes as passed to the shortcode.
 	 *
@@ -49,7 +49,7 @@ final class Job extends BaseJobs {
 	/**
 	 * Get the default array of attributes for the shortcode.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return array
 	 */
 	public function get_default_atts() {
@@ -71,7 +71,7 @@ final class Job extends BaseJobs {
 		/**
 		 * Filter the default attributes for a job listing.
 		 *
-		 * @since %VERSION%
+		 * @since 1.0.0
 		 *
 		 * @param array $default_atts Array of shortcode attributes.
 		 *
@@ -86,7 +86,7 @@ final class Job extends BaseJobs {
 	 * Override to provide data to the view that is not part of the shortcode
 	 * attributes.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param array $atts Array of shortcode attributes.
 	 *

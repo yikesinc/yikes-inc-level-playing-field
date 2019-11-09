@@ -23,7 +23,7 @@ use Yikes\LevelPlayingField\CustomPostType\JobManager;
  * Main plugin controller class that hooks the plugin's functionality into the
  * WordPress request lifecycle.
  *
- * @since   %VERSION%
+ * @since   1.0.0
  *
  * @package Yikes\LevelPlayingField
  * @author  Jeremy Pry
@@ -37,7 +37,7 @@ final class Plugin implements Registerable {
 	/**
 	 * Assets handler instance.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @var AssetsHandler
 	 */
@@ -46,7 +46,7 @@ final class Plugin implements Registerable {
 	/**
 	 * Container instance.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @var Container
 	 */
 	protected $container;
@@ -54,7 +54,7 @@ final class Plugin implements Registerable {
 	/**
 	 * Array of registered services.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @var Service[]
 	 */
 	private $services = [];
@@ -62,7 +62,7 @@ final class Plugin implements Registerable {
 	/**
 	 * Instantiate a Plugin object.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param Container     $container      The container object.
 	 * @param AssetsHandler $assets_handler Optional. Instance of the assets handler to use.
@@ -75,7 +75,7 @@ final class Plugin implements Registerable {
 	/**
 	 * Register the plugin with the WordPress system.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	public function register() {
 		add_action( 'init', [ $this, 'register_assets_handler' ] );
@@ -92,7 +92,7 @@ final class Plugin implements Registerable {
 			 * in. It also runs on an early priority of 0 so that other plugins hooking in have
 			 * a chance to modify our early filters.
 			 *
-			 * @since %VERSION%
+			 * @since 1.0.0
 			 *
 			 * @param Plugin $lpf_plugin The main plugin instance.
 			 */
@@ -128,7 +128,7 @@ final class Plugin implements Registerable {
 	/**
 	 * Register the individual services of this plugin.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	public function register_services() {
 		$services = $this->get_services();
@@ -142,7 +142,7 @@ final class Plugin implements Registerable {
 	/**
 	 * Get the list of services to register.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return string[] Array of fully qualified class names.
 	 */
@@ -160,7 +160,7 @@ final class Plugin implements Registerable {
 	/**
 	 * Register the assets handler.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	public function register_assets_handler() {
 		$this->assets_handler->register();
@@ -169,7 +169,7 @@ final class Plugin implements Registerable {
 	/**
 	 * Return the instance of the assets handler in use.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return AssetsHandler
 	 */
@@ -180,7 +180,7 @@ final class Plugin implements Registerable {
 	/**
 	 * Instantiate a single service.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $class Service class to instantiate.
 	 *
@@ -208,7 +208,7 @@ final class Plugin implements Registerable {
 	/**
 	 * Add custom links to the plugins page LPF item.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param array $links The default action links.
 	 *

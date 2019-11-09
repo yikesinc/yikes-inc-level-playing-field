@@ -14,7 +14,7 @@ use Yikes\LevelPlayingField\Settings\SettingsFields;
 /**
  * Class AdditionalEmailRecipients.
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 final class ApplicationSuccessMessage extends BaseSettingsField {
@@ -24,7 +24,7 @@ final class ApplicationSuccessMessage extends BaseSettingsField {
 	/**
 	 * Render the field's HTML.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	protected function field() {
 		?>
@@ -41,7 +41,7 @@ final class ApplicationSuccessMessage extends BaseSettingsField {
 	/**
 	 * Return the description text for this field, i18n'ed.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return string $description_text The description text for this field.
 	 */
@@ -52,7 +52,7 @@ final class ApplicationSuccessMessage extends BaseSettingsField {
 	/**
 	 * Return the placeholder text for this field, i18n'ed.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return string $placeholder_text The placeholder text for this field.
 	 */

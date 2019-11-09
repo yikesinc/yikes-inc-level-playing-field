@@ -29,7 +29,7 @@ use Yikes\LevelPlayingField\Model\JobDescriptionPlaceholder;
 /**
  * Class JobManager
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 final class JobManager extends AwesomeBaseMetabox implements AssetsAware {
@@ -48,7 +48,7 @@ final class JobManager extends AwesomeBaseMetabox implements AssetsAware {
 	/**
 	 * Register hooks.
 	 *
-	 * @since  %VERSION%
+	 * @since  1.0.0
 	 * @author Jeremy Pry
 	 */
 	public function register() {
@@ -113,7 +113,7 @@ final class JobManager extends AwesomeBaseMetabox implements AssetsAware {
 	/**
 	 * Register meta boxes.
 	 *
-	 * @since  %VERSION%
+	 * @since  1.0.0
 	 * @author Jeremy Pry
 	 *
 	 * @param array $meta_boxes Array of existing meta boxes.
@@ -215,7 +215,7 @@ final class JobManager extends AwesomeBaseMetabox implements AssetsAware {
 	 *
 	 * If the new editor is enabled, show the metabox in the side. Otherwise show it in the normal table.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return string
 	 */
@@ -235,7 +235,7 @@ final class JobManager extends AwesomeBaseMetabox implements AssetsAware {
 	/**
 	 * Load asset objects for use.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	protected function load_assets() {
 		$script = new ScriptAsset( self::JS_HANDLE, self::JS_URI, [ 'wp-blocks' ] );

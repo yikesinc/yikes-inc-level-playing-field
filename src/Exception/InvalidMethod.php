@@ -14,7 +14,7 @@ use LogicException;
 /**
  * Class InvalidMethod
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 class InvalidMethod extends LogicException implements Exception {
@@ -22,7 +22,7 @@ class InvalidMethod extends LogicException implements Exception {
 	/**
 	 * Create a new instance of this exception from an invalid method.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string|object $class  The class that doesn't have the method.
 	 * @param string        $method The method that is missing.

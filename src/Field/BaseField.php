@@ -14,7 +14,7 @@ use Yikes\LevelPlayingField\Exception\InvalidField;
 /**
  * Class BaseField
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  *
  * @property Field parent The Parent field object.
@@ -33,7 +33,7 @@ abstract class BaseField implements Field {
 	/**
 	 * An error message to display for the field.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @var string
 	 */
 	protected $error_message;
@@ -43,7 +43,7 @@ abstract class BaseField implements Field {
 	 *
 	 * Used in HTML for id and name tags.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @var string
 	 */
 	protected $id;
@@ -53,7 +53,7 @@ abstract class BaseField implements Field {
 	 *
 	 * Used inside a <label> element.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @var string
 	 */
 	protected $label;
@@ -61,7 +61,7 @@ abstract class BaseField implements Field {
 	/**
 	 * Classes to apply to the field.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @var array
 	 */
 	protected $classes;
@@ -69,7 +69,7 @@ abstract class BaseField implements Field {
 	/**
 	 * Raw value submitted to the field.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @var mixed
 	 */
 	protected $raw_value;
@@ -77,7 +77,7 @@ abstract class BaseField implements Field {
 	/**
 	 * Whether this field is read-only.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @var bool
 	 */
 	protected $read_only = false;
@@ -85,7 +85,7 @@ abstract class BaseField implements Field {
 	/**
 	 * Whether the field is required.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @var bool
 	 */
 	protected $required;
@@ -93,7 +93,7 @@ abstract class BaseField implements Field {
 	/**
 	 * Data attributes for the field.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @var array
 	 */
 	protected $data = [];
@@ -101,7 +101,7 @@ abstract class BaseField implements Field {
 	/**
 	 * The parent field.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @var Field
 	 */
 	protected $parent = null;
@@ -109,7 +109,7 @@ abstract class BaseField implements Field {
 	/**
 	 * The value for the field.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @var null
 	 */
 	protected $value = null;
@@ -118,7 +118,7 @@ abstract class BaseField implements Field {
 	 * The pattern used for matching an field's ID.
 	 *
 	 * @link  https://regex101.com/r/ZTgsNa/1
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @var string
 	 */
 	protected $id_pattern = '#^([\w-]+)(?:\[(\d+)?\])?(?:\[([\w-]+)\])?#';
@@ -169,7 +169,7 @@ abstract class BaseField implements Field {
 	/**
 	 * Get the field ID.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return string
 	 */
 	public function get_id() {
@@ -179,7 +179,7 @@ abstract class BaseField implements Field {
 	/**
 	 * Set the ID for the field.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $id The ID of the field.
 	 *
@@ -193,7 +193,7 @@ abstract class BaseField implements Field {
 	/**
 	 * Get whether this field is required or not.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return bool
 	 */
 	public function is_required() {
@@ -203,7 +203,7 @@ abstract class BaseField implements Field {
 	/**
 	 * Set the parent field object for this field.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param Field $field The parent field object.
 	 */
@@ -214,7 +214,7 @@ abstract class BaseField implements Field {
 	/**
 	 * Get the parent field object.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return Field
 	 */
 	public function get_parent() {
@@ -238,7 +238,7 @@ abstract class BaseField implements Field {
 	 * foo[bar][baz]
 	 * foo[bar[baz]]
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @throws InvalidField When the provided ID is invalid for a form field.
 	 */
@@ -257,7 +257,7 @@ abstract class BaseField implements Field {
 	/**
 	 * Add a data attribute to the field.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $key   The data key. Should NOT include data- prefix.
 	 * @param string $value The data value.
@@ -269,7 +269,7 @@ abstract class BaseField implements Field {
 	/**
 	 * Render any data attributes for this field.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	protected function render_data_attributes() {
 		if ( empty( $this->data ) ) {
@@ -288,7 +288,7 @@ abstract class BaseField implements Field {
 	/**
 	 * Render the required attribute.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	protected function render_required() {
 		if ( $this->required ) {
@@ -299,7 +299,7 @@ abstract class BaseField implements Field {
 	/**
 	 * Set the data submitted to the field.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param mixed $data The submitted data for the field.
 	 *
@@ -319,7 +319,7 @@ abstract class BaseField implements Field {
 	/**
 	 * Validate the submission for the given field.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return mixed The validated value.
 	 * @throws InvalidField When the submission isn't valid.
@@ -336,7 +336,7 @@ abstract class BaseField implements Field {
 	/**
 	 * Validate the raw value.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @throws InvalidField When the raw value is empty but the field is required.
 	 */
@@ -349,7 +349,7 @@ abstract class BaseField implements Field {
 	/**
 	 * Sanitize a submitted value.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $raw The raw value for the field.
 	 *
@@ -364,7 +364,7 @@ abstract class BaseField implements Field {
 	 *
 	 * @link  http://php.net/manual/en/function.filter-var.php
 	 * @see   filter_var()
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return null|callable|int|array Return null for no options, a callable, an int when using filter flags, or an
 	 *                                 array when using additional options for the filter.
 	 */
@@ -375,7 +375,7 @@ abstract class BaseField implements Field {
 	/**
 	 * Determine if this is a child field.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return bool
 	 */
 	public function is_child() {
@@ -385,7 +385,7 @@ abstract class BaseField implements Field {
 	/**
 	 * Render the error message for the field.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	protected function render_error_message() {
 		if ( empty( $this->error_message ) ) {
@@ -402,7 +402,7 @@ abstract class BaseField implements Field {
 	/**
 	 * Render the label for the field.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	protected function render_label() {
 		echo esc_html( $this->get_label() );
@@ -411,7 +411,7 @@ abstract class BaseField implements Field {
 	/**
 	 * Render any additional attributes.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	protected function render_extra_attributes() {
 		$this->render_required();
@@ -421,7 +421,7 @@ abstract class BaseField implements Field {
 	/**
 	 * Get the label for the field.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return string The label for the field.
 	 */
 	public function get_label() {
@@ -431,7 +431,7 @@ abstract class BaseField implements Field {
 	/**
 	 * Get the type for use with errors.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return string
 	 */
 	abstract protected function get_error_type();

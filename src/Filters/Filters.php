@@ -16,7 +16,7 @@ use Yikes\LevelPlayingField\Service;
  *
  * Define filters to be used throughout the plugin.
  *
- * @since   %VERSION%
+ * @since   1.0.0
  *
  * @package Yikes\LevelPlayingField
  * @author  Kevin Utz
@@ -26,7 +26,7 @@ class Filters implements Service {
 	/**
 	 * Register the Admin Page.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	public function register() {
 		add_filter( 'lpf_the_content', function( $content ) {

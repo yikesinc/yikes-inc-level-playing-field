@@ -14,7 +14,7 @@ namespace Yikes\LevelPlayingField;
  *
  * An object that can be uninstalled.
  *
- * @since   %VERSION%
+ * @since   1.0.0
  *
  * @package Yikes\LevelPlayingField
  * @author  Kevin Utz
@@ -24,7 +24,7 @@ interface Uninstallable {
 	/**
 	 * Uninstall the Uninstallable component.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	public function uninstall();
 }

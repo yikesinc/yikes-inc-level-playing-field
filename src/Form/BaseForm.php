@@ -20,7 +20,7 @@ use Yikes\LevelPlayingField\View\TemplatedView;
 /**
  * Abstract Class BaseForm
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 abstract class BaseForm implements Renderable, Service, AssetsAware {
@@ -30,7 +30,7 @@ abstract class BaseForm implements Renderable, Service, AssetsAware {
 	/**
 	 * Register the current Registerable.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	public function register() {
 		$this->register_assets();
@@ -40,7 +40,7 @@ abstract class BaseForm implements Renderable, Service, AssetsAware {
 	/**
 	 * Render the current Form.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param array $context Contextual arguments to pass to the view.
 	 *
@@ -61,7 +61,7 @@ abstract class BaseForm implements Renderable, Service, AssetsAware {
 	/**
 	 * Register our hooks to use when saving data.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	protected function register_persistence_hooks() {
 		$closure = $this->get_persistence_closure();
@@ -71,7 +71,7 @@ abstract class BaseForm implements Renderable, Service, AssetsAware {
 	/**
 	 * Get a closure that can verify and save the data submitted.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return Closure
 	 */
 	protected function get_persistence_closure() {
@@ -110,7 +110,7 @@ abstract class BaseForm implements Renderable, Service, AssetsAware {
 	/**
 	 * Verify the nonce and return the result.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return bool
 	 */
 	protected function verify_nonce() {
@@ -133,7 +133,7 @@ abstract class BaseForm implements Renderable, Service, AssetsAware {
 	/**
 	 * Get the name of the nonce.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return string
 	 */
 	protected function get_nonce_name() {
@@ -143,7 +143,7 @@ abstract class BaseForm implements Renderable, Service, AssetsAware {
 	/**
 	 * Get the ID for the nonce.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return string
 	 */
 	abstract protected function get_id();
@@ -151,7 +151,7 @@ abstract class BaseForm implements Renderable, Service, AssetsAware {
 	/**
 	 * Get the action for the nonce.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return string
 	 */
 	protected function get_nonce_action() {
@@ -161,7 +161,7 @@ abstract class BaseForm implements Renderable, Service, AssetsAware {
 	/**
 	 * Make sure the data is saved to the DB.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param int $post_id The post ID to save.
 	 */
@@ -170,7 +170,7 @@ abstract class BaseForm implements Renderable, Service, AssetsAware {
 	/**
 	 * Get the view URI to use when rendering the form.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return string The View URI.
 	 */
 	abstract protected function get_view_uri();

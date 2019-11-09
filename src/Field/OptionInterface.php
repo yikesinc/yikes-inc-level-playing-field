@@ -12,7 +12,7 @@ namespace Yikes\LevelPlayingField\Field;
 /**
  * Class SelectOption
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 interface OptionInterface {
@@ -20,7 +20,7 @@ interface OptionInterface {
 	/**
 	 * Render the current option.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $selected_value The currently selected value.
 	 */
@@ -29,7 +29,7 @@ interface OptionInterface {
 	/**
 	 * Get the value for the option.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return string The option value.
 	 */
 	public function get_value();

@@ -16,7 +16,7 @@ use WP_Query;
 /**
  * Abstract class CustomPostTypeRepository.
  *
- * @since   %VERSION%
+ * @since   1.0.0
  *
  * @package Yikes\LevelPlayingField
  * @author  Jeremy Pry
@@ -26,7 +26,7 @@ abstract class CustomPostTypeRepository implements Uninstallable {
 	/**
 	 * Persist a modified entity to the storage.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param CustomPostTypeEntity $entity Entity instance to persist.
 	 * @throws FailedToSavePost When there is a problem saving the post.
@@ -38,7 +38,7 @@ abstract class CustomPostTypeRepository implements Uninstallable {
 	/**
 	 * Get the meta query for a particular Job ID.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param int $job_id The Job ID.
 	 *
@@ -54,7 +54,7 @@ abstract class CustomPostTypeRepository implements Uninstallable {
 	/**
 	 * Get the meta query for a particular Application ID.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param int $application_id The Application ID.
 	 *
@@ -70,7 +70,7 @@ abstract class CustomPostTypeRepository implements Uninstallable {
 	/**
 	 * Get the meta query for viewed applicants.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return array
 	 */
 	protected function get_viewed_applicant_meta_query() {
@@ -85,7 +85,7 @@ abstract class CustomPostTypeRepository implements Uninstallable {
 	/**
 	 * Force delete all posts.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	public function uninstall() {
 		$wp_query_args = [
@@ -106,7 +106,7 @@ abstract class CustomPostTypeRepository implements Uninstallable {
 	/**
 	 * Get the post type slug to find.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return string
 	 */
 	abstract protected function get_post_type();

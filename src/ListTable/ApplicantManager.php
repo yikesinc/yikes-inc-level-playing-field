@@ -26,7 +26,7 @@ use Yikes\LevelPlayingField\Comment\ApplicantMessageRepository;
 /**
  * Class ApplicantManager
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 class ApplicantManager extends BasePostType {
@@ -38,7 +38,7 @@ class ApplicantManager extends BasePostType {
 	/**
 	 * Register hooks.
 	 *
-	 * @since  %VERSION%
+	 * @since  1.0.0
 	 * @author Jeremy Pry
 	 */
 	public function register() {
@@ -51,7 +51,7 @@ class ApplicantManager extends BasePostType {
 	/**
 	 * Adjust the columns to display for the list table.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param array $original_columns The original columns.
 	 *
@@ -88,7 +88,7 @@ class ApplicantManager extends BasePostType {
 	/**
 	 * Output the values for our custom columns.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $column_name The column slug.
 	 * @param int    $post_id     The post ID.
@@ -182,7 +182,7 @@ class ApplicantManager extends BasePostType {
 	/**
 	 * Output custom dropdowns for filtering.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $which The location of the extra table nav markup: 'top' or 'bottom' for WP_Posts_List_Table,
 	 *                      'bar' for WP_Media_List_Table.
@@ -198,7 +198,7 @@ class ApplicantManager extends BasePostType {
 	/**
 	 * Output a custom dropdown for the viewed status.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	private function viewed_dropdown_filter() {
 		global $wpdb;
@@ -228,7 +228,7 @@ class ApplicantManager extends BasePostType {
 	/**
 	 * Output a custom dropdown for the available jobs.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	private function jobs_dropdown_filter() {
 		$jobs        = ( new JobRepository() )->find_all();
@@ -239,7 +239,7 @@ class ApplicantManager extends BasePostType {
 	/**
 	 * Modifies current query variables.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param \WP_Query $query Query object.
 	 */
@@ -286,7 +286,7 @@ class ApplicantManager extends BasePostType {
 	/**
 	 * Get the function that filters the post status display.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return \Closure
 	 */
 	private function get_post_status_function() {
@@ -308,7 +308,7 @@ class ApplicantManager extends BasePostType {
 	/**
 	 * Get the function to filter the row action links.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return \Closure
 	 */
 	private function get_row_actions_function() {

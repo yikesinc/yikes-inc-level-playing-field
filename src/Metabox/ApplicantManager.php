@@ -28,7 +28,7 @@ use Yikes\LevelPlayingField\View\View;
 /**
  * Class ApplicantManager
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 final class ApplicantManager extends BaseMetabox implements AssetsAware, Service {
@@ -53,7 +53,7 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 	/**
 	 * Whether to remove 3rd party metaboxes.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @var bool
 	 */
 	protected $remove_3rd_party_boxes = true;
@@ -61,7 +61,7 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 	/**
 	 * Register the current Registerable.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	public function register() {
 		parent::register();
@@ -101,7 +101,7 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 	/**
 	 * Wrapper for adding/removing metaboxes for a given post type.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $post_type The post type.
 	 */
@@ -115,7 +115,7 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 	/**
 	 * Get the ID to use for the metabox.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return string ID to use for the metabox.
 	 */
@@ -126,7 +126,7 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 	/**
 	 * Do the actual persistence of the changed data.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param int $post_id ID of the post to persist.
 	 */
@@ -137,7 +137,7 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 	/**
 	 * Get the title to use for the metabox.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return string Title to use for the metabox.
 	 */
@@ -148,7 +148,7 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 	/**
 	 * Get the priority within the context where the boxes should show.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return string Priority within context.
 	 */
@@ -159,7 +159,7 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 	/**
 	 * Get the context in which to show the metabox.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return string Context to use.
 	 */
@@ -170,7 +170,7 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 	/**
 	 * Set the "Viewed_By" property of applicant objeect.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param Applicant $applicant The applicant object.
 	 */
@@ -184,7 +184,7 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 	/**
 	 * Set messages sent by applicant to read/approved.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param Applicant $applicant The applicant object.
 	 */
@@ -201,7 +201,7 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 	/**
 	 * Process the metabox attributes.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param WP_Post      $post The post object.
 	 * @param array|string $atts Raw metabox attributes passed into the
@@ -222,7 +222,7 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 	/**
 	 * Get the screen on which to show the metabox.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return string|array|\WP_Screen Screen on which to show the metabox.
 	 */
@@ -233,7 +233,7 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 	/**
 	 * Save new nickname upon edit.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	private function save_nickname() {
 		// Handle nonce.
@@ -264,7 +264,7 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 	/**
 	 * Load asset objects for use.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	protected function load_assets() {
 		$applicant = new ScriptAsset( 'lpf-applicant-manager-js', 'assets/js/applicant-manager', [ 'jquery' ] );
@@ -286,7 +286,7 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 	/**
 	 * Get the post types for this metabox..
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return array
 	 */
 	protected function get_post_types() {
@@ -296,7 +296,7 @@ final class ApplicantManager extends BaseMetabox implements AssetsAware, Service
 	/**
 	 * Determine we're on the applicant screen.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return bool
 	 */
 	private function is_applicant_screen() {

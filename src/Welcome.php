@@ -24,7 +24,7 @@ class Welcome implements Service {
 	/**
 	 * Register the WordPress hooks.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	public function register() {
 		add_action( 'admin_notices', [ $this, 'welcome_message' ] );

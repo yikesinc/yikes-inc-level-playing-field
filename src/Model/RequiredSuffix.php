@@ -12,7 +12,7 @@ namespace Yikes\LevelPlayingField\Model;
 /**
  * Trait RequiredSuffix
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 trait RequiredSuffix {
@@ -20,7 +20,7 @@ trait RequiredSuffix {
 	/**
 	 * Add _required as a suffix to a string.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $string The string to modify.
 	 *

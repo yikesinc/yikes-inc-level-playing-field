@@ -12,7 +12,7 @@ namespace Yikes\LevelPlayingField\Field;
 /**
  * Class WYSIWYG
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 class WYSIWYG extends BaseField {
@@ -27,7 +27,7 @@ class WYSIWYG extends BaseField {
 	/**
 	 * Render the field.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	public function render() {
 		?>
@@ -70,7 +70,7 @@ class WYSIWYG extends BaseField {
 	/**
 	 * Get the type for use with errors.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return string
 	 */
 	protected function get_error_type() {
@@ -84,7 +84,7 @@ class WYSIWYG extends BaseField {
 	 *
 	 * @link  http://php.net/manual/en/function.filter-var.php
 	 * @see   filter_var()
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return array A sanitization callback function.
 	 */
 	protected function get_filter_options() {

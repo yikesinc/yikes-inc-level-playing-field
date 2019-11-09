@@ -18,7 +18,7 @@ use Yikes\LevelPlayingField\Model\ApplicantRepository;
 /**
  *  Class InterviewAPI
  *
- * @since   %VERSION%
+ * @since   1.0.0
  *
  * @package Yikes\LevelPlayingField
  * @author  Freddie Mixell
@@ -30,7 +30,7 @@ final class InterviewAPI extends RestAPI {
 	/**
 	 * Registering Interview API Routes.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	public function register_routes() {
 		register_rest_route(
@@ -55,7 +55,7 @@ final class InterviewAPI extends RestAPI {
 	/**
 	 * Get interview status object by Applicant ID.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param WP_REST_Request $request WordPress REST API Request Object.
 	 *

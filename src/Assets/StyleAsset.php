@@ -16,7 +16,7 @@ use Yikes\LevelPlayingField\Settings\DisableFrontEndCss;
 /**
  * Class StyleAsset.
  *
- * @since   %VERSION%
+ * @since   1.0.0
  *
  * @package Yikes\LevelPlayingField\Assets
  * @author  Jeremy Pry
@@ -35,7 +35,7 @@ final class StyleAsset extends BaseAsset {
 	/**
 	 * Source location of the asset.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @var string
 	 */
@@ -44,7 +44,7 @@ final class StyleAsset extends BaseAsset {
 	/**
 	 * Dependencies of the asset.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @var string[]
 	 */
@@ -53,7 +53,7 @@ final class StyleAsset extends BaseAsset {
 	/**
 	 * Version of the asset.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @var string|bool|null
 	 */
@@ -62,7 +62,7 @@ final class StyleAsset extends BaseAsset {
 	/**
 	 * Media for which the asset is defined.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @var string
 	 */
@@ -71,7 +71,7 @@ final class StyleAsset extends BaseAsset {
 	/**
 	 * Whether this asset can be disabled.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @var string
 	 */
@@ -80,7 +80,7 @@ final class StyleAsset extends BaseAsset {
 	/**
 	 * Instantiate a StyleAsset object.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string           $handle       Handle of the asset.
 	 * @param string           $source       Source location of the asset.
@@ -108,7 +108,7 @@ final class StyleAsset extends BaseAsset {
 	/**
 	 * Get the enqueue closure to use.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return Closure
 	 */
@@ -135,7 +135,7 @@ final class StyleAsset extends BaseAsset {
 	/**
 	 * Get the enqueue closure to use.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return Closure
 	 */
@@ -148,7 +148,7 @@ final class StyleAsset extends BaseAsset {
 	/**
 	 * Get the dequeue closure to use.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return Closure
 	 */
@@ -161,7 +161,7 @@ final class StyleAsset extends BaseAsset {
 	/**
 	 * Whether the current style is disabled.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return bool
 	 */
 	private function is_disabled() {

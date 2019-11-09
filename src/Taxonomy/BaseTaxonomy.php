@@ -18,7 +18,7 @@ use WP_Term_Query;
 /**
  * Abstract class BaseTaxonomy.
  *
- * @since   %VERSION%
+ * @since   1.0.0
  *
  * @package Yikes\LevelPlayingField
  * @author  Jeremy Pry
@@ -40,7 +40,7 @@ abstract class BaseTaxonomy implements Activateable, Uninstallable, Service {
 	/**
 	 * Activate the service.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	public function activate() {
 		$this->register_taxonomy();

@@ -15,7 +15,7 @@ use Yikes\LevelPlayingField\Exception\InvalidPostID;
 /**
  * Trait PostFinder
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 trait PostFinder {
@@ -23,7 +23,7 @@ trait PostFinder {
 	/**
 	 * Find the item with a given post ID.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param int $id Post ID to retrieve.
 	 *
@@ -44,7 +44,7 @@ trait PostFinder {
 	/**
 	 * Find all the published items.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return CustomPostTypeEntity[]
 	 */
@@ -61,7 +61,7 @@ trait PostFinder {
 	/**
 	 * Find all item IDs.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return int[] Array of post IDs.
 	 */
 	public function find_all_item_ids() {
@@ -92,7 +92,7 @@ trait PostFinder {
 	/**
 	 * Get the post type slug to find.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return string
 	 */
 	abstract protected function get_post_type();
@@ -100,7 +100,7 @@ trait PostFinder {
 	/**
 	 * Get the name of the class to use when instantiating a model object.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param WP_Post $post The post object to use when instantiating the model.
 	 *

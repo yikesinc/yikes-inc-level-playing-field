@@ -20,7 +20,7 @@ use Yikes\LevelPlayingField\View\TemplatedView;
 /**
  * Abstract class BaseWidget.
  *
- * @since   %VERSION%
+ * @since   1.0.0
  *
  * @package Yikes\LevelPlayingField
  * @author  Ebonie Butler
@@ -35,7 +35,7 @@ abstract class BaseWidget implements Renderable, AssetsAware, Service {
 	/**
 	 * Register the WordPress hooks.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	public function register() {
 		$this->register_assets();
@@ -57,7 +57,7 @@ abstract class BaseWidget implements Renderable, AssetsAware, Service {
 	/**
 	 * Process the shortcode attributes and prepare rendering.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return string Rendered HTML of the shortcode.
 	 */
@@ -68,7 +68,7 @@ abstract class BaseWidget implements Renderable, AssetsAware, Service {
 	/**
 	 * Get the slug to use for the dashboard widget.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return string widget slug.
 	 * @throws MustExtend When the default slug has not been extended.
@@ -83,7 +83,7 @@ abstract class BaseWidget implements Renderable, AssetsAware, Service {
 	/**
 	 * Get the View URI to use for rendering the dashboard widget.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return string View URI.
 	 * @throws MustExtend When the default view URI has not been extended.
@@ -99,7 +99,7 @@ abstract class BaseWidget implements Renderable, AssetsAware, Service {
 	/**
 	 * Render the current Renderable.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param array $context Context in which to render.
 	 */
@@ -118,7 +118,7 @@ abstract class BaseWidget implements Renderable, AssetsAware, Service {
 	/**
 	 * Get the title of the dashboard widget.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	abstract public function get_title();
 
@@ -128,7 +128,7 @@ abstract class BaseWidget implements Renderable, AssetsAware, Service {
 	 * Override to provide data to the view that is not part of the shortcode
 	 * attributes.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return array Context to pass onto view.
 	 */

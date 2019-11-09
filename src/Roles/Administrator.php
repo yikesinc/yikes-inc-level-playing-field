@@ -12,7 +12,7 @@ namespace Yikes\LevelPlayingField\Roles;
 /**
  * Class Administrator
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 final class Administrator extends ExistingRole {
@@ -22,7 +22,7 @@ final class Administrator extends ExistingRole {
 	/**
 	 * Get the capability array for the role.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return array
 	 */
 	protected function get_caps() {

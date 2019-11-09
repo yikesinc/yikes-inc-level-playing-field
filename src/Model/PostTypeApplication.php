@@ -14,7 +14,7 @@ use Yikes\LevelPlayingField\CustomPostType\ApplicationManager;
 /**
  * Trait PostTypeApplication
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 trait PostTypeApplication {
@@ -22,7 +22,7 @@ trait PostTypeApplication {
 	/**
 	 * Get the post type slug to find.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return string
 	 */
 	protected function get_post_type() {

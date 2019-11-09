@@ -16,7 +16,7 @@ use Yikes\LevelPlayingField\Service;
  *
  * Handles registration of stylesheet for the entire admin area.
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 class AdminStyles implements Service, AssetsAware {
@@ -26,7 +26,7 @@ class AdminStyles implements Service, AssetsAware {
 	/**
 	 * Register the current Registerable.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	public function register() {
 		$this->register_assets();
@@ -39,7 +39,7 @@ class AdminStyles implements Service, AssetsAware {
 	/**
 	 * Load asset objects for use.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	protected function load_assets() {
 		$this->assets = [

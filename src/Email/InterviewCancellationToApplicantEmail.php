@@ -15,7 +15,7 @@ use Yikes\LevelPlayingField\Applicant;
 /**
  * Class InterviewCancellationToApplicantEmail.
  *
- * @since   %VERSION%
+ * @since   1.0.0
  *
  * @package Yikes\LevelPlayingField
  * @author  Kevin Utz / Jeremy Pry
@@ -27,7 +27,7 @@ class InterviewCancellationToApplicantEmail extends ToApplicantEmail {
 	/**
 	 * Get the email subject.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return string The subject of the email.
 	 */
@@ -38,7 +38,7 @@ class InterviewCancellationToApplicantEmail extends ToApplicantEmail {
 	/**
 	 * Get the email message.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return string The email's message.
 	 */

@@ -14,7 +14,7 @@ use WP_Comment;
 /**
  * Abstract class Comment.
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 abstract class Comment {
@@ -30,7 +30,7 @@ abstract class Comment {
 	/**
 	 * WP_Comment Object.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @var   WP_Comment
 	 */
@@ -39,7 +39,7 @@ abstract class Comment {
 	/**
 	 * Set the $comment object for this class.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param int $comment_id The ID of a WP_Comment object.
 	 */
@@ -52,7 +52,7 @@ abstract class Comment {
 	/**
 	 * Return the values for creating a new comment.
 	 *
-	 * @since  %VERSION%
+	 * @since  1.0.0
 	 *
 	 * @return array
 	 */
@@ -76,7 +76,7 @@ abstract class Comment {
 	/**
 	 * Return the ID of the WP_Comment object.
 	 *
-	 * @since  %VERSION%
+	 * @since  1.0.0
 	 *
 	 * @return int
 	 */
@@ -87,7 +87,7 @@ abstract class Comment {
 	/**
 	 * Return the post ID of the WP_Comment object.
 	 *
-	 * @since  %VERSION%
+	 * @since  1.0.0
 	 *
 	 * @return int
 	 */
@@ -98,7 +98,7 @@ abstract class Comment {
 	/**
 	 * Return the author of the WP_Comment object.
 	 *
-	 * @since  %VERSION%
+	 * @since  1.0.0
 	 *
 	 * @return string
 	 */
@@ -109,7 +109,7 @@ abstract class Comment {
 	/**
 	 * Return the author email of the WP_Comment object.
 	 *
-	 * @since  %VERSION%
+	 * @since  1.0.0
 	 *
 	 * @return string
 	 */
@@ -120,7 +120,7 @@ abstract class Comment {
 	/**
 	 * Return the author URL of the WP_Comment object.
 	 *
-	 * @since  %VERSION%
+	 * @since  1.0.0
 	 *
 	 * @return string
 	 */
@@ -131,7 +131,7 @@ abstract class Comment {
 	/**
 	 * Return the date of the WP_Comment object.
 	 *
-	 * @since  %VERSION%
+	 * @since  1.0.0
 	 *
 	 * @return string
 	 */
@@ -142,7 +142,7 @@ abstract class Comment {
 	/**
 	 * Format the date of the WP_Comment object with the given format.
 	 *
-	 * @since  %VERSION%
+	 * @since  1.0.0
 	 *
 	 * @param  string $format The format for PHP's date function.
 	 *
@@ -155,7 +155,7 @@ abstract class Comment {
 	/**
 	 * Return the GMT date of the WP_Comment object.
 	 *
-	 * @since  %VERSION%
+	 * @since  1.0.0
 	 *
 	 * @return string
 	 */
@@ -166,7 +166,7 @@ abstract class Comment {
 	/**
 	 * Return the content of the WP_Comment object.
 	 *
-	 * @since  %VERSION%
+	 * @since  1.0.0
 	 *
 	 * @return string
 	 */
@@ -177,7 +177,7 @@ abstract class Comment {
 	/**
 	 * Return the type of the WP_Comment object.
 	 *
-	 * @since  %VERSION%
+	 * @since  1.0.0
 	 *
 	 * @return string
 	 */
@@ -188,7 +188,7 @@ abstract class Comment {
 	/**
 	 * Return the user ID of the WP_Comment object.
 	 *
-	 * @since  %VERSION%
+	 * @since  1.0.0
 	 *
 	 * @return int
 	 */
@@ -199,7 +199,7 @@ abstract class Comment {
 	/**
 	 * Return the Author IP of the WP_Comment object.
 	 *
-	 * @since  %VERSION%
+	 * @since  1.0.0
 	 *
 	 * @return string
 	 */
@@ -210,7 +210,7 @@ abstract class Comment {
 	/**
 	 * Return the agent of the WP_Comment object.
 	 *
-	 * @since  %VERSION%
+	 * @since  1.0.0
 	 *
 	 * @return string
 	 */
@@ -221,7 +221,7 @@ abstract class Comment {
 	/**
 	 * Return the approved status of the WP_Comment object.
 	 *
-	 * @since  %VERSION%
+	 * @since  1.0.0
 	 *
 	 * @return int
 	 */
@@ -232,7 +232,7 @@ abstract class Comment {
 	/**
 	 * Return the date for a new comment.
 	 *
-	 * @since  %VERSION%
+	 * @since  1.0.0
 	 *
 	 * @return string
 	 */
@@ -243,7 +243,7 @@ abstract class Comment {
 	/**
 	 * Return the approval status for a new comment.
 	 *
-	 * @since  %VERSION%
+	 * @since  1.0.0
 	 *
 	 * @return int
 	 */
@@ -254,7 +254,7 @@ abstract class Comment {
 	/**
 	 * Return the parent for a new comment.
 	 *
-	 * @since  %VERSION%
+	 * @since  1.0.0
 	 *
 	 * @return int
 	 */
@@ -265,7 +265,7 @@ abstract class Comment {
 	/**
 	 * Return the author email for a new comment.
 	 *
-	 * @since  %VERSION%
+	 * @since  1.0.0
 	 *
 	 * @return string
 	 */
@@ -276,7 +276,7 @@ abstract class Comment {
 	/**
 	 * Return the author URL for a new comment.
 	 *
-	 * @since  %VERSION%
+	 * @since  1.0.0
 	 *
 	 * @return string
 	 */
@@ -287,7 +287,7 @@ abstract class Comment {
 	/**
 	 * Return the type for a new comment.
 	 *
-	 * @since  %VERSION%
+	 * @since  1.0.0
 	 *
 	 * @return string
 	 */
@@ -298,7 +298,7 @@ abstract class Comment {
 	/**
 	 * Return the IP for a new comment.
 	 *
-	 * @since  %VERSION%
+	 * @since  1.0.0
 	 *
 	 * @return string
 	 */
@@ -309,7 +309,7 @@ abstract class Comment {
 	/**
 	 * Return the agent for a new comment.
 	 *
-	 * @since  %VERSION%
+	 * @since  1.0.0
 	 *
 	 * @return string
 	 */
@@ -320,7 +320,7 @@ abstract class Comment {
 	/**
 	 * Return the user ID for a new comment.
 	 *
-	 * @since  %VERSION%
+	 * @since  1.0.0
 	 *
 	 * @return int
 	 */
@@ -331,7 +331,7 @@ abstract class Comment {
 	/**
 	 * Insert a new comment and assign it to the class.
 	 *
-	 * @since  %VERSION%
+	 * @since  1.0.0
 	 *
 	 * @param array $comment_data The array of comment data to override the defaults.
 	 *
@@ -358,7 +358,7 @@ abstract class Comment {
 	/**
 	 * Delete comments that were created during email errors.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param int $comment The ID of comment.
 	 *

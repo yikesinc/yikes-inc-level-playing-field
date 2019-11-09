@@ -14,7 +14,7 @@ use RuntimeException;
 /**
  * Class FailedToUnanonymize
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 class FailedToUnanonymize extends RuntimeException implements Exception {
@@ -22,7 +22,7 @@ class FailedToUnanonymize extends RuntimeException implements Exception {
 	/**
 	 * Create a new exception instance when the current user is not capable of unanonymizing.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return static
 	 */
 	public static function not_capable() {

@@ -17,7 +17,7 @@ use Yikes\LevelPlayingField\PluginHelper;
  * This class works like TemplatedView, but does not allow overriding the
  * template file in a theme.
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 class NoOverrideLocationView extends TemplatedView {
@@ -27,7 +27,7 @@ class NoOverrideLocationView extends TemplatedView {
 	/**
 	 * Get the possible locations for the view.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $uri URI of the view to get the locations for.
 	 *

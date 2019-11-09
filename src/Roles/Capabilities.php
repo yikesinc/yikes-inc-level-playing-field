@@ -18,7 +18,7 @@ use Yikes\LevelPlayingField\Taxonomy\JobStatus;
 /**
  * Interface Capabilities
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 interface Capabilities {

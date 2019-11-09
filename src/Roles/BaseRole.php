@@ -16,7 +16,7 @@ use Yikes\LevelPlayingField\Uninstallable;
 /**
  * Class BaseRole
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 abstract class BaseRole implements Service, Uninstallable {
@@ -26,7 +26,7 @@ abstract class BaseRole implements Service, Uninstallable {
 	/**
 	 * Register our methods with WordPress hooks.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	public function register() {
 		add_action( 'init', [ $this, 'register_role' ], 20 );
@@ -35,7 +35,7 @@ abstract class BaseRole implements Service, Uninstallable {
 	/**
 	 * Register the custom role and add capabilities to existing roles.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	public function register_role() {
 		add_role( $this->get_slug(), $this->get_title(), $this->get_caps() );
@@ -44,7 +44,7 @@ abstract class BaseRole implements Service, Uninstallable {
 	/**
 	 * Get the slug to use for the custom post type.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return string Custom post type slug.
 	 * @throws MustExtend When the default slug has not been extended.
@@ -67,7 +67,7 @@ abstract class BaseRole implements Service, Uninstallable {
 	/**
 	 * Get the localized title for the role.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return string
 	 */
 	abstract public function get_title();
@@ -75,7 +75,7 @@ abstract class BaseRole implements Service, Uninstallable {
 	/**
 	 * Get the capability array for the role.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return array
 	 */
 	abstract protected function get_caps();

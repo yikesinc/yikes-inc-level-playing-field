@@ -16,7 +16,7 @@ use Yikes\LevelPlayingField\Query\JobQueryBuilder;
 /**
  * Class JobRepository
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 final class JobRepository extends CustomPostTypeRepository {
@@ -27,7 +27,7 @@ final class JobRepository extends CustomPostTypeRepository {
 	/**
 	 * Find the Job with a given post ID.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param int $id Post ID to retrieve.
 	 *
@@ -41,7 +41,7 @@ final class JobRepository extends CustomPostTypeRepository {
 	/**
 	 * Find all the published Jobs.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return Job[]
 	 */
@@ -52,7 +52,7 @@ final class JobRepository extends CustomPostTypeRepository {
 	/**
 	 * Find all active Jobs.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param int    $limit           The maximum number of jobs to retrieve.
 	 * @param string $orderby         The field for ordering.
@@ -92,7 +92,7 @@ final class JobRepository extends CustomPostTypeRepository {
 	/**
 	 * Get the count of active Jobs.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return int
 	 */
 	public function count_active() {
@@ -108,7 +108,7 @@ final class JobRepository extends CustomPostTypeRepository {
 	/**
 	 * Get the count of Jobs using a particular Application.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param int $application_id The Application ID.
 	 *
@@ -126,7 +126,7 @@ final class JobRepository extends CustomPostTypeRepository {
 	/**
 	 * Get the name of the class to use when instantiating a model object.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param WP_Post $post The post object to use when instantiating the model.
 	 *

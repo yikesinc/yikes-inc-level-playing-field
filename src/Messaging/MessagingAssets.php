@@ -23,7 +23,7 @@ trait MessagingAssets {
 	/**
 	 * The handle for the messaging script.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @var string
 	 */
 	private $messaging_handle = 'lpf-messaging-admin-script';
@@ -31,7 +31,7 @@ trait MessagingAssets {
 	/**
 	 * The handle for the messaging styles.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @var string
 	 */
 	private $style_handle = 'lpf-messaging-admin-styles';
@@ -39,7 +39,7 @@ trait MessagingAssets {
 	/**
 	 * The handle for the timepicker script.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @var string
 	 */
 	private $timepicker_handle = 'jquery-timepicker-script';
@@ -47,7 +47,7 @@ trait MessagingAssets {
 	/**
 	 * Load asset objects for use.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	protected function load_assets() {
 		$this->assets = [
@@ -75,7 +75,7 @@ trait MessagingAssets {
 	/**
 	 * Enqueue the known assets.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	protected function enqueue_assets() {
 		$this->add_script_localization();
@@ -88,7 +88,7 @@ trait MessagingAssets {
 	 * This is necessary because we need to use get_rest_url(), which isn't available early
 	 * on the plugins_loaded hook where asset registration takes place.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	protected function add_script_localization() {
 		$post_id = isset( $_GET['post'] ) ? filter_var( $_GET['post'], FILTER_SANITIZE_NUMBER_INT ) : 0;

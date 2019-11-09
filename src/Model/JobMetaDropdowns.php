@@ -12,7 +12,7 @@ namespace Yikes\LevelPlayingField\Model;
 /**
 * Trait JobMetaDropdowns
 *
-* @since   %VERSION%
+* @since   1.0.0
 * @package Yikes\LevelPlayingField
 */
 trait JobMetaDropdowns {
@@ -20,7 +20,7 @@ trait JobMetaDropdowns {
 	/**
 	 * Get dropdown options for job type.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return array
 	 */
 	public function get_job_type_options() {

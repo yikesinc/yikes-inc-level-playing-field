@@ -16,7 +16,7 @@ use Yikes\LevelPlayingField\Service;
 /**
  * Abstract class BaseCustomPostType.
  *
- * @since   %VERSION%
+ * @since   1.0.0
  *
  * @package Yikes\LevelPlayingField
  * @author  Jeremy Pry
@@ -30,7 +30,7 @@ abstract class BaseCustomPostType implements Activateable, Service {
 	/**
 	 * Register the WordPress hooks.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	public function register() {
 		add_action( 'init', [ $this, 'register_post_type' ] );
@@ -40,7 +40,7 @@ abstract class BaseCustomPostType implements Activateable, Service {
 	/**
 	 * Activate the service.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	public function activate() {
 		$this->register_post_type();
@@ -58,7 +58,7 @@ abstract class BaseCustomPostType implements Activateable, Service {
 	/**
 	 * Get the slug to use for the custom post type.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return string Custom post type slug.
 	 * @throws MustExtend When the default slug has not been extended.
@@ -75,7 +75,7 @@ abstract class BaseCustomPostType implements Activateable, Service {
 	 * Include our custom messages to use when the CPT is updated.
 	 *
 	 * @author Jeremy Pry
-	 * @since  %VERSION%
+	 * @since  1.0.0
 	 *
 	 * @param array $messages Array of existing messages.
 	 *
@@ -90,7 +90,7 @@ abstract class BaseCustomPostType implements Activateable, Service {
 	/**
 	 * Getter for class properties.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $name The property name.
 	 *
@@ -109,7 +109,7 @@ abstract class BaseCustomPostType implements Activateable, Service {
 	/**
 	 * Get the arguments that configure the custom post type.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return array Array of arguments.
 	 */
@@ -118,7 +118,7 @@ abstract class BaseCustomPostType implements Activateable, Service {
 	/**
 	 * Get the array of messages to use when updating.
 	 *
-	 * @since  %VERSION%
+	 * @since  1.0.0
 	 * @author Jeremy Pry
 	 * @return array
 	 */

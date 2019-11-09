@@ -38,7 +38,7 @@ class JobApplicants extends BaseWidget {
 	 *
 	 * Override to provide data to the view.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return array Context to pass onto view.
 	 * @throws InvalidPostID When the post ID is not valid.
@@ -83,7 +83,7 @@ class JobApplicants extends BaseWidget {
 	/**
 	 * Get the title of the dashboard widget.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	public function get_title() {
 		return __( 'Applicants', 'level-playing-field' );
@@ -92,7 +92,7 @@ class JobApplicants extends BaseWidget {
 	/**
 	 * Get the array of known assets.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return Asset[]
 	 */

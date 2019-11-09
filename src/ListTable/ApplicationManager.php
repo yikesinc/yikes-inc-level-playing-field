@@ -16,7 +16,7 @@ use Yikes\LevelPlayingField\Model\PostTypeApplication;
 /**
  * Class ApplicationManager
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 final class ApplicationManager extends BasePostType {
@@ -26,7 +26,7 @@ final class ApplicationManager extends BasePostType {
 	/**
 	 * Register the WordPress hooks.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	public function register() {
 		parent::register();
@@ -38,7 +38,7 @@ final class ApplicationManager extends BasePostType {
 	/**
 	 * Adjust the columns to display for the list table.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param array $original_columns The original columns.
 	 *
@@ -59,7 +59,7 @@ final class ApplicationManager extends BasePostType {
 	/**
 	 * Output values for any custom columns.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $column_name The column slug.
 	 * @param int    $post_id     The post ID.
@@ -100,7 +100,7 @@ final class ApplicationManager extends BasePostType {
 	/**
 	 * Filter the query vars for the request.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param array $query_vars The query vars for the request.
 	 *
@@ -132,7 +132,7 @@ final class ApplicationManager extends BasePostType {
 	/**
 	 * Output custom dropdowns for filtering.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $which     The location of the extra table nav markup: 'top' or 'bottom' for WP_Posts_List_Table, 'bar' for WP_Media_List_Table.
 	 */

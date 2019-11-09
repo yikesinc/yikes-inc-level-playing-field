@@ -12,7 +12,7 @@ namespace Yikes\LevelPlayingField\Roles;
 /**
  * Class ExistingRole
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 abstract class ExistingRole extends BaseRole {
@@ -20,7 +20,7 @@ abstract class ExistingRole extends BaseRole {
 	/**
 	 * Register the custom role and add capabilities to existing roles.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	public function register_role() {
 		$role = get_role( $this->get_slug() );
@@ -50,7 +50,7 @@ abstract class ExistingRole extends BaseRole {
 	 *
 	 * This isn't used for existing roles.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return string
 	 */
 	public function get_title() {

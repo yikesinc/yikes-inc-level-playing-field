@@ -12,7 +12,7 @@ namespace Yikes\LevelPlayingField\Exception;
 /**
  * Class InvalidField
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 class InvalidField extends \InvalidArgumentException implements Exception {
@@ -21,7 +21,7 @@ class InvalidField extends \InvalidArgumentException implements Exception {
 	 * Create a new instance of the exception for a field class name that is
 	 * not recognized.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $field Class name of the service that was not recognized.
 	 *
@@ -42,7 +42,7 @@ class InvalidField extends \InvalidArgumentException implements Exception {
 	/**
 	 * Create a new instance of the exception for a field ID that is invalid.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $id The invalid field ID.
 	 *
@@ -61,7 +61,7 @@ class InvalidField extends \InvalidArgumentException implements Exception {
 	/**
 	 * Create a new instance of the exception when a form field is required.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $field   The field name.
 	 * @param string $context Optional additional context about the field.
@@ -82,7 +82,7 @@ class InvalidField extends \InvalidArgumentException implements Exception {
 	/**
 	 * Create a new instance of the exception when the form field value is invalid.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $field   The field label.
 	 * @param string $context Optional additional context about the field.

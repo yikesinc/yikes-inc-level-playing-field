@@ -21,7 +21,7 @@ use Yikes\LevelPlayingField\Query\ApplicantQueryBuilder;
 /**
  * Class ApplicantRepository
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 class ApplicantRepository extends CustomPostTypeRepository {
@@ -32,7 +32,7 @@ class ApplicantRepository extends CustomPostTypeRepository {
 	/**
 	 * Find the Applicant with a given post ID.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param int $id Post ID to retrieve.
 	 *
@@ -46,7 +46,7 @@ class ApplicantRepository extends CustomPostTypeRepository {
 	/**
 	 * Find all the published Applicants.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return Applicant[]
 	 */
@@ -57,7 +57,7 @@ class ApplicantRepository extends CustomPostTypeRepository {
 	/**
 	 * Get the name of the class to use when instantiating a model object.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param WP_Post $post The post object to use when instantiating the model.
 	 *
@@ -70,7 +70,7 @@ class ApplicantRepository extends CustomPostTypeRepository {
 	/**
 	 * Get the count of applicants for a given Job ID.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param int $job_id The Job ID.
 	 *
@@ -88,7 +88,7 @@ class ApplicantRepository extends CustomPostTypeRepository {
 	/**
 	 * Get the count of Applicants who have been viewed for a Job.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param int $job_id The Job ID.
 	 *
@@ -107,7 +107,7 @@ class ApplicantRepository extends CustomPostTypeRepository {
 	/**
 	 * Get the count of new (unviewed) applicants for a given Job ID.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param int $job_id The Job ID.
 	 *
@@ -126,7 +126,7 @@ class ApplicantRepository extends CustomPostTypeRepository {
 	/**
 	 * Get Applicants that have applied for a particular job.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param int $job_id The Job ID.
 	 *
@@ -141,7 +141,7 @@ class ApplicantRepository extends CustomPostTypeRepository {
 	/**
 	 * Get the count of applicants for a given Application ID.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param int $application_id The Application ID.
 	 *
@@ -159,7 +159,7 @@ class ApplicantRepository extends CustomPostTypeRepository {
 	/**
 	 * Get Applicants using a query builder object.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param ApplicantQueryBuilder $query_builder The query builder object.
 	 *
@@ -178,7 +178,7 @@ class ApplicantRepository extends CustomPostTypeRepository {
 	/**
 	 * Create a new Applicant.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return Applicant
 	 */
@@ -199,7 +199,7 @@ class ApplicantRepository extends CustomPostTypeRepository {
 	/**
 	 * Create a new Applicant from a submitted form.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param Application $form The form object.
 	 *

@@ -14,7 +14,7 @@ use Yikes\LevelPlayingField\Model\ApplicantMeta;
 /**
  * Class Address
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 class Address extends ComplexField {
@@ -28,7 +28,7 @@ class Address extends ComplexField {
 	 * This should return a multi-dimensional array of field data which will
 	 * be used to construct Field objects.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return array
 	 */
 	protected function get_default_fields() {
@@ -66,7 +66,7 @@ class Address extends ComplexField {
 	 *
 	 * This should echo the label directly.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	protected function render_grouping_label() {
 		printf(

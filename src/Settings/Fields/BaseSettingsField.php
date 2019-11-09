@@ -15,7 +15,7 @@ use Yikes\LevelPlayingField\Settings\Setting;
 /**
  * Class AdditionalEmailRecipients.
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 abstract class BaseSettingsField {
@@ -25,7 +25,7 @@ abstract class BaseSettingsField {
 	/**
 	 * The setting instance.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @var Setting
 	 */
 	protected $setting;
@@ -49,7 +49,7 @@ abstract class BaseSettingsField {
 	/**
 	 * Render the field.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	public function render() {
 		$this->description();
@@ -60,14 +60,14 @@ abstract class BaseSettingsField {
 	/**
 	 * Render the field's HTML.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	abstract protected function field();
 
 	/**
 	 * Get the name constant for the class.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @throws MustExtend When the NAME constant has not been extended.
 	 */
 	protected function get_name() {
@@ -81,7 +81,7 @@ abstract class BaseSettingsField {
 	/**
 	 * Get the value of the setting. We shouldn't need to instantiate the Settings class every time. We need to find a way to avoid that.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	protected function get_value() {
 		return $this->setting->get();
@@ -90,7 +90,7 @@ abstract class BaseSettingsField {
 	/**
 	 * Return the description text for this field, i18n'ed.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return string $description_text The description text for this field.
 	 */
@@ -101,7 +101,7 @@ abstract class BaseSettingsField {
 	/**
 	 * Echo the description text for this field wrapped in HTML.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	protected function description() {
 		$this->maybe_display_text( 'lpf-field-description', $this->get_description_text() );
@@ -110,7 +110,7 @@ abstract class BaseSettingsField {
 	/**
 	 * Return the help text for this field, i18n'ed.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return string $help_text The help text for this field.
 	 */
@@ -121,7 +121,7 @@ abstract class BaseSettingsField {
 	/**
 	 * Echo the help text for this field wrapped in HTML.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	protected function help() {
 		$this->maybe_display_text( 'lpf-field-help', $this->get_help_text() );
@@ -140,7 +140,7 @@ abstract class BaseSettingsField {
 	/**
 	 * Maybe display a paragraph of text with a given class.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $class HTML class for the text.
 	 * @param string $text  The text to display.

@@ -12,7 +12,7 @@ namespace Yikes\LevelPlayingField\Field;
 /**
  * Class NullParent
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 class NullParent extends BaseField {
@@ -27,7 +27,7 @@ class NullParent extends BaseField {
 	/**
 	 * Render the field.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	public function render() {
 		// nothing to do here.
@@ -43,7 +43,7 @@ class NullParent extends BaseField {
 	/**
 	 * Validate the submission for the given field.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return null A null placeholder.
 	 */
@@ -54,7 +54,7 @@ class NullParent extends BaseField {
 	/**
 	 * Get the type for use with errors.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return string
 	 */
 	protected function get_error_type() {

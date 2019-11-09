@@ -14,7 +14,7 @@ namespace Yikes\LevelPlayingField;
  *
  * Handle basic WordPress plugin variables like the plugin's path and URL.
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 trait PluginHelper {
@@ -22,7 +22,7 @@ trait PluginHelper {
 	/**
 	 * Get the main plugin file.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return string
 	 */
 	protected function get_main_file() {
@@ -32,7 +32,7 @@ trait PluginHelper {
 	/**
 	 * Get the root directory for the plugin.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return string
 	 */
 	protected function get_root_dir() {
@@ -42,7 +42,7 @@ trait PluginHelper {
 	/**
 	 * Get the version of the plugin.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return string
 	 */
 	protected function get_version() {
@@ -52,7 +52,7 @@ trait PluginHelper {
 	/**
 	 * Get the url for the plugin.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $path The URL path.
 	 *
@@ -65,7 +65,7 @@ trait PluginHelper {
 	/**
 	 * Get the filename for the plugin.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return string
 	 */
 	protected function get_main_filename() {
@@ -75,7 +75,7 @@ trait PluginHelper {
 	/**
 	 * Get the WordPress plugin name for this plugin.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return string
 	 */
 	protected function get_basename() {
@@ -87,7 +87,7 @@ trait PluginHelper {
 	 *
 	 * Check if the register_block_type function exists to see if the new editor is available. Then check if the classic editor plugin is enabled to see if the editor is being disabled.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return bool
 	 */
 	protected function is_new_editor_enabled() {

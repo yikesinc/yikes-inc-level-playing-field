@@ -12,7 +12,7 @@ namespace Yikes\LevelPlayingField\Field;
 /**
  * Class Phone
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 class Phone extends BaseInput {
@@ -22,7 +22,7 @@ class Phone extends BaseInput {
 	/**
 	 * Render any additional attributes.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	protected function render_extra_attributes() {
 		parent::render_extra_attributes();

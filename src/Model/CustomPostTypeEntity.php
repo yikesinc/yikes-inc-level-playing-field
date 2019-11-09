@@ -15,7 +15,7 @@ use Yikes\LevelPlayingField\Exception\FailedToSavePost;
 /**
  * Abstract class CustomPostTypeEntity.
  *
- * @since   %VERSION%
+ * @since   1.0.0
  *
  * @package Yikes\LevelPlayingField
  * @author  Jeremy Pry
@@ -25,7 +25,7 @@ abstract class CustomPostTypeEntity implements Entity {
 	/**
 	 * Whether this is a new Entity.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @var bool
 	 */
 	protected $new;
@@ -33,7 +33,7 @@ abstract class CustomPostTypeEntity implements Entity {
 	/**
 	 * WordPress post data representing the post.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @var WP_Post
 	 */
@@ -42,7 +42,7 @@ abstract class CustomPostTypeEntity implements Entity {
 	/**
 	 * Whether post in this object has been changed.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @var bool
 	 */
 	protected $post_changed = false;
@@ -50,7 +50,7 @@ abstract class CustomPostTypeEntity implements Entity {
 	/**
 	 * Instantiate a CustomPostTypeEntity object.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param WP_Post $post Post object to instantiate a CustomPostTypeEntity model from.
 	 */
@@ -67,7 +67,7 @@ abstract class CustomPostTypeEntity implements Entity {
 	/**
 	 * Return the entity ID.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return int Entity ID.
 	 */
@@ -78,7 +78,7 @@ abstract class CustomPostTypeEntity implements Entity {
 	/**
 	 * Return the WP_Post object that represents this model.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return WP_Post WP_Post object representing this model.
 	 */
@@ -89,7 +89,7 @@ abstract class CustomPostTypeEntity implements Entity {
 	/**
 	 * Get the post's title.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return string Title of the post.
 	 */
@@ -100,7 +100,7 @@ abstract class CustomPostTypeEntity implements Entity {
 	/**
 	 * Set the post's title.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $title New title of the post.
 	 */
@@ -112,7 +112,7 @@ abstract class CustomPostTypeEntity implements Entity {
 	/**
 	 * Get the post's content.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return string Content of the post.
 	 */
@@ -123,7 +123,7 @@ abstract class CustomPostTypeEntity implements Entity {
 	/**
 	 * Get the post's excerpt.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return string Excerpt of the post.
 	 */
@@ -134,7 +134,7 @@ abstract class CustomPostTypeEntity implements Entity {
 	/**
 	 * Get the post's publish date, possibly formatted.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $date_format A date format usable in PHP's date function.
 	 *
@@ -151,7 +151,7 @@ abstract class CustomPostTypeEntity implements Entity {
 	/**
 	 * Set the post's content.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $content New content of the post.
 	 */
@@ -163,7 +163,7 @@ abstract class CustomPostTypeEntity implements Entity {
 	/**
 	 * Magic getter method to fetch meta properties only when requested.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $property Property that was requested.
 	 *
@@ -185,7 +185,7 @@ abstract class CustomPostTypeEntity implements Entity {
 	/**
 	 * Persist the post object and post properties.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @throws FailedToSavePost When there is a problem saving the post.
 	 */
 	public function persist() {
@@ -196,7 +196,7 @@ abstract class CustomPostTypeEntity implements Entity {
 	/**
 	 * Save changes to the post object.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return bool Whether the post was successfully updated.
 	 * @throws FailedToSavePost When the post cannot be saved.
 	 */
@@ -223,7 +223,7 @@ abstract class CustomPostTypeEntity implements Entity {
 	/**
 	 * Load all lazy properties.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	protected function load_all_lazy_properties() {
 		foreach ( $this->get_lazy_properties() as $property => $default ) {
@@ -238,14 +238,14 @@ abstract class CustomPostTypeEntity implements Entity {
 	/**
 	 * Persist the additional properties of the entity.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	abstract public function persist_properties();
 
 	/**
 	 * Return the list of lazily-loaded properties and their default values.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return array
 	 */
@@ -258,7 +258,7 @@ abstract class CustomPostTypeEntity implements Entity {
 	 * object's state, otherwise the load procedure might be triggered multiple
 	 * times.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $property Name of the property to load.
 	 */

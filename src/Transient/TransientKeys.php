@@ -12,7 +12,7 @@ namespace Yikes\LevelPlayingField\Transient;
 /**
  * Interface TransientKeys
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 interface TransientKeys {

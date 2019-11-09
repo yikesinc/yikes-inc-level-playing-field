@@ -14,7 +14,7 @@ namespace Yikes\LevelPlayingField\Field;
  *
  * These are the available field types and their class mappings.
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 interface Types {

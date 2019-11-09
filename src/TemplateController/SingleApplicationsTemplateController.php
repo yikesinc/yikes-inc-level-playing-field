@@ -23,7 +23,7 @@ use Yikes\LevelPlayingField\Shortcode\Application as ApplicationShortcode;
  *
  * A class to control which template file is used to display the single applications page.
  *
- * @since   %VERSION%
+ * @since   1.0.0
  *
  * @package Yikes\LevelPlayingField
  * @author  JP, KU, EB, TL
@@ -36,7 +36,7 @@ class SingleApplicationsTemplateController extends TemplateController {
 	/**
 	 * Get the array of known assets.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return Asset[]
 	 */
@@ -49,7 +49,7 @@ class SingleApplicationsTemplateController extends TemplateController {
 	/**
 	 * Check if the current request is for this class' object and supply the current post w/ content.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param  string $content The default post content.
 	 *
@@ -75,7 +75,7 @@ class SingleApplicationsTemplateController extends TemplateController {
 	/**
 	 * Render the current Renderable.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param array $context Context in which to render.
 	 *
@@ -109,7 +109,7 @@ class SingleApplicationsTemplateController extends TemplateController {
 	/**
 	 * Get the data to pass onto the view.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param int $id The Job ID.
 	 *

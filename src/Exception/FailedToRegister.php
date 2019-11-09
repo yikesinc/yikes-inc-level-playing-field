@@ -12,7 +12,7 @@ namespace Yikes\LevelPlayingField\Exception;
 /**
  * Class FailedToRegister
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 final class FailedToRegister extends \LogicException implements Exception {
@@ -20,7 +20,7 @@ final class FailedToRegister extends \LogicException implements Exception {
 	/**
 	 * Create an instance of this exception when an asset was not registered before being enqueued.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $handle The asset handle.
 	 *

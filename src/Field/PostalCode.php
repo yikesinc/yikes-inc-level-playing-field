@@ -12,7 +12,7 @@ namespace Yikes\LevelPlayingField\Field;
 /**
  * Class PostalCode
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 class PostalCode extends BaseInput {
@@ -22,7 +22,7 @@ class PostalCode extends BaseInput {
 	/**
 	 * Render any additional attributes.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	protected function render_extra_attributes() {
 		parent::render_extra_attributes();

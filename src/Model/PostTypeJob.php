@@ -14,7 +14,7 @@ use Yikes\LevelPlayingField\CustomPostType\JobManager;
 /**
  * Trait PostTypeJob
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 trait PostTypeJob {
@@ -22,7 +22,7 @@ trait PostTypeJob {
 	/**
 	 * Get the post type slug to find.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return string
 	 */
 	protected function get_post_type() {

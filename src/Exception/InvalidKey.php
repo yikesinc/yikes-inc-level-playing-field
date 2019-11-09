@@ -12,7 +12,7 @@ namespace Yikes\LevelPlayingField\Exception;
 /**
  * Class InvalidKey
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 class InvalidKey extends \InvalidArgumentException implements Exception {
@@ -20,7 +20,7 @@ class InvalidKey extends \InvalidArgumentException implements Exception {
 	/**
 	 * Create a new instance of an exception when an empty key is provided.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $function The name of the calling function or method.
 	 *
@@ -35,7 +35,7 @@ class InvalidKey extends \InvalidArgumentException implements Exception {
 	/**
 	 * Create a new instance of an exception when a key is not found for the function.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $key      The key that wasn't found.
 	 * @param string $function The function where the key isn't found.

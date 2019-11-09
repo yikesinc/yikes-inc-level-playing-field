@@ -15,7 +15,7 @@ use Yikes\LevelPlayingField\RequiredPages\ApplicationFormPage;
 /**
  * Class Job
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  *
  * @property string status      The Job status.
@@ -33,7 +33,7 @@ final class Job extends CustomPostTypeEntity {
 	/**
 	 * Get the job status.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return string
 	 */
@@ -44,7 +44,7 @@ final class Job extends CustomPostTypeEntity {
 	/**
 	 * Magic getter method to fetch meta properties only when requested.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $property Property that was requested.
 	 *
@@ -65,7 +65,7 @@ final class Job extends CustomPostTypeEntity {
 	 *
 	 * Possible values are full time, part time, contract, per diem, and other.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return string
 	 */
@@ -79,7 +79,7 @@ final class Job extends CustomPostTypeEntity {
 	 *
 	 * Possible values are address and remote.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return bool
 	 */
@@ -90,7 +90,7 @@ final class Job extends CustomPostTypeEntity {
 	/**
 	 * Determine if the job is remote.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return bool
 	 */
@@ -101,7 +101,7 @@ final class Job extends CustomPostTypeEntity {
 	/**
 	 * Get the job address.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return array
 	 */
@@ -112,7 +112,7 @@ final class Job extends CustomPostTypeEntity {
 	/**
 	 * Get the application ID to use when displaying this Job.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return int
 	 */
@@ -123,7 +123,7 @@ final class Job extends CustomPostTypeEntity {
 	/**
 	 * Get the success message to use when an application using this Job is submitted.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return string
 	 */
@@ -134,7 +134,7 @@ final class Job extends CustomPostTypeEntity {
 	/**
 	 * Get the page ID to use for this Job's application.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return int
 	 */
@@ -145,7 +145,7 @@ final class Job extends CustomPostTypeEntity {
 	/**
 	 * Set the page ID to use for this Job's application.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param int $page_id A page ID.
 	 */
@@ -156,7 +156,7 @@ final class Job extends CustomPostTypeEntity {
 	/**
 	 * Get the application URL to use when displaying this Job.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return string
 	 */
@@ -165,7 +165,7 @@ final class Job extends CustomPostTypeEntity {
 		/**
 		 * Filter the application page ID for the given Job.
 		 *
-		 * @since %VERSION%
+		 * @since 1.0.0
 		 *
 		 * @param int $page_id The page ID of the plugin's application form page.
 		 * @param Job $job     The job class.
@@ -179,7 +179,7 @@ final class Job extends CustomPostTypeEntity {
 	/**
 	 * Persist the additional properties of the entity.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	public function persist_properties() {
 		foreach ( $this->get_lazy_properties() as $key => $default ) {
@@ -199,7 +199,7 @@ final class Job extends CustomPostTypeEntity {
 	/**
 	 * Return the list of lazily-loaded properties and their default values.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return array
 	 */
@@ -241,7 +241,7 @@ final class Job extends CustomPostTypeEntity {
 	 * object's state, otherwise the load procedure might be triggered multiple
 	 * times.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $property Name of the property to load.
 	 */
@@ -264,7 +264,7 @@ final class Job extends CustomPostTypeEntity {
 	/**
 	 * Possibly json_decode() a value.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $key  The key name.
 	 * @param mixed  $data The data.

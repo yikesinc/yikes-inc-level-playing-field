@@ -14,7 +14,7 @@ use Yikes\LevelPlayingField\Exception\InvalidField;
 /**
  * Abstract Class ComplexField
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 abstract class ComplexField extends BaseField {
@@ -22,7 +22,7 @@ abstract class ComplexField extends BaseField {
 	/**
 	 * The base HTML class value.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @var string
 	 */
 	protected $class_base = 'complexfield';
@@ -30,7 +30,7 @@ abstract class ComplexField extends BaseField {
 	/**
 	 * Array of error messages.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @var string[]
 	 */
 	protected $error_messages = [];
@@ -38,7 +38,7 @@ abstract class ComplexField extends BaseField {
 	/**
 	 * Array of sub-fields.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @var Field[]
 	 */
 	protected $sub_fields = [];
@@ -61,7 +61,7 @@ abstract class ComplexField extends BaseField {
 	/**
 	 * Set up the sub fields for this field.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @throws InvalidField When an invalid field class is provided through the filter.
 	 */
 	protected function setup_sub_fields() {
@@ -71,7 +71,7 @@ abstract class ComplexField extends BaseField {
 	/**
 	 * Get the ID base for sub-fields.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return string
 	 */
 	protected function get_id_base() {
@@ -81,7 +81,7 @@ abstract class ComplexField extends BaseField {
 	/**
 	 * Generate the sub-field objects for this field.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @throws InvalidField When an invalid field class is provided through the filter.
 	 */
@@ -130,7 +130,7 @@ abstract class ComplexField extends BaseField {
 	/**
 	 * Render the field.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	public function render() {
 		$this->render_container_open();
@@ -141,7 +141,7 @@ abstract class ComplexField extends BaseField {
 	/**
 	 * Render an individual fieldset group.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	protected function render_fieldset_group() {
 		$this->render_open_fieldset();
@@ -153,7 +153,7 @@ abstract class ComplexField extends BaseField {
 	/**
 	 * Render the opening of the main content container.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	protected function render_container_open() {
 		echo '<div class="lpf-field-container">';
@@ -162,7 +162,7 @@ abstract class ComplexField extends BaseField {
 	/**
 	 * Render the opening of a fieldset element.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	protected function render_open_fieldset() {
 		$classes = [
@@ -176,7 +176,7 @@ abstract class ComplexField extends BaseField {
 	/**
 	 * Render the sub-fields.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	protected function render_sub_fields() {
 		/** @var Field $sub_field */
@@ -188,7 +188,7 @@ abstract class ComplexField extends BaseField {
 	/**
 	 * Render the closing fieldset tag.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	protected function render_close_fieldset() {
 		echo '</fieldset>';
@@ -197,7 +197,7 @@ abstract class ComplexField extends BaseField {
 	/**
 	 * Render the closing of the main container.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	protected function render_container_close() {
 		echo '</div>';
@@ -206,7 +206,7 @@ abstract class ComplexField extends BaseField {
 	/**
 	 * Get the array of classes to merge in with the default field classes.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return array
 	 */
 	protected function get_classes() {
@@ -216,7 +216,7 @@ abstract class ComplexField extends BaseField {
 	/**
 	 * Set the data submitted to the field.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param mixed $data The submitted data for the field.
 	 *
@@ -249,7 +249,7 @@ abstract class ComplexField extends BaseField {
 	/**
 	 * Validate the submission for the given field.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return mixed The validated value.
 	 * @throws InvalidField When the submission isn't valid.
@@ -271,7 +271,7 @@ abstract class ComplexField extends BaseField {
 	/**
 	 * Validate the raw value.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @throws InvalidField When the raw value is empty but the field is required.
 	 */
@@ -288,7 +288,7 @@ abstract class ComplexField extends BaseField {
 	 * This should return a multi-dimensional array of field data which will
 	 * be used to construct Field objects.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return array
 	 */
 	abstract protected function get_default_fields();
@@ -298,14 +298,14 @@ abstract class ComplexField extends BaseField {
 	 *
 	 * This should echo the label directly.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	abstract protected function render_grouping_label();
 
 	/**
 	 * Validate that the object is an instance of the Field interface.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param object $sub_field  The sub-field object.
 	 * @param string $from_class The class used to instantiate the field.
@@ -321,7 +321,7 @@ abstract class ComplexField extends BaseField {
 	/**
 	 * Get the type for use with errors.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return string
 	 */
 	protected function get_error_type() {

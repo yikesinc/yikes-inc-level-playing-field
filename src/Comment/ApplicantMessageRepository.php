@@ -15,7 +15,7 @@ use Yikes\LevelPlayingField\Messaging\ApplicantMessaging;
 /**
  * Class ApplicantMessageRepository
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 class ApplicantMessageRepository {
@@ -23,7 +23,7 @@ class ApplicantMessageRepository {
 	/**
 	 * Find the Applicant Message Comment with a given post ID.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param int $id The comment ID.
 	 *
@@ -42,7 +42,7 @@ class ApplicantMessageRepository {
 	/**
 	 * Find all the comments for a given $post_id.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param  int $post_id The post ID.
 	 *
@@ -71,7 +71,7 @@ class ApplicantMessageRepository {
 	 * Comments with status of hold is an unread
 	 * applicant message.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param  int $post_id The post ID.
 	 *

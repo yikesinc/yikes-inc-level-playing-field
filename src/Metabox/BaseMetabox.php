@@ -21,7 +21,7 @@ use Yikes\LevelPlayingField\View\NoOverrideLocationView;
 /**
  * Abstract class BaseMetabox.
  *
- * @since   %VERSION%
+ * @since   1.0.0
  *
  * @package Yikes\LevelPlayingField
  * @author  Jeremy Pry
@@ -42,7 +42,7 @@ abstract class BaseMetabox implements Renderable, Service, AssetsAware {
 	/**
 	 * Whether to remove 3rd party metaboxes.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @var bool
 	 */
 	protected $remove_3rd_party_boxes = false;
@@ -50,7 +50,7 @@ abstract class BaseMetabox implements Renderable, Service, AssetsAware {
 	/**
 	 * Register the Metabox.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	public function register() {
 		$this->register_assets();
@@ -71,7 +71,7 @@ abstract class BaseMetabox implements Renderable, Service, AssetsAware {
 	/**
 	 * Possibly remove 3rd party metaboxes.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	protected function maybe_remove_meta_boxes() {
 		if ( ! $this->remove_3rd_party_boxes ) {
@@ -84,7 +84,7 @@ abstract class BaseMetabox implements Renderable, Service, AssetsAware {
 	/**
 	 * Wrapper for adding/removing metaboxes for a given post type.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $post_type The post type.
 	 */
@@ -103,7 +103,7 @@ abstract class BaseMetabox implements Renderable, Service, AssetsAware {
 	/**
 	 * Register the persistence hooks to be triggered by a save attempt.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	protected function register_persistence_hooks() {
 		$closure = $this->get_persistence_closure();
@@ -113,7 +113,7 @@ abstract class BaseMetabox implements Renderable, Service, AssetsAware {
 	/**
 	 * Return the persistence closure.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return Closure
 	 */
@@ -153,7 +153,7 @@ abstract class BaseMetabox implements Renderable, Service, AssetsAware {
 	/**
 	 * Verify the nonce and return the result.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return bool Whether the nonce could be successfully verified.
 	 */
@@ -175,7 +175,7 @@ abstract class BaseMetabox implements Renderable, Service, AssetsAware {
 	/**
 	 * Get the name of the nonce to use.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return string Name of the nonce.
 	 */
@@ -186,7 +186,7 @@ abstract class BaseMetabox implements Renderable, Service, AssetsAware {
 	/**
 	 * Get the ID to use for the metabox.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return string ID to use for the metabox.
 	 */
@@ -197,7 +197,7 @@ abstract class BaseMetabox implements Renderable, Service, AssetsAware {
 	/**
 	 * Get the action of the nonce to use.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return string Action of the nonce.
 	 */
@@ -208,7 +208,7 @@ abstract class BaseMetabox implements Renderable, Service, AssetsAware {
 	/**
 	 * Do the actual persistence of the changed data.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param int $post_id ID of the post to persist.
 	 */
@@ -217,7 +217,7 @@ abstract class BaseMetabox implements Renderable, Service, AssetsAware {
 	/**
 	 * Get the title to use for the metabox.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return string Title to use for the metabox.
 	 */
@@ -226,7 +226,7 @@ abstract class BaseMetabox implements Renderable, Service, AssetsAware {
 	/**
 	 * Get the screen on which to show the metabox.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return string|array|\WP_Screen Screen on which to show the metabox.
 	 */
@@ -237,7 +237,7 @@ abstract class BaseMetabox implements Renderable, Service, AssetsAware {
 	/**
 	 * Get the context in which to show the metabox.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return string Context to use.
 	 */
@@ -248,7 +248,7 @@ abstract class BaseMetabox implements Renderable, Service, AssetsAware {
 	/**
 	 * Get the priority within the context where the boxes should show.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return string Priority within context.
 	 */
@@ -259,7 +259,7 @@ abstract class BaseMetabox implements Renderable, Service, AssetsAware {
 	/**
 	 * Get the array of arguments to pass to the render callback.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return array Array of arguments.
 	 */
@@ -270,7 +270,7 @@ abstract class BaseMetabox implements Renderable, Service, AssetsAware {
 	/**
 	 * Process the metabox attributes and prepare rendering.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param WP_Post      $post The post object.
 	 * @param array|string $atts Attributes as passed to the metabox. The rendered content needs to be echoed.
@@ -286,7 +286,7 @@ abstract class BaseMetabox implements Renderable, Service, AssetsAware {
 	/**
 	 * Process the metabox attributes.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param WP_Post      $post The post object.
 	 * @param array|string $atts Raw metabox attributes passed into the
@@ -299,7 +299,7 @@ abstract class BaseMetabox implements Renderable, Service, AssetsAware {
 	/**
 	 * Render the nonce.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return string Hidden field with a nonce.
 	 */
@@ -313,7 +313,7 @@ abstract class BaseMetabox implements Renderable, Service, AssetsAware {
 	/**
 	 * Render the current Renderable.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param array $context Context in which to render.
 	 *
@@ -341,7 +341,7 @@ abstract class BaseMetabox implements Renderable, Service, AssetsAware {
 	/**
 	 * Get the View URI to use for rendering the metabox.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return string View URI.
 	 */
@@ -352,7 +352,7 @@ abstract class BaseMetabox implements Renderable, Service, AssetsAware {
 	/**
 	 * Get the post types for this metabox.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return array
 	 */
 	abstract protected function get_post_types();

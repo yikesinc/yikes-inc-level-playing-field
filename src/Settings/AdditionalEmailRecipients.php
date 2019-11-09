@@ -12,7 +12,7 @@ namespace Yikes\LevelPlayingField\Settings;
 /**
  * Class AdditionalEmailRecipients
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 class AdditionalEmailRecipients extends BaseSetting {
@@ -22,7 +22,7 @@ class AdditionalEmailRecipients extends BaseSetting {
 	/**
 	 * Get the default value for the setting.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return string
 	 */
 	protected function get_default() {

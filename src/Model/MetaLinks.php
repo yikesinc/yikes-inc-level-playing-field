@@ -16,7 +16,7 @@ use Yikes\LevelPlayingField\CustomPostType\JobManager;
 /**
  * Interface MetaLinks
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 interface MetaLinks {

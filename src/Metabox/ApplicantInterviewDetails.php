@@ -17,7 +17,7 @@ use Yikes\LevelPlayingField\View\View;
 /**
  * Class ApplicantInterviewDetails
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 final class ApplicantInterviewDetails extends BaseMetabox {
@@ -30,7 +30,7 @@ final class ApplicantInterviewDetails extends BaseMetabox {
 	/**
 	 * Do the actual persistence of the changed data.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param int $post_id ID of the post to persist.
 	 */
@@ -41,7 +41,7 @@ final class ApplicantInterviewDetails extends BaseMetabox {
 	/**
 	 * Get the title to use for the metabox.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return string Title to use for the metabox.
 	 */
@@ -52,7 +52,7 @@ final class ApplicantInterviewDetails extends BaseMetabox {
 	/**
 	 * Get the context in which to show the metabox.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return string Context to use.
 	 */
@@ -63,7 +63,7 @@ final class ApplicantInterviewDetails extends BaseMetabox {
 	/**
 	 * Process the metabox attributes.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param WP_Post      $post The post object.
 	 * @param array|string $atts Raw metabox attributes passed into the
@@ -83,7 +83,7 @@ final class ApplicantInterviewDetails extends BaseMetabox {
 	/**
 	 * Get the screen on which to show the metabox.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return string|array|\WP_Screen Screen on which to show the metabox.
 	 */
@@ -94,7 +94,7 @@ final class ApplicantInterviewDetails extends BaseMetabox {
 	/**
 	 * Get the post types for this metabox..
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return array
 	 */
 	protected function get_post_types() {
