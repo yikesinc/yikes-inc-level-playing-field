@@ -450,7 +450,6 @@ task( 'js:lint', () => {
 	return src( [
 		'assets/js/concat/*.js',
 		'assets/js/*.js',
-		'!assets/js/yikes-level-playing-field.js',
 		'!assets/js/*.min.js',
 		'!Gruntfile.js',
 		'!Gulpfile.js',
@@ -537,7 +536,7 @@ function replaceVersion() {
  */
 function bumpVersion( version ) {
 	const bump = require( 'gulp-bump' );
-	return src( [ './yikes-level-playing-field.php', './package.json', './readme.txt' ] )
+	return src( [ './level-playing-field.php', './package.json', './readme.txt' ] )
 		.pipe( plumber( { 'errorHandler': outputErrors } ) )
 		.pipe( bump( {
 			version: version,

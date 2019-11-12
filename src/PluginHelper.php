@@ -69,7 +69,7 @@ trait PluginHelper {
 	 * @return string
 	 */
 	protected function get_main_filename() {
-		return 'yikes-level-playing-field.php';
+		return 'level-playing-field.php';
 	}
 
 	/**
