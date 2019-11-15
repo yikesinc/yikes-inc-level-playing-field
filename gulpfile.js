@@ -536,13 +536,19 @@ function replaceVersion() {
  */
 function bumpVersion( version ) {
 	const bump = require( 'gulp-bump' );
-	return src( [ './level-playing-field.php', './package.json', './readme.txt' ] )
+	return src( [
+		'./level-playing-field.php',
+		'./package.json',
+		'./readme.txt',
+		'./src/PluginHelper.php'
+	], { base: process.cwd() } )
 		.pipe( plumber( { 'errorHandler': outputErrors } ) )
 		.pipe( bump( {
 			version: version,
 			keys: [
 				'version',
-				'stable tag'
+				'stable tag',
+				'return'
 			]
 		} ) )
 		.pipe( dest( './' ) );
