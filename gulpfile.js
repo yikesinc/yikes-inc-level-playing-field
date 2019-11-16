@@ -627,13 +627,13 @@ exports['replace:version'] = replaceVersion;
 exports['release:patch'] = series( getVersionBump('patch'), replaceVersion );
 exports['release:minor'] = series( getVersionBump('minor'), replaceVersion );
 exports['release:major'] = series( getVersionBump('major'), replaceVersion );
-exports.i18n = series( parallel( cleanPot, exports['check-textdomain'] ), makePot );
+exports.i18n = series( parallel( cleanPot, this['check-textdomain'] ), makePot );
 exports.icons = series( cleanIcons, compileSvg );
 exports.styles = series( cleanStyles, compileSass, minifyCss );
 exports.scripts = series( cleanScripts, parallel( compileBlocks, compileScripts ), minimizeScripts );
-exports.assets = parallel( exports.styles, exports.scripts );
-exports.default = parallel( exports.i18n, exports.assets );
-exports.build = series( exports.default, build );
+exports.assets = parallel( this.styles, this.scripts );
+exports.default = this.assets;
+exports.build = series( this.default, build );
 
 // Set up conditional tasks.
 const svnTask = options['svn-tag'] ? parallel( svnTrunk, svnTag ) : svnTrunk;
