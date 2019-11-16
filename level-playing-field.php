@@ -13,7 +13,7 @@
  * Author URI:   http://www.yikesinc.com
  * Text Domain:  yikes-level-playing-field
  * Domain Path:  /languages
- * Version:      1.0.0
+ * Version:      1.0.1
  * Requires PHP: 5.6
  * License:      GPL-2.0+
  *

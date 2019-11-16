@@ -5,7 +5,7 @@ Tags: anonymized job applications, fight bias, jobs, job listing, job management
 Requires at least: 4.8
 Tested up to: 5.3
 Requires PHP: 5.6
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -47,5 +47,10 @@ Scientifically proven bias based on name, gender and gender identity, sexual ori
 
 For the full changelog, visit the [development repository on GitHub](https://github.com/yikesinc/yikes-inc-level-playing-field/blob/develop/CHANGELOG.md)
 
-= 1.0 =
+= 1.0.1 =
+* Renamed the main plugin file to match the wordpress.org plugin slug. **Note this will cause the plugin to need to be reactivated.**
+* Added the proper version strings in all PHP docblocks.
+* Added more development enhancements.
+
+= 1.0.0 =
 * Initial Release
