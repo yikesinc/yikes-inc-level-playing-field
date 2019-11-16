@@ -12,7 +12,7 @@ namespace Yikes\LevelPlayingField\Field;
 /**
  * Class Email
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 class Email extends BaseInput {

@@ -5,7 +5,7 @@ Tags: anonymized job applications, fight bias, jobs, job listing, job management
 Requires at least: 4.8
 Tested up to: 5.3
 Requires PHP: 5.6
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -16,7 +16,7 @@ A WordPress plugin that anonymizes job applications to fight bias in employment 
 
 Level Playing Field allows businesses and organizations to easily list jobs on a WordPress website and receive **anonymized** job applications with all identifiable applicant information hidden. Hiring managers can review applicants without seeing proven unconscious bias factors. Employers can message potential candidates and schedule interviews anonymously. After an interview is scheduled and confirmed, the applicant’s information is revealed. This process gives people an opportunity to show their skills and strengths based on merit alone.
 
-Level Playing Field is a tool that can help companies and nonprofits hire truly based on merit while providing more opportunities to people from diverse communities. 
+Level Playing Field is a tool that can help companies and nonprofits hire truly based on merit while providing more opportunities to people from diverse communities.
 
 Upgrade to [Level Playing Field Pro](https://yikesplugins.com/plugin/level-playing-field-pro/) for unlimited job listings and great enhanced features!
 
@@ -45,5 +45,12 @@ Scientifically proven bias based on name, gender and gender identity, sexual ori
 
 == Changelog ==
 
-= 1.0 =
+For the full changelog, visit the [development repository on GitHub](https://github.com/yikesinc/yikes-inc-level-playing-field/blob/develop/CHANGELOG.md)
+
+= 1.0.1 =
+* Renamed the main plugin file to match the wordpress.org plugin slug. **Note this will cause the plugin to need to be reactivated.**
+* Added the proper version strings in all PHP docblocks.
+* Added more development enhancements.
+
+= 1.0.0 =
 * Initial Release

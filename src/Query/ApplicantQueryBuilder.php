@@ -17,7 +17,7 @@ use Yikes\LevelPlayingField\Taxonomy\ApplicantStatus;
 /**
  * Class ApplicantQuery
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 final class ApplicantQueryBuilder extends BaseQueryBuilder {
@@ -27,7 +27,7 @@ final class ApplicantQueryBuilder extends BaseQueryBuilder {
 	/**
 	 * Filter the query by Job ID.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param int $id The Job ID.
 	 *
@@ -40,7 +40,7 @@ final class ApplicantQueryBuilder extends BaseQueryBuilder {
 	/**
 	 * Filter the query by applicants who have been viewed.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return $this
 	 */
 	public function where_applicant_viewed() {
@@ -50,7 +50,7 @@ final class ApplicantQueryBuilder extends BaseQueryBuilder {
 	/**
 	 * Filter the query by applicants who have been viewed by a particular user.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param int $id The user ID who viewed the applicant.
 	 *
@@ -63,7 +63,7 @@ final class ApplicantQueryBuilder extends BaseQueryBuilder {
 	/**
 	 * Filter the query by applicants who have not been viewed.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return $this
 	 */
 	public function where_applicant_not_viewed() {
@@ -73,7 +73,7 @@ final class ApplicantQueryBuilder extends BaseQueryBuilder {
 	/**
 	 * Filter the query by applicants with a particular status.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $status The status to filter by.
 	 *

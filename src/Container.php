@@ -12,7 +12,7 @@ namespace Yikes\LevelPlayingField;
 /**
  * Class Container
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 final class Container {
@@ -20,7 +20,7 @@ final class Container {
 	/**
 	 * The registered services for the container.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @var array
 	 */
 	protected $services = [];
@@ -37,7 +37,7 @@ final class Container {
 	/**
 	 * Get the services from the container.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return array
 	 */
 	public function get_services() {
@@ -47,7 +47,7 @@ final class Container {
 	/**
 	 * Add a service to the container.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $service Service class name.
 	 */
@@ -58,7 +58,7 @@ final class Container {
 	/**
 	 * Remove a service from the container.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $service Service class name.
 	 */

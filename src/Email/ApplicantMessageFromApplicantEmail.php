@@ -15,7 +15,7 @@ use Yikes\LevelPlayingField\Applicant;
 /**
  * Class ApplicantMessageFromApplicantEmail.
  *
- * @since   %VERSION%
+ * @since   1.0.0
  *
  * @package Yikes\LevelPlayingField
  * @author  Kevin Utz / Jeremy Pry
@@ -25,7 +25,7 @@ class ApplicantMessageFromApplicantEmail extends FromApplicantEmail {
 	/**
 	 * Get the email subject.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return string The subject of the email.
 	 */
@@ -36,7 +36,7 @@ class ApplicantMessageFromApplicantEmail extends FromApplicantEmail {
 	/**
 	 * Get the email message.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return string The email's message.
 	 */

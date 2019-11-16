@@ -15,7 +15,7 @@ use Yikes\LevelPlayingField\Service;
 /**
  * Class SettingsManager.
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 final class SettingsManager implements Service {
@@ -23,7 +23,7 @@ final class SettingsManager implements Service {
 	/**
 	 * Register the hooks.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	public function register() {
 		add_action( 'wp_ajax_lpf_save_settings', function() {
@@ -34,7 +34,7 @@ final class SettingsManager implements Service {
 	/**
 	 * AJAX handler to save our settings.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	private function save() {
 

@@ -35,7 +35,7 @@ $show_application_button = filter_var( $this->show_application_button, FILTER_VA
 /**
  * Filter the jobs displayed in the job listings shortcode.
  *
- * @since %VERSION%
+ * @since 1.0.0
  *
  * @param array $jobs Array of Job objects.
  *

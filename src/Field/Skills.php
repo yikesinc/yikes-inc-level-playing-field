@@ -15,7 +15,7 @@ use Yikes\LevelPlayingField\Model\ApplicantMetaDropdowns;
 /**
  * Class Skills
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 class Skills extends RepeatableField {
@@ -31,7 +31,7 @@ class Skills extends RepeatableField {
 	 * This should return a multi-dimensional array of field data which will
 	 * be used to construct Field objects.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return array
 	 */
 	protected function get_default_fields() {
@@ -52,7 +52,7 @@ class Skills extends RepeatableField {
 	 *
 	 * This should echo the label directly.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	protected function render_grouping_label() {
 		printf(
@@ -66,7 +66,7 @@ class Skills extends RepeatableField {
 	 *
 	 * This should echo the label directly.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	protected function render_repeatable_field_label() {
 		printf(
@@ -79,7 +79,7 @@ class Skills extends RepeatableField {
 	/**
 	 * Get a callback for generating a new Schooling field.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return \Closure
 	 */
 	private function get_skills_callback() {
@@ -104,7 +104,7 @@ class Skills extends RepeatableField {
 	 *
 	 * Only needs to be overridden when the field is repeatable.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return string
 	 */
 	protected function get_add_new_label() {

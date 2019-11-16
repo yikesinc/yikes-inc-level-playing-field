@@ -16,7 +16,7 @@ use Closure;
 /**
  * Class ScriptAsset.
  *
- * @since   %VERSION%
+ * @since   1.0.0
  *
  * @package Yikes\LevelPlayingField\Assets
  * @author  Jeremy Pry
@@ -33,7 +33,7 @@ class ScriptAsset extends BaseAsset {
 	/**
 	 * Source location of the asset.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @var string
 	 */
@@ -42,7 +42,7 @@ class ScriptAsset extends BaseAsset {
 	/**
 	 * Dependencies of the asset.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @var string[]
 	 */
@@ -51,7 +51,7 @@ class ScriptAsset extends BaseAsset {
 	/**
 	 * Version of the asset.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @var string|bool|null
 	 */
@@ -60,7 +60,7 @@ class ScriptAsset extends BaseAsset {
 	/**
 	 * Whether to enqueue the script in the footer.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @var bool
 	 */
@@ -69,7 +69,7 @@ class ScriptAsset extends BaseAsset {
 	/**
 	 * Localization data that is added to the JS space.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @var array
 	 */
@@ -78,7 +78,7 @@ class ScriptAsset extends BaseAsset {
 	/**
 	 * Instantiate a ScriptAsset object.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string           $handle       Handle of the asset.
 	 * @param string           $source       Source location of the asset.
@@ -105,7 +105,7 @@ class ScriptAsset extends BaseAsset {
 	/**
 	 * Add a localization to the script.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $object_name Name of the object to create in JS space.
 	 * @param array  $data_array  Array of data to attach to the object.
@@ -121,7 +121,7 @@ class ScriptAsset extends BaseAsset {
 	/**
 	 * Get the enqueue closure to use.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return Closure
 	 */
@@ -144,7 +144,7 @@ class ScriptAsset extends BaseAsset {
 	/**
 	 * Get the enqueue closure to use.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return Closure
 	 */
@@ -165,7 +165,7 @@ class ScriptAsset extends BaseAsset {
 	/**
 	 * Get the dequeue closure to use.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return Closure
 	 */

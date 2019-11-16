@@ -1,36 +1,20 @@
 // Require our dependencies
-const bourbon     = require( 'bourbon' ).includePaths;
 const browserSync = require( 'browser-sync' );
-const cheerio     = require( 'gulp-cheerio' );
 const del         = require( 'del' );
 const eslint      = require( 'gulp-eslint' );
 const gutil       = require( 'gulp-util' );
 const glob        = require( 'glob' );
-const imagemin    = require( 'gulp-imagemin' );
-const merge       = require( 'gulp-merge' );
 const minimist    = require( 'minimist' );
-const mqpacker    = require( 'css-mqpacker' );
-const named       = require( 'vinyl-named' );
-const neat        = require( 'bourbon-neat' ).includePaths;
 const notify      = require( 'gulp-notify' );
 const path        = require( 'path' );
 const plumber     = require( 'gulp-plumber' );
-const postcss     = require( 'gulp-postcss' );
 const rename      = require( 'gulp-rename' );
-const sassLint    = require( 'gulp-sass-lint' );
 const sort        = require( 'gulp-sort' );
 const sourcemaps  = require( 'gulp-sourcemaps' );
-const svgmin      = require( 'gulp-svgmin' );
-const svgstore    = require( 'gulp-svgstore' );
-const debug       = require( 'gulp-debug' );
 const webpack     = require( 'webpack-stream' );
-const uglifyWpack = require( 'uglifyjs-webpack-plugin' );
 const {
 	series, parallel, task, src, dest, watch
 } = require( 'gulp' );
-
-// Environment variables.
-const gitKey = process.env.gitKey;
 
 // Set assets paths.
 const paths = {
@@ -44,9 +28,18 @@ const paths = {
 	blocks: [ 'blocks/*/index.js' ],
 	sprites: 'assets/images/sprites/*.png',
 	build: [
-		'assets/css/*.css',
+		// JS files, except for the development versions.
 		'assets/js/**/*.js',
+		'!assets/js/dev/*.js',
+
+		// Images, except those meant for SVN.
 		'assets/images/**',
+		'!assets/images/banner-*',
+		'!assets/images/icon-*',
+		'!assets/images/screenshot-*',
+
+		// Everything else.
+		'assets/css/*.css',
 		'assets/vendor/**',
 		'languages/*',
 		'src/**/*.php',
@@ -55,22 +48,30 @@ const paths = {
 		'*.php',
 		'LICENSE.txt',
 		'readme.*',
-		'!assets/js/dev/*.js'
+	],
+	svnAssets: [
+		'assets/images/banner-*',
+		'assets/images/icon-*',
+		'assets/images/screnshot-*',
 	]
 };
 
 // Command line options
 const options = minimist( process.argv.slice( 2 ), {
-	string: [ 'version', 'release', 'preid' ],
+	string: [ 'version', 'svn-dir' ],
+	boolean: [ 'svn-tag', 'existing-build' ],
 	default: {
 		// A custom version value.
 		version: '',
 
-		// This is the type of release to create when running the generic release task.
-		release: 'minor',
+		// Whether to add files to build/svn/tags/ directory.
+		'svn-tag': false,
 
-		// For pre-releases, use this parameter. "beta", "rc", etc.
-		preid: undefined,
+		// Directory to the SVN repo.
+		'svn-dir': './build/svn',
+
+		// Use existing files in the build/ directory instead of running the build task again.
+		'existing-build': false,
 	}
 } );
 
@@ -150,7 +151,13 @@ function cleanStyles() {
  * https://www.npmjs.com/package/css-mqpacker
  */
 function compileSass() {
-	const sass = require( 'gulp-sass' ), autoprefixer = require( 'autoprefixer' );
+	const autoprefixer = require( 'autoprefixer' );
+	const bourbon = require( 'bourbon' ).includePaths;
+	const neat = require( 'bourbon-neat' ).includePaths;
+	const mqpacker = require( 'css-mqpacker' );
+	const postcss = require( 'gulp-postcss' );
+	const sass = require( 'gulp-sass' );
+
 	return src( paths.sass, paths.css )
 		// Deal with errors.
 		.pipe( plumber( { 'errorHandler': handleErrors } ) )
@@ -220,6 +227,10 @@ function cleanIcons() {
  * https://www.npmjs.com/package/gulp-cheerio
  */
 function compileSvg() {
+	const cheerio = require( 'gulp-cheerio' );
+	const svgmin = require( 'gulp-svgmin' );
+	const svgstore = require( 'gulp-svgstore' );
+
 	return src( paths.icons )
 
 	// Deal with errors.
@@ -254,14 +265,17 @@ function compileSvg() {
  *
  * https://www.npmjs.com/package/gulp-imagemin
  */
-task( 'imagemin', () => src( paths.images )
-	.pipe( plumber( { 'errorHandler': handleErrors } ) )
-	.pipe( imagemin( {
-		'optimizationLevel': 5,
-		'progressive': true,
-		'interlaced': true
-	} ) )
-	.pipe( dest( 'assets/images' ) ) );
+task( 'imagemin', () => {
+	const imagemin = require( 'gulp-imagemin' );
+	return src( paths.images )
+		.pipe( plumber( { 'errorHandler': handleErrors } ) )
+		.pipe( imagemin( {
+			'optimizationLevel': 5,
+			'progressive': true,
+			'interlaced': true
+		} ) )
+		.pipe( dest( 'assets/images' ) );
+} );
 
 /**
  * Delete the scripts before rebuilding them.
@@ -317,6 +331,7 @@ function minimizeScripts() {
  * Compile blocks using webpack.
  */
 function compileBlocks() {
+	const named = require( 'vinyl-named' );
 	return src( paths.blocks )
 		.pipe( named() )
 		.pipe( webpack( {
@@ -401,7 +416,6 @@ function makePot() {
 		.pipe( wpPot( {
 			'domain': packageJSON.name,
 			'package': packageJSON.title,
-			'writeFile': false,
 			'headers': {
 				'Language': 'en_US'
 			}
@@ -415,6 +429,7 @@ function makePot() {
  * https://www.npmjs.com/package/sass-lint
  */
 task( 'sass:lint', () => {
+	const sassLint = require( 'gulp-sass-lint' );
 	return src( [
 		'assets/css/sass/**/*.scss',
 		'!assets/css/sass/base/_normalize.scss',
@@ -435,7 +450,6 @@ task( 'js:lint', () => {
 	return src( [
 		'assets/js/concat/*.js',
 		'assets/js/*.js',
-		'!assets/js/yikes-level-playing-field.js',
 		'!assets/js/*.min.js',
 		'!Gruntfile.js',
 		'!Gulpfile.js',
@@ -516,74 +530,103 @@ function replaceVersion() {
 }
 
 /**
- * Task for replacing the version in all PHP files.
- */
-task( 'replace:version', () => {
-	return replaceVersion();
-} );
-
-/**
  * Bump the version in various files.
  *
  * @returns {*}
  */
-function bumpVersion() {
+function bumpVersion( version ) {
 	const bump = require( 'gulp-bump' );
-
-	return src( [ './yikes-level-playing-field.php', './package.json' ] )
+	return src( [
+		'./level-playing-field.php',
+		'./package.json',
+		'./readme.txt',
+		'./src/PluginHelper.php'
+	], { base: process.cwd() } )
 		.pipe( plumber( { 'errorHandler': outputErrors } ) )
-		.pipe( bump( { version: currentVersion } ) )
+		.pipe( bump( {
+			version: version,
+			keys: [
+				'version',
+				'stable tag',
+				'return'
+			]
+		} ) )
 		.pipe( dest( './' ) );
 }
 
 /**
- * Tasks for updating versions in preparation for a new release.
- */
-task( 'release:patch', () => {
-	throw new Error('This task is not yet ready for use.');
-	const semver = require( 'semver' );
-	currentVersion = semver.inc( packageJSON.version, 'patch' );
-
-	return merge( replaceVersion(), bumpVersion() );
-} );
-task( 'release:minor', () => {
-	throw new Error( 'This task is not yet ready for use.' );
-	const semver = require( 'semver' );
-	currentVersion = semver.inc( packageJSON.version, 'minor' );
-	bumpVersion();
-
-	return replaceVersion();
-} );
-task( 'release:major', () => {
-	throw new Error( 'This task is not yet ready for use.' );
-	return merge( bumpVersion( 'major' ), gulp.run( 'replace:version' ) );
-} );
-
-/**
- * General release task. Use this when creating pre-release versions, making
- * use of the --release and --preid CLI flags.
+ * Get a function to bump the version by given type.
  *
- * --release refers to a SemVer release type. Use "preminor" or "premajor".
- * --preid refers to the type of pre-release. Use "beta" or "rc".
+ * We use the semver library to determine the version based on what is currently
+ * listed in the package.json file. This is to ensure the same version is applied
+ * everywhere, instead of simply incrementing whatever version is found in
+ * each file, in case they weren't in sync.
+ *
+ * @param type
+ * @returns {function(): *}
  */
-task( 'release', () => {
-	throw new Error( 'This task is not yet ready for use.' );
-	return merge( bumpVersion( options.release, options.preid ), gulp.run( 'replace:version' ) );
-} );
+function getVersionBump( type ) {
+	return function() {
+		const semver = require( 'semver' );
+		const validTypes = [ 'patch', 'minor', 'major' ];
+
+		if ( !validTypes.includes( type ) ) {
+			throw new Error( `"${type} is not a valid option.` );
+		}
+
+		currentVersion = semver.inc( packageJSON.version, type );
+
+		return bumpVersion( currentVersion );
+	};
+}
 
 /**
- * Create individual tasks.
+ * Copy plugin repo assets from images into the SVN assets directory.
+ * @returns {*}
  */
-// task( 'markup', browserSync.reload );
-// task( 'i18n', [ 'wp-pot' ] );
-// task( 'icons', [ 'svg' ] );
-// task( 'scripts', [ 'webpack' ] );
-// task( 'lint', [ 'sass:lint', 'js:lint' ] );
-// task( 'docs', [ 'sassdoc' ] );
-// task( 'assets', [ 'styles', 'scripts' ] );
-// task( 'default', [ 'i18n', 'assets' ] );
+function svnAssets() {
+	return src( paths.svnAssets )
+		.pipe( dest( `${options['svn-dir']}/assets` ) );
+}
 
+/**
+ * Copy files from the build directory into SVN Trunk.
+ */
+function svnTrunk() {
+	return src( [ `./build/${packageJSON.name}/**/*` ] )
+		.pipe( dest( `${options['svn-dir']}/trunk` ) );
+}
+
+/**
+ * Copy files from teh build directory into the SVN tags directory.
+ *
+ * Uses the current tag as defined in package.json.
+ */
+function svnTag( done ) {
+	const fs = require( 'fs' );
+	const tagDir = `${options['svn-dir']}/tags/${currentVersion}`;
+
+	if ( fs.existsSync( tagDir ) ) {
+		const promptMessage = `Tag ${currentVersion} already exists. Overwrite directory contents?`;
+		const readLine = require( 'readline-sync' );
+		const response = readLine.keyInYN( promptMessage );
+		if ( !response ) {
+			console.warn( 'Skipping because tag already exists.' );
+			done();
+			return;
+		}
+	}
+
+	return src( [ `./build/${packageJSON.name}/**/*` ] )
+		.pipe( dest( tagDir ) );
+}
+
+// Create individual tasks.
 exports['check-textdomain'] = checkTextDomain;
+exports['replace:version'] = replaceVersion;
+exports['release:patch'] = series( getVersionBump('patch'), replaceVersion );
+exports['release:minor'] = series( getVersionBump('minor'), replaceVersion );
+exports['release:major'] = series( getVersionBump('major'), replaceVersion );
 exports.i18n = series( parallel( cleanPot, exports['check-textdomain'] ), makePot );
 exports.icons = series( cleanIcons, compileSvg );
 exports.styles = series( cleanStyles, compileSass, minifyCss );
@@ -591,3 +634,8 @@ exports.scripts = series( cleanScripts, parallel( compileBlocks, compileScripts 
 exports.assets = parallel( exports.styles, exports.scripts );
 exports.default = parallel( exports.i18n, exports.assets );
 exports.build = series( exports.default, build );
+
+// Set up conditional tasks.
+const svnTask = options['svn-tag'] ? parallel( svnTrunk, svnTag ) : svnTrunk;
+const buildTask = options['existing-build'] ? svnTask : series( this.build, svnTask );
+exports.svn = parallel( svnAssets, buildTask );

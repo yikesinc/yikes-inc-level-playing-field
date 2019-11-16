@@ -16,7 +16,7 @@ use Yikes\LevelPlayingField\Transient\TransientKeys;
 /**
  * Class ApplicantMessageFromApplicantEmail.
  *
- * @since   %VERSION%
+ * @since   1.0.0
  *
  * @package Yikes\LevelPlayingField
  * @author  Kevin Utz / Jeremy Pry
@@ -28,7 +28,7 @@ abstract class FromApplicantEmail extends ApplicantEmail {
 	/**
 	 * Get the recipient's email address.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return mixed An array or comma-separated list of email addresses.
 	 */
@@ -50,7 +50,7 @@ abstract class FromApplicantEmail extends ApplicantEmail {
 	/**
 	 * Get the HTML link to the applicant's admin edit page.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return string The HTML of message with the URL appended.
 	 */
@@ -66,7 +66,7 @@ abstract class FromApplicantEmail extends ApplicantEmail {
 	/**
 	 * Fetch all of the email addresses defined by the settings AdditionalEmailRecipients and EmailRecipientRoles.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $role The role we're fetching emails for.
 	 *

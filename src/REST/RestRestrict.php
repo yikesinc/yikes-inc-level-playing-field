@@ -14,7 +14,7 @@ use Yikes\LevelPlayingField\Roles\Capabilities;
 /**
 * Trait RestRestrict
 *
-* @since   %VERSION%
+* @since   1.0.0
 * @package Yikes\LevelPlayingField
 */
 trait RestRestrict {
@@ -22,7 +22,7 @@ trait RestRestrict {
 	/**
 	 * Permission Callback For Routes.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	public function can_edit_applications() {
 		return current_user_can( Capabilities::EDIT_APPLICANTS );

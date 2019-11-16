@@ -56,7 +56,7 @@ use Yikes\LevelPlayingField\Welcome;
 /**
  * Class PluginFactory
  *
- * @since   %VERSION%
+ * @since   1.0.0
  *
  * @package Yikes\LevelPlayingField
  * @author  Jeremy Pry
@@ -70,7 +70,7 @@ final class PluginFactory {
 	 *
 	 * This always returns a shared instance.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return Plugin The plugin instance.
 	 */
@@ -87,7 +87,7 @@ final class PluginFactory {
 	/**
 	 * Get the service container for our class.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return Container
 	 */
 	private function get_service_container() {

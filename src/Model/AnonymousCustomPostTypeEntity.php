@@ -15,7 +15,7 @@ use Yikes\LevelPlayingField\Tools\AnonymizerInterface;
 /**
  * Class AnonymousCustomPostTypeEntity
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 abstract class AnonymousCustomPostTypeEntity extends CustomPostTypeEntity {
@@ -23,7 +23,7 @@ abstract class AnonymousCustomPostTypeEntity extends CustomPostTypeEntity {
 	/**
 	 * Anonymizer object.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @var AnonymizerInterface
 	 */
 	protected $anonymizer;
@@ -44,7 +44,7 @@ abstract class AnonymousCustomPostTypeEntity extends CustomPostTypeEntity {
 	 *
 	 * This ensures that certain properties are anonymized if needed.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $property The property name to set.
 	 * @param mixed  $value    The value for the property.
@@ -58,7 +58,7 @@ abstract class AnonymousCustomPostTypeEntity extends CustomPostTypeEntity {
 	/**
 	 * Return the list of properties that should be anonymized.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return array
 	 */
 	abstract protected function get_anonymous_properties();

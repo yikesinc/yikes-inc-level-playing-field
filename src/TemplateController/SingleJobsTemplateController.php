@@ -20,7 +20,7 @@ use Yikes\LevelPlayingField\Shortcode\Job as JobShortcode;
  *
  * A class to control which template file is used to display the single jobs page.
  *
- * @since   %VERSION%
+ * @since   1.0.0
  *
  * @package Yikes\LevelPlayingField
  * @author  JP, KU, EB, TL
@@ -33,7 +33,7 @@ class SingleJobsTemplateController extends TemplateController {
 	/**
 	 * Get the array of known assets.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return Asset[]
 	 */
@@ -46,7 +46,7 @@ class SingleJobsTemplateController extends TemplateController {
 	/**
 	 * Check if the current request is for this class' object and supply the current post w/ content.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param  string $content The default post content.
 	 *
@@ -64,7 +64,7 @@ class SingleJobsTemplateController extends TemplateController {
 	/**
 	 * Filters the path of the current template before including it.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $template The path of the template to include.
 	 */
@@ -106,7 +106,7 @@ class SingleJobsTemplateController extends TemplateController {
 	/**
 	 * Get the data to pass onto the view.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param int $id The Job ID.
 	 *

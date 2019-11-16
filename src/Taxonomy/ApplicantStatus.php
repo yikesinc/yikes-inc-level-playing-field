@@ -21,7 +21,7 @@ use Yikes\LevelPlayingField\Roles\Capabilities;
 /**
  * Class ApplicantStatus
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 final class ApplicantStatus extends BaseTaxonomy implements AssetsAware {
@@ -99,7 +99,7 @@ final class ApplicantStatus extends BaseTaxonomy implements AssetsAware {
 	/**
 	 * Set up default terms for the taxonomy.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	public function default_terms() {
 		$terms = $this->get_default_terms();
@@ -114,7 +114,7 @@ final class ApplicantStatus extends BaseTaxonomy implements AssetsAware {
 	/**
 	 * Custom metabox callback for this taxonomy.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param \WP_Post $post The current post object.
 	 */
@@ -143,7 +143,7 @@ final class ApplicantStatus extends BaseTaxonomy implements AssetsAware {
 	/**
 	 * Create term selection drop-down.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param \WP_Post $post The current post object.
 	 */
@@ -190,7 +190,7 @@ final class ApplicantStatus extends BaseTaxonomy implements AssetsAware {
 	/**
 	 * Load asset objects for use.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	protected function load_assets() {
 		$script = new ScriptAsset(
@@ -276,7 +276,7 @@ final class ApplicantStatus extends BaseTaxonomy implements AssetsAware {
 	/**
 	 * Get the default terms that we're setting.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return array
 	 */
 	private function get_default_terms() {
@@ -303,7 +303,7 @@ final class ApplicantStatus extends BaseTaxonomy implements AssetsAware {
 	/**
 	 * Assign a term to the post.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	private function add_post_term() {
 

@@ -12,7 +12,7 @@ namespace Yikes\LevelPlayingField\Exception;
 /**
  * Class InvalidAnonymousData
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 class InvalidAnonymousData extends \InvalidArgumentException implements Exception {
@@ -20,7 +20,7 @@ class InvalidAnonymousData extends \InvalidArgumentException implements Exceptio
 	/**
 	 * Create a new instance of the exception for anonmyzed data that is not valid.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $data The invalid data.
 	 *

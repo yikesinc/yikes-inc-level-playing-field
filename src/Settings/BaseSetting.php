@@ -14,7 +14,7 @@ use Yikes\LevelPlayingField\Exception\MustExtend;
 /**
  * Class BaseSetting
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 abstract class BaseSetting implements Setting {
@@ -22,7 +22,7 @@ abstract class BaseSetting implements Setting {
 	/**
 	 * Whether the setting should be autoloaded.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @var bool
 	 */
 	protected $autoload = true;
@@ -30,7 +30,7 @@ abstract class BaseSetting implements Setting {
 	/**
 	 * Whether the setting has been loaded.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @var bool
 	 */
 	protected $loaded = false;
@@ -38,7 +38,7 @@ abstract class BaseSetting implements Setting {
 	/**
 	 * The setting prefix.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @var string
 	 */
 	protected $prefix = 'lpf_settings_';
@@ -46,7 +46,7 @@ abstract class BaseSetting implements Setting {
 	/**
 	 * The setting value.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @var mixed
 	 */
 	protected $value;
@@ -57,7 +57,7 @@ abstract class BaseSetting implements Setting {
 	/**
 	 * Get the plugin value.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return mixed
 	 */
 	public function get() {
@@ -69,7 +69,7 @@ abstract class BaseSetting implements Setting {
 	/**
 	 * Update the value of the setting.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param mixed $value The new value for the setting.
 	 */
@@ -85,7 +85,7 @@ abstract class BaseSetting implements Setting {
 	/**
 	 * Delete the setting from the DB.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	public function delete() {
 		delete_option( $this->get_setting_name() );
@@ -94,7 +94,7 @@ abstract class BaseSetting implements Setting {
 	/**
 	 * Maybe load the setting from the DB.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	protected function maybe_load() {
 		if ( ! $this->loaded ) {
@@ -106,7 +106,7 @@ abstract class BaseSetting implements Setting {
 	/**
 	 * Get the name of the setting from the DB.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return string
 	 * @throws MustExtend When the default slug is not overridden.
 	 */
@@ -121,7 +121,7 @@ abstract class BaseSetting implements Setting {
 	/**
 	 * Get the default value for the setting.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return mixed
 	 */
 	protected function get_default() {
@@ -131,7 +131,7 @@ abstract class BaseSetting implements Setting {
 	/**
 	 * Sanitize the setting value.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param mixed $value The value to sanitize.
 	 *

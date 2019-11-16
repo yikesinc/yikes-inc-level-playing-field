@@ -12,7 +12,7 @@ namespace Yikes\LevelPlayingField\Settings;
 /**
  * Interface SettingsFields
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 interface SettingsFields {

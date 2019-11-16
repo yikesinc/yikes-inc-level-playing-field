@@ -16,7 +16,7 @@ use Yikes\LevelPlayingField\Shortcode\BaseJobs;
 /**
  * Class AdditionalEmailRecipients.
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 final class DisableFrontEndCSS extends BaseSettingsField {
@@ -26,7 +26,7 @@ final class DisableFrontEndCSS extends BaseSettingsField {
 	/**
 	 * Render the field's HTML.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	protected function field() {
 		$disableable_css_files = [
@@ -52,7 +52,7 @@ final class DisableFrontEndCSS extends BaseSettingsField {
 	/**
 	 * Return the description text for this field, i18n'ed.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return string $description_text The description text for this field.
 	 */

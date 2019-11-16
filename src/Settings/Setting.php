@@ -12,7 +12,7 @@ namespace Yikes\LevelPlayingField\Settings;
 /**
  * Interface Setting
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 interface Setting {
@@ -20,7 +20,7 @@ interface Setting {
 	/**
 	 * Get the setting value.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return mixed
 	 */
 	public function get();
@@ -28,7 +28,7 @@ interface Setting {
 	/**
 	 * Update the value of the setting.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param mixed $value The new value for the setting.
 	 */
@@ -37,7 +37,7 @@ interface Setting {
 	/**
 	 * Delete the setting from the DB.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	public function delete();
 }

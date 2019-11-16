@@ -14,7 +14,7 @@ use Yikes\LevelPlayingField\Exception\InvalidAssetHandle;
 /**
  * Trait AssetsAwareness
  *
- * @since   %VERSION%
+ * @since   1.0.0
  *
  * @package Yikes\LevelPlayingField
  * @author  Jeremy Pry
@@ -24,7 +24,7 @@ trait AssetsAwareness {
 	/**
 	 * Assets handler instance to use.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @var AssetsHandler
 	 */
@@ -33,7 +33,7 @@ trait AssetsAwareness {
 	/**
 	 * Array of asset objects.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @var Asset[]
 	 */
 	protected $assets = [];
@@ -41,7 +41,7 @@ trait AssetsAwareness {
 	/**
 	 * Get the array of known assets.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return Asset[]
 	 */
@@ -56,7 +56,7 @@ trait AssetsAwareness {
 	/**
 	 * Register the known assets.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	protected function register_assets() {
 		foreach ( $this->get_assets() as $asset ) {
@@ -67,7 +67,7 @@ trait AssetsAwareness {
 	/**
 	 * Enqueue the known assets.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @throws InvalidAssetHandle If the passed-in asset handle is not valid.
 	 */
@@ -80,7 +80,7 @@ trait AssetsAwareness {
 	/**
 	 * Enqueue a single asset.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $handle Handle of the asset to enqueue.
 	 *
@@ -93,7 +93,7 @@ trait AssetsAwareness {
 	/**
 	 * Set the assets handler to use within this object.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param AssetsHandler $assets Assets handler to use.
 	 */
@@ -104,7 +104,7 @@ trait AssetsAwareness {
 	/**
 	 * Load asset objects for use.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	protected function load_assets() {
 		$this->assets = [];

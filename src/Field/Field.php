@@ -16,14 +16,14 @@ interface Field {
 	/**
 	 * Render the field.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	public function render();
 
 	/**
 	 * Set the data submitted to the field.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param mixed $data The submitted data for the field.
 	 */
@@ -32,7 +32,7 @@ interface Field {
 	/**
 	 * Get the ID of the field.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return string
 	 */
 	public function get_id();
@@ -40,7 +40,7 @@ interface Field {
 	/**
 	 * Set the ID for the field.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $id The ID of the field.
 	 *
@@ -51,7 +51,7 @@ interface Field {
 	/**
 	 * Get the sanitized value for the field.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return mixed The validated value.
 	 * @throws InvalidField When the submission isn't valid.
@@ -61,7 +61,7 @@ interface Field {
 	/**
 	 * Set the parent field object for this field.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param Field $field The parent field object.
 	 */
@@ -70,7 +70,7 @@ interface Field {
 	/**
 	 * Determine if this is a child field.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return bool
 	 */
 	public function is_child();
@@ -78,7 +78,7 @@ interface Field {
 	/**
 	 * Get whether this field is required or not.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return bool
 	 */
 	public function is_required();
@@ -86,7 +86,7 @@ interface Field {
 	/**
 	 * Get the label for the field.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return string The label for the field.
 	 */
 	public function get_label();

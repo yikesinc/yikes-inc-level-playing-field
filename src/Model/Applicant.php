@@ -33,7 +33,7 @@ use Yikes\LevelPlayingField\Taxonomy\ApplicantStatus;
 /**
  * Class Applicant
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  *
  * @property string email            The Applicant email address.
@@ -61,7 +61,7 @@ final class Applicant extends CustomPostTypeEntity {
 	/**
 	 * The anonymizer class used for anonymization.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @var string
 	 */
 	private $anonymizer = '';
@@ -69,7 +69,7 @@ final class Applicant extends CustomPostTypeEntity {
 	/**
 	 * Array of changed properties.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @var array
 	 */
 	private $changes = [];
@@ -77,7 +77,7 @@ final class Applicant extends CustomPostTypeEntity {
 	/**
 	 * Get the status of the applicant.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return string
 	 */
 	public function get_status() {
@@ -87,7 +87,7 @@ final class Applicant extends CustomPostTypeEntity {
 	/**
 	 * Set the status of the current Applicant.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $status The status.
 	 */
@@ -98,7 +98,7 @@ final class Applicant extends CustomPostTypeEntity {
 	/**
 	 * Get the email address of the applicant.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return string
 	 */
 	public function get_email() {
@@ -108,7 +108,7 @@ final class Applicant extends CustomPostTypeEntity {
 	/**
 	 * Get the email address of the applicant for email communication.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return string
 	 */
 	public function get_email_for_send() {
@@ -118,7 +118,7 @@ final class Applicant extends CustomPostTypeEntity {
 	/**
 	 * Set the email for the applicant.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $email The applicant's email address.
 	 */
@@ -129,7 +129,7 @@ final class Applicant extends CustomPostTypeEntity {
 	/**
 	 * Get the Job ID for the applicant.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return int
 	 */
 	public function get_job_id() {
@@ -139,7 +139,7 @@ final class Applicant extends CustomPostTypeEntity {
 	/**
 	 * Set the Job ID for the applicant.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param int $job_id The job ID.
 	 */
@@ -150,7 +150,7 @@ final class Applicant extends CustomPostTypeEntity {
 	/**
 	 * Get the name of the applicant.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return string The applicant name.
 	 */
 	public function get_name() {
@@ -160,7 +160,7 @@ final class Applicant extends CustomPostTypeEntity {
 	/**
 	 * Set the name of the applicant.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $name The applicant name.
 	 */
@@ -171,7 +171,7 @@ final class Applicant extends CustomPostTypeEntity {
 	/**
 	 * Get the phone of the applicant.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return int The applicant phone.
 	 */
 	public function get_phone() {
@@ -181,7 +181,7 @@ final class Applicant extends CustomPostTypeEntity {
 	/**
 	 * Set the phone of the applicant.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param int $phone The applicant's phone.
 	 */
@@ -192,7 +192,7 @@ final class Applicant extends CustomPostTypeEntity {
 	/**
 	 * Get the ID of the application that the Applicant filled out.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return int
 	 */
 	public function get_application_id() {
@@ -202,7 +202,7 @@ final class Applicant extends CustomPostTypeEntity {
 	/**
 	 * Set the ID of the application that the Applicant filled out.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param int $id The application ID.
 	 */
@@ -213,7 +213,7 @@ final class Applicant extends CustomPostTypeEntity {
 	/**
 	 * Get the avatar image tag.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param int $size The image size.
 	 *
@@ -241,7 +241,7 @@ final class Applicant extends CustomPostTypeEntity {
 	/**
 	 * Get the cover letter for the applicant.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return string
 	 */
 	public function get_cover_letter() {
@@ -251,7 +251,7 @@ final class Applicant extends CustomPostTypeEntity {
 	/**
 	 * Set the cover letter for the applicant.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $cover_letter The cover letter text.
 	 */
@@ -263,7 +263,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * Get the schooling details for the applicant.
 	 *
 	 * @see   Schooling
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return array
 	 */
 	public function get_schooling() {
@@ -309,7 +309,7 @@ final class Applicant extends CustomPostTypeEntity {
 	/**
 	 * Add a schooling to the applicant.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param array $schooling Array of schooling data.
 	 */
@@ -320,7 +320,7 @@ final class Applicant extends CustomPostTypeEntity {
 	/**
 	 * Set the schooling for the applicant.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param array $schooling All schooling data.
 	 */
@@ -345,7 +345,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * Get the certifications for the applicant.
 	 *
 	 * @see   Certifications
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return array
 	 */
 	public function get_certifications() {
@@ -375,7 +375,7 @@ final class Applicant extends CustomPostTypeEntity {
 	/**
 	 * Add a certification to the applicant.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param array $certification The certification data.
 	 */
@@ -386,7 +386,7 @@ final class Applicant extends CustomPostTypeEntity {
 	/**
 	 * Set the certification data for the applicant.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param array $certifications All certification data.
 	 */
@@ -407,7 +407,7 @@ final class Applicant extends CustomPostTypeEntity {
 	/**
 	 * Get the skills of the applicant.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return array
 	 */
 	public function get_skills() {
@@ -417,7 +417,7 @@ final class Applicant extends CustomPostTypeEntity {
 	/**
 	 * Add a skill to the applicant.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param array $skill The skill data.
 	 */
@@ -428,7 +428,7 @@ final class Applicant extends CustomPostTypeEntity {
 	/**
 	 * Set the skills for the applicant.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param array $skills The skills for the applicant.
 	 */
@@ -450,7 +450,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * Get the job experience of the applicant.
 	 *
 	 * @see   Experience
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return array
 	 */
 	public function get_experience() {
@@ -460,7 +460,7 @@ final class Applicant extends CustomPostTypeEntity {
 	/**
 	 * Add a experience to the applicant.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param array $experience The experience data.
 	 */
@@ -472,7 +472,7 @@ final class Applicant extends CustomPostTypeEntity {
 	/**
 	 * Set the experiences for the applicant.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param array $experiences The experiences for the applicant.
 	 */
@@ -495,7 +495,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 *
 	 * @see   Volunteer
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return array
 	 */
 	public function get_volunteer() {
@@ -505,7 +505,7 @@ final class Applicant extends CustomPostTypeEntity {
 	/**
 	 * Add volunteer work to the applicant.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param array $volunteer Array of volunteer work.
 	 */
@@ -517,7 +517,7 @@ final class Applicant extends CustomPostTypeEntity {
 	/**
 	 * Set the volunteer work for the applicant.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param array $volunteer The volunteer work for the applicant.
 	 */
@@ -541,7 +541,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 *
 	 * This requires the array of data to have a start and end date.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param array $data The array of data with date information.
 	 *
@@ -575,7 +575,7 @@ final class Applicant extends CustomPostTypeEntity {
 	/**
 	 * Calculate the date difference from a time interval and return a readable string.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param DateInterval $diff             A date interval object.
 	 * @param bool         $present_position A flag indicating whether this is a present position.
@@ -622,7 +622,7 @@ final class Applicant extends CustomPostTypeEntity {
 	/**
 	 * Get the nickname of the applicant.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return string
 	 */
 	public function get_nickname() {
@@ -632,7 +632,7 @@ final class Applicant extends CustomPostTypeEntity {
 	/**
 	 * Set the nickname of the applicant.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $nickname The applicant nickname.
 	 */
@@ -645,7 +645,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 *
 	 * When the applicant is anonymized, only the City and State will be returned.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return array The address data.
 	 */
 	public function get_address() {
@@ -663,7 +663,7 @@ final class Applicant extends CustomPostTypeEntity {
 	/**
 	 * Set the address of the Applicant.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param array $address The array of address data.
 	 */
@@ -674,7 +674,7 @@ final class Applicant extends CustomPostTypeEntity {
 	/**
 	 * Get the user ID who viewed the applicant.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return int
 	 */
 	public function get_viewed_by() {
@@ -684,7 +684,7 @@ final class Applicant extends CustomPostTypeEntity {
 	/**
 	 * Set the user who viewed the applicant.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param int $id The user ID who viewed the applicant.
 	 */
@@ -695,7 +695,7 @@ final class Applicant extends CustomPostTypeEntity {
 	/**
 	 * Get the languages and proficiency.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return array
 	 */
 	public function get_languages() {
@@ -705,7 +705,7 @@ final class Applicant extends CustomPostTypeEntity {
 	/**
 	 * Add a language to the applicant.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param array $language Array of language data.
 	 */
@@ -716,7 +716,7 @@ final class Applicant extends CustomPostTypeEntity {
 	/**
 	 * Set the languages of the applicant.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param array $languages Array of language arrays.
 	 */
@@ -736,7 +736,7 @@ final class Applicant extends CustomPostTypeEntity {
 	/**
 	 * Get the interview details for the applicant.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return array
 	 */
 	public function get_interview() {
@@ -746,7 +746,7 @@ final class Applicant extends CustomPostTypeEntity {
 	/**
 	 * Set the interview details for the applicant.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param array $interview The interview details for the applicant.
 	 */
@@ -765,7 +765,7 @@ final class Applicant extends CustomPostTypeEntity {
 	/**
 	 * Get an interview request status.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return string
 	 */
 	public function get_interview_status() {
@@ -775,7 +775,7 @@ final class Applicant extends CustomPostTypeEntity {
 	/**
 	 * Get all interview details for interview widget
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return array
 	 */
 	public function get_interview_details() {
@@ -831,7 +831,7 @@ final class Applicant extends CustomPostTypeEntity {
 	/**
 	 * Set the status of an interview request.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * Possible values:
 	 * - ''
@@ -848,7 +848,7 @@ final class Applicant extends CustomPostTypeEntity {
 	/**
 	 * Cancel an interview.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	public function cancel_interview() {
 		// Don't allow cancellation of an interview that isn't scheduled, is already confirmed, or is already cancelled.
@@ -883,7 +883,7 @@ final class Applicant extends CustomPostTypeEntity {
 	/**
 	 * Confirm an interview.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @throws InvalidClass When the anonymizer class saved to this applicant can't be found.
 	 */
@@ -923,7 +923,7 @@ final class Applicant extends CustomPostTypeEntity {
 	/**
 	 * Get the URL to the messaging page with the applicant's secret keys appended.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return string $messaging_endpoint The URL to the messaging page with the applicant's secret keys appended.
 	 */
@@ -940,7 +940,7 @@ final class Applicant extends CustomPostTypeEntity {
 	/**
 	 * Get the endpoint that cancels a scheduled interview.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return string $cancellation_endpoint The endpoint that cancels a scheduled interview.
 	 */
@@ -956,7 +956,7 @@ final class Applicant extends CustomPostTypeEntity {
 	/**
 	 * Get the endpoint that confirms a scheduled interview.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return string $confirmation_endpoint The endpoint that confirms a scheduled interview.
 	 */
@@ -972,7 +972,7 @@ final class Applicant extends CustomPostTypeEntity {
 	/**
 	 * Create a unique hash/guid.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	public function create_guid() {
 		if ( ! empty( $this->{ApplicantMeta::GUID} ) ) {
@@ -985,7 +985,7 @@ final class Applicant extends CustomPostTypeEntity {
 	/**
 	 * Get the applicant's guid.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return string $guid The applicant's guid.
 	 */
@@ -1001,7 +1001,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 *
 	 * This function should NOT use the set_property() method.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $anonymizer The class name used for anonymization.
 	 */
@@ -1013,7 +1013,7 @@ final class Applicant extends CustomPostTypeEntity {
 	/**
 	 * Get the anonymizer class used for this applicant's anonymization.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return string $anonymizer The class name used for anonymization.
 	 */
@@ -1024,7 +1024,7 @@ final class Applicant extends CustomPostTypeEntity {
 	/**
 	 * Set the anonymized property.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param bool $anonymized True to set this applicant as anonymized.
 	 */
@@ -1036,7 +1036,7 @@ final class Applicant extends CustomPostTypeEntity {
 	/**
 	 * Whether this applicant's data is currently anonymized.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return bool
 	 */
 	public function is_anonymized() {
@@ -1046,7 +1046,7 @@ final class Applicant extends CustomPostTypeEntity {
 	/**
 	 * Persist the additional properties of the entity.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	public function persist_properties() {
 		// Always make sure we have a status set.
@@ -1077,7 +1077,7 @@ final class Applicant extends CustomPostTypeEntity {
 	/**
 	 * Anonymize this applicant's data.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param AnonymizerInterface $anonymizer The anonymizer object.
 	 */
@@ -1104,7 +1104,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 *
 	 * The Closure that is returned by this method is expected to be compatible with array_walk_recursive().
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param AnonymizerInterface $anonymizer The anonymizer object.
 	 * @param string              $method     The method to use from the anonymizer class.
@@ -1137,7 +1137,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 *
 	 * Role checking should be handled outside of this function.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param AnonymizerInterface $anonymizer The anonymizer object.
 	 *
@@ -1165,7 +1165,7 @@ final class Applicant extends CustomPostTypeEntity {
 	/**
 	 * Copy changed properties back to the object.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param array $properties Properties changed by anonymization process.
 	 */
@@ -1181,7 +1181,7 @@ final class Applicant extends CustomPostTypeEntity {
 	/**
 	 * Return the list of lazily-loaded properties and their default values.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return array
 	 */
@@ -1232,7 +1232,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 *
 	 * Due to the way WordPress handles post meta, loading a single property will load all of the post's meta properties.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $property Name of the property to load. Default to an empty string because passing in a property name is not required.
 	 */
@@ -1263,7 +1263,7 @@ final class Applicant extends CustomPostTypeEntity {
 	/**
 	 * Load the status of the Applicant.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	private function load_status() {
 		/** @var WP_Term[] $terms */
@@ -1280,7 +1280,7 @@ final class Applicant extends CustomPostTypeEntity {
 	/**
 	 * Set a property for this Applicant.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $property The property to set.
 	 * @param mixed  $value    The value of that property.
@@ -1299,7 +1299,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * This is only to be used for properties that contain multiple values, such as experience. For properties
 	 * with only one value (even if that value is an array, like address), use the set_property() method.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $property The property name.
 	 * @param mixed  $value    The property value.
@@ -1326,7 +1326,7 @@ final class Applicant extends CustomPostTypeEntity {
 	/**
 	 * Persist the status of the applicant.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	private function persist_status() {
 		wp_set_object_terms( $this->post->ID, $this->{ApplicantMeta::STATUS}, ApplicantStatus::SLUG );
@@ -1335,7 +1335,7 @@ final class Applicant extends CustomPostTypeEntity {
 	/**
 	 * Register that a property has been changed.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $property The property that has changed.
 	 */
@@ -1346,7 +1346,7 @@ final class Applicant extends CustomPostTypeEntity {
 	/**
 	 * Get properties to exclude from anonymizer.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return array
 	 */
 	private function get_excluded_properties() {
@@ -1368,7 +1368,7 @@ final class Applicant extends CustomPostTypeEntity {
 	/**
 	 * Get the sanitization value for use with filter_var().
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $property The property being filtered.
 	 *
@@ -1446,7 +1446,7 @@ final class Applicant extends CustomPostTypeEntity {
 	/**
 	 * Get the data structure of a complex property.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $property The property name.
 	 *
@@ -1537,7 +1537,7 @@ final class Applicant extends CustomPostTypeEntity {
 	/**
 	 * Determine if the property allows multiple values.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $property The property name.
 	 *
@@ -1567,7 +1567,7 @@ final class Applicant extends CustomPostTypeEntity {
 	/**
 	 * Get the meta key for a given property.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $property The we want a meta key for.
 	 *
@@ -1593,7 +1593,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * For a structured property, each element will be sanitized individually. For
 	 * a non-structured property, the value will be sanitized directly.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $property The property name to sanitize.
 	 * @param mixed  $data     The data for the property.
@@ -1630,7 +1630,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 *
 	 * @see Applicant::get_sanitize_filter()
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $key   The key to sanitize against.
 	 * @param mixed  $value The value to sanitize.
@@ -1659,7 +1659,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 *
 	 * Certain properties are only able to be modified by internal methods.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $property The property to validate.
 	 *
@@ -1674,7 +1674,7 @@ final class Applicant extends CustomPostTypeEntity {
 	/**
 	 * Validate that a property allows multiple values.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $property The property name.
 	 *

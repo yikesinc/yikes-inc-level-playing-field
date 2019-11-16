@@ -14,7 +14,7 @@ use InvalidArgumentException;
 /**
  * Class EmptyArray
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 class EmptyArray extends InvalidArgumentException implements Exception {
@@ -22,7 +22,7 @@ class EmptyArray extends InvalidArgumentException implements Exception {
 	/**
 	 * Create a new instance of an exception when an empty array is provided.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $function The function name.
 	 *

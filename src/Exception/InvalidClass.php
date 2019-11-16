@@ -14,7 +14,7 @@ use InvalidArgumentException;
 /**
  * Class InvalidClass
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 class InvalidClass extends InvalidArgumentException implements Exception {
@@ -22,7 +22,7 @@ class InvalidClass extends InvalidArgumentException implements Exception {
 	/**
 	 * Return new instance of this exception when a class does not implement the necessary interface.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $class     The invalid class name.
 	 * @param string $interface The interface that the class should implement.
@@ -40,7 +40,7 @@ class InvalidClass extends InvalidArgumentException implements Exception {
 	/**
 	 * Return a new instance of this exception when a class is not found.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $class The invalid class name.
 	 *
@@ -56,7 +56,7 @@ class InvalidClass extends InvalidArgumentException implements Exception {
 	/**
 	 * Return a new instance of this exception when we expected one class but got another.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $class    The class name we received.
 	 * @param string $expected The Class name we expected.

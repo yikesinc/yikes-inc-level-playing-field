@@ -12,7 +12,7 @@ namespace Yikes\LevelPlayingField\Model;
 /**
 * Trait ApplicantMetaDropdowns
 *
-* @since   %VERSION%
+* @since   1.0.0
 * @package Yikes\LevelPlayingField
 */
 trait ApplicantMetaDropdowns {
@@ -20,7 +20,7 @@ trait ApplicantMetaDropdowns {
 	/**
 	 * Get dropdown options for schooling institution type.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return array
 	 */
 	public function get_schooling_options() {
@@ -36,7 +36,7 @@ trait ApplicantMetaDropdowns {
 	/**
 	 * Get dropdown options for skill proficiency.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return array
 	 */
 	public function get_skills_options() {
@@ -52,7 +52,7 @@ trait ApplicantMetaDropdowns {
 	/**
 	 * Get dropdown options for language proficiency.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return array
 	 */
 	public function get_language_options() {

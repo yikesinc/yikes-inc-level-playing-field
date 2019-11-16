@@ -16,7 +16,7 @@ use Yikes\LevelPlayingField\Exception\InvalidField;
  *
  * This is a complex field which can have repeatable input.
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 abstract class RepeatableField extends ComplexField {
@@ -24,7 +24,7 @@ abstract class RepeatableField extends ComplexField {
 	/**
 	 * Set up the sub fields for this field.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @throws InvalidField When an invalid field class is provided through the filter.
 	 */
 	protected function setup_sub_fields() {
@@ -34,7 +34,7 @@ abstract class RepeatableField extends ComplexField {
 	/**
 	 * Get the ID base for sub-fields.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return string
 	 */
 	protected function get_id_base() {
@@ -44,7 +44,7 @@ abstract class RepeatableField extends ComplexField {
 	/**
 	 * Render an individual fieldset group.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	protected function render_fieldset_group() {
 		$last = count( $this->sub_fields ) - 1;
@@ -75,7 +75,7 @@ abstract class RepeatableField extends ComplexField {
 	/**
 	 * Render the opening of a fieldset element.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	protected function render_open_fieldset() {
 		$classes = [
@@ -93,7 +93,7 @@ abstract class RepeatableField extends ComplexField {
 	/**
 	 * Render the opening of a field container div tag.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	protected function render_open_field_container() {
 		$classes = [
@@ -112,7 +112,7 @@ abstract class RepeatableField extends ComplexField {
 	/**
 	 * Render the delete button.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	protected function render_delete_button() {
 		print( '<button type="button" class="lpf-delete-button">x</button>' );
@@ -121,7 +121,7 @@ abstract class RepeatableField extends ComplexField {
 	/**
 	 * Render the sub-fields.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param int $group The index for the group of fields to render.
 	 */
@@ -135,7 +135,7 @@ abstract class RepeatableField extends ComplexField {
 	/**
 	 * Render the closing field container div tag.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	protected function render_close_field_container() {
 		echo '</div>';
@@ -144,7 +144,7 @@ abstract class RepeatableField extends ComplexField {
 	/**
 	 * Render the repeater button.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	protected function render_repeater_button() {
 		printf(
@@ -159,7 +159,7 @@ abstract class RepeatableField extends ComplexField {
 	 *
 	 * Only needs to be overridden when the field is repeatable.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return string
 	 */
 	protected function get_add_new_label() {
@@ -171,14 +171,14 @@ abstract class RepeatableField extends ComplexField {
 	 *
 	 * This should echo the label directly.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	abstract protected function render_repeatable_field_label();
 
 	/**
 	 * Set the data submitted to the field.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param mixed $data The submitted data for the field.
 	 *
@@ -208,7 +208,7 @@ abstract class RepeatableField extends ComplexField {
 	/**
 	 * Validate the submission for the given field.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return mixed The validated value.
 	 * @throws InvalidField When the submission isn't valid.
@@ -233,7 +233,7 @@ abstract class RepeatableField extends ComplexField {
 	/**
 	 * Clone sub-fields so that each field object can handle its own submission.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param int $total The total number of fields.
 	 */
@@ -269,7 +269,7 @@ abstract class RepeatableField extends ComplexField {
 	 * Make sure the array is in the right format when it is repeating. We expect to receive
 	 * a numerically-indexed array of arrays.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @throws InvalidField When the raw value is empty but the field is required.
 	 */

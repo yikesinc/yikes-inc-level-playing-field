@@ -15,7 +15,7 @@ use Closure;
 /**
  * Class BlockAsset.
  *
- * @since   %VERSION%
+ * @since   1.0.0
  *
  * @package Yikes\LevelPlayingField\Assets
  * @author  Jeremy Pry
@@ -27,7 +27,7 @@ final class BlockAsset extends ScriptAsset {
 	/**
 	 * Get the enqueue action to use.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return string Enqueue action name.
 	 */
@@ -38,7 +38,7 @@ final class BlockAsset extends ScriptAsset {
 	/**
 	 * Get the enqueue closure to use.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return Closure
 	 */

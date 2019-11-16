@@ -22,7 +22,7 @@ use Yikes\LevelPlayingField\Model\RequiredSuffix;
 /**
  * Class ApplicationManager
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 final class ApplicationManager extends AwesomeBaseMetabox implements AssetsAware {
@@ -39,7 +39,7 @@ final class ApplicationManager extends AwesomeBaseMetabox implements AssetsAware
 	/**
 	 * Register hooks.
 	 *
-	 * @since  %VERSION%
+	 * @since  1.0.0
 	 * @author Jeremy Pry
 	 */
 	public function register() {
@@ -54,7 +54,7 @@ final class ApplicationManager extends AwesomeBaseMetabox implements AssetsAware
 	/**
 	 * Register meta boxes.
 	 *
-	 * @since  %VERSION%
+	 * @since  1.0.0
 	 * @author Jeremy Pry
 	 *
 	 * @param array $meta_boxes Array of existing meta boxes.
@@ -348,7 +348,7 @@ final class ApplicationManager extends AwesomeBaseMetabox implements AssetsAware
 	/**
 	 * Get the HTML for the Schooling details.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return string
 	 */
 	protected function get_schooling_html() {
@@ -369,7 +369,7 @@ final class ApplicationManager extends AwesomeBaseMetabox implements AssetsAware
 	/**
 	 * Get the HTML for the Certification details.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return string
 	 */
 	protected function get_certification_html() {
@@ -390,7 +390,7 @@ final class ApplicationManager extends AwesomeBaseMetabox implements AssetsAware
 	/**
 	 * Get the HTML for the Experience details.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return string
 	 */
 	protected function get_experience_html() {
@@ -410,7 +410,7 @@ final class ApplicationManager extends AwesomeBaseMetabox implements AssetsAware
 	/**
 	 * Get the HTML for the Experience details.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return string
 	 */
 	protected function get_volunteer_html() {
@@ -430,7 +430,7 @@ final class ApplicationManager extends AwesomeBaseMetabox implements AssetsAware
 	/**
 	 * Load asset objects for use.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	protected function load_assets() {
 		$this->assets = [

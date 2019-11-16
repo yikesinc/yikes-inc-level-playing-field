@@ -12,7 +12,7 @@ namespace Yikes\LevelPlayingField\RequiredPages;
 /**
  * Class ApplicantMessagingPage
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 class ApplicantMessagingPage extends BaseRequiredPage {
@@ -28,7 +28,7 @@ class ApplicantMessagingPage extends BaseRequiredPage {
 	/**
 	 * Get the array of post attributes.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return array $post_array The array of post attributes.
 	 */
@@ -49,7 +49,7 @@ class ApplicantMessagingPage extends BaseRequiredPage {
 	 *
 	 * Note: this variable cannot be used as a class constant because it requires the string be run through a translation function.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return string $post_state The description for this post in the list table.
 	 */

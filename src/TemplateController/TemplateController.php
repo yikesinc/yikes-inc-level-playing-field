@@ -22,7 +22,7 @@ use Yikes\LevelPlayingField\View\TemplatedView;
  *
  * A class to control which template file is used to display our custom post types.
  *
- * @since   %VERSION%
+ * @since   1.0.0
  *
  * @package Yikes\LevelPlayingField
  * @author  JP, KU, EB, TL
@@ -37,7 +37,7 @@ abstract class TemplateController implements Renderable, AssetsAware, Service {
 	/**
 	 * Register the current Registerable.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	public function register() {
 		add_filter( 'the_content', [ $this, 'set_content' ], static::PRIORITY );
@@ -47,7 +47,7 @@ abstract class TemplateController implements Renderable, AssetsAware, Service {
 	/**
 	 * Check if the current request is for this class' object and supply the current post w/ content.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param  string $content The default post content.
 	 *
@@ -58,7 +58,7 @@ abstract class TemplateController implements Renderable, AssetsAware, Service {
 	/**
 	 * Filters the path of the current template before including it.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $template The path of the template to include.
 	 *
@@ -78,7 +78,7 @@ abstract class TemplateController implements Renderable, AssetsAware, Service {
 	/**
 	 * Render the current Renderable.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param array $context Context in which to render.
 	 *
@@ -109,7 +109,7 @@ abstract class TemplateController implements Renderable, AssetsAware, Service {
 	/**
 	 * Get the View URI to use for rendering the template's content.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return string View URI.
 	 * @throws MustExtend When the default view URI has not been extended.

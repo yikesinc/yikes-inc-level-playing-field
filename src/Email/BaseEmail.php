@@ -12,7 +12,7 @@ namespace Yikes\LevelPlayingField\Email;
 /**
  * Abstract class BaseEmail.
  *
- * @since   %VERSION%
+ * @since   1.0.0
  *
  * @package Yikes\LevelPlayingField
  * @author  Jeremy Pry
@@ -26,7 +26,7 @@ abstract class BaseEmail {
 	/**
 	 * Send the Email.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	public function send() {
 
@@ -35,7 +35,7 @@ abstract class BaseEmail {
 		 *
 		 * Note: you can return an array or comma-separated list of email addresses.
 		 *
-		 * @since %VERSION%
+		 * @since 1.0.0
 		 *
 		 * @param  mixed  $email The recipient's email address.
 		 * @param  string $type  LPF's internal email type slug.
@@ -48,7 +48,7 @@ abstract class BaseEmail {
 		/**
 		 * Filter the subject of the email.
 		 *
-		 * @since %VERSION%
+		 * @since 1.0.0
 		 *
 		 * @param  string $subject The subject of the email.
 		 * @param  string $type    LPF's internal email type slug.
@@ -61,7 +61,7 @@ abstract class BaseEmail {
 		/**
 		 * Filter the message of the email.
 		 *
-		 * @since %VERSION%
+		 * @since 1.0.0
 		 *
 		 * @param  string $message The email's message.
 		 * @param  string $type    LPF's internal email type slug.
@@ -80,7 +80,7 @@ abstract class BaseEmail {
 		 * $headers[] = 'Cc: John Q Codex <jqc@wordpress.org>';
 		 * $headers[] = 'Cc: iluvwp@wordpress.org';
 		 *
-		 * @since %VERSION%
+		 * @since 1.0.0
 		 *
 		 * @param  array  $headers The array of headers for this email.
 		 * @param  string $type    LPF's internal email type slug.
@@ -93,7 +93,7 @@ abstract class BaseEmail {
 		/**
 		 * Filter the attachments of the email.
 		 *
-		 * @since %VERSION%
+		 * @since 1.0.0
 		 *
 		 * @param  array  $attachments The array of attachments for this email.
 		 * @param  string $type        LPF's internal email type slug.
@@ -110,7 +110,7 @@ abstract class BaseEmail {
 	/**
 	 * Get the recipient's email address.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return mixed An array or comma-separated list of email addresses.
 	 */
@@ -119,7 +119,7 @@ abstract class BaseEmail {
 	/**
 	 * Get the email subject.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return string The subject of the email.
 	 */
@@ -128,7 +128,7 @@ abstract class BaseEmail {
 	/**
 	 * Get the email message.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return string The email's message.
 	 */
@@ -137,7 +137,7 @@ abstract class BaseEmail {
 	/**
 	 * Get the headers.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return array The array of headers for this email.
 	 */
@@ -154,7 +154,7 @@ abstract class BaseEmail {
 	/**
 	 * Get the attachments.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return array The array of attachments for this email.
 	 */

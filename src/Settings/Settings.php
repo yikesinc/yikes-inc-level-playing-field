@@ -18,7 +18,7 @@ use Yikes\LevelPlayingField\Exception\NoDefault;
 /**
  * Class Settings.
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 final class Settings implements JsonSerializable, Uninstallable {
@@ -26,7 +26,7 @@ final class Settings implements JsonSerializable, Uninstallable {
 	/**
 	 * Array of available settings.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @var Setting[]
 	 */
 	private $settings = [];
@@ -43,7 +43,7 @@ final class Settings implements JsonSerializable, Uninstallable {
 	 *
 	 * @todo These should be injected via the constructor rather than hardcoded.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return Setting[] Array of setting objects.
 	 * @throws InvalidClass When the Setting interface isn't implemented.
 	 */
@@ -77,7 +77,7 @@ final class Settings implements JsonSerializable, Uninstallable {
 	/**
 	 * Set one of our settings.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $name  The setting name.
 	 * @param mixed  $value The setting value.
@@ -106,7 +106,7 @@ final class Settings implements JsonSerializable, Uninstallable {
 	/**
 	 * Fetch a specific setting from the database.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $setting_name The name of the setting, without the settings prefix.
 	 *
@@ -124,7 +124,7 @@ final class Settings implements JsonSerializable, Uninstallable {
 	/**
 	 * Method for serializing the object to JSON.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return array
 	 */
 	public function jsonSerialize() {

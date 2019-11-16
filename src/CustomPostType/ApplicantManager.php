@@ -25,7 +25,7 @@ final class ApplicantManager extends BaseCustomPostType {
 	/**
 	 * Get the arguments that configure the custom post type.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return array Array of arguments.
 	 */
@@ -95,7 +95,7 @@ final class ApplicantManager extends BaseCustomPostType {
 	/**
 	 * Get the array of messages to use when updating.
 	 *
-	 * @since  %VERSION%
+	 * @since  1.0.0
 	 * @author Jeremy Pry
 	 * @return array
 	 */

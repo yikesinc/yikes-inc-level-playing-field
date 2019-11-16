@@ -12,7 +12,7 @@ namespace Yikes\LevelPlayingField\Model;
 /**
  * Trait ApplicationPrefix
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 trait ApplicationPrefix {
@@ -20,7 +20,7 @@ trait ApplicationPrefix {
 	/**
 	 * Add the application meta prefix to a string.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $string The string to prefix.
 	 *
@@ -33,7 +33,7 @@ trait ApplicationPrefix {
 	/**
 	 * Add the application form prefix to a string.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $string The string to prefix.
 	 *

@@ -16,7 +16,7 @@ use Yikes\LevelPlayingField\Service;
  *
  * Base class for building metaboxes with the Awesome framework.
  *
- * @since   %VERSION%
+ * @since   1.0.0
  *
  * @package Yikes\LevelPlayingField\Metabox
  */
@@ -25,7 +25,7 @@ abstract class AwesomeBaseMetabox implements Service {
 	/**
 	 * Register hooks.
 	 *
-	 * @since  %VERSION%
+	 * @since  1.0.0
 	 * @author Jeremy Pry
 	 */
 	public function register() {
@@ -35,7 +35,7 @@ abstract class AwesomeBaseMetabox implements Service {
 	/**
 	 * Register meta boxes.
 	 *
-	 * @since  %VERSION%
+	 * @since  1.0.0
 	 * @author Jeremy Pry
 	 *
 	 * @param array $meta_boxes Array of existing meta boxes.

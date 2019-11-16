@@ -12,7 +12,7 @@ namespace Yikes\LevelPlayingField\Exception;
 /**
  * Class MustExtend
  *
- * @since   %VERSION%
+ * @since   1.0.0
  *
  * @package Yikes\LevelPlayingField\Exception
  * @author  Jeremy Pry
@@ -41,7 +41,7 @@ class MustExtend extends \LogicException implements Exception {
 	/**
 	 * Create a new exception when a tag needs extended.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $tag The default tag that needs extended.
 	 *
@@ -60,7 +60,7 @@ class MustExtend extends \LogicException implements Exception {
 	/**
 	 * Create a new exception when a view needs extended.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $view The default view that needs extended.
 	 *
@@ -79,7 +79,7 @@ class MustExtend extends \LogicException implements Exception {
 	/**
 	 * Create a new exception when a type needs extended.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $type The default type that needs extended.
 	 *
@@ -98,7 +98,7 @@ class MustExtend extends \LogicException implements Exception {
 	/**
 	 * Create a new exception when a name needs to be extended.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $name The default name.
 	 *

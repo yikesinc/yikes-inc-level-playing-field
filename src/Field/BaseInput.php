@@ -14,7 +14,7 @@ use Yikes\LevelPlayingField\Exception\MustExtend;
 /**
  * Class BaseInput
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 class BaseInput extends BaseField {
@@ -29,7 +29,7 @@ class BaseInput extends BaseField {
 	/**
 	 * Get the type of field.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return string
 	 * @throws MustExtend When the type is not defined.
 	 */
@@ -44,7 +44,7 @@ class BaseInput extends BaseField {
 	/**
 	 * Render the field.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @throws MustExtend When the TYPE constant is not properly defined.
 	 */
 	public function render() {
@@ -71,7 +71,7 @@ class BaseInput extends BaseField {
 	/**
 	 * Get the type for use with errors.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return string
 	 * @throws MustExtend When the type hasn't been defined correctly.
 	 */

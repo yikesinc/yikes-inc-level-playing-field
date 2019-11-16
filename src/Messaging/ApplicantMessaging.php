@@ -31,7 +31,7 @@ use Yikes\LevelPlayingField\View\TemplatedView;
 /**
  * Class ApplicantMessaging.
  *
- * @since   %VERSION%
+ * @since   1.0.0
  *
  * @package Yikes\LevelPlayingField
  * @author  Jeremy Pry
@@ -60,7 +60,7 @@ class ApplicantMessaging implements Activateable, Deactivateable, Renderable, As
 	/**
 	 * Register our hooks.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	public function register() {
 		$this->register_assets();
@@ -102,7 +102,7 @@ class ApplicantMessaging implements Activateable, Deactivateable, Renderable, As
 	 *
 	 * We're running a direct DB query here and in the deactivate function in order to prevent this operation from being filtered or from timing out.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	public function activate() {
 		global $wpdb;
@@ -115,7 +115,7 @@ class ApplicantMessaging implements Activateable, Deactivateable, Renderable, As
 	/**
 	 * Deactivate the service: hide our applicant messages from the main comments dashboard list table.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	public function deactivate() {
 		global $wpdb;
@@ -128,7 +128,7 @@ class ApplicantMessaging implements Activateable, Deactivateable, Renderable, As
 	/**
 	 * Load asset objects for use.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	protected function load_assets() {
 		$this->trait_load_assets();
@@ -144,7 +144,7 @@ class ApplicantMessaging implements Activateable, Deactivateable, Renderable, As
 	/**
 	 * Render the current Renderable.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param array $context Context in which to render.
 	 *
@@ -172,7 +172,7 @@ class ApplicantMessaging implements Activateable, Deactivateable, Renderable, As
 	/**
 	 * Do the actual persistence of the changed data.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param int $post_id ID of the post to persist.
 	 */
@@ -181,7 +181,7 @@ class ApplicantMessaging implements Activateable, Deactivateable, Renderable, As
 	/**
 	 * Get the View URI to use for rendering the metabox.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return string View URI.
 	 */
@@ -192,7 +192,7 @@ class ApplicantMessaging implements Activateable, Deactivateable, Renderable, As
 	/**
 	 * Process the metabox attributes.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param WP_Post      $post The post object.
 	 * @param array|string $atts Raw metabox attributes passed into the
@@ -207,7 +207,7 @@ class ApplicantMessaging implements Activateable, Deactivateable, Renderable, As
 	/**
 	 * Get the data needed for this metabox or template.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param int  $applicant_id The ID of an applicant.
 	 * @param bool $is_metabox   Whether the current context is in an admin metabox.
@@ -236,7 +236,7 @@ class ApplicantMessaging implements Activateable, Deactivateable, Renderable, As
 	/**
 	 * Create a new comment.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	public function send_message() {
 
@@ -298,7 +298,7 @@ class ApplicantMessaging implements Activateable, Deactivateable, Renderable, As
 	/**
 	 * Refresh the conversation and send the HTML back to the browser.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	public function refresh_conversation() {
 
@@ -329,7 +329,7 @@ class ApplicantMessaging implements Activateable, Deactivateable, Renderable, As
 	/**
 	 * Exclude comments of type 'applicant_message' from comment queries.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param \WP_Comment_Query $query Current instance of WP_Comment_Query (passed by reference).
 	 */
@@ -443,7 +443,7 @@ class ApplicantMessaging implements Activateable, Deactivateable, Renderable, As
 	/**
 	 * Remove the default comments' meta boxes.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	public function remove_default_comments_meta_boxes() {
 
@@ -455,7 +455,7 @@ class ApplicantMessaging implements Activateable, Deactivateable, Renderable, As
 	/**
 	 * AJAX handler for sending an interview request.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	public function send_interview_request() {
 
@@ -562,7 +562,7 @@ class ApplicantMessaging implements Activateable, Deactivateable, Renderable, As
 	/**
 	 * Display email error notice if error occurs during interview request.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	public function maybe_display_email_error_notice() {
 		$error_id = 'lpf-email-error-message';

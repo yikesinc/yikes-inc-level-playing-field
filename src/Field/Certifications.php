@@ -14,7 +14,7 @@ use Yikes\LevelPlayingField\Model\ApplicantMeta;
 /**
  * Class Certifications
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 class Certifications extends RepeatableField {
@@ -28,7 +28,7 @@ class Certifications extends RepeatableField {
 	 * This should return a multi-dimensional array of field data which will
 	 * be used to construct Field objects.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return array
 	 */
 	protected function get_default_fields() {
@@ -62,7 +62,7 @@ class Certifications extends RepeatableField {
 	 *
 	 * This should echo the label directly.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	protected function render_grouping_label() {
 		printf(
@@ -76,7 +76,7 @@ class Certifications extends RepeatableField {
 	 *
 	 * This should echo the label directly.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	protected function render_repeatable_field_label() {
 		printf(
@@ -91,7 +91,7 @@ class Certifications extends RepeatableField {
 	 *
 	 * Only needs to be overridden when the field is repeatable.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return string
 	 */
 	protected function get_add_new_label() {

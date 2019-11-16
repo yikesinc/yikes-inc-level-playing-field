@@ -16,7 +16,7 @@ use Yikes\LevelPlayingField\Roles\HumanResources;
 /**
  * Class AdditionalEmailRecipients.
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 final class EmailRecipientRoles extends BaseSettingsField {
@@ -26,7 +26,7 @@ final class EmailRecipientRoles extends BaseSettingsField {
 	/**
 	 * Render the field's HTML.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	protected function field() {
 		$roles = [
@@ -52,7 +52,7 @@ final class EmailRecipientRoles extends BaseSettingsField {
 	/**
 	 * Return the help text for this field, i18n'ed.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return string $description_text The help text for this field.
 	 */

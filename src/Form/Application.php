@@ -21,7 +21,7 @@ use Yikes\LevelPlayingField\Model\ApplicationPrefix;
 /**
  * Class Application
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  *
  * @property Field[] fields        The array of field objects.
@@ -35,7 +35,7 @@ final class Application {
 	/**
 	 * The application object.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @var AppModel
 	 */
 	private $application;
@@ -43,7 +43,7 @@ final class Application {
 	/**
 	 * Array of classes to use for fields.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @var array
 	 */
 	private $field_classes = [];
@@ -51,7 +51,7 @@ final class Application {
 	/**
 	 * Whether the form has any errors.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @var bool
 	 */
 	private $has_errors = false;
@@ -59,7 +59,7 @@ final class Application {
 	/**
 	 * Whether the form has been submitted.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @var bool
 	 */
 	private $is_submitted = false;
@@ -67,7 +67,7 @@ final class Application {
 	/**
 	 * The ID of the Job.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @var int
 	 */
 	private $job_id = 0;
@@ -75,7 +75,7 @@ final class Application {
 	/**
 	 * The data submitted with this form.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @var array
 	 */
 	private $submitted_data = [];
@@ -83,7 +83,7 @@ final class Application {
 	/**
 	 * The validated data for this form.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @var array
 	 */
 	private $valid_data = [];
@@ -107,7 +107,7 @@ final class Application {
 	 *
 	 * The class fields will only be modified if they are currently empty.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	private function set_default_classes() {
 		$base_classes = [
@@ -147,7 +147,7 @@ final class Application {
 	/**
 	 * Create the array of fields.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	private function create_fields() {
 		$fields = [];
@@ -170,7 +170,7 @@ final class Application {
 	/**
 	 * Get the label for the form field.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $field The field name.
 	 *
@@ -192,7 +192,7 @@ final class Application {
 	/**
 	 * Get the class type for a particular field.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $field The field name.
 	 *
@@ -222,7 +222,7 @@ final class Application {
 	/**
 	 * Instantiate a field.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $field The raw field name.
 	 *
@@ -264,7 +264,7 @@ final class Application {
 	/**
 	 * Set the array of classes to use for fields.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param array $classes The classes to add to the fields.
 	 */
@@ -275,7 +275,7 @@ final class Application {
 	/**
 	 * Render the form fields.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	public function render() {
 		foreach ( $this->fields as $field ) {
@@ -286,7 +286,7 @@ final class Application {
 	/**
 	 * Set the submission data.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param array $data Submitted data.
 	 */
@@ -298,7 +298,7 @@ final class Application {
 	/**
 	 * Determine whether the form has errors.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return bool
 	 */
 	public function has_errors() {
@@ -308,7 +308,7 @@ final class Application {
 	/**
 	 * Validate the submission.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	public function validate_submission() {
 		$valid = [];
@@ -331,7 +331,7 @@ final class Application {
 	/**
 	 * Validate that the given object is a Field.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param object $maybe_field The object to validate.
 	 *

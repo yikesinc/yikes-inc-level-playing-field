@@ -20,7 +20,7 @@ use Yikes\LevelPlayingField\Shortcode\AllJobs as JobsShortcode;
 /**
  * Class JobDescription
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 final class JobListings extends BaseBlock {
@@ -32,7 +32,7 @@ final class JobListings extends BaseBlock {
 	/**
 	 * Load asset objects for use.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	protected function load_assets() {
 		$block_script = new BlockAsset(
@@ -68,7 +68,7 @@ final class JobListings extends BaseBlock {
 	/**
 	 * Get the block's title, i18n'ed.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return string
 	 */
 	protected function get_title() {
@@ -80,7 +80,7 @@ final class JobListings extends BaseBlock {
 	 *
 	 * Note: if you don't set the default attributes on the server side, the defaults won't be available when rendering (i.e. in the `render_block()` function).
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return array
 	 */
 	protected function get_attributes() {

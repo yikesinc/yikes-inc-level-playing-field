@@ -17,7 +17,7 @@ use Yikes\LevelPlayingField\Assets\StyleAsset;
 /**
  * Class SettingsPage
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 class SupportPage extends BaseAdminPage implements AssetsAware {
@@ -35,7 +35,7 @@ class SupportPage extends BaseAdminPage implements AssetsAware {
 	/**
 	 * Register hooks.
 	 *
-	 * @since  %VERSION%
+	 * @since  1.0.0
 	 * @author Jeremy Pry
 	 */
 	public function register() {
@@ -57,7 +57,7 @@ class SupportPage extends BaseAdminPage implements AssetsAware {
 	/**
 	 * Load asset objects for use.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	protected function load_assets() {
 		$this->assets = [
@@ -68,7 +68,7 @@ class SupportPage extends BaseAdminPage implements AssetsAware {
 	/**
 	 * Get the title to use for the admin page.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return string The text to be displayed in the title tags of the page when the menu is.
 	 */
@@ -79,7 +79,7 @@ class SupportPage extends BaseAdminPage implements AssetsAware {
 	/**
 	 * Get the text to be used for the menu name.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return string The text to be used for the menu.
 	 */

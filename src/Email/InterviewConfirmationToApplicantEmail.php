@@ -14,7 +14,7 @@ use Yikes\LevelPlayingField\Service;
 /**
  * Class InterviewConfirmationToApplicantEmail.
  *
- * @since   %VERSION%
+ * @since   1.0.0
  *
  * @package Yikes\LevelPlayingField
  * @author  Kevin Utz / Jeremy Pry
@@ -26,7 +26,7 @@ class InterviewConfirmationToApplicantEmail extends ToApplicantEmail {
 	/**
 	 * Get the email subject.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return string The subject of the email.
 	 */
@@ -37,7 +37,7 @@ class InterviewConfirmationToApplicantEmail extends ToApplicantEmail {
 	/**
 	 * Get the email message.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return string The email's message.
 	 */

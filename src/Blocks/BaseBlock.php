@@ -18,7 +18,7 @@ use Yikes\LevelPlayingField\Exception\MustExtend;
 /**
  * Class BaseBlock
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 abstract class BaseBlock implements Service, AssetsAware {
@@ -35,7 +35,7 @@ abstract class BaseBlock implements Service, AssetsAware {
 	/**
 	 * Register the current Registerable.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	public function register() {
 		$this->register_assets();
@@ -57,14 +57,14 @@ abstract class BaseBlock implements Service, AssetsAware {
 	/**
 	 * Load asset objects for use.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	abstract protected function load_assets();
 
 	/**
 	 * Get the slug for use with registering the block.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return string
 	 * @throws MustExtend When the default slug has not been extended.
 	 */
@@ -78,7 +78,7 @@ abstract class BaseBlock implements Service, AssetsAware {
 	/**
 	 * Get the path for the main JS block file.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return string
 	 */
 	protected function get_block_path() {
@@ -88,7 +88,7 @@ abstract class BaseBlock implements Service, AssetsAware {
 	/**
 	 * Get the block's category.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return string
 	 */
 	protected function get_category() {
@@ -98,7 +98,7 @@ abstract class BaseBlock implements Service, AssetsAware {
 	/**
 	 * Get the block's title, i18n'ed.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return string
 	 */
 	abstract protected function get_title();
@@ -108,7 +108,7 @@ abstract class BaseBlock implements Service, AssetsAware {
 	 *
 	 * Note: if you don't set the default attributes on the server side, the defaults won't be available when rendering (i.e. in the `render_block()` function).
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return array
 	 */
 	protected function get_attributes() {
@@ -128,7 +128,7 @@ abstract class BaseBlock implements Service, AssetsAware {
 	/**
 	 * Get the arguments used when registering a block.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return array
 	 */
 	protected function get_block_args() {
@@ -147,7 +147,7 @@ abstract class BaseBlock implements Service, AssetsAware {
 	 * @param array   $categories Array of block categories.
 	 * @param WP_Post $post               Post being loaded.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return array
 	 */
 	public function set_block_category( $categories, $post ) {

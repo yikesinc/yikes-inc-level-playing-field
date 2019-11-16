@@ -18,7 +18,7 @@ use Yikes\LevelPlayingField\Exception\MustExtend;
 /**
  * Abstract class BaseAdminPage.
  *
- * @since   %VERSION%
+ * @since   1.0.0
  *
  * @package Yikes\LevelPlayingField
  * @author  Jeremy Pry
@@ -32,7 +32,7 @@ abstract class BaseAdminPage implements Service {
 	/**
 	 * Register the Admin Page.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	public function register() {
 		add_action( 'admin_menu', function () {
@@ -50,7 +50,7 @@ abstract class BaseAdminPage implements Service {
 	/**
 	 * Get the parent slug for the admin page.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return string The slug name for the parent menu (or the file name of a standard WordPress admin page).
 	 */
@@ -61,7 +61,7 @@ abstract class BaseAdminPage implements Service {
 	/**
 	 * Get the title to use for the admin page.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return string The text to be displayed in the title tags of the page when the menu is.
 	 */
@@ -70,7 +70,7 @@ abstract class BaseAdminPage implements Service {
 	/**
 	 * Get the text to be used for the menu name.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return string The text to be used for the menu.
 	 */
@@ -79,7 +79,7 @@ abstract class BaseAdminPage implements Service {
 	/**
 	 * Get the capability required for this menu to be displayed to the user.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return string Capability required for this menu to be displayed to the user.
 	 */
@@ -90,7 +90,7 @@ abstract class BaseAdminPage implements Service {
 	/**
 	 * Get the slug name to refer to this menu by.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @throws MustExtend When the default type has not been extended.
 	 * @return string The slug name to refer to this menu by.
 	 */
@@ -104,7 +104,7 @@ abstract class BaseAdminPage implements Service {
 	/**
 	 * Get the function to be called to output the content for this page.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return callable The function to be called to output the content for this page.
 	 */
@@ -115,7 +115,7 @@ abstract class BaseAdminPage implements Service {
 	/**
 	 * Display the admin page's HTML.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	public function callback() {
 		echo ( new AdminView( static::VIEW_URI ) )->render( $this->get_context() ); // phpcs:ignore WordPress.Security.EscapeOutput
@@ -124,7 +124,7 @@ abstract class BaseAdminPage implements Service {
 	/**
 	 * Get the priority for this admin page.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return int The priority.
 	 */
@@ -135,7 +135,7 @@ abstract class BaseAdminPage implements Service {
 	/**
 	 * Include the variables required for this admin page.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return array $context The context.
 	 */

@@ -12,7 +12,7 @@ namespace Yikes\LevelPlayingField\Exception;
 /**
  * Class InvalidService.
  *
- * @since   %VERSION%
+ * @since   1.0.0
  *
  * @package Yikes\LevelPlayingField\Exception
  * @author  Jeremy Pry
@@ -23,7 +23,7 @@ class InvalidService extends \InvalidArgumentException implements Exception {
 	 * Create a new instance of the exception for a service class name that is
 	 * not recognized.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $service Class name of the service that was not recognized.
 	 *

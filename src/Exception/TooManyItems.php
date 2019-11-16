@@ -12,7 +12,7 @@ namespace Yikes\LevelPlayingField\Exception;
 /**
  * Class TooManyItems
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 class TooManyItems extends \InvalidArgumentException implements Exception {
@@ -20,7 +20,7 @@ class TooManyItems extends \InvalidArgumentException implements Exception {
 	/**
 	 * Create a new exception instance for a post type that is limited.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $post_type The post type.
 	 * @param int    $limit     The limit for the post type.

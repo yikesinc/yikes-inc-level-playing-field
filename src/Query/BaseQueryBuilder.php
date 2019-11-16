@@ -15,7 +15,7 @@ use Yikes\LevelPlayingField\Model\MetaLinks;
 /**
  * Class BaseQuery
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 abstract class BaseQueryBuilder {
@@ -23,7 +23,7 @@ abstract class BaseQueryBuilder {
 	/**
 	 * Query args.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @var array
 	 */
 	protected $args = [
@@ -44,7 +44,7 @@ abstract class BaseQueryBuilder {
 	/**
 	 * Get the arguments of the query.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return array
 	 */
 	public function get_args() {
@@ -54,7 +54,7 @@ abstract class BaseQueryBuilder {
 	/**
 	 * Get the results
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return WP_Query
 	 */
 	public function get_query() {
@@ -64,7 +64,7 @@ abstract class BaseQueryBuilder {
 	/**
 	 * Filter the fields returned by the query.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $fields The fields to return.
 	 *
@@ -81,7 +81,7 @@ abstract class BaseQueryBuilder {
 	 *
 	 * This is a shortcut for setting 1 post per page, and obtaining IDs.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return $this
 	 */
 	public function for_count() {
@@ -91,7 +91,7 @@ abstract class BaseQueryBuilder {
 	/**
 	 * Filter the query by a particular year/date.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param int $m The year/date value. E.g. 201908 for August 2019.
 	 *
@@ -106,7 +106,7 @@ abstract class BaseQueryBuilder {
 	/**
 	 * Filter the query with a meta query.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $key     The meta key.
 	 * @param string $value   The meta value.
@@ -129,7 +129,7 @@ abstract class BaseQueryBuilder {
 	/**
 	 * Filter the query by a meta value not existing.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $key The key to ensure does not exist.
 	 *
@@ -147,7 +147,7 @@ abstract class BaseQueryBuilder {
 	/**
 	 * Define a meta query as an OR comparison.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return $this
 	 */
 	public function meta_or_relation() {
@@ -159,7 +159,7 @@ abstract class BaseQueryBuilder {
 	/**
 	 * Change what field is used to order the results.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $orderby The field to order the results.
 	 *
@@ -174,7 +174,7 @@ abstract class BaseQueryBuilder {
 	/**
 	 * Return the results in ascending order.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return $this
 	 */
 	public function order_ascending() {
@@ -186,7 +186,7 @@ abstract class BaseQueryBuilder {
 	/**
 	 * Exclude posts by ID.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param array|string $not_in Post IDs to exclude. A string should be comma-separated.
 	 *
@@ -202,7 +202,7 @@ abstract class BaseQueryBuilder {
 	/**
 	 * Filter the posts per page.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param int $number The number of posts per page.
 	 *
@@ -217,7 +217,7 @@ abstract class BaseQueryBuilder {
 	/**
 	 * Filter the post status for this query.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param array $status The array of valid statuses.
 	 *
@@ -232,7 +232,7 @@ abstract class BaseQueryBuilder {
 	/**
 	 * Filter the results by a searc string.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $s The string to search for.
 	 *
@@ -247,7 +247,7 @@ abstract class BaseQueryBuilder {
 	/**
 	 * Filter the query by taxonomy terms.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string           $taxonomy         The taxonomy to use.
 	 * @param int|string|array $terms            Terms to filter by.
@@ -272,7 +272,7 @@ abstract class BaseQueryBuilder {
 	/**
 	 * Allow the post meta cache to be updated.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return $this
 	 */
 	public function update_post_meta_cache() {
@@ -284,7 +284,7 @@ abstract class BaseQueryBuilder {
 	/**
 	 * Allow the post term cache to be updated.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return $this
 	 */
 	public function update_post_term_cache() {
@@ -296,7 +296,7 @@ abstract class BaseQueryBuilder {
 	/**
 	 * Filter the query by Application ID.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param int $id The application ID.
 	 *
@@ -309,7 +309,7 @@ abstract class BaseQueryBuilder {
 	/**
 	 * Get the post type to use with this query.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return string
 	 */
 	abstract protected function get_post_type();

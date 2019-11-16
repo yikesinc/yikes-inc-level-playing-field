@@ -16,7 +16,7 @@ use Yikes\LevelPlayingField\Exception\MustExtend;
 /**
  * Class BaseRequiredPage
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 abstract class BaseRequiredPage implements Registerable, Service {
@@ -26,7 +26,7 @@ abstract class BaseRequiredPage implements Registerable, Service {
 	/**
 	 * Register the WordPress hooks.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	public function register() {
 
@@ -49,7 +49,7 @@ abstract class BaseRequiredPage implements Registerable, Service {
 	/**
 	 * Create the plugin's required pages.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @throws MustExtend When the default type has not been extended.
 	 */
 	public function register_pages() {
@@ -78,7 +78,7 @@ abstract class BaseRequiredPage implements Registerable, Service {
 	/**
 	 * Get the array of post attributes.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return array $post_array The array of post attributes.
 	 */
@@ -89,7 +89,7 @@ abstract class BaseRequiredPage implements Registerable, Service {
 	 *
 	 * Note: this variable cannot be used as a class constant because it requires the string be run through a translation function.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return string $post_state The description for this post in the list table.
 	 */
@@ -98,7 +98,7 @@ abstract class BaseRequiredPage implements Registerable, Service {
 	/**
 	 * Add the post state string to the post states array.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param  array  $post_states The current post states for this page.
 	 * @param  object $post        The post object.
@@ -116,7 +116,7 @@ abstract class BaseRequiredPage implements Registerable, Service {
 	/**
 	 * Set flag to prevent required pages from being trashed.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param bool     $trash Whether to go forward with trashing.
 	 * @param /WP_Post $post  Post object.
@@ -133,7 +133,7 @@ abstract class BaseRequiredPage implements Registerable, Service {
 	/**
 	 * Show a notice if we failed to create a page.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	public function trash_page_failure_notice() {
 
@@ -159,7 +159,7 @@ abstract class BaseRequiredPage implements Registerable, Service {
 	/**
 	 * Delete the plugin's option if the corresponding page is deleted.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param int $post_id The post ID.
 	 */
@@ -172,7 +172,7 @@ abstract class BaseRequiredPage implements Registerable, Service {
 	/**
 	 * Get a required page's ID from its slug.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $page_slug The page slug we use to designate our required pages.
 	 *
@@ -186,7 +186,7 @@ abstract class BaseRequiredPage implements Registerable, Service {
 	/**
 	 * Show a notice if we failed to create a page.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	public function create_page_failure_notice() {
 		printf(
@@ -202,7 +202,7 @@ abstract class BaseRequiredPage implements Registerable, Service {
 	/**
 	 * Show a notice if we successfully created a page.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	public function create_page_success_notice() {
 		printf(

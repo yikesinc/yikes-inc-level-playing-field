@@ -15,7 +15,7 @@ use Yikes\LevelPlayingField\Exception\InvalidOption;
 /**
  * Class Select
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 class Select extends BaseField {
@@ -50,7 +50,7 @@ class Select extends BaseField {
 	/**
 	 * Render the field.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	public function render() {
 		$classes   = array_merge( $this->classes, [ 'lpf-field-select' ] );
@@ -75,7 +75,7 @@ class Select extends BaseField {
 	/**
 	 * Render the options for the select element.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	private function render_options() {
 		foreach ( $this->options as $option ) {
@@ -86,7 +86,7 @@ class Select extends BaseField {
 	/**
 	 * Get the type for use with errors.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return string
 	 */
 	protected function get_error_type() {
@@ -96,7 +96,7 @@ class Select extends BaseField {
 	/**
 	 * Validate the raw value.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @throws InvalidField When the raw value is empty but the field is required.
 	 */

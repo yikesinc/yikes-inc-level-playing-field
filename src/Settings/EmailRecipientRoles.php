@@ -15,7 +15,7 @@ use Yikes\LevelPlayingField\Roles\HumanResources;
 /**
  * Class EmailRecipientRoles
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 class EmailRecipientRoles extends BaseSetting {
@@ -25,7 +25,7 @@ class EmailRecipientRoles extends BaseSetting {
 	/**
 	 * Get the default value for the setting.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return array
 	 */
 	protected function get_default() {
@@ -38,7 +38,7 @@ class EmailRecipientRoles extends BaseSetting {
 	/**
 	 * Sanitize the setting value.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param mixed $value The value to sanitize.
 	 *

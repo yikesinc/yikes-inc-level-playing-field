@@ -12,7 +12,7 @@ namespace Yikes\LevelPlayingField\Model;
 /**
  * Trait ChangedProperties
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 trait ChangedProperties {
@@ -20,7 +20,7 @@ trait ChangedProperties {
 	/**
 	 * Whether arbitrary properties are allowed.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @var bool
 	 */
 	protected $allow_arbitrary_properties = false;
@@ -28,7 +28,7 @@ trait ChangedProperties {
 	/**
 	 * Changed properties for this object.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @var array
 	 */
 	protected $changed = [];
@@ -36,7 +36,7 @@ trait ChangedProperties {
 	/**
 	 * Properties for this object.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @var array
 	 */
 	protected $properties = [];
@@ -44,7 +44,7 @@ trait ChangedProperties {
 	/**
 	 * Whether the object properties have been loaded.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @var bool
 	 */
 	protected $loaded = false;
@@ -52,7 +52,7 @@ trait ChangedProperties {
 	/**
 	 * Get the value of a property.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $property The property name.
 	 *
@@ -73,7 +73,7 @@ trait ChangedProperties {
 	/**
 	 * Set the value of a property.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $property The property to set.
 	 * @param mixed  $value    The property value.

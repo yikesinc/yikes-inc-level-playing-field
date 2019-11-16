@@ -14,7 +14,7 @@ use Yikes\LevelPlayingField\Model\ApplicationMeta as AMMeta;
 /**
  * Class Application
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 class Application extends CustomPostTypeEntity {
@@ -25,7 +25,7 @@ class Application extends CustomPostTypeEntity {
 	/**
 	 * Persist the additional properties of the entity.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	public function persist_properties() {
 		foreach ( $this->get_lazy_properties() as $key => $default ) {
@@ -41,7 +41,7 @@ class Application extends CustomPostTypeEntity {
 	/**
 	 * Return the list of lazily-loaded properties and their default values.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return array
 	 */
@@ -72,7 +72,7 @@ class Application extends CustomPostTypeEntity {
 	/**
 	 * Get the active fields for this application.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return array
 	 */
 	public function get_active_fields() {
@@ -86,7 +86,7 @@ class Application extends CustomPostTypeEntity {
 	 * Check if field is required for this application.
 	 *
 	 * @param string $field field name.
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return bool
 	 */
 	public function is_required( $field ) {
@@ -100,7 +100,7 @@ class Application extends CustomPostTypeEntity {
 	 * object's state, otherwise the load procedure might be triggered multiple
 	 * times.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	protected function load_lazy_properties() {
 		$meta = get_post_meta( $this->get_id() );
@@ -134,7 +134,7 @@ class Application extends CustomPostTypeEntity {
 	 * object's state, otherwise the load procedure might be triggered multiple
 	 * times.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $property Name of the property to load.
 	 */

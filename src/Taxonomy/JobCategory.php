@@ -15,7 +15,7 @@ use Yikes\LevelPlayingField\Roles\Capabilities;
 /**
  * Class JobCategory
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 final class JobCategory extends BaseTaxonomy {

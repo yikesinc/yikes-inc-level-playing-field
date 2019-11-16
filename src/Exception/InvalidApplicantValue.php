@@ -14,7 +14,7 @@ use InvalidArgumentException;
 /**
  * Class InvalidApplicantValue
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 class InvalidApplicantValue extends InvalidArgumentException implements Exception {
@@ -22,7 +22,7 @@ class InvalidApplicantValue extends InvalidArgumentException implements Exceptio
 	/**
 	 * Create new exception instance when an invalid value is given for a property.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $property The property name.
 	 * @param string $value    The attempted value of the property.
@@ -40,7 +40,7 @@ class InvalidApplicantValue extends InvalidArgumentException implements Exceptio
 	/**
 	 * Create a new exception instance when a property has no sanitization setting.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $property The property name.
 	 *

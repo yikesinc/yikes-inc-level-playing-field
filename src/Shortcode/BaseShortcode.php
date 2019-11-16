@@ -20,7 +20,7 @@ use Yikes\LevelPlayingField\View\TemplatedView;
 /**
  * Abstract class BaseShortcode.
  *
- * @since   %VERSION%
+ * @since   1.0.0
  *
  * @package Yikes\LevelPlayingField
  * @author  Jeremy Pry
@@ -35,7 +35,7 @@ abstract class BaseShortcode implements Renderable, AssetsAware, Service {
 	/**
 	 * Register the Shortcode.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	public function register() {
 		$this->register_assets();
@@ -48,7 +48,7 @@ abstract class BaseShortcode implements Renderable, AssetsAware, Service {
 	/**
 	 * Process the shortcode attributes and prepare rendering.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param array|string $atts Attributes as passed to the shortcode.
 	 *
@@ -64,7 +64,7 @@ abstract class BaseShortcode implements Renderable, AssetsAware, Service {
 	/**
 	 * Render the current Renderable.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param array $context Context in which to render.
 	 *
@@ -87,7 +87,7 @@ abstract class BaseShortcode implements Renderable, AssetsAware, Service {
 	 *
 	 * Override to add accepted attributes and their default values.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param array|string $atts Raw shortcode attributes passed into the shortcode function.
 	 *
@@ -103,7 +103,7 @@ abstract class BaseShortcode implements Renderable, AssetsAware, Service {
 	 * Override to provide data to the view that is not part of the shortcode
 	 * attributes.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param array $atts Array of shortcode attributes.
 	 *
@@ -116,7 +116,7 @@ abstract class BaseShortcode implements Renderable, AssetsAware, Service {
 	/**
 	 * Get the tag to use for the shortcode.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return string Tag of the shortcode.
 	 * @throws MustExtend When the default tag has not been extended.
@@ -132,7 +132,7 @@ abstract class BaseShortcode implements Renderable, AssetsAware, Service {
 	/**
 	 * Get the View URI to use for rendering the shortcode.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return string View URI.
 	 * @throws MustExtend When the default view URI has not been extended.
@@ -148,7 +148,7 @@ abstract class BaseShortcode implements Renderable, AssetsAware, Service {
 	/**
 	 * Get the default array of attributes for the shortcode.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return array
 	 */
 	abstract protected function get_default_atts();

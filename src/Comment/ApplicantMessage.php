@@ -12,7 +12,7 @@ namespace Yikes\LevelPlayingField\Comment;
 /**
  * Class ApplicantMessage.
  *
- * @since   %VERSION%
+ * @since   1.0.0
  *
  * @package Yikes\LevelPlayingField\Assets
  * @author  Jeremy Pry
@@ -26,7 +26,7 @@ class ApplicantMessage extends Comment {
 	/**
 	 * Set the class' comment object if provided.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param int $comment_id Comment object to instantiate a Comment model from.
 	 */

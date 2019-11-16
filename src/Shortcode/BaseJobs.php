@@ -15,7 +15,7 @@ use Yikes\LevelPlayingField\Assets\StyleAsset;
 /**
  * Class BaseJobs
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 abstract class BaseJobs extends BaseShortcode {
@@ -28,7 +28,7 @@ abstract class BaseJobs extends BaseShortcode {
 	/**
 	 * Get the array of known assets.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return Asset[]
 	 */

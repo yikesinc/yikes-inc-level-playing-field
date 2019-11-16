@@ -17,7 +17,7 @@ use Yikes\LevelPlayingField\PluginHelper;
 /**
  * Class MediaAsset.
  *
- * @since   %VERSION%
+ * @since   1.0.0
  *
  * @package Yikes\LevelPlayingField\Assets
  * @author  Ebonie Butler

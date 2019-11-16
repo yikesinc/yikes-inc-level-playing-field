@@ -14,7 +14,7 @@ use Yikes\LevelPlayingField\Exception\InvalidClass;
 /**
  * Class AnonymizerFactory
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 final class AnonymizerFactory {
@@ -22,7 +22,7 @@ final class AnonymizerFactory {
 	/**
 	 * Get the Anonymizer interface.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return AnonymizerInterface
 	 * @throws InvalidClass When an invlid class is supplied to the filter.
 	 */

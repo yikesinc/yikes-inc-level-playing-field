@@ -14,7 +14,7 @@ use Yikes\LevelPlayingField\Exception\InvalidField;
 /**
  * Class Hidden
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 class Hidden extends BaseField {
@@ -22,7 +22,7 @@ class Hidden extends BaseField {
 	/**
 	 * The value of the hidden field.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @var string
 	 */
 	protected $value;
@@ -30,7 +30,7 @@ class Hidden extends BaseField {
 	/**
 	 * Whether this field is read-only.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @var bool
 	 */
 	protected $read_only = true;
@@ -50,7 +50,7 @@ class Hidden extends BaseField {
 	/**
 	 * Render the field.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	public function render() {
 		$classes = array_merge( $this->classes, [ 'lpf-field-hidden' ] );
@@ -70,7 +70,7 @@ class Hidden extends BaseField {
 	 *
 	 * This validates by type-casting the values to strings.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @throws InvalidField When the raw value is different from the provided value, or empty.
 	 */
@@ -86,7 +86,7 @@ class Hidden extends BaseField {
 	/**
 	 * Render the error message for the field.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	protected function render_error_message() {
 		// Don't do anything.
@@ -95,7 +95,7 @@ class Hidden extends BaseField {
 	/**
 	 * Get the type for use with errors.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return string
 	 */
 	protected function get_error_type() {

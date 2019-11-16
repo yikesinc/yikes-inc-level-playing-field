@@ -12,7 +12,7 @@ namespace Yikes\LevelPlayingField\Settings;
 /**
  * Class DeleteOnUninstall
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 class DeleteOnUninstall extends BaseSetting {
@@ -23,7 +23,7 @@ class DeleteOnUninstall extends BaseSetting {
 	/**
 	 * Get the default value for the setting.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return bool
 	 */
 	protected function get_default() {

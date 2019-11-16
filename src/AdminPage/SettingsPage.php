@@ -19,7 +19,7 @@ use Yikes\LevelPlayingField\Settings\Settings;
 /**
  * Class SettingsPage
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 class SettingsPage extends BaseAdminPage implements AssetsAware {
@@ -42,7 +42,7 @@ class SettingsPage extends BaseAdminPage implements AssetsAware {
 	/**
 	 * Register hooks.
 	 *
-	 * @since  %VERSION%
+	 * @since  1.0.0
 	 * @author Jeremy Pry
 	 */
 	public function register() {
@@ -64,7 +64,7 @@ class SettingsPage extends BaseAdminPage implements AssetsAware {
 	/**
 	 * Load asset objects for use.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	protected function load_assets() {
 		$script = new ScriptAsset(
@@ -99,7 +99,7 @@ class SettingsPage extends BaseAdminPage implements AssetsAware {
 	/**
 	 * Get the title to use for the admin page.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return string The text to be displayed in the title tags of the page when the menu is.
 	 */
@@ -110,7 +110,7 @@ class SettingsPage extends BaseAdminPage implements AssetsAware {
 	/**
 	 * Get the text to be used for the menu name.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return string The text to be used for the menu.
 	 */
@@ -121,7 +121,7 @@ class SettingsPage extends BaseAdminPage implements AssetsAware {
 	/**
 	 * Include the variables required for this admin page.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return array $context The context.
 	 */

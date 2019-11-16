@@ -12,7 +12,7 @@ namespace Yikes\LevelPlayingField\Exception;
 /**
  * Class InvalidURI.
  *
- * @since   %VERSION%
+ * @since   1.0.0
  *
  * @package Yikes\LevelPlayingField\Exception
  * @author  Jeremy Pry
@@ -23,7 +23,7 @@ class InvalidURI extends \InvalidArgumentException implements Exception {
 	 * Create a new instance of the exception for a file that is not accessible
 	 * or not readable.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $uri URI of the file that is not accessible or not
 	 *                    readable.
@@ -42,7 +42,7 @@ class InvalidURI extends \InvalidArgumentException implements Exception {
 	/**
 	 * Create a new instance of the exception for a file that is not in the list.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $uri  The invalid URI.
 	 * @param array  $list The list of valid URIs.
@@ -62,7 +62,7 @@ class InvalidURI extends \InvalidArgumentException implements Exception {
 	/**
 	 * Create a new instance of the exception for a path that is invalid.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $path The path that is invalid.
 	 *

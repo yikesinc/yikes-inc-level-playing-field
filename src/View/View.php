@@ -16,7 +16,7 @@ use Yikes\LevelPlayingField\Renderable;
 /**
  * Interface View.
  *
- * @since   %VERSION%
+ * @since   1.0.0
  *
  * @package Yikes\LevelPlayingField
  * @author  Jeremy Pry
@@ -26,7 +26,7 @@ interface View extends Renderable {
 	/**
 	 * Render a given URI.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param array $context Context in which to render.
 	 *
@@ -44,7 +44,7 @@ interface View extends Renderable {
 	 * The passed-in context is optional, and will fall back to the parent's
 	 * context if omitted.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string     $uri     URI of the partial to render.
 	 * @param array|null $context Context in which to render the partial.

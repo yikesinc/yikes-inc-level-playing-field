@@ -15,7 +15,7 @@ use Yikes\LevelPlayingField\Roles\Capabilities;
 /**
  * Class Status
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 final class JobStatus extends BaseTaxonomy {
@@ -96,7 +96,7 @@ final class JobStatus extends BaseTaxonomy {
 	/**
 	 * Set up default terms for the taxonomy.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	public function default_terms() {
 		$terms = [
@@ -120,7 +120,7 @@ final class JobStatus extends BaseTaxonomy {
 	/**
 	 * Custom metabox callback for this taxonomy.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param \WP_Post $post The current post object.
 	 */
@@ -130,7 +130,7 @@ final class JobStatus extends BaseTaxonomy {
 		?>
 		<div class="tagsdiv">
 			<?php
-			do_action( "{$tax_name}_metabox_before" ); // WPCS: prefix ok.
+			do_action( "{$tax_name}_metabox_before" ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals
 			if ( current_user_can( $taxonomy->cap->assign_terms ) ) {
 				$this->term_select( $post );
 			}
@@ -143,7 +143,7 @@ final class JobStatus extends BaseTaxonomy {
 	/**
 	 * Create term selection drop-down.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param \WP_Post $post The current post object.
 	 */

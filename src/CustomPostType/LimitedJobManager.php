@@ -16,7 +16,7 @@ use Yikes\LevelPlayingField\Taxonomy\JobStatus;
 /**
  * Class LimitedJobManager
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 final class LimitedJobManager extends JobManager {
@@ -24,7 +24,7 @@ final class LimitedJobManager extends JobManager {
 	/**
 	 * Number of active jobs allowed.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @var int
 	 */
 	private $limit = 4;
@@ -32,7 +32,7 @@ final class LimitedJobManager extends JobManager {
 	/**
 	 * Register the WordPress hooks.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	public function register() {
 		parent::register();
@@ -44,7 +44,7 @@ final class LimitedJobManager extends JobManager {
 	/**
 	 * Hook to the set_object_terms action.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	private function add_terms_action() {
 		add_action( 'set_object_terms', [ $this, 'modify_post_terms' ], 10, 4 );
@@ -53,7 +53,7 @@ final class LimitedJobManager extends JobManager {
 	/**
 	 * Modify the terms for a given job.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param int    $object_id Object ID.
 	 * @param array  $terms     An array of object terms.
@@ -100,7 +100,7 @@ final class LimitedJobManager extends JobManager {
 	/**
 	 * Determine if we're past the number of active jobs.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return bool
 	 */
 	private function active_past_limit() {
@@ -110,7 +110,7 @@ final class LimitedJobManager extends JobManager {
 	/**
 	 * Determine if we're at the limit available jobs.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return bool
 	 */
 	private function active_at_limit() {
@@ -120,7 +120,7 @@ final class LimitedJobManager extends JobManager {
 	/**
 	 * Return the count of active Jobs.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return int
 	 */
 	private function count_active() {
@@ -135,7 +135,7 @@ final class LimitedJobManager extends JobManager {
 	/**
 	 * Unhook our set_object_terms action.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	private function remove_terms_action() {
 		remove_action( 'set_object_terms', [ $this, 'modify_post_terms' ], 10 );
@@ -144,7 +144,7 @@ final class LimitedJobManager extends JobManager {
 	/**
 	 * Display a notice when there are too many items active.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param array $field Array of field data on the Yikes Framework hook.
 	 */

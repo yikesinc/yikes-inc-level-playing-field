@@ -15,7 +15,7 @@ use Yikes\LevelPlayingField\Taxonomy\JobCategory;
 /**
  * Abstract class BasePostType
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  *
  * @property string $post_type The post type.
@@ -25,7 +25,7 @@ abstract class BasePostType implements Service {
 	/**
 	 * Register the WordPress hooks.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	public function register() {
 
@@ -44,7 +44,7 @@ abstract class BasePostType implements Service {
 	/**
 	 * Allow getting class properties.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $name The property name to get.
 	 *
@@ -63,7 +63,7 @@ abstract class BasePostType implements Service {
 	/**
 	 * Disable the months drop-down on this post type.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param bool   $disable   Whether to disable the dropdown.
 	 * @param string $post_type The post type.
@@ -81,7 +81,7 @@ abstract class BasePostType implements Service {
 	/**
 	 * Filter the available columns.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param array $original_columns The original array of columns.
 	 *
@@ -92,7 +92,7 @@ abstract class BasePostType implements Service {
 	/**
 	 * Output values for any custom columns.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $column_name The column slug.
 	 * @param int    $post_id     The post ID.
@@ -102,7 +102,7 @@ abstract class BasePostType implements Service {
 	/**
 	 * Output custom dropdowns for filtering.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $post_type The post type.
 	 * @param string $which     The location of the extra table nav markup: 'top' or 'bottom' for WP_Posts_List_Table, 'bar' for WP_Media_List_Table.
@@ -118,7 +118,7 @@ abstract class BasePostType implements Service {
 	/**
 	 * Modifies current query variables.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param \WP_Query $query Query object.
 	 */
@@ -127,7 +127,7 @@ abstract class BasePostType implements Service {
 	/**
 	 * Output custom dropdowns for filtering.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string $which     The location of the extra table nav markup: 'top' or 'bottom' for WP_Posts_List_Table, 'bar' for WP_Media_List_Table.
 	 */
@@ -136,7 +136,7 @@ abstract class BasePostType implements Service {
 	/**
 	 * Get the post type.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return string
 	 */
 	abstract protected function get_post_type();

@@ -12,7 +12,7 @@ namespace Yikes\LevelPlayingField\Model;
 /**
 * Trait JobDescriptionPlaceholder
 *
-* @since   %VERSION%
+* @since   1.0.0
 * @package Yikes\LevelPlayingField
 */
 trait JobDescriptionPlaceholder {
@@ -20,7 +20,7 @@ trait JobDescriptionPlaceholder {
 	/**
 	 * Get placeholder text for job description paragraph block.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return string
 	 */
 	public function get_job_description_placeholder() {

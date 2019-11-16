@@ -14,7 +14,7 @@ namespace Yikes\LevelPlayingField;
  *
  * An object that can be `render()`ed.
  *
- * @since   %VERSION%
+ * @since   1.0.0
  *
  * @package Yikes\LevelPlayingField
  * @author  Jeremy Pry
@@ -24,7 +24,7 @@ interface Renderable {
 	/**
 	 * Render the current Renderable.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param array $context Context in which to render.
 	 *

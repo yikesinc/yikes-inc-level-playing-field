@@ -17,7 +17,7 @@ use Yikes\LevelPlayingField\Taxonomy\JobCategory;
  *
  * This creates the "lpf_all_jobs" shortcode.
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 final class AllJobs extends BaseJobs {
@@ -31,7 +31,7 @@ final class AllJobs extends BaseJobs {
 	/**
 	 * Get the default array of attributes for the shortcode.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 * @return array
 	 */
 	public function get_default_atts() {
@@ -56,7 +56,7 @@ final class AllJobs extends BaseJobs {
 		/**
 		 * Filter the default attributes for the job listings shortcode.
 		 *
-		 * @since %VERSION%
+		 * @since 1.0.0
 		 *
 		 * @param array $default_atts Array of shortcode attributes.
 		 *
@@ -71,7 +71,7 @@ final class AllJobs extends BaseJobs {
 	 * Override to provide data to the view that is not part of the shortcode
 	 * attributes.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param array $atts Array of shortcode attributes.
 	 *

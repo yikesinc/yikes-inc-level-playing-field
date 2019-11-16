@@ -31,7 +31,7 @@ class JobManager extends BaseCustomPostType {
 	/**
 	 * Register the WordPress hooks.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	public function register() {
 		parent::register();
@@ -81,7 +81,7 @@ class JobManager extends BaseCustomPostType {
 	/**
 	 * Get the arguments that configure the custom post type.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @return array Array of arguments.
 	 */
@@ -156,7 +156,7 @@ class JobManager extends BaseCustomPostType {
 	/**
 	 * Get the array of messages to use when updating.
 	 *
-	 * @since  %VERSION%
+	 * @since  1.0.0
 	 * @author Jeremy Pry
 	 * @return array
 	 */

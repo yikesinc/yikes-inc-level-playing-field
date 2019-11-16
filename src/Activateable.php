@@ -12,7 +12,7 @@ namespace Yikes\LevelPlayingField;
 /**
  * Interface Activateable
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 interface Activateable {
@@ -20,7 +20,7 @@ interface Activateable {
 	/**
 	 * Activate the service.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 */
 	public function activate();
 }

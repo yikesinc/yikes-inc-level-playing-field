@@ -16,7 +16,7 @@ use Yikes\LevelPlayingField\Field\Types;
 /**
  * Interface ApplicantMeta
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 interface ApplicantMeta {

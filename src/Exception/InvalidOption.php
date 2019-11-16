@@ -14,7 +14,7 @@ use InvalidArgumentException;
 /**
  * Class InvalidOption
  *
- * @since   %VERSION%
+ * @since   1.0.0
  * @package Yikes\LevelPlayingField
  */
 class InvalidOption extends InvalidArgumentException implements Exception {
@@ -22,7 +22,7 @@ class InvalidOption extends InvalidArgumentException implements Exception {
 	/**
 	 * Create a new Exception instance from an invalid option.
 	 *
-	 * @since %VERSION%
+	 * @since 1.0.0
 	 *
 	 * @param string|object $option The invalid Option.
 	 *
