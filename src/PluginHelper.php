@@ -46,7 +46,7 @@ trait PluginHelper {
 	 * @return string
 	 */
 	protected function get_version() {
-		return '1.0.0';
+		return '1.0.1';
 	}
 
 	/**
