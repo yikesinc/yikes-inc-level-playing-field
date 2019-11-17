@@ -43,14 +43,14 @@ interface JobMeta {
 	// Compensation.
 	const COMPENSATION = 'compensation';
 
-	// Company Details.
-	const NAME     = 'company_name';
-	const DESC     = 'company_desc';
-	const LOGO     = 'company_logo';
-	const WEBSITE  = 'company_website';
-	const TWITTER  = 'company_twitter';
-	const FACEBOOK = 'company_facebook';
-	const LINKEDIN = 'company_linkedin';
+	// Organization Details.
+	const NAME     = 'organization_name';
+	const DESC     = 'organization_desc';
+	const LOGO     = 'organization_logo';
+	const WEBSITE  = 'organization_website';
+	const TWITTER  = 'organization_twitter';
+	const FACEBOOK = 'organization_facebook';
+	const LINKEDIN = 'organization_linkedin';
 
 	// Properties that should be JSON-encoded.
 	const JSON_PROPERTIES = [
