@@ -48,4 +48,20 @@ class InvalidProperty extends \InvalidArgumentException implements Exception {
 			$property
 		) );
 	}
+
+	/**
+	 * Create a new instance of the class when the property does not exist.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param string $property The property name.
+	 *
+	 * @return static
+	 */
+	public static function does_not_exist( $property ) {
+		return new static( sprintf(
+			'The property "%s" does not exist.',
+			$property
+		) );
+	}
 }
