@@ -261,12 +261,6 @@ final class Job extends CustomPostTypeEntity {
 				$this->$key = $default;
 				$this->changed_property( $key );
 			}
-
-			$prefixed_key = JobMeta::META_PREFIXES[ $key ];
-			$this->$key   = array_key_exists( $prefixed_key, $meta )
-				// Maybe decode, because we grabbed all meta at once instead of individually.
-				? $this->maybe_json_decode( $prefixed_key, $meta[ $prefixed_key ][0] )
-				: $default;
 		}
 	}
 
