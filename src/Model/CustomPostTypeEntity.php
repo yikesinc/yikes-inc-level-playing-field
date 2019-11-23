@@ -11,6 +11,7 @@ namespace Yikes\LevelPlayingField\Model;
 
 use WP_Post;
 use Yikes\LevelPlayingField\Exception\FailedToSavePost;
+use Yikes\LevelPlayingField\Exception\InvalidProperty;
 
 /**
  * Abstract class CustomPostTypeEntity.
@@ -21,6 +22,14 @@ use Yikes\LevelPlayingField\Exception\FailedToSavePost;
  * @author  Jeremy Pry
  */
 abstract class CustomPostTypeEntity implements Entity {
+
+	/**
+	 * Array of changed properties.
+	 *
+	 * @since %VERSION%
+	 * @var array
+	 */
+	protected $changes = [];
 
 	/**
 	 * Whether this is a new Entity.
@@ -233,6 +242,93 @@ abstract class CustomPostTypeEntity implements Entity {
 
 			$this->load_lazy_property( $property );
 		}
+	}
+
+	/**
+	 * Get the meta key for a given property.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param string $property The we want a meta key for.
+	 *
+	 * @return string The meta key.
+	 */
+	protected function get_meta_key( $property ) {
+		return $property;
+	}
+
+	/**
+	 * Register that a property has been changed.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param string $property The property that has changed.
+	 */
+	protected function changed_property( $property ) {
+		$this->changes[ $property ] = true;
+	}
+
+	/**
+	 * Get a property from this object.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param string $property The property name.
+	 *
+	 * @return mixed The property value.
+	 * @throws InvalidProperty When the property does not exist.
+	 */
+	public function get_property( $property ) {
+		if ( property_exists( $this, $property ) ) {
+			return $this->$property;
+		}
+
+		throw InvalidProperty::does_not_exist( $property );
+	}
+
+	/**
+	 * Set a property for this Applicant.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param string $property The property to set.
+	 * @param mixed  $value    The value of that property.
+	 */
+	public function set_property( $property, $value ) {
+		$this->validate_can_modify_property( $property );
+		$this->$property = $this->sanitize_property( $property, $value );
+		$this->changed_property( $property );
+	}
+
+	/**
+	 * Validate that a property can be modified.
+	 *
+	 * Certain properties are only able to be modified by internal methods.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param string $property The property to validate.
+	 *
+	 * @throws InvalidProperty When the property cannot be modified.
+	 */
+	protected function validate_can_modify_property( $property ) {
+		// Nothing to do in this base method. Override in child class.
+	}
+
+	/**
+	 * Sanitize a property for this object.
+	 *
+	 * Must be overridden in a child class to do anything substantial.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param string $property The property name to sanitize.
+	 * @param mixed  $data     The data for the property.
+	 *
+	 * @return mixed The sanitized data.
+	 */
+	protected function sanitize_property( $property, $data ) {
+		return $data;
 	}
 
 	/**

@@ -34,7 +34,7 @@ abstract class BaseJobs extends BaseShortcode {
 	 */
 	protected function get_assets() {
 		return [
-			new StyleAsset( self::CSS_HANDLE, self::CSS_URI, StyleAsset::DEPENDENCIES, StyleAsset::VERSION, StyleAsset::MEDIA_ALL, true ),
+			( new StyleAsset( self::CSS_HANDLE, self::CSS_URI ) )->set_disableable(),
 		];
 	}
 }

@@ -10,7 +10,6 @@
 namespace Yikes\LevelPlayingField\Assets;
 
 use Yikes\LevelPlayingField\Exception\FailedToRegister;
-use Yikes\LevelPlayingField\Plugin;
 use Closure;
 
 /**
@@ -23,12 +22,9 @@ use Closure;
  */
 class ScriptAsset extends BaseAsset {
 
-	const ENQUEUE_HEADER = false;
-	const ENQUEUE_FOOTER = true;
-
+	const ENQUEUE_HEADER    = false;
+	const ENQUEUE_FOOTER    = true;
 	const DEFAULT_EXTENSION = 'js';
-
-	const VERSION = Plugin::VERSION;
 
 	/**
 	 * Source location of the asset.
@@ -92,13 +88,13 @@ class ScriptAsset extends BaseAsset {
 		$handle,
 		$source,
 		$dependencies = [],
-		$version = self::VERSION,
+		$version = null,
 		$in_footer = self::ENQUEUE_HEADER
 	) {
 		$this->handle       = $handle;
 		$this->source       = $this->normalize_source( $source, static::DEFAULT_EXTENSION );
 		$this->dependencies = (array) $dependencies;
-		$this->version      = $version;
+		$this->version      = $version ?: $this->get_version();
 		$this->in_footer    = $in_footer;
 	}
 

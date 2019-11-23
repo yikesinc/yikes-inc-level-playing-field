@@ -81,7 +81,7 @@ final class Job extends CustomPostTypeEntity {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @return bool
+	 * @return string
 	 */
 	public function get_location() {
 		return $this->{JobMeta::LOCATION};
@@ -247,17 +247,20 @@ final class Job extends CustomPostTypeEntity {
 	 */
 	protected function load_lazy_property( $property ) {
 		// Load the normal properties from post meta.
-		$meta = get_post_meta( $this->get_id() );
+		$meta = $this->new ? [] : get_post_meta( $this->get_id() );
 		foreach ( $this->get_lazy_properties() as $key => $default ) {
-			if ( ! array_key_exists( $key, JobMeta::META_PREFIXES ) ) {
+			// If they key has been changed, don't overwrite the change.
+			if ( array_key_exists( $key, $this->changes ) ) {
 				continue;
 			}
 
-			$prefixed_key = JobMeta::META_PREFIXES[ $key ];
-			$this->$key   = array_key_exists( $prefixed_key, $meta )
-				// Maybe decode, because we grabbed all meta at once instead of individually.
-				? $this->maybe_json_decode( $prefixed_key, $meta[ $prefixed_key ][0] )
-				: $default;
+			$meta_key = $this->get_meta_key( $key );
+			if ( array_key_exists( $meta_key, $meta ) ) {
+				$this->$key = $this->maybe_json_decode( $meta_key, $meta[ $meta_key ][0] );
+			} else {
+				$this->$key = $default;
+				$this->changed_property( $key );
+			}
 		}
 	}
 
@@ -272,7 +275,7 @@ final class Job extends CustomPostTypeEntity {
 	 * @return mixed
 	 */
 	protected function maybe_json_decode( $key, $data ) {
-		if ( array_key_exists( $key, JobMeta::JSON_PROPERTIES ) ) {
+		if ( $this->is_json_property( $key ) ) {
 			$decoded = json_decode( $data, true );
 			$data    = JSON_ERROR_NONE === json_last_error() && is_array( $decoded ) && isset( $decoded[0] )
 				? $decoded[0]
@@ -280,5 +283,49 @@ final class Job extends CustomPostTypeEntity {
 		}
 
 		return $data;
+	}
+
+	/**
+	 * Get the meta key for a given property.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param string $property The we want a meta key for.
+	 *
+	 * @return string The meta key.
+	 */
+	protected function get_meta_key( $property ) {
+		$meta_key = array_key_exists( $property, JobMeta::META_PREFIXES )
+			? JobMeta::META_PREFIXES[ $property ]
+			: $property;
+
+		/**
+		 * Filter the meta key of a given property key.
+		 *
+		 * @param string $meta_key The version of the key used for the postmeta table.
+		 * @param string $property The applicant property key.
+		 */
+		return apply_filters( 'lpf_job_meta_key', $meta_key, $property );
+	}
+
+	/**
+	 * Determine whether a given property is a JSON property.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param string $property The property to test.
+	 *
+	 * @return bool
+	 */
+	protected function is_json_property( $property ) {
+		$is_json = array_key_exists( $property, JobMeta::JSON_PROPERTIES );
+
+		/**
+		 * Filter whether the given property is a JSON property.
+		 *
+		 * @param bool   $is_json  Whether the property is JSON.
+		 * @param string $property The property name.
+		 */
+		return (bool) apply_filters( 'lpf_job_json_property', $is_json, $property );
 	}
 }

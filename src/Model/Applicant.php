@@ -67,14 +67,6 @@ final class Applicant extends CustomPostTypeEntity {
 	private $anonymizer = '';
 
 	/**
-	 * Array of changed properties.
-	 *
-	 * @since 1.0.0
-	 * @var array
-	 */
-	private $changes = [];
-
-	/**
 	 * Get the status of the applicant.
 	 *
 	 * @since 1.0.0
@@ -1288,9 +1280,8 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @throws InvalidApplicantValue When the value is not valid, or when there is no sanitization setting.
 	 */
 	public function set_property( $property, $value ) {
-		$this->validate_can_modify_property( $property );
-		$this->$property = $this->sanitize_property( $property, $value );
-		$this->changed_property( $property );
+		// Overridden to note what exception could be thrown.
+		return parent::set_property( $property, $value );
 	}
 
 	/**
@@ -1330,17 +1321,6 @@ final class Applicant extends CustomPostTypeEntity {
 	 */
 	private function persist_status() {
 		wp_set_object_terms( $this->post->ID, $this->{ApplicantMeta::STATUS}, ApplicantStatus::SLUG );
-	}
-
-	/**
-	 * Register that a property has been changed.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param string $property The property that has changed.
-	 */
-	private function changed_property( $property ) {
-		$this->changes[ $property ] = true;
 	}
 
 	/**
@@ -1573,7 +1553,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 *
 	 * @return string The meta key.
 	 */
-	private function get_meta_key( $property ) {
+	protected function get_meta_key( $property ) {
 		$meta_key = array_key_exists( $property, ApplicantMeta::META_PREFIXES )
 			? ApplicantMeta::META_PREFIXES[ $property ]
 			: $property;
@@ -1601,7 +1581,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @return mixed The sanitized data.
 	 * @throws EmptyArray When a structured property has none of the correct keys.
 	 */
-	private function sanitize_property( $property, $data ) {
+	protected function sanitize_property( $property, $data ) {
 		// Handle non-array properties.
 		$structure = $this->get_property_structure( $property );
 		if ( empty( $structure ) ) {
@@ -1665,7 +1645,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 *
 	 * @throws InvalidProperty When the property cannot be modified.
 	 */
-	private function validate_can_modify_property( $property ) {
+	protected function validate_can_modify_property( $property ) {
 		if ( array_key_exists( $property, $this->get_excluded_properties() ) ) {
 			throw InvalidProperty::cannot_modify( $property );
 		}
