@@ -28,7 +28,6 @@ final class StyleAsset extends BaseAsset {
 	const MEDIA_SCREEN = 'screen';
 	const DEPENDENCIES = [];
 	const VERSION      = Plugin::VERSION;
-	const DISABLEABLE  = false;
 
 	const DEFAULT_EXTENSION = 'css';
 
@@ -87,7 +86,6 @@ final class StyleAsset extends BaseAsset {
 	 * @param array            $dependencies Optional. Dependencies of the asset.
 	 * @param string|bool|null $version      Optional. Version of the asset.
 	 * @param string           $media        Media for which the asset is defined.
-	 * @param bool             $disableable  Whether this script can be disabled.
 	 */
 	public function __construct(
 		$handle,
@@ -95,14 +93,26 @@ final class StyleAsset extends BaseAsset {
 		$dependencies = self::DEPENDENCIES,
 		$version = self::VERSION,
 		$media = self::MEDIA_ALL,
-		$disableable = self::DISABLEABLE
 	) {
 		$this->handle       = $handle;
 		$this->source       = $this->normalize_source( $source, static::DEFAULT_EXTENSION );
 		$this->dependencies = (array) $dependencies;
 		$this->version      = $version;
 		$this->media        = $media;
-		$this->disableable  = $disableable;
+	}
+
+	/**
+	 * Whether the asset can be disabled.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param bool $disableable
+	 *
+	 * @return $this
+	 */
+	public function set_disableable( $disableable = true ) {
+		$this->disableable = (bool) $disableable;
+		return $this;
 	}
 
 	/**

@@ -227,15 +227,11 @@ final class Application extends BaseShortcode {
 			],
 		] );
 
-		$jquery_datepicker_styles = new StyleAsset( 'lpf-jquery-ui-datepicker-styles', 'assets/vendor/datepicker/jquery-ui', StyleAsset::DEPENDENCIES, StyleAsset::VERSION, StyleAsset::MEDIA_ALL );
-
-		$styles = new StyleAsset( self::CSS_HANDLE, self::CSS_URI, StyleAsset::DEPENDENCIES, StyleAsset::VERSION, StyleAsset::MEDIA_ALL, true );
-
 		return [
 			$repeater,
-			$styles,
 			$input_validation,
-			$jquery_datepicker_styles,
+			( new StyleAsset( self::CSS_HANDLE, self::CSS_URI ) )->set_disableable(),
+			new StyleAsset( 'lpf-jquery-ui-datepicker-styles', 'assets/vendor/datepicker/jquery-ui' ),
 		];
 	}
 

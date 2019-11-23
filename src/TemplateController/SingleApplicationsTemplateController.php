@@ -9,6 +9,7 @@
 
 namespace Yikes\LevelPlayingField\TemplateController;
 
+use Yikes\LevelPlayingField\Assets\Asset;
 use Yikes\LevelPlayingField\Assets\StyleAsset;
 use Yikes\LevelPlayingField\CustomPostType\ApplicationManager;
 use Yikes\LevelPlayingField\Exception\InvalidPostID;
@@ -42,7 +43,7 @@ class SingleApplicationsTemplateController extends TemplateController {
 	 */
 	protected function get_assets() {
 		return [
-			new StyleAsset( ApplicationShortcode::CSS_HANDLE, ApplicationShortcode::CSS_URI, StyleAsset::DEPENDENCIES, StyleAsset::VERSION, StyleAsset::MEDIA_ALL, true ),
+			( new StyleAsset( ApplicationShortcode::CSS_HANDLE, ApplicationShortcode::CSS_URI ) )->set_disableable(),
 		];
 	}
 
