@@ -30,9 +30,9 @@ use Yikes\LevelPlayingField\CustomPostType\JobManager;
  */
 final class Plugin implements Registerable {
 
-	use PluginHelper;
-
-	const VERSION = '1.0.0';
+	use PluginHelper {
+		get_version as public;
+	}
 
 	/**
 	 * Assets handler instance.
