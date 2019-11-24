@@ -261,8 +261,8 @@ final class Applicant extends CustomPostTypeEntity {
 	public function get_schooling() {
 		$schooling       = [];
 		$type_selections = $this->get_schooling_options();
-		foreach ( $this->{ApplicantMeta::SCHOOLING} as $school ) :
-			if ( $this->is_anonymized() ) :
+		foreach ( $this->{ApplicantMeta::SCHOOLING} as $school ) {
+			if ( $this->is_anonymized() ) {
 				if ( 'high_school' === $school['type'] ) {
 					$schooling[] = sprintf(
 						'%s',
@@ -276,7 +276,7 @@ final class Applicant extends CustomPostTypeEntity {
 						esc_html( $school[ ApplicantMeta::MAJOR ] )
 					);
 				}
-			else :
+			} else {
 				if ( 'high_school' === $school['type'] ) {
 					$schooling[] = sprintf(
 						'Graduated from %s (High School or High School equivalent) in %s',
@@ -292,8 +292,8 @@ final class Applicant extends CustomPostTypeEntity {
 						esc_html( $school[ ApplicantMeta::MAJOR ] )
 					);
 				}
-			endif;
-		endforeach;
+			}
+		}
 
 		return $schooling;
 	}
@@ -450,10 +450,6 @@ final class Applicant extends CustomPostTypeEntity {
 	public function get_experience() {
 		$experiences = [];
 		foreach ( $this->{ApplicantMeta::EXPERIENCE} as $experience ) {
-			if ( empty( array_filter( $experience ) ) ) {
-				continue;
-			}
-
 			if ( $this->is_anonymized() ) {
 				$experiences[] = sprintf(
 					/* translators: %1$s: position. %2$s: industry. %3$s: number of years. */
@@ -474,6 +470,7 @@ final class Applicant extends CustomPostTypeEntity {
 				);
 			}
 		}
+
 		return $experiences;
 	}
 
