@@ -80,15 +80,33 @@ $applicant = $this->applicant;
 	</section>
 	<?php endif; ?>
 
-	<?php if ( ! empty( $applicant->get_languages() ) ) : ?>
+	<?php
+	$languages = $applicant->get_languages();
+	if ( ! empty( $languages ) ) : ?>
 	<section id="languages">
-		<?php $languages = $applicant->get_languages(); ?>
 		<h4 class="lpf_mbox_subtitle"><?php esc_html_e( 'Languages', 'level-playing-field' ); ?></h4>
-			<div class="applicant-skills-container">
-			<?php
-			if ( ! is_array( $languages ) ) :
-				echo '<p>' . $languages . '</p>';
-				?>
+		<div class="applicant-skills-container">
+			<?php if ( $applicant->is_anonymized() ) : ?>
+				<p>
+					<?php
+					$language_strings = [];
+					if ( count( $languages ) > 1 ) {
+						echo esc_html__( 'Multilingual', 'level-playing-field' ), ' &ndash; ';
+					}
+
+					foreach ( $languages as $proficiency => $data ) {
+						$string  = esc_html( $data['label'] ) . ' ';
+						$string .= sprintf(
+							/* translators: %d is the number of languages for the given fluency level */
+							_n( 'in %d language', 'in %d languages', $data['count'], 'level-playing-field' ),
+							$data['count']
+						);
+						$language_strings[] = $string;
+					}
+
+					echo join( ', ', $language_strings );
+					?>
+				</p>
 			<?php else : ?>
 			<table class="wp-list-table widefat fixed striped">
 				<thead>

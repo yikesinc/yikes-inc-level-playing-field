@@ -264,13 +264,14 @@ final class Applicant extends CustomPostTypeEntity {
 		foreach ( $this->{ApplicantMeta::SCHOOLING} as $school ) {
 			if ( $this->is_anonymized() ) {
 				if ( 'high_school' === $school['type'] ) {
-					$schooling[] = sprintf(
-						'%s',
-						esc_html__( 'Graduated from High School or High School equivalent', 'level-playing-field' )
+					$schooling[] = esc_html__(
+						'Graduated from High School or High School equivalent',
+						'level-playing-field'
 					);
 				} else {
 					$schooling[] = sprintf(
-						'Graduated with a %s from %s with a major in %s',
+						/* translators: 1 is the degree name, 2 is the school type, 3 is the major name */
+						'Graduated with a %1$s from %2$s with a major in %3$s',
 						esc_html( $school[ ApplicantMeta::DEGREE ] ),
 						esc_html( $type_selections[ $school['type'] ] ),
 						esc_html( $school[ ApplicantMeta::MAJOR ] )
@@ -279,12 +280,14 @@ final class Applicant extends CustomPostTypeEntity {
 			} else {
 				if ( 'high_school' === $school['type'] ) {
 					$schooling[] = sprintf(
+						/* translators: 1 is the school name, 2 is the year */
 						'Graduated from %s (High School or High School equivalent) in %s',
 						esc_html( $school[ ApplicantMeta::INSTITUTION ] ),
 						esc_html( $school[ ApplicantMeta::YEAR ] )
 					);
 				} else {
 					$schooling[] = sprintf(
+						/* translators: 1 is the year, 2 is the degree, 3 is the school name, 4 is the major */
 						'Graduated in %s with a %s from %s with a major in %s',
 						esc_html( $school[ ApplicantMeta::YEAR ] ),
 						esc_html( $school[ ApplicantMeta::DEGREE ] ),
@@ -712,47 +715,39 @@ final class Applicant extends CustomPostTypeEntity {
 	/**
 	 * Get the languages and proficiency.
 	 *
+	 * When the Applicant is anonymized, an array of proficiencies and their counts and
+	 * labels will be returned instead of the full language data.
+	 *
 	 * @since 1.0.0
 	 * @return array
 	 */
 	public function get_languages() {
 		$languages = $this->{ApplicantMeta::LANGUAGES};
-		if ( $this->is_anonymized() ) :
-			$is_multilingual = count( $languages ) > 1;
-
-			// Build up language proficiency data.
-			$proficiency_labels = $this->get_language_options();
-			$proficiency_counts = [];
-
-			foreach ( $languages as $language ) {
-				if ( ! array_key_exists( $language[ ApplicantMeta::PROFICIENCY ], $proficiency_counts ) ) {
-					$proficiency_counts[ $language[ ApplicantMeta::PROFICIENCY ] ] = 1;
-					continue;
-				}
-
-				$proficiency_counts[ $language[ ApplicantMeta::PROFICIENCY ] ]++;
-			}
-
-			// Set up a counter for when we need to output a comma.
-			$needs_comma = count( $proficiency_counts ) - 1;
-			$output      = $is_multilingual ? esc_html__( 'Multilingual', 'level-playing-field' ) . ' &ndash; ' : '';
-
-			foreach ( $proficiency_counts as $proficiency => $count ) {
-				$output .= esc_html( $proficiency_labels[ $proficiency ] ) . ' ';
-				$output .= esc_html(
-					sprintf(
-						/* translators: %d is the number of languages for the given fluency level */
-						_n( 'in %d language', 'in %d languages', $count, 'level-playing-field' ),
-						$count
-					)
-				);
-				$output .= $needs_comma ? ', ' : ' ';
-				$needs_comma--;
-			}
-			return $output;
-		else :
+		if ( ! $this->is_anonymized() ) {
 			return $languages;
-		endif;
+		}
+
+		// Build up language proficiency data.
+		$proficiency_labels = $this->get_language_options();
+		$proficiency_counts = array_fill_keys( array_keys( $proficiency_labels ), 0 );
+
+		foreach ( $languages as $language ) {
+			$proficiency_counts[ $language[ ApplicantMeta::PROFICIENCY ] ]++;
+		}
+
+		// Clean up proficiencies with no count.
+		$proficiency_counts = array_filter( $proficiency_counts );
+
+		// Combine labels and counts for final return.
+		$return = [];
+		foreach ( $proficiency_counts as $proficiency => $count ) {
+			$return[ $proficiency ] = [
+				'count' => $count,
+				'label' => $proficiency_labels[ $proficiency ],
+			];
+		}
+
+		return $return;
 	}
 
 	/**
