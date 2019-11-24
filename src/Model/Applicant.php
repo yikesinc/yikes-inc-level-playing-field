@@ -261,39 +261,42 @@ final class Applicant extends CustomPostTypeEntity {
 	public function get_schooling() {
 		$schooling       = [];
 		$type_selections = $this->get_schooling_options();
-		foreach ( $this->{ApplicantMeta::SCHOOLING} as $school ) :
-			if ( $this->is_anonymized() ) :
+		foreach ( $this->{ApplicantMeta::SCHOOLING} as $school ) {
+			if ( $this->is_anonymized() ) {
 				if ( 'high_school' === $school['type'] ) {
-					$schooling[] = sprintf(
-						'<li>%s</li>',
-						esc_html__( 'Graduated from High School or High School equivalent', 'level-playing-field' )
+					$schooling[] = esc_html__(
+						'Graduated from High School or High School equivalent',
+						'level-playing-field'
 					);
 				} else {
 					$schooling[] = sprintf(
-						'<li>Graduated with a %s from %s with a major in %s</li>',
+						/* translators: 1 is the degree name, 2 is the school type, 3 is the major name */
+						'Graduated with a %1$s from %2$s with a major in %3$s',
 						esc_html( $school[ ApplicantMeta::DEGREE ] ),
 						esc_html( $type_selections[ $school['type'] ] ),
 						esc_html( $school[ ApplicantMeta::MAJOR ] )
 					);
 				}
-			else :
+			} else {
 				if ( 'high_school' === $school['type'] ) {
 					$schooling[] = sprintf(
-						'<li>Graduated from %s (High School or High School equivalent) in %s</li>',
+						/* translators: 1 is the school name, 2 is the year */
+						'Graduated from %s (High School or High School equivalent) in %s',
 						esc_html( $school[ ApplicantMeta::INSTITUTION ] ),
 						esc_html( $school[ ApplicantMeta::YEAR ] )
 					);
 				} else {
 					$schooling[] = sprintf(
-						'<li>Graduated in %s with a %s from %s with a major in %s</li>',
+						/* translators: 1 is the year, 2 is the degree, 3 is the school name, 4 is the major */
+						'Graduated in %s with a %s from %s with a major in %s',
 						esc_html( $school[ ApplicantMeta::YEAR ] ),
 						esc_html( $school[ ApplicantMeta::DEGREE ] ),
 						esc_html( $school[ ApplicantMeta::INSTITUTION ] ),
 						esc_html( $school[ ApplicantMeta::MAJOR ] )
 					);
 				}
-			endif;
-		endforeach;
+			}
+		}
 
 		return $schooling;
 	}
@@ -345,14 +348,16 @@ final class Applicant extends CustomPostTypeEntity {
 		foreach ( $this->{ApplicantMeta::CERTIFICATIONS} as $certification ) {
 			if ( $this->is_anonymized() ) {
 				$certifications[] = sprintf(
-					'<li>Certified in %s from %s. Status: %s</li>',
+					/* translators: %1$s: certification type. %2$s: institution type. %3$s: status. */
+					__( 'Certified in %1$s from %2$s. Status: %3$s', 'level-playing-field' ),
 					esc_html( $certification[ ApplicantMeta::CERT_TYPE ] ),
 					esc_html( $certification[ ApplicantMeta::TYPE ] ),
 					esc_html( $certification[ ApplicantMeta::STATUS ] )
 				);
 			} else {
 				$certifications[] = sprintf(
-					'<li>Certified in %s from %s. Status: %s. Year: %s.</li>',
+					/* translators: %1$s: certification type. %2$s: institution. %3$s: status. %4$s: year. */
+					__( 'Certified in %1$s from %2$s. Status: %3$s. Year: %4$s.', 'level-playing-field' ),
 					esc_html( $certification[ ApplicantMeta::CERT_TYPE ] ),
 					esc_html( $certification[ ApplicantMeta::INSTITUTION ] ),
 					esc_html( $certification[ ApplicantMeta::STATUS ] ),
@@ -446,7 +451,30 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @return array
 	 */
 	public function get_experience() {
-		return $this->{ApplicantMeta::EXPERIENCE};
+		$experiences = [];
+		foreach ( $this->{ApplicantMeta::EXPERIENCE} as $experience ) {
+			if ( $this->is_anonymized() ) {
+				$experiences[] = sprintf(
+					/* translators: %1$s: position. %2$s: industry. %3$s: number of years. */
+					__( '%1$s in %2$s %3$s', 'level-playing-field' ),
+					esc_html( $experience[ ApplicantMeta::POSITION ] ),
+					esc_html( $experience[ ApplicantMeta::INDUSTRY ] ),
+					! empty( $experience[ ApplicantMeta::YEAR_DURATION ] ) ? esc_html( 'for ' . $experience[ ApplicantMeta::YEAR_DURATION ] ) : ''
+				);
+			} else {
+				$experiences[] = sprintf(
+					/* translators: %1$s: position. %2$s: industry. %3$s: organization. %4$s: start date. %5$s: end date. */
+					__( '%1$s in %2$s at %3$s from %4$s to %5$s', 'level-playing-field' ),
+					esc_html( $experience[ ApplicantMeta::POSITION ] ),
+					esc_html( $experience[ ApplicantMeta::INDUSTRY ] ),
+					esc_html( $experience[ ApplicantMeta::ORGANIZATION ] ),
+					esc_html( date( 'm/d/Y', strtotime( $experience[ ApplicantMeta::START_DATE ] ) ) ),
+					esc_html( ! empty( $experience[ ApplicantMeta::PRESENT_POSITION ] ) ? __( 'the present time.', 'level-playing-field' ) : date( 'm/d/Y', strtotime( $experience[ ApplicantMeta::END_DATE ] ) ) )
+				);
+			}
+		}
+
+		return $experiences;
 	}
 
 	/**
@@ -687,11 +715,39 @@ final class Applicant extends CustomPostTypeEntity {
 	/**
 	 * Get the languages and proficiency.
 	 *
+	 * When the Applicant is anonymized, an array of proficiencies and their counts and
+	 * labels will be returned instead of the full language data.
+	 *
 	 * @since 1.0.0
 	 * @return array
 	 */
 	public function get_languages() {
-		return $this->{ApplicantMeta::LANGUAGES};
+		$languages = $this->{ApplicantMeta::LANGUAGES};
+		if ( ! $this->is_anonymized() ) {
+			return $languages;
+		}
+
+		// Build up language proficiency data.
+		$proficiency_labels = $this->get_language_options();
+		$proficiency_counts = array_fill_keys( array_keys( $proficiency_labels ), 0 );
+
+		foreach ( $languages as $language ) {
+			$proficiency_counts[ $language[ ApplicantMeta::PROFICIENCY ] ]++;
+		}
+
+		// Clean up proficiencies with no count.
+		$proficiency_counts = array_filter( $proficiency_counts );
+
+		// Combine labels and counts for final return.
+		$return = [];
+		foreach ( $proficiency_counts as $proficiency => $count ) {
+			$return[ $proficiency ] = [
+				'count' => $count,
+				'label' => $proficiency_labels[ $proficiency ],
+			];
+		}
+
+		return $return;
 	}
 
 	/**
