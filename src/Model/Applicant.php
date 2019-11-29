@@ -1060,7 +1060,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @return bool
 	 */
 	public function is_anonymized() {
-		return (bool) $this->get_property( ApplicantMeta::ANONYMIZED );
+		return (bool) $this->{ApplicantMeta::ANONYMIZED};
 	}
 
 	/**

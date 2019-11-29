@@ -179,16 +179,14 @@ abstract class CustomPostTypeEntity implements Entity {
 	 * @return mixed
 	 */
 	public function __get( $property ) {
-		if ( array_key_exists( $property, $this->get_lazy_properties() ) ) {
-			$this->load_lazy_property( $property );
+		try {
+			return $this->get_property( $property );
+		} catch ( InvalidProperty $e ) {
+			$message = sprintf( 'Undefined property: %s::$%s', static::class, $property );
+			trigger_error( esc_html( $message ), E_USER_NOTICE );
 
-			return $this->{$property};
+			return null;
 		}
-
-		$message = sprintf( 'Undefined property: %s::$%s', static::class, $property );
-		trigger_error( esc_html( $message ), E_USER_NOTICE );
-
-		return null;
 	}
 
 	/**
@@ -279,6 +277,11 @@ abstract class CustomPostTypeEntity implements Entity {
 	 * @throws InvalidProperty When the property does not exist.
 	 */
 	public function get_property( $property ) {
+		if ( $this->is_lazy_property( $property ) ) {
+			$this->load_lazy_property( $property );
+			return $this->{$property};
+		}
+
 		if ( property_exists( $this, $property ) ) {
 			return $this->$property;
 		}
@@ -329,6 +332,19 @@ abstract class CustomPostTypeEntity implements Entity {
 	 */
 	protected function sanitize_property( $property, $data ) {
 		return $data;
+	}
+
+	/**
+	 * Determine whether a given property is a lazy property.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param string $property The property name.
+	 *
+	 * @return bool
+	 */
+	protected function is_lazy_property( $property ) {
+		return array_key_exists( $property, $this->get_lazy_properties() );
 	}
 
 	/**
