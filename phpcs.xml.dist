@@ -63,7 +63,7 @@
 			</property>
 		</properties>
 		<exclude-pattern type="relative">/views/*</exclude-pattern>
-		<exclude-pattern type="relative">/vendor/awesome-yikes-framework/*</exclude-pattern>
+		<exclude-pattern type="relative">/libraries/awesome-yikes-framework/*</exclude-pattern>
 	</rule>
 	<rule ref="WordPress.Security.EscapeOutput.OutputNotEscaped">
 		<exclude-pattern type="relative">/views/*</exclude-pattern>
@@ -78,6 +78,7 @@
 
 	<exclude-pattern>*/node_modules/*</exclude-pattern>
 	<exclude-pattern type="relative">vendor/*</exclude-pattern>
+	<exclude-pattern type="relative">libraries/*</exclude-pattern>
 	<exclude-pattern type="relative">build/*</exclude-pattern>
 	<exclude-pattern type="relative">.idea/*</exclude-pattern>
 	<exclude-pattern type="relative">old/*</exclude-pattern>

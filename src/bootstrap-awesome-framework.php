@@ -14,4 +14,4 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die();
 }
 
-require_once dirname( __DIR__ ) . '/vendor/awesome-yikes-framework/yks-mbox-framework.php';
+require_once dirname( __DIR__ ) . '/libraries/awesome-yikes-framework/yks-mbox-framework.php';
