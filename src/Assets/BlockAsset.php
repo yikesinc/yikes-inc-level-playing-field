@@ -9,7 +9,6 @@
 
 namespace Yikes\LevelPlayingField\Assets;
 
-use Yikes\LevelPlayingField\Plugin;
 use Closure;
 
 /**

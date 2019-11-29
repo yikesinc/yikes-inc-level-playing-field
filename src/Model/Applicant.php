@@ -35,24 +35,6 @@ use Yikes\LevelPlayingField\Taxonomy\ApplicantStatus;
  *
  * @since   1.0.0
  * @package Yikes\LevelPlayingField
- *
- * @property string email            The Applicant email address.
- * @property int    job              The Job ID.
- * @property string name             The Applicant's name.
- * @property int    application      The Application ID.
- * @property string status           The Applicant status.
- * @property string cover_letter     The Applicant's cover letter.
- * @property array  schooling        The Applicant's schooling details.
- * @property array  certifications   The Applicant's certifications.
- * @property array  skills           The Applicant's skills.
- * @property array  experience       The Applicant's experience.
- * @property array  volunteer        The Applicant's volunteer work.
- * @property string nickname         The Applicant's nickname (for use when their data is anonymous).
- * @property bool   anonymized       Whether the applicant is anonymized.
- * @property int    viewed           User ID who viewed the applicant.
- * @property array  interview        The Applicant's interview details.
- * @property string interview_status The Applicant's interview status.
- * @property string guid             A unique hash for the applicant.
  */
 final class Applicant extends CustomPostTypeEntity {
 
@@ -73,7 +55,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @return string
 	 */
 	public function get_status() {
-		return $this->{ApplicantMeta::STATUS};
+		return $this->get_property( ApplicantMeta::STATUS );
 	}
 
 	/**
@@ -94,7 +76,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @return string
 	 */
 	public function get_email() {
-		return $this->is_anonymized() ? '' : $this->{ApplicantMeta::EMAIL};
+		return $this->get_property( ApplicantMeta::EMAIL );
 	}
 
 	/**
@@ -104,7 +86,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @return string
 	 */
 	public function get_email_for_send() {
-		return $this->{ApplicantMeta::EMAIL};
+		return parent::get_property( ApplicantMeta::EMAIL );
 	}
 
 	/**
@@ -125,7 +107,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @return int
 	 */
 	public function get_job_id() {
-		return (int) $this->{ApplicantMeta::JOB};
+		return (int) $this->get_property( ApplicantMeta::JOB );
 	}
 
 	/**
@@ -146,7 +128,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @return string The applicant name.
 	 */
 	public function get_name() {
-		return $this->is_anonymized() ? '' : $this->{ApplicantMeta::NAME};
+		return $this->get_property( ApplicantMeta::NAME );
 	}
 
 	/**
@@ -167,7 +149,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @return int The applicant phone.
 	 */
 	public function get_phone() {
-		return $this->is_anonymized() ? '' : $this->{ApplicantMeta::PHONE};
+		return $this->get_property( ApplicantMeta::PHONE );
 	}
 
 	/**
@@ -188,7 +170,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @return int
 	 */
 	public function get_application_id() {
-		return (int) $this->{ApplicantMeta::APPLICATION};
+		return (int) $this->get_property( ApplicantMeta::APPLICATION );
 	}
 
 	/**
@@ -237,7 +219,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @return string
 	 */
 	public function get_cover_letter() {
-		return $this->{ApplicantMeta::COVER_LETTER};
+		return $this->get_property( ApplicantMeta::COVER_LETTER );
 	}
 
 	/**
@@ -408,7 +390,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @return array
 	 */
 	public function get_skills() {
-		return $this->{ApplicantMeta::SKILLS};
+		return $this->get_property( ApplicantMeta::SKILLS );
 	}
 
 	/**
@@ -519,7 +501,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @return array
 	 */
 	public function get_volunteer() {
-		return $this->{ApplicantMeta::VOLUNTEER};
+		return $this->get_property( ApplicantMeta::VOLUNTEER );
 	}
 
 	/**
@@ -646,7 +628,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @return string
 	 */
 	public function get_nickname() {
-		return $this->{ApplicantMeta::NICKNAME};
+		return $this->get_property( ApplicantMeta::NICKNAME );
 	}
 
 	/**
@@ -669,15 +651,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @return array The address data.
 	 */
 	public function get_address() {
-		return $this->is_anonymized()
-			? array_intersect_key(
-				$this->{ApplicantMeta::ADDRESS},
-				[
-					ApplicantMeta::CITY  => 1,
-					ApplicantMeta::STATE => 1,
-				]
-			)
-			: $this->{ApplicantMeta::ADDRESS};
+		return $this->get_property( ApplicantMeta::ADDRESS );
 	}
 
 	/**
@@ -698,7 +672,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @return int
 	 */
 	public function get_viewed_by() {
-		return (int) $this->{ApplicantMeta::VIEWED};
+		return (int) $this->get_property( ApplicantMeta::VIEWED );
 	}
 
 	/**
@@ -722,7 +696,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @return array
 	 */
 	public function get_languages() {
-		$languages = $this->{ApplicantMeta::LANGUAGES};
+		$languages = parent::get_property( ApplicantMeta::LANGUAGES );
 		if ( ! $this->is_anonymized() ) {
 			return $languages;
 		}
@@ -787,8 +761,8 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @since 1.0.0
 	 * @return array
 	 */
-	public function get_interview() {
-		return $this->{ApplicantMeta::INTERVIEW};
+	private function get_interview() {
+		return $this->get_property( ApplicantMeta::INTERVIEW );
 	}
 
 	/**
@@ -817,7 +791,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @return string
 	 */
 	public function get_interview_status() {
-		return $this->{ApplicantMeta::INTERVIEW_STATUS};
+		return $this->get_property( ApplicantMeta::INTERVIEW_STATUS );
 	}
 
 	/**
@@ -908,8 +882,6 @@ final class Applicant extends CustomPostTypeEntity {
 		$this->set_interview( [] );
 		$this->persist_properties();
 
-		$message = '<div class="lpf-message-interview-declined">' . __( 'The applicant has declined the interview.', 'level-playing-field' ) . '</div>';
-
 		$message_class = new ApplicantMessage();
 		$message_class->create_comment(
 			[
@@ -961,7 +933,7 @@ final class Applicant extends CustomPostTypeEntity {
 			'comment_post_ID'  => $this->get_id(),
 			'comment_content'  => $message,
 		];
-		$new_message   = $message_class->create_comment( $comment_data );
+		$message_class->create_comment( $comment_data );
 
 		// Send off confirmed interview email to both the applicant and job managers.
 		( new InterviewConfirmationToApplicantEmail( $this ) )->send();
@@ -1038,7 +1010,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @return string $guid The applicant's guid.
 	 */
 	public function get_guid() {
-		return $this->{ApplicantMeta::GUID};
+		return $this->get_property( ApplicantMeta::GUID );
 	}
 
 	/**
@@ -1066,7 +1038,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @return string $anonymizer The class name used for anonymization.
 	 */
 	public function get_anonymizer() {
-		return $this->{ApplicantMeta::ANONYMIZER};
+		return $this->get_property( ApplicantMeta::ANONYMIZER );
 	}
 
 	/**
@@ -1088,7 +1060,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @return bool
 	 */
 	public function is_anonymized() {
-		return (bool) $this->{ApplicantMeta::ANONYMIZED};
+		return (bool) $this->get_property( ApplicantMeta::ANONYMIZED );
 	}
 
 	/**
@@ -1720,5 +1692,30 @@ final class Applicant extends CustomPostTypeEntity {
 		if ( ! $this->property_is_multiple( $property ) ) {
 			throw InvalidProperty::not_multiple( $property );
 		}
+	}
+
+	/**
+	 * Get a property from this object.
+	 *
+	 * @since %VERSION%
+	 *
+	 * @param string $property The property name.
+	 *
+	 * @return mixed The property value.
+	 * @throws InvalidProperty When the property does not exist.
+	 */
+	public function get_property( $property ) {
+		$value = parent::get_property( $property );
+		if ( ! $this->is_anonymized() ) {
+			return $value;
+		}
+
+		if ( is_array( $value ) ) {
+			$value = array_diff_key( $value, ApplicantMeta::ANONYMOUS_FIELDS );
+		} elseif ( is_string( $value ) && array_key_exists( $property, ApplicantMeta::ANONYMOUS_FIELDS ) ) {
+			$value = __( '(anonymized)', 'level-playing-field' );
+		}
+
+		return $value;
 	}
 }

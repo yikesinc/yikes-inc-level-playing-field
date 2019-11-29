@@ -12,7 +12,6 @@ namespace Yikes\LevelPlayingField\Metabox;
 use Yikes\LevelPlayingField\Model\ApplicantRepository;
 use Yikes\LevelPlayingField\Model\JobRepository;
 use Yikes\LevelPlayingField\CustomPostType\ApplicantManager as ApplicantCPT;
-use Yikes\LevelPlayingField\View\View;
 
 /**
  * Class ApplicantInterviewDetails

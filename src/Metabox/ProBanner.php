@@ -11,7 +11,6 @@ namespace Yikes\LevelPlayingField\Metabox;
 
 use Yikes\LevelPlayingField\CustomPostType\ApplicantManager as ApplicantCPT;
 use Yikes\LevelPlayingField\CustomPostType\ApplicationManager as ApplicationCPT;
-use Yikes\LevelPlayingField\View\View;
 
 /**
  * Class Banner2

@@ -9,7 +9,6 @@
 
 namespace Yikes\LevelPlayingField\Email;
 
-use Yikes\LevelPlayingField\Service;
 use Yikes\LevelPlayingField\Model\Applicant;
 
 /**
@@ -25,7 +24,7 @@ abstract class ApplicantEmail extends BaseEmail {
 	/**
 	 * The applicant object.
 	 *
-	 * @var object $applicant The applicant object.
+	 * @var Applicant $applicant The applicant object.
 	 */
 	protected $applicant;
 

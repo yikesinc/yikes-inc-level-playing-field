@@ -9,9 +9,6 @@
 
 namespace Yikes\LevelPlayingField\Email;
 
-use Yikes\LevelPlayingField\Service;
-use Yikes\LevelPlayingField\Model\Applicant;
-
 /**
  * Class ApplicantMessageFromApplicantEmail.
  *

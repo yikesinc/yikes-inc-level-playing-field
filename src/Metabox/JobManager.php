@@ -11,7 +11,6 @@ namespace Yikes\LevelPlayingField\Metabox;
 
 use Yikes\LevelPlayingField\Model\JobPrefix;
 use Yikes\LevelPlayingField\PluginHelper;
-use Yikes\LevelPlayingField\Assets\Asset;
 use Yikes\LevelPlayingField\Assets\AssetsAware;
 use Yikes\LevelPlayingField\Assets\AssetsAwareness;
 use Yikes\LevelPlayingField\Assets\ScriptAsset;

@@ -10,7 +10,6 @@
 namespace Yikes\LevelPlayingField\Assets;
 
 use Closure;
-use Yikes\LevelPlayingField\Plugin;
 use Yikes\LevelPlayingField\Settings\DisableFrontEndCss;
 
 /**

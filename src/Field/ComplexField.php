@@ -307,7 +307,7 @@ abstract class ComplexField extends BaseField {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param object $sub_field  The sub-field object.
+	 * @param Field  $sub_field  The sub-field object.
 	 * @param string $from_class The class used to instantiate the field.
 	 *
 	 * @throws InvalidField When the field is not of the correct type.

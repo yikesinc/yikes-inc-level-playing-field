@@ -10,7 +10,6 @@
 namespace Yikes\LevelPlayingField\ListTable;
 
 use Yikes\LevelPlayingField\Service;
-use Yikes\LevelPlayingField\Taxonomy\JobCategory;
 
 /**
  * Abstract class BasePostType

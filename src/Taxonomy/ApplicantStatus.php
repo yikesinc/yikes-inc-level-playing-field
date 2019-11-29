@@ -10,7 +10,6 @@
 namespace Yikes\LevelPlayingField\Taxonomy;
 
 use WP_Error;
-use Yikes\LevelPlayingField\Assets\Asset;
 use Yikes\LevelPlayingField\Assets\AssetsAware;
 use Yikes\LevelPlayingField\Assets\AssetsAwareness;
 use Yikes\LevelPlayingField\Assets\ScriptAsset;
@@ -157,13 +156,6 @@ final class ApplicantStatus extends BaseTaxonomy implements AssetsAware {
 
 		$post_terms = get_the_terms( $post->ID, $tax_name );
 		$post_terms = $post_terms ? wp_list_pluck( $post_terms, 'slug', 'term_id' ) : [];
-
-		// Set the default term.
-		$selected_term = '';
-		if ( empty( $post_terms ) ) {
-			$default_term  = get_term_by( 'slug', self::DEFAULT_TERM_SLUG, self::SLUG );
-			$selected_term = $default_term->term_id;
-		}
 		?>
 		<!-- Button group for selecting applicant status -->
 		<div id="applicant-status">
