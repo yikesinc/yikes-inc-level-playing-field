@@ -9,8 +9,6 @@
 
 namespace Yikes\LevelPlayingField\Taxonomy;
 
-use Yikes\LevelPlayingField\Taxonomy\ApplicantStatus;
-
 /**
  * Trait JobDropdown
  *

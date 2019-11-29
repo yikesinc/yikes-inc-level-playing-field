@@ -14,7 +14,6 @@ use Yikes\LevelPlayingField\Model\PostTypeJob;
 use Yikes\LevelPlayingField\Taxonomy\JobCategory;
 use Yikes\LevelPlayingField\Taxonomy\JobStatus;
 use Yikes\LevelPlayingField\Shortcode\Job;
-use Yikes\LevelPlayingField\Assets\Asset;
 use Yikes\LevelPlayingField\Assets\StyleAsset;
 use Yikes\LevelPlayingField\Assets\AssetsAware;
 use Yikes\LevelPlayingField\Assets\AssetsAwareness;

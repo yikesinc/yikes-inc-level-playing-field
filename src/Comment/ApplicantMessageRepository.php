@@ -10,8 +10,7 @@
 namespace Yikes\LevelPlayingField\Comment;
 
 use Yikes\LevelPlayingField\Exception\InvalidCommentID;
-use Yikes\LevelPlayingField\Comment\ApplicantMessage;
-use Yikes\LevelPlayingField\Messaging\ApplicantMessaging;
+
 /**
  * Class ApplicantMessageRepository
  *

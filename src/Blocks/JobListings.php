@@ -9,7 +9,6 @@
 
 namespace Yikes\LevelPlayingField\Blocks;
 
-use Yikes\LevelPlayingField\Assets\Asset;
 use Yikes\LevelPlayingField\Assets\BlockAsset;
 use Yikes\LevelPlayingField\PluginHelper;
 use Yikes\LevelPlayingField\CustomPostType\JobManager;

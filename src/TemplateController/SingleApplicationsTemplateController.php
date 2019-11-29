@@ -11,9 +11,7 @@ namespace Yikes\LevelPlayingField\TemplateController;
 
 use Yikes\LevelPlayingField\Assets\Asset;
 use Yikes\LevelPlayingField\Assets\StyleAsset;
-use Yikes\LevelPlayingField\CustomPostType\ApplicationManager;
 use Yikes\LevelPlayingField\Exception\InvalidPostID;
-use Yikes\LevelPlayingField\Model\ApplicationRepository;
 use Yikes\LevelPlayingField\View\FormEscapedView;
 use Yikes\LevelPlayingField\View\TemplatedView;
 use Yikes\LevelPlayingField\RequiredPages\ApplicationFormPage;

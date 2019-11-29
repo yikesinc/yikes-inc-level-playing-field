@@ -882,8 +882,6 @@ final class Applicant extends CustomPostTypeEntity {
 		$this->set_interview( [] );
 		$this->persist_properties();
 
-		$message = '<div class="lpf-message-interview-declined">' . __( 'The applicant has declined the interview.', 'level-playing-field' ) . '</div>';
-
 		$message_class = new ApplicantMessage();
 		$message_class->create_comment(
 			[
@@ -935,7 +933,7 @@ final class Applicant extends CustomPostTypeEntity {
 			'comment_post_ID'  => $this->get_id(),
 			'comment_content'  => $message,
 		];
-		$new_message   = $message_class->create_comment( $comment_data );
+		$message_class->create_comment( $comment_data );
 
 		// Send off confirmed interview email to both the applicant and job managers.
 		( new InterviewConfirmationToApplicantEmail( $this ) )->send();

@@ -9,8 +9,6 @@
 
 namespace Yikes\LevelPlayingField\Email;
 
-use Yikes\LevelPlayingField\Service;
-
 /**
  * Class InterviewConfirmationToApplicantEmail.
  *
