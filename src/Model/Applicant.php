@@ -94,7 +94,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @return string
 	 */
 	public function get_email() {
-		return $this->is_anonymized() ? '' : $this->{ApplicantMeta::EMAIL};
+		return $this->is_anonymized() ? __( '(anonymized)', 'level-playing-field' ) : $this->{ApplicantMeta::EMAIL};
 	}
 
 	/**
@@ -146,7 +146,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @return string The applicant name.
 	 */
 	public function get_name() {
-		return $this->is_anonymized() ? '' : $this->{ApplicantMeta::NAME};
+		return $this->is_anonymized() ? __( '(anonymized)', 'level-playing-field' ) : $this->{ApplicantMeta::NAME};
 	}
 
 	/**
@@ -167,7 +167,7 @@ final class Applicant extends CustomPostTypeEntity {
 	 * @return int The applicant phone.
 	 */
 	public function get_phone() {
-		return $this->is_anonymized() ? '' : $this->{ApplicantMeta::PHONE};
+		return $this->is_anonymized() ? __( '(anonymized)', 'level-playing-field' ) : $this->{ApplicantMeta::PHONE};
 	}
 
 	/**
