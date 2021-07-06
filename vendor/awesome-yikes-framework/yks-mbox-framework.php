@@ -45,6 +45,12 @@ if ( ! class_exists( 'YIKES_Awesome_Framework_101', false ) ) {
 		 */
 		public function init() {
 
+			add_filter( 'yikes-awesome-framework-custom-field-directories', function( $dirs ) {
+				$dirs[] = trailingslashit( WP_CONTENT_DIR ) . 'mu-plugins/awesome-yikes-framework/inc';
+				$dirs[] = trailingslashit( WP_CONTENT_DIR ) . 'mu-plugins/awesome-yikes-framework/inc/fields';
+				return $dirs;
+			} );
+
 			if ( class_exists( 'YIKES_CPT_Meta_Boxes', false ) || class_exists( 'YIKES_Page_Meta_Boxes', false ) ) {
 				return;
 			}
