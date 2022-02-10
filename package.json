@@ -59,7 +59,7 @@
         "gulp-zip": "^4.2.0",
         "gulp.spritesmith": "^6",
         "minimist": "^1",
-        "node-sass": "^4.11.0",
+        "node-sass": "^7.0.0",
         "postcss-loader": "^2.1.5",
         "raw-loader": "^0.5.1",
         "readline-sync": "^1.4.10",
