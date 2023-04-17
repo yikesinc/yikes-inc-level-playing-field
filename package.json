@@ -15,7 +15,7 @@
         "babel-preset-latest": "^6",
         "bourbon": "^4.3",
         "bourbon-neat": "^1.9.1",
-        "browser-sync": "^2.26.3",
+        "browser-sync": "^2.29.1",
         "browserify": "^16.5.0",
         "classnames": "^2.2.5",
         "cross-env": "^5.1.5",
